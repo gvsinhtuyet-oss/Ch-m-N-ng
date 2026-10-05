@@ -52,7 +52,7 @@ interface AppContextType {
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(DEMO_STUDENTS[0]);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [role, setRoleState] = useState<UserRole>('student');
   const [currentGrade, setCurrentGrade] = useState<number>(2);
   const [currentStation, setCurrentStation] = useState<Station | null>(null);
@@ -79,19 +79,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const setRole = (newRole: UserRole) => {
     audioService.playSfx('click');
     setRoleState(newRole);
-    if (newRole === 'student') {
-      setCurrentUser(DEMO_STUDENTS[0]);
-      setCurrentView('student-journey');
-    } else if (newRole === 'teacher') {
-      setCurrentUser(DEMO_TEACHER);
-      setCurrentView('teacher-view');
-    } else if (newRole === 'admin') {
-      setCurrentUser(DEMO_ADMIN);
-      setCurrentView('admin-view');
-    } else {
-      setCurrentUser({ id: 'guest', role: 'guest', name: 'Khách trải nghiệm' });
-      setCurrentView('student-journey');
-    }
+    setCurrentUser(null);
+    setCurrentStation(null);
+    setCurrentStage(1);
+    setCurrentView('landing');
   };
 
   const loginAsStudent = (student: Student) => {

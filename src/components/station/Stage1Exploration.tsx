@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService, NarrationState } from '../../services/AudioService';
@@ -18,6 +18,17 @@ import {
   Info,
 } from 'lucide-react';
 import { RewardClaimModal } from '../common/RewardClaimModal';
+
+
+// Shuffle a copy so option IDs and correctness stay unchanged.
+function shuffleOptions<T>(options: readonly T[]): T[] {
+  const shuffled = [...options];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
 
 interface Props {
   station: Station;
@@ -39,6 +50,11 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   const [showRewardModal, setShowRewardModal] = useState(false);
 
   const hotspot: ExplorationHotspot = station.hotspots[currentHotspotIdx] || station.hotspots[0];
+
+  const displayedOptions = useMemo(
+    () => shuffleOptions(hotspot.interaction?.options || []),
+    [hotspot],
+  );
 
   // Subscribe to audio service state
   useEffect(() => {
@@ -420,7 +436,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
               {/* Options */}
               <div className="space-y-2.5">
-                {hotspot.interaction.options.map((opt) => {
+                {displayedOptions.map((opt) => {
                   const isSelected = selectedOptionId === opt.id;
                   let optClass = 'border-slate-200 hover:bg-slate-50 text-slate-700';
 

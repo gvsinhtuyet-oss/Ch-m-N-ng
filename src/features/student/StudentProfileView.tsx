@@ -39,8 +39,8 @@ export const StudentProfileView: React.FC = () => {
         <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-left text-xs text-emerald-900 flex items-start gap-2.5">
           <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
           <div>
-            <strong className="block">Bảo mật thông tin tối giản:</strong>
-            Hệ thống chỉ lưu trữ tên hiển thị và mã lớp học. Không thu thập số điện thoại, địa chỉ hay dữ liệu cá nhân nhạy cảm.
+            <strong className="block">Phiên bản demo – dữ liệu cục bộ:</strong>
+            Tên hiển thị, mã lớp và tiến độ học được dùng cho phiên trải nghiệm trên trình duyệt. Ứng dụng demo không yêu cầu số điện thoại, địa chỉ hay thông tin cá nhân nhạy cảm.
           </div>
         </div>
 

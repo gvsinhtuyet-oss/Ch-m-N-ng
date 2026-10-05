@@ -1,3 +1,4 @@
+import { AppBackground } from './components/common/AppBackground';
 import React from 'react';
 import { AppProvider, useApp } from './contexts/AppContext';
 import { Header } from './components/common/Header';
@@ -28,10 +29,10 @@ const AppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+    <div className="game-shell min-h-screen flex flex-col text-slate-800">
       <Header />
 
-      <main className="flex-1">
+      <main className="game-content flex-1">
         {currentView === 'student-journey' && <StudentJourneyView />}
         {currentView === 'student-passport' && <StudentPassportView />}
         {currentView === 'student-maps' && <StudentJourneyMapsView />}
@@ -60,6 +61,7 @@ const AppContent: React.FC = () => {
 export function App() {
   return (
     <AppProvider>
+      <AppBackground />
       <AppContent />
     </AppProvider>
   );

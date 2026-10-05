@@ -150,6 +150,12 @@ export const CANONICAL_THANH_DIEN_HAI_STATION: Station = {
     platform: 'internal_interactive',
     instructionsVi: 'Em hãy chọn đáp án đúng để hoàn thành thử thách về Thành Điện Hải nhé!',
     instructionsEn: 'Complete these 3 questions to master the history of Dien Hai Citadel!',
+    externalGame: {
+      platform: 'wordwall',
+      titleVi: 'BẢO VỆ THÀNH CỔ',
+      url: 'https://wordwall.net/vi/resource/120604647?wwmethod=link',
+      noteVi: 'Trò chơi luyện tập mở rộng trên Wordwall. Hoạt động này không thay thế thử thách nội bộ và không ảnh hưởng đến tiến độ hoàn thành bài học.',
+    },
     completionMode: 'AUTO',
     passingScore: 3,
     questions: [

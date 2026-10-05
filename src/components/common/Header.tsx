@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { PWAInstallButton } from './PWAInstallButton';
-import { Volume2, VolumeX, Globe, Wifi, WifiOff, User, Compass, Award, Heart, Presentation } from 'lucide-react';
+import { Volume2, VolumeX, Globe, Wifi, WifiOff, User, Compass, Award, Heart, Presentation, Map as MapIcon } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const {
@@ -146,6 +146,15 @@ export const Header: React.FC = () => {
               >
                 <Award className="w-4 h-4 text-amber-500" />
                 <span>HỘ CHIẾU</span>
+              </button>
+              <button
+                onClick={() => setCurrentView('student-maps')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
+                  currentView === 'student-maps' ? 'bg-sky-100 text-sky-800 shadow-inner' : 'text-slate-600 hover:bg-slate-100'
+                }`}
+              >
+                <MapIcon className="w-4 h-4 text-emerald-600" />
+                <span>BẢN ĐỒ</span>
               </button>
               <button
                 onClick={() => setCurrentView('student-memories')}

@@ -1,3 +1,4 @@
+import { fetchWithTimeout } from './NetworkService';
 import { ThemeSettings, saveTheme } from './ThemeService';
 
 import { Station } from '../types';
@@ -16,7 +17,23 @@ export interface StationContent {
 }
 const STORAGE_KEY = 'cham_danang_content_v1';
 let records: Record<string, StationContent> = {};
-try { records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch {}
+function validContent(value: unknown): value is StationContent {
+  if (!value || typeof value !== 'object') return false;
+  const content = value as StationContent;
+  return typeof content.coverImage === 'string' && typeof content.mapImage === 'string' &&
+    Array.isArray(content.hotspots) && content.hotspots.length > 0 &&
+    content.hotspots.every(h => h && typeof h.id === 'string' && typeof h.titleVi === 'string' &&
+      typeof h.image === 'string' && typeof h.narrationVi === 'string' && typeof h.keyFactVi === 'string' &&
+      (!h.interaction || (Array.isArray(h.interaction.options) && typeof h.interaction.questionVi === 'string'))) &&
+    Array.isArray(content.resources) &&
+    content.resources.every(r => r && typeof r.id === 'string' && typeof r.title === 'string' &&
+      typeof r.url === 'string' && ['document','video','audio','image'].includes(r.kind));
+}
+function validRecords(value: unknown): Record<string, StationContent> {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return {};
+  return Object.fromEntries(Object.entries(value).filter(([key,content]) => /^[a-zA-Z0-9_-]{1,100}$/.test(key) && validContent(content)));
+}
+try { records = validRecords(JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')); } catch {}
 let adminToken = '';
 export const contentService = {
   get(station: Station): StationContent {
@@ -42,24 +59,27 @@ export const contentService = {
   },
   resources(stationId: string) { return records[stationId]?.resources || []; },
   saveLocal(station: Station, content: StationContent) {
-    const next = { ...records, [station.id]: content };
+    if (!validContent(content)) throw new Error('Nội dung trạm chưa hợp lệ.');
+    const next = { ...records, [station.id]: structuredClone(content) };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
     records = next;
     this.apply(station);
   },
   async loadShared(stations: Station[]) {
     try {
-      const response = await fetch('/api/content', { cache: 'no-store' });
+      const response = await fetchWithTimeout('/api/content', { cache: 'no-store' });
       if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) return false;
       const remote = await response.json();
       if (remote.schemaVersion !== 1 || !remote.stations || typeof remote.stations !== 'object') return false;
-      records = { ...records, ...remote.stations };
+      records = { ...records, ...validRecords(remote.stations) };
+      if (remote.theme) { try { saveTheme(remote.theme); } catch {} }
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); } catch {}
       stations.forEach(station => this.apply(station));
       return true;
     } catch { return false; }
   },
   async login(password: string) {
-    const response = await fetch('/api/content/login', {
+    const response = await fetchWithTimeout('/api/content/login', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password }),
     });
@@ -68,7 +88,7 @@ export const contentService = {
     adminToken = (await response.json()).token;
   },
   async publishTheme(theme: ThemeSettings) {
-    const response = await fetch('/api/theme', {
+    const response = await fetchWithTimeout('/api/theme', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + adminToken },
       body: JSON.stringify(theme),
@@ -79,13 +99,13 @@ export const contentService = {
     }
   },
   async publish(station: Station, content: StationContent) {
-    const response = await fetch('/api/content/' + encodeURIComponent(station.id), {
+    const response = await fetchWithTimeout('/api/content/' + encodeURIComponent(station.id), {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + adminToken },
       body: JSON.stringify(content),
     });
     if (!response.ok) throw new Error('Chưa xuất bản được. Hãy kiểm tra kết nối và đăng nhập kho học liệu.');
-    records = { ...records, [station.id]: content };
+    records = { ...records, [station.id]: structuredClone(content) };
     this.apply(station);
     // A large shared file can exceed localStorage; publishing has already succeeded.
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); } catch {}

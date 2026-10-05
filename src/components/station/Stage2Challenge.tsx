@@ -12,7 +12,8 @@ interface Props {
 }
 
 export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) => {
-  const { currentUser } = useApp();
+  const { currentUser, role } = useApp();
+  const isGuest = role === 'guest';
   const challenge = station.challenge;
   const questions = challenge.questions || [];
 
@@ -53,7 +54,9 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
 
       if (pass) {
         audioService.playSfx('correct');
-        progressService.completeStage2(studentId, station.id);
+        if (!isGuest) {
+          progressService.completeStage2(studentId, station.id);
+        }
         setShowRewardModal(true);
       } else {
         audioService.playSfx('wrong');
@@ -222,11 +225,13 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
         <RewardClaimModal
           reward={station.rewards.find(r => r.stage === 2) || station.rewards[1]}
           stage={2}
-          alreadyClaimed={progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 2)?.id || '')}
+          alreadyClaimed={!isGuest && progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 2)?.id || '')}
           onClaim={() => {
-            const rw2 = station.rewards.find(r => r.stage === 2);
-            if (rw2) {
-              progressService.claimReward(studentId, station.id, rw2.id);
+            if (!isGuest) {
+              const rw2 = station.rewards.find(r => r.stage === 2);
+              if (rw2) {
+                progressService.claimReward(studentId, station.id, rw2.id);
+              }
             }
           }}
           onContinue={() => {

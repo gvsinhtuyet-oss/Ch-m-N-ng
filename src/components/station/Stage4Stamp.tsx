@@ -13,7 +13,8 @@ interface Props {
 }
 
 export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExploreNext }) => {
-  const { currentUser } = useApp();
+  const { currentUser, role } = useApp();
+  const isGuest = role === 'guest';
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
 
@@ -52,7 +53,9 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     }
 
     setStamped(true);
-    progressService.completeStage4(studentId, station.id);
+    if (!isGuest) {
+      progressService.completeStage4(studentId, station.id);
+    }
   };
 
   return (
@@ -204,6 +207,13 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
               <p className="text-xs sm:text-sm text-slate-500 italic mt-1 max-w-lg mx-auto font-medium">
                 "{station.stamp.quoteVi}"
               </p>
+              {isGuest && (
+                <div className="pt-2">
+                  <span className="inline-block px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold">
+                    Bản xem thử – đăng nhập học sinh để lưu dấu vào Hộ chiếu.
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Action buttons */}

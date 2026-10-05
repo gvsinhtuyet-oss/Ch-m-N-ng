@@ -19,13 +19,14 @@ export const CANONICAL_HOI_AN_STATION: Station = {
   isFullyVerified: true,
   // Trải nghiệm VR360 tổng cho toàn bộ trạm Hội An
   vr360Experience: {
-    url: '',
-    provider: 'official_portal',
+    url: 'https://vr360.com.vn/projects/hoian-metaverse/',
+    provider: 'custom_web',
     titleVi: 'Khám phá Hội An 360°',
     titleEn: 'Discover Hoi An 360°',
-    verified: false,
+    verified: true,
     embedMode: 'iframe',
-    sourceName: 'Cổng thông tin bảo tồn di sản',
+    fallbackUrl: 'https://vr360.com.vn/projects/hoian-metaverse/',
+    sourceName: 'VR360 – Hội An Metaverse',
   },
   pedagogyGoals: {
     knowGoalVi: 'Nhận biết được những nét tiêu biểu của phố cổ Hội An (Chùa Cầu, nhà cổ, hội quán, dòng sông Hoài) và các giá trị di sản đặc sắc.',

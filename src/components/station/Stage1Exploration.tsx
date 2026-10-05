@@ -25,14 +25,17 @@ interface Props {
 }
 
 export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage }) => {
-  const { currentUser, isOnline, language } = useApp();
+  const { currentUser, role, isOnline, language } = useApp();
+  const isGuest = role === 'guest';
   const [currentHotspotIdx, setCurrentHotspotIdx] = useState(0);
   const [narrationState, setNarrationState] = useState<NarrationState>('idle');
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [answerSubmitted, setAnswerSubmitted] = useState<boolean>(false);
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [showVrModal, setShowVrModal] = useState(false);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
   const [iframeError, setIframeError] = useState(false);
+  const [vrTimeoutReached, setVrTimeoutReached] = useState(false);
   const [showRewardModal, setShowRewardModal] = useState(false);
 
   const hotspot: ExplorationHotspot = station.hotspots[currentHotspotIdx] || station.hotspots[0];
@@ -53,9 +56,24 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
     setSelectedOptionId(null);
     setAnswerSubmitted(false);
     setIsCorrect(false);
-    setIframeError(false);
     audioService.stopNarration();
   }, [currentHotspotIdx]);
+
+  // VR timeout handler
+  useEffect(() => {
+    let timer: any;
+    if (showVrModal) {
+      setIframeLoaded(false);
+      setIframeError(false);
+      setVrTimeoutReached(false);
+      timer = setTimeout(() => {
+        setVrTimeoutReached(true);
+      }, 7000);
+    }
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [showVrModal]);
 
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
@@ -95,7 +113,9 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
     if (correct) {
       audioService.playSfx('correct');
-      progressService.completeHotspot(studentId, station.id, hotspot.id);
+      if (!isGuest) {
+        progressService.completeHotspot(studentId, station.id, hotspot.id);
+      }
     } else {
       audioService.playSfx('wrong');
     }
@@ -110,12 +130,16 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   const handleNextHotspot = () => {
     audioService.playSfx('click');
-    progressService.completeHotspot(studentId, station.id, hotspot.id);
+    if (!isGuest) {
+      progressService.completeHotspot(studentId, station.id, hotspot.id);
+    }
 
     if (currentHotspotIdx < station.hotspots.length - 1) {
       changeHotspot(currentHotspotIdx + 1);
     } else {
-      progressService.completeStage1(studentId, station.id);
+      if (!isGuest) {
+        progressService.completeStage1(studentId, station.id);
+      }
       setShowRewardModal(true);
     }
   };
@@ -184,32 +208,28 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                 <Globe className="w-5 h-5" />
               </span>
               <h3 className="text-lg sm:text-xl font-black text-slate-900">
-                {station.vr360Experience?.titleVi || 'KHÁM PHÁ HỘI AN 360°'}
+                🌐 KHÁM PHÁ HỘI AN 360°
               </h3>
             </div>
             <p className="text-xs sm:text-sm text-slate-600 font-medium">
               Xoay để quan sát toàn cảnh và chạm các điểm khám phá trong không gian di sản.
             </p>
+            <p className="text-[11px] text-slate-500 pt-0.5 font-medium">
+              Nguồn trải nghiệm: VR360 – Hội An Metaverse
+            </p>
           </div>
 
           <div className="shrink-0">
-            {station.vr360Experience?.verified && station.vr360Experience?.url ? (
-              <button
-                onClick={() => {
-                  audioService.playSfx('click');
-                  setShowVrModal(true);
-                }}
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-amber-400/30 transition transform hover:scale-105 active:scale-95"
-              >
-                <Globe className="w-4 h-4" />
-                <span>🌐 BẮT ĐẦU KHÁM PHÁ 360°</span>
-              </button>
-            ) : (
-              <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/95 text-amber-900 border border-amber-200 text-xs font-bold shadow-2xs">
-                <Info className="w-4 h-4 text-amber-600 shrink-0" />
-                <span>Trải nghiệm Hội An 360° đang được cập nhật từ nguồn đã kiểm chứng.</span>
-              </div>
-            )}
+            <button
+              onClick={() => {
+                audioService.playSfx('click');
+                setShowVrModal(true);
+              }}
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-amber-400/30 transition transform hover:scale-105 active:scale-95 cursor-pointer"
+            >
+              <Globe className="w-4 h-4" />
+              <span>BẮT ĐẦU KHÁM PHÁ 360°</span>
+            </button>
           </div>
         </div>
       )}
@@ -509,7 +529,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
             </div>
 
             {/* Modal Body */}
-            <div className="flex-1 bg-black relative flex items-center justify-center overflow-hidden">
+            <div className="flex-1 bg-slate-950 relative flex items-center justify-center overflow-hidden">
               {!isOnline ? (
                 <div className="text-center p-8 text-slate-300 max-w-md">
                   <div className="w-14 h-14 rounded-full bg-slate-800 text-amber-400 flex items-center justify-center mx-auto mb-3">
@@ -521,44 +541,68 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                   </p>
                 </div>
               ) : iframeError || !station.vr360Experience?.url ? (
-                <div className="text-center p-8 text-slate-300 max-w-md space-y-4">
-                  <div className="w-14 h-14 rounded-full bg-slate-800 text-sky-400 flex items-center justify-center mx-auto">
-                    <Info className="w-8 h-8" />
+                <div className="text-center p-8 text-slate-200 max-w-md space-y-4">
+                  <div className="w-16 h-16 rounded-full bg-amber-400/20 text-amber-400 flex items-center justify-center mx-auto shadow-inner">
+                    <Globe className="w-9 h-9" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-white mb-1">Nguồn 360° đang cập nhật</h4>
+                    <h4 className="text-xl font-black text-white mb-1">
+                      Trải nghiệm 360° cần mở trong cửa sổ riêng.
+                    </h4>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      Nguồn 360° không cho phép nhúng trực tiếp hoặc đang được thẩm định từ nguồn chính thức. Em có thể mở trải nghiệm trong tab mới khi có URL kiểm chứng.
+                      Nguồn thực tế ảo VR360 – Hội An Metaverse hoạt động tối ưu nhất khi được mở trong cửa sổ riêng của trình duyệt.
                     </p>
                   </div>
-                  {station.vr360Experience?.url ? (
-                    <a
-                      href={station.vr360Experience.fallbackUrl || station.vr360Experience.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-xl"
-                    >
-                      <span>MỞ TAB MỚI</span>
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
-                  ) : (
-                    <button
-                      onClick={() => setShowVrModal(false)}
-                      className="px-6 py-2.5 rounded-2xl bg-slate-800 text-white font-bold text-xs"
-                    >
-                      Đã hiểu
-                    </button>
-                  )}
+                  <a
+                    href="https://vr360.com.vn/projects/hoian-metaverse/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-xl shadow-amber-400/30 transition transform hover:scale-105 active:scale-95"
+                  >
+                    <span>MỞ HỘI AN 360°</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
                 </div>
               ) : (
-                <iframe
-                  src={station.vr360Experience.url}
-                  title={station.vr360Experience.titleVi}
-                  className="w-full h-full border-0"
-                  allowFullScreen
-                  sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-                  onError={() => setIframeError(true)}
-                />
+                <>
+                  <iframe
+                    src={station.vr360Experience.url}
+                    title={station.vr360Experience.titleVi || 'Khám phá Hội An 360°'}
+                    className="w-full h-full border-0"
+                    allowFullScreen
+                    sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                    onLoad={() => setIframeLoaded(true)}
+                    onError={() => setIframeError(true)}
+                  />
+
+                  {/* Loading & Timeout Overlay */}
+                  {!iframeLoaded && (
+                    <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-xs flex flex-col items-center justify-center p-6 text-center text-white space-y-4">
+                      <div className="w-10 h-10 border-3 border-amber-400 border-t-transparent rounded-full animate-spin" />
+                      <div className="space-y-1">
+                        <p className="text-sm font-bold text-slate-200">Đang mở không gian Hội An 360°...</p>
+                        <p className="text-xs text-slate-400">Nguồn: VR360 – Hội An Metaverse</p>
+                      </div>
+
+                      {vrTimeoutReached && (
+                        <div className="pt-3 space-y-3 animate-fade-in max-w-sm">
+                          <p className="text-xs text-amber-300 font-semibold">
+                            Trải nghiệm 360° cần mở trong cửa sổ riêng.
+                          </p>
+                          <a
+                            href="https://vr360.com.vn/projects/hoian-metaverse/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm shadow-xl transition transform hover:scale-105"
+                          >
+                            <span>MỞ HỘI AN 360°</span>
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -569,11 +613,13 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
         <RewardClaimModal
           reward={station.rewards.find(r => r.stage === 1) || station.rewards[0]}
           stage={1}
-          alreadyClaimed={progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 1)?.id || '')}
+          alreadyClaimed={!isGuest && progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 1)?.id || '')}
           onClaim={() => {
-            const rw1 = station.rewards.find(r => r.stage === 1);
-            if (rw1) {
-              progressService.claimReward(studentId, station.id, rw1.id);
+            if (!isGuest) {
+              const rw1 = station.rewards.find(r => r.stage === 1);
+              if (rw1) {
+                progressService.claimReward(studentId, station.id, rw1.id);
+              }
             }
           }}
           onContinue={() => {

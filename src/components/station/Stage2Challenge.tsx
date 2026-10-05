@@ -51,6 +51,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const [showRewardModal, setShowRewardModal] = useState<boolean>(false);
   const [externalGameOpened, setExternalGameOpened] = useState<boolean>(false);
 
+  const [useInternalChallenge, setUseInternalChallenge] = useState(false);
   const [embedRound, setEmbedRound] = useState(0);
   const resourceId = challenge.externalGame?.url.match(/\/resource\/(\d+)/)?.[1];
   const embedUrl = resourceId ? WORDWALL_EMBED_URLS[resourceId] : undefined;
@@ -129,7 +130,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
           </span>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900">{challenge.titleVi}</h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            {challenge.externalGame && isOnline
+            {challenge.externalGame && isOnline && !useInternalChallenge && Boolean(embedUrl)
               ? 'Có kết nối Internet: em sẽ thực hiện trò chơi Wordwall. Nếu mất mạng, hệ thống tự chuyển sang thử thách nội bộ.'
               : challenge.instructionsVi}
           </p>
@@ -139,7 +140,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
         </div>
       </div>
 
-      {challenge.externalGame && isOnline ? (
+      {challenge.externalGame && isOnline && !useInternalChallenge && Boolean(embedUrl) ? (
         <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-violet-200 space-y-6">
           <div className="flex items-start gap-3">
             <div className="w-12 h-12 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center shrink-0">
@@ -192,6 +193,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 className="w-full h-[520px] sm:h-[640px] border-0"
                 allow="fullscreen"
                 allowFullScreen
+                onError={() => setUseInternalChallenge(true)}
               />
             </div>
           )}
@@ -208,6 +210,19 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
             </a>
           )}
 
+          <button
+            type="button"
+            onClick={() => {
+              audioService.playSfx('click');
+              handleRetry();
+              setShowRewardModal(false);
+              setUseInternalChallenge(true);
+            }}
+            className="w-full px-5 py-3 rounded-2xl bg-sky-100 hover:bg-sky-200 text-sky-900 font-bold text-sm"
+          >
+            Trò chơi gặp sự cố? Làm 5 câu hỏi trong app
+          </button>
+
           <div className="p-3 rounded-2xl bg-sky-50 border border-sky-100 text-xs text-sky-800">
             Khi mất mạng, hệ thống sẽ tự chuyển sang thử thách nội bộ để em vẫn hoàn thành bài học.
           </div>
@@ -217,6 +232,12 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
           {challenge.externalGame && !isOnline && (
             <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm font-semibold">
               <span className="font-black">Đang ngoại tuyến:</span> Wordwall cần kết nối Internet, vì vậy hệ thống đã chuyển sang thử thách nội bộ.
+            </div>
+          )}
+
+          {challenge.externalGame && isOnline && (useInternalChallenge || !embedUrl) && (
+            <div className="p-4 rounded-2xl bg-sky-50 border border-sky-200 text-sky-900 text-sm font-semibold">
+              Em làm 5 câu hỏi trong app để tiếp tục hành trình và nhận phần thưởng nhé!
             </div>
           )}
 

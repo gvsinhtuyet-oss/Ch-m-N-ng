@@ -151,12 +151,12 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   return (
     <div className="space-y-6">
-      {/* Hero Preview: Khám phá Hội An 360° (Chỉ dành cho Trạm Hội An) */}
-      {station.id === 'g2-station-4' && (
+      {/* Station-level verified VR360 preview */}
+      {station.vr360Experience?.verified && station.vr360Experience.url && (
         <div
           role="button"
           tabIndex={0}
-          aria-label="Mở trải nghiệm Hội An 360 độ"
+          aria-label={`Mở trải nghiệm ${station.vr360Experience.titleVi}`}
           onClick={() => {
             audioService.playSfx('click');
             setShowVrModal(true);
@@ -193,13 +193,13 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
           <div className="relative z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div className="space-y-1.5 max-w-xl text-white">
               <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight drop-shadow-md flex items-center gap-2">
-                <span>🌐 KHÁM PHÁ HỘI AN 360°</span>
+                <span>🌐 {station.vr360Experience.titleVi.toUpperCase()}</span>
               </h3>
               <p className="text-xs sm:text-sm text-slate-200 font-medium drop-shadow leading-relaxed">
-                Xoay để quan sát toàn cảnh và chạm các điểm khám phá trong không gian di sản.
+                Mở không gian 360° để quan sát điểm đến và khám phá tư liệu trực quan.
               </p>
               <p className="text-[11px] text-amber-300/90 font-medium drop-shadow-xs">
-                Nguồn trải nghiệm: VR360 – Hội An Metaverse
+                Nguồn trải nghiệm: {station.vr360Experience.sourceName || 'Nguồn 360° đã kiểm chứng'}
               </p>
             </div>
 
@@ -526,7 +526,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                 <Globe className="w-5 h-5 text-amber-400 animate-spin-slow" />
                 <div>
                   <h3 className="font-extrabold text-sm">
-                    {station.vr360Experience?.titleVi || 'Khám phá Hội An 360°'}
+                    {station.vr360Experience?.titleVi || 'Khám phá 360°'}
                   </h3>
                   <span className="text-[11px] text-slate-400">Không gian thực tế ảo di sản</span>
                 </div>
@@ -578,16 +578,16 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                       Trải nghiệm 360° cần mở trong cửa sổ riêng.
                     </h4>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      Nguồn thực tế ảo VR360 – Hội An Metaverse hoạt động tối ưu nhất khi được mở trong cửa sổ riêng của trình duyệt.
+                      Nguồn 360° này có thể hoạt động tối ưu hơn khi được mở trong cửa sổ riêng của trình duyệt.
                     </p>
                   </div>
                   <a
-                    href="https://vr360.com.vn/projects/hoian-metaverse/"
+                    href={station.vr360Experience?.fallbackUrl || station.vr360Experience?.url || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-xl shadow-amber-400/30 transition transform hover:scale-105 active:scale-95"
                   >
-                    <span>MỞ HỘI AN 360°</span>
+                    <span>MỞ 360° TRONG TAB MỚI</span>
                     <ExternalLink className="w-4 h-4" />
                   </a>
                 </div>
@@ -595,7 +595,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                 <>
                   <iframe
                     src={station.vr360Experience.url}
-                    title={station.vr360Experience.titleVi || 'Khám phá Hội An 360°'}
+                    title={station.vr360Experience.titleVi || 'Khám phá 360°'}
                     className="w-full h-full border-0"
                     allowFullScreen
                     sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
@@ -608,8 +608,8 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                     <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-xs flex flex-col items-center justify-center p-6 text-center text-white space-y-4">
                       <div className="w-10 h-10 border-3 border-amber-400 border-t-transparent rounded-full animate-spin" />
                       <div className="space-y-1">
-                        <p className="text-sm font-bold text-slate-200">Đang mở không gian Hội An 360°...</p>
-                        <p className="text-xs text-slate-400">Nguồn: VR360 – Hội An Metaverse</p>
+                        <p className="text-sm font-bold text-slate-200">Đang mở không gian 360°...</p>
+                        <p className="text-xs text-slate-400">Nguồn: {station.vr360Experience?.sourceName || 'Nguồn 360° đã kiểm chứng'}</p>
                       </div>
 
                       {vrTimeoutReached && (
@@ -618,12 +618,12 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                             Trải nghiệm 360° cần mở trong cửa sổ riêng.
                           </p>
                           <a
-                            href="https://vr360.com.vn/projects/hoian-metaverse/"
+                            href={station.vr360Experience?.fallbackUrl || station.vr360Experience?.url || '#'}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm shadow-xl transition transform hover:scale-105"
                           >
-                            <span>MỞ HỘI AN 360°</span>
+                            <span>MỞ 360° TRONG TAB MỚI</span>
                             <ExternalLink className="w-4 h-4" />
                           </a>
                         </div>

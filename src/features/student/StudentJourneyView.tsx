@@ -151,7 +151,7 @@ export const StudentJourneyView: React.FC = () => {
               >
                 {/* Image Cover */}
                 <div className="relative aspect-16/10 bg-slate-900 overflow-hidden">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={station.coverImage}
                     alt={station.titleVi}
                     className={`w-full h-full object-cover transition duration-500 ${
@@ -257,3 +257,4 @@ export const StudentJourneyView: React.FC = () => {
     </div>
   );
 };
+

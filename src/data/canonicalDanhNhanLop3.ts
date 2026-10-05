@@ -183,7 +183,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
       },
       {
         id: 'q3',
-        questionVi: 'Phẩm chất nào nổi bật ở Huỳnh Thúc Kháng qua bài học?'
+        questionVi: 'Phẩm chất nào nổi bật ở Huỳnh Thúc Kháng qua bài học?',
         questionEn: 'For what qualities was Huynh Thuc Khang revered by the people?',
         options: [
           { id: 'o1', textVi: 'Yêu nước, hiếu học, có khí tiết và trách nhiệm', textEn: 'Patriotic, studious, principled, and responsible', isCorrect: true },
@@ -194,7 +194,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
       },
       {
         id: 'q4',
-        questionVi: 'Điểm chung nổi bật giữa Huỳnh Thúc Kháng và Phan Châu Trinh là gì?'
+        questionVi: 'Điểm chung nổi bật giữa Huỳnh Thúc Kháng và Phan Châu Trinh là gì?',
         questionEn: 'What was the prominent common ground between both patriots?',
         options: [
           { id: 'o1', textVi: 'Yêu nước, có ý chí và mong muốn canh tân đất nước', textEn: 'Patriotism, determination, and a desire for national reform', isCorrect: true },

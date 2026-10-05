@@ -23,6 +23,7 @@ export const LandingView: React.FC = () => {
   const {
     loginAsStudent,
     loginAsTeacher,
+    loginAsGuest,
     soundEnabled,
     toggleSound,
     t,
@@ -300,7 +301,7 @@ export const LandingView: React.FC = () => {
             </div>
 
             {!showStudentLogin && !showTeacherLogin ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
                 <button
                   onClick={() => {
                     audioService.playSfx('click');
@@ -327,6 +328,23 @@ export const LandingView: React.FC = () => {
                   </div>
                   <h4 className="font-black text-sm text-slate-900">GIÁO VIÊN</h4>
                   <p className="text-[11px] text-slate-500">Trải nghiệm cổng Giáo viên bằng tài khoản demo được ghi rõ</p>
+                </button>
+
+                <button
+                  onClick={() => {
+                    audioService.playSfx('click');
+                    setShowRolePicker(false);
+                    setShowStudentLogin(false);
+                    setShowTeacherLogin(false);
+                    loginAsGuest();
+                  }}
+                  className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-amber-500 shadow-sm hover:shadow-md transition text-left space-y-1.5 group cursor-pointer"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold group-hover:scale-110 transition">
+                    <Globe className="w-5 h-5" />
+                  </div>
+                  <h4 className="font-black text-sm text-slate-900">NHÀ PHIÊU LƯU</h4>
+                  <p className="text-[11px] text-slate-500">Khám phá nhanh không cần đăng nhập, không lưu tiến độ cá nhân</p>
                 </button>
 
               </div>

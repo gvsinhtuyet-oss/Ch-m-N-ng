@@ -12,6 +12,10 @@ await mkdir(dataDir, { recursive: true });
 let stations = {};
 try { stations = JSON.parse(await readFile(dataFile, 'utf8')); }
 catch (error) { if (error.code !== 'ENOENT') throw error; }
+const themeFile = path.join(dataDir, 'theme.json');
+let theme = { desktop:'',mobile:'',lightness:.12,blur:0 };
+try { theme = JSON.parse(await readFile(themeFile,'utf8')); }
+catch (error) { if (error.code !== 'ENOENT') throw error; }
 const tokens = new Map();
 let failures = 0, blockedUntil = 0, writes = Promise.resolve();
 const validUrl = value => typeof value === 'string' && (
@@ -37,7 +41,7 @@ const types = { '.html':'text/html', '.js':'application/javascript', '.css':'tex
 const server = createServer(async (req,res) => {
   try {
     const pathname = new URL(req.url, 'http://localhost').pathname;
-    if (pathname === '/api/content' && req.method === 'GET') return json(res,200,{ schemaVersion:1,stations });
+    if (pathname === '/api/content' && req.method === 'GET') return json(res,200,{ schemaVersion:1,stations,theme });
     if (pathname === '/api/content/login' && req.method === 'POST') {
       if (Date.now() < blockedUntil) return json(res,429,{ error:'Try again later' });
       const data = await body(req);
@@ -52,6 +56,22 @@ const server = createServer(async (req,res) => {
       const token = randomBytes(32).toString('hex');
       tokens.set(token, Date.now() + 3600000);
       return json(res,200,{ token });
+    }
+    if (pathname === '/api/theme' && req.method === 'PUT') {
+      const token = (req.headers.authorization || '').replace(/^Bearer /,'');
+      if ((tokens.get(token) || 0) < Date.now()) return json(res,401,{ error:'Authentication required' });
+      const data = await body(req);
+      const validImage = value => value === '' || (typeof value === 'string' && (/^https:\/\//i.test(value) || /^data:image\/(png|jpeg|webp|gif);base64,/i.test(value)));
+      if (!validImage(data.desktop) || !validImage(data.mobile) || !Number.isFinite(data.lightness) || data.lightness < 0 || data.lightness > .65 || !Number.isFinite(data.blur) || data.blur < 0 || data.blur > 6)
+        return json(res,400,{ error:'Invalid theme settings' });
+      const clean = { desktop:data.desktop,mobile:data.mobile,lightness:data.lightness,blur:data.blur };
+      const operation = writes.then(async () => {
+        await writeFile(themeFile + '.tmp',JSON.stringify(clean),{ mode:0o600 });
+        await rename(themeFile + '.tmp',themeFile); theme = clean;
+      });
+      writes = operation.catch(() => {});
+      await operation;
+      return json(res,200,{ saved:true });
     }
     if (pathname.startsWith('/api/content/') && req.method === 'PUT') {
       const token = (req.headers.authorization || '').replace(/^Bearer /, '');

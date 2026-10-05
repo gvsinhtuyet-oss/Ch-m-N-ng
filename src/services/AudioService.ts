@@ -56,7 +56,7 @@ class AudioService {
   }
 
   // Play procedural sound effects using Web Audio API
-  public playSfx(type: 'click' | 'correct' | 'wrong' | 'unlock' | 'reward' | 'stamp' | 'victory' | 'transition') {
+  public playSfx(type: 'click' | 'correct' | 'wrong' | 'unlock' | 'reward' | 'stamp' | 'victory' | 'transition' | 'map' | 'treasure') {
     if (!this.soundEnabled) return;
     try {
       this.initAudio();
@@ -156,6 +156,32 @@ class AudioService {
           gain.connect(this.audioCtx!.destination);
           osc.start(now + idx * 0.12);
           osc.stop(now + idx * 0.12 + 0.4);
+        });
+      } else if (type === 'map') {
+        [392, 523.25, 659.25, 783.99].forEach((freq, idx) => {
+          const osc = this.audioCtx!.createOscillator();
+          const gain = this.audioCtx!.createGain();
+          osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+          gain.gain.setValueAtTime(0.16, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.3);
+          osc.connect(gain);
+          gain.connect(this.audioCtx!.destination);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.3);
+        });
+      } else if (type === 'treasure') {
+        [261.63, 329.63, 392, 523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+          const osc = this.audioCtx!.createOscillator();
+          const gain = this.audioCtx!.createGain();
+          osc.type = idx < 3 ? 'triangle' : 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.09);
+          gain.gain.setValueAtTime(0.18, now + idx * 0.09);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.42);
+          osc.connect(gain);
+          gain.connect(this.audioCtx!.destination);
+          osc.start(now + idx * 0.09);
+          osc.stop(now + idx * 0.09 + 0.42);
         });
       }
     } catch {

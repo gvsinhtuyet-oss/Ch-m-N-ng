@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
-import { DEMO_STUDENTS, DEMO_TEACHER, DEMO_ADMIN } from '../../data/mockUsers';
+import { DEMO_STUDENTS } from '../../data/mockUsers';
+import { authService } from '../../services/AuthService';
 import { audioService } from '../../services/AudioService';
 import {
   Compass,
@@ -32,6 +33,9 @@ export const LandingView: React.FC = () => {
   const [showRolePicker, setShowRolePicker] = useState<boolean>(false);
   const [showStudentLogin, setShowStudentLogin] = useState<boolean>(false);
   const [adminLogin, setAdminLogin] = useState(false);
+  const [staffEmail, setStaffEmail] = useState('');
+  const [staffPassword, setStaffPassword] = useState('');
+  const [staffBusy, setStaffBusy] = useState(false);
   const [showTeacherLogin, setShowTeacherLogin] = useState<boolean>(false);
   const [selectedClass, setSelectedClass] = useState<string>('2/24');
   const [studentName, setStudentName] = useState<string>('');
@@ -325,7 +329,7 @@ export const LandingView: React.FC = () => {
                     <Presentation className="w-5 h-5" />
                   </div>
                   <h4 className="font-black text-sm text-slate-900">GIÁO VIÊN</h4>
-                  <p className="text-[11px] text-slate-500">Trải nghiệm cổng Giáo viên bằng tài khoản demo được ghi rõ</p>
+                  <p className="text-[11px] text-slate-500">Đăng nhập bằng tài khoản do nhà trường cấp</p>
                 </button>
 
                 <button
@@ -411,48 +415,31 @@ export const LandingView: React.FC = () => {
                 </div>
               </form>
             ) : (
-              /* Teacher Demo Confirmation */
-              <div className="space-y-4 text-xs">
-                <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-950">
-                  <span className="inline-block px-2.5 py-1 rounded-full bg-emerald-700 text-white text-[10px] font-black uppercase tracking-wide mb-2">
-                    Dữ liệu minh họa
-                  </span>
-                  <h4 className="font-black text-base">{adminLogin ? 'Trải nghiệm cổng Quản trị' : 'Trải nghiệm cổng Giáo viên'} – tài khoản demo</h4>
-                  <p className="mt-2 leading-relaxed">
-                    Phiên bản thẩm định sử dụng tài khoản minh họa để người xem trải nghiệm chức năng giáo viên.
-                    Hệ thống không tự nhận diện danh tính người truy cập.
-                  </p>
+              <form className="space-y-4 text-sm" onSubmit={async e => {
+                e.preventDefault(); if(staffBusy) return; setStaffBusy(true); setLoginError('');
+                try {
+                  const user = await authService.login(staffEmail,staffPassword);
+                  setStaffPassword('');
+                  if(user.role === 'admin') loginAsAdmin(user); else loginAsTeacher(user);
+                  setShowRolePicker(false);
+                } catch(error) { setLoginError((error as Error).message); }
+                finally { setStaffBusy(false); }
+              }}>
+                <h4 className="font-black text-lg">{adminLogin ? 'Đăng nhập quản trị' : 'Đăng nhập giáo viên'}</h4>
+                <p className="text-slate-500">Dùng email và mật khẩu được nhà trường cấp. Quyền truy cập được xác định theo tài khoản.</p>
+                <label className="block font-bold">Email
+                  <input type="email" autoComplete="username" required maxLength={254} value={staffEmail} onChange={e=>setStaffEmail(e.target.value)} className="mt-1 w-full p-3 border rounded-xl" />
+                </label>
+                <label className="block font-bold">Mật khẩu
+                  <input type="password" autoComplete="current-password" required maxLength={128} value={staffPassword} onChange={e=>setStaffPassword(e.target.value)} className="mt-1 w-full p-3 border rounded-xl" />
+                </label>
+                {loginError && <p role="alert" className="p-3 rounded-xl bg-rose-50 text-rose-700">{loginError}</p>}
+                <p className="text-xs text-slate-500">Quên mật khẩu? Liên hệ quản trị nhà trường để được đặt lại.</p>
+                <div className="flex gap-2">
+                  <button type="button" disabled={staffBusy} onClick={()=>{setShowTeacherLogin(false);setStaffPassword('');setLoginError('');}} className="flex-1 p-3 rounded-xl bg-slate-100">Quay lại</button>
+                  <button disabled={staffBusy} className="flex-1 p-3 rounded-xl bg-emerald-600 text-white font-bold disabled:opacity-50">{staffBusy ? 'Đang đăng nhập…' : 'Đăng nhập'}</button>
                 </div>
-
-                <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-1.5">
-                  <div><span className="font-bold text-slate-500">Tài khoản demo:</span> <span className="font-black text-slate-900">{adminLogin ? DEMO_ADMIN.name : DEMO_TEACHER.name}</span></div>
-                  <div><span className="font-bold text-slate-500">Đơn vị:</span> <span className="font-semibold text-slate-800">{DEMO_TEACHER.schoolName}</span></div>
-                  <div className="text-[11px] text-slate-500 pt-1">Thông tin này chỉ phục vụ trình diễn chức năng của sản phẩm.</div>
-                </div>
-
-                <div className="flex gap-2 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setShowTeacherLogin(false)}
-                    className="flex-1 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition"
-                  >
-                    Quay lại
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      audioService.playSfx('unlock');
-                      setShowRolePicker(false);
-                      setShowTeacherLogin(false);
-                      if (adminLogin) loginAsAdmin(DEMO_ADMIN);
-                      else loginAsTeacher(DEMO_TEACHER);
-                    }}
-                    className="flex-1 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold shadow-md shadow-emerald-600/20 transition"
-                  >
-                    {adminLogin ? 'VÀO CỔNG QUẢN TRỊ' : 'VÀO CỔNG GIÁO VIÊN'}
-                  </button>
-                </div>
-              </div>
+              </form>
             )}
           </div>
         </div>
@@ -461,3 +448,4 @@ export const LandingView: React.FC = () => {
   );
 };
 export default LandingView;
+

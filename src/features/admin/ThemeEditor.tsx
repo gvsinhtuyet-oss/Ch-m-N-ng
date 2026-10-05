@@ -5,7 +5,6 @@ import { contentService } from '../../services/ContentService';
 
 export const ThemeEditor: React.FC = () => {
   const [draft, setDraft] = useState<ThemeSettings>(readTheme);
-  const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
   const set = (patch: Partial<ThemeSettings>) => setDraft(prev => ({ ...prev, ...patch }));
@@ -31,9 +30,9 @@ export const ThemeEditor: React.FC = () => {
   const publish = async () => {
     setBusy(true); setMessage('');
     try {
-      await contentService.login(password);
+      await contentService.login();
       await contentService.publishTheme(draft);
-      setPassword(''); setMessage('Đã xuất bản giao diện. Học sinh tải lại app để nhận nền mới.');
+      setMessage('Đã xuất bản giao diện. Học sinh tải lại app để nhận nền mới.');
     } catch (error) { setMessage((error as Error).message); } finally { setBusy(false); }
   };
   return (
@@ -68,11 +67,11 @@ export const ThemeEditor: React.FC = () => {
         <button type="button" disabled={busy} onClick={() => { setDraft({ ...DEFAULT_THEME }); try { saveTheme(DEFAULT_THEME); setMessage('Đã trở về nền cơ bản trên máy này.'); } catch {} }} className="rounded-xl bg-slate-200 font-bold px-5 py-3">Khôi phục nền cơ bản</button>
       </div>
       <div className="flex flex-wrap gap-3">
-        <input aria-label="Mật khẩu xuất bản giao diện" type="password" autoComplete="current-password" placeholder="Mật khẩu quản trị kho học liệu" value={password} onChange={e => setPassword(e.target.value)} className="rounded-xl border p-3 text-sm" />
-        <button type="button" disabled={busy || !password} onClick={() => void publish()} className="rounded-xl bg-indigo-700 text-white font-bold px-5 py-3 disabled:opacity-50">Xuất bản giao diện</button>
+        <button type="button" disabled={busy} onClick={() => void publish()} className="rounded-xl bg-indigo-700 text-white font-bold px-5 py-3 disabled:opacity-50">Xuất bản giao diện</button>
       </div>
       <p className="text-xs text-slate-600">Xuất bản cho mọi thiết bị cần máy chủ kho học liệu được cấu hình. Nếu chỉ có một ảnh, app sẽ dùng ảnh đó trên cả máy tính và điện thoại.</p>
       {message && <p role="status" className="text-sm font-semibold rounded-xl bg-white p-3">{message}</p>}
     </section>
   );
 };
+

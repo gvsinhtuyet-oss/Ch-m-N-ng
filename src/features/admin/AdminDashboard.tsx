@@ -1,3 +1,4 @@
+import { StaffAccounts } from './StaffAccounts';
 import { ThemeEditor } from './ThemeEditor';
 import { ContentEditor } from './ContentEditor';
 import React, { useState } from 'react';
@@ -297,37 +298,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
       )}
 
-      {/* TAB 4: NGƯỜI DÙNG */}
-      {activeTab === 'users' && (
-        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-xl font-black text-slate-900">Quản Lý Danh Sách Lớp & Học Sinh</h2>
-              <p className="text-xs text-slate-500">Cấp phát mã định danh và mã PIN 4 chữ số cho học sinh tiểu học</p>
-            </div>
-            <button className="px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm">
-              <Plus className="w-3.5 h-3.5" />
-              <span>Thêm học sinh</span>
-            </button>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {DEMO_CLASSROOMS.map(cls => (
-              <div key={cls.id} className="p-4 rounded-2xl border border-slate-200 bg-slate-50 space-y-2">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-bold text-sm text-slate-900">{cls.name}</h4>
-                  <span className="px-2 py-0.5 rounded bg-sky-100 text-sky-800 text-[10px] font-bold">Khối {cls.grade}</span>
-                </div>
-                <p className="text-xs text-slate-500">GV: {cls.teacherName}</p>
-                <div className="pt-2 flex items-center justify-between text-xs text-slate-400">
-                  <span>Sĩ số: {cls.totalStudents} em</span>
-                  <span className="text-emerald-700 font-semibold">100% cấp PIN</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {activeTab === 'users' && <StaffAccounts />}
 
       {/* TAB 5: BÁO CÁO */}
       {activeTab === 'reports' && (
@@ -353,3 +324,4 @@ export const AdminDashboard: React.FC = () => {
     </div>
   );
 };
+

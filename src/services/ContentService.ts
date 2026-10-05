@@ -1,3 +1,4 @@
+import { authService } from './AuthService';
 import { fetchWithTimeout } from './NetworkService';
 import { ThemeSettings, saveTheme } from './ThemeService';
 
@@ -34,7 +35,7 @@ function validRecords(value: unknown): Record<string, StationContent> {
   return Object.fromEntries(Object.entries(value).filter(([key,content]) => /^[a-zA-Z0-9_-]{1,100}$/.test(key) && validContent(content)));
 }
 try { records = validRecords(JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')); } catch {}
-let adminToken = '';
+
 export const contentService = {
   get(station: Station): StationContent {
     return records[station.id] || {
@@ -78,19 +79,14 @@ export const contentService = {
       return true;
     } catch { return false; }
   },
-  async login(password: string) {
-    const response = await fetchWithTimeout('/api/content/login', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password }),
-    });
-    if (!response.ok || !response.headers.get('content-type')?.includes('application/json'))
-      throw new Error('Không thể kết nối kho học liệu hoặc mật khẩu chưa đúng.');
-    adminToken = (await response.json()).token;
+  async login(_password?: string) {
+    const user = await authService.restore();
+    if(user?.role !== 'admin') throw new Error('Vui lòng đăng nhập bằng tài khoản quản trị.');
   },
   async publishTheme(theme: ThemeSettings) {
     const response = await fetchWithTimeout('/api/theme', {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + adminToken },
+      headers: { 'Content-Type': 'application/json',  },
       body: JSON.stringify(theme),
     });
     if (!response.ok) throw new Error('Chưa xuất bản được giao diện. Hãy kiểm tra cấu hình máy chủ.');
@@ -101,7 +97,7 @@ export const contentService = {
   async publish(station: Station, content: StationContent) {
     const response = await fetchWithTimeout('/api/content/' + encodeURIComponent(station.id), {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + adminToken },
+      headers: { 'Content-Type': 'application/json',  },
       body: JSON.stringify(content),
     });
     if (!response.ok) throw new Error('Chưa xuất bản được. Hãy kiểm tra kết nối và đăng nhập kho học liệu.');
@@ -111,3 +107,4 @@ export const contentService = {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); } catch {}
   },
 };
+

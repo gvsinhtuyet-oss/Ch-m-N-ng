@@ -21,7 +21,6 @@ export const ContentEditor: React.FC = () => {
   const [draft, setDraft] = useState<StationContent>(() => structuredClone(contentService.get(station)));
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
-  const [password, setPassword] = useState('');
   const [resourceTitle, setResourceTitle] = useState('');
   const [resourceUrl, setResourceUrl] = useState('');
   const [resourceKind, setResourceKind] = useState<LearningResource['kind']>('document');
@@ -53,9 +52,8 @@ export const ContentEditor: React.FC = () => {
     try {
       validate();
       if (publish) {
-        await contentService.login(password);
+        await contentService.login();
         await contentService.publish(station, draft);
-        setPassword('');
         setMessage('Đã xuất bản. Học sinh tải lại app sẽ thấy nội dung mới.');
       } else {
         contentService.saveLocal(station, draft);
@@ -143,11 +141,11 @@ export const ContentEditor: React.FC = () => {
       </div>
       <div className="flex flex-wrap items-center gap-3">
         <button disabled={busy} type="button" className="rounded-xl bg-slate-700 text-white px-4 py-3 font-bold disabled:opacity-50" onClick={() => void save(false)}>Lưu xem thử trên máy này</button>
-        <input aria-label="Mật khẩu xuất bản" className="rounded-xl border p-3 text-sm" type="password" autoComplete="current-password" placeholder="Mật khẩu quản trị kho học liệu" value={password} onChange={e => setPassword(e.target.value)} />
-        <button disabled={busy || !password} type="button" className="rounded-xl bg-indigo-700 text-white px-4 py-3 font-bold disabled:opacity-50" onClick={() => void save(true)}>{busy ? 'Đang xử lý...' : 'Xuất bản cho học sinh'}</button>
+        <button disabled={busy} type="button" className="rounded-xl bg-indigo-700 text-white px-4 py-3 font-bold disabled:opacity-50" onClick={() => void save(true)}>{busy ? 'Đang xử lý...' : 'Xuất bản cho học sinh'}</button>
       </div>
       <p className="text-xs text-slate-600">Xuất bản cần kho học liệu trực tuyến đã được cấu hình. Lưu xem thử chỉ áp dụng trên thiết bị này.</p>
       {message && <p role="status" className="rounded-xl bg-white border p-3 text-sm font-semibold">{message}</p>}
     </section>
   );
 };
+

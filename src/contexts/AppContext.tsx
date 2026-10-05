@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, Student, Teacher, Admin, Station, UserRole } from '../types';
-import { DEMO_STUDENTS, DEMO_TEACHER, DEMO_ADMIN } from '../data/mockUsers';
+import { authService } from '../services/AuthService';
 import { contentService } from '../services/ContentService';
 import { ALL_25_STATIONS, getStationsForGrade } from '../data/allStations';
 import { CANONICAL_HOI_AN_STATION } from '../data/canonicalHoiAn';
@@ -34,11 +34,11 @@ interface AppContextType {
   allStationsInCurrentGrade: Station[];
   
   // Actions
-  setRole: (role: UserRole) => void;
+  setRole: (role: UserRole) => Promise<void>;
   loginAsStudent: (student: Student) => void;
   loginAsTeacher: (teacher: Teacher) => void;
   loginAsAdmin: (admin: Admin) => void;
-  logout: () => void;
+  logout: () => Promise<void>;
   setCurrentGrade: (grade: number) => void;
   openStation: (station: Station, initialStage?: 1 | 2 | 3 | 4) => void;
   closeStation: () => void;
@@ -94,7 +94,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setCurrentStage(1);
   };
 
-  const setRole = (newRole: UserRole) => {
+  const setRole = async (newRole: UserRole) => {
+    if (authService.current()) {
+      try { await authService.logout(); } catch (error) { alert((error as Error).message); return; }
+    }
     audioService.playSfx('click');
     setRoleState(newRole);
     setCurrentUser(null);
@@ -114,6 +117,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const loginAsTeacher = (teacher: Teacher) => {
+    if (authService.current()?.id !== teacher.id || authService.current()?.role !== 'teacher') return;
     audioService.playSfx('unlock');
     setCurrentUser(teacher);
     setRoleState('teacher');
@@ -124,18 +128,49 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const loginAsAdmin = (admin: Admin) => {
+    if (authService.current()?.id !== admin.id || authService.current()?.role !== 'admin') return;
     audioService.playSfx('unlock');
     setCurrentUser(admin);
     setRoleState('admin');
     setCurrentView('admin-view');
   };
 
-  const logout = () => {
+  const logout = async () => {
+    if (authService.current()) {
+      try { await authService.logout(); } catch (error) { alert((error as Error).message); return; }
+    }
     audioService.playSfx('click');
     setCurrentUser(null);
     setCurrentStation(null);
     setCurrentView('landing');
   };
+
+  useEffect(() => {
+    let active = true;
+    const restore = async () => {
+      try {
+        const user = await authService.restore();
+        if (!active) return;
+        if (user) { setCurrentUser(user); setRoleState(user.role); setCurrentView(user.role === 'admin' ? 'admin-view' : 'teacher-view'); }
+      } catch { /* Staff login shows configuration errors explicitly. */ }
+    };
+    void restore();
+    return () => { active = false; };
+  }, []);
+
+  useEffect(() => {
+    if (!currentUser || role === 'student') return;
+    let active = true;
+    const check = async () => {
+      try {
+        const user = await authService.restore();
+        if (active && !user) { setCurrentUser(null); setCurrentStation(null); setCurrentView('landing'); }
+      } catch { /* A connection failure is shown by the next protected action. */ }
+    };
+    const timer = window.setInterval(() => void check(), 60000);
+    window.addEventListener('focus', check);
+    return () => { active = false; window.clearInterval(timer); window.removeEventListener('focus', check); };
+  }, [currentUser?.id, role]);
 
   const openStation = (station: Station, initialStage: 1 | 2 | 3 | 4 = 1) => {
     if (!currentUser) return;
@@ -230,3 +265,4 @@ export const useApp = () => {
   }
   return context;
 };
+

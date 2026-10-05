@@ -1,14 +1,16 @@
 
 import { createServer } from 'node:http';
-import { randomBytes, timingSafeEqual } from 'node:crypto';
+import { createAuth, firestoreStore } from './auth-server.mjs';
 import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
 import path from 'node:path';
 
 const dataDir = path.resolve(process.env.CONTENT_DATA_DIR || './content-data');
 const dataFile = path.join(dataDir, 'stations.json');
-const password = process.env.CONTENT_ADMIN_PASSWORD;
-const publishingEnabled = typeof password === 'string' && password.length >= 12;
-if (!publishingEnabled) console.warn('Content publishing disabled: configure CONTENT_ADMIN_PASSWORD (at least 12 characters).');
+const auth = createAuth({
+  store: process.env.AUTH_FIRESTORE_PROJECT ? firestoreStore(process.env.AUTH_FIRESTORE_PROJECT) : null,
+  adminEmail: process.env.AUTH_ADMIN_EMAIL, adminPassword: process.env.AUTH_ADMIN_PASSWORD,
+  secureCookie: process.env.AUTH_LOCAL_HTTP !== 'true' || !!process.env.K_SERVICE,
+});
 await mkdir(dataDir, { recursive: true });
 let stations = {};
 try { stations = JSON.parse(await readFile(dataFile, 'utf8')); }
@@ -17,8 +19,7 @@ const themeFile = path.join(dataDir, 'theme.json');
 let theme = { desktop:'',mobile:'',lightness:.12,blur:0 };
 try { theme = JSON.parse(await readFile(themeFile,'utf8')); }
 catch (error) { if (error.code !== 'ENOENT') throw error; }
-const tokens = new Map();
-let failures = 0, blockedUntil = 0, writes = Promise.resolve();
+let writes = Promise.resolve();
 const validUrl = value => typeof value === 'string' && (
   value === '' || /^https:\/\//i.test(value) ||
   /^data:(image\/(png|jpeg|webp|gif)|application\/pdf|audio\/(mpeg|mp3|wav|ogg|mp4|x-wav)|video\/(mp4|webm|ogg));base64,/i.test(value)
@@ -32,7 +33,7 @@ async function body(req) {
   const chunks = [];
   for await (const chunk of req) {
     size += chunk.length;
-    if (size > 32 * 1024 * 1024) throw Object.assign(new Error('Too large'), { status: 413 });
+    if (size > (req.url.startsWith('/api/auth/') || req.url === '/api/admin/users' ? 16384 : 32 * 1024 * 1024)) throw Object.assign(new Error('Too large'), { status: 413 });
     chunks.push(chunk);
   }
   try { return JSON.parse(Buffer.concat(chunks).toString('utf8')); }
@@ -43,25 +44,10 @@ const server = createServer(async (req,res) => {
   try {
     const pathname = new URL(req.url, 'http://localhost').pathname;
     if (pathname === '/api/content' && req.method === 'GET') return json(res,200,{ schemaVersion:1,stations,theme });
-    if (pathname === '/api/content/login' && req.method === 'POST') {
-      if (!publishingEnabled) return json(res,503,{ error:'Chưa cấu hình mật khẩu xuất bản học liệu trên máy chủ.' });
-      if (Date.now() < blockedUntil) return json(res,429,{ error:'Try again later' });
-      const data = await body(req);
-      const supplied = Buffer.from(typeof data.password === 'string' ? data.password : '');
-      const expected = Buffer.from(password);
-      if (supplied.length !== expected.length || !timingSafeEqual(supplied,expected)) {
-        if (++failures >= 10) { blockedUntil = Date.now() + 60000; failures = 0; }
-        return json(res,401,{ error:'Invalid password' });
-      }
-      failures = 0;
-      for (const [token,expiry] of tokens) if (expiry < Date.now()) tokens.delete(token);
-      const token = randomBytes(32).toString('hex');
-      tokens.set(token, Date.now() + 3600000);
-      return json(res,200,{ token });
-    }
+    if (await auth.handle(req,res,pathname,body,json)) return;
+    if (pathname === '/api/content/login') return json(res,410,{ error:'Hãy đăng nhập bằng tài khoản quản trị.' });
     if (pathname === '/api/theme' && req.method === 'PUT') {
-      const token = (req.headers.authorization || '').replace(/^Bearer /,'');
-      if ((tokens.get(token) || 0) < Date.now()) return json(res,401,{ error:'Authentication required' });
+      auth.sameOrigin(req); await auth.requireAdmin(req);
       const data = await body(req);
       const validImage = value => value === '' || (typeof value === 'string' && (/^https:\/\//i.test(value) || /^data:image\/(png|jpeg|webp|gif);base64,/i.test(value)));
       if (!validImage(data.desktop) || !validImage(data.mobile) || !Number.isFinite(data.lightness) || data.lightness < 0 || data.lightness > .65 || !Number.isFinite(data.blur) || data.blur < 0 || data.blur > 6)
@@ -76,8 +62,7 @@ const server = createServer(async (req,res) => {
       return json(res,200,{ saved:true });
     }
     if (pathname.startsWith('/api/content/') && req.method === 'PUT') {
-      const token = (req.headers.authorization || '').replace(/^Bearer /, '');
-      if ((tokens.get(token) || 0) < Date.now()) return json(res,401,{ error:'Authentication required' });
+      auth.sameOrigin(req); await auth.requireAdmin(req);
       const id = decodeURIComponent(pathname.slice('/api/content/'.length));
       const content = await body(req);
       if (!/^[a-zA-Z0-9_-]{1,100}$/.test(id) ||
@@ -113,7 +98,8 @@ const server = createServer(async (req,res) => {
     res.end(req.method === 'HEAD' ? undefined : data);
   } catch (error) {
     console.error('Content server error:',error.message);
-    json(res,error.status || 500,{ error:'Could not process request' });
+    json(res,error.status || 500,{ error:error.status ? error.message : 'Could not process request' });
   }
 });
 server.listen(Number(process.env.PORT || 3000),'0.0.0.0',() => console.log('CHAM DA NANG content server started'));
+

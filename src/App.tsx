@@ -1,3 +1,4 @@
+import { StaffPassword } from './components/common/StaffPassword';
 import { AppBackground } from './components/common/AppBackground';
 import React, { useState, useEffect } from 'react';
 import { AppProvider, useApp } from './contexts/AppContext';
@@ -16,7 +17,7 @@ import { ClassroomPresentationMode } from './features/teacher/ClassroomPresentat
 import { WifiOff } from 'lucide-react';
 
 const AppContent: React.FC = () => {
-  const { currentView, currentStation, isOnline, closeStation, exitPresentationMode } = useApp();
+  const { currentUser, role, currentView, currentStation, isOnline, closeStation, exitPresentationMode } = useApp();
 
   const [storageWarning, setStorageWarning] = useState(false);
   useEffect(() => {
@@ -25,8 +26,10 @@ const AppContent: React.FC = () => {
     return () => window.removeEventListener('cham-progress-storage-error', notify);
   }, []);
 
+  if (!currentUser && currentView !== 'landing') return <LandingView />;
+
   // If in Presentation Mode, render full-screen projection without header/footer
-  if (currentView === 'presentation-view' && currentStation) {
+  if (currentView === 'presentation-view' && currentStation && (role === 'teacher' || role === 'admin')) {
     return <ClassroomPresentationMode key={currentStation.id} station={currentStation} onExit={exitPresentationMode} />;
   }
 
@@ -38,6 +41,7 @@ const AppContent: React.FC = () => {
   return (
     <div className="game-shell min-h-screen flex flex-col text-slate-800">
       <Header />
+      <StaffPassword />
 
       <main className="game-content flex-1">
         {currentView === 'student-journey' && <StudentJourneyView />}
@@ -48,8 +52,8 @@ const AppContent: React.FC = () => {
         {currentView === 'station-view' && currentStation && (
           <StationView key={currentStation.id} station={currentStation} onBack={closeStation} />
         )}
-        {currentView === 'teacher-view' && <TeacherDashboard />}
-        {currentView === 'admin-view' && <AdminDashboard />}
+        {currentView === 'teacher-view' && role === 'teacher' && <TeacherDashboard />}
+        {currentView === 'admin-view' && role === 'admin' && <AdminDashboard />}
       </main>
 
       <Footer />
@@ -82,4 +86,5 @@ export function App() {
 }
 
 export default App;
+
 

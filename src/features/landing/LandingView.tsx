@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { DEMO_STUDENTS, DEMO_TEACHER } from '../../data/mockUsers';
 import { audioService } from '../../services/AudioService';
@@ -34,9 +34,23 @@ export const LandingView: React.FC = () => {
   const [showTeacherLogin, setShowTeacherLogin] = useState<boolean>(false);
   const [selectedClass, setSelectedClass] = useState<string>('2/24');
   const [studentName, setStudentName] = useState<string>('');
-  const [studentCode, setStudentCode] = useState<string>('');
-  const [pin, setPin] = useState<string>('');
+  const [savedStudentId, setSavedStudentId] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
+
+  const STUDENT_PROFILE_KEY = 'cham_danang_student_profile_v1';
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STUDENT_PROFILE_KEY);
+      if (!raw) return;
+      const saved = JSON.parse(raw);
+      if (typeof saved?.name === 'string') setStudentName(saved.name);
+      if (typeof saved?.className === 'string') setSelectedClass(saved.className);
+      if (typeof saved?.id === 'string') setSavedStudentId(saved.id);
+    } catch {
+      // Dữ liệu cũ không hợp lệ thì cho học sinh nhập lại.
+    }
+  }, []);
 
   const openRolePicker = () => {
     setLoginError('');
@@ -54,59 +68,40 @@ export const LandingView: React.FC = () => {
     e.preventDefault();
     audioService.playSfx('click');
 
-    const normalizedCode = studentCode.trim().toUpperCase();
     const normalizedName = studentName.trim();
-    const normalizedPin = pin.trim();
-
     if (!normalizedName) {
       setLoginError('Vui lòng nhập họ và tên học sinh.');
       return;
     }
-    if (!normalizedCode) {
-      setLoginError('Vui lòng nhập mã học sinh.');
-      return;
-    }
-    if (!/^\d{4}$/.test(normalizedPin)) {
-      setLoginError('Mã PIN demo gồm đúng 4 chữ số.');
-      return;
-    }
-
-    const found = DEMO_STUDENTS.find(
-      s => s.studentCode.trim().toUpperCase() === normalizedCode
-    );
-
-    if (found) {
-      if (found.className !== selectedClass) {
-        setLoginError(`Mã ${normalizedCode} thuộc lớp ${found.className}. Vui lòng chọn đúng lớp.`);
-        return;
-      }
-      if (normalizedPin !== found.pinHash) {
-        setLoginError('Mã PIN chưa chính xác. PIN demo của tài khoản mẫu là 1234.');
-        return;
-      }
-      loginAsStudent(found);
-      return;
-    }
-
-    if (normalizedPin !== '1234') {
-      setLoginError('Tài khoản demo tự nhập sử dụng PIN 1234.');
-      return;
-    }
 
     const selectedGrade = Number(selectedClass.split('/')[0]) || 2;
-    const safeCode = normalizedCode.replace(/[^A-Z0-9_-]/g, '-');
+    const id =
+      savedStudentId ||
+      `local-student-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 
-    loginAsStudent({
+    const student = {
       ...DEMO_STUDENTS[0],
-      id: `demo-${selectedClass.replace('/', '-')}-${safeCode}`,
-      studentCode: normalizedCode,
+      id,
+      studentCode: id,
       classId: `class-${selectedClass.replace('/', '-')}`,
       className: selectedClass,
       grade: selectedGrade,
       displayName: normalizedName,
       name: normalizedName,
-      pinHash: '1234',
-    });
+      pinHash: undefined,
+    };
+
+    try {
+      localStorage.setItem(
+        STUDENT_PROFILE_KEY,
+        JSON.stringify({ id, name: normalizedName, className: selectedClass })
+      );
+      setSavedStudentId(id);
+    } catch {
+      // Nếu không lưu được cục bộ, vẫn cho phép vào học.
+    }
+
+    loginAsStudent(student);
   };
 
   return (
@@ -313,7 +308,7 @@ export const LandingView: React.FC = () => {
                     <GraduationCap className="w-5 h-5" />
                   </div>
                   <h4 className="font-black text-sm text-slate-900">HỌC SINH</h4>
-                  <p className="text-[11px] text-slate-500">Nhập họ tên, lớp, mã HS và PIN demo</p>
+                  <p className="text-[11px] text-slate-500">Chọn lớp và nhập tên để bắt đầu hành trình</p>
                 </button>
 
                 <button
@@ -385,40 +380,9 @@ export const LandingView: React.FC = () => {
                   />
                 </div>
 
-                <div>
-                  <label className="font-bold text-slate-700 block mb-1">Mã học sinh:</label>
-                  <input
-                    type="text"
-                    value={studentCode}
-                    onChange={(e) => {
-                      setStudentCode(e.target.value);
-                      setLoginError('');
-                    }}
-                    placeholder="Ví dụ: HS_2_24_001"
-                    required
-                    className="w-full p-3 rounded-xl border border-slate-200 text-xs font-mono font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="font-bold text-slate-700 block mb-1">Mã PIN 4 số:</label>
-                  <input
-                    type="password"
-                    maxLength={4}
-                    value={pin}
-                    onChange={(e) => {
-                      setPin(e.target.value.replace(/\D/g, ''));
-                      setLoginError('');
-                    }}
-                    inputMode="numeric"
-                    pattern="\d{4}"
-                    placeholder="****"
-                    required
-                    className="w-full p-3 rounded-xl border border-slate-200 text-sm font-bold text-center tracking-widest text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                  />
-                  <span className="text-[10px] text-slate-400 mt-1 block">
-                    Phiên bản demo: nhập họ tên, lớp và mã HS để tạo hồ sơ trải nghiệm cục bộ. PIN demo: 1234.
-                  </span>
+                <div className="rounded-xl bg-sky-50 border border-sky-100 px-3 py-2.5 text-[10px] text-sky-800 leading-relaxed">
+                  Thiết bị này sẽ ghi nhớ <strong>tên và lớp</strong> để lần sau em vào học nhanh hơn.
+                  Em vẫn có thể đổi tên hoặc đổi lớp bất cứ lúc nào.
                 </div>
 
                 {loginError && (

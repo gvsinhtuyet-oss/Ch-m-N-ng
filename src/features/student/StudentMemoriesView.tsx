@@ -1,12 +1,24 @@
 import React from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { progressService } from '../../services/ProgressService';
+import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { Heart, Sparkles, Award, MessageCircle, Calendar } from 'lucide-react';
+
+const REWARD_ICON_BY_TEMPLATE: Record<string, string> = {
+  discovery_compass: '🧭',
+  scholar_scroll: '📜',
+  heritage_lantern: '🏮',
+  nature_leaf: '🍃',
+  dragon_gem: '💎',
+  pottery_vase: '🏺',
+  sea_pearl: '🫧',
+  silk_ribbon: '🎀',
+};
 
 export const StudentMemoriesView: React.FC = () => {
   const { currentUser, allStationsInCurrentGrade } = useApp();
   const studentId = currentUser?.id || 'guest';
-  const stations = allStationsInCurrentGrade;
+  const stations = allStationsInCurrentGrade.filter(station => DEMO_STATION_IDS.has(station.id));
 
   return (
     <div className="max-w-5xl mx-auto px-3 sm:px-6 py-8 space-y-8">
@@ -49,7 +61,7 @@ export const StudentMemoriesView: React.FC = () => {
                   }`}
                 >
                   <div className="w-12 h-12 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center text-xl shrink-0 font-bold shadow-xs">
-                    {rw.stage === 1 ? '🏮' : rw.stage === 2 ? '🧭' : '💖'}
+                    {REWARD_ICON_BY_TEMPLATE[rw.template] ?? '🎁'}
                   </div>
                   <div>
                     <div className="flex items-center gap-1.5">

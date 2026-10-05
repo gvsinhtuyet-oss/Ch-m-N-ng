@@ -190,6 +190,28 @@ export interface Stamp {
   symbolSvg?: string;
 }
 
+export interface JourneyMapNode {
+  id: string;
+  titleVi: string;
+  textVi: string;
+  icon?: string;
+}
+
+export interface JourneyMapDefinition {
+  id: string;
+  stationId: string;
+  grade: number;
+  titleVi: string;
+  subtitleVi?: string;
+  image?: string;
+  summaryNodes: JourneyMapNode[];
+  knowVi: string;
+  understandVi: string;
+  actVi: string;
+  rewardNameVi?: string;
+  stampNameVi?: string;
+}
+
 export interface PedagogyGoals {
   knowGoalVi: string;
   knowGoalEn?: string;
@@ -252,6 +274,7 @@ export interface Station {
   checkIn: CheckIn;
   rewards: Reward[];
   stamp: Stamp;
+  journeyMap?: JourneyMapDefinition;
   version: StationVersion;
   sources: ContentSource[];
   isFullyVerified: boolean;
@@ -275,6 +298,10 @@ export interface StudentStationProgress {
   exploredHotspotIds: string[];
   rewardsCollected: string[]; // reward ids
   stampReceived: boolean;
+  journeyMapReceived: boolean;
+  journeyMapReceivedAt?: string;
+  keyFragmentReceived: boolean;
+  keyFragmentReceivedAt?: string;
   startedAt?: string;
   completedAt?: string;
   lastVisitedAt: string;

@@ -17,6 +17,19 @@ export const ClassroomPresentationMode: React.FC<Props> = ({ station, onExit }) 
   const [showVrModal, setShowVrModal] = useState(false);
 
   const hotspot = station.hotspots[activeHotspotIndex] || station.hotspots[0];
+  const presentationVr = hotspot?.vr360
+    ? {
+        url: hotspot.vr360.url,
+        verified: hotspot.vr360.verified,
+        title: hotspot.vr360.title || 'Khám phá 360°',
+      }
+    : station.vr360Experience
+    ? {
+        url: station.vr360Experience.url,
+        verified: station.vr360Experience.verified,
+        title: station.vr360Experience.titleVi,
+      }
+    : null;
 
   const handleToggleSpeak = () => {
     if (isSpeaking) {
@@ -35,6 +48,7 @@ export const ClassroomPresentationMode: React.FC<Props> = ({ station, onExit }) 
       audioService.stopNarration();
       setIsSpeaking(false);
       setShowAnswer(false);
+      setShowVrModal(false);
       setActiveHotspotIndex(prev => prev - 1);
     }
   };
@@ -44,6 +58,7 @@ export const ClassroomPresentationMode: React.FC<Props> = ({ station, onExit }) 
       audioService.stopNarration();
       setIsSpeaking(false);
       setShowAnswer(false);
+      setShowVrModal(false);
       setActiveHotspotIndex(prev => prev + 1);
     }
   };
@@ -97,7 +112,7 @@ export const ClassroomPresentationMode: React.FC<Props> = ({ station, onExit }) 
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/30 pointer-events-none" />
 
           {/* 360 Button on big screen */}
-          {hotspot.vr360?.url && hotspot.vr360?.verified && (
+          {presentationVr?.url && presentationVr.verified && (
             <button
               onClick={() => setShowVrModal(true)}
               className="absolute bottom-6 right-6 px-5 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-xl transition flex items-center gap-2 active:scale-95"
@@ -205,10 +220,10 @@ export const ClassroomPresentationMode: React.FC<Props> = ({ station, onExit }) 
       </div>
 
       {/* VR 360 Fullscreen modal */}
-      {showVrModal && hotspot.vr360 && (
+      {showVrModal && presentationVr && (
         <div className="fixed inset-0 z-60 bg-black/95 flex flex-col p-4">
           <div className="flex items-center justify-between pb-3 border-b border-slate-800">
-            <span className="font-bold text-sm text-amber-300">{hotspot.vr360.title}</span>
+            <span className="font-bold text-sm text-amber-300">{presentationVr.title}</span>
             <button
               onClick={() => setShowVrModal(false)}
               className="px-4 py-1.5 rounded-xl bg-slate-800 text-white text-xs font-bold hover:bg-slate-700"
@@ -218,7 +233,13 @@ export const ClassroomPresentationMode: React.FC<Props> = ({ station, onExit }) 
           </div>
           <div className="flex-1 mt-3 rounded-2xl overflow-hidden">
             {isOnline ? (
-              <iframe src={hotspot.vr360.url} className="w-full h-full border-0" allowFullScreen />
+              <iframe
+                src={presentationVr.url}
+                className="w-full h-full border-0"
+                allowFullScreen
+                sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                title={presentationVr.title}
+              />
             ) : (
               <div className="flex items-center justify-center h-full text-slate-400 text-center">
                 Cần kết nối Internet để tải dữ liệu 360°.

@@ -55,11 +55,16 @@ export const LandingView: React.FC = () => {
         setLoginError('Mã PIN chưa chính xác (Mặc định demo: 1234)');
       }
     } else {
+      const selectedGrade = Number(selectedClass.split('/')[0]) || 2;
       loginAsStudent({
         ...DEMO_STUDENTS[0],
+        id: `demo-${selectedClass.replace('/', '-')}-${studentCode || 'student'}`,
         studentCode,
+        classId: `class-${selectedClass.replace('/', '-')}`,
         className: selectedClass,
+        grade: selectedGrade,
         displayName: 'Học sinh ' + selectedClass,
+        name: 'Học sinh ' + selectedClass,
       });
     }
   };
@@ -296,6 +301,8 @@ export const LandingView: React.FC = () => {
                     <option value="2/25">Lớp 2/25 (Khối 2)</option>
                     <option value="1/12">Lớp 1/12 (Khối 1)</option>
                     <option value="3/18">Lớp 3/18 (Khối 3)</option>
+                    <option value="4/15">Lớp 4/15 (Khối 4)</option>
+                    <option value="5/10">Lớp 5/10 (Khối 5)</option>
                   </select>
                 </div>
 

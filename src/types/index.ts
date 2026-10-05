@@ -137,6 +137,12 @@ export interface Challenge {
   completionMode: CompletionMode;
   passingScore?: number;
   questions?: ChallengeQuestion[];
+  externalGame?: {
+    platform: 'wordwall' | 'wayground' | 'external';
+    titleVi: string;
+    url: string;
+    noteVi?: string;
+  };
 }
 
 export interface CheckInOption {

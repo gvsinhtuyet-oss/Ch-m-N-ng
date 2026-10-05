@@ -53,6 +53,7 @@ class ProgressService {
       localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(obj));
     } catch (e) {
       console.warn('Could not save progress to storage:', e);
+      window.dispatchEvent(new Event('cham-progress-storage-error'));
     }
   }
 
@@ -416,3 +417,4 @@ class ProgressService {
 }
 
 export const progressService = new ProgressService();
+

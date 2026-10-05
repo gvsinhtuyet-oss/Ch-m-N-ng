@@ -12,6 +12,17 @@ interface Props {
   onExploreNext: () => void;
 }
 
+const REWARD_ICON_BY_TEMPLATE: Record<string, string> = {
+  discovery_compass: '🧭',
+  scholar_scroll: '📜',
+  heritage_lantern: '🏮',
+  nature_leaf: '🍃',
+  dragon_gem: '💎',
+  pottery_vase: '🏺',
+  sea_pearl: '🫧',
+  silk_ribbon: '🎀',
+};
+
 export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExploreNext }) => {
   const { currentUser, role } = useApp();
   const isGuest = role === 'guest';
@@ -117,7 +128,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                       : 'bg-slate-200 text-slate-400'
                   }`}
                 >
-                  {rw.stage === 1 ? '🏮' : rw.stage === 2 ? '🧭' : '💖'}
+                  {REWARD_ICON_BY_TEMPLATE[rw.template] ?? '🎁'}
                 </div>
 
                 <div>

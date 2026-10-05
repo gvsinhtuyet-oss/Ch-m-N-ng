@@ -1,5 +1,5 @@
 import { AppBackground } from './components/common/AppBackground';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AppProvider, useApp } from './contexts/AppContext';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
@@ -18,9 +18,16 @@ import { WifiOff } from 'lucide-react';
 const AppContent: React.FC = () => {
   const { currentView, currentStation, isOnline, closeStation, exitPresentationMode } = useApp();
 
+  const [storageWarning, setStorageWarning] = useState(false);
+  useEffect(() => {
+    const notify = () => setStorageWarning(true);
+    window.addEventListener('cham-progress-storage-error', notify);
+    return () => window.removeEventListener('cham-progress-storage-error', notify);
+  }, []);
+
   // If in Presentation Mode, render full-screen projection without header/footer
   if (currentView === 'presentation-view' && currentStation) {
-    return <ClassroomPresentationMode station={currentStation} onExit={exitPresentationMode} />;
+    return <ClassroomPresentationMode key={currentStation.id} station={currentStation} onExit={exitPresentationMode} />;
   }
 
   // If on Landing Cover Page, render full-screen immersive cover
@@ -39,13 +46,20 @@ const AppContent: React.FC = () => {
         {currentView === 'student-memories' && <StudentMemoriesView />}
         {currentView === 'student-profile' && <StudentProfileView />}
         {currentView === 'station-view' && currentStation && (
-          <StationView station={currentStation} onBack={closeStation} />
+          <StationView key={currentStation.id} station={currentStation} onBack={closeStation} />
         )}
         {currentView === 'teacher-view' && <TeacherDashboard />}
         {currentView === 'admin-view' && <AdminDashboard />}
       </main>
 
       <Footer />
+
+      {storageWarning && (
+        <div role="alert" className="fixed bottom-4 right-4 z-50 max-w-sm rounded-2xl bg-amber-100 border border-amber-400 p-4 text-sm text-amber-950 shadow-xl">
+          <p>Máy chưa lưu được tiến trình. Đừng đóng app; hãy giải phóng bộ nhớ hoặc nhờ thầy cô hỗ trợ.</p>
+          <button type="button" onClick={() => setStorageWarning(false)} className="mt-2 font-bold underline">Đã hiểu</button>
+        </div>
+      )}
 
       {/* Non-intrusive Offline Floating Toast */}
       {!isOnline && (
@@ -68,3 +82,4 @@ export function App() {
 }
 
 export default App;
+

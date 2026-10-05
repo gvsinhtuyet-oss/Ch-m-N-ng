@@ -150,6 +150,12 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
     platform: 'internal_interactive',
     instructionsVi: 'Em hãy hoàn thành 5 câu hỏi dưới đây để thấu hiểu tư tưởng tiến bộ và khát vọng của hai nhà yêu nước nhé!',
     instructionsEn: 'Complete these 5 questions to understand the patriotic vision of both leaders!',
+    externalGame: {
+      platform: 'wordwall',
+      titleVi: 'DẤU CHÂN NGƯỜI KHAI SÁNG',
+      url: 'https://wordwall.net/resource/120606175?wwmethod=link',
+      noteVi: 'Trò chơi luyện tập mở rộng trên Wordwall. Hoạt động này không thay thế thử thách nội bộ và không ảnh hưởng đến tiến độ hoàn thành bài học.',
+    },
     completionMode: 'AUTO',
     passingScore: 5,
     questions: [

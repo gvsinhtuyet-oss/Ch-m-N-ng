@@ -1,3 +1,4 @@
+import { ThemeSettings, saveTheme } from './ThemeService';
 
 import { Station } from '../types';
 
@@ -65,6 +66,17 @@ export const contentService = {
     if (!response.ok || !response.headers.get('content-type')?.includes('application/json'))
       throw new Error('Không thể kết nối kho học liệu hoặc mật khẩu chưa đúng.');
     adminToken = (await response.json()).token;
+  },
+  async publishTheme(theme: ThemeSettings) {
+    const response = await fetch('/api/theme', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + adminToken },
+      body: JSON.stringify(theme),
+    });
+    if (!response.ok) throw new Error('Chưa xuất bản được giao diện. Hãy kiểm tra cấu hình máy chủ.');
+    try { saveTheme(theme); } catch {
+      window.dispatchEvent(new Event('cham-theme-changed'));
+    }
   },
   async publish(station: Station, content: StationContent) {
     const response = await fetch('/api/content/' + encodeURIComponent(station.id), {

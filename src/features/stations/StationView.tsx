@@ -20,6 +20,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
 
+  const [completedStagePreview, setCompletedStagePreview] = useState<number | null>(null);
   const [downloading, setDownloading] = useState(false);
   const [offlinePkg, setOfflinePkg] = useState(offlineService.getPackage(station.id));
 
@@ -44,6 +45,34 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
 
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6">
+      {completedStagePreview !== null && (
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div role="dialog" aria-modal="true" aria-label="Bản đồ tiến trình" className="w-full max-w-lg rounded-3xl bg-amber-50 border-4 border-amber-300 p-6 shadow-2xl space-y-5 text-center">
+            <h2 className="text-xl font-black text-sky-950">🗺️ Bản đồ tiến trình</h2>
+            <p className="font-bold text-emerald-800">Em vừa hoàn thành Chặng {completedStagePreview}!</p>
+            <div className="grid grid-cols-2 gap-3">
+              {stages.map(step => {
+                const Icon = step.icon;
+                const done = step.num <= completedStagePreview;
+                return (
+                  <div key={step.num} className={`p-4 rounded-2xl border-2 ${done ? 'bg-emerald-100 border-emerald-400 text-emerald-950' : 'bg-white border-slate-200 text-slate-500'}`}>
+                    <Icon className="w-8 h-8 mx-auto mb-2" />
+                    <p className="text-xs font-bold">{step.num}. {step.name}</p>
+                    {done && <CheckCircle2 className="w-5 h-5 mx-auto mt-2" />}
+                  </div>
+                );
+              })}
+            </div>
+            <button autoFocus type="button" onClick={() => {
+              audioService.playSfx('click');
+              setCurrentStage((completedStagePreview + 1) as 1 | 2 | 3 | 4);
+              setCompletedStagePreview(null);
+            }} className="w-full py-3 rounded-2xl bg-sky-700 text-white font-black">
+              TIẾP TỤC CHẶNG {completedStagePreview + 1}
+            </button>
+          </div>
+        </div>
+      )}
       {/* Top Station Header bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/95 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-xs">
         <div className="flex items-center gap-3.5">
@@ -163,21 +192,21 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         {currentStage === 1 && (
           <Stage1Exploration
             station={station}
-            onCompleteStage={() => setCurrentStage(2)}
+            onCompleteStage={() => setCompletedStagePreview(1)}
           />
         )}
 
         {currentStage === 2 && (
           <Stage2Challenge
             station={station}
-            onCompleteStage={() => setCurrentStage(3)}
+            onCompleteStage={() => setCompletedStagePreview(2)}
           />
         )}
 
         {currentStage === 3 && (
           <Stage3CheckIn
             station={station}
-            onCompleteStage={() => setCurrentStage(4)}
+            onCompleteStage={() => setCompletedStagePreview(3)}
           />
         )}
 

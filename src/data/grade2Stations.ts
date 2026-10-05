@@ -18,7 +18,7 @@ export const GRADE_2_STATIONS: Station[] = [
     openingMessageVi: 'Chào mừng em đến với làng nghề Chiếu Cẩm Nê và Bàn Thạch! Nơi đây vang tiếng thoi dệt lách cách ngày đêm.',
     totalPeriods: 6,
     officialCurriculumReference: 'Tài liệu GDĐP TP Đà Nẵng - Khối 2 - Bài 1',
-    isFullyVerified: true,
+    isFullyVerified: false,
     pedagogyGoals: {
       knowGoalVi: 'Nhận biết được sản phẩm chiếu truyền thống Cẩm Nê (Hòa Vang) và Bàn Thạch, quy trình chọn cói và dệt chiếu.',
       understandGoalVi: 'Biết vai trò quan trọng của nghề dệt chiếu đối với đời sống sinh hoạt và nét đẹp văn hóa cộng đồng.',
@@ -125,7 +125,7 @@ export const GRADE_2_STATIONS: Station[] = [
       colorTheme: '#10b981',
       quoteVi: 'Sợi cói dẻo dai – Nâng niu giấc ngủ quê hương',
     },
-    version: { stationId: 'g2-station-1', version: '1.0.0', status: 'PUBLISHED', createdBy: 'Ban Biên Soạn', createdAt: '2026-09-01' },
+    version: { stationId: 'g2-station-1', version: '1.0.0', status: 'IN_REVIEW', createdBy: 'Nhóm biên soạn CHẠM ĐÀ NẴNG', createdAt: '2026-09-01' },
     sources: [{ id: 'src-cn1', title: 'Tài liệu GDĐP Đà Nẵng Lớp 2', organization: 'Sở GDĐT Đà Nẵng', sourceType: 'official_curriculum', verified: true }],
   },
 
@@ -145,7 +145,7 @@ export const GRADE_2_STATIONS: Station[] = [
     openingMessageVi: 'Chào mừng em đến với thiên đường thiên nhiên Cù Lao Chàm và Bán đảo Sơn Trà – viên ngọc quý của Đà Nẵng!',
     totalPeriods: 7,
     officialCurriculumReference: 'Tài liệu GDĐP TP Đà Nẵng - Khối 2 - Bài 2',
-    isFullyVerified: true,
+    isFullyVerified: false,
     pedagogyGoals: {
       knowGoalVi: 'Nhận biết được cảnh quan, loài linh trưởng quý Voọc chà vá chân nâu ở Sơn Trà và rạn san hô rực rỡ ở Cù Lao Chàm.',
       understandGoalVi: 'Nêu được giá trị to lớn của rừng và biển trong việc điều hòa không khí và bảo tồn đa dạng sinh học.',
@@ -240,7 +240,7 @@ export const GRADE_2_STATIONS: Station[] = [
       colorTheme: '#0284c7',
       quoteVi: 'Rừng vàng biển bạc – Viên ngọc xanh của Đà Nẵng',
     },
-    version: { stationId: 'g2-station-2', version: '1.0.0', status: 'PUBLISHED', createdBy: 'Ban Biên Soạn', createdAt: '2026-09-01' },
+    version: { stationId: 'g2-station-2', version: '1.0.0', status: 'IN_REVIEW', createdBy: 'Nhóm biên soạn CHẠM ĐÀ NẴNG', createdAt: '2026-09-01' },
     sources: [{ id: 'src-st1', title: 'Tài liệu GDĐP Đà Nẵng Lớp 2', organization: 'Sở GDĐT Đà Nẵng', sourceType: 'official_curriculum', verified: true }],
   },
 
@@ -260,7 +260,7 @@ export const GRADE_2_STATIONS: Station[] = [
     openingMessageVi: 'Chào mừng em đến với bài học lịch sử về hai vị anh hùng kiệt xuất Nguyễn Tri Phương và Hoàng Diệu!',
     totalPeriods: 7,
     officialCurriculumReference: 'Tài liệu GDĐP TP Đà Nẵng - Khối 2 - Bài 3',
-    isFullyVerified: true,
+    isFullyVerified: false,
     pedagogyGoals: {
       knowGoalVi: 'Nhận biết được cuộc đời, sự nghiệp chiến đấu kiên cường của Thống chế Nguyễn Tri Phương và Tổng đốc Hoàng Diệu.',
       understandGoalVi: 'Hiểu được lòng yêu nước nồng nàn, khí phách kiên trung bất khuất trước quân xâm lược.',
@@ -353,7 +353,7 @@ export const GRADE_2_STATIONS: Station[] = [
       colorTheme: '#dc2626',
       quoteVi: 'Khí tiết ngàn thu – Soi sáng truyền thống yêu nước',
     },
-    version: { stationId: 'g2-station-3', version: '1.0.0', status: 'PUBLISHED', createdBy: 'Ban Biên Soạn', createdAt: '2026-09-01' },
+    version: { stationId: 'g2-station-3', version: '1.0.0', status: 'IN_REVIEW', createdBy: 'Nhóm biên soạn CHẠM ĐÀ NẴNG', createdAt: '2026-09-01' },
     sources: [{ id: 'src-ntp1', title: 'Tài liệu GDĐP Đà Nẵng Lớp 2', organization: 'Sở GDĐT Đà Nẵng', sourceType: 'official_curriculum', verified: true }],
   },
 
@@ -376,7 +376,7 @@ export const GRADE_2_STATIONS: Station[] = [
     openingMessageVi: 'Chào mừng em đến với không khí ngày hội rực rỡ sắc màu của đất Quảng thân yêu!',
     totalPeriods: 6,
     officialCurriculumReference: 'Tài liệu GDĐP TP Đà Nẵng - Khối 2 - Bài 5',
-    isFullyVerified: true,
+    isFullyVerified: false,
     pedagogyGoals: {
       knowGoalVi: 'Nhận biết được một số lễ hội truyền thống tiêu biểu như Lễ hội Cầu Ngư ven biển, Lễ hội Quán Thế Âm Ngũ Hành Sơn.',
       understandGoalVi: 'Hiểu được ý nghĩa tốt đẹp: cầu mưa thuận gió hòa, sóng yên biển lặng và xóm làng no ấm.',
@@ -469,7 +469,7 @@ export const GRADE_2_STATIONS: Station[] = [
       colorTheme: '#8b5cf6',
       quoteVi: 'Rộn rã trống hội – Gắn kết nghĩa tình xóm làng',
     },
-    version: { stationId: 'g2-station-5', version: '1.0.0', status: 'PUBLISHED', createdBy: 'Ban Biên Soạn', createdAt: '2026-09-01' },
+    version: { stationId: 'g2-station-5', version: '1.0.0', status: 'IN_REVIEW', createdBy: 'Nhóm biên soạn CHẠM ĐÀ NẴNG', createdAt: '2026-09-01' },
     sources: [{ id: 'src-lh1', title: 'Tài liệu GDĐP Đà Nẵng Lớp 2', organization: 'Sở GDĐT Đà Nẵng', sourceType: 'official_curriculum', verified: true }],
   },
 ];

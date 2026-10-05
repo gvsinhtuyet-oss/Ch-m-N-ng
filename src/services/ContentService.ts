@@ -30,6 +30,14 @@ export const contentService = {
     station.coverImage = content.coverImage;
     station.hotspots = content.hotspots;
     if (station.journeyMap) station.journeyMap = { ...station.journeyMap, image: content.mapImage };
+    else if (content.mapImage) station.journeyMap = {
+      id: 'map-' + station.id, stationId: station.id, grade: station.grade,
+      titleVi: 'Bản đồ hành trình ' + station.titleVi, image: content.mapImage,
+      summaryNodes: content.hotspots.slice(0, 4).map(h => ({ id: h.id, titleVi: h.titleVi, textVi: h.keyFactVi })),
+      knowVi: station.pedagogyGoals.knowGoalVi,
+      understandVi: station.pedagogyGoals.understandGoalVi,
+      actVi: station.pedagogyGoals.behaviorGoalVi,
+    };
   },
   resources(stationId: string) { return records[stationId]?.resources || []; },
   saveLocal(station: Station, content: StationContent) {

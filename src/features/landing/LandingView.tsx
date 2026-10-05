@@ -352,6 +352,7 @@ export const LandingView: React.FC = () => {
                     value={selectedClass}
                     onChange={(e) => {
                       setSelectedClass(e.target.value);
+                      setSavedStudentId('');
                       setLoginError('');
                     }}
                     className="w-full p-3 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white"
@@ -372,6 +373,7 @@ export const LandingView: React.FC = () => {
                     value={studentName}
                     onChange={(e) => {
                       setStudentName(e.target.value);
+                      setSavedStudentId('');
                       setLoginError('');
                     }}
                     placeholder="Ví dụ: Nguyễn Minh Khang"

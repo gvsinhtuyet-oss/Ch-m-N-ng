@@ -154,7 +154,7 @@ export const CANONICAL_THANH_DIEN_HAI_STATION: Station = {
       platform: 'wordwall',
       titleVi: 'BẢO VỆ THÀNH CỔ',
       url: 'https://wordwall.net/vi/resource/120604647?wwmethod=link',
-      noteVi: 'Trò chơi luyện tập mở rộng trên Wordwall. Hoạt động này không thay thế thử thách nội bộ và không ảnh hưởng đến tiến độ hoàn thành bài học.',
+      noteVi: 'Khi có mạng, Wordwall là thử thách chính của Chặng 2; khi ngoại tuyến, hệ thống tự chuyển sang thử thách nội bộ.',
     },
     completionMode: 'AUTO',
     passingScore: 3,

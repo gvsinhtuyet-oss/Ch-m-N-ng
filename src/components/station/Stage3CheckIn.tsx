@@ -13,7 +13,7 @@ interface Props {
 
 export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => {
   const { currentUser, role } = useApp();
-  const isGuest = role === 'guest';
+  const isReadOnly = role !== 'student';
   const checkIn = station.checkIn;
 
   const [selectedEmotion, setSelectedEmotion] = useState<string>('');
@@ -43,7 +43,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
     if (selectedEmotion === '' || selectedRememberIds.length === 0 || selectedActionIds.length === 0) return;
     setIsSubmitted(true);
 
-    if (!isGuest) {
+    if (!isReadOnly) {
       progressService.completeStage3(
         studentId,
         station.id,
@@ -228,9 +228,9 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
         <RewardClaimModal
           reward={station.rewards.find(r => r.stage === 3) || station.rewards[2]}
           stage={3}
-          alreadyClaimed={!isGuest && progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 3)?.id || '')}
+          alreadyClaimed={!isReadOnly && progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 3)?.id || '')}
           onClaim={() => {
-            if (!isGuest) {
+            if (!isReadOnly) {
               const rw3 = station.rewards.find(r => r.stage === 3);
               if (rw3) {
                 progressService.claimReward(studentId, station.id, rw3.id);

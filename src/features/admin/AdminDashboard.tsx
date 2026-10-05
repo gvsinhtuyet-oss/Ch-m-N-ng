@@ -1,3 +1,4 @@
+import { ThemeEditor } from './ThemeEditor';
 import { ContentEditor } from './ContentEditor';
 import React, { useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
@@ -22,7 +23,7 @@ import {
 
 export const AdminDashboard: React.FC = () => {
   const { allStationsInCurrentGrade, currentGrade } = useApp();
-  const [activeTab, setActiveTab] = useState<'overview' | 'tracking' | 'stations' | 'users' | 'reports'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'tracking' | 'stations' | 'users' | 'reports' | 'theme'>('overview');
   const [gradeFilter, setGradeFilter] = useState<number>(0); // 0 = all
   const [selectedStationTab, setSelectedStationTab] = useState<string>('g2-station-4');
 
@@ -58,6 +59,7 @@ export const AdminDashboard: React.FC = () => {
             { id: 'overview', label: 'TỔNG QUAN', icon: BarChart3 },
             { id: 'tracking', label: 'THEO DÕI TRIỂN KHAI', icon: Calendar },
             { id: 'stations', label: 'NỘI DUNG TRẠM', icon: BookOpen },
+            { id: 'theme', label: 'GIAO DIỆN', icon: Layers },
             { id: 'users', label: 'NGƯỜI DÙNG', icon: Users },
             { id: 'reports', label: 'BÁO CÁO', icon: FileText },
           ].map(tab => {
@@ -78,6 +80,8 @@ export const AdminDashboard: React.FC = () => {
           })}
         </div>
       </div>
+
+      {activeTab === 'theme' && <ThemeEditor />}
 
       {/* TAB 1: TỔNG QUAN */}
       {activeTab === 'overview' && (

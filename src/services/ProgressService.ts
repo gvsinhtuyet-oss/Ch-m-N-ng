@@ -9,6 +9,9 @@ export interface GradeSummary {
   completedStations: number;
   totalStamps: number;
   totalRewards: number;
+  totalJourneyMaps: number;
+  totalKeyFragments: number;
+  treasureChestEligible: boolean;
 }
 
 class ProgressService {
@@ -65,6 +68,8 @@ class ProgressService {
         exploredHotspotIds: [],
         rewardsCollected: [],
         stampReceived: false,
+        journeyMapReceived: false,
+        keyFragmentReceived: false,
         lastVisitedAt: new Date().toISOString(),
         syncStatus: 'local_only',
       };
@@ -73,7 +78,11 @@ class ProgressService {
     const key = this.getCompositeKey(studentId, stationId);
     const existing = this.memoryCache.get(key);
     if (existing) {
-      return { ...existing };
+      return {
+        ...existing,
+        journeyMapReceived: existing.journeyMapReceived ?? false,
+        keyFragmentReceived: existing.keyFragmentReceived ?? false,
+      };
     }
 
     const initial: StudentStationProgress = {
@@ -87,6 +96,8 @@ class ProgressService {
       exploredHotspotIds: [],
       rewardsCollected: [],
       stampReceived: false,
+      journeyMapReceived: false,
+      keyFragmentReceived: false,
       lastVisitedAt: new Date().toISOString(),
       syncStatus: 'local_only',
     };
@@ -215,10 +226,46 @@ class ProgressService {
     return { ...current };
   }
 
+  public claimJourneyGift(studentId: string, stationId: string): StudentStationProgress {
+    const current = this.getStationProgress(studentId, stationId);
+
+    // Guest mode is view-only and never writes personal progress.
+    if (this.isGuest(studentId) || !current.stage4Completed || !current.stationCompleted) {
+      return current;
+    }
+
+    const now = new Date().toISOString();
+    let changed = false;
+
+    if (!current.journeyMapReceived) {
+      current.journeyMapReceived = true;
+      current.journeyMapReceivedAt = now;
+      changed = true;
+    }
+
+    if (!current.keyFragmentReceived) {
+      current.keyFragmentReceived = true;
+      current.keyFragmentReceivedAt = now;
+      changed = true;
+    }
+
+    if (changed) {
+      current.lastVisitedAt = now;
+      const key = this.getCompositeKey(studentId, stationId);
+      this.memoryCache.set(key, current);
+      this.saveToStorage();
+      this.queueSyncEvent(studentId, stationId, 'JOURNEY_GIFT_CLAIMED');
+    }
+
+    return { ...current };
+  }
+
   public getGradeProgress(studentId: string, stationIdsInGrade: string[], grade: number): GradeSummary {
     let completedStations = 0;
     let totalStamps = 0;
     let totalRewards = 0;
+    let totalJourneyMaps = 0;
+    let totalKeyFragments = 0;
 
     stationIdsInGrade.forEach(sId => {
       const p = this.getStationProgress(studentId, sId);
@@ -227,6 +274,12 @@ class ProgressService {
       }
       if (p.stampReceived) {
         totalStamps++;
+      }
+      if (p.journeyMapReceived) {
+        totalJourneyMaps++;
+      }
+      if (p.keyFragmentReceived) {
+        totalKeyFragments++;
       }
       totalRewards += p.rewardsCollected.length;
     });
@@ -237,6 +290,13 @@ class ProgressService {
       completedStations,
       totalStamps,
       totalRewards,
+      totalJourneyMaps,
+      totalKeyFragments,
+      treasureChestEligible:
+        stationIdsInGrade.length === 5 &&
+        totalJourneyMaps === 5 &&
+        totalKeyFragments === 5 &&
+        completedStations === 5,
     };
   }
 

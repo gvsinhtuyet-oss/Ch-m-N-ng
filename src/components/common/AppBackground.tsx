@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { readTheme, loadSharedTheme } from '../../services/ThemeService';
+import { readTheme } from '../../services/ThemeService';
 
 export const AppBackground: React.FC = () => {
   const [theme, setTheme] = useState(readTheme);
@@ -13,12 +13,12 @@ export const AppBackground: React.FC = () => {
     const query = window.matchMedia('(max-width: 767px)');
     const resize = () => setMobile(query.matches);
     window.addEventListener('cham-theme-changed', refresh);
-    window.addEventListener('storage', refresh);
+    const refreshStorage = () => setTheme(readTheme(true));
+    window.addEventListener('storage', refreshStorage);
     query.addEventListener('change', resize);
-    void loadSharedTheme();
     return () => {
       window.removeEventListener('cham-theme-changed', refresh);
-      window.removeEventListener('storage', refresh);
+      window.removeEventListener('storage', refreshStorage);
       query.removeEventListener('change', resize);
     };
   }, []);
@@ -30,3 +30,4 @@ export const AppBackground: React.FC = () => {
     </div>
   );
 };
+

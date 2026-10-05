@@ -133,7 +133,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               className="flex-1 px-5 py-3.5 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
             >
               <Gamepad2 className="w-5 h-5" />
-              <span>{externalGameOpened ? 'MỞ LẠI WORDWALL' : 'CHƠI WORDWALL'}</span>
+              <span>{externalGameOpened ? 'Bước vào thử thách lần nữa' : 'Bước vào thử thách'}</span>
               <ExternalLink className="w-4 h-4" />
             </button>
 

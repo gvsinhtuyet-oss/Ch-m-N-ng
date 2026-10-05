@@ -17,6 +17,7 @@ export const Header: React.FC = () => {
     toggleLanguage,
     setCurrentView,
     logout,
+    loginAsGuest,
     t,
   } = useApp();
 
@@ -78,6 +79,8 @@ export const Header: React.FC = () => {
               <span className="font-bold">
                 {role === 'teacher'
                   ? 'Giáo viên'
+                  : role === 'guest'
+                  ? 'Nhà phiêu lưu'
                   : `HS: ${(currentUser as any)?.displayName || 'Lớp ' + currentGrade}`}
               </span>
             </button>
@@ -179,7 +182,7 @@ export const Header: React.FC = () => {
           <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-slate-100">
             <h3 className="text-lg font-extrabold text-slate-900 mb-1 text-center">Chọn Vai Trò Trải Nghiệm</h3>
             <p className="text-xs text-slate-500 text-center mb-6">
-              Phiên bản demo tập trung vào 2 vai trò chính:
+              Phiên bản demo có 3 cách trải nghiệm:
             </p>
 
             <div className="grid grid-cols-1 gap-3">
@@ -216,6 +219,24 @@ export const Header: React.FC = () => {
                 <div>
                   <div className="font-bold text-slate-900 text-sm">GIÁO VIÊN</div>
                   <div className="text-xs text-slate-500">Trở về trang đầu để xác nhận tài khoản giáo viên demo</div>
+                </div>
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowRoleModal(false);
+                  loginAsGuest();
+                }}
+                className={`flex items-center gap-4 p-3.5 rounded-2xl border text-left transition ${
+                  role === 'guest' ? 'border-amber-500 bg-amber-50/70' : 'border-slate-200 hover:bg-slate-50'
+                }`}
+              >
+                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
+                  <Globe className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="font-bold text-slate-900 text-sm">NHÀ PHIÊU LƯU</div>
+                  <div className="text-xs text-slate-500">Khám phá không cần đăng nhập, không lưu tiến độ cá nhân</div>
                 </div>
               </button>
 

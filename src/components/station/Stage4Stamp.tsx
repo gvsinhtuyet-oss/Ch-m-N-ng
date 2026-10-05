@@ -34,6 +34,8 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     progress.journeyMapReceived && progress.keyFragmentReceived
   );
 
+  const [showGiftReveal, setShowGiftReveal] = useState(false);
+
   const handleStamp = () => {
     audioService.playSfx('stamp');
     setTimeout(() => {
@@ -101,10 +103,69 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     }
 
     setGiftClaimed(true);
+    setShowGiftReveal(true);
   };
 
   return (
     <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
+      <style>{`
+        @keyframes journey-map-reveal {
+          from { opacity: 0; transform: translateY(50px) scale(.65) rotate(-8deg); }
+          to { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+        }
+        @keyframes journey-key-flight {
+          0% { opacity: 0; transform: translate(-130px, 120px) scale(.25) rotate(-100deg); }
+          35% { opacity: 1; transform: translate(30px, -35px) scale(1.3) rotate(20deg); }
+          65% { transform: translate(-10px, -15px) scale(1.05) rotate(-10deg); }
+          100% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .journey-map-reveal, .journey-key-flight { animation: none !important; }
+        }
+      `}</style>
+      {showGiftReveal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div role="dialog" aria-modal="true" aria-label="Bản đồ và chìa khóa hành trình" className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-gradient-to-br from-amber-50 to-sky-50 border-4 border-amber-300 p-5 sm:p-8 text-center shadow-2xl space-y-5">
+            <h3 className="text-2xl font-black text-sky-950">🎉 Quà hành trình của em!</h3>
+            <div className="journey-map-reveal rounded-2xl border-2 border-amber-400 bg-amber-100 p-4 shadow-lg" style={{ animation: 'journey-map-reveal .8s ease-out both' }}>
+              <h4 className="font-black text-lg text-amber-950">{station.journeyMap?.titleVi || 'Bản đồ hành trình ' + station.titleVi}</h4>
+              {station.journeyMap?.image ? (
+                <img src={station.journeyMap.image} alt={'Bản đồ hành trình ' + station.titleVi} className="w-full rounded-xl mt-3" />
+              ) : (
+                <svg viewBox="0 0 480 240" role="img" aria-label={'Bản đồ khám phá ' + station.titleVi} className="w-full mt-3 rounded-xl bg-amber-50">
+                  <path d="M65 65 C140 0 320 0 405 65 S340 230 250 175 S80 260 65 65" fill="none" stroke="#b45309" strokeWidth="5" strokeDasharray="10 8" />
+                  {[[65,65],[405,65],[405,175],[65,175]].map(([x,y],i) => (
+                    <g key={i}>
+                      <circle cx={x} cy={y} r="27" fill="#0284c7" stroke="white" strokeWidth="4" />
+                      <text x={x} y={y+8} textAnchor="middle" fill="white" fontSize="24" fontWeight="bold">{i+1}</text>
+                    </g>
+                  ))}
+                  <text x="240" y="105" textAnchor="middle" fontSize="34">🧭</text>
+                  <text x="240" y="140" textAnchor="middle" fill="#92400e" fontSize="18" fontWeight="bold">CHẠM ĐÀ NẴNG</text>
+                </svg>
+              )}
+              <div className="grid grid-cols-2 gap-2 mt-3 text-left">
+                {(station.journeyMap?.summaryNodes || station.hotspots.map(h => ({ id: h.id, titleVi: h.titleVi, textVi: h.keyFactVi }))).slice(0,4).map((node,i) => (
+                  <div key={node.id} className="rounded-xl bg-white/80 p-2 text-xs text-amber-950">
+                    <strong>{i+1}. {node.titleVi}</strong>
+                    <p className="mt-1">{node.textVi}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="journey-key-flight mx-auto flex items-center justify-center gap-3 rounded-2xl bg-amber-300 p-4 text-amber-950 shadow-lg" style={{ animation: 'journey-key-flight 1.5s .25s ease-out both' }}>
+              <KeyRound className="w-14 h-14 shrink-0" />
+              <div className="text-left">
+                <p className="font-black">Em nhận được 1 mảnh chìa khóa!</p>
+                <p className="text-xs">Sưu tập đủ 5 mảnh để mở rương kho báu Khối {station.grade}.</p>
+              </div>
+            </div>
+            <button autoFocus type="button" onClick={() => setShowGiftReveal(false)} className="w-full rounded-2xl bg-sky-700 py-3 text-white font-black">
+              CẤT QUÀ VÀO BỘ SƯU TẬP
+            </button>
+          </div>
+        </div>
+      )}
       {/* Celebratory Hero Header */}
       <div className="bg-gradient-to-r from-sky-700 via-indigo-800 to-amber-700 text-white rounded-3xl p-6 sm:p-10 shadow-2xl text-center relative overflow-hidden border border-white/20">
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl pointer-events-none" />
@@ -279,7 +340,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                     className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/20 transition transform hover:scale-103 active:scale-95 inline-flex items-center gap-2"
                   >
                     <Gift className="w-5 h-5" />
-                    <span>{isReadOnly ? 'XEM QUÀ HÀNH TRÌNH (DEMO)' : 'ĐỔI QUÀ HÀNH TRÌNH'}</span>
+                    <span>{isReadOnly ? 'XEM QUÀ HÀNH TRÌNH (DEMO)' : 'NHẬN BẢN ĐỒ VÀ CHÌA KHÓA'}</span>
                   </button>
                   {isReadOnly && (
                     <p className="text-[11px] text-amber-800 font-semibold">
@@ -289,6 +350,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                 </>
               ) : (
                 <div className="space-y-4 animate-fade-in">
+                  <button type="button" onClick={() => setShowGiftReveal(true)} className="text-sky-700 font-bold underline text-sm">XEM BẢN ĐỒ VÀ CHÌA KHÓA</button>
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black">
                     <Sparkles className="w-4 h-4" />
                     <span>{isReadOnly ? 'QUÀ DEMO ĐÃ MỞ' : 'ĐÃ ĐỔI QUÀ THÀNH CÔNG'}</span>

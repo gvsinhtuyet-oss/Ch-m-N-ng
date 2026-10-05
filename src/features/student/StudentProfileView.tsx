@@ -1,13 +1,18 @@
 import React from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { progressService } from '../../services/ProgressService';
-import { User, ShieldCheck, Award, BookOpen, LogOut, CheckCircle2 } from 'lucide-react';
+import { DEMO_STATION_IDS } from '../../data/demoStations';
+import { ShieldCheck, LogOut } from 'lucide-react';
 
 export const StudentProfileView: React.FC = () => {
-  const { currentUser, currentGrade, allStationsInCurrentGrade, setRole } = useApp();
+  const { currentUser, currentGrade, allStationsInCurrentGrade, setRole, logout } = useApp();
   const student = currentUser as any;
-  const stations = allStationsInCurrentGrade;
-  const gradeProg = progressService.getGradeProgress(student?.id || 'guest', stations.map(s => s.id), currentGrade);
+  const demoStations = allStationsInCurrentGrade.filter(station => DEMO_STATION_IDS.has(station.id));
+  const gradeProg = progressService.getGradeProgress(
+    student?.id || 'guest',
+    demoStations.map(station => station.id),
+    currentGrade
+  );
 
   return (
     <div className="max-w-3xl mx-auto px-3 sm:px-6 py-8 space-y-6">
@@ -59,11 +64,11 @@ export const StudentProfileView: React.FC = () => {
             Chuyển sang Cổng Giáo Viên
           </button>
           <button
-            onClick={() => setRole('guest')}
+            onClick={logout}
             className="px-5 py-2.5 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold transition flex items-center gap-1.5"
           >
             <LogOut className="w-3.5 h-3.5" />
-            <span>Thoát tài khoản</span>
+            <span>Về trang đầu</span>
           </button>
         </div>
       </div>

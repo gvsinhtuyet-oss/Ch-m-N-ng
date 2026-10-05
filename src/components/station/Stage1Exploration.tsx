@@ -304,7 +304,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103"
               onError={(e) => {
                 const image = e.currentTarget;
-                image.onerror = null;
+                if (image.src.endsWith('/adventure-background.svg')) return;
                 image.src = '/adventure-background.svg';
               }}
             />

@@ -32,43 +32,80 @@ export const LandingView: React.FC = () => {
   const [showStudentLogin, setShowStudentLogin] = useState<boolean>(false);
   const [showTeacherLogin, setShowTeacherLogin] = useState<boolean>(false);
   const [selectedClass, setSelectedClass] = useState<string>('2/24');
+  const [studentName, setStudentName] = useState<string>('');
   const [studentCode, setStudentCode] = useState<string>('');
   const [pin, setPin] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
 
-  const handleStartJourney = () => {
-    audioService.playSfx('click');
+  const openRolePicker = () => {
     setLoginError('');
     setShowStudentLogin(false);
     setShowTeacherLogin(false);
     setShowRolePicker(true);
   };
 
+  const handleStartJourney = () => {
+    audioService.playSfx('click');
+    openRolePicker();
+  };
+
   const handleStudentSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     audioService.playSfx('click');
-    const found = DEMO_STUDENTS.find(
-      s => s.studentCode.trim().toUpperCase() === studentCode.trim().toUpperCase()
-    );
-    if (found) {
-      if (pin === '1234' || pin === found.pinHash) {
-        loginAsStudent(found);
-      } else {
-        setLoginError('Mã PIN chưa chính xác (Mặc định demo: 1234)');
-      }
-    } else {
-      const selectedGrade = Number(selectedClass.split('/')[0]) || 2;
-      loginAsStudent({
-        ...DEMO_STUDENTS[0],
-        id: `demo-${selectedClass.replace('/', '-')}-${studentCode || 'student'}`,
-        studentCode,
-        classId: `class-${selectedClass.replace('/', '-')}`,
-        className: selectedClass,
-        grade: selectedGrade,
-        displayName: 'Học sinh ' + selectedClass,
-        name: 'Học sinh ' + selectedClass,
-      });
+
+    const normalizedCode = studentCode.trim().toUpperCase();
+    const normalizedName = studentName.trim();
+    const normalizedPin = pin.trim();
+
+    if (!normalizedName) {
+      setLoginError('Vui lòng nhập họ và tên học sinh.');
+      return;
     }
+    if (!normalizedCode) {
+      setLoginError('Vui lòng nhập mã học sinh.');
+      return;
+    }
+    if (!/^\d{4}$/.test(normalizedPin)) {
+      setLoginError('Mã PIN demo gồm đúng 4 chữ số.');
+      return;
+    }
+
+    const found = DEMO_STUDENTS.find(
+      s => s.studentCode.trim().toUpperCase() === normalizedCode
+    );
+
+    if (found) {
+      if (found.className !== selectedClass) {
+        setLoginError(`Mã ${normalizedCode} thuộc lớp ${found.className}. Vui lòng chọn đúng lớp.`);
+        return;
+      }
+      if (normalizedPin !== found.pinHash) {
+        setLoginError('Mã PIN chưa chính xác. PIN demo của tài khoản mẫu là 1234.');
+        return;
+      }
+      loginAsStudent(found);
+      return;
+    }
+
+    if (normalizedPin !== '1234') {
+      setLoginError('Tài khoản demo tự nhập sử dụng PIN 1234.');
+      return;
+    }
+
+    const selectedGrade = Number(selectedClass.split('/')[0]) || 2;
+    const safeCode = normalizedCode.replace(/[^A-Z0-9_-]/g, '-');
+
+    loginAsStudent({
+      ...DEMO_STUDENTS[0],
+      id: `demo-${selectedClass.replace('/', '-')}-${safeCode}`,
+      studentCode: normalizedCode,
+      classId: `class-${selectedClass.replace('/', '-')}`,
+      className: selectedClass,
+      grade: selectedGrade,
+      displayName: normalizedName,
+      name: normalizedName,
+      pinHash: '1234',
+    });
   };
 
   return (
@@ -121,7 +158,7 @@ export const LandingView: React.FC = () => {
           <button
             onClick={() => {
               audioService.playSfx('click');
-              setShowRolePicker(true);
+              openRolePicker();
             }}
             className="px-3.5 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 backdrop-blur-md text-white text-xs font-bold border border-white/20 transition flex items-center gap-1.5 cursor-pointer shadow-xs"
           >
@@ -250,7 +287,12 @@ export const LandingView: React.FC = () => {
                 <h3 className="text-xl font-black text-slate-900 mt-1">Chọn Vai Trò Trải Nghiệm</h3>
               </div>
               <button
-                onClick={() => setShowRolePicker(false)}
+                onClick={() => {
+                  setShowRolePicker(false);
+                  setShowStudentLogin(false);
+                  setShowTeacherLogin(false);
+                  setLoginError('');
+                }}
                 className="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition"
               >
                 <X className="w-5 h-5" />
@@ -270,7 +312,7 @@ export const LandingView: React.FC = () => {
                     <GraduationCap className="w-5 h-5" />
                   </div>
                   <h4 className="font-black text-sm text-slate-900">HỌC SINH</h4>
-                  <p className="text-[11px] text-slate-500">Đăng nhập Lớp, Mã HS & PIN 4 số</p>
+                  <p className="text-[11px] text-slate-500">Nhập họ tên, lớp, mã HS và PIN demo</p>
                 </button>
 
                 <button
@@ -295,7 +337,10 @@ export const LandingView: React.FC = () => {
                   <label className="font-bold text-slate-700 block mb-1">Lớp của em:</label>
                   <select
                     value={selectedClass}
-                    onChange={(e) => setSelectedClass(e.target.value)}
+                    onChange={(e) => {
+                      setSelectedClass(e.target.value);
+                      setLoginError('');
+                    }}
                     className="w-full p-3 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 bg-white"
                   >
                     <option value="2/24">Lớp 2/24 (Khối 2)</option>
@@ -308,11 +353,29 @@ export const LandingView: React.FC = () => {
                 </div>
 
                 <div>
+                  <label className="font-bold text-slate-700 block mb-1">Họ và tên học sinh:</label>
+                  <input
+                    type="text"
+                    value={studentName}
+                    onChange={(e) => {
+                      setStudentName(e.target.value);
+                      setLoginError('');
+                    }}
+                    placeholder="Ví dụ: Nguyễn Minh Khang"
+                    required
+                    className="w-full p-3 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  />
+                </div>
+
+                <div>
                   <label className="font-bold text-slate-700 block mb-1">Mã học sinh:</label>
                   <input
                     type="text"
                     value={studentCode}
-                    onChange={(e) => setStudentCode(e.target.value)}
+                    onChange={(e) => {
+                      setStudentCode(e.target.value);
+                      setLoginError('');
+                    }}
                     placeholder="Ví dụ: HS_2_24_001"
                     required
                     className="w-full p-3 rounded-xl border border-slate-200 text-xs font-mono font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
@@ -325,13 +388,18 @@ export const LandingView: React.FC = () => {
                     type="password"
                     maxLength={4}
                     value={pin}
-                    onChange={(e) => setPin(e.target.value)}
+                    onChange={(e) => {
+                      setPin(e.target.value.replace(/\D/g, ''));
+                      setLoginError('');
+                    }}
+                    inputMode="numeric"
+                    pattern="\d{4}"
                     placeholder="****"
                     required
                     className="w-full p-3 rounded-xl border border-slate-200 text-sm font-bold text-center tracking-widest text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
                   />
                   <span className="text-[10px] text-slate-400 mt-1 block">
-                    Dữ liệu minh họa: có thể dùng mã HS demo và PIN 1234 khi thẩm định.
+                    Phiên bản demo: nhập họ tên, lớp và mã HS để tạo hồ sơ trải nghiệm cục bộ. PIN demo: 1234.
                   </span>
                 </div>
 

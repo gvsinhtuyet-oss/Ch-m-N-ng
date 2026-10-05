@@ -3,7 +3,7 @@ import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
-import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle } from 'lucide-react';
+import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle, ExternalLink, Gamepad2 } from 'lucide-react';
 import { RewardClaimModal } from '../common/RewardClaimModal';
 
 interface Props {
@@ -87,6 +87,38 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
           <Award className="w-7 h-7" />
         </div>
       </div>
+
+      {challenge.externalGame && (
+        <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-violet-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <div className="w-11 h-11 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center shrink-0">
+              <Gamepad2 className="w-6 h-6" />
+            </div>
+            <div>
+              <span className="inline-block px-2.5 py-1 rounded-full bg-violet-100 text-violet-800 text-[10px] font-black uppercase tracking-wide mb-1">
+                Trò chơi mở rộng • Tùy chọn
+              </span>
+              <h3 className="font-black text-slate-900 text-sm sm:text-base">
+                {challenge.externalGame.titleVi}
+              </h3>
+              <p className="text-xs text-slate-500 mt-1">
+                {challenge.externalGame.noteVi || 'Mở Wordwall để luyện tập thêm. Hoạt động này không ảnh hưởng đến tiến độ hoàn thành bài học trong CHẠM ĐÀ NẴNG.'}
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              audioService.playSfx('click');
+              window.open(challenge.externalGame!.url, '_blank', 'noopener,noreferrer');
+            }}
+            className="shrink-0 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-extrabold text-xs shadow-sm transition inline-flex items-center justify-center gap-2"
+          >
+            <span>CHƠI WORDWALL</span>
+            <ExternalLink className="w-4 h-4" />
+          </button>
+        </div>
+      )}
 
       {!isSubmitted ? (
         /* Question Card */

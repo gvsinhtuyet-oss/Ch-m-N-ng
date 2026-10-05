@@ -270,7 +270,7 @@ export const CANONICAL_THANH_DIEN_HAI_STATION: Station = {
       id: 'src-tdh-2',
       title: 'Tư liệu lịch sử kháng chiến tại mặt trận Đà Nẵng (1858)',
       organization: 'Bảo tàng Đà Nẵng',
-      sourceType: 'museum_archive',
+      sourceType: 'museum',
       verified: true,
     },
   ],

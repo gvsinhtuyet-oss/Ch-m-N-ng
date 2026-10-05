@@ -142,7 +142,7 @@ function catalogItemToStation(cat: CatalogItem): Station {
       stationId: cat.id,
       version: '1.0.0-draft',
       status: 'IN_REVIEW',
-      createdBy: 'Ban Biên Soạn GDĐP',
+      createdBy: 'Nhóm biên soạn CHẠM ĐÀ NẴNG',
       createdAt: '2026-09-01',
       changelog: 'Đang hoàn thiện nội dung chi tiết theo đề cương chính thức',
     },

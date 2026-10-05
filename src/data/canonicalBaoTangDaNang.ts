@@ -161,6 +161,12 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
     platform: 'internal_interactive',
     instructionsVi: 'Em hãy hoàn thành 5 câu hỏi thử thách để trở thành Thám tử hiện vật tài ba của các bảo tàng Đà Nẵng!',
     instructionsEn: 'Complete these 5 challenge questions to become a master Artifact Detective!',
+    externalGame: {
+      platform: 'wordwall',
+      titleVi: 'THÁM TỬ HIỆN VẬT',
+      url: 'https://wordwall.net/resource/120606516?wwmethod=link',
+      noteVi: 'Trò chơi luyện tập mở rộng trên Wordwall. Hoạt động này không thay thế thử thách nội bộ và không ảnh hưởng đến tiến độ hoàn thành bài học.',
+    },
     completionMode: 'AUTO',
     passingScore: 5,
     questions: [

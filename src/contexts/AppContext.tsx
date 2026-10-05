@@ -1,0 +1,221 @@
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { User, Student, Teacher, Admin, Station, UserRole } from '../types';
+import { DEMO_STUDENTS, DEMO_TEACHER, DEMO_ADMIN } from '../data/mockUsers';
+import { GRADE_2_STATIONS } from '../data/grade2Stations';
+import { CANONICAL_HOI_AN_STATION } from '../data/canonicalHoiAn';
+import { audioService } from '../services/AudioService';
+import { progressService } from '../services/ProgressService';
+import { Language, TRANSLATIONS } from '../utils/i18n';
+
+export type AppView =
+  | 'landing'
+  | 'student-journey'
+  | 'student-passport'
+  | 'student-memories'
+  | 'student-profile'
+  | 'station-view'
+  | 'teacher-view'
+  | 'admin-view'
+  | 'presentation-view';
+
+interface AppContextType {
+  currentUser: User | null;
+  role: UserRole;
+  currentGrade: number;
+  currentStation: Station | null;
+  currentStage: 1 | 2 | 3 | 4;
+  currentView: AppView;
+  isOnline: boolean;
+  soundEnabled: boolean;
+  language: Language;
+  t: (typeof TRANSLATIONS)['vi'];
+  allStationsInCurrentGrade: Station[];
+  
+  // Actions
+  setRole: (role: UserRole) => void;
+  loginAsStudent: (student: Student) => void;
+  loginAsTeacher: (teacher: Teacher) => void;
+  loginAsAdmin: (admin: Admin) => void;
+  loginAsGuest: () => void;
+  logout: () => void;
+  setCurrentGrade: (grade: number) => void;
+  openStation: (station: Station, initialStage?: 1 | 2 | 3 | 4) => void;
+  closeStation: () => void;
+  setCurrentStage: (stage: 1 | 2 | 3 | 4) => void;
+  setCurrentView: (view: AppView) => void;
+  toggleSound: () => void;
+  toggleLanguage: () => void;
+  enterPresentationMode: (station: Station) => void;
+  exitPresentationMode: () => void;
+}
+
+const AppContext = createContext<AppContextType | undefined>(undefined);
+
+export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState<User | null>(DEMO_STUDENTS[0]);
+  const [role, setRoleState] = useState<UserRole>('student');
+  const [currentGrade, setCurrentGrade] = useState<number>(2);
+  const [currentStation, setCurrentStation] = useState<Station | null>(null);
+  const [currentStage, setCurrentStage] = useState<1 | 2 | 3 | 4>(1);
+  const [currentView, setCurrentView] = useState<AppView>('landing');
+  const [isOnline, setIsOnline] = useState<boolean>(typeof navigator !== 'undefined' ? navigator.onLine : true);
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
+  const [language, setLanguage] = useState<Language>('vi');
+
+  // Network listener
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  const t = TRANSLATIONS[language];
+
+  const setRole = (newRole: UserRole) => {
+    audioService.playSfx('click');
+    setRoleState(newRole);
+    if (newRole === 'student') {
+      setCurrentUser(DEMO_STUDENTS[0]);
+      setCurrentView('student-journey');
+    } else if (newRole === 'teacher') {
+      setCurrentUser(DEMO_TEACHER);
+      setCurrentView('teacher-view');
+    } else if (newRole === 'admin') {
+      setCurrentUser(DEMO_ADMIN);
+      setCurrentView('admin-view');
+    } else {
+      setCurrentUser({ id: 'guest', role: 'guest', name: 'Khách trải nghiệm' });
+      setCurrentView('student-journey');
+    }
+  };
+
+  const loginAsStudent = (student: Student) => {
+    audioService.playSfx('unlock');
+    setCurrentUser(student);
+    setRoleState('student');
+    setCurrentGrade(student.grade);
+    setCurrentView('student-journey');
+  };
+
+  const loginAsTeacher = (teacher: Teacher) => {
+    audioService.playSfx('unlock');
+    setCurrentUser(teacher);
+    setRoleState('teacher');
+    setCurrentView('teacher-view');
+  };
+
+  const loginAsAdmin = (admin: Admin) => {
+    audioService.playSfx('unlock');
+    setCurrentUser(admin);
+    setRoleState('admin');
+    setCurrentView('admin-view');
+  };
+
+  const loginAsGuest = () => {
+    audioService.playSfx('click');
+    setCurrentUser({ id: 'guest', role: 'guest', name: 'Khách tham quan' });
+    setRoleState('guest');
+    setCurrentView('student-journey');
+  };
+
+  const logout = () => {
+    audioService.playSfx('click');
+    setCurrentUser(null);
+    setCurrentStation(null);
+    setCurrentView('landing');
+  };
+
+  const openStation = (station: Station, initialStage: 1 | 2 | 3 | 4 = 1) => {
+    audioService.playSfx('click');
+    setCurrentStation(station);
+    setCurrentStage(initialStage);
+    setCurrentView('station-view');
+
+    // Register station start in progress engine
+    if (currentUser) {
+      progressService.startStation(currentUser.id, station.id);
+    }
+  };
+
+  const closeStation = () => {
+    audioService.playSfx('click');
+    audioService.stopNarration();
+    setCurrentStation(null);
+    if (role === 'teacher') {
+      setCurrentView('teacher-view');
+    } else {
+      setCurrentView('student-journey');
+    }
+  };
+
+  const toggleSound = () => {
+    const next = audioService.toggleSound();
+    setSoundEnabled(next);
+  };
+
+  const toggleLanguage = () => {
+    audioService.playSfx('click');
+    setLanguage(prev => (prev === 'vi' ? 'en' : 'vi'));
+  };
+
+  const enterPresentationMode = (station: Station) => {
+    audioService.playSfx('click');
+    setCurrentStation(station);
+    setCurrentStage(1);
+    setCurrentView('presentation-view');
+  };
+
+  const exitPresentationMode = () => {
+    audioService.playSfx('click');
+    audioService.stopNarration();
+    setCurrentView('teacher-view');
+  };
+
+  return (
+    <AppContext.Provider
+      value={{
+        currentUser,
+        role,
+        currentGrade,
+        currentStation,
+        currentStage,
+        currentView,
+        isOnline,
+        soundEnabled,
+        language,
+        t,
+        allStationsInCurrentGrade: GRADE_2_STATIONS,
+        setRole,
+        loginAsStudent,
+        loginAsTeacher,
+        loginAsAdmin,
+        loginAsGuest,
+        logout,
+        setCurrentGrade,
+        openStation,
+        closeStation,
+        setCurrentStage,
+        setCurrentView,
+        toggleSound,
+        toggleLanguage,
+        enterPresentationMode,
+        exitPresentationMode,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
+};
+
+export const useApp = () => {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error('useApp must be used within an AppProvider');
+  }
+  return context;
+};

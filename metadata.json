@@ -1,0 +1,6 @@
+{
+  "name": "CHẠM ĐÀ NẴNG – Hành trình số khám phá quê hương",
+  "description": "Nền tảng Giáo dục địa phương số thành phố Đà Nẵng dành cho học sinh tiểu học, giáo viên và nhà trường.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

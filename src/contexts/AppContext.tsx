@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, Student, Teacher, Admin, Station, UserRole } from '../types';
 import { DEMO_STUDENTS, DEMO_TEACHER, DEMO_ADMIN } from '../data/mockUsers';
-import { GRADE_2_STATIONS } from '../data/grade2Stations';
+import { getStationsForGrade } from '../data/allStations';
 import { CANONICAL_HOI_AN_STATION } from '../data/canonicalHoiAn';
 import { audioService } from '../services/AudioService';
 import { progressService } from '../services/ProgressService';
@@ -189,7 +189,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         soundEnabled,
         language,
         t,
-        allStationsInCurrentGrade: GRADE_2_STATIONS,
+        allStationsInCurrentGrade: getStationsForGrade(currentGrade),
         setRole,
         loginAsStudent,
         loginAsTeacher,

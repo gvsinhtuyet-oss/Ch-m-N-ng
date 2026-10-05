@@ -180,6 +180,13 @@ export const StudentJourneyView: React.FC = () => {
                     </div>
                   </div>
 
+                  {!station.isFullyVerified && (
+                    <div className="px-2.5 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-[11px] font-semibold flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse shrink-0" />
+                      <span>Nội dung đang được hoàn thiện từ nguồn đã kiểm chứng.</span>
+                    </div>
+                  )}
+
                   {/* Progress info & CTA */}
                   <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
                     <div className="flex items-center gap-1.5 text-xs text-slate-500">

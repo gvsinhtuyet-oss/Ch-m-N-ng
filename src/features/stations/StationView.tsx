@@ -92,6 +92,16 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </div>
       </div>
 
+      {/* Verification notice if draft */}
+      {!station.isFullyVerified && (
+        <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 text-xs font-medium flex items-center gap-2.5">
+          <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping shrink-0" />
+          <span>
+            <strong>Lưu ý:</strong> Nội dung đang được hoàn thiện từ nguồn đã kiểm chứng của Sở Giáo dục và Đào tạo TP Đà Nẵng.
+          </span>
+        </div>
+      )}
+
       {/* 4 Stages Navigation */}
       {isUnlockedAllStages ? (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-slate-100/80 p-1.5 rounded-2xl">

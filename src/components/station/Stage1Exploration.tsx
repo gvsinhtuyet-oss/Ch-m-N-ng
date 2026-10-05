@@ -198,15 +198,17 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
             {/* Top Badges */}
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
               <span className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-black shadow-md border border-white/20">
-                Ảnh thực tế di sản
+                {hotspot.mediaRights === 'ALLOWED' && !hotspot.mediaCredit?.includes('minh họa')
+                  ? 'Ảnh thực tế di sản'
+                  : 'Ảnh minh họa đang cập nhật'}
               </span>
 
-              {hotspot.vr360 && (
+              {hotspot.vr360?.url && hotspot.vr360?.verified ? (
                 <span className="px-3 py-1 rounded-full bg-amber-500/90 backdrop-blur-md text-slate-950 text-xs font-black shadow-md flex items-center gap-1.5 animate-pulse">
                   <Globe className="w-3.5 h-3.5" />
                   <span>Có VR 360°</span>
                 </span>
-              )}
+              ) : null}
             </div>
 
             {/* Prominent Overlay Action Buttons */}
@@ -265,8 +267,8 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                 )}
               </div>
 
-              {/* VR 360 Hero Button */}
-              {hotspot.vr360 && (
+              {/* VR 360 Hero Button or Status */}
+              {hotspot.vr360?.url && hotspot.vr360?.verified ? (
                 <button
                   onClick={() => setShowVrModal(true)}
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm shadow-xl transition transform hover:scale-105 active:scale-95 border-2 border-amber-300"
@@ -274,14 +276,19 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                   <Globe className="w-4 h-4" />
                   <span>KHÁM PHÁ 360°</span>
                 </button>
+              ) : (
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-md text-amber-200/90 text-[11px] font-bold border border-amber-400/20">
+                  <Info className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+                  <span>Trải nghiệm 360° đang được cập nhật từ nguồn đã kiểm chứng</span>
+                </div>
               )}
             </div>
           </div>
 
           {/* Media source and copyright credit */}
           <div className="px-5 py-2.5 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between text-[11px] text-slate-500">
-            <span>Nguồn ảnh: {hotspot.mediaCredit || 'Tư liệu di sản đã kiểm chứng'}</span>
-            <span className="text-emerald-700 font-bold">Bản quyền: Dùng cho giáo dục</span>
+            <span>Nguồn ảnh: {hotspot.mediaCredit || 'Hình ảnh minh họa đang cập nhật'}</span>
+            <span className="text-slate-600 font-medium">Tư liệu đang chuẩn hóa</span>
           </div>
         </div>
 

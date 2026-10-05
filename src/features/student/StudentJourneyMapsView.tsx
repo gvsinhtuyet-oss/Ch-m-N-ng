@@ -51,6 +51,7 @@ export const StudentJourneyMapsView: React.FC = () => {
 
   const studentId = currentUser?.id || 'guest';
   const isGuest = role === 'guest';
+  const isReadOnly = role !== 'student';
   const stations = allStationsInCurrentGrade;
   const stationIds = stations.map(station => station.id);
 
@@ -72,7 +73,7 @@ export const StudentJourneyMapsView: React.FC = () => {
 
   const openMap = (station: Station) => {
     const progress = progressService.getStationProgress(studentId, station.id);
-    const canPreview = isGuest && DEMO_STATION_IDS.has(station.id);
+    const canPreview = isReadOnly && DEMO_STATION_IDS.has(station.id);
     if (!progress.journeyMapReceived && !canPreview) return;
     audioService.playSfx('map');
     setSelectedStation(station);
@@ -92,7 +93,7 @@ export const StudentJourneyMapsView: React.FC = () => {
   };
 
   const handleOpenTreasure = () => {
-    if (isGuest) {
+    if (isReadOnly) {
       setPreviewTreasure(true);
       celebrateTreasure();
       return;
@@ -181,7 +182,7 @@ export const StudentJourneyMapsView: React.FC = () => {
           {stations.map(station => {
             const progress = progressService.getStationProgress(studentId, station.id);
             const isDemo = DEMO_STATION_IDS.has(station.id);
-            const canGuestPreview = isGuest && isDemo;
+            const canGuestPreview = isReadOnly && isDemo;
             const unlocked = progress.journeyMapReceived || canGuestPreview;
 
             return (
@@ -303,7 +304,7 @@ export const StudentJourneyMapsView: React.FC = () => {
                 </div>
                 <h2 className="text-3xl sm:text-4xl font-black mt-4">{selectedStation.titleVi}</h2>
                 <p className="text-sm text-sky-100 mt-2 max-w-2xl mx-auto">{selectedStation.subtitleVi}</p>
-                {isGuest && (
+                {isReadOnly && (
                   <div className="mt-4 inline-block px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold">
                     BẢN XEM THỬ • Không lưu vào hồ sơ
                   </div>
@@ -419,7 +420,9 @@ export const StudentJourneyMapsView: React.FC = () => {
                 <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-left text-xs">
                   <div className="rounded-xl bg-white/80 border border-slate-200 p-3">
                     <strong>Nhà khám phá:</strong><br />
-                    {isGuest ? 'Nhà phiêu lưu (bản xem thử)' : (currentUser as any)?.displayName || currentUser?.name || 'Học sinh'}
+                    {isReadOnly
+                      ? (isGuest ? 'Nhà phiêu lưu (bản xem thử)' : 'Giáo viên xem trước')
+                      : (currentUser as any)?.displayName || currentUser?.name || 'Học sinh'}
                   </div>
                   <div className="rounded-xl bg-white/80 border border-slate-200 p-3">
                     <strong>Thành tích:</strong><br />

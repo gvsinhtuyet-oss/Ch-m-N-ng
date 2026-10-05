@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, Student, Teacher, Admin, Station, UserRole } from '../types';
 import { DEMO_STUDENTS, DEMO_TEACHER, DEMO_ADMIN } from '../data/mockUsers';
-import { getStationsForGrade } from '../data/allStations';
+import { contentService } from '../services/ContentService';
+import { ALL_25_STATIONS, getStationsForGrade } from '../data/allStations';
 import { CANONICAL_HOI_AN_STATION } from '../data/canonicalHoiAn';
 import { audioService } from '../services/AudioService';
 import { progressService } from '../services/ProgressService';
@@ -62,6 +63,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isOnline, setIsOnline] = useState<boolean>(typeof navigator !== 'undefined' ? navigator.onLine : true);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [language, setLanguage] = useState<Language>('vi');
+
+  const [, setContentRevision] = useState(0);
+  useEffect(() => {
+    let active = true;
+    void contentService.loadShared(ALL_25_STATIONS).then(loaded => {
+      if (active && loaded) setContentRevision(value => value + 1);
+    });
+    return () => { active = false; };
+  }, []);
 
   // Network listener
   useEffect(() => {

@@ -136,8 +136,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setCurrentStage(initialStage);
     setCurrentView('station-view');
 
-    // Register station start in progress engine
-    if (currentUser && role !== 'guest') {
+    // Only authenticated student sessions write learning progress.
+    if (currentUser && role === 'student') {
       progressService.startStation(currentUser.id, station.id);
     }
   };

@@ -1,3 +1,4 @@
+import { contentService } from '../../services/ContentService';
 import React, { useState, useEffect, useMemo } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
 import { useApp } from '../../contexts/AppContext';
@@ -167,6 +168,20 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   return (
     <div className="space-y-6">
+      {contentService.resources(station.id).length > 0 && (
+        <section className="bg-white rounded-3xl p-5 border border-sky-200 space-y-3">
+          <h3 className="font-black text-sky-950">Học liệu của trạm</h3>
+          {contentService.resources(station.id).map(resource => (
+            <div key={resource.id} className="rounded-xl bg-sky-50 p-3 space-y-2">
+              <a href={resource.url} target="_blank" rel="noopener noreferrer" className="text-sky-800 font-bold underline">{resource.title}</a>
+              {resource.kind === 'image' && <img src={resource.url} alt={resource.title} className="max-h-80 w-full object-contain rounded-xl" />}
+              {resource.kind === 'audio' && <audio controls preload="none" src={resource.url} className="w-full" />}
+              {resource.kind === 'video' && (resource.url.startsWith('data:video/') || /\\.(mp4|webm|ogg)(\\?|$)/i.test(resource.url)) && <video controls preload="none" src={resource.url} className="max-h-96 w-full rounded-xl" />}
+              {resource.kind === 'document' && <p className="text-xs text-slate-600">Bấm tên học liệu để mở tài liệu.</p>}
+            </div>
+          ))}
+        </section>
+      )}
       {/* Station-level verified VR360 preview */}
       {station.vr360Experience?.verified && station.vr360Experience.url && (
         <div

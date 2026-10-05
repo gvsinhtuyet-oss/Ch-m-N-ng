@@ -5,6 +5,7 @@ import { Footer } from './components/common/Footer';
 import { LandingView } from './features/landing/LandingView';
 import { StudentJourneyView } from './features/student/StudentJourneyView';
 import { StudentPassportView } from './features/passport/StudentPassportView';
+import { StudentJourneyMapsView } from './features/student/StudentJourneyMapsView';
 import { StudentMemoriesView } from './features/student/StudentMemoriesView';
 import { StudentProfileView } from './features/student/StudentProfileView';
 import { StationView } from './features/stations/StationView';
@@ -33,6 +34,7 @@ const AppContent: React.FC = () => {
       <main className="flex-1">
         {currentView === 'student-journey' && <StudentJourneyView />}
         {currentView === 'student-passport' && <StudentPassportView />}
+        {currentView === 'student-maps' && <StudentJourneyMapsView />}
         {currentView === 'student-memories' && <StudentMemoriesView />}
         {currentView === 'student-profile' && <StudentProfileView />}
         {currentView === 'station-view' && currentStation && (

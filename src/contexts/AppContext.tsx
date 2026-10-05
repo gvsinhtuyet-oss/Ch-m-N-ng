@@ -11,6 +11,7 @@ export type AppView =
   | 'landing'
   | 'student-journey'
   | 'student-passport'
+  | 'student-maps'
   | 'student-memories'
   | 'student-profile'
   | 'station-view'

@@ -151,6 +151,69 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   return (
     <div className="space-y-6">
+      {/* Hero Preview: Khám phá Hội An 360° (Chỉ dành cho Trạm Hội An) */}
+      {station.id === 'g2-station-4' && (
+        <div
+          role="button"
+          tabIndex={0}
+          aria-label="Mở trải nghiệm Hội An 360 độ"
+          onClick={() => {
+            audioService.playSfx('click');
+            setShowVrModal(true);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              audioService.playSfx('click');
+              setShowVrModal(true);
+            }
+          }}
+          className="relative w-full min-h-[200px] sm:min-h-[270px] rounded-3xl overflow-hidden shadow-md group cursor-pointer border border-amber-300/60 focus:outline-none focus:ring-4 focus:ring-amber-400/80 transition-all transform active:scale-[0.99] select-none flex flex-col justify-end p-5 sm:p-7"
+        >
+          {/* Background Image with Zoom Effect on Hover */}
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
+            style={{
+              backgroundImage: `url(${station.coverImage || 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=1200&q=80'})`,
+            }}
+          />
+
+          {/* Dark Gradient Overlay to ensure text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/45 to-transparent pointer-events-none" />
+
+          {/* Badge at Top Left */}
+          <div className="absolute top-4 left-4 z-10">
+            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md text-amber-300 font-black text-xs uppercase tracking-wider border border-amber-400/40 shadow-sm">
+              <Globe className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+              <span>Không gian 360°</span>
+            </span>
+          </div>
+
+          {/* Content on Image */}
+          <div className="relative z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div className="space-y-1.5 max-w-xl text-white">
+              <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-white tracking-tight drop-shadow-md flex items-center gap-2">
+                <span>🌐 KHÁM PHÁ HỘI AN 360°</span>
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-200 font-medium drop-shadow leading-relaxed">
+                Xoay để quan sát toàn cảnh và chạm các điểm khám phá trong không gian di sản.
+              </p>
+              <p className="text-[11px] text-amber-300/90 font-medium drop-shadow-xs">
+                Nguồn trải nghiệm: VR360 – Hội An Metaverse
+              </p>
+            </div>
+
+            {/* Call To Action Button (non-nested interactive) */}
+            <div className="shrink-0 pt-2 sm:pt-0">
+              <span className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-amber-400 group-hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/25 transition-transform duration-200 group-hover:scale-105 active:scale-95 pointer-events-none">
+                <Globe className="w-4 h-4 text-slate-950" />
+                <span>BẮT ĐẦU KHÁM PHÁ 360°</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Navigation Header */}
       <div className="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-6 shadow-sm border border-sky-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
@@ -198,41 +261,6 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
           })}
         </div>
       </div>
-
-      {/* Station-Level VR360 Total Experience Card */}
-      {(station.id === 'g2-station-4' || station.vr360Experience) && (
-        <div className="bg-gradient-to-r from-amber-500/10 via-sky-500/10 to-indigo-500/10 border-2 border-amber-300/80 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="w-8 h-8 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black shadow-2xs">
-                <Globe className="w-5 h-5" />
-              </span>
-              <h3 className="text-lg sm:text-xl font-black text-slate-900">
-                🌐 KHÁM PHÁ HỘI AN 360°
-              </h3>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-600 font-medium">
-              Xoay để quan sát toàn cảnh và chạm các điểm khám phá trong không gian di sản.
-            </p>
-            <p className="text-[11px] text-slate-500 pt-0.5 font-medium">
-              Nguồn trải nghiệm: VR360 – Hội An Metaverse
-            </p>
-          </div>
-
-          <div className="shrink-0">
-            <button
-              onClick={() => {
-                audioService.playSfx('click');
-                setShowVrModal(true);
-              }}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-amber-400/30 transition transform hover:scale-105 active:scale-95 cursor-pointer"
-            >
-              <Globe className="w-4 h-4" />
-              <span>BẮT ĐẦU KHÁM PHÁ 360°</span>
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Main Hotspot Stage Canvas (4 Outside-VR Learning Hotspots) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">

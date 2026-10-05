@@ -42,7 +42,7 @@ export const RewardClaimModal: React.FC<Props> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in">
-      <div className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-amber-300 text-center relative overflow-hidden space-y-6">
+      <div className="w-full max-w-md max-h-[90dvh] overflow-y-auto bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-amber-300 text-center relative space-y-6">
         {/* Ambient Top Glow */}
         <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-48 bg-gradient-to-b from-amber-400/30 to-transparent rounded-full blur-2xl pointer-events-none" />
 
@@ -106,3 +106,4 @@ export const RewardClaimModal: React.FC<Props> = ({
     </div>
   );
 };
+

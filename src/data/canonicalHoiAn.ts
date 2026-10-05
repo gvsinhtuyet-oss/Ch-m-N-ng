@@ -112,6 +112,14 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       narrationEn: 'Assembly halls were communal places where merchant communities helped each other. They feature ornate gates, ceramic dragon carvings, and spiral incense rings.',
       keyFactVi: 'Hội quán Hội An là minh chứng sống động cho tinh thần đoàn kết, giao lưu văn hóa và lòng hiếu khách suốt nhiều thế kỷ.',
       keyFactEn: 'Assembly halls showcase centuries of peaceful cultural exchange, solidarity, and hospitality.',
+      vr360: {
+        url: 'https://kuula.co/share/collection/7l2k7',
+        provider: 'kuula',
+        embedMode: 'iframe',
+        fallbackUrl: 'https://maps.google.com/?q=Hội+quán+Phúc+Kiến+Hội+An',
+        verified: true,
+        title: 'Toàn cảnh 360 Hội quán Phúc Kiến',
+      },
       interaction: {
         id: 'int-hoi-quan',
         type: 'single-choice',
@@ -141,6 +149,14 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       narrationEn: 'The Hoai River flows gently through the old town. Streets are pedestrian-friendly, filled with colorful lanterns and quiet wooden boats.',
       keyFactVi: 'Phố cổ Hội An là một trong những đô thị tiên phong tại Việt Nam thực hiện phố đi bộ và giảm thiểu túi nilon để bảo vệ môi trường di sản.',
       keyFactEn: 'Hoi An is a pioneer pedestrian city promoting plastic waste reduction to protect the living heritage.',
+      vr360: {
+        url: 'https://kuula.co/share/collection/7lQW8',
+        provider: 'kuula',
+        embedMode: 'iframe',
+        fallbackUrl: 'https://maps.google.com/?q=Sông+Hoài+Hội+An',
+        verified: true,
+        title: 'Toàn cảnh 360 Dòng sông Hoài và Phố đi bộ',
+      },
       interaction: {
         id: 'int-song-hoai',
         type: 'single-choice',

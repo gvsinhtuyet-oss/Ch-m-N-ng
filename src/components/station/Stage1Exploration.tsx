@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
 import { useApp } from '../../contexts/AppContext';
-import { audioService } from '../../services/AudioService';
+import { audioService, NarrationState } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
-import { Volume2, VolumeX, RotateCcw, CheckCircle2, AlertCircle, Compass, Eye, Sparkles, ChevronRight, ExternalLink } from 'lucide-react';
+import {
+  Volume2,
+  VolumeX,
+  Play,
+  Pause,
+  RotateCcw,
+  CheckCircle2,
+  AlertCircle,
+  Compass,
+  Globe,
+  Sparkles,
+  ChevronRight,
+  ExternalLink,
+  ChevronLeft,
+  X,
+  Info,
+} from 'lucide-react';
 
 interface Props {
   station: Station;
@@ -13,38 +29,56 @@ interface Props {
 export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage }) => {
   const { currentUser, isOnline, language } = useApp();
   const [currentHotspotIdx, setCurrentHotspotIdx] = useState(0);
-  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [narrationState, setNarrationState] = useState<NarrationState>('idle');
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [answerSubmitted, setAnswerSubmitted] = useState<boolean>(false);
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [showVrModal, setShowVrModal] = useState(false);
+  const [iframeError, setIframeError] = useState(false);
 
   const hotspot: ExplorationHotspot = station.hotspots[currentHotspotIdx] || station.hotspots[0];
 
-  // Load progress
-  const studentId = currentUser?.id || 'guest';
-  const progress = progressService.getStationProgress(studentId, station.id);
-  const isExplored = progress.exploredHotspotIds.includes(hotspot.id);
+  // Subscribe to audio service state
+  useEffect(() => {
+    const unsubscribe = audioService.subscribeState((state) => {
+      setNarrationState(state);
+    });
+    return () => {
+      unsubscribe();
+      audioService.stopNarration();
+    };
+  }, []);
 
+  // Hotspot change handler
   useEffect(() => {
     setSelectedOptionId(null);
     setAnswerSubmitted(false);
     setIsCorrect(false);
+    setIframeError(false);
     audioService.stopNarration();
-    setIsSpeaking(false);
   }, [currentHotspotIdx]);
 
-  const handleToggleNarration = () => {
-    if (isSpeaking) {
-      audioService.stopNarration();
-      setIsSpeaking(false);
-    } else {
-      setIsSpeaking(true);
-      const textToSpeak = language === 'en' && hotspot.narrationEn ? hotspot.narrationEn : hotspot.narrationVi;
-      audioService.speakNarration(textToSpeak, language === 'en' ? 'en-US' : 'vi-VN', () => {
-        setIsSpeaking(false);
-      });
-    }
+  const studentId = currentUser?.id || 'guest';
+  const progress = progressService.getStationProgress(studentId, station.id);
+  const isExplored = progress.exploredHotspotIds.includes(hotspot.id);
+
+  // Audio Playback Controls
+  const handlePlayAudio = () => {
+    const textToSpeak = language === 'en' && hotspot.narrationEn ? hotspot.narrationEn : hotspot.narrationVi;
+    audioService.speakNarration(textToSpeak, language === 'en' ? 'en-US' : 'vi-VN');
+  };
+
+  const handlePauseAudio = () => {
+    audioService.pauseNarration();
+  };
+
+  const handleResumeAudio = () => {
+    audioService.resumeNarration();
+  };
+
+  const handleRestartAudio = () => {
+    audioService.stopNarration();
+    handlePlayAudio();
   };
 
   const handleSelectOption = (optId: string) => {
@@ -62,22 +96,26 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
     if (correct) {
       audioService.playSfx('correct');
-      // Mark hotspot explored
       progressService.completeHotspot(studentId, station.id, hotspot.id);
     } else {
       audioService.playSfx('wrong');
     }
   };
 
+  const changeHotspot = (newIndex: number) => {
+    if (newIndex >= 0 && newIndex < station.hotspots.length) {
+      audioService.playSfx('transition');
+      setCurrentHotspotIdx(newIndex);
+    }
+  };
+
   const handleNextHotspot = () => {
     audioService.playSfx('click');
-    // Ensure marked explored if passed
     progressService.completeHotspot(studentId, station.id, hotspot.id);
 
     if (currentHotspotIdx < station.hotspots.length - 1) {
-      setCurrentHotspotIdx(prev => prev + 1);
+      changeHotspot(currentHotspotIdx + 1);
     } else {
-      // Completed all hotspots in stage 1
       const rw = station.rewards.find(r => r.stage === 1);
       progressService.completeStage1(studentId, station.id, rw?.id);
       audioService.playSfx('reward');
@@ -87,134 +125,210 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   const totalHotspots = station.hotspots.length;
   const isLastHotspot = currentHotspotIdx === totalHotspots - 1;
+  const isPlaying = narrationState === 'playing';
+  const isPaused = narrationState === 'paused';
 
   return (
     <div className="space-y-6">
-      {/* Exploration Header & Progress */}
-      <div className="bg-white rounded-3xl p-4 sm:p-6 shadow-sm border border-sky-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      {/* Immersive Hotspot Navigation Header */}
+      <div className="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-6 shadow-sm border border-sky-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-100 text-sky-800">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-sky-600 to-amber-500 text-white shadow-xs">
               Điểm chạm {currentHotspotIdx + 1} / {totalHotspots}
             </span>
             {isExplored && (
-              <span className="inline-flex items-center gap-1 text-emerald-600 text-xs font-semibold">
-                <CheckCircle2 className="w-3.5 h-3.5" /> Đã khám phá
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Đã khám phá
               </span>
             )}
+            <span className="text-xs text-slate-400 font-semibold hidden sm:inline">• Chặng 1: Giải mã điểm đến</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">{hotspot.titleVi}</h2>
-          {hotspot.subtitleVi && <p className="text-xs sm:text-sm text-slate-500 mt-0.5">{hotspot.subtitleVi}</p>}
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            {hotspot.titleVi}
+          </h2>
+          {hotspot.subtitleVi && (
+            <p className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">{hotspot.subtitleVi}</p>
+          )}
         </div>
 
-        {/* Hotspot thumbnail dots */}
-        <div className="flex items-center gap-2">
+        {/* Hotspot Step Selector Tabs */}
+        <div className="flex items-center gap-2 bg-slate-100/80 p-1.5 rounded-2xl">
           {station.hotspots.map((h, idx) => {
             const explored = progress.exploredHotspotIds.includes(h.id);
+            const isCurrent = idx === currentHotspotIdx;
             return (
               <button
                 key={h.id}
-                onClick={() => setCurrentHotspotIdx(idx)}
-                className={`w-9 h-9 rounded-xl font-bold text-xs flex items-center justify-center transition ${
-                  idx === currentHotspotIdx
-                    ? 'bg-sky-600 text-white shadow-md shadow-sky-500/30 scale-105 ring-2 ring-sky-300'
+                onClick={() => changeHotspot(idx)}
+                className={`px-3 py-2 rounded-xl font-black text-xs flex items-center gap-1.5 transition ${
+                  isCurrent
+                    ? 'bg-sky-600 text-white shadow-md shadow-sky-600/30 scale-105'
                     : explored
-                    ? 'bg-emerald-100 text-emerald-800'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200'
+                    : 'bg-white text-slate-700 hover:bg-slate-200'
                 }`}
+                title={h.titleVi}
               >
-                {idx + 1}
+                <span>{idx + 1}</span>
+                {explored && <CheckCircle2 className="w-3 h-3 text-emerald-600 inline" />}
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Main Exploration Card */}
+      {/* Main Hotspot Stage Canvas */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Visual Media & 360 column */}
-        <div className="lg:col-span-7 bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200/80">
-          <div className="relative aspect-4/3 sm:aspect-16/10 bg-slate-900 group">
+        {/* Visual Showcase (7 cols) */}
+        <div className="lg:col-span-7 bg-white rounded-3xl overflow-hidden shadow-md border border-slate-200 flex flex-col group">
+          <div className="relative aspect-4/3 sm:aspect-16/10 bg-slate-950 overflow-hidden">
             <img
               src={hotspot.image}
               alt={hotspot.titleVi}
-              className="w-full h-full object-cover transition duration-500 group-hover:scale-102"
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103"
               onError={(e) => {
-                // Fallback to placeholder image
-                (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=1000&q=80';
+                (e.target as HTMLImageElement).src =
+                  'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=1200&q=80';
               }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-black/20" />
+            {/* Cinematic Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-black/30 pointer-events-none" />
 
-            {/* Badges on image */}
-            <div className="absolute top-4 left-4 flex gap-2">
-              <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-semibold">
+            {/* Top Badges */}
+            <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+              <span className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-black shadow-md border border-white/20">
                 Ảnh thực tế di sản
               </span>
+
+              {hotspot.vr360 && (
+                <span className="px-3 py-1 rounded-full bg-amber-500/90 backdrop-blur-md text-slate-950 text-xs font-black shadow-md flex items-center gap-1.5 animate-pulse">
+                  <Globe className="w-3.5 h-3.5" />
+                  <span>Có VR 360°</span>
+                </span>
+              )}
             </div>
 
-            {/* VR 360 CTA Button */}
-            {hotspot.vr360 && (
-              <button
-                onClick={() => setShowVrModal(true)}
-                className="absolute bottom-4 right-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs shadow-lg transition active:scale-95"
-              >
-                <Eye className="w-4 h-4" />
-                <span>Mở không gian 360°</span>
-              </button>
-            )}
+            {/* Prominent Overlay Action Buttons */}
+            <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center justify-between gap-3">
+              {/* Audio Playback Hero Pill */}
+              <div className="flex items-center gap-2 bg-black/75 backdrop-blur-md p-1.5 rounded-2xl border border-white/20 shadow-xl">
+                {!isPlaying && !isPaused ? (
+                  <button
+                    onClick={handlePlayAudio}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white font-black text-xs shadow-md transition transform hover:scale-102 active:scale-95"
+                  >
+                    <Volume2 className="w-4 h-4" />
+                    <span>NGHE THUYẾT MINH</span>
+                  </button>
+                ) : isPlaying ? (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handlePauseAudio}
+                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs transition"
+                    >
+                      <Pause className="w-4 h-4 fill-slate-950" />
+                      <span>Tạm dừng</span>
+                    </button>
+                    <button
+                      onClick={handleRestartAudio}
+                      className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs transition"
+                      title="Nghe lại từ đầu"
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                    </button>
+                    {/* Animated sound wave bars */}
+                    <div className="flex items-center gap-1 px-2">
+                      <span className="w-1 h-4 bg-sky-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-1 h-6 bg-sky-300 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-1 h-3 bg-sky-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                      <span className="w-1 h-5 bg-sky-400 rounded-full animate-bounce" style={{ animationDelay: '200ms' }} />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handleResumeAudio}
+                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-black text-xs transition"
+                    >
+                      <Play className="w-4 h-4 fill-white" />
+                      <span>Tiếp tục nghe</span>
+                    </button>
+                    <button
+                      onClick={handleRestartAudio}
+                      className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs transition"
+                      title="Nghe lại từ đầu"
+                    >
+                      <RotateCcw className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+              </div>
 
-            {/* Narration quick control on image */}
-            <button
-              onClick={handleToggleNarration}
-              className={`absolute bottom-4 left-4 inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl backdrop-blur-md font-bold text-xs transition ${
-                isSpeaking
-                  ? 'bg-rose-500 text-white animate-pulse'
-                  : 'bg-white/90 hover:bg-white text-slate-800'
-              }`}
-            >
-              {isSpeaking ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-sky-600" />}
-              <span>{isSpeaking ? 'Tạm dừng đọc' : 'Nghe giọng đọc'}</span>
-            </button>
+              {/* VR 360 Hero Button */}
+              {hotspot.vr360 && (
+                <button
+                  onClick={() => setShowVrModal(true)}
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm shadow-xl transition transform hover:scale-105 active:scale-95 border-2 border-amber-300"
+                >
+                  <Globe className="w-4 h-4" />
+                  <span>KHÁM PHÁ 360°</span>
+                </button>
+              )}
+            </div>
           </div>
 
-          {/* Media rights & credit */}
-          <div className="px-4 py-2 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-            <span>{hotspot.mediaCredit || 'Ảnh tư liệu đã kiểm duyệt'}</span>
-            <span className="text-emerald-700 font-medium">Bản quyền: Đã cấp phép giáo dục</span>
+          {/* Media source and copyright credit */}
+          <div className="px-5 py-2.5 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between text-[11px] text-slate-500">
+            <span>Nguồn ảnh: {hotspot.mediaCredit || 'Tư liệu di sản đã kiểm chứng'}</span>
+            <span className="text-emerald-700 font-bold">Bản quyền: Dùng cho giáo dục</span>
           </div>
         </div>
 
-        {/* Narrative & Interaction column */}
+        {/* Narrative, Key Fact & Knowledge Interaction (5 cols) */}
         <div className="lg:col-span-5 space-y-4">
-          {/* Narration Box */}
-          <div className="bg-white rounded-3xl p-5 shadow-sm border border-sky-100">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-bold text-sky-700 uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                Lời Thuyết Minh Điểm Đến
+          {/* Narration Box with Speech Aura Highlight */}
+          <div
+            className={`bg-white rounded-3xl p-6 shadow-sm border transition-all duration-500 ${
+              isPlaying
+                ? 'border-sky-400 ring-4 ring-sky-100 bg-sky-50/30'
+                : 'border-slate-200'
+            }`}
+          >
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-black text-sky-800 uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-amber-500" />
+                Câu Chuyện Điểm Đến
               </span>
               <button
-                onClick={handleToggleNarration}
-                className="text-xs font-semibold text-sky-600 hover:underline flex items-center gap-1"
+                onClick={isPlaying ? handlePauseAudio : isPaused ? handleResumeAudio : handlePlayAudio}
+                className="text-xs font-bold text-sky-600 hover:underline flex items-center gap-1"
               >
-                {isSpeaking ? 'Dừng đọc' : 'Đọc lại'}
+                {isPlaying ? 'Tạm dừng đọc' : isPaused ? 'Tiếp tục' : 'Phát âm thanh'}
               </button>
             </div>
-            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal">
+
+            {/* Transcript text with subtle highlight when playing */}
+            <p
+              className={`text-base sm:text-lg leading-relaxed font-medium transition-colors duration-300 ${
+                isPlaying ? 'text-slate-950' : 'text-slate-700'
+              }`}
+            >
               {hotspot.narrationVi}
             </p>
 
-            {/* Key Fact card */}
+            {/* Key Fact Highlight Card */}
             {hotspot.keyFactVi && (
-              <div className="mt-4 p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/80">
-                <div className="flex items-start gap-2">
-                  <div className="w-6 h-6 rounded-lg bg-amber-400 text-slate-900 flex items-center justify-center font-black text-xs shrink-0 mt-0.5">
+              <div className="mt-4 p-4 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 shadow-2xs">
+                <div className="flex items-start gap-3">
+                  <div className="w-7 h-7 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black text-sm shrink-0 shadow-2xs mt-0.5">
                     ★
                   </div>
                   <div>
-                    <span className="font-bold text-xs text-amber-900 block">Điều thú vị cần nhớ:</span>
-                    <p className="text-xs text-amber-950 mt-0.5 font-medium leading-normal">
+                    <span className="font-extrabold text-xs text-amber-900 uppercase tracking-wide block">
+                      Điều thú vị cần nhớ:
+                    </span>
+                    <p className="text-xs sm:text-sm text-amber-950 font-bold mt-1 leading-snug">
                       {hotspot.keyFactVi}
                     </p>
                   </div>
@@ -223,33 +337,34 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
             )}
           </div>
 
-          {/* Interactive touchpoint question */}
+          {/* Interactive Touchpoint Question */}
           {hotspot.interaction && (
-            <div className="bg-white rounded-3xl p-5 shadow-sm border border-slate-200">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-5 h-5 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs font-bold">
+            <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-4">
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs font-extrabold">
                   ?
                 </span>
-                <h3 className="font-bold text-sm text-slate-900">Khám phá tương tác</h3>
+                <h3 className="font-extrabold text-sm text-slate-900">Khám phá tương tác</h3>
               </div>
-              <p className="text-xs sm:text-sm font-semibold text-slate-800 mb-3">
+
+              <p className="text-sm sm:text-base font-bold text-slate-800 leading-snug">
                 {hotspot.interaction.questionVi}
               </p>
 
               {/* Options */}
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 {hotspot.interaction.options.map((opt) => {
                   const isSelected = selectedOptionId === opt.id;
-                  let optStyle = 'border-slate-200 hover:bg-slate-50 text-slate-700';
+                  let optClass = 'border-slate-200 hover:bg-slate-50 text-slate-700';
 
                   if (answerSubmitted) {
                     if (opt.isCorrect) {
-                      optStyle = 'border-emerald-500 bg-emerald-50 text-emerald-900 font-bold';
+                      optClass = 'border-emerald-500 bg-emerald-50 text-emerald-950 font-bold ring-2 ring-emerald-300';
                     } else if (isSelected && !opt.isCorrect) {
-                      optStyle = 'border-rose-400 bg-rose-50 text-rose-800';
+                      optClass = 'border-rose-400 bg-rose-50 text-rose-900';
                     }
                   } else if (isSelected) {
-                    optStyle = 'border-sky-500 bg-sky-50 text-sky-900 font-semibold ring-1 ring-sky-300';
+                    optClass = 'border-sky-500 bg-sky-50 text-sky-950 font-bold ring-2 ring-sky-300';
                   }
 
                   return (
@@ -257,11 +372,11 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                       key={opt.id}
                       onClick={() => handleSelectOption(opt.id)}
                       disabled={answerSubmitted}
-                      className={`w-full p-3 rounded-2xl border text-left text-xs sm:text-sm transition flex items-center justify-between gap-3 ${optStyle}`}
+                      className={`w-full p-3.5 rounded-2xl border text-left text-xs sm:text-sm transition flex items-center justify-between gap-3 ${optClass}`}
                     >
                       <span>{opt.textVi}</span>
                       {answerSubmitted && opt.isCorrect && (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                        <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
                       )}
                     </button>
                   );
@@ -271,45 +386,47 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
               {/* Feedback Alert */}
               {answerSubmitted && (
                 <div
-                  className={`mt-4 p-3.5 rounded-2xl text-xs leading-relaxed ${
+                  className={`p-4 rounded-2xl text-xs leading-relaxed ${
                     isCorrect
-                      ? 'bg-emerald-50 text-emerald-900 border border-emerald-200'
-                      : 'bg-amber-50 text-amber-900 border border-amber-200'
+                      ? 'bg-emerald-50 text-emerald-950 border border-emerald-200'
+                      : 'bg-amber-50 text-amber-950 border border-amber-200'
                   }`}
                 >
-                  <p className="font-bold mb-1">
+                  <p className="font-extrabold text-sm mb-1">
                     {isCorrect
                       ? 'Chính xác! Em đã phát hiện thêm một điều thú vị về điểm đến này.'
                       : 'Chưa đúng rồi. Em xem lại hình ảnh hoặc nghe lại thuyết minh nhé!'}
                   </p>
-                  <p className="text-[11px] text-slate-600">{hotspot.interaction.explanationVi}</p>
+                  <p className="text-[11px] text-slate-600 leading-relaxed font-medium">
+                    {hotspot.interaction.explanationVi}
+                  </p>
                 </div>
               )}
 
-              {/* Action buttons */}
-              <div className="mt-4 flex items-center gap-2">
+              {/* Control Buttons */}
+              <div className="pt-2">
                 {!answerSubmitted ? (
                   <button
                     onClick={handleSubmitAnswer}
                     disabled={!selectedOptionId}
-                    className="w-full py-2.5 rounded-2xl bg-sky-600 hover:bg-sky-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold text-xs sm:text-sm shadow-sm transition active:scale-98"
+                    className="w-full py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-black text-sm shadow-md transition active:scale-98"
                   >
                     Kiểm tra câu trả lời
                   </button>
                 ) : !isCorrect ? (
-                  <div className="flex w-full gap-2">
+                  <div className="flex gap-2">
                     <button
                       onClick={() => {
                         setAnswerSubmitted(false);
                         setSelectedOptionId(null);
                       }}
-                      className="flex-1 py-2.5 rounded-2xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs transition"
+                      className="flex-1 py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs transition"
                     >
                       Thử lại
                     </button>
                     <button
                       onClick={handleNextHotspot}
-                      className="flex-1 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition"
+                      className="flex-1 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition"
                     >
                       Tiếp tục khám phá
                     </button>
@@ -317,10 +434,10 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                 ) : (
                   <button
                     onClick={handleNextHotspot}
-                    className="w-full py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-1.5"
+                    className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2 active:scale-95"
                   >
                     <span>{isLastHotspot ? 'Hoàn thành Chặng 1 – Nhận phần thưởng!' : 'Khám phá điểm tiếp theo'}</span>
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-5 h-5" />
                   </button>
                 )}
               </div>
@@ -329,43 +446,84 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
         </div>
       </div>
 
-      {/* VR 360 Fullscreen Modal */}
+      {/* Robust VR360 Modal with Error Fallback & External Link */}
       {showVrModal && hotspot.vr360 && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md p-3 sm:p-6">
-          <div className="w-full max-w-4xl h-[85vh] bg-slate-900 rounded-3xl overflow-hidden flex flex-col shadow-2xl border border-slate-700">
-            {/* Modal header */}
-            <div className="p-4 bg-slate-800/90 text-white flex items-center justify-between border-b border-slate-700">
-              <div className="flex items-center gap-2">
-                <Compass className="w-5 h-5 text-amber-400" />
-                <span className="font-bold text-sm">{hotspot.vr360.title || 'Toàn cảnh VR 360°'}</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-3 sm:p-6 animate-fade-in">
+          <div className="w-full max-w-5xl h-[88vh] bg-slate-900 rounded-3xl overflow-hidden flex flex-col shadow-2xl border border-slate-700">
+            {/* Modal Header */}
+            <div className="px-5 py-3.5 bg-slate-800/90 text-white flex items-center justify-between border-b border-slate-700">
+              <div className="flex items-center gap-3">
+                <Globe className="w-5 h-5 text-amber-400 animate-spin-slow" />
+                <div>
+                  <h3 className="font-extrabold text-sm">{hotspot.vr360.title || 'Không gian thực tế ảo 360°'}</h3>
+                  <span className="text-[11px] text-slate-400">Trải nghiệm xoay toàn cảnh 360 độ</span>
+                </div>
               </div>
-              <button
-                onClick={() => setShowVrModal(false)}
-                className="w-8 h-8 rounded-full bg-slate-700 hover:bg-slate-600 text-white flex items-center justify-center text-sm font-bold"
-              >
-                ✕
-              </button>
+
+              <div className="flex items-center gap-2">
+                {/* External open button */}
+                <a
+                  href={hotspot.vr360.fallbackUrl || hotspot.vr360.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold transition flex items-center gap-1.5"
+                >
+                  <span>Mở tab mới</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+
+                <button
+                  onClick={() => setShowVrModal(false)}
+                  className="w-8 h-8 rounded-full bg-slate-700 hover:bg-rose-600 text-white flex items-center justify-center text-sm font-bold transition"
+                  title="Đóng cửa sổ 360°"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
-            {/* Modal body */}
-            <div className="flex-1 bg-black relative flex items-center justify-center">
-              {isOnline ? (
+            {/* Modal Body */}
+            <div className="flex-1 bg-black relative flex items-center justify-center overflow-hidden">
+              {!isOnline ? (
+                <div className="text-center p-8 text-slate-300 max-w-md">
+                  <div className="w-14 h-14 rounded-full bg-slate-800 text-amber-400 flex items-center justify-center mx-auto mb-3">
+                    <AlertCircle className="w-8 h-8" />
+                  </div>
+                  <h4 className="text-lg font-bold text-white mb-2">Nội dung 360° cần kết nối Internet</h4>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Trải nghiệm ảnh toàn cảnh thực tế ảo 360° yêu cầu dữ liệu trực tuyến. Em hãy kết nối mạng để thưởng ngoạn nhé!
+                  </p>
+                </div>
+              ) : iframeError ? (
+                <div className="text-center p-8 text-slate-300 max-w-md space-y-4">
+                  <div className="w-14 h-14 rounded-full bg-slate-800 text-sky-400 flex items-center justify-center mx-auto">
+                    <Info className="w-8 h-8" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-white mb-1">Trải nghiệm trong tab mới</h4>
+                    <p className="text-xs text-slate-400 leading-relaxed">
+                      Nguồn 360° không cho phép nhúng trực tiếp trên khung này. Em có thể mở trải nghiệm trong tab mới để ngắm nhìn toàn cảnh nhé!
+                    </p>
+                  </div>
+                  <a
+                    href={hotspot.vr360.fallbackUrl || hotspot.vr360.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-xl"
+                  >
+                    <span>MỞ TRẢI NGHIỆM TRONG TAB MỚI</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
+              ) : (
                 <iframe
                   src={hotspot.vr360.url}
                   title="VR 360 Viewer"
                   className="w-full h-full border-0"
                   allowFullScreen
+                  sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                  onError={() => setIframeError(true)}
                 />
-              ) : (
-                <div className="text-center p-6 text-slate-300">
-                  <div className="w-12 h-12 rounded-full bg-slate-800 text-amber-400 flex items-center justify-center mx-auto mb-3">
-                    <AlertCircle className="w-6 h-6" />
-                  </div>
-                  <h4 className="text-base font-bold text-white mb-1">Nội dung này cần kết nối Internet</h4>
-                  <p className="text-xs text-slate-400 max-w-sm mx-auto">
-                    Chế độ không gian thực tế ảo 360° yêu cầu dữ liệu trực tuyến. Em hãy kết nối mạng để trải nghiệm nhé!
-                  </p>
-                </div>
               )}
             </div>
           </div>

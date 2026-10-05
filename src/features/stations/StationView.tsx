@@ -3,11 +3,12 @@ import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { progressService } from '../../services/ProgressService';
 import { offlineService } from '../../services/OfflineService';
+import { audioService } from '../../services/AudioService';
 import { Stage1Exploration } from '../../components/station/Stage1Exploration';
 import { Stage2Challenge } from '../../components/station/Stage2Challenge';
 import { Stage3CheckIn } from '../../components/station/Stage3CheckIn';
 import { Stage4Stamp } from '../../components/station/Stage4Stamp';
-import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles, BookOpen } from 'lucide-react';
+import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles } from 'lucide-react';
 
 interface Props {
   station: Station;
@@ -26,10 +27,12 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const isUnlockedAllStages = progress.stationCompleted || progress.stampReceived;
 
   const handleDownload = async () => {
+    audioService.playSfx('click');
     setDownloading(true);
     const pkg = await offlineService.downloadStation(station.id);
     setOfflinePkg(pkg);
     setDownloading(false);
+    audioService.playSfx('reward');
   };
 
   const stages = [
@@ -42,32 +45,37 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6">
       {/* Top Station Header bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-4 rounded-3xl border border-slate-200 shadow-xs">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/95 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-xs">
+        <div className="flex items-center gap-3.5">
           <button
-            onClick={onBack}
-            className="w-10 h-10 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition"
+            onClick={() => {
+              audioService.playSfx('click');
+              onBack();
+            }}
+            className="w-11 h-11 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition shadow-2xs shrink-0"
             title="Quay lại danh sách trạm"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-sky-100 text-sky-800">
+              <span className="px-2.5 py-0.5 rounded-md text-[11px] font-black bg-gradient-to-r from-sky-600 to-sky-700 text-white shadow-2xs">
                 Trạm {station.number}
               </span>
-              <span className="text-xs text-slate-400 font-medium">Khối {station.grade}</span>
+              <span className="text-xs text-slate-400 font-bold">Khối {station.grade}</span>
+              <span className="text-slate-300">•</span>
+              <span className="text-xs text-amber-700 font-semibold">{station.themeNameVi}</span>
             </div>
-            <h1 className="text-lg sm:text-xl font-black text-slate-900 leading-tight">
+            <h1 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight mt-0.5">
               {station.titleVi}
             </h1>
           </div>
         </div>
 
         {/* Offline Download button */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           {offlinePkg ? (
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-emerald-50 text-emerald-800 text-xs font-semibold border border-emerald-200">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200 shadow-2xs">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
               <span>Đã tải offline ({offlinePkg.sizeMb}MB)</span>
             </div>
@@ -75,32 +83,35 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
             <button
               onClick={handleDownload}
               disabled={downloading}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl bg-sky-50 hover:bg-sky-100 text-sky-700 text-xs font-bold border border-sky-200 transition"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-2xl bg-sky-50 hover:bg-sky-100 text-sky-800 text-xs font-black border border-sky-200 transition shadow-2xs active:scale-95"
             >
-              <Download className="w-3.5 h-3.5" />
+              <Download className="w-3.5 h-3.5 text-sky-600" />
               <span>{downloading ? 'Đang tải...' : 'TẢI TRẠM ĐỂ HỌC OFFLINE'}</span>
             </button>
           )}
         </div>
       </div>
 
-      {/* 4 Stages Navigation (only unlocked if completed or in replay mode) */}
+      {/* 4 Stages Navigation */}
       {isUnlockedAllStages ? (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-slate-100/70 p-1.5 rounded-2xl">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-slate-100/80 p-1.5 rounded-2xl">
           {stages.map((st) => {
             const Icon = st.icon;
             const isActive = currentStage === st.num;
             return (
               <button
                 key={st.num}
-                onClick={() => setCurrentStage(st.num as any)}
-                className={`py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition ${
+                onClick={() => {
+                  audioService.playSfx('click');
+                  setCurrentStage(st.num as any);
+                }}
+                className={`py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition ${
                   isActive
-                    ? 'bg-white text-sky-900 shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/50'
+                    ? 'bg-white text-sky-950 shadow-md font-black scale-102'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
                 }`}
               >
-                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-sky-600' : 'text-slate-400'}`} />
+                <Icon className={`w-4 h-4 ${isActive ? 'text-sky-600' : 'text-slate-400'}`} />
                 <span className="truncate">{st.num}. {st.name}</span>
               </button>
             );
@@ -108,56 +119,63 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </div>
       ) : (
         /* First time flow stepper */
-        <div className="bg-white p-3 rounded-2xl border border-slate-100 flex items-center justify-between text-xs font-bold text-slate-500">
-          <span>Hành trình lần đầu:</span>
-          <div className="flex items-center gap-2">
-            {[1, 2, 3, 4].map((step) => (
+        <div className="bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-slate-100 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-bold text-slate-500">
+          <span className="text-slate-700">Hành trình lần đầu (hoàn thành tuần tự):</span>
+          <div className="flex items-center gap-1.5 overflow-x-auto">
+            {[
+              { num: 1, label: 'Chặng 1: Khám phá' },
+              { num: 2, label: 'Chặng 2: Thử thách' },
+              { num: 3, label: 'Chặng 3: Check-in' },
+              { num: 4, label: 'Chặng 4: Lưu dấu' },
+            ].map((step) => (
               <div
-                key={step}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-lg ${
-                  currentStage === step
+                key={step.num}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition ${
+                  currentStage === step.num
                     ? 'bg-sky-600 text-white shadow-xs'
-                    : currentStage > step
+                    : currentStage > step.num
                     ? 'bg-emerald-100 text-emerald-800'
                     : 'bg-slate-100 text-slate-400'
                 }`}
               >
-                <span>Chặng {step}</span>
+                <span>{step.label}</span>
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {/* Stage Views */}
-      {currentStage === 1 && (
-        <Stage1Exploration
-          station={station}
-          onCompleteStage={() => setCurrentStage(2)}
-        />
-      )}
+      {/* Stage Views with subtle container transition */}
+      <div className="transition-all duration-300">
+        {currentStage === 1 && (
+          <Stage1Exploration
+            station={station}
+            onCompleteStage={() => setCurrentStage(2)}
+          />
+        )}
 
-      {currentStage === 2 && (
-        <Stage2Challenge
-          station={station}
-          onCompleteStage={() => setCurrentStage(3)}
-        />
-      )}
+        {currentStage === 2 && (
+          <Stage2Challenge
+            station={station}
+            onCompleteStage={() => setCurrentStage(3)}
+          />
+        )}
 
-      {currentStage === 3 && (
-        <Stage3CheckIn
-          station={station}
-          onCompleteStage={() => setCurrentStage(4)}
-        />
-      )}
+        {currentStage === 3 && (
+          <Stage3CheckIn
+            station={station}
+            onCompleteStage={() => setCurrentStage(4)}
+          />
+        )}
 
-      {currentStage === 4 && (
-        <Stage4Stamp
-          station={station}
-          onReviewJourney={() => setCurrentStage(1)}
-          onExploreNext={onBack}
-        />
-      )}
+        {currentStage === 4 && (
+          <Stage4Stamp
+            station={station}
+            onReviewJourney={() => setCurrentStage(1)}
+            onExploreNext={onBack}
+          />
+        )}
+      </div>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import confetti from 'canvas-confetti';
-import { Award, Compass, Sparkles, CheckCircle2, RotateCcw, ArrowRight } from 'lucide-react';
+import { Award, Compass, Sparkles, CheckCircle2, RotateCcw, ArrowRight, Shield, Star, Heart } from 'lucide-react';
 
 interface Props {
   station: Station;
@@ -23,30 +23,30 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     audioService.playSfx('stamp');
     setTimeout(() => {
       audioService.playSfx('victory');
-    }, 200);
+    }, 220);
 
-    // Confetti effect 2.5s
+    // Dynamic Confetti celebration
     try {
       confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: ['#0284c7', '#f59e0b', '#10b981', '#ec4899', '#8b5cf6'],
+        particleCount: 100,
+        spread: 80,
+        origin: { y: 0.55 },
+        colors: ['#0284c7', '#f59e0b', '#10b981', '#ec4899', '#8b5cf6', '#ef4444'],
       });
       setTimeout(() => {
         confetti({
-          particleCount: 50,
+          particleCount: 60,
           angle: 60,
-          spread: 55,
+          spread: 60,
           origin: { x: 0 },
         });
         confetti({
-          particleCount: 50,
+          particleCount: 60,
           angle: 120,
-          spread: 55,
+          spread: 60,
           origin: { x: 1 },
         });
-      }, 400);
+      }, 350);
     } catch {
       // ignore
     }
@@ -56,107 +56,135 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
   };
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-sky-600 via-sky-700 to-indigo-800 text-white rounded-3xl p-6 sm:p-8 shadow-xl text-center relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="relative z-10">
-          <span className="px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md text-amber-300 font-extrabold text-xs uppercase tracking-wider inline-block mb-2">
-            Chặng 4: Lưu Dấu Hành Trình
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-black">{station.titleVi}</h2>
-          <p className="text-xs sm:text-sm text-sky-100 mt-2 max-w-lg mx-auto font-medium">
-            Em đã hoàn thành xuất sắc các chặng khám phá và chinh phục trọn vẹn mục tiêu bài học!
+    <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
+      {/* Celebratory Hero Header */}
+      <div className="bg-gradient-to-r from-sky-700 via-indigo-800 to-amber-700 text-white rounded-3xl p-6 sm:p-10 shadow-2xl text-center relative overflow-hidden border border-white/20">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-sky-400/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 space-y-3">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-amber-300 font-black text-xs uppercase tracking-widest border border-amber-300/30">
+            <Sparkles className="w-4 h-4 text-amber-300" />
+            <span>Chặng 4: Lưu Dấu Hành Trình</span>
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white drop-shadow-sm">
+            {station.titleVi}
+          </h2>
+
+          <p className="text-sm sm:text-base text-sky-100 max-w-xl mx-auto font-medium leading-relaxed">
+            Chúc mừng em đã hoàn thành xuất sắc chuyến khám phá văn hóa, di sản và phong cảnh quê hương!
           </p>
         </div>
       </div>
 
-      {/* Rewards Collection Showcase */}
-      <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
-        <h3 className="font-extrabold text-xs sm:text-sm text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-1.5">
-          <Sparkles className="w-4 h-4 text-amber-500" />
-          Bộ 3 Kỉ Niệm Đã Thu Thập:
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      {/* Collector's Showcase: 3 Stage Rewards */}
+      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-5">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-amber-500" />
+            <h3 className="font-black text-base sm:text-lg text-slate-900">
+              Bộ Sưu Tập Kỉ Niệm Đạt Được
+            </h3>
+          </div>
+          <span className="px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-black">
+            3 / 3 Kỉ niệm
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {station.rewards.map((rw) => (
             <div
               key={rw.id}
-              className="p-4 rounded-2xl bg-amber-50/50 border border-amber-200/60 flex items-center gap-3"
+              className="p-5 rounded-3xl bg-gradient-to-b from-amber-50/80 via-white to-orange-50/50 border-2 border-amber-200/80 shadow-xs flex flex-col items-center text-center space-y-3 relative group hover:border-amber-400 transition"
             >
-              <div className="w-11 h-11 rounded-xl bg-amber-400 text-amber-950 flex items-center justify-center font-black text-lg shadow-sm shrink-0">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-400 to-amber-300 text-slate-950 flex items-center justify-center text-2xl font-black shadow-md group-hover:scale-110 transition duration-300">
                 {rw.stage === 1 ? '🏮' : rw.stage === 2 ? '🧭' : '💖'}
               </div>
+
               <div>
-                <span className="text-[10px] font-bold text-amber-800 uppercase block">Chặng {rw.stage}</span>
-                <h4 className="font-extrabold text-xs text-slate-900 leading-tight">{rw.nameVi}</h4>
+                <span className="text-[10px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full inline-block mb-1">
+                  Chặng {rw.stage}
+                </span>
+                <h4 className="font-black text-sm text-slate-900">{rw.nameVi}</h4>
+                <p className="text-xs text-slate-500 mt-1 leading-snug">{rw.descriptionVi}</p>
+              </div>
+
+              <div className="w-full pt-2 border-t border-amber-200/50 flex items-center justify-center gap-1 text-[11px] font-bold text-emerald-700">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Đã vào Kho Kỉ Niệm</span>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Stamp Section */}
-      <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-200 text-center space-y-6">
+      {/* Master Stamp Ceremony Section */}
+      <div className="bg-white rounded-3xl p-8 sm:p-12 shadow-sm border border-slate-200 text-center space-y-8 relative overflow-hidden">
         {!stamped ? (
-          <div className="space-y-4">
-            <div className="w-32 h-32 mx-auto rounded-full border-4 border-dashed border-sky-300 bg-sky-50/50 flex flex-col items-center justify-center text-sky-500">
-              <Award className="w-12 h-12 stroke-[1.5]" />
-              <span className="text-[11px] font-bold mt-1">Con dấu chờ đóng</span>
+          <div className="space-y-6">
+            <div className="w-36 h-36 mx-auto rounded-full border-4 border-dashed border-sky-300 bg-sky-50/50 flex flex-col items-center justify-center text-sky-500 shadow-inner animate-pulse">
+              <Award className="w-14 h-14 stroke-[1.5]" />
+              <span className="text-xs font-black mt-2">Dấu ấn chờ đóng</span>
             </div>
 
-            <div>
-              <h3 className="text-xl font-bold text-slate-900">Sẵn sàng lưu dấu vào Hộ chiếu?</h3>
-              <p className="text-xs text-slate-500 max-w-sm mx-auto mt-1">
-                Nhấn vào nút bên dưới để đóng dấu chứng nhận hoàn thành trạm học tập này.
+            <div className="space-y-2">
+              <h3 className="text-2xl font-black text-slate-900">
+                Sẵn Sàng Ghi Danh Vào Hộ Chiếu?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto leading-relaxed">
+                Nhấn vào nút đỏ danh dự bên dưới để thực hiện nghi thức đóng dấu chứng nhận hoàn thành trạm học tập!
               </p>
             </div>
 
-            <button
-              onClick={handleStamp}
-              className="px-10 py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black text-base shadow-xl shadow-amber-500/30 transition transform hover:scale-105 active:scale-95 inline-flex items-center gap-2 cursor-pointer"
-            >
-              <Award className="w-5 h-5" />
-              <span>ĐÓNG DẤU HOÀN THÀNH</span>
-            </button>
+            <div>
+              <button
+                onClick={handleStamp}
+                className="px-10 py-4 rounded-2xl bg-gradient-to-r from-red-600 to-amber-600 hover:from-red-700 hover:to-amber-700 text-white font-black text-base sm:text-lg shadow-xl shadow-red-500/30 transition transform hover:scale-105 active:scale-95 inline-flex items-center gap-3 cursor-pointer"
+              >
+                <Award className="w-6 h-6 text-amber-300" />
+                <span>ĐÓNG DẤU HOÀN THÀNH</span>
+              </button>
+            </div>
           </div>
         ) : (
-          <div className="space-y-6">
-            {/* The Actual Stamped Stamp with Animation */}
-            <div className="inline-block relative p-2">
-              <div className="animate-stamp w-40 h-40 sm:w-44 sm:h-44 rounded-full border-4 border-double border-red-700 bg-red-50/80 p-3 flex flex-col items-center justify-center text-red-700 shadow-xl shadow-red-500/20 rotate-[-4deg]">
-                <div className="w-full h-full rounded-full border border-red-600/70 p-2 flex flex-col items-center justify-center text-center">
-                  <span className="text-[9px] font-black uppercase tracking-wider text-red-800">
+          <div className="space-y-8 animate-fade-in">
+            {/* The Actual Large Realistic Rubber Stamp */}
+            <div className="inline-block relative">
+              <div className="animate-stamp w-48 h-48 sm:w-56 sm:h-56 rounded-full border-[6px] border-double border-red-700 bg-red-50/90 p-4 flex flex-col items-center justify-center text-red-700 shadow-2xl shadow-red-500/25 rotate-[-5deg]">
+                <div className="w-full h-full rounded-full border-2 border-red-600/70 p-2.5 flex flex-col items-center justify-center text-center">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-red-900">
                     SỞ GDĐT ĐÀ NẴNG
                   </span>
-                  <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center my-1">
-                    <Compass className="w-5 h-5 text-red-700" />
+                  <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center my-1.5 shadow-2xs">
+                    <Compass className="w-6 h-6 text-red-700" />
                   </div>
-                  <span className="text-[11px] font-black uppercase tracking-tight text-red-900 px-1 leading-tight">
+                  <span className="text-xs sm:text-sm font-black uppercase tracking-tight text-red-950 px-1 leading-tight">
                     {station.stamp.nameVi}
                   </span>
-                  <span className="text-[8px] font-bold text-red-600 mt-0.5">
+                  <span className="text-[9px] font-extrabold text-red-700 mt-1 uppercase tracking-wide">
                     ★ ĐÃ HOÀN THÀNH ★
                   </span>
                 </div>
               </div>
             </div>
 
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-extrabold text-xs mb-2">
+            <div className="space-y-2">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100 text-emerald-800 font-black text-xs sm:text-sm mb-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                 <span>Chúc mừng nhà khám phá! Em đã hoàn thành trạm</span>
               </div>
-              <h3 className="text-2xl font-black text-slate-900">{station.titleVi}</h3>
-              <p className="text-xs text-slate-500 italic mt-1 max-w-md mx-auto">
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-900">{station.titleVi}</h3>
+              <p className="text-xs sm:text-sm text-slate-500 italic mt-1 max-w-lg mx-auto font-medium">
                 "{station.stamp.quoteVi}"
               </p>
             </div>
 
-            {/* Navigation buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 border-t border-slate-100">
+            {/* Action buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t border-slate-100">
               <button
                 onClick={onReviewJourney}
-                className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs sm:text-sm transition flex items-center justify-center gap-2"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span>XEM LẠI HÀNH TRÌNH</span>
@@ -164,7 +192,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
 
               <button
                 onClick={onExploreNext}
-                className="w-full sm:w-auto px-8 py-3 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-sky-600/30 transition flex items-center justify-center gap-2 active:scale-95"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-sky-700 hover:from-sky-700 hover:to-sky-800 text-white font-black text-xs sm:text-sm shadow-xl shadow-sky-600/30 transition flex items-center justify-center gap-2 transform hover:scale-103 active:scale-95"
               >
                 <span>KHÁM PHÁ TRẠM TIẾP THEO</span>
                 <ArrowRight className="w-4 h-4" />

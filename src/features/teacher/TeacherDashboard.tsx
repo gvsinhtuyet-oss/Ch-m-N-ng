@@ -66,6 +66,9 @@ export const TeacherDashboard: React.FC = () => {
             <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-amber-300 font-bold text-xs uppercase tracking-wider">
               Không Gian Dạy Học – Giáo Viên
             </span>
+            <span className="px-3 py-1 rounded-full bg-amber-300 text-slate-950 font-black text-[10px] uppercase tracking-wide">
+              Tài khoản demo • Dữ liệu minh họa
+            </span>
             <span className="text-xs text-emerald-200">Trường TH Trần Đại Nghĩa</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black">

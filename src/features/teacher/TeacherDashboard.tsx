@@ -61,6 +61,7 @@ export const TeacherDashboard: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8 space-y-8">
+      {currentUser?.id === 'teacher-demo' && <p className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">Chế độ giáo viên trải nghiệm dành cho giám khảo. Bạn có thể xem học liệu và trình chiếu bài học; đăng ảnh, tài liệu chung cần đăng nhập quản trị.</p>}
       {/* Teacher Profile Banner */}
       <div className="bg-gradient-to-r from-emerald-600 via-teal-700 to-sky-800 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>

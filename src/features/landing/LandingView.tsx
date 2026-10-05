@@ -24,6 +24,7 @@ export const LandingView: React.FC = () => {
   const {
     loginAsStudent,
     loginAsTeacher,
+    enterTeacherDemo,
     loginAsAdmin,
     soundEnabled,
     toggleSound,
@@ -318,10 +319,9 @@ export const LandingView: React.FC = () => {
                 </button>
 
                 <button
-                  onClick={() => {
-                    audioService.playSfx('click');
-                    setAdminLogin(false);
-                    setShowTeacherLogin(true);
+                  onClick={async () => {
+                    try { await enterTeacherDemo(); setShowRolePicker(false); }
+                    catch (error) { setLoginError((error as Error).message); }
                   }}
                   className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-emerald-500 shadow-sm hover:shadow-md transition text-left space-y-1.5 group cursor-pointer"
                 >
@@ -329,7 +329,7 @@ export const LandingView: React.FC = () => {
                     <Presentation className="w-5 h-5" />
                   </div>
                   <h4 className="font-black text-sm text-slate-900">GIÁO VIÊN</h4>
-                  <p className="text-[11px] text-slate-500">Đăng nhập bằng tài khoản do nhà trường cấp</p>
+                  <p className="text-[11px] text-slate-500">Trải nghiệm dành cho giám khảo — không cần đăng nhập</p>
                 </button>
 
                 <button

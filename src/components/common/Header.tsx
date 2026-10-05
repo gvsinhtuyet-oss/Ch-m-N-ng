@@ -17,6 +17,7 @@ export const Header: React.FC = () => {
     toggleLanguage,
     setCurrentView,
     logout,
+    enterTeacherDemo,
     t,
   } = useApp();
 
@@ -214,9 +215,9 @@ export const Header: React.FC = () => {
               </button>
 
               <button
-                onClick={() => {
-                  setShowRoleModal(false);
-                  logout();
+                onClick={async () => {
+                  try { await enterTeacherDemo(); setShowRoleModal(false); }
+                  catch (error) { alert((error as Error).message); }
                 }}
                 className={`flex items-center gap-4 p-3.5 rounded-2xl border text-left transition ${
                   role === 'teacher' ? 'border-emerald-500 bg-emerald-50/70' : 'border-slate-200 hover:bg-slate-50'
@@ -227,7 +228,7 @@ export const Header: React.FC = () => {
                 </div>
                 <div>
                   <div className="font-bold text-slate-900 text-sm">GIÁO VIÊN</div>
-                  <div className="text-xs text-slate-500">Trở về trang đầu để xác nhận tài khoản giáo viên demo</div>
+                  <div className="text-xs text-slate-500">Trải nghiệm giáo viên không cần đăng nhập</div>
                 </div>
               </button>
 

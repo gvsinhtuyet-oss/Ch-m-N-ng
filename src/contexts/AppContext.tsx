@@ -37,6 +37,7 @@ interface AppContextType {
   setRole: (role: UserRole) => Promise<void>;
   loginAsStudent: (student: Student) => void;
   loginAsTeacher: (teacher: Teacher) => void;
+  enterTeacherDemo: () => Promise<void>;
   loginAsAdmin: (admin: Admin) => void;
   logout: () => Promise<void>;
   setCurrentGrade: (grade: number) => void;
@@ -127,6 +128,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setCurrentView('teacher-view');
   };
 
+  const enterTeacherDemo = async () => {
+    if (authService.current()) await authService.logout();
+    audioService.playSfx('unlock');
+    setCurrentUser({ id: 'teacher-demo', role: 'teacher', name: 'Giáo viên trải nghiệm', assignedClasses: ['class-2-24', 'class-2-25'], schoolName: 'Trường Tiểu học Trần Đại Nghĩa' } as Teacher);
+    setRoleState('teacher');
+    setGradeState(2);
+    setCurrentStation(null);
+    setCurrentStage(1);
+    setCurrentView('teacher-view');
+  };
+
   const loginAsAdmin = (admin: Admin) => {
     if (authService.current()?.id !== admin.id || authService.current()?.role !== 'admin') return;
     audioService.playSfx('unlock');
@@ -159,7 +171,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   useEffect(() => {
-    if (!currentUser || role === 'student') return;
+    if (!currentUser || role === 'student' || currentUser.id === 'teacher-demo') return;
     let active = true;
     const check = async () => {
       try {
@@ -240,6 +252,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setRole,
         loginAsStudent,
         loginAsTeacher,
+        enterTeacherDemo,
         loginAsAdmin,
         logout,
         setCurrentGrade,

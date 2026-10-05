@@ -119,7 +119,17 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       try {
         rate=await store.get('cham_auth_limits',id);
         if(rate?.until > Date.now()) throw fail(429,'Bạn đã thử nhiều lần. Vui lòng chờ 1 phút.');
-        const user=await store.get('cham_users',id);
+        let user=await store.get('cham_users',id);
+        // The server-only owner secret can recover the owner account after a secret rotation.
+        // Never grant this path to a teacher, inactive account, or another email.
+        if (user?.active && user.role === 'admin' && email === owner &&
+            typeof adminPassword === 'string' && adminPassword.length >= 12 && adminPassword.length <= 128 &&
+            typeof data.password === 'string' &&
+            timingSafeEqual(Buffer.from(hash(data.password)), Buffer.from(hash(adminPassword))) &&
+            !(await matches(data.password,user.passwordHash))) {
+          user={...user,passwordHash:await passwordHash(adminPassword),version:user.version+1};
+          await store.put('cham_users',id,user);
+        }
         if(!user?.active || !(await matches(data.password,user.passwordHash))) {
           const count=(rate?.updatedAt > Date.now()-600000 ? rate.count : 0)+1;
           await store.put('cham_auth_limits',id,{count,updatedAt:Date.now(),until:count>=5 ? Date.now()+60000 : 0});

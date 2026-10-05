@@ -3,7 +3,7 @@ import {createServer} from 'node:http';
 import {createAuth} from './auth-server.mjs';
 const records=new Map();
 const store={ async get(c,id){return structuredClone(records.get(c+'/'+id)||null);},async put(c,id,data,create=false){if(create&&records.has(c+'/'+id))throw Object.assign(new Error('exists'),{status:409});records.set(c+'/'+id,structuredClone(data));},async remove(c,id){records.delete(c+'/'+id);},async list(c){return [...records].filter(([key])=>key.startsWith(c+'/')).map(([,value])=>structuredClone(value));}};
-const auth=createAuth({store,adminEmail:'owner@example.com',adminPassword:'Strong-test-owner-42',secureCookie:false});
+let auth=createAuth({store,adminEmail:'owner@example.com',adminPassword:'Strong-test-owner-42',secureCookie:false});
 const server=createServer(async(req,res)=>{try{
  const json=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json'});res.end(JSON.stringify(data));};
  const body=async req=>{const chunks=[];for await(const chunk of req)chunks.push(chunk);return JSON.parse(Buffer.concat(chunks));};
@@ -41,5 +41,11 @@ try {
  assert.equal((await call('/api/auth/login','POST',{email:'missing@example.com',password:'wrong'})).status,429);
  const restored=createAuth({store,adminEmail:'owner@example.com',adminPassword:undefined,secureCookie:false});
  assert.equal((await restored.requireAdmin({headers:{cookie:admin.cookie}})).role,'admin');
+ auth=createAuth({store,adminEmail:'owner@example.com',adminPassword:'Rotated-owner-secret-42',secureCookie:false});
+ assert.equal((await call('/api/auth/login','POST',{email:'teacher@example.com',password:'Rotated-owner-secret-42'})).status,401);
+ const recovered=await call('/api/auth/login','POST',{email:'owner@example.com',password:'Rotated-owner-secret-42'});
+ assert.equal(recovered.status,200);assert.equal(recovered.body.user.role,'admin');
+ assert.equal((await call('/api/auth/session','GET',undefined,admin.cookie)).body.user,null);
+ assert.equal((await call('/api/auth/login','POST',{email:'owner@example.com',password:'Strong-test-owner-42'})).status,401);
  console.log('PASS: login, roles, duplicate, lock, reset, password change, logout, origin, throttle, persistent sessions.');
 }finally{await new Promise(resolve=>server.close(resolve));}

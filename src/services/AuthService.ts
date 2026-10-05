@@ -1,6 +1,6 @@
 import { Admin, Teacher } from '../types';
 import { fetchWithTimeout } from './NetworkService';
-export type StaffUser = Admin | Teacher;
+export type StaffUser = (Admin | Teacher) & { email: string };
 let user: StaffUser | null = null;
 async function request(path: string, method='GET', data?: unknown) {
   const response = await fetchWithTimeout(path, { method, credentials:'same-origin', cache:'no-store',

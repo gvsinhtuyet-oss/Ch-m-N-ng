@@ -113,9 +113,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const loginAsGuest = () => {
-    audioService.playSfx('click');
-    setCurrentUser({ id: 'guest', role: 'guest', name: 'Khách tham quan' });
+    audioService.playSfx('unlock');
+    setCurrentUser({ id: 'guest', role: 'guest', name: 'Nhà phiêu lưu' });
     setRoleState('guest');
+    setCurrentGrade(2);
+    setCurrentStation(null);
+    setCurrentStage(1);
     setCurrentView('student-journey');
   };
 

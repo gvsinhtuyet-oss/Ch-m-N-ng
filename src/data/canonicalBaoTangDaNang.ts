@@ -52,7 +52,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
       interaction: {
         id: 'int-bt4-1',
         type: 'single-choice',
-        questionVi: 'Một nhiệm vụ quan trọng của bảo tàng là gì?'
+        questionVi: 'Một nhiệm vụ quan trọng của bảo tàng là gì?',
         questionEn: 'What do artifacts help us do?',
         options: [
           { id: 'opt-1', textVi: 'Sưu tầm, bảo quản và giới thiệu di sản', textEn: 'Collect, preserve, and present heritage', isCorrect: true },
@@ -81,7 +81,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
       interaction: {
         id: 'int-bt4-2',
         type: 'single-choice',
-        questionVi: 'Khi quan sát một tác phẩm mỹ thuật, em nên chú ý điều gì?'
+        questionVi: 'Khi quan sát một tác phẩm mỹ thuật, em nên chú ý điều gì?',
         questionEn: 'Which can be considered a fine arts artifact?',
         options: [
           { id: 'opt-1', textVi: 'Hình dáng, màu sắc, chất liệu và cách thể hiện', textEn: 'Form, color, material, and expression', isCorrect: true },
@@ -139,7 +139,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
       interaction: {
         id: 'int-bt4-4',
         type: 'single-choice',
-        questionVi: 'Việc làm nào vừa giúp bảo tồn vừa góp phần phát huy giá trị di sản?'
+        questionVi: 'Việc làm nào vừa giúp bảo tồn vừa góp phần phát huy giá trị di sản?',
         questionEn: 'How should you behave inside a museum?',
         options: [
           { id: 'opt-1', textVi: 'Làm theo hướng dẫn và chia sẻ điều đã học một cách đúng đắn', textEn: 'Follow guidance and share what you learned accurately', isCorrect: true },
@@ -172,7 +172,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
     questions: [
       {
         id: 'q1',
-        questionVi: 'Bảo tàng có vai trò nào sau đây?'
+        questionVi: 'Bảo tàng có vai trò nào sau đây?',
         questionEn: 'When reading an artifact label, which information is most important?',
         options: [
           { id: 'o1', textVi: 'Sưu tầm, bảo quản, trưng bày và giới thiệu di sản', textEn: 'Collect, preserve, display, and present heritage', isCorrect: true },
@@ -183,7 +183,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
       },
       {
         id: 'q2',
-        questionVi: 'Khi mô tả một hiện vật mỹ thuật, em nên chú ý những yếu tố nào?'
+        questionVi: 'Khi mô tả một hiện vật mỹ thuật, em nên chú ý những yếu tố nào?',
         questionEn: 'Lacquer paintings, silk paintings, and sculptures belong to which artifact category?',
         options: [
           { id: 'o1', textVi: 'Hình dáng, màu sắc, chất liệu và cách thể hiện', textEn: 'Form, color, material, and expression', isCorrect: true },
@@ -194,7 +194,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
       },
       {
         id: 'q3',
-        questionVi: 'Cách nào giúp em khai thác thông tin từ một hiện vật tốt hơn?'
+        questionVi: 'Cách nào giúp em khai thác thông tin từ một hiện vật tốt hơn?',
         questionEn: 'Ancient manuscripts, bronze cannons, or historic maps belong to which category?',
         options: [
           { id: 'o1', textVi: 'Quan sát kĩ, đọc nhãn và đặt câu hỏi về hiện vật', textEn: 'Observe carefully, read the label, and ask questions', isCorrect: true },
@@ -205,7 +205,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
       },
       {
         id: 'q4',
-        questionVi: 'Không gian trưng bày của Bảo tàng Mỹ thuật Đà Nẵng giúp em nhận ra điều gì?'
+        questionVi: 'Không gian trưng bày của Bảo tàng Mỹ thuật Đà Nẵng giúp em nhận ra điều gì?',
         questionEn: 'Traditional costumes, weaving looms, and stone mills belong to which category?',
         options: [
           { id: 'o1', textVi: 'Nghệ thuật có nhiều loại hình và chất liệu khác nhau', textEn: 'Art uses many forms and materials', isCorrect: true },
@@ -216,7 +216,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
       },
       {
         id: 'q5',
-        questionVi: 'Hành động nào thể hiện ý thức bảo tồn và phát huy di sản văn hóa?'
+        questionVi: 'Hành động nào thể hiện ý thức bảo tồn và phát huy di sản văn hóa?',
         questionEn: 'Which behavior is RIGHT when students visit a museum?',
         options: [
           { id: 'o1', textVi: 'Tuân thủ hướng dẫn, giữ gìn hiện vật và chia sẻ kiến thức đúng đắn', textEn: 'Follow guidance, protect artifacts, and share knowledge accurately', isCorrect: true },

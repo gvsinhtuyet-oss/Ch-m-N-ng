@@ -4,13 +4,14 @@
 
 ## Thiết lập trên Google Cloud
 
-1. Trong project đang chạy app (`boreal-doodad-j6shk`), bật Firestore API và tạo cơ sở dữ liệu Firestore Native tên `(default)`. Chọn vị trí phù hợp trước khi tạo.
+1. Trong project đang chạy app (`boreal-doodad-j6shk`), bật Firestore API và tạo cơ sở dữ liệu Firestore Native. Có thể bật Firebase từ AI Studio → Settings → Integrations → Firebase Firestore & Auth; ghi lại Database ID được cấp. Chọn vị trí phù hợp trước khi tạo.
 2. Xem tài khoản dịch vụ được gán cho **dịch vụ Cloud Run** trong phần Security. Cấp tài khoản đó quyền `Cloud Datastore User` (`roles/datastore.user`) trên project Firestore. Đây là danh tính chạy app, không nhất thiết trùng tài khoản triển khai AI Studio.
 3. Thiết lập các biến máy chủ của dịch vụ Cloud Run:
 
    | Biến | Giá trị |
    |---|---|
    | `AUTH_FIRESTORE_PROJECT` | `boreal-doodad-j6shk` |
+   | `AUTH_FIRESTORE_DATABASE` | Database ID thật; ví dụ `ai-studio-71b45c71-26f3-4479-9372-306c6b35245a` khi AI Studio cấp; mặc định `(default)` |
    | `AUTH_ADMIN_EMAIL` | Email thật của người quản trị đầu tiên |
    | `AUTH_ADMIN_PASSWORD` | Mật khẩu riêng từ 12–128 ký tự, nên gán bằng Secret Manager |
 
@@ -41,6 +42,6 @@ Tài khoản quản trị ban đầu được giữ nguyên sau mỗi triển kh
 
 Đăng nhập nhân sự thật đã được triển khai trong mã; phải hoàn thành cấu hình và kiểm thử thực tế trên URL Cloud Run trước khi sử dụng. Kiểm tra: đăng nhập quản trị/giáo viên, cấp/khóa/đặt lại mật khẩu, đổi mật khẩu, đăng xuất và từ chối giáo viên gọi API quản trị.
 
-Danh sách lớp/học sinh, số liệu báo cáo và một số minh chứng hiện vẫn là dữ liệu minh họa; tài khoản giáo viên mới chưa được gán lớp. Tiến trình học sinh vẫn lưu tại thiết bị. Kho ảnh/học liệu vẫn dùng `CONTENT_DATA_DIR` và cần lưu trữ bền vững riêng; Firestore trong thay đổi này chỉ lưu tài khoản và phiên. Chưa có gửi email đặt lại mật khẩu tự động, Google OAuth, MFA hoặc đăng nhập học sinh bằng mã lớp.
+Danh sách lớp/học sinh, số liệu báo cáo và một số minh chứng hiện vẫn là dữ liệu minh họa; tài khoản giáo viên mới chưa được gán lớp. Tiến trình học sinh vẫn lưu tại thiết bị. Kho ảnh/học liệu đã chuyển sang Firestore khi cấu hình `AUTH_FIRESTORE_PROJECT` và đúng Database ID. `CONTENT_DATA_DIR` chỉ dùng cho chạy cục bộ. Cần kiểm thử tải tệp và xuất bản lại trên Cloud Run thật. Chưa có gửi email đặt lại mật khẩu tự động, Google OAuth, MFA hoặc đăng nhập học sinh bằng mã lớp.
 
 Kiểm tra tự động: `node --test auth-test.mjs` kiểm tra API với kho dữ liệu bộ nhớ (không thay thế kiểm thử Firestore/Cloud Run thật). Cấu hình thiếu không được làm máy chủ dừng.

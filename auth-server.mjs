@@ -19,8 +19,8 @@ async function matches(password, encoded) {
   return timingSafeEqual(actual, Buffer.from(key, 'hex'));
 }
 // IAM credentials stay on the server. No service-account key is sent to the app.
-export function firestoreStore(project) {
-  const root = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/(default)/documents`;
+export function firestoreStore(project, database = '(default)') {
+  const root = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/${encodeURIComponent(database)}/documents`;
   let cachedToken, expires = 0;
   async function request(route, method='GET', data, query='') {
     if (!cachedToken || expires < Date.now()) {

@@ -1,13 +1,16 @@
 
 import { createServer } from 'node:http';
 import { createAuth, firestoreStore } from './auth-server.mjs';
+import { contentStorage } from './content-storage.mjs';
 import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
 import path from 'node:path';
 
 const dataDir = path.resolve(process.env.CONTENT_DATA_DIR || './content-data');
 const dataFile = path.join(dataDir, 'stations.json');
+const cloudStore = process.env.AUTH_FIRESTORE_PROJECT ? firestoreStore(process.env.AUTH_FIRESTORE_PROJECT, process.env.AUTH_FIRESTORE_DATABASE || '(default)') : null;
+const durableContent = cloudStore ? contentStorage(cloudStore) : null;
 const auth = createAuth({
-  store: process.env.AUTH_FIRESTORE_PROJECT ? firestoreStore(process.env.AUTH_FIRESTORE_PROJECT) : null,
+  store: cloudStore,
   adminEmail: process.env.AUTH_ADMIN_EMAIL, adminPassword: process.env.AUTH_ADMIN_PASSWORD,
   secureCookie: process.env.AUTH_LOCAL_HTTP !== 'true' || !!process.env.K_SERVICE,
 });
@@ -43,7 +46,10 @@ const types = { '.html':'text/html', '.js':'application/javascript', '.css':'tex
 const server = createServer(async (req,res) => {
   try {
     const pathname = new URL(req.url, 'http://localhost').pathname;
-    if (pathname === '/api/content' && req.method === 'GET') return json(res,200,{ schemaVersion:1,stations,theme });
+    if (pathname === '/api/content' && req.method === 'GET') {
+      const current = durableContent ? await durableContent.load() : {stations,theme};
+      return json(res,200,{ schemaVersion:1,...current });
+    }
     if (await auth.handle(req,res,pathname,body,json)) return;
     if (pathname === '/api/content/login') return json(res,410,{ error:'Hãy đăng nhập bằng tài khoản quản trị.' });
     if (pathname === '/api/theme' && req.method === 'PUT') {
@@ -54,6 +60,8 @@ const server = createServer(async (req,res) => {
         return json(res,400,{ error:'Invalid theme settings' });
       const clean = { desktop:data.desktop,mobile:data.mobile,lightness:data.lightness,blur:data.blur };
       const operation = writes.then(async () => {
+        if (durableContent) { await durableContent.saveTheme(clean); return; }
+        if (process.env.K_SERVICE) throw Object.assign(new Error('Chưa cấu hình kho học liệu lâu dài.'),{status:503});
         await writeFile(themeFile + '.tmp',JSON.stringify(clean),{ mode:0o600 });
         await rename(themeFile + '.tmp',themeFile); theme = clean;
       });
@@ -74,6 +82,8 @@ const server = createServer(async (req,res) => {
         return json(res,400,{ error:'Invalid station content' });
       const clean = { coverImage:content.coverImage,mapImage:content.mapImage,hotspots:content.hotspots,resources:content.resources };
       const operation = writes.then(async () => {
+        if (durableContent) { await durableContent.saveStation(id,clean); return; }
+        if (process.env.K_SERVICE) throw Object.assign(new Error('Chưa cấu hình kho học liệu lâu dài.'),{status:503});
         const next = { ...stations,[id]:clean };
         await writeFile(dataFile + '.tmp',JSON.stringify(next),{ mode:0o600 });
         await rename(dataFile + '.tmp',dataFile);
@@ -102,4 +112,3 @@ const server = createServer(async (req,res) => {
   }
 });
 server.listen(Number(process.env.PORT || 3000),'0.0.0.0',() => console.log('CHAM DA NANG content server started'));
-

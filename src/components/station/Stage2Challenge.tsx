@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
@@ -55,6 +55,10 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const [embedRound, setEmbedRound] = useState(0);
   const resourceId = challenge.externalGame?.url.match(/\/resource\/(\d+)/)?.[1];
   const embedUrl = resourceId ? WORDWALL_EMBED_URLS[resourceId] : undefined;
+
+  useEffect(() => {
+    if (!isOnline && challenge.externalGame) setUseInternalChallenge(true);
+  }, [isOnline, challenge]);
 
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
@@ -401,3 +405,4 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
     </div>
   );
 };
+

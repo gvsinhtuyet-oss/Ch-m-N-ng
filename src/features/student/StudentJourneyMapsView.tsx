@@ -198,7 +198,7 @@ export const StudentJourneyMapsView: React.FC = () => {
                 }`}
               >
                 <div className="aspect-[4/3] relative overflow-hidden bg-slate-200">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={station.coverImage}
                     alt=""
                     className={`w-full h-full object-cover ${unlocked ? '' : 'grayscale blur-[1px]'}`}
@@ -288,7 +288,7 @@ export const StudentJourneyMapsView: React.FC = () => {
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md p-3 sm:p-6 overflow-y-auto">
           <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden my-3">
             <div className="relative min-h-[260px] bg-slate-900">
-              <img src={selectedStation.coverImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-45" />
+              <img loading="lazy" decoding="async" src={selectedStation.coverImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-45" />
               <div className="absolute inset-0 bg-gradient-to-br from-sky-950/90 via-indigo-950/75 to-amber-900/55" />
               <button
                 type="button"
@@ -315,7 +315,7 @@ export const StudentJourneyMapsView: React.FC = () => {
             <div className="p-5 sm:p-8 space-y-7">
               <div className="relative">
                 <div className="mx-auto w-40 h-40 sm:w-48 sm:h-48 rounded-full border-8 border-amber-100 overflow-hidden shadow-xl relative z-10">
-                  <img src={selectedStation.journeyMap?.image || selectedStation.coverImage} alt="Bản đồ hành trình" className="w-full h-full object-contain" />
+                  <img loading="lazy" decoding="async" src={selectedStation.journeyMap?.image || selectedStation.coverImage} alt="Bản đồ hành trình" className="w-full h-full object-contain" />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
@@ -448,3 +448,4 @@ export const StudentJourneyMapsView: React.FC = () => {
 };
 
 export default StudentJourneyMapsView;
+

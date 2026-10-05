@@ -23,7 +23,6 @@ export const LandingView: React.FC = () => {
   const {
     loginAsStudent,
     loginAsTeacher,
-    setCurrentView,
     soundEnabled,
     toggleSound,
     t,
@@ -38,8 +37,7 @@ export const LandingView: React.FC = () => {
 
   const handleStartJourney = () => {
     audioService.playSfx('click');
-    // Default student entry directly into journey
-    setCurrentView('student-journey');
+    loginAsStudent(DEMO_STUDENTS[0]);
   };
 
   const handleStudentSubmit = (e: React.FormEvent) => {

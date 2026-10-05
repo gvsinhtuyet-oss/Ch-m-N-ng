@@ -38,7 +38,6 @@ interface AppContextType {
   loginAsStudent: (student: Student) => void;
   loginAsTeacher: (teacher: Teacher) => void;
   loginAsAdmin: (admin: Admin) => void;
-  loginAsGuest: () => void;
   logout: () => void;
   setCurrentGrade: (grade: number) => void;
   openStation: (station: Station, initialStage?: 1 | 2 | 3 | 4) => void;
@@ -56,7 +55,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined);
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [role, setRoleState] = useState<UserRole>('student');
-  const [currentGrade, setCurrentGrade] = useState<number>(2);
+  const [selectedGrade, setGradeState] = useState<number>(2);
   const [currentStation, setCurrentStation] = useState<Station | null>(null);
   const [currentStage, setCurrentStage] = useState<1 | 2 | 3 | 4>(1);
   const [currentView, setCurrentView] = useState<AppView>('landing');
@@ -86,6 +85,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   const t = TRANSLATIONS[language];
+  const currentGrade = role === 'student' && currentUser
+    ? (currentUser as Student).grade : selectedGrade;
+  const setCurrentGrade = (grade: number) => {
+    if (role === 'student' || !Number.isInteger(grade) || grade < 1 || grade > 5) return;
+    setGradeState(grade);
+    setCurrentStation(null);
+    setCurrentStage(1);
+  };
 
   const setRole = (newRole: UserRole) => {
     audioService.playSfx('click');
@@ -100,7 +107,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     audioService.playSfx('unlock');
     setCurrentUser(student);
     setRoleState('student');
-    setCurrentGrade(student.grade);
+    setGradeState(student.grade);
     setCurrentStation(null);
     setCurrentStage(1);
     setCurrentView('student-journey');
@@ -110,7 +117,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     audioService.playSfx('unlock');
     setCurrentUser(teacher);
     setRoleState('teacher');
-    setCurrentGrade(2);
+    setGradeState(2);
     setCurrentStation(null);
     setCurrentStage(1);
     setCurrentView('teacher-view');
@@ -123,16 +130,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setCurrentView('admin-view');
   };
 
-  const loginAsGuest = () => {
-    audioService.playSfx('unlock');
-    setCurrentUser({ id: 'guest', role: 'guest', name: 'Nhà phiêu lưu' });
-    setRoleState('guest');
-    setCurrentGrade(2);
-    setCurrentStation(null);
-    setCurrentStage(1);
-    setCurrentView('student-journey');
-  };
-
   const logout = () => {
     audioService.playSfx('click');
     setCurrentUser(null);
@@ -141,6 +138,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const openStation = (station: Station, initialStage: 1 | 2 | 3 | 4 = 1) => {
+    if (!currentUser) return;
+    if (role === 'student' && station.grade !== (currentUser as Student).grade) return;
     audioService.playSfx('click');
     setCurrentStation(station);
     setCurrentStage(initialStage);
@@ -156,7 +155,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     audioService.playSfx('click');
     audioService.stopNarration();
     setCurrentStation(null);
-    if (role === 'teacher') {
+    if (role === 'admin') {
+      setCurrentView('admin-view');
+    } else if (role === 'teacher') {
       setCurrentView('teacher-view');
     } else {
       setCurrentView('student-journey');
@@ -174,6 +175,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const enterPresentationMode = (station: Station) => {
+    if (!currentUser || (role !== 'teacher' && role !== 'admin')) return;
     audioService.playSfx('click');
     setCurrentStation(station);
     setCurrentStage(1);
@@ -204,7 +206,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         loginAsStudent,
         loginAsTeacher,
         loginAsAdmin,
-        loginAsGuest,
         logout,
         setCurrentGrade,
         openStation,

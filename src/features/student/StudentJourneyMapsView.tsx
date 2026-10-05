@@ -315,7 +315,7 @@ export const StudentJourneyMapsView: React.FC = () => {
             <div className="p-5 sm:p-8 space-y-7">
               <div className="relative">
                 <div className="mx-auto w-40 h-40 sm:w-48 sm:h-48 rounded-full border-8 border-amber-100 overflow-hidden shadow-xl relative z-10">
-                  <img src={selectedStation.coverImage} alt="" className="w-full h-full object-cover" />
+                  <img src={selectedStation.journeyMap?.image || selectedStation.coverImage} alt="Bản đồ hành trình" className="w-full h-full object-contain" />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">

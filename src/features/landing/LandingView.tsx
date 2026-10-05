@@ -6,7 +6,6 @@ import {
   Compass,
   GraduationCap,
   Presentation,
-  School,
   Globe,
   ArrowRight,
   Sparkles,
@@ -24,7 +23,6 @@ export const LandingView: React.FC = () => {
   const {
     loginAsStudent,
     loginAsTeacher,
-    loginAsGuest,
     setCurrentView,
     soundEnabled,
     toggleSound,
@@ -206,16 +204,6 @@ export const LandingView: React.FC = () => {
             >
               Dành cho Giáo viên
             </button>
-            <span>•</span>
-            <button
-              onClick={() => {
-                audioService.playSfx('click');
-                loginAsGuest();
-              }}
-              className="hover:text-amber-300 transition underline underline-offset-4 decoration-white/30"
-            >
-              Khám phá tự do (Khách)
-            </button>
           </div>
         </div>
 
@@ -293,20 +281,6 @@ export const LandingView: React.FC = () => {
                   <p className="text-[11px] text-slate-500">Trình chiếu TV lớp học & xác nhận bài dạy</p>
                 </button>
 
-                <button
-                  onClick={() => {
-                    audioService.playSfx('click');
-                    setShowRolePicker(false);
-                    loginAsGuest();
-                  }}
-                  className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-amber-500 shadow-sm hover:shadow-md transition text-left space-y-1.5 group cursor-pointer"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold group-hover:scale-110 transition">
-                    <Globe className="w-5 h-5" />
-                  </div>
-                  <h4 className="font-black text-sm text-slate-900">KHÁCH THAM QUAN</h4>
-                  <p className="text-[11px] text-slate-500">Khám phá tự do không cần tài khoản</p>
-                </button>
               </div>
             ) : (
               /* Student Login Form */

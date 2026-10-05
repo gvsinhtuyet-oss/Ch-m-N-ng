@@ -4,7 +4,7 @@ import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import confetti from 'canvas-confetti';
-import { Award, Compass, Sparkles, CheckCircle2, RotateCcw, ArrowRight, Shield, Star, Heart } from 'lucide-react';
+import { Award, Compass, Sparkles, CheckCircle2, RotateCcw, ArrowRight, Map, KeyRound, Gift } from 'lucide-react';
 
 interface Props {
   station: Station;
@@ -30,6 +30,9 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
   const progress = progressService.getStationProgress(studentId, station.id);
 
   const [stamped, setStamped] = useState<boolean>(progress.stampReceived || progress.stationCompleted);
+  const [giftClaimed, setGiftClaimed] = useState<boolean>(
+    progress.journeyMapReceived && progress.keyFragmentReceived
+  );
 
   const handleStamp = () => {
     audioService.playSfx('stamp');
@@ -67,6 +70,37 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     if (!isGuest) {
       progressService.completeStage4(studentId, station.id);
     }
+  };
+
+  const handleJourneyGift = () => {
+    if (!stamped) return;
+
+    if (!isGuest) {
+      const updated = progressService.claimJourneyGift(studentId, station.id);
+      if (!updated.journeyMapReceived || !updated.keyFragmentReceived) {
+        return;
+      }
+    }
+
+    audioService.playSfx('map');
+    setTimeout(() => audioService.playSfx('treasure'), 360);
+
+    try {
+      confetti({
+        particleCount: 120,
+        spread: 95,
+        startVelocity: 38,
+        origin: { y: 0.62 },
+      });
+      setTimeout(() => {
+        confetti({ particleCount: 70, angle: 60, spread: 70, origin: { x: 0, y: 0.65 } });
+        confetti({ particleCount: 70, angle: 120, spread: 70, origin: { x: 1, y: 0.65 } });
+      }, 280);
+    } catch {
+      // Celebration is optional if the browser blocks canvas effects.
+    }
+
+    setGiftClaimed(true);
   };
 
   return (
@@ -223,6 +257,72 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                   <span className="inline-block px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold">
                     Bản xem thử – đăng nhập học sinh để lưu dấu vào Hộ chiếu.
                   </span>
+                </div>
+              )}
+            </div>
+
+            {/* Journey Gift Exchange */}
+            <div className="max-w-2xl mx-auto rounded-3xl border-2 border-amber-200 bg-gradient-to-br from-amber-50 via-white to-sky-50 p-5 sm:p-6 shadow-sm space-y-4">
+              {!giftClaimed ? (
+                <>
+                  <div className="flex items-center justify-center gap-2">
+                    <Gift className="w-5 h-5 text-amber-600" />
+                    <h4 className="text-lg font-black text-slate-900">Quà cuối hành trình đang chờ em</h4>
+                  </div>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Đổi quà sau khi hoàn thành đủ 4 chặng để nhận <strong>Bản đồ hành trình</strong> và
+                    <strong> 1 Mảnh chìa khóa kho báu</strong>. Các kỉ niệm em đã nhận vẫn được giữ nguyên.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleJourneyGift}
+                    className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/20 transition transform hover:scale-103 active:scale-95 inline-flex items-center gap-2"
+                  >
+                    <Gift className="w-5 h-5" />
+                    <span>{isGuest ? 'XEM QUÀ HÀNH TRÌNH (DEMO)' : 'ĐỔI QUÀ HÀNH TRÌNH'}</span>
+                  </button>
+                  {isGuest && (
+                    <p className="text-[11px] text-amber-800 font-semibold">
+                      Nhà phiêu lưu được xem thử cơ chế phần thưởng; hệ thống không lưu tiến độ cá nhân.
+                    </p>
+                  )}
+                </>
+              ) : (
+                <div className="space-y-4 animate-fade-in">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black">
+                    <Sparkles className="w-4 h-4" />
+                    <span>{isGuest ? 'QUÀ DEMO ĐÃ MỞ' : 'ĐÃ ĐỔI QUÀ THÀNH CÔNG'}</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="rounded-2xl border border-sky-200 bg-white p-4 flex items-center gap-3 text-left">
+                      <div className="w-12 h-12 rounded-2xl bg-sky-100 flex items-center justify-center shrink-0">
+                        <Map className="w-6 h-6 text-sky-700" />
+                      </div>
+                      <div>
+                        <div className="text-[10px] uppercase tracking-wide font-black text-sky-700">Phần thưởng 01</div>
+                        <div className="font-black text-slate-900">Bản đồ hành trình</div>
+                        <div className="text-[11px] text-slate-500 mt-0.5">{station.titleVi}</div>
+                      </div>
+                    </div>
+
+                    <div className="rounded-2xl border border-amber-200 bg-white p-4 flex items-center gap-3 text-left">
+                      <div className="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center shrink-0">
+                        <KeyRound className="w-6 h-6 text-amber-700" />
+                      </div>
+                      <div>
+                        <div className="text-[10px] uppercase tracking-wide font-black text-amber-700">Phần thưởng 02</div>
+                        <div className="font-black text-slate-900">Mảnh chìa khóa kho báu</div>
+                        <div className="text-[11px] text-slate-500 mt-0.5">Sưu tập đủ 5 mảnh để mở Rương Kho báu Khối {station.grade}.</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-[11px] sm:text-xs text-slate-600 font-medium">
+                    {isGuest
+                      ? 'Đây là bản xem thử. Hãy đăng nhập bằng vai trò Học sinh để lưu Bản đồ và Mảnh chìa khóa.'
+                      : 'Bản đồ đã được lưu vào mục BẢN ĐỒ. Học lại bài sẽ không tạo phần thưởng trùng lặp.'}
+                  </p>
                 </div>
               )}
             </div>

@@ -2,6 +2,7 @@ import { StudentStationProgress, StudentCheckInResponse } from '../types';
 
 const PROGRESS_STORAGE_KEY = 'cham_danang_progress_v2';
 const SYNC_QUEUE_KEY = 'cham_danang_sync_queue_v2';
+const TREASURE_STORAGE_KEY = 'cham_danang_grade_treasure_v1';
 
 export interface GradeSummary {
   grade: number;
@@ -12,6 +13,14 @@ export interface GradeSummary {
   totalJourneyMaps: number;
   totalKeyFragments: number;
   treasureChestEligible: boolean;
+}
+
+export interface GradeTreasureProgress {
+  studentId: string;
+  grade: number;
+  chestOpened: boolean;
+  chestOpenedAt?: string;
+  explorerCertificateUnlocked: boolean;
 }
 
 class ProgressService {
@@ -305,6 +314,64 @@ class ProgressService {
         totalKeyFragments === 5 &&
         completedStations === 5,
     };
+  }
+
+  public getGradeTreasureProgress(studentId: string, grade: number): GradeTreasureProgress {
+    const fallback: GradeTreasureProgress = {
+      studentId,
+      grade,
+      chestOpened: false,
+      explorerCertificateUnlocked: false,
+    };
+
+    if (this.isGuest(studentId)) {
+      return fallback;
+    }
+
+    try {
+      const raw = localStorage.getItem(TREASURE_STORAGE_KEY);
+      if (!raw) return fallback;
+      const parsed: Record<string, GradeTreasureProgress> = JSON.parse(raw);
+      return parsed[`${studentId}:::${grade}`] ?? fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  public openGradeTreasure(
+    studentId: string,
+    grade: number,
+    stationIdsInGrade: string[]
+  ): GradeTreasureProgress {
+    const current = this.getGradeTreasureProgress(studentId, grade);
+    if (this.isGuest(studentId) || current.chestOpened) {
+      return current;
+    }
+
+    const summary = this.getGradeProgress(studentId, stationIdsInGrade, grade);
+    if (!summary.treasureChestEligible) {
+      return current;
+    }
+
+    const next: GradeTreasureProgress = {
+      studentId,
+      grade,
+      chestOpened: true,
+      chestOpenedAt: new Date().toISOString(),
+      explorerCertificateUnlocked: true,
+    };
+
+    try {
+      const raw = localStorage.getItem(TREASURE_STORAGE_KEY);
+      const parsed: Record<string, GradeTreasureProgress> = raw ? JSON.parse(raw) : {};
+      parsed[`${studentId}:::${grade}`] = next;
+      localStorage.setItem(TREASURE_STORAGE_KEY, JSON.stringify(parsed));
+    } catch {
+      return current;
+    }
+
+    this.queueSyncEvent(studentId, `grade-${grade}`, 'GRADE_TREASURE_OPENED');
+    return next;
   }
 
   public getAllCompletedStamps(studentId: string): string[] {

@@ -13,7 +13,7 @@ interface Props {
 
 export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) => {
   const { currentUser, role, isOnline } = useApp();
-  const isGuest = role === 'guest';
+  const isReadOnly = role !== 'student';
   const challenge = station.challenge;
   const questions = challenge.questions || [];
 
@@ -55,7 +55,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
 
       if (pass) {
         audioService.playSfx('correct');
-        if (!isGuest) {
+        if (!isReadOnly) {
           progressService.completeStage2(studentId, station.id);
         }
         setShowRewardModal(true);
@@ -67,7 +67,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
 
   const handleExternalGameComplete = () => {
     audioService.playSfx('correct');
-    if (!isGuest) {
+    if (!isReadOnly) {
       progressService.completeStage2(studentId, station.id);
     }
     setPassed(true);
@@ -280,9 +280,9 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
         <RewardClaimModal
           reward={station.rewards.find(r => r.stage === 2) || station.rewards[1]}
           stage={2}
-          alreadyClaimed={!isGuest && progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 2)?.id || '')}
+          alreadyClaimed={!isReadOnly && progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 2)?.id || '')}
           onClaim={() => {
-            if (!isGuest) {
+            if (!isReadOnly) {
               const rw2 = station.rewards.find(r => r.stage === 2);
               if (rw2) {
                 progressService.claimReward(studentId, station.id, rw2.id);

@@ -17,6 +17,15 @@ function shuffleOptions<T>(options: readonly T[]): T[] {
   return shuffled;
 }
 
+// Official embed URLs returned by Wordwall's oEmbed API.
+const WORDWALL_EMBED_URLS: Record<string, string> = {
+  "120604647": "https://wordwall.net/embed/9bf5318dbfc94898902ef662795c3973?themeId=65&ref=oembed",
+  "120605543": "https://wordwall.net/embed/998e4ceb735f4333b8e89dc347a8ac33?themeId=46&ref=oembed",
+  "120606175": "https://wordwall.net/embed/2c3810ecb9834a54b8196a88658f54c6?themeId=62&ref=oembed",
+  "120606516": "https://wordwall.net/embed/9c87d7fd21d84cc5a27008f055576960?themeId=49&ref=oembed",
+  "120607731": "https://wordwall.net/embed/5e9f990113d24b5bac54f5738b1f9915?themeId=1&ref=oembed"
+};
+
 interface Props {
   station: Station;
   onCompleteStage: () => void;
@@ -44,9 +53,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
 
   const [embedRound, setEmbedRound] = useState(0);
   const resourceId = challenge.externalGame?.url.match(/\/resource\/(\d+)/)?.[1];
-  const embedUrl = resourceId
-    ? `https://wordwall.net/embed/resource/${resourceId}`
-    : undefined;
+  const embedUrl = resourceId ? WORDWALL_EMBED_URLS[resourceId] : undefined;
 
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);

@@ -154,7 +154,7 @@ export const LandingView: React.FC = () => {
               <Layers className="w-4 h-4" />
             </div>
             <div className="text-xs font-black text-white">5 Khối Lớp</div>
-            <div className="text-[10px] text-slate-300 font-medium">25 trạm học tập</div>
+            <div className="text-[10px] text-slate-300 font-medium">25 bài trong lộ trình</div>
           </div>
 
           <div className="p-3 rounded-2xl bg-slate-900/60 backdrop-blur-md border border-white/10 text-center space-y-1">
@@ -170,7 +170,7 @@ export const LandingView: React.FC = () => {
               <Award className="w-4 h-4" />
             </div>
             <div className="text-xs font-black text-white">Hộ Chiếu Số</div>
-            <div className="text-[10px] text-slate-300 font-medium">Bộ sưu tập 25 tem</div>
+            <div className="text-[10px] text-slate-300 font-medium">Dấu ấn hành trình</div>
           </div>
 
           <div className="p-3 rounded-2xl bg-slate-900/60 backdrop-blur-md border border-white/10 text-center space-y-1">

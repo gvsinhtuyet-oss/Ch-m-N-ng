@@ -1,12 +1,13 @@
 import React from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { progressService } from '../../services/ProgressService';
+import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { Award, Compass, Shield, MapPin, Calendar, CheckCircle2, Bookmark } from 'lucide-react';
 
 export const StudentPassportView: React.FC = () => {
   const { currentUser, currentGrade, allStationsInCurrentGrade, openStation } = useApp();
   const studentId = currentUser?.id || 'guest';
-  const stations = allStationsInCurrentGrade;
+  const stations = allStationsInCurrentGrade.filter(station => DEMO_STATION_IDS.has(station.id));
 
   return (
     <div className="max-w-5xl mx-auto px-3 sm:px-6 py-8 space-y-8">
@@ -63,7 +64,7 @@ export const StudentPassportView: React.FC = () => {
               <Bookmark className="w-5 h-5 text-red-700" />
               <span>Trang Thu Thập Dấu Ấn – Khối {currentGrade}</span>
             </h2>
-            <p className="text-xs text-slate-500">Mỗi trạm hoàn thành sẽ được đóng một con dấu kỷ niệm trang trọng</p>
+            <p className="text-xs text-slate-500">Phiên bản demo hiện mở 01 dấu hành trình cho mỗi khối; các bài còn lại đang phát triển.</p>
           </div>
         </div>
 

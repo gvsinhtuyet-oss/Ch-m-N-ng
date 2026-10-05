@@ -44,7 +44,11 @@ export const TeacherDashboard: React.FC = () => {
   });
   const currentDemoStation = demoStations[0] || null;
   const implementations = implementationService.getAll();
-  const demoStudentSummaries = DEMO_STUDENTS.map(student =>
+  const teacherClasses = DEMO_CLASSROOMS.filter(classroom =>
+    teacher?.assignedClasses?.includes(classroom.id)
+  );
+  const classStudents = DEMO_STUDENTS.filter(student => student.classId === selectedClassId);
+  const demoStudentSummaries = classStudents.map(student =>
     progressService.getGradeProgress(
       student.id,
       demoStations.map(station => station.id),
@@ -258,8 +262,11 @@ export const TeacherDashboard: React.FC = () => {
                 onChange={(e) => setSelectedClassId(e.target.value)}
                 className="px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
               >
-                <option value="class-2-24">Lớp 2/24 (35 học sinh)</option>
-                <option value="class-2-25">Lớp 2/25 (34 học sinh)</option>
+                {teacherClasses.map(classroom => (
+                  <option key={classroom.id} value={classroom.id}>
+                    {classroom.name} ({classroom.totalStudents} học sinh)
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -277,7 +284,7 @@ export const TeacherDashboard: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
-                {DEMO_STUDENTS.map((st) => {
+                {classStudents.map((st) => {
                   const prog = progressService.getGradeProgress(
                     st.id,
                     demoStations.map(station => station.id),
@@ -341,7 +348,7 @@ export const TeacherDashboard: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-100">
               <span className="text-xs font-bold text-emerald-800 uppercase">Tỷ lệ tham gia</span>
-              <div className="text-3xl font-black text-emerald-700 mt-1">{participatingStudents}/{DEMO_STUDENTS.length}</div>
+              <div className="text-3xl font-black text-emerald-700 mt-1">{participatingStudents}/{classStudents.length}</div>
               <p className="text-[11px] text-emerald-600 mt-1">Học sinh demo đã hoàn thành bài demo trong dữ liệu cục bộ</p>
             </div>
 

@@ -174,9 +174,9 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
           {contentService.resources(station.id).map(resource => (
             <div key={resource.id} className="rounded-xl bg-sky-50 p-3 space-y-2">
               <a href={resource.url} target="_blank" rel="noopener noreferrer" className="text-sky-800 font-bold underline">{resource.title}</a>
-              {resource.kind === 'image' && <img src={resource.url} alt={resource.title} className="max-h-80 w-full object-contain rounded-xl" />}
+              {resource.kind === 'image' && <img src={resource.url} alt={resource.title} loading="lazy" decoding="async" className="max-h-80 w-full object-contain rounded-xl" />}
               {resource.kind === 'audio' && <audio controls preload="none" src={resource.url} className="w-full" />}
-              {resource.kind === 'video' && (resource.url.startsWith('data:video/') || /\\.(mp4|webm|ogg)(\\?|$)/i.test(resource.url)) && <video controls preload="none" src={resource.url} className="max-h-96 w-full rounded-xl" />}
+              {resource.kind === 'video' && (resource.url.startsWith('data:video/') || /\.(mp4|webm|ogg)(\?|$)/i.test(resource.url)) && <video controls preload="none" src={resource.url} className="max-h-96 w-full rounded-xl" />}
               {resource.kind === 'document' && <p className="text-xs text-slate-600">Bấm tên học liệu để mở tài liệu.</p>}
             </div>
           ))}
@@ -303,8 +303,9 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
               alt={hotspot.titleVi}
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103"
               onError={(e) => {
-                (e.target as HTMLImageElement).src =
-                  'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=1200&q=80';
+                const image = e.currentTarget;
+                image.onerror = null;
+                image.src = '/adventure-background.svg';
               }}
             />
             {/* Cinematic Gradient Overlays */}
@@ -690,3 +691,4 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
     </div>
   );
 };
+

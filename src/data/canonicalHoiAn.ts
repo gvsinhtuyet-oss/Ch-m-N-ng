@@ -162,6 +162,12 @@ export const CANONICAL_HOI_AN_STATION: Station = {
     platform: 'internal_interactive',
     instructionsVi: 'Em hãy trả lời đúng 5 câu hỏi để giải mã những bí mật thú vị của thương cảng Hội An xưa nhé!',
     instructionsEn: 'Answer these 5 questions correctly to decode the fascinating heritage of Hoi An!',
+    externalGame: {
+      platform: 'wordwall',
+      titleVi: 'GIẢI MÃ THƯƠNG CẢNG HỘI AN',
+      url: 'https://wordwall.net/resource/120605543?wwmethod=link',
+      noteVi: 'Trò chơi luyện tập mở rộng trên Wordwall. Hoạt động này không thay thế thử thách nội bộ và không ảnh hưởng đến tiến độ hoàn thành bài học.',
+    },
     completionMode: 'AUTO',
     passingScore: 5,
     questions: [

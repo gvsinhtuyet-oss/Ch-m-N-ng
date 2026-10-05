@@ -230,7 +230,14 @@ class ProgressService {
     const current = this.getStationProgress(studentId, stationId);
 
     // Guest mode is view-only and never writes personal progress.
-    if (this.isGuest(studentId) || !current.stage4Completed || !current.stationCompleted) {
+    if (
+      this.isGuest(studentId) ||
+      !current.stage1Completed ||
+      !current.stage2Completed ||
+      !current.stage3Completed ||
+      !current.stage4Completed ||
+      !current.stationCompleted
+    ) {
       return current;
     }
 

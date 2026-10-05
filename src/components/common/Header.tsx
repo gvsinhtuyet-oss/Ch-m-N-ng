@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { PWAInstallButton } from './PWAInstallButton';
-import { Volume2, VolumeX, Globe, Wifi, WifiOff, User, Compass, Award, Heart, BookOpen, Layers, Users, BarChart3, Presentation, LogOut } from 'lucide-react';
+import { Volume2, VolumeX, Globe, Wifi, WifiOff, User, Compass, Award, Heart, Presentation } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const {
@@ -77,13 +77,9 @@ export const Header: React.FC = () => {
             >
               <User className="w-3 h-3" />
               <span className="font-bold">
-                {role === 'student'
-                  ? `HS: ${(currentUser as any)?.displayName || 'Lớp ' + currentGrade}`
-                  : role === 'teacher'
+                {role === 'teacher'
                   ? 'Giáo viên'
-                  : role === 'admin'
-                  ? 'Ban Giám Hiệu'
-                  : 'Khách'}
+                  : `HS: ${(currentUser as any)?.displayName || 'Lớp ' + currentGrade}`}
               </span>
             </button>
           </div>
@@ -94,9 +90,8 @@ export const Header: React.FC = () => {
           {/* Logo & Slogan */}
           <div
             onClick={() => {
-              if (role === 'student' || role === 'guest') setCurrentView('student-journey');
-              else if (role === 'teacher') setCurrentView('teacher-view');
-              else setCurrentView('admin-view');
+              if (role === 'teacher') setCurrentView('teacher-view');
+              else setCurrentView('student-journey');
             }}
             className="flex items-center gap-3 cursor-pointer group"
           >
@@ -117,7 +112,7 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Role Navigation */}
-          {role === 'student' || role === 'guest' ? (
+          {role !== 'teacher' ? (
             <nav className="flex items-center gap-1 sm:gap-2">
               <button
                 onClick={() => setCurrentView('landing')}
@@ -175,13 +170,7 @@ export const Header: React.FC = () => {
                 Cổng Giáo Viên
               </span>
             </nav>
-          ) : (
-            <nav className="flex items-center gap-1 sm:gap-2">
-              <span className="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-800 text-xs font-bold border border-indigo-200">
-                Cổng Nhà Trường / Ban Giám Hiệu
-              </span>
-            </nav>
-          )}
+          ) : null}
         </div>
       </header>
 
@@ -191,7 +180,7 @@ export const Header: React.FC = () => {
           <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-slate-100">
             <h3 className="text-lg font-extrabold text-slate-900 mb-1 text-center">Chọn Vai Trò Trải Nghiệm</h3>
             <p className="text-xs text-slate-500 text-center mb-6">
-              Hệ thống cung cấp trải nghiệm phân quyền đầy đủ cho 4 đối tượng:
+              Phiên bản demo tập trung vào 2 vai trò chính:
             </p>
 
             <div className="grid grid-cols-1 gap-3">
@@ -209,7 +198,7 @@ export const Header: React.FC = () => {
                 </div>
                 <div>
                   <div className="font-bold text-slate-900 text-sm">HỌC SINH (Tiểu học)</div>
-                  <div className="text-xs text-slate-500">Khám phá 5 trạm, làm thử thách, nhận con dấu hộ chiếu</div>
+                  <div className="text-xs text-slate-500">Khám phá bài demo, làm thử thách và lưu dấu hành trình</div>
                 </div>
               </button>
 
@@ -231,41 +220,6 @@ export const Header: React.FC = () => {
                 </div>
               </button>
 
-              <button
-                onClick={() => {
-                  setRole('admin');
-                  setShowRoleModal(false);
-                }}
-                className={`flex items-center gap-4 p-3.5 rounded-2xl border text-left transition ${
-                  role === 'admin' ? 'border-indigo-500 bg-indigo-50/70' : 'border-slate-200 hover:bg-slate-50'
-                }`}
-              >
-                <div className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
-                  <BarChart3 className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="font-bold text-slate-900 text-sm">NHÀ TRƯỜNG / ADMIN</div>
-                  <div className="text-xs text-slate-500">Dashboard triển khai toàn trường, quản lý trạm, xuất bản phiên bản</div>
-                </div>
-              </button>
-
-              <button
-                onClick={() => {
-                  setRole('guest');
-                  setShowRoleModal(false);
-                }}
-                className={`flex items-center gap-4 p-3.5 rounded-2xl border text-left transition ${
-                  role === 'guest' ? 'border-amber-500 bg-amber-50/70' : 'border-slate-200 hover:bg-slate-50'
-                }`}
-              >
-                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
-                  <Globe className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="font-bold text-slate-900 text-sm">TRẢI NGHIỆM VỚI TƯ CÁCH KHÁCH</div>
-                  <div className="text-xs text-slate-500">Xem tự do không yêu cầu đăng nhập, không lưu báo cáo lớp</div>
-                </div>
-              </button>
             </div>
 
             {/* Grade Selector */}

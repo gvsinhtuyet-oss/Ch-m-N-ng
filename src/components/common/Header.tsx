@@ -15,7 +15,6 @@ export const Header: React.FC = () => {
     setCurrentGrade,
     toggleSound,
     toggleLanguage,
-    setRole,
     setCurrentView,
     logout,
     t,
@@ -186,8 +185,8 @@ export const Header: React.FC = () => {
             <div className="grid grid-cols-1 gap-3">
               <button
                 onClick={() => {
-                  setRole('student');
                   setShowRoleModal(false);
+                  logout();
                 }}
                 className={`flex items-center gap-4 p-3.5 rounded-2xl border text-left transition ${
                   role === 'student' ? 'border-sky-500 bg-sky-50/70' : 'border-slate-200 hover:bg-slate-50'
@@ -198,14 +197,14 @@ export const Header: React.FC = () => {
                 </div>
                 <div>
                   <div className="font-bold text-slate-900 text-sm">HỌC SINH (Tiểu học)</div>
-                  <div className="text-xs text-slate-500">Khám phá bài demo, làm thử thách và lưu dấu hành trình</div>
+                  <div className="text-xs text-slate-500">Trở về trang đầu để đăng nhập/chọn học sinh rõ ràng</div>
                 </div>
               </button>
 
               <button
                 onClick={() => {
-                  setRole('teacher');
                   setShowRoleModal(false);
+                  logout();
                 }}
                 className={`flex items-center gap-4 p-3.5 rounded-2xl border text-left transition ${
                   role === 'teacher' ? 'border-emerald-500 bg-emerald-50/70' : 'border-slate-200 hover:bg-slate-50'
@@ -216,7 +215,7 @@ export const Header: React.FC = () => {
                 </div>
                 <div>
                   <div className="font-bold text-slate-900 text-sm">GIÁO VIÊN</div>
-                  <div className="text-xs text-slate-500">Trình chiếu TV lớp học, theo dõi học sinh, xác nhận đã triển khai</div>
+                  <div className="text-xs text-slate-500">Trở về trang đầu để xác nhận tài khoản giáo viên demo</div>
                 </div>
               </button>
 

@@ -1,6 +1,11 @@
 import { Station, Reward, Stamp, PedagogyGoals, ExplorationHotspot, Challenge, CheckIn } from '../types';
 import { GRADE_2_STATIONS } from './grade2Stations';
 import { OFFICIAL_25_CATALOG, CatalogItem } from './curriculumCatalog';
+import { CANONICAL_THANH_DIEN_HAI_STATION } from './canonicalThanhDienHai';
+import { CANONICAL_HOI_AN_STATION } from './canonicalHoiAn';
+import { CANONICAL_DANH_NHAN_LOP3_STATION } from './canonicalDanhNhanLop3';
+import { CANONICAL_BAO_TANG_DA_NANG_STATION } from './canonicalBaoTangDaNang';
+import { CANONICAL_NGU_HANH_SON_STATION } from './canonicalNguHanhSon';
 
 function catalogItemToStation(cat: CatalogItem): Station {
   const hotspots: ExplorationHotspot[] = [
@@ -153,13 +158,26 @@ function catalogItemToStation(cat: CatalogItem): Station {
   };
 }
 
-// Build the full 25 stations map
+// Build the full 25 stations map and replace the five appraisal demos
+// with their canonical, fully authored station data.
+const CANONICAL_DEMO_STATIONS: Record<string, Station> = {
+  [CANONICAL_THANH_DIEN_HAI_STATION.id]: CANONICAL_THANH_DIEN_HAI_STATION,
+  [CANONICAL_HOI_AN_STATION.id]: CANONICAL_HOI_AN_STATION,
+  [CANONICAL_DANH_NHAN_LOP3_STATION.id]: CANONICAL_DANH_NHAN_LOP3_STATION,
+  [CANONICAL_BAO_TANG_DA_NANG_STATION.id]: CANONICAL_BAO_TANG_DA_NANG_STATION,
+  [CANONICAL_NGU_HANH_SON_STATION.id]: CANONICAL_NGU_HANH_SON_STATION,
+};
+
+function withCanonicalDemo(stations: Station[]): Station[] {
+  return stations.map(station => CANONICAL_DEMO_STATIONS[station.id] ?? station);
+}
+
 const STATIONS_BY_GRADE: Record<number, Station[]> = {
-  1: OFFICIAL_25_CATALOG.filter(c => c.grade === 1).map(catalogItemToStation),
-  2: GRADE_2_STATIONS, // Grade 2 uses the full canonical stations
-  3: OFFICIAL_25_CATALOG.filter(c => c.grade === 3).map(catalogItemToStation),
-  4: OFFICIAL_25_CATALOG.filter(c => c.grade === 4).map(catalogItemToStation),
-  5: OFFICIAL_25_CATALOG.filter(c => c.grade === 5).map(catalogItemToStation),
+  1: withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 1).map(catalogItemToStation)),
+  2: withCanonicalDemo(GRADE_2_STATIONS),
+  3: withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 3).map(catalogItemToStation)),
+  4: withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 4).map(catalogItemToStation)),
+  5: withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 5).map(catalogItemToStation)),
 };
 
 export function getStationsForGrade(grade: number): Station[] {

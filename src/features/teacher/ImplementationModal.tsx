@@ -69,7 +69,7 @@ export const ImplementationModal: React.FC<Props> = ({ station, onClose, onSucce
               </span>
               <h3 className="text-xl font-black text-slate-900 mt-2">{station.titleVi}</h3>
               <p className="text-xs text-slate-500 mt-0.5">
-                Ghi nhận nhật ký triển khai bài học vào hồ sơ theo dõi của nhà trường.
+                Ghi nhận nhật ký triển khai bài học trong phiên bản demo của giáo viên.
               </p>
             </div>
 
@@ -168,7 +168,7 @@ export const ImplementationModal: React.FC<Props> = ({ station, onClose, onSucce
             </div>
             <h3 className="text-xl font-bold text-slate-900">Đã lưu nhật ký triển khai!</h3>
             <p className="text-xs text-slate-600">
-              Dữ liệu đã được cập nhật vào báo cáo chuyên môn của tổ khối và Nhà trường.
+              Dữ liệu đã được lưu vào nhật ký triển khai trong phiên bản demo.
             </p>
           </div>
         )}

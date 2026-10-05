@@ -17,7 +17,6 @@ export const Header: React.FC = () => {
     toggleLanguage,
     setCurrentView,
     logout,
-    loginAsGuest,
     t,
   } = useApp();
 
@@ -79,8 +78,8 @@ export const Header: React.FC = () => {
               <span className="font-bold">
                 {role === 'teacher'
                   ? 'Giáo viên'
-                  : role === 'guest'
-                  ? 'Nhà phiêu lưu'
+                  : role === 'admin'
+                  ? 'Quản trị'
                   : `HS: ${(currentUser as any)?.displayName || 'Lớp ' + currentGrade}`}
               </span>
             </button>
@@ -92,7 +91,8 @@ export const Header: React.FC = () => {
           {/* Logo & Slogan */}
           <div
             onClick={() => {
-              if (role === 'teacher') setCurrentView('teacher-view');
+              if (role === 'admin') setCurrentView('admin-view');
+              else if (role === 'teacher') setCurrentView('teacher-view');
               else setCurrentView('student-journey');
             }}
             className="flex items-center gap-3 cursor-pointer group"
@@ -114,7 +114,7 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Role Navigation */}
-          {role !== 'teacher' ? (
+          {role === 'student' ? (
             <nav className="flex items-center gap-1 sm:gap-2">
               <button
                 onClick={() => setCurrentView('landing')}
@@ -234,25 +234,25 @@ export const Header: React.FC = () => {
               <button
                 onClick={() => {
                   setShowRoleModal(false);
-                  loginAsGuest();
+                  logout();
                 }}
                 className={`flex items-center gap-4 p-3.5 rounded-2xl border text-left transition ${
-                  role === 'guest' ? 'border-amber-500 bg-amber-50/70' : 'border-slate-200 hover:bg-slate-50'
+                  role === 'admin' ? 'border-amber-500 bg-amber-50/70' : 'border-slate-200 hover:bg-slate-50'
                 }`}
               >
                 <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
                   <Globe className="w-5 h-5" />
                 </div>
                 <div>
-                  <div className="font-bold text-slate-900 text-sm">NHÀ PHIÊU LƯU</div>
-                  <div className="text-xs text-slate-500">Khám phá không cần đăng nhập, không lưu tiến độ cá nhân</div>
+                  <div className="font-bold text-slate-900 text-sm">QUẢN TRỊ</div>
+                  <div className="text-xs text-slate-500">Quản lý giao diện, hình ảnh và học liệu</div>
                 </div>
               </button>
 
             </div>
 
             {/* Grade Selector */}
-            <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
+            {role !== 'student' && <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-600">Đổi khối lớp:</span>
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map(g => (
@@ -267,7 +267,7 @@ export const Header: React.FC = () => {
                   </button>
                 ))}
               </div>
-            </div>
+            </div>}
 
             <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
               <button

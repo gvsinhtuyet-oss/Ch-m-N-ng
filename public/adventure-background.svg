@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+<defs><linearGradient id="sea" x2="0" y2="1"><stop stop-color="#78cee0"/><stop offset=".52" stop-color="#d5edf0"/><stop offset="1" stop-color="#59bdd1"/></linearGradient><radialGradient id="sun"><stop stop-color="#fff7d6"/><stop offset="1" stop-color="#fff7d6" stop-opacity="0"/></radialGradient><filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#126b81" flood-opacity=".16"/></filter></defs>
+<path fill="url(#sea)" d="M0 0h1920v1080H0z"/><ellipse cx="960" cy="400" rx="700" ry="500" fill="url(#sun)"/>
+<g fill="#fff" opacity=".5"><path d="M-60 100q40-80 110-30q50-85 120-30q80-25 100 70Z"/><path d="M1580 90q30-55 80-25q50-70 100-30q70-15 90 70Z"/><path d="M580 25q50-60 100-25q60-45 120 15Z"/></g>
+<g stroke="#e5f7ff" stroke-width="3" fill="none" opacity=".55"><path d="M0 870q90-35 180 0t180 0M1430 960q90-35 180 0t180 0t180 0M0 1010q110-30 220 0t220 0M1540 310q60-20 120 0t120 0"/></g>
+<path d="M120 260C650-120 1400 100 1780 440S1720 950 1290 870S350 1180 140 820" fill="none" stroke="#b08d47" stroke-width="5" stroke-dasharray="14 18" opacity=".28"/>
+<g filter="url(#shadow)">
+<g transform="translate(80 240)"><ellipse cy="60" rx="145" ry="65" fill="#ecd49a"/><ellipse cy="43" rx="130" ry="48" fill="#8cc58f"/><path d="M-90 38v-65h25v15h20v-15h25v15h20v-15h25v65Z" fill="#d29360"/><path d="M-68 38v-42h20v42m30 0v-42h20v42" fill="#b67449"/><path d="M-45 40v-30a18 18 0 0136 0v30" fill="#6e6551"/></g>
+<g transform="translate(1810 160)"><ellipse cy="100" rx="155" ry="65" fill="#ecd49a"/><path d="M-130 90L-70-80-25-20 20-110 95 5 135 90Z" fill="#78ae96"/><path d="M-105 90L-40-60 0-10 35-70 95 90Z" fill="#a8cab1"/><path d="M-20 55h65v-30h-65Z" fill="#eed79b"/><path d="M-40 27L12-6 65 27Z" fill="#a86650"/></g>
+<g transform="translate(90 870)"><ellipse cy="70" rx="180" ry="75" fill="#eed6a4"/><path d="M-20 40q10-110 30-155" stroke="#8d7857" stroke-width="14" fill="none"/><path d="M10-105q-80-60-125-5q60-15 100 20M10-110q55-75 110-15q-60-15-105 30M10-110q-20-90 40-85q-20 35-30 80" fill="#599f80"/></g>
+<g transform="translate(1800 880)"><ellipse cy="50" rx="170" ry="65" fill="#eed6a4"/><path d="M-60 35v-70q60-65 120 0v70Z" fill="#a96940" stroke="#f8c85e" stroke-width="7"/><path d="M-60-8h120M0-56v91" stroke="#f8c85e" stroke-width="8"/><circle cy="5" r="13" fill="#ffdf78"/><path d="M-17-95h34M0-112v34M-93-54h20M-83-64v20" stroke="#fff0b4" stroke-width="5"/></g>
+</g><g fill="#fff8d0" opacity=".75"><path d="m280 90 5 14 15 1-12 9 4 15-12-9-12 9 4-15-12-9 15-1Z"/><path d="m1620 710 5 14 15 1-12 9 4 15-12-9-12 9 4-15-12-9 15-1Z"/></g>
+</svg>

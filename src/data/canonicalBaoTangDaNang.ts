@@ -285,7 +285,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
       id: 'src-bt4-1',
       title: 'Tư liệu giáo dục di sản tại các bảo tàng trên địa bàn TP Đà Nẵng',
       organization: 'Bảo tàng Đà Nẵng & Bảo tàng Điêu khắc Chăm',
-      sourceType: 'museum_archive',
+      sourceType: 'museum',
       verified: true,
     },
     {

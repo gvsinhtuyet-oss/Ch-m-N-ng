@@ -161,7 +161,7 @@ export const CANONICAL_THANH_DIEN_HAI_STATION: Station = {
     questions: [
       {
         id: 'q1',
-        questionVi: 'Thành Điện Hải là gì?'
+        questionVi: 'Thành Điện Hải là gì?',
         questionEn: 'What is the significance of Dien Hai Citadel for Da Nang?',
         options: [
           { id: 'o1', textVi: 'Một di tích lịch sử tiêu biểu của Đà Nẵng', textEn: 'A notable historical relic of Da Nang', isCorrect: true },
@@ -172,7 +172,7 @@ export const CANONICAL_THANH_DIEN_HAI_STATION: Station = {
       },
       {
         id: 'q2',
-        questionVi: 'Dấu tích nào em có thể gặp khi tìm hiểu Thành Điện Hải?'
+        questionVi: 'Dấu tích nào em có thể gặp khi tìm hiểu Thành Điện Hải?',
         questionEn: 'Which relic at the citadel reminds us of coastal defense?',
         options: [
           { id: 'o1', textVi: 'Tường thành, hào và đại bác', textEn: 'Walls, moat, and cannons', isCorrect: true },

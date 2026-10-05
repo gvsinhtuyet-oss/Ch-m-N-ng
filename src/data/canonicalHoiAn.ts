@@ -288,7 +288,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
     stationId: 'g2-station-4',
     version: '1.0.0-demo',
     status: 'IN_REVIEW',
-    createdBy: 'Ban Biên Soạn GDĐP',
+    createdBy: 'Nhóm biên soạn CHẠM ĐÀ NẴNG',
     createdAt: '2026-10-01T08:00:00Z',
     changelog: 'Rà soát Khối 2: bám 3 yêu cầu cần đạt; làm gọn kiến thức về Chùa Cầu, nhà cổ, hội quán, sông/bến và giữ nguyên VR360 đã kiểm chứng',
   },

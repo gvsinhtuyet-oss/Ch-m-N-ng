@@ -73,11 +73,11 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </div>
 
         {/* Offline Download button */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex flex-col items-start sm:items-end gap-1 shrink-0">
           {offlinePkg ? (
             <div className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200 shadow-2xs">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>Đã tải offline ({offlinePkg.sizeMb}MB)</span>
+              <span>Demo offline đã lưu cục bộ ({offlinePkg.sizeMb}MB)</span>
             </div>
           ) : (
             <button
@@ -86,9 +86,12 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-2xl bg-sky-50 hover:bg-sky-100 text-sky-800 text-xs font-black border border-sky-200 transition shadow-2xs active:scale-95"
             >
               <Download className="w-3.5 h-3.5 text-sky-600" />
-              <span>{downloading ? 'Đang tải...' : 'TẢI TRẠM ĐỂ HỌC OFFLINE'}</span>
+              <span>{downloading ? 'Đang lưu demo...' : 'DEMO TẢI OFFLINE'}</span>
             </button>
           )}
+          <span className="text-[10px] text-slate-400 font-medium">
+            Phiên bản demo – dữ liệu được lưu cục bộ trên thiết bị, chưa phải gói offline hoàn chỉnh.
+          </span>
         </div>
       </div>
 

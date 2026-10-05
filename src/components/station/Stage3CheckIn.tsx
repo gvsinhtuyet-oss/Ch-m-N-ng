@@ -190,7 +190,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
               className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 to-sky-600 hover:from-rose-600 hover:to-sky-700 disabled:opacity-40 text-white font-extrabold text-sm shadow-lg shadow-rose-500/25 transition active:scale-95 inline-flex items-center gap-2"
             >
               <Sparkles className="w-4 h-4 text-amber-300" />
-              <span>Gửi Check-in & Mở khóa Chặng 4: Lưu Dấu Hành Trình</span>
+              <span>GỬI CHECK-IN & NHẬN VẬT PHẨM</span>
             </button>
           </div>
         </div>

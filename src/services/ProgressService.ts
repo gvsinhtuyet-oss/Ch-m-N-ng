@@ -48,7 +48,28 @@ class ProgressService {
     return `${studentId}:::${stationId}`;
   }
 
+  private isGuest(studentId: string): boolean {
+    return !studentId || studentId === 'guest';
+  }
+
   public getStationProgress(studentId: string, stationId: string): StudentStationProgress {
+    if (this.isGuest(studentId)) {
+      return {
+        studentId: 'guest',
+        stationId,
+        stage1Completed: false,
+        stage2Completed: false,
+        stage3Completed: false,
+        stage4Completed: false,
+        stationCompleted: false,
+        exploredHotspotIds: [],
+        rewardsCollected: [],
+        stampReceived: false,
+        lastVisitedAt: new Date().toISOString(),
+        syncStatus: 'local_only',
+      };
+    }
+
     const key = this.getCompositeKey(studentId, stationId);
     const existing = this.memoryCache.get(key);
     if (existing) {
@@ -74,6 +95,9 @@ class ProgressService {
 
   public startStation(studentId: string, stationId: string): StudentStationProgress {
     const current = this.getStationProgress(studentId, stationId);
+    if (this.isGuest(studentId)) {
+      return current;
+    }
     if (!current.startedAt) {
       current.startedAt = new Date().toISOString();
     }
@@ -86,6 +110,9 @@ class ProgressService {
 
   public completeHotspot(studentId: string, stationId: string, hotspotId: string): StudentStationProgress {
     const current = this.getStationProgress(studentId, stationId);
+    if (this.isGuest(studentId)) {
+      return current;
+    }
     if (!current.exploredHotspotIds.includes(hotspotId)) {
       current.exploredHotspotIds.push(hotspotId);
     }
@@ -98,6 +125,9 @@ class ProgressService {
 
   public completeStage1(studentId: string, stationId: string, rewardId?: string): StudentStationProgress {
     const current = this.getStationProgress(studentId, stationId);
+    if (this.isGuest(studentId)) {
+      return current;
+    }
     current.stage1Completed = true;
     if (rewardId && !current.rewardsCollected.includes(rewardId)) {
       current.rewardsCollected.push(rewardId);
@@ -112,6 +142,9 @@ class ProgressService {
 
   public claimReward(studentId: string, stationId: string, rewardId: string): StudentStationProgress {
     const current = this.getStationProgress(studentId, stationId);
+    if (this.isGuest(studentId)) {
+      return current;
+    }
     if (!current.rewardsCollected.includes(rewardId)) {
       current.rewardsCollected.push(rewardId);
       current.lastVisitedAt = new Date().toISOString();
@@ -125,6 +158,9 @@ class ProgressService {
 
   public completeStage2(studentId: string, stationId: string, rewardId?: string): StudentStationProgress {
     const current = this.getStationProgress(studentId, stationId);
+    if (this.isGuest(studentId)) {
+      return current;
+    }
     current.stage2Completed = true;
     if (rewardId && !current.rewardsCollected.includes(rewardId)) {
       current.rewardsCollected.push(rewardId);
@@ -144,6 +180,9 @@ class ProgressService {
     rewardId?: string
   ): StudentStationProgress {
     const current = this.getStationProgress(studentId, stationId);
+    if (this.isGuest(studentId)) {
+      return current;
+    }
     current.stage3Completed = true;
     current.checkInResponse = checkInResponse;
     if (rewardId && !current.rewardsCollected.includes(rewardId)) {
@@ -159,6 +198,9 @@ class ProgressService {
 
   public completeStage4(studentId: string, stationId: string): StudentStationProgress {
     const current = this.getStationProgress(studentId, stationId);
+    if (this.isGuest(studentId)) {
+      return current;
+    }
     current.stage4Completed = true;
     current.stationCompleted = true;
     current.stampReceived = true;

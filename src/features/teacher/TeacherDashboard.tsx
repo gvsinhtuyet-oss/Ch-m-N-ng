@@ -282,11 +282,21 @@ export const TeacherDashboard: React.FC = () => {
       {/* TAB 3: KẾT QUẢ */}
       {activeTab === 'results' && (
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
-          <div>
-            <h2 className="text-xl font-black text-slate-900">Báo Cáo Tiến Độ & Kết Quả Lớp</h2>
-            <p className="text-xs text-slate-500">
-              Tổng hợp mức độ tham gia, con dấu đạt được và cảm xúc của học sinh (Không áp lực điểm số).
-            </p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <h2 className="text-xl font-black text-slate-900">Báo Cáo Tiến Độ & Kết Quả Lớp</h2>
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black uppercase tracking-wider border border-amber-300">
+                  DỮ LIỆU MINH HỌA
+                </span>
+              </div>
+              <p className="text-xs text-slate-500">
+                Tổng hợp mức độ tham gia, con dấu đạt được và cảm xúc của học sinh (Không áp lực điểm số).
+              </p>
+            </div>
+            <span className="px-3 py-1 rounded-xl bg-slate-100 text-slate-600 text-xs font-semibold">
+              Kỳ học 2025 - 2026
+            </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -305,7 +315,7 @@ export const TeacherDashboard: React.FC = () => {
             <div className="p-5 rounded-2xl bg-amber-50 border border-amber-100">
               <span className="text-xs font-bold text-amber-800 uppercase">Trạm yêu thích nhất</span>
               <div className="text-xl font-black text-amber-900 mt-1">Di sản Hội An & Cù Lao Chàm</div>
-              <p className="text-[11px] text-amber-700 mt-1">Nhiều lượt xem 360° và phản hồi tích cực nhất</p>
+              <p className="text-[11px] text-amber-700 mt-1">Ví dụ minh họa từ dữ liệu demo</p>
             </div>
           </div>
 

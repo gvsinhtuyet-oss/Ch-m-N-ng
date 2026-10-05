@@ -180,7 +180,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
               <div className="animate-stamp w-48 h-48 sm:w-56 sm:h-56 rounded-full border-[6px] border-double border-red-700 bg-red-50/90 p-4 flex flex-col items-center justify-center text-red-700 shadow-2xl shadow-red-500/25 rotate-[-5deg]">
                 <div className="w-full h-full rounded-full border-2 border-red-600/70 p-2.5 flex flex-col items-center justify-center text-center">
                   <span className="text-[10px] font-black uppercase tracking-widest text-red-900">
-                    SỞ GDĐT ĐÀ NẴNG
+                    CHẠM ĐÀ NẴNG
                   </span>
                   <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center my-1.5 shadow-2xs">
                     <Compass className="w-6 h-6 text-red-700" />

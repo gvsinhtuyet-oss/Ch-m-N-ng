@@ -137,7 +137,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setCurrentView('station-view');
 
     // Register station start in progress engine
-    if (currentUser) {
+    if (currentUser && role !== 'guest') {
       progressService.startStation(currentUser.id, station.id);
     }
   };

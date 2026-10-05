@@ -83,7 +83,7 @@ export const StudentPassportView: React.FC = () => {
                     <div className="w-28 h-28 mx-auto rounded-full border-4 border-double border-red-700 bg-red-50 p-2 flex flex-col items-center justify-center text-red-700 shadow-md rotate-[-3deg] transition group-hover:rotate-0">
                       <div className="w-full h-full rounded-full border border-red-600/60 p-1.5 flex flex-col items-center justify-center">
                         <span className="text-[7px] font-black uppercase tracking-widest text-red-900">
-                          SỞ GDĐT ĐÀ NẴNG
+                          CHẠM ĐÀ NẴNG
                         </span>
                         <Award className="w-5 h-5 text-red-700 my-0.5" />
                         <span className="text-[9px] font-black uppercase text-red-800 leading-tight">

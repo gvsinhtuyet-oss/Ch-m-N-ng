@@ -1,6 +1,6 @@
 // Master TypeScript Data Models for CHẠM ĐÀ NẴNG
 
-export type UserRole = 'guest' | 'student' | 'teacher' | 'admin';
+export type UserRole = 'student' | 'teacher' | 'admin';
 
 export interface User {
   id: string;

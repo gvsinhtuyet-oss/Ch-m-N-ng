@@ -287,7 +287,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
     stationId: 'g4-station-2',
     version: '1.0.0-demo',
     status: 'IN_REVIEW',
-    createdBy: 'Ban Biên Soạn GDĐP',
+    createdBy: 'Nhóm biên soạn CHẠM ĐÀ NẴNG',
     createdAt: '2026-10-01T08:00:00Z',
     changelog: 'Rà soát Khối 4: bám 4 yêu cầu cần đạt; bổ sung quá trình hình thành, loại hình hiện vật, kĩ năng khai thác thông tin, bảo tồn – phát huy và VR360 chính thức',
   },

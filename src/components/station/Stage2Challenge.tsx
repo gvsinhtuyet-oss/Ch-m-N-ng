@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle, ExternalLink, Gamepad2 } from 'lucide-react';
 import { RewardClaimModal } from '../common/RewardClaimModal';
+
+
+// Shuffle a copy so option IDs and correctness stay unchanged.
+function shuffleOptions<T>(options: readonly T[]): T[] {
+  const shuffled = [...options];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
 
 interface Props {
   station: Station;
@@ -15,7 +26,14 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const { currentUser, role, isOnline } = useApp();
   const isReadOnly = role !== 'student';
   const challenge = station.challenge;
-  const questions = challenge.questions || [];
+  const [shuffleRound, setShuffleRound] = useState(0);
+  const questions = useMemo(
+    () => (challenge.questions || []).map(question => ({
+      ...question,
+      options: shuffleOptions(question.options),
+    })),
+    [challenge, shuffleRound],
+  );
 
   const [currentQIndex, setCurrentQIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
@@ -77,6 +95,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
 
   const handleRetry = () => {
     audioService.playSfx('click');
+    setShuffleRound(round => round + 1);
     setSelectedAnswers({});
     setCurrentQIndex(0);
     setIsSubmitted(false);

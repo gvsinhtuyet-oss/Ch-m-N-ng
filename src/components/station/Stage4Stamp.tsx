@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { fetchWithTimeout } from '../../services/NetworkService';
+import React, { useState, useEffect, useRef } from 'react';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
@@ -44,7 +45,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     try {
       let blob: Blob;
       if (station.journeyMap?.image) {
-        const response = await fetch(station.journeyMap.image);
+        const response = await fetchWithTimeout(station.journeyMap.image);
         if (!response.ok) throw new Error('Không tải được ảnh bản đồ.');
         blob = await response.blob();
         if (!blob.type.startsWith('image/')) throw new Error('Đường dẫn bản đồ chưa phải tệp ảnh.');
@@ -101,70 +102,46 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     } finally { setSavingMap(false); }
   };
 
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const exchanging = useRef(false);
+  useEffect(() => () => { timers.current.forEach(clearTimeout); }, []);
+  const schedule = (callback: () => void, delay: number) => {
+    timers.current.push(setTimeout(callback, delay));
+  };
   const handleStamp = () => {
     audioService.playSfx('stamp');
-    setTimeout(() => {
-      audioService.playSfx('victory');
-    }, 220);
-
-    // Dynamic Confetti celebration
-    try {
-      confetti({
-        particleCount: 100,
-        spread: 80,
-        origin: { y: 0.55 },
-        colors: ['#0284c7', '#f59e0b', '#10b981', '#ec4899', '#8b5cf6', '#ef4444'],
-      });
-      setTimeout(() => {
-        confetti({
-          particleCount: 60,
-          angle: 60,
-          spread: 60,
-          origin: { x: 0 },
-        });
-        confetti({
-          particleCount: 60,
-          angle: 120,
-          spread: 60,
-          origin: { x: 1 },
-        });
-      }, 350);
-    } catch {
-      // ignore
-    }
-
     setStamped(true);
-    if (!isReadOnly) {
-      progressService.completeStage4(studentId, station.id);
-    }
+    if (!isReadOnly) progressService.completeStage4(studentId, station.id);
   };
 
   const handleJourneyGift = () => {
-    if (!canExchange) return;
+    if (!canExchange || exchanging.current || giftClaimed) return;
+    exchanging.current = true;
     if (!stamped) handleStamp();
 
     if (!isReadOnly) {
       const updated = progressService.claimJourneyGift(studentId, station.id);
       if (!updated.journeyMapReceived || !updated.keyFragmentReceived) {
+        exchanging.current = false;
         return;
       }
     }
 
     audioService.playSfx('map');
-    setTimeout(() => audioService.playSfx('treasure'), 360);
+    schedule(() => audioService.playSfx('treasure'), 360);
 
     try {
       confetti({
-        particleCount: 120,
+        particleCount: 65,
         spread: 95,
         startVelocity: 38,
         origin: { y: 0.35 },
         zIndex: 10000,
         disableForReducedMotion: true,
       });
-      setTimeout(() => {
-        confetti({ particleCount: 70, angle: 60, spread: 70, origin: { x: 0, y: 0.65 }, zIndex: 10000, disableForReducedMotion: true });
-        confetti({ particleCount: 70, angle: 120, spread: 70, origin: { x: 1, y: 0.65 }, zIndex: 10000, disableForReducedMotion: true });
+      schedule(() => {
+        confetti({ particleCount: 35, angle: 60, spread: 70, origin: { x: 0, y: 0.65 }, zIndex: 10000, disableForReducedMotion: true });
+        confetti({ particleCount: 35, angle: 120, spread: 70, origin: { x: 1, y: 0.65 }, zIndex: 10000, disableForReducedMotion: true });
       }, 280);
     } catch {
       // Celebration is optional if the browser blocks canvas effects.
@@ -278,3 +255,4 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     </div>
   );
 };
+

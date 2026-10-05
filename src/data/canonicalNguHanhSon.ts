@@ -150,6 +150,12 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
     platform: 'internal_interactive',
     instructionsVi: 'Em hãy giải mã các dấu hiệu của Ngũ Hành Sơn để vượt qua thử thách!',
     instructionsEn: 'Decode the clues of Marble Mountains to complete the challenge!',
+    externalGame: {
+      platform: 'wordwall',
+      titleVi: 'GIẢI MÃ MIỀN DI SẢN',
+      url: 'https://wordwall.net/vi/resource/120607731?wwmethod=link',
+      noteVi: 'Trò chơi luyện tập mở rộng trên Wordwall. Hoạt động này không thay thế thử thách nội bộ và không ảnh hưởng đến tiến độ hoàn thành bài học.',
+    },
     completionMode: 'AUTO',
     passingScore: 5,
     questions: [

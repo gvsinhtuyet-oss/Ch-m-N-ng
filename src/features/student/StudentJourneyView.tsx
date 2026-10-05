@@ -8,6 +8,7 @@ import { Compass, Award, CheckCircle2, Play, Sparkles, BookOpen, Clock } from 'l
 export const StudentJourneyView: React.FC = () => {
   const {
     currentUser,
+    role,
     currentGrade,
     setCurrentGrade,
     allStationsInCurrentGrade,
@@ -49,7 +50,7 @@ export const StudentJourneyView: React.FC = () => {
               <span className="text-xs text-sky-200">Khối Lớp {currentGrade}</span>
             </div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight">
-              Hành Trình Khám Phá Quê Hương
+              {role === 'student' ? `Chào Nhà phiêu lưu ${(currentUser as any)?.displayName || currentUser?.name || ''}!` : 'Hành Trình Khám Phá Quê Hương'}
             </h1>
             <p className="text-xs sm:text-sm text-sky-100 max-w-xl leading-relaxed">
               Khám phá bài học demo của Khối {currentGrade}. Các nội dung còn lại đang tiếp tục được hoàn thiện.
@@ -74,7 +75,7 @@ export const StudentJourneyView: React.FC = () => {
         </div>
 
         {/* Grade Selector Tabs */}
-        <div className="mt-6 pt-5 border-t border-white/15 flex items-center gap-2 overflow-x-auto pb-1">
+        {role !== 'student' && <div className="mt-6 pt-5 border-t border-white/15 flex items-center gap-2 overflow-x-auto pb-1">
           <span className="text-xs text-sky-200 font-semibold mr-2 shrink-0">Chọn khối học:</span>
           {[1, 2, 3, 4, 5].map((g) => (
             <button
@@ -89,7 +90,7 @@ export const StudentJourneyView: React.FC = () => {
               Khối {g}
             </button>
           ))}
-        </div>
+        </div>}
       </div>
 
       {/* Celebration Banner when the demo lesson is completed */}

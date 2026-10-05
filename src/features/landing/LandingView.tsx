@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
-import { DEMO_STUDENTS, DEMO_TEACHER } from '../../data/mockUsers';
+import { DEMO_STUDENTS, DEMO_TEACHER, DEMO_ADMIN } from '../../data/mockUsers';
 import { audioService } from '../../services/AudioService';
 import {
   Compass,
@@ -23,7 +23,7 @@ export const LandingView: React.FC = () => {
   const {
     loginAsStudent,
     loginAsTeacher,
-    loginAsGuest,
+    loginAsAdmin,
     soundEnabled,
     toggleSound,
     t,
@@ -31,6 +31,7 @@ export const LandingView: React.FC = () => {
 
   const [showRolePicker, setShowRolePicker] = useState<boolean>(false);
   const [showStudentLogin, setShowStudentLogin] = useState<boolean>(false);
+  const [adminLogin, setAdminLogin] = useState(false);
   const [showTeacherLogin, setShowTeacherLogin] = useState<boolean>(false);
   const [selectedClass, setSelectedClass] = useState<string>('2/24');
   const [studentName, setStudentName] = useState<string>('');
@@ -56,6 +57,7 @@ export const LandingView: React.FC = () => {
     setLoginError('');
     setShowStudentLogin(false);
     setShowTeacherLogin(false);
+    setAdminLogin(false);
     setShowRolePicker(true);
   };
 
@@ -314,6 +316,7 @@ export const LandingView: React.FC = () => {
                 <button
                   onClick={() => {
                     audioService.playSfx('click');
+                    setAdminLogin(false);
                     setShowTeacherLogin(true);
                   }}
                   className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-emerald-500 shadow-sm hover:shadow-md transition text-left space-y-1.5 group cursor-pointer"
@@ -328,18 +331,16 @@ export const LandingView: React.FC = () => {
                 <button
                   onClick={() => {
                     audioService.playSfx('click');
-                    setShowRolePicker(false);
-                    setShowStudentLogin(false);
-                    setShowTeacherLogin(false);
-                    loginAsGuest();
+                    setAdminLogin(true);
+                    setShowTeacherLogin(true);
                   }}
                   className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-amber-500 shadow-sm hover:shadow-md transition text-left space-y-1.5 group cursor-pointer"
                 >
                   <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold group-hover:scale-110 transition">
                     <Globe className="w-5 h-5" />
                   </div>
-                  <h4 className="font-black text-sm text-slate-900">NHÀ PHIÊU LƯU</h4>
-                  <p className="text-[11px] text-slate-500">Khám phá nhanh không cần đăng nhập, không lưu tiến độ cá nhân</p>
+                  <h4 className="font-black text-sm text-slate-900">QUẢN TRỊ</h4>
+                  <p className="text-[11px] text-slate-500">Quản lý giao diện, hình ảnh và học liệu</p>
                 </button>
 
               </div>
@@ -384,7 +385,7 @@ export const LandingView: React.FC = () => {
 
                 <div className="rounded-xl bg-sky-50 border border-sky-100 px-3 py-2.5 text-[10px] text-sky-800 leading-relaxed">
                   Thiết bị này sẽ ghi nhớ <strong>tên và lớp</strong> để lần sau em vào học nhanh hơn.
-                  Em vẫn có thể đổi tên hoặc đổi lớp bất cứ lúc nào.
+                  Sau khi vào học, em chỉ thấy các chặng đúng khối lớp đã đăng ký.
                 </div>
 
                 {loginError && (
@@ -416,7 +417,7 @@ export const LandingView: React.FC = () => {
                   <span className="inline-block px-2.5 py-1 rounded-full bg-emerald-700 text-white text-[10px] font-black uppercase tracking-wide mb-2">
                     Dữ liệu minh họa
                   </span>
-                  <h4 className="font-black text-base">Trải nghiệm cổng Giáo viên – tài khoản demo</h4>
+                  <h4 className="font-black text-base">{adminLogin ? 'Trải nghiệm cổng Quản trị' : 'Trải nghiệm cổng Giáo viên'} – tài khoản demo</h4>
                   <p className="mt-2 leading-relaxed">
                     Phiên bản thẩm định sử dụng tài khoản minh họa để người xem trải nghiệm chức năng giáo viên.
                     Hệ thống không tự nhận diện danh tính người truy cập.
@@ -424,7 +425,7 @@ export const LandingView: React.FC = () => {
                 </div>
 
                 <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-1.5">
-                  <div><span className="font-bold text-slate-500">Tài khoản demo:</span> <span className="font-black text-slate-900">{DEMO_TEACHER.name}</span></div>
+                  <div><span className="font-bold text-slate-500">Tài khoản demo:</span> <span className="font-black text-slate-900">{adminLogin ? DEMO_ADMIN.name : DEMO_TEACHER.name}</span></div>
                   <div><span className="font-bold text-slate-500">Đơn vị:</span> <span className="font-semibold text-slate-800">{DEMO_TEACHER.schoolName}</span></div>
                   <div className="text-[11px] text-slate-500 pt-1">Thông tin này chỉ phục vụ trình diễn chức năng của sản phẩm.</div>
                 </div>
@@ -443,11 +444,12 @@ export const LandingView: React.FC = () => {
                       audioService.playSfx('unlock');
                       setShowRolePicker(false);
                       setShowTeacherLogin(false);
-                      loginAsTeacher(DEMO_TEACHER);
+                      if (adminLogin) loginAsAdmin(DEMO_ADMIN);
+                      else loginAsTeacher(DEMO_TEACHER);
                     }}
                     className="flex-1 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold shadow-md shadow-emerald-600/20 transition"
                   >
-                    VÀO CỔNG GIÁO VIÊN
+                    {adminLogin ? 'VÀO CỔNG QUẢN TRỊ' : 'VÀO CỔNG GIÁO VIÊN'}
                   </button>
                 </div>
               </div>

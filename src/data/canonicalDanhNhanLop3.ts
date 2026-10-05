@@ -285,7 +285,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
       id: 'src-dn3-1',
       title: 'Tư liệu Danh nhân lịch sử xứ Quảng – Huỳnh Thúc Kháng và Phan Châu Trinh',
       organization: 'Bảo tàng Đà Nẵng & Hội Khoa học Lịch sử TP Đà Nẵng',
-      sourceType: 'museum_archive',
+      sourceType: 'museum',
       verified: true,
     },
     {

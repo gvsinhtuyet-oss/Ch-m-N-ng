@@ -149,7 +149,7 @@ export const CANONICAL_THANH_DIEN_HAI_STATION: Station = {
     titleEn: 'Citadel Explorer Challenge',
     platform: 'internal_interactive',
     instructionsVi: 'Em hãy chọn đáp án đúng để hoàn thành thử thách về Thành Điện Hải nhé!',
-    instructionsEn: 'Complete these 3 questions to master the history of Dien Hai Citadel!',
+    instructionsEn: 'Complete these 5 questions to master the history of Dien Hai Citadel!',
     externalGame: {
       platform: 'wordwall',
       titleVi: 'BẢO VỆ THÀNH CỔ',
@@ -157,7 +157,7 @@ export const CANONICAL_THANH_DIEN_HAI_STATION: Station = {
       noteVi: 'Khi có mạng, Wordwall là thử thách chính của Chặng 2; khi ngoại tuyến, hệ thống tự chuyển sang thử thách nội bộ.',
     },
     completionMode: 'AUTO',
-    passingScore: 3,
+    passingScore: 5,
     questions: [
       {
         id: 'q1',
@@ -191,6 +191,26 @@ export const CANONICAL_THANH_DIEN_HAI_STATION: Station = {
           { id: 'o3', textVi: 'Khắc tên mình lên gạch thành cổ', textEn: 'Carve initials on ancient bricks', isCorrect: false },
         ],
         hintVi: 'Hãy là người bảo vệ di tích văn minh và tôn trọng lịch sử!',
+      },
+      {
+        id: 'q4',
+        questionVi: 'Những khẩu đại bác ở Thành Điện Hải gợi nhớ điều gì?',
+        options: [
+          { id: 'o1', textVi: 'Việc chiến đấu bảo vệ quê hương', isCorrect: true },
+          { id: 'o2', textVi: 'Một trò chơi trong công viên', isCorrect: false },
+          { id: 'o3', textVi: 'Dụng cụ dùng để trồng cây', isCorrect: false },
+        ],
+        hintVi: 'Đại bác gắn với nhiệm vụ bảo vệ thành ngày xưa.',
+      },
+      {
+        id: 'q5',
+        questionVi: 'Nếu thấy bạn định vẽ lên tường thành, em nên làm gì?',
+        options: [
+          { id: 'o1', textVi: 'Nhẹ nhàng nhắc bạn dừng lại và nhờ thầy cô giúp đỡ', isCorrect: true },
+          { id: 'o2', textVi: 'Đưa bút để bạn vẽ thêm', isCorrect: false },
+          { id: 'o3', textVi: 'Cùng bạn khắc tên lên tường', isCorrect: false },
+        ],
+        hintVi: 'Giữ gìn di tích là không vẽ, khắc hoặc làm hư hại tường thành.',
       },
     ],
   },

@@ -181,7 +181,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
           </div>
 
           <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-900 text-xs font-semibold inline-block">
-            ★ Em đã nhận được Phần thưởng Chặng 2 và mở khóa Chặng 3: Check-in cảm xúc.
+            ★ Em đã mở khóa Phần thưởng Chặng 2 và Chặng 3: Check-in cảm xúc.
           </div>
 
           <div>

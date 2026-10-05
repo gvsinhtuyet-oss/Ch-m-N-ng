@@ -241,6 +241,7 @@ export interface Station {
   pedagogyGoals: PedagogyGoals;
   hotspots: ExplorationHotspot[];
   vr360Experience?: StationVr360Experience;
+  vr360PreviewImage?: string;
   challenge: Challenge;
   checkIn: CheckIn;
   rewards: Reward[];

@@ -120,6 +120,17 @@ export const Header: React.FC = () => {
           {role === 'student' || role === 'guest' ? (
             <nav className="flex items-center gap-1 sm:gap-2">
               <button
+                onClick={() => setCurrentView('landing')}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
+                  currentView === 'landing'
+                    ? 'bg-sky-100 text-sky-800 shadow-inner'
+                    : 'text-slate-600 hover:bg-slate-100'
+                }`}
+                title="Quay lại trang bìa mở đầu"
+              >
+                <span>TRANG BÌA</span>
+              </button>
+              <button
                 onClick={() => setCurrentView('student-journey')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
                   currentView === 'student-journey' || currentView === 'station-view'
@@ -275,9 +286,21 @@ export const Header: React.FC = () => {
               </div>
             </div>
 
+            <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+              <button
+                onClick={() => {
+                  setShowRoleModal(false);
+                  setCurrentView('landing');
+                }}
+                className="text-xs font-semibold text-slate-500 hover:text-sky-600 transition flex items-center gap-1.5 cursor-pointer"
+              >
+                <span>← Trở về Trang bìa mở đầu</span>
+              </button>
+            </div>
+
             <button
               onClick={() => setShowRoleModal(false)}
-              className="mt-5 w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition"
+              className="mt-3 w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition"
             >
               Đóng
             </button>

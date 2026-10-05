@@ -21,12 +21,16 @@ const AppContent: React.FC = () => {
     return <ClassroomPresentationMode station={currentStation} onExit={exitPresentationMode} />;
   }
 
+  // If on Landing Cover Page, render full-screen immersive cover
+  if (currentView === 'landing') {
+    return <LandingView />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
       <Header />
 
       <main className="flex-1">
-        {currentView === 'landing' && <LandingView />}
         {currentView === 'student-journey' && <StudentJourneyView />}
         {currentView === 'student-passport' && <StudentPassportView />}
         {currentView === 'student-memories' && <StudentMemoriesView />}

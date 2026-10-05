@@ -14,6 +14,7 @@ import {
   BarChart3,
   FileEdit,
   Clock,
+  Map as MapIcon,
 } from 'lucide-react';
 
 export const TeacherDashboard: React.FC = () => {
@@ -24,6 +25,7 @@ export const TeacherDashboard: React.FC = () => {
     allStationsInCurrentGrade,
     openStation,
     enterPresentationMode,
+    setCurrentView,
   } = useApp();
 
   const [activeTab, setActiveTab] = useState<'teaching' | 'classrooms' | 'results' | 'resources'>('teaching');
@@ -77,6 +79,14 @@ export const TeacherDashboard: React.FC = () => {
           <p className="text-xs sm:text-sm text-emerald-100 mt-1 max-w-xl">
             Hỗ trợ giáo viên tổ chức bài học demo, trình chiếu nội dung, theo dõi tiến độ và ghi nhận triển khai.
           </p>
+          <button
+            type="button"
+            onClick={() => setCurrentView('student-maps')}
+            className="mt-3 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/15 text-xs font-black transition"
+          >
+            <MapIcon className="w-4 h-4 text-amber-300" />
+            <span>XEM TRƯỚC BẢN ĐỒ & RƯƠNG KHO BÁU</span>
+          </button>
         </div>
 
         {/* Tab Navigation Buttons */}

@@ -4,6 +4,7 @@ import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import { Heart, Sparkles, Check, ChevronRight } from 'lucide-react';
+import { RewardClaimModal } from '../common/RewardClaimModal';
 
 interface Props {
   station: Station;
@@ -18,8 +19,10 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
   const [selectedRememberIds, setSelectedRememberIds] = useState<string[]>([]);
   const [selectedActionIds, setSelectedActionIds] = useState<string[]>([]);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [showRewardModal, setShowRewardModal] = useState<boolean>(false);
 
   const studentId = currentUser?.id || 'guest';
+  const progress = progressService.getStationProgress(studentId, station.id);
 
   const toggleRemember = (id: string) => {
     audioService.playSfx('click');
@@ -37,10 +40,8 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
 
   const handleSubmit = () => {
     if (selectedRememberIds.length === 0 || selectedActionIds.length === 0) return;
-    audioService.playSfx('reward');
     setIsSubmitted(true);
 
-    const rw3 = station.rewards.find(r => r.stage === 3);
     progressService.completeStage3(
       studentId,
       station.id,
@@ -49,9 +50,9 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
         rememberOptionIds: selectedRememberIds,
         actionOptionIds: selectedActionIds,
         submittedAt: new Date().toISOString(),
-      },
-      rw3?.id
+      }
     );
+    setShowRewardModal(true);
   };
 
   const isValid = selectedRememberIds.length > 0 && selectedActionIds.length > 0;
@@ -214,6 +215,25 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
             </button>
           </div>
         </div>
+      )}
+
+      {/* Stage 3 Reward Claim Modal */}
+      {showRewardModal && (
+        <RewardClaimModal
+          reward={station.rewards.find(r => r.stage === 3) || station.rewards[2]}
+          stage={3}
+          alreadyClaimed={progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 3)?.id || '')}
+          onClaim={() => {
+            const rw3 = station.rewards.find(r => r.stage === 3);
+            if (rw3) {
+              progressService.claimReward(studentId, station.id, rw3.id);
+            }
+          }}
+          onContinue={() => {
+            setShowRewardModal(false);
+            onCompleteStage();
+          }}
+        />
       )}
     </div>
   );

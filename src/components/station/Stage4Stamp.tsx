@@ -88,34 +88,60 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
             </h3>
           </div>
           <span className="px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-black">
-            3 / 3 Kỉ niệm
+            {station.rewards.filter(rw => progress.rewardsCollected.includes(rw.id)).length === station.rewards.length
+              ? '✓ Đã nhận đủ 3 kỉ niệm'
+              : `${station.rewards.filter(rw => progress.rewardsCollected.includes(rw.id)).length} / ${station.rewards.length} Kỉ niệm`}
           </span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {station.rewards.map((rw) => (
-            <div
-              key={rw.id}
-              className="p-5 rounded-3xl bg-gradient-to-b from-amber-50/80 via-white to-orange-50/50 border-2 border-amber-200/80 shadow-xs flex flex-col items-center text-center space-y-3 relative group hover:border-amber-400 transition"
-            >
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-400 to-amber-300 text-slate-950 flex items-center justify-center text-2xl font-black shadow-md group-hover:scale-110 transition duration-300">
-                {rw.stage === 1 ? '🏮' : rw.stage === 2 ? '🧭' : '💖'}
-              </div>
+          {station.rewards.map((rw) => {
+            const isClaimed = progress.rewardsCollected.includes(rw.id);
 
-              <div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full inline-block mb-1">
-                  Chặng {rw.stage}
-                </span>
-                <h4 className="font-black text-sm text-slate-900">{rw.nameVi}</h4>
-                <p className="text-xs text-slate-500 mt-1 leading-snug">{rw.descriptionVi}</p>
-              </div>
+            return (
+              <div
+                key={rw.id}
+                className={`p-5 rounded-3xl border-2 shadow-xs flex flex-col items-center text-center space-y-3 relative transition ${
+                  isClaimed
+                    ? 'bg-gradient-to-b from-amber-50/80 via-white to-orange-50/50 border-amber-300'
+                    : 'bg-slate-50 border-dashed border-slate-200 opacity-60'
+                }`}
+              >
+                <div
+                  className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl font-black shadow-md transition duration-300 ${
+                    isClaimed
+                      ? 'bg-gradient-to-tr from-amber-400 to-amber-300 text-slate-950'
+                      : 'bg-slate-200 text-slate-400'
+                  }`}
+                >
+                  {rw.stage === 1 ? '🏮' : rw.stage === 2 ? '🧭' : '💖'}
+                </div>
 
-              <div className="w-full pt-2 border-t border-amber-200/50 flex items-center justify-center gap-1 text-[11px] font-bold text-emerald-700">
-                <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Đã vào Kho Kỉ Niệm</span>
+                <div>
+                  <span
+                    className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full inline-block mb-1 ${
+                      isClaimed ? 'text-amber-800 bg-amber-100' : 'text-slate-500 bg-slate-200'
+                    }`}
+                  >
+                    Chặng {rw.stage}
+                  </span>
+                  <h4 className="font-black text-sm text-slate-900">{rw.nameVi}</h4>
+                  <p className="text-xs text-slate-500 mt-1 leading-snug">{rw.descriptionVi}</p>
+                </div>
+
+                <div className="w-full pt-2 border-t border-slate-100 flex items-center justify-center gap-1 text-[11px] font-bold">
+                  {isClaimed ? (
+                    <>
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                      <span className="text-emerald-700">✓ Đã nhận</span>
+                    </>
+                  ) : (
+                    <span className="text-slate-400">Chưa nhận ở Chặng {rw.stage}</span>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

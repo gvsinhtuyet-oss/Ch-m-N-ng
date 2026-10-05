@@ -17,6 +17,7 @@ import {
   X,
   Info,
 } from 'lucide-react';
+import { RewardClaimModal } from '../common/RewardClaimModal';
 
 interface Props {
   station: Station;
@@ -32,6 +33,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [showVrModal, setShowVrModal] = useState(false);
   const [iframeError, setIframeError] = useState(false);
+  const [showRewardModal, setShowRewardModal] = useState(false);
 
   const hotspot: ExplorationHotspot = station.hotspots[currentHotspotIdx] || station.hotspots[0];
 
@@ -113,10 +115,8 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
     if (currentHotspotIdx < station.hotspots.length - 1) {
       changeHotspot(currentHotspotIdx + 1);
     } else {
-      const rw = station.rewards.find(r => r.stage === 1);
-      progressService.completeStage1(studentId, station.id, rw?.id);
-      audioService.playSfx('reward');
-      onCompleteStage();
+      progressService.completeStage1(studentId, station.id);
+      setShowRewardModal(true);
     }
   };
 
@@ -377,10 +377,10 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                   let optClass = 'border-slate-200 hover:bg-slate-50 text-slate-700';
 
                   if (answerSubmitted) {
-                    if (opt.isCorrect) {
+                    if (isCorrect && opt.isCorrect) {
                       optClass = 'border-emerald-500 bg-emerald-50 text-emerald-950 font-bold ring-2 ring-emerald-300';
-                    } else if (isSelected && !opt.isCorrect) {
-                      optClass = 'border-rose-400 bg-rose-50 text-rose-900';
+                    } else if (!isCorrect && isSelected) {
+                      optClass = 'border-rose-400 bg-rose-50 text-rose-900 font-bold ring-2 ring-rose-300';
                     }
                   } else if (isSelected) {
                     optClass = 'border-sky-500 bg-sky-50 text-sky-950 font-bold ring-2 ring-sky-300';
@@ -394,7 +394,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                       className={`w-full p-3.5 rounded-2xl border text-left text-xs sm:text-sm transition flex items-center justify-between gap-3 ${optClass}`}
                     >
                       <span>{opt.textVi}</span>
-                      {answerSubmitted && opt.isCorrect && (
+                      {answerSubmitted && isCorrect && opt.isCorrect && (
                         <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
                       )}
                     </button>
@@ -416,9 +416,11 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                       ? 'Chính xác! Em đã phát hiện thêm một điều thú vị về điểm đến này.'
                       : 'Chưa đúng rồi. Em xem lại hình ảnh hoặc nghe lại thuyết minh nhé!'}
                   </p>
-                  <p className="text-[11px] text-slate-600 leading-relaxed font-medium">
-                    {hotspot.interaction.explanationVi}
-                  </p>
+                  {isCorrect && (
+                    <p className="text-[11px] text-slate-600 leading-relaxed font-medium">
+                      {hotspot.interaction.explanationVi}
+                    </p>
+                  )}
                 </div>
               )}
 
@@ -438,16 +440,17 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                       onClick={() => {
                         setAnswerSubmitted(false);
                         setSelectedOptionId(null);
+                        setIsCorrect(false);
                       }}
                       className="flex-1 py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs transition"
                     >
-                      Thử lại
+                      THỬ LẠI
                     </button>
                     <button
                       onClick={handleNextHotspot}
                       className="flex-1 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition"
                     >
-                      Tiếp tục khám phá
+                      TIẾP TỤC KHÁM PHÁ
                     </button>
                   </div>
                 ) : (
@@ -560,6 +563,24 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
             </div>
           </div>
         </div>
+      )}
+      {/* Stage 1 Reward Claim Modal */}
+      {showRewardModal && (
+        <RewardClaimModal
+          reward={station.rewards.find(r => r.stage === 1) || station.rewards[0]}
+          stage={1}
+          alreadyClaimed={progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 1)?.id || '')}
+          onClaim={() => {
+            const rw1 = station.rewards.find(r => r.stage === 1);
+            if (rw1) {
+              progressService.claimReward(studentId, station.id, rw1.id);
+            }
+          }}
+          onContinue={() => {
+            setShowRewardModal(false);
+            onCompleteStage();
+          }}
+        />
       )}
     </div>
   );

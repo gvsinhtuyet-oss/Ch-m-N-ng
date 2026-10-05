@@ -37,7 +37,7 @@ export const StudentMemoriesView: React.FC = () => {
           {stations.map((st) => {
             const prog = progressService.getStationProgress(studentId, st.id);
             return st.rewards.map((rw) => {
-              const isUnlocked = prog.rewardsCollected.includes(rw.id) || (rw.stage === 1 && prog.stage1Completed) || (rw.stage === 2 && prog.stage2Completed) || (rw.stage === 3 && prog.stage3Completed);
+              const isUnlocked = prog.rewardsCollected.includes(rw.id);
 
               return (
                 <div

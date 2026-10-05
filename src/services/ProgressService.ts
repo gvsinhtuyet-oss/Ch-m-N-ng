@@ -110,6 +110,19 @@ class ProgressService {
     return { ...current };
   }
 
+  public claimReward(studentId: string, stationId: string, rewardId: string): StudentStationProgress {
+    const current = this.getStationProgress(studentId, stationId);
+    if (!current.rewardsCollected.includes(rewardId)) {
+      current.rewardsCollected.push(rewardId);
+      current.lastVisitedAt = new Date().toISOString();
+      const key = this.getCompositeKey(studentId, stationId);
+      this.memoryCache.set(key, current);
+      this.saveToStorage();
+      this.queueSyncEvent(studentId, stationId, 'REWARD_CLAIMED');
+    }
+    return { ...current };
+  }
+
   public completeStage2(studentId: string, stationId: string, rewardId?: string): StudentStationProgress {
     const current = this.getStationProgress(studentId, stationId);
     current.stage2Completed = true;

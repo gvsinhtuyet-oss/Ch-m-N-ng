@@ -4,6 +4,7 @@ import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle } from 'lucide-react';
+import { RewardClaimModal } from '../common/RewardClaimModal';
 
 interface Props {
   station: Station;
@@ -19,8 +20,10 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [passed, setPassed] = useState<boolean | null>(null);
+  const [showRewardModal, setShowRewardModal] = useState<boolean>(false);
 
   const studentId = currentUser?.id || 'guest';
+  const progress = progressService.getStationProgress(studentId, station.id);
   const currentQ = questions[currentQIndex];
 
   const handleSelect = (questionId: string, optionId: string) => {
@@ -50,8 +53,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
 
       if (pass) {
         audioService.playSfx('correct');
-        const rw2 = station.rewards.find(r => r.stage === 2);
-        progressService.completeStage2(studentId, station.id, rw2?.id);
+        progressService.completeStage2(studentId, station.id);
+        setShowRewardModal(true);
       } else {
         audioService.playSfx('wrong');
       }
@@ -212,6 +215,25 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
             </button>
           </div>
         </div>
+      )}
+
+      {/* Stage 2 Reward Claim Modal */}
+      {showRewardModal && (
+        <RewardClaimModal
+          reward={station.rewards.find(r => r.stage === 2) || station.rewards[1]}
+          stage={2}
+          alreadyClaimed={progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 2)?.id || '')}
+          onClaim={() => {
+            const rw2 = station.rewards.find(r => r.stage === 2);
+            if (rw2) {
+              progressService.claimReward(studentId, station.id, rw2.id);
+            }
+          }}
+          onContinue={() => {
+            setShowRewardModal(false);
+            onCompleteStage();
+          }}
+        />
       )}
     </div>
   );

@@ -97,6 +97,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     audioService.playSfx('unlock');
     setCurrentUser(teacher);
     setRoleState('teacher');
+    setCurrentGrade(2);
+    setCurrentStation(null);
+    setCurrentStage(1);
     setCurrentView('teacher-view');
   };
 

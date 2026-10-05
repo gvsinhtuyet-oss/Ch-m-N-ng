@@ -154,7 +154,7 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
       platform: 'wordwall',
       titleVi: 'GIẢI MÃ MIỀN DI SẢN',
       url: 'https://wordwall.net/vi/resource/120607731?wwmethod=link',
-      noteVi: 'Trò chơi luyện tập mở rộng trên Wordwall. Hoạt động này không thay thế thử thách nội bộ và không ảnh hưởng đến tiến độ hoàn thành bài học.',
+      noteVi: 'Khi có mạng, Wordwall là thử thách chính của Chặng 2; khi ngoại tuyến, hệ thống tự chuyển sang thử thách nội bộ.',
     },
     completionMode: 'AUTO',
     passingScore: 5,

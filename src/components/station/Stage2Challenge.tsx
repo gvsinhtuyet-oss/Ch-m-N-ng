@@ -92,7 +92,11 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
             Chặng 2: Chinh phục thử thách
           </span>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900">{challenge.titleVi}</h2>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">{challenge.instructionsVi}</p>
+          <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            {challenge.externalGame && isOnline
+              ? 'Có kết nối Internet: em sẽ thực hiện trò chơi Wordwall. Nếu mất mạng, hệ thống tự chuyển sang thử thách nội bộ.'
+              : challenge.instructionsVi}
+          </p>
         </div>
         <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-lg shadow-amber-500/30 shrink-0">
           <Award className="w-7 h-7" />

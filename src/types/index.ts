@@ -206,6 +206,22 @@ export interface StationVersion {
   changelog?: string;
 }
 
+export interface StationVr360Experience {
+  url: string;
+  provider:
+    | 'custom_web'
+    | 'kuula'
+    | 'matterport'
+    | 'google_streetview'
+    | 'official_portal';
+  titleVi: string;
+  titleEn?: string;
+  verified: boolean;
+  embedMode: 'iframe' | 'direct_link';
+  fallbackUrl?: string;
+  sourceName?: string;
+}
+
 export interface Station {
   id: string;
   number: number; // 1..5 in grade
@@ -224,6 +240,7 @@ export interface Station {
   officialCurriculumReference: string;
   pedagogyGoals: PedagogyGoals;
   hotspots: ExplorationHotspot[];
+  vr360Experience?: StationVr360Experience;
   challenge: Challenge;
   checkIn: CheckIn;
   rewards: Reward[];

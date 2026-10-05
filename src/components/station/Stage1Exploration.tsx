@@ -5,18 +5,15 @@ import { audioService, NarrationState } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import {
   Volume2,
-  VolumeX,
   Play,
   Pause,
   RotateCcw,
   CheckCircle2,
   AlertCircle,
-  Compass,
   Globe,
   Sparkles,
   ChevronRight,
   ExternalLink,
-  ChevronLeft,
   X,
   Info,
 } from 'lucide-react';
@@ -130,7 +127,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   return (
     <div className="space-y-6">
-      {/* Immersive Hotspot Navigation Header */}
+      {/* Navigation Header */}
       <div className="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-6 shadow-sm border border-sky-100 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
@@ -178,7 +175,46 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
         </div>
       </div>
 
-      {/* Main Hotspot Stage Canvas */}
+      {/* Station-Level VR360 Total Experience Card */}
+      {(station.id === 'g2-station-4' || station.vr360Experience) && (
+        <div className="bg-gradient-to-r from-amber-500/10 via-sky-500/10 to-indigo-500/10 border-2 border-amber-300/80 rounded-3xl p-5 sm:p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="w-8 h-8 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black shadow-2xs">
+                <Globe className="w-5 h-5" />
+              </span>
+              <h3 className="text-lg sm:text-xl font-black text-slate-900">
+                {station.vr360Experience?.titleVi || 'KHÁM PHÁ HỘI AN 360°'}
+              </h3>
+            </div>
+            <p className="text-xs sm:text-sm text-slate-600 font-medium">
+              Xoay để quan sát toàn cảnh và chạm các điểm khám phá trong không gian di sản.
+            </p>
+          </div>
+
+          <div className="shrink-0">
+            {station.vr360Experience?.verified && station.vr360Experience?.url ? (
+              <button
+                onClick={() => {
+                  audioService.playSfx('click');
+                  setShowVrModal(true);
+                }}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm shadow-lg shadow-amber-400/30 transition transform hover:scale-105 active:scale-95"
+              >
+                <Globe className="w-4 h-4" />
+                <span>🌐 BẮT ĐẦU KHÁM PHÁ 360°</span>
+              </button>
+            ) : (
+              <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/95 text-amber-900 border border-amber-200 text-xs font-bold shadow-2xs">
+                <Info className="w-4 h-4 text-amber-600 shrink-0" />
+                <span>Trải nghiệm Hội An 360° đang được cập nhật từ nguồn đã kiểm chứng.</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Main Hotspot Stage Canvas (4 Outside-VR Learning Hotspots) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Visual Showcase (7 cols) */}
         <div className="lg:col-span-7 bg-white rounded-3xl overflow-hidden shadow-md border border-slate-200 flex flex-col group">
@@ -195,25 +231,17 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
             {/* Cinematic Gradient Overlays */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-black/30 pointer-events-none" />
 
-            {/* Top Badges */}
+            {/* Top Badge */}
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
               <span className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-black shadow-md border border-white/20">
                 {hotspot.mediaRights === 'ALLOWED' && !hotspot.mediaCredit?.includes('minh họa')
                   ? 'Ảnh thực tế di sản'
                   : 'Ảnh minh họa đang cập nhật'}
               </span>
-
-              {hotspot.vr360?.url && hotspot.vr360?.verified ? (
-                <span className="px-3 py-1 rounded-full bg-amber-500/90 backdrop-blur-md text-slate-950 text-xs font-black shadow-md flex items-center gap-1.5 animate-pulse">
-                  <Globe className="w-3.5 h-3.5" />
-                  <span>Có VR 360°</span>
-                </span>
-              ) : null}
             </div>
 
-            {/* Prominent Overlay Action Buttons */}
-            <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center justify-between gap-3">
-              {/* Audio Playback Hero Pill */}
+            {/* Audio Playback Hero Pill (Positioned Prominently at Bottom Left) */}
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
               <div className="flex items-center gap-2 bg-black/75 backdrop-blur-md p-1.5 rounded-2xl border border-white/20 shadow-xl">
                 {!isPlaying && !isPaused ? (
                   <button
@@ -266,22 +294,6 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                   </div>
                 )}
               </div>
-
-              {/* VR 360 Hero Button or Status */}
-              {hotspot.vr360?.url && hotspot.vr360?.verified ? (
-                <button
-                  onClick={() => setShowVrModal(true)}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm shadow-xl transition transform hover:scale-105 active:scale-95 border-2 border-amber-300"
-                >
-                  <Globe className="w-4 h-4" />
-                  <span>KHÁM PHÁ 360°</span>
-                </button>
-              ) : (
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-md text-amber-200/90 text-[11px] font-bold border border-amber-400/20">
-                  <Info className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-                  <span>Trải nghiệm 360° đang được cập nhật từ nguồn đã kiểm chứng</span>
-                </div>
-              )}
             </div>
           </div>
 
@@ -453,8 +465,8 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
         </div>
       </div>
 
-      {/* Robust VR360 Modal with Error Fallback & External Link */}
-      {showVrModal && hotspot.vr360 && (
+      {/* Station Total VR360 Modal */}
+      {showVrModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-3 sm:p-6 animate-fade-in">
           <div className="w-full max-w-5xl h-[88vh] bg-slate-900 rounded-3xl overflow-hidden flex flex-col shadow-2xl border border-slate-700">
             {/* Modal Header */}
@@ -462,29 +474,33 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
               <div className="flex items-center gap-3">
                 <Globe className="w-5 h-5 text-amber-400 animate-spin-slow" />
                 <div>
-                  <h3 className="font-extrabold text-sm">{hotspot.vr360.title || 'Không gian thực tế ảo 360°'}</h3>
-                  <span className="text-[11px] text-slate-400">Trải nghiệm xoay toàn cảnh 360 độ</span>
+                  <h3 className="font-extrabold text-sm">
+                    {station.vr360Experience?.titleVi || 'Khám phá Hội An 360°'}
+                  </h3>
+                  <span className="text-[11px] text-slate-400">Không gian thực tế ảo di sản</span>
                 </div>
               </div>
 
               <div className="flex items-center gap-2">
-                {/* External open button */}
-                <a
-                  href={hotspot.vr360.fallbackUrl || hotspot.vr360.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold transition flex items-center gap-1.5"
-                >
-                  <span>Mở tab mới</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
+                {station.vr360Experience?.url && (
+                  <a
+                    href={station.vr360Experience.fallbackUrl || station.vr360Experience.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold transition flex items-center gap-1.5"
+                  >
+                    <span>MỞ TAB MỚI</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
 
                 <button
                   onClick={() => setShowVrModal(false)}
-                  className="w-8 h-8 rounded-full bg-slate-700 hover:bg-rose-600 text-white flex items-center justify-center text-sm font-bold transition"
+                  className="px-3 py-1.5 rounded-xl bg-slate-700 hover:bg-rose-600 text-white text-xs font-bold transition flex items-center gap-1"
                   title="Đóng cửa sổ 360°"
                 >
                   <X className="w-4 h-4" />
+                  <span>ĐÓNG</span>
                 </button>
               </div>
             </div>
@@ -501,31 +517,40 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                     Trải nghiệm ảnh toàn cảnh thực tế ảo 360° yêu cầu dữ liệu trực tuyến. Em hãy kết nối mạng để thưởng ngoạn nhé!
                   </p>
                 </div>
-              ) : iframeError ? (
+              ) : iframeError || !station.vr360Experience?.url ? (
                 <div className="text-center p-8 text-slate-300 max-w-md space-y-4">
                   <div className="w-14 h-14 rounded-full bg-slate-800 text-sky-400 flex items-center justify-center mx-auto">
                     <Info className="w-8 h-8" />
                   </div>
                   <div>
-                    <h4 className="text-lg font-bold text-white mb-1">Trải nghiệm trong tab mới</h4>
+                    <h4 className="text-lg font-bold text-white mb-1">Nguồn 360° đang cập nhật</h4>
                     <p className="text-xs text-slate-400 leading-relaxed">
-                      Nguồn 360° không cho phép nhúng trực tiếp trên khung này. Em có thể mở trải nghiệm trong tab mới để ngắm nhìn toàn cảnh nhé!
+                      Nguồn 360° không cho phép nhúng trực tiếp hoặc đang được thẩm định từ nguồn chính thức. Em có thể mở trải nghiệm trong tab mới khi có URL kiểm chứng.
                     </p>
                   </div>
-                  <a
-                    href={hotspot.vr360.fallbackUrl || hotspot.vr360.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-xl"
-                  >
-                    <span>MỞ TRẢI NGHIỆM TRONG TAB MỚI</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
+                  {station.vr360Experience?.url ? (
+                    <a
+                      href={station.vr360Experience.fallbackUrl || station.vr360Experience.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-sm shadow-xl"
+                    >
+                      <span>MỞ TAB MỚI</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  ) : (
+                    <button
+                      onClick={() => setShowVrModal(false)}
+                      className="px-6 py-2.5 rounded-2xl bg-slate-800 text-white font-bold text-xs"
+                    >
+                      Đã hiểu
+                    </button>
+                  )}
                 </div>
               ) : (
                 <iframe
-                  src={hotspot.vr360.url}
-                  title="VR 360 Viewer"
+                  src={station.vr360Experience.url}
+                  title={station.vr360Experience.titleVi}
                   className="w-full h-full border-0"
                   allowFullScreen
                   sandbox="allow-scripts allow-same-origin allow-popups allow-forms"

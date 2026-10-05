@@ -17,6 +17,16 @@ export const CANONICAL_HOI_AN_STATION: Station = {
   totalPeriods: 7,
   officialCurriculumReference: 'Tài liệu GDĐP TP Đà Nẵng - Khối 2 - Bài 4 (Thông tư số 32/2018/TT-BGDĐT & Công văn SGDĐT)',
   isFullyVerified: true,
+  // Trải nghiệm VR360 tổng cho toàn bộ trạm Hội An
+  vr360Experience: {
+    url: '',
+    provider: 'official_portal',
+    titleVi: 'Khám phá Hội An 360°',
+    titleEn: 'Discover Hoi An 360°',
+    verified: false,
+    embedMode: 'iframe',
+    sourceName: 'Cổng thông tin bảo tồn di sản',
+  },
   pedagogyGoals: {
     knowGoalVi: 'Nhận biết được những nét tiêu biểu của phố cổ Hội An (Chùa Cầu, nhà cổ, hội quán, dòng sông Hoài) và các giá trị di sản đặc sắc.',
     knowGoalEn: 'Identify prominent features of Hoi An Ancient Town (Japanese Covered Bridge, ancient houses, assembly halls, Hoai River) and unique heritage values.',
@@ -38,8 +48,6 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       narrationEn: 'The Japanese Covered Bridge was built by Japanese merchants in the 17th century. It features a tiled roof and a small shrine worshipping the deity of peace. At both ends stand statues of dogs and monkeys.',
       keyFactVi: 'Chùa Cầu vừa là cây cầu giao thông vừa là ngôi chùa tâm linh, được in trên tờ tiền polymer 20.000 đồng của Việt Nam.',
       keyFactEn: 'The Covered Bridge is both a bridge and a sacred pagoda, depicted on Vietnam\'s 20,000 VND banknote.',
-      // VR360 removed because previously linked Kuula URL was unverified
-      vr360: undefined,
       interaction: {
         id: 'int-chua-cau',
         type: 'single-choice',
@@ -69,7 +77,6 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       narrationEn: 'Hoi An ancient houses feature a tubular design with front shops and rear river access. An inner courtyard brings in gentle air and natural light.',
       keyFactVi: 'Các ngôi nhà cổ như nhà cổ Tấn Ký, Phùng Hưng đã tồn tại hơn 200 năm qua bao mùa bão lũ nhưng vẫn vững chãi kiên cố.',
       keyFactEn: 'Houses like Tan Ky and Phung Hung have survived over 200 years of historic seasonal floods.',
-      vr360: undefined,
       interaction: {
         id: 'int-nha-co',
         type: 'single-choice',
@@ -92,14 +99,13 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       stationId: 'g2-station-4',
       titleVi: '3. Hội quán Phúc Kiến – Dấu ấn giao thoa thương cảng',
       titleEn: '3. Assembly Halls – Sign of Ancient Maritime Trade',
-      subtitleVi: 'Nơi sinh hoạt cộng đồng và tri ân thần biển của kiều dân xưa',
+      subtitleVi: 'Nơi sinh hoạt cộng đồng và tri ấn thần biển của kiều dân xưa',
       subtitleEn: 'Community gathering space and worship of sea protectors',
       image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1000&q=80',
       narrationVi: 'Hội quán là nơi gặp gỡ, giúp đỡ lẫn nhau của các thương nhân từ khắp nơi đến buôn bán. Nổi bật nhất là Hội quán Phúc Kiến, Quảng Đông và Triều Châu với cổng tam quan lợp ngói âm dương rực rỡ, tượng rồng phượng uy nghi và những vòng nhang thơm cầu chúc bình an cho tàu bè vượt biển khơi.',
       narrationEn: 'Assembly halls were communal places where merchant communities helped each other. They feature ornate gates, ceramic dragon carvings, and spiral incense rings.',
       keyFactVi: 'Hội quán Hội An là minh chứng sống động cho tinh thần đoàn kết, giao lưu văn hóa và lòng hiếu khách suốt nhiều thế kỷ.',
       keyFactEn: 'Assembly halls showcase centuries of peaceful cultural exchange, solidarity, and hospitality.',
-      vr360: undefined,
       interaction: {
         id: 'int-hoi-quan',
         type: 'single-choice',
@@ -129,7 +135,6 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       narrationEn: 'The Hoai River flows gently through the old town. Streets are pedestrian-friendly, filled with colorful lanterns and quiet wooden boats.',
       keyFactVi: 'Phố cổ Hội An là một trong những đô thị tiên phong tại Việt Nam thực hiện phố đi bộ và giảm thiểu túi nilon để bảo vệ môi trường di sản.',
       keyFactEn: 'Hoi An is a pioneer pedestrian city promoting plastic waste reduction to protect the living heritage.',
-      vr360: undefined,
       interaction: {
         id: 'int-song-hoai',
         type: 'single-choice',

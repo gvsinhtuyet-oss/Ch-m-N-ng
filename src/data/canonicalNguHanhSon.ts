@@ -282,6 +282,14 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
       sourceType: 'department_document',
       verified: true,
     },
+    {
+      id: 'src-nghs-2',
+      title: 'Về miền di sản – Ngũ Hành Sơn',
+      organization: 'Cổng thông tin Đà Nẵng – Nửa thế kỷ vươn mình',
+      url: 'https://50nam.danang.gov.vn/thanh-pho-hom-nay/ve-mien-di-san-40458.html',
+      sourceType: 'department_document',
+      verified: true,
+    },
   ],
 };
 

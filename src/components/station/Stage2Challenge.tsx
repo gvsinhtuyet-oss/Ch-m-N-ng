@@ -42,6 +42,12 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const [showRewardModal, setShowRewardModal] = useState<boolean>(false);
   const [externalGameOpened, setExternalGameOpened] = useState<boolean>(false);
 
+  const [embedRound, setEmbedRound] = useState(0);
+  const resourceId = challenge.externalGame?.url.match(/\/resource\/(\d+)/)?.[1];
+  const embedUrl = resourceId
+    ? `https://wordwall.net/embed/resource/${resourceId}`
+    : undefined;
+
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
   const currentQ = questions[currentQIndex];
@@ -93,6 +99,10 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
     setShowRewardModal(true);
   };
 
+  const wrongQuestions = questions.filter(q =>
+    !q.options.some(option => option.isCorrect && option.id === selectedAnswers[q.id]),
+  );
+
   const handleRetry = () => {
     audioService.playSfx('click');
     setShuffleRound(round => round + 1);
@@ -136,7 +146,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 {challenge.externalGame.titleVi}
               </h3>
               <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
-                Em sẽ chơi Wordwall ở một tab mới. Sau khi hoàn thành, quay lại CHẠM ĐÀ NẴNG và xác nhận để nhận phần thưởng Chặng 2.
+                Em chơi thử thách ngay bên dưới. Khi chơi xong, bấm “Em đã hoàn thành thử thách” để nhận phần thưởng Chặng 2.
               </p>
             </div>
           </div>
@@ -147,13 +157,12 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               onClick={() => {
                 audioService.playSfx('click');
                 setExternalGameOpened(true);
-                window.open(challenge.externalGame!.url, '_blank', 'noopener,noreferrer');
+                setEmbedRound(round => round + 1);
               }}
               className="flex-1 px-5 py-3.5 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
             >
               <Gamepad2 className="w-5 h-5" />
               <span>{externalGameOpened ? 'Bước vào thử thách lần nữa' : 'Bước vào thử thách'}</span>
-              <ExternalLink className="w-4 h-4" />
             </button>
 
             <button
@@ -163,9 +172,34 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               className="flex-1 px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
             >
               <CheckCircle2 className="w-5 h-5" />
-              <span>TÔI ĐÃ HOÀN THÀNH WORDWALL</span>
+              <span>Em đã hoàn thành thử thách</span>
             </button>
           </div>
+
+          {externalGameOpened && embedUrl && (
+            <div className="overflow-hidden rounded-2xl border border-violet-200 bg-slate-50">
+              <iframe
+                key={`${station.id}-${embedRound}`}
+                src={embedUrl}
+                title={challenge.externalGame.titleVi}
+                className="w-full h-[520px] sm:h-[640px] border-0"
+                allow="fullscreen"
+                allowFullScreen
+              />
+            </div>
+          )}
+
+          {externalGameOpened && (
+            <a
+              href={challenge.externalGame.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-violet-700 underline"
+            >
+              <ExternalLink className="w-4 h-4" />
+              Nếu trò chơi chưa hiển thị, mở trong cửa sổ riêng
+            </a>
+          )}
 
           <div className="p-3 rounded-2xl bg-sky-50 border border-sky-100 text-xs text-sky-800">
             Khi mất mạng, hệ thống sẽ tự chuyển sang thử thách nội bộ để em vẫn hoàn thành bài học.
@@ -281,6 +315,28 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 <p className="text-xs text-slate-500 max-w-md mx-auto mt-1">
                   Em có thể thử lại ngay hoặc xem lại phần khám phá ở Chặng 1.
                 </p>
+              </div>
+              <div className="space-y-3 text-left" role="status" aria-live="polite">
+                <p className="text-sm font-bold text-slate-700">
+                  Em đã trả lời đúng {questions.length - wrongQuestions.length}/{questions.length} câu.
+                  Cùng xem lại những câu sau nhé:
+                </p>
+                {wrongQuestions.map(q => {
+                  const chosen = q.options.find(option => option.id === selectedAnswers[q.id]);
+                  const correct = q.options.find(option => option.isCorrect);
+                  return (
+                    <div key={q.id} className="rounded-2xl border border-rose-100 bg-rose-50 p-4 space-y-2">
+                      <h4 className="font-bold text-sm text-slate-900">
+                        Câu {questions.findIndex(question => question.id === q.id) + 1}: {q.questionVi}
+                      </h4>
+                      <p className="text-sm text-rose-800">Em đã chọn: {chosen?.textVi || 'Chưa trả lời'}</p>
+                      <p className="text-sm font-semibold text-emerald-800">Đáp án đúng: {correct?.textVi}</p>
+                      <p className="text-sm text-sky-900">
+                        {q.hintVi || 'Em hãy đọc lại câu chuyện ở Chặng 1 và đối chiếu với đáp án đúng nhé.'}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
               <button
                 onClick={handleRetry}

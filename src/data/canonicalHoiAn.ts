@@ -82,7 +82,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       interaction: {
         id: 'int-nha-co',
         type: 'single-choice',
-        questionVi: 'Nhiều nhà cổ ở Hội An gắn với hoạt động nào của cư dân xưa?'
+        questionVi: 'Nhiều nhà cổ ở Hội An gắn với hoạt động nào của cư dân xưa?',
         questionEn: 'Why do ancient houses have front facades facing the street?',
         options: [
           { id: 'opt-1', textVi: 'Sinh hoạt gia đình và buôn bán', textEn: 'Family life and commerce', isCorrect: true },
@@ -195,7 +195,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       },
       {
         id: 'q3',
-        questionVi: 'Nhà cổ Hội An phản ánh điều gì về đời sống cư dân thương cảng?'
+        questionVi: 'Nhà cổ Hội An phản ánh điều gì về đời sống cư dân thương cảng?',
         questionEn: 'Which feature of Hoi An ancient houses served both living and business?',
         options: [
           { id: 'o1', textVi: 'Nơi ở và hoạt động buôn bán có mối liên hệ chặt chẽ', textEn: 'Homes and commercial activity were closely connected', isCorrect: true },
@@ -217,7 +217,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       },
       {
         id: 'q5',
-        questionVi: 'Cách ứng xử nào phù hợp khi tham quan di sản Hội An?'
+        questionVi: 'Cách ứng xử nào phù hợp khi tham quan di sản Hội An?',
         questionEn: 'How should you behave when visiting historic yellow walls in Hoi An?',
         options: [
           { id: 'o1', textVi: 'Giữ vệ sinh, không viết vẽ lên di tích và tôn trọng không gian di sản', textEn: 'Keep clean, do not mark heritage structures, and respect the site', isCorrect: true },

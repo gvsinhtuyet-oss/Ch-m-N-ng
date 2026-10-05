@@ -90,6 +90,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setCurrentUser(student);
     setRoleState('student');
     setCurrentGrade(student.grade);
+    setCurrentStation(null);
+    setCurrentStage(1);
     setCurrentView('student-journey');
   };
 

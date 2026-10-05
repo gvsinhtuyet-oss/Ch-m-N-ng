@@ -25,7 +25,7 @@ const REWARD_ICON_BY_TEMPLATE: Record<string, string> = {
 
 export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExploreNext }) => {
   const { currentUser, role } = useApp();
-  const isGuest = role === 'guest';
+  const isReadOnly = role !== 'student';
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
 
@@ -67,7 +67,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     }
 
     setStamped(true);
-    if (!isGuest) {
+    if (!isReadOnly) {
       progressService.completeStage4(studentId, station.id);
     }
   };
@@ -75,7 +75,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
   const handleJourneyGift = () => {
     if (!stamped) return;
 
-    if (!isGuest) {
+    if (!isReadOnly) {
       const updated = progressService.claimJourneyGift(studentId, station.id);
       if (!updated.journeyMapReceived || !updated.keyFragmentReceived) {
         return;
@@ -252,10 +252,10 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
               <p className="text-xs sm:text-sm text-slate-500 italic mt-1 max-w-lg mx-auto font-medium">
                 "{station.stamp.quoteVi}"
               </p>
-              {isGuest && (
+              {isReadOnly && (
                 <div className="pt-2">
                   <span className="inline-block px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs font-semibold">
-                    Bản xem thử – đăng nhập học sinh để lưu dấu vào Hộ chiếu.
+                    Bản xem thử – chỉ vai trò Học sinh mới lưu tiến độ và phần thưởng.
                   </span>
                 </div>
               )}
@@ -279,11 +279,11 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                     className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-black text-sm shadow-lg shadow-amber-500/20 transition transform hover:scale-103 active:scale-95 inline-flex items-center gap-2"
                   >
                     <Gift className="w-5 h-5" />
-                    <span>{isGuest ? 'XEM QUÀ HÀNH TRÌNH (DEMO)' : 'ĐỔI QUÀ HÀNH TRÌNH'}</span>
+                    <span>{isReadOnly ? 'XEM QUÀ HÀNH TRÌNH (DEMO)' : 'ĐỔI QUÀ HÀNH TRÌNH'}</span>
                   </button>
-                  {isGuest && (
+                  {isReadOnly && (
                     <p className="text-[11px] text-amber-800 font-semibold">
-                      Nhà phiêu lưu được xem thử cơ chế phần thưởng; hệ thống không lưu tiến độ cá nhân.
+                      Chế độ xem thử không lưu tiến độ hay phần thưởng cá nhân.
                     </p>
                   )}
                 </>
@@ -291,7 +291,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                 <div className="space-y-4 animate-fade-in">
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black">
                     <Sparkles className="w-4 h-4" />
-                    <span>{isGuest ? 'QUÀ DEMO ĐÃ MỞ' : 'ĐÃ ĐỔI QUÀ THÀNH CÔNG'}</span>
+                    <span>{isReadOnly ? 'QUÀ DEMO ĐÃ MỞ' : 'ĐÃ ĐỔI QUÀ THÀNH CÔNG'}</span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -319,7 +319,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                   </div>
 
                   <p className="text-[11px] sm:text-xs text-slate-600 font-medium">
-                    {isGuest
+                    {isReadOnly
                       ? 'Đây là bản xem thử. Hãy đăng nhập bằng vai trò Học sinh để lưu Bản đồ và Mảnh chìa khóa.'
                       : 'Bản đồ đã được lưu vào mục BẢN ĐỒ. Học lại bài sẽ không tạo phần thưởng trùng lặp.'}
                   </p>

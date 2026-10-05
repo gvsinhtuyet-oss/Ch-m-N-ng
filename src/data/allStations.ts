@@ -1,3 +1,4 @@
+import { contentService } from '../services/ContentService';
 import { Station, Reward, Stamp, PedagogyGoals, ExplorationHotspot, Challenge, CheckIn } from '../types';
 import { GRADE_2_STATIONS } from './grade2Stations';
 import { OFFICIAL_25_CATALOG, CatalogItem } from './curriculumCatalog';
@@ -191,3 +192,5 @@ export const ALL_25_STATIONS: Station[] = [
   ...STATIONS_BY_GRADE[4],
   ...STATIONS_BY_GRADE[5],
 ];
+
+ALL_25_STATIONS.forEach(station => contentService.apply(station));

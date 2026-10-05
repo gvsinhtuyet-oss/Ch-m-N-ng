@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
-import { DEMO_STUDENTS, DEMO_TEACHER, DEMO_ADMIN } from '../../data/mockUsers';
+import { DEMO_STUDENTS, DEMO_TEACHER } from '../../data/mockUsers';
 import { audioService } from '../../services/AudioService';
 import {
   Compass,
@@ -24,7 +24,6 @@ export const LandingView: React.FC = () => {
   const {
     loginAsStudent,
     loginAsTeacher,
-    loginAsAdmin,
     loginAsGuest,
     setCurrentView,
     soundEnabled,
@@ -205,7 +204,7 @@ export const LandingView: React.FC = () => {
               }}
               className="hover:text-amber-300 transition underline underline-offset-4 decoration-white/30"
             >
-              Dành cho Giáo viên & Quản lý
+              Dành cho Giáo viên
             </button>
             <span>•</span>
             <button
@@ -292,21 +291,6 @@ export const LandingView: React.FC = () => {
                   </div>
                   <h4 className="font-black text-sm text-slate-900">GIÁO VIÊN</h4>
                   <p className="text-[11px] text-slate-500">Trình chiếu TV lớp học & xác nhận bài dạy</p>
-                </button>
-
-                <button
-                  onClick={() => {
-                    audioService.playSfx('click');
-                    setShowRolePicker(false);
-                    loginAsAdmin(DEMO_ADMIN);
-                  }}
-                  className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-indigo-500 shadow-sm hover:shadow-md transition text-left space-y-1.5 group cursor-pointer"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold group-hover:scale-110 transition">
-                    <School className="w-5 h-5" />
-                  </div>
-                  <h4 className="font-black text-sm text-slate-900">NHÀ TRƯỜNG / ADMIN</h4>
-                  <p className="text-[11px] text-slate-500">Dashboard điều hành 25 trạm toàn trường</p>
                 </button>
 
                 <button

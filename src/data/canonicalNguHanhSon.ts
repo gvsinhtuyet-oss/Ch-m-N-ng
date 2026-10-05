@@ -70,7 +70,7 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
       interaction: {
         id: 'int-nghs-2',
         type: 'single-choice',
-        questionVi: 'Khi tham quan chùa hoặc tham gia không gian lễ hội, em nên làm gì?'
+        questionVi: 'Khi tham quan chùa hoặc tham gia không gian lễ hội, em nên làm gì?',
         questionEn: 'How should you behave in a sacred place?',
         options: [
           { id: 'opt-1', textVi: 'Đi nhẹ, nói vừa phải', textEn: 'Walk gently and speak quietly', isCorrect: true },
@@ -99,7 +99,7 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
       interaction: {
         id: 'int-nghs-3',
         type: 'single-choice',
-        questionVi: 'Với các dấu tích trên đá, em nên làm gì?'
+        questionVi: 'Với các dấu tích trên đá, em nên làm gì?',
         questionEn: 'What should you do with historic inscriptions on stone?',
         options: [
           { id: 'opt-1', textVi: 'Giữ nguyên và bảo vệ', textEn: 'Leave them unchanged and protect them', isCorrect: true },
@@ -128,7 +128,7 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
       interaction: {
         id: 'int-nghs-4',
         type: 'single-choice',
-        questionVi: 'Làng đá mỹ nghệ Non Nước cho thấy điều gì?'
+        questionVi: 'Làng đá mỹ nghệ Non Nước cho thấy điều gì?',
         questionEn: 'Who creates stone craft products?',
         options: [
           { id: 'opt-1', textVi: 'Nghề truyền thống gắn với đời sống và văn hóa địa phương', textEn: 'A traditional craft linked to local life and culture', isCorrect: true },
@@ -170,7 +170,7 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
       },
       {
         id: 'q-nghs-2',
-        questionVi: 'Chùa, lễ hội và dấu tích trên đá giúp chúng ta nhận biết thêm giá trị nào của Ngũ Hành Sơn?'
+        questionVi: 'Chùa, lễ hội và dấu tích trên đá giúp chúng ta nhận biết thêm giá trị nào của Ngũ Hành Sơn?',
         options: [
           { id: 'o1', textVi: 'Văn hóa – lịch sử', isCorrect: true },
           { id: 'o2', textVi: 'Thể thao hiện đại', isCorrect: false },
@@ -179,7 +179,7 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
       },
       {
         id: 'q-nghs-3',
-        questionVi: 'Làng đá mỹ nghệ Non Nước thể hiện giá trị nào?'
+        questionVi: 'Làng đá mỹ nghệ Non Nước thể hiện giá trị nào?',
         options: [
           { id: 'o1', textVi: 'Nghề truyền thống và đời sống văn hóa địa phương', isCorrect: true },
           { id: 'o2', textVi: 'Giao thông đường sắt', isCorrect: false },
@@ -197,7 +197,7 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
       },
       {
         id: 'q-nghs-5',
-        questionVi: 'Ngũ Hành Sơn có ý nghĩa như thế nào đối với Đà Nẵng hôm nay?'
+        questionVi: 'Ngũ Hành Sơn có ý nghĩa như thế nào đối với Đà Nẵng hôm nay?',
         options: [
           { id: 'o1', textVi: 'Góp phần gìn giữ lịch sử, văn hóa và tạo sức hút cho sự phát triển địa phương', isCorrect: true },
           { id: 'o2', textVi: 'Chỉ là nơi để chụp ảnh', isCorrect: false },

@@ -5,7 +5,7 @@ import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { ShieldCheck, LogOut } from 'lucide-react';
 
 export const StudentProfileView: React.FC = () => {
-  const { currentUser, currentGrade, allStationsInCurrentGrade, setRole, logout } = useApp();
+  const { currentUser, currentGrade, allStationsInCurrentGrade, logout } = useApp();
   const student = currentUser as any;
   const demoStations = allStationsInCurrentGrade.filter(station => DEMO_STATION_IDS.has(station.id));
   const gradeProg = progressService.getGradeProgress(
@@ -22,9 +22,14 @@ export const StudentProfileView: React.FC = () => {
         </div>
 
         <div>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900">
-            {student?.displayName || student?.name || 'Học sinh khám phá'}
-          </h2>
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900">
+              {student?.displayName || student?.name || 'Học sinh khám phá'}
+            </h2>
+            <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black uppercase tracking-wide">
+              Dữ liệu minh họa
+            </span>
+          </div>
           <p className="text-xs text-slate-500 mt-0.5">
             Mã định danh: {student?.studentCode || 'HS_DEMO_2026'} • Lớp {student?.className || `Khối ${currentGrade}`}
           </p>
@@ -55,20 +60,14 @@ export const StudentProfileView: React.FC = () => {
           </div>
         </div>
 
-        {/* Switch Role or Log Out */}
-        <div className="pt-4 border-t border-slate-100 flex justify-center gap-3">
-          <button
-            onClick={() => setRole('teacher')}
-            className="px-5 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition"
-          >
-            Chuyển sang Cổng Giáo Viên
-          </button>
+        {/* Explicit exit: role changes happen again from the landing entry screen */}
+        <div className="pt-4 border-t border-slate-100 flex justify-center">
           <button
             onClick={logout}
             className="px-5 py-2.5 rounded-2xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold transition flex items-center gap-1.5"
           >
             <LogOut className="w-3.5 h-3.5" />
-            <span>Về trang đầu</span>
+            <span>Về trang đầu / Đổi vai trò</span>
           </button>
         </div>
       </div>

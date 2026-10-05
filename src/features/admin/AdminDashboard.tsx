@@ -1,3 +1,4 @@
+import { ContentEditor } from './ContentEditor';
 import React, { useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { DEMO_CLASSROOMS, DEMO_STUDENTS } from '../../data/mockUsers';
@@ -242,6 +243,8 @@ export const AdminDashboard: React.FC = () => {
           </div>
         </div>
       )}
+
+      {activeTab === 'stations' && <ContentEditor />}
 
       {/* TAB 3: NỘI DUNG TRẠM (25 Stations & Versioning) */}
       {activeTab === 'stations' && (

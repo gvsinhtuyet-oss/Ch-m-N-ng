@@ -243,7 +243,7 @@ export const TeacherDashboard: React.FC = () => {
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
                 {DEMO_STUDENTS.map((st) => {
-                  const prog = progressService.getGradeProgress(st.id, stations.map(s => s.id));
+                  const prog = progressService.getGradeProgress(st.id, stations.map(s => s.id), currentGrade);
                   return (
                     <tr key={st.id} className="hover:bg-slate-50/70">
                       <td className="py-3 px-4 font-mono font-semibold text-slate-500">{st.studentCode}</td>

@@ -15,7 +15,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
   const { currentUser } = useApp();
   const checkIn = station.checkIn;
 
-  const [selectedEmotion, setSelectedEmotion] = useState<string>(checkIn.emotions[0]?.id || '');
+  const [selectedEmotion, setSelectedEmotion] = useState<string>('');
   const [selectedRememberIds, setSelectedRememberIds] = useState<string[]>([]);
   const [selectedActionIds, setSelectedActionIds] = useState<string[]>([]);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -39,7 +39,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
   };
 
   const handleSubmit = () => {
-    if (selectedRememberIds.length === 0 || selectedActionIds.length === 0) return;
+    if (selectedEmotion === '' || selectedRememberIds.length === 0 || selectedActionIds.length === 0) return;
     setIsSubmitted(true);
 
     progressService.completeStage3(
@@ -55,7 +55,10 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
     setShowRewardModal(true);
   };
 
-  const isValid = selectedRememberIds.length > 0 && selectedActionIds.length > 0;
+  const isValid =
+    selectedEmotion !== '' &&
+    selectedRememberIds.length > 0 &&
+    selectedActionIds.length > 0;
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">

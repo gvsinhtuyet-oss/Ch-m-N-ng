@@ -173,7 +173,7 @@ class ProgressService {
     return { ...current };
   }
 
-  public getGradeProgress(studentId: string, stationIdsInGrade: string[]): GradeSummary {
+  public getGradeProgress(studentId: string, stationIdsInGrade: string[], grade: number): GradeSummary {
     let completedStations = 0;
     let totalStamps = 0;
     let totalRewards = 0;
@@ -190,7 +190,7 @@ class ProgressService {
     });
 
     return {
-      grade: 2,
+      grade,
       totalStations: stationIdsInGrade.length,
       completedStations,
       totalStamps,

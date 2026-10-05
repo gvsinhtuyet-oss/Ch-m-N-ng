@@ -7,7 +7,7 @@ export const StudentProfileView: React.FC = () => {
   const { currentUser, currentGrade, allStationsInCurrentGrade, setRole } = useApp();
   const student = currentUser as any;
   const stations = allStationsInCurrentGrade;
-  const gradeProg = progressService.getGradeProgress(student?.id || 'guest', stations.map(s => s.id));
+  const gradeProg = progressService.getGradeProgress(student?.id || 'guest', stations.map(s => s.id), currentGrade);
 
   return (
     <div className="max-w-3xl mx-auto px-3 sm:px-6 py-8 space-y-6">

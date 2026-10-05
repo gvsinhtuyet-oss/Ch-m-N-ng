@@ -16,7 +16,7 @@ export const StudentJourneyView: React.FC = () => {
 
   const studentId = currentUser?.id || 'guest';
   const stations: Station[] = allStationsInCurrentGrade;
-  const gradeProgress = progressService.getGradeProgress(studentId, stations.map(s => s.id));
+  const gradeProgress = progressService.getGradeProgress(studentId, stations.map(s => s.id), currentGrade);
 
   const allDone = gradeProgress.completedStations === stations.length;
 

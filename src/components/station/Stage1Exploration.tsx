@@ -26,7 +26,7 @@ interface Props {
 
 export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage }) => {
   const { currentUser, role, isOnline, language } = useApp();
-  const isGuest = role === 'guest';
+  const isReadOnly = role !== 'student';
   const [currentHotspotIdx, setCurrentHotspotIdx] = useState(0);
   const [narrationState, setNarrationState] = useState<NarrationState>('idle');
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
@@ -113,7 +113,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
     if (correct) {
       audioService.playSfx('correct');
-      if (!isGuest) {
+      if (!isReadOnly) {
         progressService.completeHotspot(studentId, station.id, hotspot.id);
       }
     } else {
@@ -130,14 +130,14 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   const handleNextHotspot = () => {
     audioService.playSfx('click');
-    if (!isGuest) {
+    if (!isReadOnly) {
       progressService.completeHotspot(studentId, station.id, hotspot.id);
     }
 
     if (currentHotspotIdx < station.hotspots.length - 1) {
       changeHotspot(currentHotspotIdx + 1);
     } else {
-      if (!isGuest) {
+      if (!isReadOnly) {
         progressService.completeStage1(studentId, station.id);
       }
       setShowRewardModal(true);
@@ -641,9 +641,9 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
         <RewardClaimModal
           reward={station.rewards.find(r => r.stage === 1) || station.rewards[0]}
           stage={1}
-          alreadyClaimed={!isGuest && progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 1)?.id || '')}
+          alreadyClaimed={!isReadOnly && progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 1)?.id || '')}
           onClaim={() => {
-            if (!isGuest) {
+            if (!isReadOnly) {
               const rw1 = station.rewards.find(r => r.stage === 1);
               if (rw1) {
                 progressService.claimReward(studentId, station.id, rw1.id);

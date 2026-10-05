@@ -50,7 +50,6 @@ export const StudentJourneyMapsView: React.FC = () => {
   } = useApp();
 
   const studentId = currentUser?.id || 'guest';
-  const isGuest = role === 'guest';
   const isReadOnly = role !== 'student';
   const stations = allStationsInCurrentGrade;
   const stationIds = stations.map(station => station.id);
@@ -142,7 +141,7 @@ export const StudentJourneyMapsView: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative z-10 mt-6 pt-5 border-t border-white/10 flex items-center gap-2 overflow-x-auto">
+        {role !== 'student' && <div className="relative z-10 mt-6 pt-5 border-t border-white/10 flex items-center gap-2 overflow-x-auto">
           <span className="text-xs text-sky-200 font-semibold mr-1 shrink-0">Chọn khối:</span>
           {[1, 2, 3, 4, 5].map(grade => (
             <button
@@ -161,7 +160,7 @@ export const StudentJourneyMapsView: React.FC = () => {
               Khối {grade}
             </button>
           ))}
-        </div>
+        </div>}
       </section>
 
       <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs sm:text-sm text-amber-950 leading-relaxed">
@@ -421,7 +420,7 @@ export const StudentJourneyMapsView: React.FC = () => {
                   <div className="rounded-xl bg-white/80 border border-slate-200 p-3">
                     <strong>Nhà khám phá:</strong><br />
                     {isReadOnly
-                      ? (isGuest ? 'Nhà phiêu lưu (bản xem thử)' : 'Giáo viên xem trước')
+                      ? 'Xem trước phần thưởng'
                       : (currentUser as any)?.displayName || currentUser?.name || 'Học sinh'}
                   </div>
                   <div className="rounded-xl bg-white/80 border border-slate-200 p-3">

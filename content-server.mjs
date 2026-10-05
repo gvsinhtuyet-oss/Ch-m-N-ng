@@ -7,7 +7,8 @@ import path from 'node:path';
 const dataDir = path.resolve(process.env.CONTENT_DATA_DIR || './content-data');
 const dataFile = path.join(dataDir, 'stations.json');
 const password = process.env.CONTENT_ADMIN_PASSWORD;
-if (!password || password.length < 12) throw new Error('Set CONTENT_ADMIN_PASSWORD to at least 12 characters.');
+const publishingEnabled = typeof password === 'string' && password.length >= 12;
+if (!publishingEnabled) console.warn('Content publishing disabled: configure CONTENT_ADMIN_PASSWORD (at least 12 characters).');
 await mkdir(dataDir, { recursive: true });
 let stations = {};
 try { stations = JSON.parse(await readFile(dataFile, 'utf8')); }
@@ -43,6 +44,7 @@ const server = createServer(async (req,res) => {
     const pathname = new URL(req.url, 'http://localhost').pathname;
     if (pathname === '/api/content' && req.method === 'GET') return json(res,200,{ schemaVersion:1,stations,theme });
     if (pathname === '/api/content/login' && req.method === 'POST') {
+      if (!publishingEnabled) return json(res,503,{ error:'Chưa cấu hình mật khẩu xuất bản học liệu trên máy chủ.' });
       if (Date.now() < blockedUntil) return json(res,429,{ error:'Try again later' });
       const data = await body(req);
       const supplied = Buffer.from(typeof data.password === 'string' ? data.password : '');

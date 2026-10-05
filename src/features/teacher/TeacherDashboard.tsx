@@ -4,6 +4,7 @@ import { Station } from '../../types';
 import { DEMO_STUDENTS, DEMO_CLASSROOMS } from '../../data/mockUsers';
 import { implementationService } from '../../services/ImplementationService';
 import { progressService } from '../../services/ProgressService';
+import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { ImplementationModal } from './ImplementationModal';
 import {
   Presentation,
@@ -13,9 +14,6 @@ import {
   BarChart3,
   FileEdit,
   Clock,
-  ExternalLink,
-  ChevronRight,
-  Filter,
 } from 'lucide-react';
 
 export const TeacherDashboard: React.FC = () => {
@@ -37,7 +35,23 @@ export const TeacherDashboard: React.FC = () => {
 
   const teacher = currentUser as any;
   const stations = allStationsInCurrentGrade;
+  const demoStations = stations.filter(station => DEMO_STATION_IDS.has(station.id));
+  const displayStations = [...stations].sort((a, b) => {
+    const aDemo = DEMO_STATION_IDS.has(a.id);
+    const bDemo = DEMO_STATION_IDS.has(b.id);
+    if (aDemo === bDemo) return 0;
+    return aDemo ? -1 : 1;
+  });
+  const currentDemoStation = demoStations[0] || null;
   const implementations = implementationService.getAll();
+  const demoStudentSummaries = DEMO_STUDENTS.map(student =>
+    progressService.getGradeProgress(
+      student.id,
+      demoStations.map(station => station.id),
+      currentGrade
+    )
+  );
+  const participatingStudents = demoStudentSummaries.filter(summary => summary.completedStations > 0).length;
 
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8 space-y-8">
@@ -54,7 +68,7 @@ export const TeacherDashboard: React.FC = () => {
             Chào mừng {teacher?.name || 'Cô Trương Sinh Tuyết'}!
           </h1>
           <p className="text-xs sm:text-sm text-emerald-100 mt-1 max-w-xl">
-            Tổ chức dạy học GDĐP linh hoạt theo Thông tư 32/2018/TT-BGDĐT: Trình chiếu trực tiếp, tích hợp bài giảng hoặc giao dự án trải nghiệm.
+            Hỗ trợ giáo viên tổ chức bài học demo, trình chiếu nội dung, theo dõi tiến độ và ghi nhận triển khai.
           </p>
         </div>
 
@@ -106,7 +120,7 @@ export const TeacherDashboard: React.FC = () => {
             <div>
               <h2 className="text-xl font-black text-slate-900">Danh Mục Bài Dạy Khối {currentGrade}</h2>
               <p className="text-xs text-slate-500">
-                Thực hiện phân phối 5 bài học tích hợp (hoặc 35 tiết/năm học đối với các cấp tiếp theo).
+                Mỗi khối hiện có 01 bài demo mở; 04 bài còn lại đang tiếp tục hoàn thiện.
               </p>
             </div>
 
@@ -128,14 +142,19 @@ export const TeacherDashboard: React.FC = () => {
           </div>
 
           <div className="space-y-4">
-            {stations.map(station => {
-              const stationImps = implementations.filter(i => i.stationId === station.id);
+            {displayStations.map(station => {
+              const isDemoReady = DEMO_STATION_IDS.has(station.id);
+              const stationImps = isDemoReady
+                ? implementations.filter(i => i.stationId === station.id)
+                : [];
               const hasImplemented = stationImps.length > 0;
 
               return (
                 <div
                   key={station.id}
-                  className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:border-emerald-300 transition flex flex-col lg:flex-row lg:items-center justify-between gap-6"
+                  className={`bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-xs transition flex flex-col lg:flex-row lg:items-center justify-between gap-6 ${
+                    isDemoReady ? 'hover:border-emerald-300' : 'opacity-70'
+                  }`}
                 >
                   <div className="flex items-start gap-4 flex-1">
                     <img
@@ -149,7 +168,11 @@ export const TeacherDashboard: React.FC = () => {
                           Bài {station.number}
                         </span>
                         <span className="text-xs text-slate-400 font-semibold">• {station.totalPeriods} tiết</span>
-                        {hasImplemented ? (
+                        {!isDemoReady ? (
+                          <span className="px-2.5 py-0.5 rounded-full bg-slate-800 text-white text-[11px] font-bold">
+                            🔒 ĐANG PHÁT TRIỂN
+                          </span>
+                        ) : hasImplemented ? (
                           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold">
                             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                             Đã triển khai ({stationImps.length} lượt)
@@ -173,32 +196,44 @@ export const TeacherDashboard: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Actions: MỞ BÀI, TRÌNH CHIẾU, ĐÃ TRIỂN KHAI */}
+                  {/* Chỉ bài demo đã hoàn thiện mới cho phép dạy / trình chiếu / ghi nhận */}
                   <div className="flex flex-wrap items-center gap-2 shrink-0 border-t lg:border-t-0 pt-4 lg:pt-0">
-                    <button
-                      onClick={() => openStation(station)}
-                      className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs transition"
-                      title="Mở nội dung để xem như học sinh"
-                    >
-                      MỞ BÀI
-                    </button>
+                    {isDemoReady ? (
+                      <>
+                        <button
+                          onClick={() => openStation(station)}
+                          className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs transition"
+                          title="Mở nội dung để xem như học sinh"
+                        >
+                          MỞ BÀI
+                        </button>
 
-                    <button
-                      onClick={() => enterPresentationMode(station)}
-                      className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-sm transition flex items-center gap-1.5 active:scale-95"
-                      title="Chiếu lên TV hoặc máy chiếu"
-                    >
-                      <Presentation className="w-3.5 h-3.5" />
-                      <span>TRÌNH CHIẾU</span>
-                    </button>
+                        <button
+                          onClick={() => enterPresentationMode(station)}
+                          className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-sm transition flex items-center gap-1.5 active:scale-95"
+                          title="Chiếu lên TV hoặc máy chiếu"
+                        >
+                          <Presentation className="w-3.5 h-3.5" />
+                          <span>TRÌNH CHIẾU</span>
+                        </button>
 
-                    <button
-                      onClick={() => setSelectedStationForImp(station)}
-                      className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-sm transition flex items-center gap-1.5 active:scale-95"
-                    >
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      <span>ĐÃ TRIỂN KHAI</span>
-                    </button>
+                        <button
+                          onClick={() => setSelectedStationForImp(station)}
+                          className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-sm transition flex items-center gap-1.5 active:scale-95"
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>ĐÃ TRIỂN KHAI</span>
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        type="button"
+                        disabled
+                        className="px-4 py-2 rounded-xl bg-slate-200 text-slate-500 font-bold text-xs cursor-not-allowed"
+                      >
+                        ĐANG PHÁT TRIỂN
+                      </button>
+                    )}
                   </div>
                 </div>
               );
@@ -243,22 +278,26 @@ export const TeacherDashboard: React.FC = () => {
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
                 {DEMO_STUDENTS.map((st) => {
-                  const prog = progressService.getGradeProgress(st.id, stations.map(s => s.id), currentGrade);
+                  const prog = progressService.getGradeProgress(
+                    st.id,
+                    demoStations.map(station => station.id),
+                    currentGrade
+                  );
                   return (
                     <tr key={st.id} className="hover:bg-slate-50/70">
                       <td className="py-3 px-4 font-mono font-semibold text-slate-500">{st.studentCode}</td>
                       <td className="py-3 px-4 font-bold text-slate-900">{st.displayName}</td>
                       <td className="py-3 px-4">{st.className}</td>
                       <td className="py-3 px-4">
-                        <span className="font-extrabold text-sky-700">{prog.completedStations} / {stations.length}</span>
+                        <span className="font-extrabold text-sky-700">{prog.completedStations} / {demoStations.length || 1}</span>
                       </td>
                       <td className="py-3 px-4">
                         <span className="font-extrabold text-amber-600">{prog.totalStamps} dấu</span>
                       </td>
                       <td className="py-3 px-4">
-                        {prog.completedStations === stations.length ? (
+                        {demoStations.length > 0 && prog.completedStations === demoStations.length ? (
                           <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
-                            Hoàn thành khối
+                            Hoàn thành bài demo
                           </span>
                         ) : prog.completedStations > 0 ? (
                           <span className="px-2.5 py-1 rounded-full bg-sky-100 text-sky-800 text-[10px] font-bold">
@@ -302,8 +341,8 @@ export const TeacherDashboard: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="p-5 rounded-2xl bg-emerald-50 border border-emerald-100">
               <span className="text-xs font-bold text-emerald-800 uppercase">Tỷ lệ tham gia</span>
-              <div className="text-3xl font-black text-emerald-700 mt-1">94.2%</div>
-              <p className="text-[11px] text-emerald-600 mt-1">Học sinh đã đăng nhập và khám phá ít nhất 1 trạm</p>
+              <div className="text-3xl font-black text-emerald-700 mt-1">{participatingStudents}/{DEMO_STUDENTS.length}</div>
+              <p className="text-[11px] text-emerald-600 mt-1">Học sinh demo đã hoàn thành bài demo trong dữ liệu cục bộ</p>
             </div>
 
             <div className="p-5 rounded-2xl bg-sky-50 border border-sky-100">
@@ -313,9 +352,9 @@ export const TeacherDashboard: React.FC = () => {
             </div>
 
             <div className="p-5 rounded-2xl bg-amber-50 border border-amber-100">
-              <span className="text-xs font-bold text-amber-800 uppercase">Trạm yêu thích nhất</span>
-              <div className="text-xl font-black text-amber-900 mt-1">Di sản Hội An & Cù Lao Chàm</div>
-              <p className="text-[11px] text-amber-700 mt-1">Ví dụ minh họa từ dữ liệu demo</p>
+              <span className="text-xs font-bold text-amber-800 uppercase">Bài demo đang mở</span>
+              <div className="text-xl font-black text-amber-900 mt-1">{currentDemoStation?.titleVi || 'Đang cập nhật'}</div>
+              <p className="text-[11px] text-amber-700 mt-1">01 bài demo/khối để kiểm thử luồng dạy – học</p>
             </div>
           </div>
 
@@ -362,7 +401,9 @@ export const TeacherDashboard: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {stations.map(st => (
+            {displayStations.map(st => {
+              const isDemoReady = DEMO_STATION_IDS.has(st.id);
+              return (
               <div key={st.id} className="p-4 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-2">
                 <div className="flex items-center justify-between">
                   <h4 className="font-bold text-sm text-slate-900">{st.titleVi}</h4>
@@ -375,20 +416,25 @@ export const TeacherDashboard: React.FC = () => {
                 </p>
                 <div className="pt-2 flex items-center justify-between text-xs">
                   <span className="text-slate-400">Số điểm chạm: {st.hotspots.length}</span>
-                  <button
-                    onClick={() => {
-                      setProposalStation(st);
-                      setProposalText('');
-                      setProposalSent(false);
-                    }}
-                    className="text-emerald-700 font-bold hover:underline flex items-center gap-1"
-                  >
-                    <FileEdit className="w-3.5 h-3.5" />
-                    <span>Đề xuất chỉnh sửa</span>
-                  </button>
+                  {isDemoReady ? (
+                    <button
+                      onClick={() => {
+                        setProposalStation(st);
+                        setProposalText('');
+                        setProposalSent(false);
+                      }}
+                      className="text-emerald-700 font-bold hover:underline flex items-center gap-1"
+                    >
+                      <FileEdit className="w-3.5 h-3.5" />
+                      <span>Góp ý học liệu</span>
+                    </button>
+                  ) : (
+                    <span className="text-slate-500 font-bold">🔒 Đang phát triển</span>
+                  )}
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
@@ -410,7 +456,7 @@ export const TeacherDashboard: React.FC = () => {
               Đề Xuất Chỉnh Sửa Học Liệu: {proposalStation.titleVi}
             </h3>
             <p className="text-xs text-slate-500">
-              Ý kiến đóng góp chuyên môn của giáo viên sẽ được chuyển đến Ban Giám Hiệu và Tổ Biên Soạn xem xét trước khi cập nhật bản mẫu.
+              Ý kiến chuyên môn được ghi nhận trong phiên bản demo để phục vụ rà soát và hoàn thiện học liệu.
             </p>
 
             {!proposalSent ? (
@@ -443,7 +489,7 @@ export const TeacherDashboard: React.FC = () => {
               </div>
             ) : (
               <div className="text-center py-4 text-emerald-700 font-bold text-sm">
-                ✓ Đã gửi đề xuất thành công đến Ban Biên Soạn!
+                ✓ Đã ghi nhận góp ý học liệu!
               </div>
             )}
           </div>

@@ -1,4 +1,5 @@
 // Audio & Sound Effects Engine (Web Audio API + SpeechSynthesis)
+import { backgroundMusic } from './BackgroundMusic';
 
 export type NarrationState = 'idle' | 'playing' | 'paused';
 
@@ -58,6 +59,19 @@ class AudioService {
   // Play procedural sound effects using Web Audio API
   public playSfx(type: 'click' | 'correct' | 'wrong' | 'unlock' | 'reward' | 'stamp' | 'victory' | 'transition' | 'map' | 'treasure') {
     if (!this.soundEnabled) return;
+    const muteDurations: Record<typeof type, number> = {
+      click: 180,
+      correct: 700,
+      wrong: 450,
+      unlock: 850,
+      reward: 850,
+      stamp: 650,
+      victory: 1400,
+      transition: 650,
+      map: 900,
+      treasure: 1700,
+    };
+    backgroundMusic.muteFor(muteDurations[type]);
     try {
       this.initAudio();
       if (!this.audioCtx) return;
@@ -213,6 +227,7 @@ class AudioService {
       }
 
       utterance.onstart = () => {
+        backgroundMusic.beginForegroundAudio();
         this.notifyState('playing');
       };
 
@@ -221,17 +236,20 @@ class AudioService {
       };
 
       utterance.onresume = () => {
+        backgroundMusic.beginForegroundAudio();
         this.notifyState('playing');
       };
 
       utterance.onend = () => {
         this.currentUtterance = null;
+        backgroundMusic.endForegroundAudio();
         this.notifyState('idle');
         if (onEnd) onEnd();
       };
 
       utterance.onerror = () => {
         this.currentUtterance = null;
+        backgroundMusic.endForegroundAudio();
         this.notifyState('idle');
         if (onEnd) onEnd();
       };
@@ -247,6 +265,7 @@ class AudioService {
   public pauseNarration() {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.speaking) {
       window.speechSynthesis.pause();
+      backgroundMusic.endForegroundAudio();
       this.notifyState('paused');
     }
   }
@@ -260,8 +279,10 @@ class AudioService {
 
   public stopNarration() {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      const wasActive = this.currentUtterance !== null || window.speechSynthesis.speaking || window.speechSynthesis.paused;
       window.speechSynthesis.cancel();
       this.currentUtterance = null;
+      if (wasActive) backgroundMusic.endForegroundAudio();
       this.notifyState('idle');
     }
   }

@@ -128,21 +128,41 @@ const server = createServer(async (req,res) => {
     const pathname = new URL(req.url, 'http://localhost').pathname;
     if (pathname === '/api/health' && req.method === 'GET') {
       let firestoreStatus = 'unknown';
+      let adminAccountExists = false;
+      const adminEmail = typeof process.env.AUTH_ADMIN_EMAIL === 'string'
+        ? process.env.AUTH_ADMIN_EMAIL.trim().toLowerCase()
+        : '';
       if (cloudStore) {
         try {
           await cloudStore.get('cham_users', 'health-check');
           firestoreStatus = 'connected';
+          if (adminEmail) {
+            const adminId = createHash('sha256').update(adminEmail).digest('hex');
+            const adminUser = await cloudStore.get('cham_users', adminId);
+            adminAccountExists = !!(adminUser && adminUser.role === 'admin' && adminUser.active);
+          }
         } catch (err) {
           firestoreStatus = `error: ${err.message}`;
         }
       } else {
         firestoreStatus = 'unconfigured';
       }
+      const bootstrapSecretConfigured =
+        typeof process.env.AUTH_ADMIN_PASSWORD === 'string' &&
+        process.env.AUTH_ADMIN_PASSWORD.length >= 12 &&
+        process.env.AUTH_ADMIN_PASSWORD.length <= 128;
       return json(res, 200, {
         status: 'ok',
         project: process.env.AUTH_FIRESTORE_PROJECT || null,
         database: process.env.AUTH_FIRESTORE_DATABASE || '(default)',
         firestore: firestoreStatus,
+        auth: {
+          adminEmailConfigured: !!adminEmail,
+          adminAccountExists,
+          bootstrapSecretConfigured,
+          ready: firestoreStatus === 'connected' && !!adminEmail && (adminAccountExists || bootstrapSecretConfigured),
+        },
+        contentStorage: durableContent ? 'firestore' : 'local',
       });
     }
     if (pathname === '/api/content' && req.method === 'GET') {

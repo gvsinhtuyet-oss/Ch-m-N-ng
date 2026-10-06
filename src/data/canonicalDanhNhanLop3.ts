@@ -33,7 +33,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
       titleEn: '1. Meeting Huynh Thuc Khang',
       subtitleVi: 'Nhà yêu nước tiêu biểu của đất Quảng',
       subtitleEn: 'Profound scholar and upright patriot',
-      image: 'https://upload.wikimedia.org/wikipedia/commons/b/b6/Portrait_of_Mr._Hu%E1%BB%B3nh_Th%C3%BAc_Kh%C3%A1ng.jpg',
+      image: 'https://vksdanang.gov.vn/uploads/news/2026_10/image-20261001170956-3.jpeg',
       narrationVi: 'Huỳnh Thúc Kháng là một nhà yêu nước tiêu biểu của đất Quảng. Cuộc đời và sự nghiệp của ông gắn với tinh thần hiếu học, khí tiết, trách nhiệm với nhân dân và khát vọng làm cho đất nước tiến bộ.',
       narrationEn: 'Huynh Thuc Khang was a distinguished patriot and cultural-political leader of Quang Nam - Da Nang, renowned for integrity, vast knowledge, and dedication to public education.',
       keyFactVi: 'Huỳnh Thúc Kháng là một trong những chí sĩ tiêu biểu của phong trào Duy Tân ở Trung Kỳ và để lại dấu ấn sâu đậm trong lịch sử yêu nước của đất Quảng.',
@@ -91,7 +91,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
       titleEn: '3. The Duy Tan Reform Movement',
       subtitleVi: 'Tinh thần canh tân và khát vọng đổi mới đất nước',
       subtitleEn: 'Aspiration for self-reliance through knowledge',
-      image: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=1200&q=80',
+      image: 'https://commons.wikimedia.org/wiki/Special:FilePath/%E6%BD%98%E5%91%A8%E6%A5%A8%E5%AF%84%E5%AF%B6%E5%B6%B9%E6%9B%B8.jpg',
       narrationVi: 'Phong trào Duy Tân gắn với nhiều chí sĩ yêu nước như Huỳnh Thúc Kháng, Phan Châu Trinh, Phan Bội Châu và Trần Quý Cáp trong mạch nội dung của bài học. Điểm nổi bật là tinh thần yêu nước, ý chí đổi mới và coi trọng việc học để góp phần làm cho đất nước tiến bộ.',
       narrationEn: 'Patriotic scholars sought education, critical thinking, and self-reliance for all citizens. Today, students carry this forward by learning diligently and thinking independently.',
       keyFactVi: 'Phong trào Duy Tân đầu thế kỉ XX thể hiện khát vọng canh tân đất nước, mở mang dân trí và khuyến khích tinh thần tự lực.',
@@ -111,7 +111,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
       },
       sources: ['Tư liệu Phong trào Duy Tân đầu thế kỷ XX – Sở GDĐT Đà Nẵng'],
       mediaRights: 'LINK_ONLY',
-      mediaCredit: 'Unsplash – Tri thức và sách vở',
+      mediaCredit: 'Wikimedia Commons – Thư thất điều của Phan Châu Trinh (1922, public domain), tư liệu gợi mở tinh thần canh tân và khai dân trí',
     },
     {
       id: 'dn3-dau-chan-hom-nay',
@@ -140,7 +140,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
       },
       sources: ['Nhà lưu niệm danh nhân văn hóa – Sở Văn hóa Thể thao Đà Nẵng'],
       mediaRights: 'LINK_ONLY',
-      mediaCredit: 'Wikimedia Commons – Chân dung Huỳnh Thúc Kháng (ảnh ngữ cảnh cho nội dung Nhà lưu niệm)',
+      mediaCredit: 'Viện kiểm sát nhân dân TP Đà Nẵng – ảnh hành trình về địa chỉ đỏ tại Nhà lưu niệm cụ Huỳnh Thúc Kháng, xã Thạnh Bình (01/10/2026)',
     },
   ],
   challenge: {
@@ -302,7 +302,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
     status: 'IN_REVIEW',
     createdBy: 'Nhóm biên soạn CHẠM ĐÀ NẴNG',
     createdAt: '2026-10-01T08:00:00Z',
-    changelog: 'Rà soát Khối 3: sửa thời lượng thành 7 tiết, bám yêu cầu cần đạt và bổ sung đúng Nhà lưu niệm Huỳnh Thúc Kháng ở xã Thạnh Bình',
+    changelog: 'Rà soát Khối 3: giữ ảnh chân dung đã kiểm định của Huỳnh Thúc Kháng và Phan Châu Trinh; thay ảnh minh họa chung ở điểm Duy Tân bằng tư liệu lịch sử gắn với tư tưởng canh tân của Phan Châu Trinh; thay ảnh chân dung lặp ở điểm Nhà lưu niệm bằng ảnh thực tế tại địa chỉ đỏ Nhà lưu niệm cụ Huỳnh Thúc Kháng, xã Thạnh Bình.',
   },
   sources: [
     {

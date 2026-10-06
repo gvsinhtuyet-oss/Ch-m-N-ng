@@ -237,7 +237,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const exitPresentationMode = () => {
     audioService.playSfx('click');
     audioService.stopNarration();
-    setCurrentView('teacher-view');
+    setCurrentStation(null);
+    setCurrentStage(1);
+    setCurrentView(role === 'admin' ? 'admin-view' : 'teacher-view');
   };
 
   return (
@@ -283,4 +285,3 @@ export const useApp = () => {
   }
   return context;
 };
-

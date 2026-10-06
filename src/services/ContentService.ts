@@ -68,7 +68,7 @@ export const contentService = {
   },
   async loadShared(stations: Station[]) {
     try {
-      const response = await fetchWithTimeout('/api/content', { cache: 'no-store' });
+      const response = await fetchWithTimeout('/api/content', { cache: 'no-store' }, 120000);
       if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) return false;
       const remote = await response.json();
       if (remote.schemaVersion !== 1 || !remote.stations || typeof remote.stations !== 'object') return false;
@@ -88,8 +88,11 @@ export const contentService = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json',  },
       body: JSON.stringify(theme),
-    });
-    if (!response.ok) throw new Error('Chưa xuất bản được giao diện. Hãy kiểm tra cấu hình máy chủ.');
+    }, 120000);
+    if (!response.ok) {
+      const result = await response.json().catch(() => ({}));
+      throw new Error(result.error || 'Chưa xuất bản được giao diện. Hãy kiểm tra cấu hình máy chủ.');
+    }
     try { saveTheme(theme); } catch {
       window.dispatchEvent(new Event('cham-theme-changed'));
     }
@@ -99,12 +102,14 @@ export const contentService = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json',  },
       body: JSON.stringify(content),
-    });
-    if (!response.ok) throw new Error('Chưa xuất bản được. Hãy kiểm tra kết nối và đăng nhập kho học liệu.');
+    }, 120000);
+    if (!response.ok) {
+      const result = await response.json().catch(() => ({}));
+      throw new Error(result.error || 'Chưa xuất bản được. Hãy kiểm tra kết nối và đăng nhập kho học liệu.');
+    }
     records = { ...records, [station.id]: structuredClone(content) };
     this.apply(station);
     // A large shared file can exceed localStorage; publishing has already succeeded.
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); } catch {}
   },
 };
-

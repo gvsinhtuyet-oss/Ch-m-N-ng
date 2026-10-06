@@ -119,8 +119,11 @@ class BackgroundMusic {
   }
 
   muteFor(durationMs: number) {
-    this.beginForegroundAudio();
-    if (this.resumeTimer !== null) window.clearTimeout(this.resumeTimer);
+    if (this.resumeTimer === null) {
+      this.beginForegroundAudio();
+    } else {
+      window.clearTimeout(this.resumeTimer);
+    }
     this.resumeTimer = window.setTimeout(() => {
       this.resumeTimer = null;
       this.endForegroundAudio();

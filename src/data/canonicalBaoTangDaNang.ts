@@ -295,6 +295,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
     grade: 4,
     titleVi: 'Bản đồ hành trình Bảo tàng Đà Nẵng',
     subtitleVi: 'Thám tử hiện vật',
+    image: 'https://drive.google.com/thumbnail?id=1X2L0-6ZbOceXOGg-vfd7Cl0V9ZWqL8U5&sz=w900',
     summaryNodes: [
       { id: 'map-bt-1', titleVi: 'Không gian bảo tàng', textVi: 'Bảo tàng là nơi lưu giữ, giới thiệu những tư liệu và hiện vật giúp tìm hiểu quê hương.', icon: '🏛️' },
       { id: 'map-bt-2', titleVi: 'Hiện vật', textVi: 'Quan sát hình dáng, chất liệu và thông tin đi kèm để hiểu câu chuyện của hiện vật.', icon: '🏺' },

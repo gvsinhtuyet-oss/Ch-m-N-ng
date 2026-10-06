@@ -257,7 +257,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
       stage: 1,
       nameVi: 'KÍNH LÚP THÁM TỬ',
       nameEn: 'Detective Magnifier',
-      template: 'discovery_compass',
+      template: 'detective_magnifier',
       descriptionVi: 'Ghi nhận em đã hoàn thành chặng quan sát 4 điểm chạm bảo tàng.',
     },
     {
@@ -266,7 +266,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
       stage: 2,
       nameVi: 'THẺ HIỆN VẬT',
       nameEn: 'Artifact Curatorial Card',
-      template: 'scholar_scroll',
+      template: 'artifact_card',
       descriptionVi: 'Vinh danh kỹ năng phân loại và giải mã hiện vật xuất sắc.',
     },
     {
@@ -275,7 +275,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
       stage: 3,
       nameVi: 'HUY HIỆU NGƯỜI BẢO TỒN',
       nameEn: 'Conservation Badge',
-      template: 'dragon_gem',
+      template: 'museum_conservator',
       descriptionVi: 'Minh chứng cho ý thức nâng niu, trân trọng và bảo vệ di sản văn hóa.',
     },
   ],

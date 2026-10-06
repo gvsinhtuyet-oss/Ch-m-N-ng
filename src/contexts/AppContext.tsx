@@ -62,7 +62,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [currentStage, setCurrentStage] = useState<1 | 2 | 3 | 4>(1);
   const [currentView, setCurrentView] = useState<AppView>('landing');
   const [isOnline, setIsOnline] = useState<boolean>(typeof navigator !== 'undefined' ? navigator.onLine : true);
-  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(() => audioService.isSoundEnabled());
   const [language, setLanguage] = useState<Language>('vi');
 
   const [, setContentRevision] = useState(0);

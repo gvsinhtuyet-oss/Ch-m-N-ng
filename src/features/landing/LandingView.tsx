@@ -90,6 +90,28 @@ export const LandingView: React.FC = () => {
     return () => backgroundMusic.setForegroundSource('intro-video', false);
   }, [introActive]);
 
+  useEffect(() => {
+    if (!introActive) return;
+    const startAudibleIntro = () => {
+      try {
+        introFrameRef.current?.contentWindow?.postMessage(
+          JSON.stringify({ event: 'command', func: 'unMute', args: [] }),
+          '*'
+        );
+        introFrameRef.current?.contentWindow?.postMessage(
+          JSON.stringify({ event: 'command', func: 'playVideo', args: [] }),
+          '*'
+        );
+      } catch {}
+    };
+    window.addEventListener('pointerdown', startAudibleIntro, { once: true });
+    window.addEventListener('keydown', startAudibleIntro, { once: true });
+    return () => {
+      window.removeEventListener('pointerdown', startAudibleIntro);
+      window.removeEventListener('keydown', startAudibleIntro);
+    };
+  }, [introActive]);
+
   const stopIntroVideo = () => {
     setIntroActive(false);
     try {
@@ -290,6 +312,7 @@ export const LandingView: React.FC = () => {
 
           <button
             onClick={() => {
+              stopIntroVideo();
               audioService.playSfx('click');
               openRolePicker();
             }}

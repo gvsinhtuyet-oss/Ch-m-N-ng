@@ -284,6 +284,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
     grade: 3,
     titleVi: 'Bản đồ hành trình Danh nhân xứ Quảng',
     subtitleVi: 'Huỳnh Thúc Kháng – Phan Châu Trinh',
+    image: 'https://drive.google.com/thumbnail?id=1rHY014MsHSXckRsT5QM9x4M2dbMzvnOp&sz=w900',
     summaryNodes: [
       { id: 'map-dn-1', titleVi: 'Huỳnh Thúc Kháng', textVi: 'Tìm hiểu một danh nhân tiêu biểu của quê hương và những đóng góp đáng trân trọng.', icon: '📜' },
       { id: 'map-dn-2', titleVi: 'Phan Châu Trinh', textVi: 'Khám phá tinh thần học tập, đổi mới và trách nhiệm với đất nước.', icon: '📚' },

@@ -67,10 +67,14 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
   const owner = emailOf(adminEmail);
   let bootstrap;
   async function ready() {
-    if (!store || !validEmail(owner) || typeof adminPassword !== 'string' || adminPassword.length < 12 || adminPassword.length > 128)
+    if (!store || !validEmail(owner))
       throw fail(503,'Đăng nhập nhân sự chưa được cấu hình đầy đủ trên máy chủ.');
     if (!bootstrap) bootstrap=(async()=>{
-      const id=hash(owner); if (await store.get('cham_users',id)) return;
+      const id=hash(owner);
+      const existing=await store.get('cham_users',id);
+      if (existing) return;
+      if (typeof adminPassword !== 'string' || adminPassword.length < 12 || adminPassword.length > 128)
+        throw fail(503,'Chưa có tài khoản quản trị đầu tiên. Hãy cấu hình AUTH_ADMIN_PASSWORD từ 12 đến 128 ký tự rồi thử lại.');
       const user={ id,email:owner,name:'Quản trị nhà trường',role:'admin',active:true,version:1,passwordHash:await passwordHash(adminPassword) };
       try { await store.put('cham_users',id,user,true); } catch(error) { if(error.status !== 409) throw error; }
     })().catch(error=>{ bootstrap=undefined; throw error; });

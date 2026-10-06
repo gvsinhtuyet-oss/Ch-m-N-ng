@@ -412,9 +412,11 @@ class ProgressService {
       const raw = localStorage.getItem(SYNC_QUEUE_KEY);
       if (!raw) return { success: true, syncedCount: 0 };
       const queue = JSON.parse(raw);
-      const count = queue.length;
-      localStorage.removeItem(SYNC_QUEUE_KEY);
-      return { success: true, syncedCount: count };
+      const count = Array.isArray(queue) ? queue.length : 0;
+
+      // Chưa có API đồng bộ tiến độ học sinh lên máy chủ.
+      // Giữ nguyên hàng đợi để không báo "đã đồng bộ" giả và không làm mất sự kiện cục bộ.
+      return { success: false, syncedCount: 0 };
     } catch {
       return { success: false, syncedCount: 0 };
     }

@@ -246,7 +246,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
       stage: 1,
       nameVi: 'CUỐN SÁCH KHAI TRÍ',
       nameEn: 'Book of Enlightenment',
-      template: 'scholar_scroll',
+      template: 'enlightenment_book',
       descriptionVi: 'Ghi nhận em đã tìm hiểu trọn vẹn 4 điểm chạm cuộc đời hai bậc danh nhân.',
     },
     {
@@ -255,7 +255,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
       stage: 2,
       nameVi: 'NGỌN ĐUỐC DUY TÂN',
       nameEn: 'Torch of Reform',
-      template: 'discovery_compass',
+      template: 'reform_torch',
       descriptionVi: 'Vinh danh bản lĩnh hoàn thành thử thách Giải mã dấu chân danh nhân.',
     },
     {
@@ -264,7 +264,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
       stage: 3,
       nameVi: 'HUY HIỆU NHÀ KHAI SÁNG NHÍ',
       nameEn: 'Junior Enlightener Badge',
-      template: 'dragon_gem',
+      template: 'junior_enlightener',
       descriptionVi: 'Phần thưởng dành cho bạn nhỏ có tinh thần tự giác hiếu học và trách nhiệm.',
     },
   ],

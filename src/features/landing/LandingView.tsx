@@ -33,6 +33,7 @@ export const LandingView: React.FC = () => {
   } = useApp();
 
   const [showRolePicker, setShowRolePicker] = useState<boolean>(false);
+  const [showIntroVideo, setShowIntroVideo] = useState<boolean>(true);
   const [chosenGrade, setChosenGrade] = useState<number | null>(null);
   const [guestMode, setGuestMode] = useState(false);
   const [showStudentLogin, setShowStudentLogin] = useState<boolean>(false);
@@ -73,6 +74,12 @@ export const LandingView: React.FC = () => {
 
   const handleStartJourney = () => {
     audioService.playSfx('click');
+    openRolePicker();
+  };
+
+  const handleSkipIntro = () => {
+    audioService.playSfx('click');
+    setShowIntroVideo(false);
     openRolePicker();
   };
 
@@ -297,6 +304,53 @@ export const LandingView: React.FC = () => {
           <span className="font-bold text-amber-300">Trương Sinh Tuyết – Nguyễn Thị Thanh</span>
         </div>
       </footer>
+
+      {/* Intro video — opens automatically when the cover page loads */}
+      {showIntroVideo && (
+        <div className="fixed inset-0 z-[70] bg-slate-950 flex flex-col items-center justify-center">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.18),_transparent_45%),radial-gradient(circle_at_bottom,_rgba(251,191,36,0.14),_transparent_45%)] pointer-events-none" />
+
+          <div className="relative w-full h-full flex flex-col items-center justify-center px-3 sm:px-6 py-4 sm:py-6">
+            <div className="w-full max-w-6xl flex items-center justify-between gap-3 mb-3">
+              <div className="text-left">
+                <div className="text-[10px] sm:text-xs font-extrabold tracking-[0.18em] text-amber-300 uppercase">
+                  Video giới thiệu
+                </div>
+                <div className="text-sm sm:text-lg font-black text-white">
+                  CHẠM ĐÀ NẴNG · Hành trình số khám phá quê hương
+                </div>
+              </div>
+              <span className="hidden sm:inline-flex rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-bold text-slate-200 backdrop-blur">
+                Tự động phát
+              </span>
+            </div>
+
+            <div className="relative w-full max-w-6xl aspect-video overflow-hidden rounded-2xl sm:rounded-3xl border border-white/15 bg-black shadow-2xl shadow-sky-950/50">
+              <iframe
+                className="absolute inset-0 h-full w-full"
+                src="https://www.youtube-nocookie.com/embed/Ud2uUxz9Lw4?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=1"
+                title="Video giới thiệu CHẠM ĐÀ NẴNG"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+
+            <button
+              type="button"
+              onClick={handleSkipIntro}
+              className="group mt-4 sm:mt-5 inline-flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 px-7 sm:px-10 py-3.5 sm:py-4 text-sm sm:text-base font-black text-slate-950 shadow-2xl shadow-amber-400/30 transition hover:scale-[1.03] active:scale-95"
+            >
+              <Compass className="w-5 h-5 transition group-hover:rotate-45" />
+              <span>CHẠM ĐỂ KHÁM PHÁ NGAY</span>
+              <ArrowRight className="w-5 h-5 transition group-hover:translate-x-1" />
+            </button>
+
+            <p className="mt-2 text-[10px] sm:text-xs text-slate-400 text-center">
+              Bỏ qua video để vào ngay màn hình chọn vai trò.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Role Picker Modal */}
       {showRolePicker && (

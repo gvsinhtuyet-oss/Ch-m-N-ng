@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { DEMO_STUDENTS, DEMO_CLASSROOMS } from '../../data/mockUsers';
 import { authService } from '../../services/AuthService';
 import { audioService } from '../../services/AudioService';
+import { backgroundMusic } from '../../services/BackgroundMusic';
 import { studentSyncService } from '../../services/StudentSyncService';
 import { progressService } from '../../services/ProgressService';
 import {
@@ -49,6 +50,8 @@ export const LandingView: React.FC = () => {
   const [syncCodeInput, setSyncCodeInput] = useState<string>('');
   const [syncBusy, setSyncBusy] = useState(false);
   const [loginError, setLoginError] = useState<string>('');
+  const [introActive, setIntroActive] = useState(true);
+  const introFrameRef = useRef<HTMLIFrameElement | null>(null);
 
   const STUDENT_PROFILE_KEY = 'cham_danang_student_profile_v1';
 
@@ -82,6 +85,23 @@ export const LandingView: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    backgroundMusic.setForegroundSource('intro-video', introActive);
+    return () => backgroundMusic.setForegroundSource('intro-video', false);
+  }, [introActive]);
+
+  const stopIntroVideo = () => {
+    setIntroActive(false);
+    try {
+      introFrameRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ event: 'command', func: 'stopVideo', args: [] }),
+        '*'
+      );
+    } catch {
+      // Nếu iframe chưa sẵn sàng, việc ẩn iframe vẫn dừng phần phát khi component cập nhật.
+    }
+  };
+
   const openRolePicker = () => {
     setLoginError('');
     setShowStudentLogin(false);
@@ -93,6 +113,7 @@ export const LandingView: React.FC = () => {
   };
 
   const handleStartJourney = () => {
+    stopIntroVideo();
     audioService.playSfx('click');
     openRolePicker();
   };
@@ -291,26 +312,41 @@ export const LandingView: React.FC = () => {
           </p>
         </div>
 
-        {/* Intro video lives directly on the cover instead of covering the whole app */}
-        <div className="relative w-full max-w-3xl mt-4 sm:mt-5">
-          <div className="absolute -inset-1 rounded-[22px] sm:rounded-[26px] bg-gradient-to-r from-sky-500/35 via-white/10 to-amber-400/35 blur-lg pointer-events-none" />
-          <div className="relative aspect-video overflow-hidden rounded-2xl sm:rounded-3xl border border-white/20 bg-black shadow-2xl shadow-slate-950/60">
-            <iframe
-              className="absolute inset-0 h-full w-full"
-              src="https://www.youtube-nocookie.com/embed/Ud2uUxz9Lw4?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=1"
-              title="Video giới thiệu CHẠM ĐÀ NẴNG"
-              allow="autoplay; encrypted-media; picture-in-picture"
-              allowFullScreen
-            />
-            <button
-              type="button"
-              onClick={handleStartJourney}
-              className="absolute right-2.5 top-2.5 sm:right-3 sm:top-3 rounded-xl border border-white/20 bg-slate-950/75 px-3 py-1.5 text-[10px] sm:text-xs font-bold text-white backdrop-blur-md hover:bg-slate-900 transition"
-            >
-              Bỏ qua
-            </button>
+        {/* Intro video: ưu tiên tự phát có tiếng; khi bỏ qua/khám phá thì dừng ngay. */}
+        {introActive && (
+          <div className="relative w-full max-w-3xl mt-4 sm:mt-5">
+            <div className="absolute -inset-1 rounded-[22px] sm:rounded-[26px] bg-gradient-to-r from-sky-500/35 via-white/10 to-amber-400/35 blur-lg pointer-events-none" />
+            <div className="relative aspect-video overflow-hidden rounded-2xl sm:rounded-3xl border border-white/20 bg-black shadow-2xl shadow-slate-950/60">
+              <iframe
+                ref={introFrameRef}
+                className="absolute inset-0 h-full w-full"
+                src="https://www.youtube-nocookie.com/embed/Ud2uUxz9Lw4?autoplay=1&mute=0&playsinline=1&rel=0&modestbranding=1&controls=1&enablejsapi=1"
+                title="Video giới thiệu CHẠM ĐÀ NẴNG"
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+                onLoad={() => {
+                  try {
+                    introFrameRef.current?.contentWindow?.postMessage(
+                      JSON.stringify({ event: 'command', func: 'unMute', args: [] }),
+                      '*'
+                    );
+                    introFrameRef.current?.contentWindow?.postMessage(
+                      JSON.stringify({ event: 'command', func: 'playVideo', args: [] }),
+                      '*'
+                    );
+                  } catch {}
+                }}
+              />
+              <button
+                type="button"
+                onClick={handleStartJourney}
+                className="absolute right-2.5 top-2.5 sm:right-3 sm:top-3 rounded-xl border border-white/20 bg-slate-950/75 px-3 py-1.5 text-[10px] sm:text-xs font-bold text-white backdrop-blur-md hover:bg-slate-900 transition"
+              >
+                Bỏ qua
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         <button
           onClick={handleStartJourney}

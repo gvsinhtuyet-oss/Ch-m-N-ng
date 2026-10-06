@@ -22,8 +22,10 @@
    | `AUTH_ADMIN_PASSWORD` | Mật khẩu riêng từ 12–128 ký tự, nên gán bằng Secret Manager |
 
 4. Lấy mã mới từ GitHub vào AI Studio và xuất bản. Nếu AI Studio tạo lại dịch vụ/cấu hình, kiểm tra các biến trên ở bản triển khai mới.
-5. Chọn Quản trị trên trang đầu, nhập email/mật khẩu đã cấu hình. Tài khoản đầu tiên được tạo khi có yêu cầu đăng nhập lần đầu. Vào mục Người dùng để cấp tài khoản giáo viên.
-6. Sau khi tài khoản quản trị đã được tạo thành công, có thể bỏ biến `AUTH_ADMIN_PASSWORD` khỏi dịch vụ; giữ `AUTH_ADMIN_EMAIL` cố định. Mật khẩu đã lưu dưới dạng băm có salt; app không lưu mật khẩu gốc.
+5. Sau khi triển khai, mở `/api/health` trên đúng URL Cloud Run. Chỉ tiếp tục khi thấy `firestore: "connected"`, `auth.ready: true` và `contentStorage: "firestore"`.
+6. Chọn Quản trị trên trang đầu, nhập email/mật khẩu đã cấu hình. Tài khoản đầu tiên được tạo khi có yêu cầu đăng nhập lần đầu. Đăng xuất rồi đăng nhập lại một lần để xác nhận phiên thật hoạt động.
+7. Vào mục Người dùng để thử tạo một tài khoản giáo viên; vào Nội dung trạm để thử xuất bản một thay đổi nhỏ. Nếu cả hai thao tác thành công, tài khoản quản trị và quyền ghi Firestore đã hoạt động đúng.
+8. Sau khi tài khoản quản trị đã được tạo thành công, có thể bỏ biến `AUTH_ADMIN_PASSWORD` khỏi dịch vụ; giữ `AUTH_ADMIN_EMAIL` cố định. Mật khẩu đã lưu dưới dạng băm có salt; app không lưu mật khẩu gốc.
 
 Không đưa mật khẩu, khóa dịch vụ hoặc secret vào biến `VITE_*`, mã frontend, GitHub hoặc ô chat AI Studio. Tên project không phải bí mật. Không bật `AUTH_LOCAL_HTTP` trên Cloud Run; mã cũng tự buộc cookie Secure khi chạy trong Cloud Run.
 

@@ -6,6 +6,7 @@ import { ALL_25_STATIONS, getStationsForGrade } from '../data/allStations';
 import { CANONICAL_HOI_AN_STATION } from '../data/canonicalHoiAn';
 import { audioService } from '../services/AudioService';
 import { progressService } from '../services/ProgressService';
+import { studentSyncService } from '../services/StudentSyncService';
 import { Language, TRANSLATIONS } from '../utils/i18n';
 
 export type AppView =
@@ -241,6 +242,51 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const timer = window.setInterval(() => void check(), 60000);
     window.addEventListener('focus', check);
     return () => { active = false; window.clearInterval(timer); window.removeEventListener('focus', check); };
+  }, [currentUser?.id, role]);
+
+  useEffect(() => {
+    if (!currentUser || role !== 'student' || (currentUser as Student).isGuest) return;
+
+    let syncCode = '';
+    try {
+      const raw = localStorage.getItem('cham_danang_student_profile_v1');
+      const saved = raw ? JSON.parse(raw) : null;
+      if (saved?.id === currentUser.id && typeof saved?.syncCode === 'string') {
+        syncCode = saved.syncCode.trim();
+      }
+    } catch {}
+    if (!syncCode) return;
+
+    let timer: number | undefined;
+    let stopped = false;
+    const push = async () => {
+      if (stopped || !navigator.onLine) return;
+      try {
+        const records = progressService.getStudentProgressRecords(currentUser.id);
+        const result = await studentSyncService.push(syncCode, records);
+        if (!stopped && result?.progress) {
+          progressService.mergeStudentProgressRecords(currentUser.id, result.progress);
+        }
+      } catch {
+        // Giữ dữ liệu cục bộ; lần thay đổi hoặc lần online tiếp theo sẽ thử lại.
+      }
+    };
+    const schedulePush = () => {
+      if (timer) window.clearTimeout(timer);
+      timer = window.setTimeout(() => void push(), 700);
+    };
+    const handleOnline = () => schedulePush();
+
+    window.addEventListener('cham-progress-changed', schedulePush);
+    window.addEventListener('online', handleOnline);
+    schedulePush();
+
+    return () => {
+      stopped = true;
+      if (timer) window.clearTimeout(timer);
+      window.removeEventListener('cham-progress-changed', schedulePush);
+      window.removeEventListener('online', handleOnline);
+    };
   }, [currentUser?.id, role]);
 
   const openStation = (station: Station, initialStage: 1 | 2 | 3 | 4 = 1) => {

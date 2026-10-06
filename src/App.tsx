@@ -35,8 +35,7 @@ const AppContent: React.FC = () => {
     };
   }, []);
   useEffect(() => {
-    const lessonOpen = currentView === 'station-view' || currentView === 'presentation-view';
-    backgroundMusic.setScene(!lessonOpen, soundEnabled);
+    backgroundMusic.setScene(currentView !== 'presentation-view', soundEnabled);
   }, [currentView, soundEnabled]);
 
   const [storageWarning, setStorageWarning] = useState(false);

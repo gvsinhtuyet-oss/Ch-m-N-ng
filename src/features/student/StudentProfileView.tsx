@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { progressService } from '../../services/ProgressService';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
-import { ShieldCheck, LogOut } from 'lucide-react';
+import { ShieldCheck, LogOut, Copy, Cloud } from 'lucide-react';
 
 export const StudentProfileView: React.FC = () => {
   const { currentUser, currentGrade, allStationsInCurrentGrade, logout } = useApp();
   const student = currentUser as any;
+  const [copied, setCopied] = useState(false);
+  const syncCode = useMemo(() => {
+    try {
+      const raw = localStorage.getItem('cham_danang_student_profile_v1');
+      const saved = raw ? JSON.parse(raw) : null;
+      return saved?.id === student?.id && typeof saved?.syncCode === 'string' ? saved.syncCode : '';
+    } catch {
+      return '';
+    }
+  }, [student?.id]);
   const demoStations = allStationsInCurrentGrade.filter(station => DEMO_STATION_IDS.has(station.id));
   const gradeProg = progressService.getGradeProgress(
     student?.id || 'guest',
@@ -39,10 +49,40 @@ export const StudentProfileView: React.FC = () => {
         <div className="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-left text-xs text-emerald-900 flex items-start gap-2.5">
           <ShieldCheck className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
           <div>
-            <strong className="block">Phiên bản demo – dữ liệu cục bộ:</strong>
-            Tên hiển thị, mã lớp và tiến độ học được dùng cho phiên trải nghiệm trên trình duyệt. Ứng dụng demo không yêu cầu số điện thoại, địa chỉ hay thông tin cá nhân nhạy cảm.
+            <strong className="block">Hồ sơ học tập được lưu an toàn theo mã đồng bộ:</strong>
+            App chỉ dùng tên hiển thị, lớp và tiến độ học. Không yêu cầu số điện thoại, địa chỉ hay thông tin cá nhân nhạy cảm.
           </div>
         </div>
+
+        {syncCode && !student?.isGuest && (
+          <div className="rounded-2xl border border-sky-200 bg-sky-50 p-4 text-left">
+            <div className="flex items-center gap-2 text-sky-900 font-black text-sm">
+              <Cloud className="w-4 h-4" />
+              <span>Mã đồng bộ hành trình</span>
+            </div>
+            <p className="mt-1 text-[11px] text-slate-600">Dùng mã này khi học trên thiết bị khác để khôi phục Bản đồ, chìa khóa và Hộ chiếu.</p>
+            <div className="mt-3 flex flex-col sm:flex-row gap-2 sm:items-center">
+              <code className="flex-1 rounded-xl bg-white border border-sky-200 px-4 py-3 font-black tracking-[0.18em] text-sky-900 text-center">
+                {syncCode}
+              </code>
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(syncCode);
+                    setCopied(true);
+                    window.setTimeout(() => setCopied(false), 1600);
+                  } catch {}
+                }}
+                className="rounded-xl bg-sky-700 px-4 py-3 text-white font-bold text-xs inline-flex items-center justify-center gap-2"
+              >
+                <Copy className="w-4 h-4" />
+                {copied ? 'Đã sao chép' : 'Sao chép mã'}
+              </button>
+            </div>
+            <p className="mt-2 text-[10px] text-amber-800 font-semibold">Không chia sẻ mã này cho người khác vì mã có thể dùng để khôi phục tiến độ học.</p>
+          </div>
+        )}
 
         {/* Progress summary card */}
         <div className="grid grid-cols-3 gap-3 pt-3">

@@ -313,7 +313,7 @@ export const CANONICAL_BAO_TANG_DA_NANG_STATION: Station = {
     status: 'IN_REVIEW',
     createdBy: 'Nhóm biên soạn CHẠM ĐÀ NẴNG',
     createdAt: '2026-10-01T08:00:00Z',
-    changelog: 'Rà soát Khối 4: bám 4 yêu cầu cần đạt; bổ sung quá trình hình thành, loại hình hiện vật, kĩ năng khai thác thông tin, bảo tồn – phát huy và VR360 chính thức',
+    changelog: 'Rà soát Khối 4: bám 4 yêu cầu cần đạt; kiểm định lại hình ảnh theo đúng hệ thống bảo tàng ở Đà Nẵng; dùng ảnh Bảo tàng Đà Nẵng, Bảo tàng Mỹ thuật Đà Nẵng, hiện vật có nguồn từ Bảo tàng Đà Nẵng và không gian trưng bày thật tại Bảo tàng Điêu khắc Chăm; giữ VR360 chính thức.',
   },
   sources: [
     {

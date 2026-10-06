@@ -85,7 +85,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
 
     try {
       confetti({
-        particleCount: 110,
+        particleCount: 80,
         spread: 105,
         startVelocity: 46,
         origin: { y: 0.38 },
@@ -93,11 +93,11 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
         disableForReducedMotion: true,
       });
       schedule(() => {
-        confetti({ particleCount: 55, angle: 60, spread: 78, origin: { x: 0, y: 0.65 }, zIndex: 10000, disableForReducedMotion: true });
-        confetti({ particleCount: 55, angle: 120, spread: 78, origin: { x: 1, y: 0.65 }, zIndex: 10000, disableForReducedMotion: true });
+        confetti({ particleCount: 35, angle: 60, spread: 78, origin: { x: 0, y: 0.65 }, zIndex: 10000, disableForReducedMotion: true });
+        confetti({ particleCount: 35, angle: 120, spread: 78, origin: { x: 1, y: 0.65 }, zIndex: 10000, disableForReducedMotion: true });
       }, 280);
       schedule(() => {
-        confetti({ particleCount: 70, spread: 100, startVelocity: 34, origin: { x: 0.5, y: 0.28 }, zIndex: 10000, disableForReducedMotion: true });
+        confetti({ particleCount: 45, spread: 100, startVelocity: 34, origin: { x: 0.5, y: 0.28 }, zIndex: 10000, disableForReducedMotion: true });
       }, 650);
     } catch {
       // Celebration is optional if the browser blocks canvas effects.
@@ -176,8 +176,8 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
             <div className="journey-key-flight mx-auto flex items-center justify-center gap-3 rounded-2xl bg-amber-300 p-4 text-amber-950 shadow-lg" style={{ animation: 'journey-key-flight 1.5s .25s ease-out both' }}>
               <KeyRound className="w-14 h-14 shrink-0" />
               <div className="text-left">
-                <p className="font-black">Em nhận được 1 mảnh chìa khóa!</p>
-                <p className="text-xs">Sưu tập đủ 5 mảnh để mở rương kho báu Khối {station.grade}.</p>
+                <p className="font-black">{giftClaimed ? 'Em đã nhận 1 mảnh chìa khóa!' : '1 mảnh chìa khóa đang chờ em lưu!'}</p>
+                <p className="text-xs">{giftClaimed ? `Sưu tập đủ 5 mảnh để mở rương kho báu Khối ${station.grade}.` : 'Bấm LƯU BẢN ĐỒ để cất bản đồ và mảnh chìa khóa vào bộ sưu tập.'}</p>
               </div>
             </div>
             <button

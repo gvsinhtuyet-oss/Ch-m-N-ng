@@ -64,7 +64,7 @@ export const RewardClaimModal: React.FC<Props> = ({
               className="w-full py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-black text-sm shadow-lg shadow-sky-600/30 transition transform hover:scale-102 active:scale-95 inline-flex items-center justify-center gap-2 cursor-pointer"
             >
               <Map className="w-5 h-5" />
-              <span>XEM BẢN ĐỒ TIẾN TRÌNH</span>
+              <span>XEM BẢN ĐỒ HÀNH TRÌNH</span>
             </button>
           ) : (
             <button

@@ -55,6 +55,7 @@ export const StudentJourneyMapsView: React.FC = () => {
   const stationIds = stations.map(station => station.id);
 
   const [selectedStation, setSelectedStation] = useState<Station | null>(null);
+  const [mapZoomed, setMapZoomed] = useState(false);
   const [previewTreasure, setPreviewTreasure] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
 
@@ -75,6 +76,7 @@ export const StudentJourneyMapsView: React.FC = () => {
     const canPreview = isReadOnly && DEMO_STATION_IDS.has(station.id);
     if (!progress.journeyMapReceived && !canPreview) return;
     audioService.playSfx('map');
+    setMapZoomed(false);
     setSelectedStation(station);
   };
 
@@ -283,6 +285,25 @@ export const StudentJourneyMapsView: React.FC = () => {
         </div>
       </section>
 
+      {selectedStation && mapZoomed && (
+        <div className="fixed inset-0 z-[70] bg-slate-950/95 p-3 sm:p-6 flex items-center justify-center" onClick={() => setMapZoomed(false)}>
+          <button
+            type="button"
+            onClick={() => setMapZoomed(false)}
+            className="absolute top-4 right-4 z-10 h-11 w-11 rounded-xl bg-white/15 text-white flex items-center justify-center hover:bg-white/25"
+            aria-label="Đóng ảnh phóng to"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <img
+            src={selectedStation.journeyMap?.image || selectedStation.coverImage}
+            alt={'Bản đồ hành trình phóng to ' + selectedStation.titleVi}
+            className="max-h-full max-w-full object-contain rounded-xl shadow-2xl"
+            onClick={event => event.stopPropagation()}
+          />
+        </div>
+      )}
+
       {selectedStation && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md p-3 sm:p-6 overflow-y-auto">
           <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden my-3">
@@ -313,9 +334,23 @@ export const StudentJourneyMapsView: React.FC = () => {
 
             <div className="p-5 sm:p-8 space-y-7">
               <div className="relative">
-                <div className="mx-auto w-40 h-40 sm:w-48 sm:h-48 rounded-full border-8 border-amber-100 overflow-hidden shadow-xl relative z-10">
-                  <img loading="lazy" decoding="async" src={selectedStation.journeyMap?.image || selectedStation.coverImage} alt="Bản đồ hành trình" className="w-full h-full object-contain" />
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setMapZoomed(true)}
+                  className="group mx-auto block max-w-[220px] sm:max-w-[260px] rounded-2xl border-4 border-amber-100 bg-white overflow-hidden shadow-xl relative z-10"
+                  aria-label="Phóng to bản đồ hành trình"
+                >
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    src={selectedStation.journeyMap?.image || selectedStation.coverImage}
+                    alt="Bản đồ hành trình"
+                    className="w-full max-h-80 object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+                  />
+                  <span className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-lg bg-slate-950/75 px-2 py-1 text-[11px] font-bold text-white">
+                    <ZoomIn className="h-3.5 w-3.5" /> Phóng to
+                  </span>
+                </button>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                   {buildMapNodes(selectedStation).map((node, index) => (

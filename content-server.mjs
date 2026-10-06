@@ -7,7 +7,24 @@ import path from 'node:path';
 
 const dataDir = path.resolve(process.env.CONTENT_DATA_DIR || './content-data');
 const dataFile = path.join(dataDir, 'stations.json');
-const cloudStore = process.env.AUTH_FIRESTORE_PROJECT ? firestoreStore(process.env.AUTH_FIRESTORE_PROJECT, process.env.AUTH_FIRESTORE_DATABASE || '(default)') : null;
+const ACTIVE_FIRESTORE_DATABASE = 'ai-studio-chmnnghnhtrnhskh-71b45c71-26f3-4479-9372-306c6b35245a';
+let targetDatabase = ACTIVE_FIRESTORE_DATABASE;
+let targetProject = process.env.AUTH_FIRESTORE_PROJECT;
+try {
+  const cfg = JSON.parse(await readFile(new URL('./firebase-applet-config.json', import.meta.url), 'utf8'));
+  if (cfg?.firestoreDatabaseId) targetDatabase = cfg.firestoreDatabaseId;
+  if (!targetProject && cfg?.projectId) targetProject = cfg.projectId;
+} catch {}
+if (!targetProject) targetProject = 'boreal-doodad-j6shk';
+// Replace obsolete revision value if present, or honor any non-placeholder custom DB
+if (process.env.AUTH_FIRESTORE_DATABASE &&
+    process.env.AUTH_FIRESTORE_DATABASE !== 'ai-studio-71b45c71-26f3-4479-9372-306c6b35245a' &&
+    process.env.AUTH_FIRESTORE_DATABASE !== '(default)') {
+  targetDatabase = process.env.AUTH_FIRESTORE_DATABASE;
+}
+process.env.AUTH_FIRESTORE_PROJECT = targetProject;
+process.env.AUTH_FIRESTORE_DATABASE = targetDatabase;
+const cloudStore = firestoreStore(targetProject, targetDatabase);
 const durableContent = cloudStore ? contentStorage(cloudStore) : null;
 const auth = createAuth({
   store: cloudStore,
@@ -46,6 +63,21 @@ const types = { '.html':'text/html', '.js':'application/javascript', '.css':'tex
 const server = createServer(async (req,res) => {
   try {
     const pathname = new URL(req.url, 'http://localhost').pathname;
+    if (pathname === '/api/health' && req.method === 'GET') {
+      let firestoreStatus = 'unknown';
+      try {
+        await cloudStore.get('cham_users', 'health-check');
+        firestoreStatus = 'connected';
+      } catch (err) {
+        firestoreStatus = `error: ${err.message}`;
+      }
+      return json(res, 200, {
+        status: 'ok',
+        project: targetProject,
+        database: targetDatabase,
+        firestore: firestoreStatus,
+      });
+    }
     if (pathname === '/api/content' && req.method === 'GET') {
       const current = durableContent ? await durableContent.load() : {stations,theme};
       return json(res,200,{ schemaVersion:1,...current });

@@ -3,6 +3,7 @@ import { createServer } from 'node:http';
 import { createAuth, firestoreStore } from './auth-server.mjs';
 import { contentStorage } from './content-storage.mjs';
 import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
+import { randomBytes, createHash } from 'node:crypto';
 import path from 'node:path';
 
 const dataDir = path.resolve(process.env.CONTENT_DATA_DIR || './content-data');
@@ -27,6 +28,85 @@ const validUrl = value => typeof value === 'string' && (
   value === '' || /^https:\/\//i.test(value) ||
   /^data:(image\/(png|jpeg|webp|gif)|application\/pdf|audio\/(mpeg|mp3|wav|ogg|mp4|x-wav)|video\/(mp4|webm|ogg));base64,/i.test(value)
 );
+const studentSyncKey = code => createHash('sha256').update(String(code || '').trim().toUpperCase()).digest('hex');
+const cleanSyncCode = value => String(value || '').toUpperCase().replace(/[^A-Z0-9]/g,'');
+const newSyncCode = () => {
+  const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  const bytes=randomBytes(12);
+  let raw='';
+  for(let i=0;i<12;i++) raw+=alphabet[bytes[i]%alphabet.length];
+  return raw.match(/.{1,4}/g).join('-');
+};
+const validStudentProfile = profile => !!profile &&
+  typeof profile.id === 'string' && /^[a-zA-Z0-9_-]{6,120}$/.test(profile.id) &&
+  typeof profile.name === 'string' && profile.name.trim().length >= 1 && profile.name.trim().length <= 100 &&
+  typeof profile.className === 'string' && /^[1-5]\/[1-9][0-9]{0,2}$/.test(profile.className) &&
+  Number.isInteger(profile.grade) && profile.grade >= 1 && profile.grade <= 5 &&
+  Number(profile.className.split('/')[0]) === profile.grade;
+const cleanProgressRecord = (record, studentId, stationId) => {
+  if (!record || typeof record !== 'object') return null;
+  const arr = value => Array.isArray(value) ? [...new Set(value.filter(v => typeof v === 'string').slice(0,100))] : [];
+  const iso = value => typeof value === 'string' && !Number.isNaN(Date.parse(value)) ? value : undefined;
+  const clean = {
+    studentId,
+    stationId,
+    stage1Completed: !!record.stage1Completed,
+    stage2Completed: !!record.stage2Completed,
+    stage3Completed: !!record.stage3Completed,
+    stage4Completed: !!record.stage4Completed,
+    stationCompleted: !!record.stationCompleted,
+    exploredHotspotIds: arr(record.exploredHotspotIds),
+    rewardsCollected: arr(record.rewardsCollected),
+    stampReceived: !!record.stampReceived,
+    journeyMapReceived: !!record.journeyMapReceived,
+    keyFragmentReceived: !!record.keyFragmentReceived,
+    lastVisitedAt: iso(record.lastVisitedAt) || new Date().toISOString(),
+    syncStatus: 'synced',
+  };
+  for (const key of ['journeyMapReceivedAt','keyFragmentReceivedAt','startedAt','completedAt']) {
+    const value=iso(record[key]); if(value) clean[key]=value;
+  }
+  if (record.checkInResponse && typeof record.checkInResponse === 'object') {
+    const submittedAt=iso(record.checkInResponse.submittedAt);
+    if (submittedAt) clean.checkInResponse={
+      emotionId: typeof record.checkInResponse.emotionId === 'string' ? record.checkInResponse.emotionId.slice(0,100) : '',
+      rememberOptionIds: arr(record.checkInResponse.rememberOptionIds),
+      actionOptionIds: arr(record.checkInResponse.actionOptionIds),
+      submittedAt,
+    };
+  }
+  return clean;
+};
+const mergeProgressRecord = (older, newer) => {
+  if (!older) return newer;
+  const union=(a,b)=>[...new Set([...(Array.isArray(a)?a:[]),...(Array.isArray(b)?b:[])])];
+  const earliest=(a,b)=>!a?b:!b?a:(Date.parse(a)<=Date.parse(b)?a:b);
+  const latest=(a,b)=>!a?b:!b?a:(Date.parse(a)>=Date.parse(b)?a:b);
+  const checkIn = !older.checkInResponse ? newer.checkInResponse :
+    !newer.checkInResponse ? older.checkInResponse :
+    Date.parse(newer.checkInResponse.submittedAt) >= Date.parse(older.checkInResponse.submittedAt) ? newer.checkInResponse : older.checkInResponse;
+  return {
+    ...older,
+    ...newer,
+    stage1Completed: !!(older.stage1Completed || newer.stage1Completed),
+    stage2Completed: !!(older.stage2Completed || newer.stage2Completed),
+    stage3Completed: !!(older.stage3Completed || newer.stage3Completed),
+    stage4Completed: !!(older.stage4Completed || newer.stage4Completed),
+    stationCompleted: !!(older.stationCompleted || newer.stationCompleted),
+    stampReceived: !!(older.stampReceived || newer.stampReceived),
+    journeyMapReceived: !!(older.journeyMapReceived || newer.journeyMapReceived),
+    keyFragmentReceived: !!(older.keyFragmentReceived || newer.keyFragmentReceived),
+    exploredHotspotIds: union(older.exploredHotspotIds,newer.exploredHotspotIds),
+    rewardsCollected: union(older.rewardsCollected,newer.rewardsCollected),
+    startedAt: earliest(older.startedAt,newer.startedAt),
+    journeyMapReceivedAt: earliest(older.journeyMapReceivedAt,newer.journeyMapReceivedAt),
+    keyFragmentReceivedAt: earliest(older.keyFragmentReceivedAt,newer.keyFragmentReceivedAt),
+    completedAt: earliest(older.completedAt,newer.completedAt),
+    lastVisitedAt: latest(older.lastVisitedAt,newer.lastVisitedAt) || new Date().toISOString(),
+    checkInResponse: checkIn,
+    syncStatus: 'synced',
+  };
+};
 const json = (res,status,data) => {
   res.writeHead(status, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
   res.end(JSON.stringify(data));
@@ -68,6 +148,51 @@ const server = createServer(async (req,res) => {
     if (pathname === '/api/content' && req.method === 'GET') {
       const current = durableContent ? await durableContent.load() : {stations,theme};
       return json(res,200,{ schemaVersion:1,...current });
+    }
+    if (pathname === '/api/student/sync/register' && req.method === 'POST') {
+      if (!cloudStore) return json(res,503,{error:'Đồng bộ học sinh chưa được cấu hình trên máy chủ.'});
+      auth.sameOrigin(req);
+      const data=await body(req);
+      if (!validStudentProfile(data.profile)) return json(res,400,{error:'Thông tin học sinh chưa hợp lệ.'});
+      let code, key;
+      for(let attempt=0;attempt<6;attempt++){
+        code=newSyncCode(); key=studentSyncKey(code);
+        if (!(await cloudStore.get('cham_student_sync',key))) break;
+        code=undefined;
+      }
+      if(!code || !key) return json(res,503,{error:'Chưa tạo được mã đồng bộ. Vui lòng thử lại.'});
+      const profile={id:data.profile.id,name:data.profile.name.trim(),className:data.profile.className,grade:data.profile.grade};
+      await cloudStore.put('cham_student_sync',key,{profile,progress:{},createdAt:Date.now(),updatedAt:Date.now()},true);
+      return json(res,200,{syncCode:code,profile,progress:{}});
+    }
+    if (pathname === '/api/student/sync/restore' && req.method === 'POST') {
+      if (!cloudStore) return json(res,503,{error:'Đồng bộ học sinh chưa được cấu hình trên máy chủ.'});
+      auth.sameOrigin(req);
+      const data=await body(req), code=cleanSyncCode(data.syncCode);
+      if(code.length!==12) return json(res,400,{error:'Mã đồng bộ chưa đúng.'});
+      const saved=await cloudStore.get('cham_student_sync',studentSyncKey(code));
+      if(!saved?.profile) return json(res,404,{error:'Không tìm thấy mã đồng bộ.'});
+      return json(res,200,{profile:saved.profile,progress:saved.progress || {}});
+    }
+    if (pathname === '/api/student/sync/progress' && req.method === 'PUT') {
+      if (!cloudStore) return json(res,503,{error:'Đồng bộ học sinh chưa được cấu hình trên máy chủ.'});
+      auth.sameOrigin(req);
+      const data=await body(req), code=cleanSyncCode(data.syncCode);
+      if(code.length!==12 || !data.progress || typeof data.progress!=='object' || Array.isArray(data.progress))
+        return json(res,400,{error:'Dữ liệu đồng bộ chưa hợp lệ.'});
+      const key=studentSyncKey(code), saved=await cloudStore.get('cham_student_sync',key);
+      if(!saved?.profile || !validStudentProfile(saved.profile)) return json(res,404,{error:'Không tìm thấy mã đồng bộ.'});
+      const incomingEntries=Object.entries(data.progress);
+      if(incomingEntries.length>30) return json(res,400,{error:'Có quá nhiều bản ghi tiến độ.'});
+      const merged={...(saved.progress || {})};
+      for(const [stationId,record] of incomingEntries){
+        if(!/^[a-zA-Z0-9_-]{1,100}$/.test(stationId)) return json(res,400,{error:'Mã trạm chưa hợp lệ.'});
+        const clean=cleanProgressRecord(record,saved.profile.id,stationId);
+        if(!clean) return json(res,400,{error:'Bản ghi tiến độ chưa hợp lệ.'});
+        merged[stationId]=mergeProgressRecord(merged[stationId],clean);
+      }
+      await cloudStore.put('cham_student_sync',key,{...saved,progress:merged,updatedAt:Date.now()});
+      return json(res,200,{saved:true,progress:merged});
     }
     if (await auth.handle(req,res,pathname,body,json)) return;
     if (pathname === '/api/content/login') return json(res,410,{ error:'Hãy đăng nhập bằng tài khoản quản trị.' });

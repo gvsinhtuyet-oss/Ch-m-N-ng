@@ -40,5 +40,8 @@ jobs:
       - name: Authentication tests
         run: node --test auth-test.mjs
 
+      - name: Content storage tests
+        run: node --test content-storage-test.mjs
+
       - name: Production build
         run: npm run build

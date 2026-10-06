@@ -158,9 +158,23 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 {challenge.externalGame.titleVi}
               </h3>
               <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
-                Em chơi thử thách ngay bên dưới. Khi chơi xong, bấm “Em đã hoàn thành thử thách” để nhận phần thưởng Chặng 2.
+                Bấm “Bắt đầu thử thách” để chơi. Sau khi hoàn thành trò chơi, em chọn “Xác nhận đã hoàn thành” để nhận phần thưởng Chặng 2.
               </p>
             </div>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs sm:text-sm font-bold">
+            {!externalGameOpened && passed !== true && (
+              <span className="text-slate-600">Trạng thái: Chưa bắt đầu thử thách</span>
+            )}
+            {externalGameOpened && passed !== true && (
+              <span className="text-violet-700">Trạng thái: Đang thực hiện thử thách</span>
+            )}
+            {passed === true && (
+              <span className="text-emerald-700 inline-flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4" /> Trạng thái: Đã hoàn thành thử thách
+              </span>
+            )}
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3">
@@ -169,22 +183,30 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               onClick={() => {
                 audioService.playSfx('click');
                 setExternalGameOpened(true);
+                setPassed(null);
+                setIsSubmitted(false);
                 setEmbedRound(round => round + 1);
               }}
               className="flex-1 px-5 py-3.5 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
             >
               <Gamepad2 className="w-5 h-5" />
-              <span>{externalGameOpened ? 'Bước vào thử thách lần nữa' : 'Bước vào thử thách'}</span>
+              <span>{externalGameOpened ? 'Chơi lại thử thách' : 'Bắt đầu thử thách'}</span>
             </button>
 
             <button
               type="button"
               onClick={handleExternalGameComplete}
-              disabled={!externalGameOpened}
+              disabled={!externalGameOpened || passed === true}
               className="flex-1 px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
             >
               <CheckCircle2 className="w-5 h-5" />
-              <span>Em đã hoàn thành thử thách</span>
+              <span>
+                {passed === true
+                  ? 'Đã hoàn thành thử thách'
+                  : externalGameOpened
+                  ? 'Xác nhận đã hoàn thành'
+                  : 'Hoàn thành sau khi chơi'}
+              </span>
             </button>
           </div>
 

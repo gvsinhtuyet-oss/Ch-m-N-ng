@@ -9,6 +9,7 @@ class BackgroundMusic {
   private enabled = true;
   private volume = .35;
   private foregroundLocks = 0;
+  private foregroundSources = new Set<string>();
   private resumeTimer: number | null = null;
   private listeners = new Set<() => void>();
 
@@ -56,6 +57,7 @@ class BackgroundMusic {
       this.sceneAllowed &&
       this.soundAllowed &&
       this.foregroundLocks === 0 &&
+      this.foregroundSources.size === 0 &&
       !document.hidden;
   }
 
@@ -113,6 +115,17 @@ class BackgroundMusic {
     this.pause();
   }
 
+  setForegroundSource(sourceId: string, active: boolean) {
+    if (!sourceId) return;
+    if (active) {
+      this.foregroundSources.add(sourceId);
+      this.pause();
+      return;
+    }
+    this.foregroundSources.delete(sourceId);
+    if (this.canPlay()) void this.play();
+  }
+
   endForegroundAudio() {
     this.foregroundLocks = Math.max(0, this.foregroundLocks - 1);
     if (this.foregroundLocks === 0 && this.canPlay()) void this.play();
@@ -136,6 +149,7 @@ class BackgroundMusic {
       this.resumeTimer = null;
     }
     this.foregroundLocks = 0;
+    this.foregroundSources.clear();
     this.pause();
     if (this.audio) {
       this.audio.currentTime = 0;

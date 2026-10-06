@@ -181,9 +181,9 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                 preload="none"
                 src={resource.url}
                 className="w-full"
-                onPlay={() => backgroundMusic.beginForegroundAudio()}
-                onPause={() => backgroundMusic.endForegroundAudio()}
-                onEnded={() => backgroundMusic.endForegroundAudio()}
+                onPlay={() => backgroundMusic.setForegroundSource(`media-${resource.id}`, true)}
+                onPause={() => backgroundMusic.setForegroundSource(`media-${resource.id}`, false)}
+                onEnded={() => backgroundMusic.setForegroundSource(`media-${resource.id}`, false)}
               />}
               {resource.kind === 'video' && (resource.url.startsWith('data:video/') || /\.(mp4|webm|ogg)(\?|$)/i.test(resource.url)) && <video
                 controls

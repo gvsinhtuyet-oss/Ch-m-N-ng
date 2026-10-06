@@ -1,4 +1,3 @@
-import { MusicControl } from '../../components/common/MusicControl';
 import React, { useEffect, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { DEMO_STUDENTS, DEMO_CLASSROOMS } from '../../data/mockUsers';
@@ -10,14 +9,11 @@ import {
   Presentation,
   Globe,
   ArrowRight,
-  Sparkles,
   Volume2,
   VolumeX,
   Layers,
   Award,
-  CheckCircle2,
   BookOpen,
-  Info,
   X,
 } from 'lucide-react';
 
@@ -33,7 +29,6 @@ export const LandingView: React.FC = () => {
   } = useApp();
 
   const [showRolePicker, setShowRolePicker] = useState<boolean>(false);
-  const [showIntroVideo, setShowIntroVideo] = useState<boolean>(true);
   const [chosenGrade, setChosenGrade] = useState<number | null>(null);
   const [guestMode, setGuestMode] = useState(false);
   const [showStudentLogin, setShowStudentLogin] = useState<boolean>(false);
@@ -74,12 +69,6 @@ export const LandingView: React.FC = () => {
 
   const handleStartJourney = () => {
     audioService.playSfx('click');
-    openRolePicker();
-  };
-
-  const handleSkipIntro = () => {
-    audioService.playSfx('click');
-    setShowIntroVideo(false);
     openRolePicker();
   };
 
@@ -195,98 +184,60 @@ export const LandingView: React.FC = () => {
         </div>
       </header>
 
-      <button type="button" className="relative z-20 mx-auto text-white text-sm underline p-2" onClick={()=>{openRolePicker();setShowTeacherLogin(true);setAdminLogin(false);}}>Đăng nhập giáo viên được cấp tài khoản</button>
-
-      {/* Main Center Hero Cover Content */}
-      <main className="relative z-20 w-full max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10 flex flex-col items-center text-center my-auto space-y-6 sm:space-y-8">
-        {/* Subtle pill badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-amber-400/30 shadow-lg text-xs font-extrabold text-amber-300 tracking-wide">
-          <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-          <span>HÀNH TRÌNH HỌC TẬP SỐ THÀNH PHỐ ĐÀ NẴNG</span>
-        </div>
-
-        {/* Prominent App Title & Subtitle */}
-        <div className="space-y-2 sm:space-y-3">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white drop-shadow-xl leading-none">
+      {/* Compact cinematic cover: app identity → intro video → explore */}
+      <main className="relative z-20 w-full max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-5 flex flex-col items-center text-center my-auto">
+        <div className="space-y-1.5 sm:space-y-2">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white drop-shadow-xl leading-none">
             CHẠM ĐÀ NẴNG
           </h1>
-          <p className="text-xl sm:text-3xl font-extrabold text-amber-300 tracking-tight drop-shadow-md">
+          <p className="text-lg sm:text-2xl md:text-3xl font-extrabold text-amber-300 tracking-tight drop-shadow-md">
             Hành trình số khám phá quê hương
           </p>
         </div>
 
-        {/* Brief Introduction */}
-        <p className="text-sm sm:text-base md:text-lg text-slate-100 max-w-2xl mx-auto leading-relaxed drop-shadow font-medium">
-          “Ứng dụng giúp học sinh tiểu học khám phá quê hương Đà Nẵng qua các hành trình học tập số, kết hợp hình ảnh, thuyết minh, trải nghiệm tương tác và nhiệm vụ học tập phù hợp với từng khối lớp.”
-        </p>
-
-        {/* 4 Characteristic Badges */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full max-w-3xl pt-1">
-          <div className="p-3 rounded-2xl bg-slate-900/60 backdrop-blur-md border border-white/10 text-center space-y-1">
-            <div className="w-7 h-7 mx-auto rounded-lg bg-sky-500/20 text-sky-300 flex items-center justify-center font-bold">
-              <Layers className="w-4 h-4" />
-            </div>
-            <div className="text-xs font-black text-white">5 Khối Lớp</div>
-            <div className="text-[10px] text-slate-300 font-medium">25 bài trong lộ trình</div>
-          </div>
-
-          <div className="p-3 rounded-2xl bg-slate-900/60 backdrop-blur-md border border-white/10 text-center space-y-1">
-            <div className="w-7 h-7 mx-auto rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold">
-              <Globe className="w-4 h-4" />
-            </div>
-            <div className="text-xs font-black text-white">VR360° Di Sản</div>
-            <div className="text-[10px] text-slate-300 font-medium">Không gian tương tác</div>
-          </div>
-
-          <div className="p-3 rounded-2xl bg-slate-900/60 backdrop-blur-md border border-white/10 text-center space-y-1">
-            <div className="w-7 h-7 mx-auto rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-bold">
-              <Award className="w-4 h-4" />
-            </div>
-            <div className="text-xs font-black text-white">Hộ Chiếu Số</div>
-            <div className="text-[10px] text-slate-300 font-medium">Dấu ấn hành trình</div>
-          </div>
-
-          <div className="p-3 rounded-2xl bg-slate-900/60 backdrop-blur-md border border-white/10 text-center space-y-1">
-            <div className="w-7 h-7 mx-auto rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center font-bold">
-              <BookOpen className="w-4 h-4" />
-            </div>
-            <div className="text-xs font-black text-white">Đa Phương Tiện</div>
-            <div className="text-[10px] text-slate-300 font-medium">Audio thuyết minh & Quiz</div>
-          </div>
-        </div>
-
-        {/* Primary Action Button (BẮT ĐẦU HÀNH TRÌNH) */}
-        <div className="pt-2 flex flex-col items-center gap-3">
-          <button
-            onClick={handleStartJourney}
-            className="group px-9 sm:px-12 py-4 sm:py-4.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 hover:from-amber-300 hover:to-amber-200 text-slate-950 font-black text-base sm:text-lg shadow-2xl shadow-amber-400/40 transition-all duration-200 transform hover:scale-105 active:scale-95 inline-flex items-center gap-3 cursor-pointer"
-          >
-            <Compass className="w-5 h-5 text-slate-950 group-hover:rotate-45 transition duration-300" />
-            <span>BẮT ĐẦU HÀNH TRÌNH</span>
-            <ArrowRight className="w-5 h-5 text-slate-950 group-hover:translate-x-1 transition duration-200" />
-          </button>
-
-          <MusicControl />
-          {/* Secondary Quick Access Links */}
-          <div className="flex items-center gap-4 text-xs font-semibold text-slate-300">
+        {/* Intro video lives directly on the cover instead of covering the whole app */}
+        <div className="relative w-full max-w-3xl mt-4 sm:mt-5">
+          <div className="absolute -inset-1 rounded-[22px] sm:rounded-[26px] bg-gradient-to-r from-sky-500/35 via-white/10 to-amber-400/35 blur-lg pointer-events-none" />
+          <div className="relative aspect-video overflow-hidden rounded-2xl sm:rounded-3xl border border-white/20 bg-black shadow-2xl shadow-slate-950/60">
+            <iframe
+              className="absolute inset-0 h-full w-full"
+              src="https://www.youtube-nocookie.com/embed/Ud2uUxz9Lw4?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=1"
+              title="Video giới thiệu CHẠM ĐÀ NẴNG"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              allowFullScreen
+            />
             <button
-              onClick={() => {
-                audioService.playSfx('click');
-                setShowRolePicker(true);
-              }}
-              className="hover:text-amber-300 transition underline underline-offset-4 decoration-white/30"
+              type="button"
+              onClick={handleStartJourney}
+              className="absolute right-2.5 top-2.5 sm:right-3 sm:top-3 rounded-xl border border-white/20 bg-slate-950/75 px-3 py-1.5 text-[10px] sm:text-xs font-bold text-white backdrop-blur-md hover:bg-slate-900 transition"
             >
-              Dành cho Giáo viên
+              Bỏ qua
             </button>
           </div>
         </div>
 
-        {/* Safe, dignified note regarding curriculum and draft materials */}
-        <div className="max-w-2xl mx-auto p-3.5 sm:p-4 rounded-2xl bg-slate-950/60 backdrop-blur-md border border-white/10 text-left flex items-start gap-2.5 shadow-md">
-          <Info className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
-          <p className="text-[11px] sm:text-xs text-slate-300 leading-relaxed font-normal">
-            “Nội dung học tập đang được xây dựng và cập nhật theo định hướng chương trình Giáo dục địa phương và nguồn tư liệu đã kiểm chứng. Một số học liệu hiện đang ở giai đoạn hoàn thiện theo tài liệu dự thảo.”
-          </p>
+        <button
+          onClick={handleStartJourney}
+          className="group mt-4 sm:mt-5 inline-flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 px-8 sm:px-11 py-3.5 sm:py-4 text-sm sm:text-base font-black text-slate-950 shadow-2xl shadow-amber-400/30 transition-all duration-200 hover:scale-[1.03] active:scale-95"
+        >
+          <Compass className="w-5 h-5 transition duration-300 group-hover:rotate-45" />
+          <span>CHẠM ĐỂ KHÁM PHÁ</span>
+          <ArrowRight className="w-5 h-5 transition duration-200 group-hover:translate-x-1" />
+        </button>
+
+        <p className="mt-3 max-w-2xl text-xs sm:text-sm text-slate-200 font-medium leading-relaxed drop-shadow">
+          Khám phá Đà Nẵng qua di sản, câu chuyện, nhiệm vụ và trải nghiệm số.
+        </p>
+
+        {/* Compact feature strip */}
+        <div className="mt-3 sm:mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 rounded-2xl border border-white/10 bg-slate-950/45 px-4 py-2.5 backdrop-blur-md text-[10px] sm:text-xs font-bold text-slate-200">
+          <span className="inline-flex items-center gap-1.5"><Layers className="w-3.5 h-3.5 text-sky-300" />5 khối lớp</span>
+          <span className="hidden sm:inline text-white/25">•</span>
+          <span className="inline-flex items-center gap-1.5"><Globe className="w-3.5 h-3.5 text-amber-300" />VR360°</span>
+          <span className="hidden sm:inline text-white/25">•</span>
+          <span className="inline-flex items-center gap-1.5"><Award className="w-3.5 h-3.5 text-emerald-300" />Hộ chiếu số</span>
+          <span className="hidden sm:inline text-white/25">•</span>
+          <span className="inline-flex items-center gap-1.5"><BookOpen className="w-3.5 h-3.5 text-violet-300" />Audio & Quiz</span>
         </div>
       </main>
 
@@ -304,53 +255,6 @@ export const LandingView: React.FC = () => {
           <span className="font-bold text-amber-300">Trương Sinh Tuyết – Nguyễn Thị Thanh</span>
         </div>
       </footer>
-
-      {/* Intro video — opens automatically when the cover page loads */}
-      {showIntroVideo && (
-        <div className="fixed inset-0 z-[70] bg-slate-950 flex flex-col items-center justify-center">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.18),_transparent_45%),radial-gradient(circle_at_bottom,_rgba(251,191,36,0.14),_transparent_45%)] pointer-events-none" />
-
-          <div className="relative w-full h-full flex flex-col items-center justify-center px-3 sm:px-6 py-4 sm:py-6">
-            <div className="w-full max-w-6xl flex items-center justify-between gap-3 mb-3">
-              <div className="text-left">
-                <div className="text-[10px] sm:text-xs font-extrabold tracking-[0.18em] text-amber-300 uppercase">
-                  Video giới thiệu
-                </div>
-                <div className="text-sm sm:text-lg font-black text-white">
-                  CHẠM ĐÀ NẴNG · Hành trình số khám phá quê hương
-                </div>
-              </div>
-              <span className="hidden sm:inline-flex rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-bold text-slate-200 backdrop-blur">
-                Tự động phát
-              </span>
-            </div>
-
-            <div className="relative w-full max-w-6xl aspect-video overflow-hidden rounded-2xl sm:rounded-3xl border border-white/15 bg-black shadow-2xl shadow-sky-950/50">
-              <iframe
-                className="absolute inset-0 h-full w-full"
-                src="https://www.youtube-nocookie.com/embed/Ud2uUxz9Lw4?autoplay=1&mute=1&playsinline=1&rel=0&modestbranding=1&controls=1"
-                title="Video giới thiệu CHẠM ĐÀ NẴNG"
-                allow="autoplay; encrypted-media; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-
-            <button
-              type="button"
-              onClick={handleSkipIntro}
-              className="group mt-4 sm:mt-5 inline-flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 px-7 sm:px-10 py-3.5 sm:py-4 text-sm sm:text-base font-black text-slate-950 shadow-2xl shadow-amber-400/30 transition hover:scale-[1.03] active:scale-95"
-            >
-              <Compass className="w-5 h-5 transition group-hover:rotate-45" />
-              <span>CHẠM ĐỂ KHÁM PHÁ NGAY</span>
-              <ArrowRight className="w-5 h-5 transition group-hover:translate-x-1" />
-            </button>
-
-            <p className="mt-2 text-[10px] sm:text-xs text-slate-400 text-center">
-              Bỏ qua video để vào ngay màn hình chọn vai trò.
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* Role Picker Modal */}
       {showRolePicker && (

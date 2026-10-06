@@ -227,7 +227,7 @@ class AudioService {
       }
 
       utterance.onstart = () => {
-        backgroundMusic.beginForegroundAudio();
+        backgroundMusic.setForegroundSource('narration', true);
         this.notifyState('playing');
       };
 
@@ -236,20 +236,20 @@ class AudioService {
       };
 
       utterance.onresume = () => {
-        backgroundMusic.beginForegroundAudio();
+        backgroundMusic.setForegroundSource('narration', true);
         this.notifyState('playing');
       };
 
       utterance.onend = () => {
         this.currentUtterance = null;
-        backgroundMusic.endForegroundAudio();
+        backgroundMusic.setForegroundSource('narration', false);
         this.notifyState('idle');
         if (onEnd) onEnd();
       };
 
       utterance.onerror = () => {
         this.currentUtterance = null;
-        backgroundMusic.endForegroundAudio();
+        backgroundMusic.setForegroundSource('narration', false);
         this.notifyState('idle');
         if (onEnd) onEnd();
       };
@@ -265,7 +265,7 @@ class AudioService {
   public pauseNarration() {
     if (typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.speaking) {
       window.speechSynthesis.pause();
-      backgroundMusic.endForegroundAudio();
+      backgroundMusic.setForegroundSource('narration', false);
       this.notifyState('paused');
     }
   }
@@ -282,7 +282,7 @@ class AudioService {
       const wasActive = this.currentUtterance !== null || window.speechSynthesis.speaking || window.speechSynthesis.paused;
       window.speechSynthesis.cancel();
       this.currentUtterance = null;
-      if (wasActive) backgroundMusic.endForegroundAudio();
+      if (wasActive) backgroundMusic.setForegroundSource('narration', false);
       this.notifyState('idle');
     }
   }

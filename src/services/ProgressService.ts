@@ -244,9 +244,7 @@ class ProgressService {
       this.isGuest(studentId) ||
       !current.stage1Completed ||
       !current.stage2Completed ||
-      !current.stage3Completed ||
-      !current.stage4Completed ||
-      !current.stationCompleted
+      !current.stage3Completed
     ) {
       return current;
     }

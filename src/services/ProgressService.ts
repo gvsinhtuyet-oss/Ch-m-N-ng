@@ -219,7 +219,14 @@ class ProgressService {
 
   public completeStage4(studentId: string, stationId: string): StudentStationProgress {
     const current = this.getStationProgress(studentId, stationId);
-    if (this.isGuest(studentId)) {
+    if (
+      this.isGuest(studentId) ||
+      !current.stage1Completed ||
+      !current.stage2Completed ||
+      !current.stage3Completed ||
+      !current.journeyMapReceived ||
+      !current.keyFragmentReceived
+    ) {
       return current;
     }
     current.stage4Completed = true;

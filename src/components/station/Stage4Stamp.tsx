@@ -106,10 +106,16 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     if (!giftClaimed) return;
 
     audioService.playSfx('stamp');
-    setStamped(true);
 
-    if (!isReadOnly) {
-      progressService.completeStage4(studentId, station.id);
+    if (isReadOnly) {
+      setStamped(true);
+    } else {
+      const updated = progressService.completeStage4(studentId, station.id);
+      if (!updated.stage4Completed || !updated.stationCompleted || !updated.stampReceived) {
+        setSaveMessage('Chưa thể đóng dấu. Em hãy thu thập bản đồ trước rồi thử lại.');
+        return;
+      }
+      setStamped(true);
     }
 
     try {

@@ -240,7 +240,7 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
       stage: 1,
       nameVi: 'VIÊN ĐÁ DI SẢN',
       nameEn: 'Heritage Stone',
-      template: 'nature_leaf',
+      template: 'heritage_stone',
       descriptionVi: 'Ghi nhận em đã khám phá cảnh quan và dấu tích của Ngũ Hành Sơn.',
     },
     {
@@ -249,7 +249,7 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
       stage: 2,
       nameVi: 'HOA SEN VĂN HÓA',
       nameEn: 'Culture Lotus',
-      template: 'heritage_lantern',
+      template: 'culture_lotus',
       descriptionVi: 'Ghi nhận em đã vượt qua thử thách Giải mã miền di sản.',
     },
     {
@@ -258,7 +258,7 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
       stage: 3,
       nameVi: 'HUY HIỆU NHÀ BẢO TỒN',
       nameEn: 'Heritage Guardian Badge',
-      template: 'dragon_gem',
+      template: 'mountain_conservator',
       descriptionVi: 'Ghi nhận cam kết ứng xử văn minh và giữ gìn di sản.',
     },
   ],

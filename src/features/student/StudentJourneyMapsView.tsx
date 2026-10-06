@@ -12,6 +12,7 @@ import {
   Sparkles,
   Star,
   X,
+  ZoomIn,
 } from 'lucide-react';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
@@ -300,6 +301,10 @@ export const StudentJourneyMapsView: React.FC = () => {
             alt={'Bản đồ hành trình phóng to ' + selectedStation.titleVi}
             className="max-h-full max-w-full object-contain rounded-xl shadow-2xl"
             onClick={event => event.stopPropagation()}
+            onError={event => {
+              const img = event.currentTarget;
+              if (img.src !== selectedStation.coverImage) img.src = selectedStation.coverImage;
+            }}
           />
         </div>
       )}

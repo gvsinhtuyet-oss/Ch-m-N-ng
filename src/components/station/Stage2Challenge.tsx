@@ -62,8 +62,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
 
   useEffect(() => {
     if (!externalGameOpened || useInternalChallenge || !isOnline || !embedUrl) return;
-    backgroundMusic.beginForegroundAudio();
-    return () => backgroundMusic.endForegroundAudio();
+    backgroundMusic.setForegroundSource('wordwall', true);
+    return () => backgroundMusic.setForegroundSource('wordwall', false);
   }, [externalGameOpened, useInternalChallenge, isOnline, embedUrl]);
 
 

@@ -51,6 +51,7 @@ class ProgressService {
         obj[key] = val;
       });
       localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(obj));
+      window.dispatchEvent(new Event('cham-progress-changed'));
     } catch (e) {
       console.warn('Could not save progress to storage:', e);
       window.dispatchEvent(new Event('cham-progress-storage-error'));
@@ -388,6 +389,66 @@ class ProgressService {
       }
     });
     return stamps;
+  }
+
+  public getStudentProgressRecords(studentId: string): Record<string, StudentStationProgress> {
+    const records: Record<string, StudentStationProgress> = {};
+    if (this.isGuest(studentId)) return records;
+    this.memoryCache.forEach((prog, key) => {
+      if (key.startsWith(`${studentId}:::`)) {
+        records[prog.stationId] = { ...prog };
+      }
+    });
+    return records;
+  }
+
+  public mergeStudentProgressRecords(
+    studentId: string,
+    records: Record<string, StudentStationProgress>
+  ): number {
+    if (this.isGuest(studentId) || !records || typeof records !== 'object') return 0;
+    let changed = 0;
+    const union = (a: string[] = [], b: string[] = []) => [...new Set([...a, ...b])];
+    const earliest = (a?: string, b?: string) => !a ? b : !b ? a : (Date.parse(a) <= Date.parse(b) ? a : b);
+    const latest = (a?: string, b?: string) => !a ? b : !b ? a : (Date.parse(a) >= Date.parse(b) ? a : b);
+
+    Object.entries(records).forEach(([stationId, incoming]) => {
+      if (!incoming || incoming.studentId !== studentId || incoming.stationId !== stationId) return;
+      const local = this.getStationProgress(studentId, stationId);
+      const merged: StudentStationProgress = {
+        ...local,
+        ...incoming,
+        studentId,
+        stationId,
+        stage1Completed: local.stage1Completed || incoming.stage1Completed,
+        stage2Completed: local.stage2Completed || incoming.stage2Completed,
+        stage3Completed: local.stage3Completed || incoming.stage3Completed,
+        stage4Completed: local.stage4Completed || incoming.stage4Completed,
+        stationCompleted: local.stationCompleted || incoming.stationCompleted,
+        stampReceived: local.stampReceived || incoming.stampReceived,
+        journeyMapReceived: local.journeyMapReceived || incoming.journeyMapReceived,
+        keyFragmentReceived: local.keyFragmentReceived || incoming.keyFragmentReceived,
+        exploredHotspotIds: union(local.exploredHotspotIds, incoming.exploredHotspotIds),
+        rewardsCollected: union(local.rewardsCollected, incoming.rewardsCollected),
+        startedAt: earliest(local.startedAt, incoming.startedAt),
+        journeyMapReceivedAt: earliest(local.journeyMapReceivedAt, incoming.journeyMapReceivedAt),
+        keyFragmentReceivedAt: earliest(local.keyFragmentReceivedAt, incoming.keyFragmentReceivedAt),
+        completedAt: earliest(local.completedAt, incoming.completedAt),
+        lastVisitedAt: latest(local.lastVisitedAt, incoming.lastVisitedAt) || new Date().toISOString(),
+        checkInResponse:
+          !local.checkInResponse ? incoming.checkInResponse :
+          !incoming.checkInResponse ? local.checkInResponse :
+          Date.parse(incoming.checkInResponse.submittedAt) >= Date.parse(local.checkInResponse.submittedAt)
+            ? incoming.checkInResponse
+            : local.checkInResponse,
+        syncStatus: 'synced',
+      };
+      this.memoryCache.set(this.getCompositeKey(studentId, stationId), merged);
+      changed++;
+    });
+
+    if (changed) this.saveToStorage();
+    return changed;
   }
 
   private queueSyncEvent(studentId: string, stationId: string, eventType: string) {

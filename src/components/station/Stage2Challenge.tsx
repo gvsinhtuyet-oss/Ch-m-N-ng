@@ -18,6 +18,8 @@ function shuffleOptions<T>(options: readonly T[]): T[] {
 }
 
 // Official embed URLs returned by Wordwall's oEmbed API.
+const MIN_EXTERNAL_PLAY_SECONDS = 30;
+
 const WORDWALL_EMBED_URLS: Record<string, string> = {
   "120604647": "https://wordwall.net/embed/9bf5318dbfc94898902ef662795c3973?themeId=65&ref=oembed",
   "120605543": "https://wordwall.net/embed/998e4ceb735f4333b8e89dc347a8ac33?themeId=46&ref=oembed",
@@ -51,6 +53,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const [showRewardModal, setShowRewardModal] = useState<boolean>(false);
   const [externalGameOpened, setExternalGameOpened] = useState<boolean>(false);
   const [externalGameFinished, setExternalGameFinished] = useState<boolean>(false);
+  const [externalGameStartedAt, setExternalGameStartedAt] = useState<number | null>(null);
+  const [externalElapsedSeconds, setExternalElapsedSeconds] = useState(0);
 
   const [useInternalChallenge, setUseInternalChallenge] = useState(false);
   const [embedRound, setEmbedRound] = useState(0);
@@ -60,6 +64,18 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   useEffect(() => {
     if (!isOnline && challenge.externalGame) setUseInternalChallenge(true);
   }, [isOnline, challenge]);
+
+  useEffect(() => {
+    if (!externalGameOpened || externalGameFinished || !externalGameStartedAt) return;
+    const updateElapsed = () => {
+      setExternalElapsedSeconds(Math.floor((Date.now() - externalGameStartedAt) / 1000));
+    };
+    updateElapsed();
+    const timer = window.setInterval(updateElapsed, 1000);
+    return () => window.clearInterval(timer);
+  }, [externalGameOpened, externalGameFinished, externalGameStartedAt]);
+
+  const externalPlayReady = externalElapsedSeconds >= MIN_EXTERNAL_PLAY_SECONDS;
 
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
@@ -103,7 +119,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   };
 
   const handleExternalGameComplete = () => {
-    if (!externalGameOpened) return;
+    if (!externalGameOpened || !externalPlayReady) return;
     audioService.playSfx('transition');
     setExternalGameFinished(true);
     setUseInternalChallenge(true);
@@ -172,7 +188,10 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               <span className="text-slate-600">Trạng thái: Chưa bắt đầu thử thách</span>
             )}
             {externalGameOpened && !externalGameFinished && (
-              <span className="text-violet-700">Trạng thái: Đang chơi thử thách Wordwall</span>
+              <span className="text-violet-700">
+                Trạng thái: Đang chơi thử thách Wordwall
+                {!externalPlayReady && ` • Còn ${MIN_EXTERNAL_PLAY_SECONDS - externalElapsedSeconds}s trước khi mở bước kiểm tra`}
+              </span>
             )}
             {externalGameFinished && passed !== true && (
               <span className="text-sky-700">Trạng thái: Đang kiểm tra kết quả thử thách</span>
@@ -191,6 +210,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 audioService.playSfx('click');
                 setExternalGameOpened(true);
                 setExternalGameFinished(false);
+                setExternalGameStartedAt(Date.now());
+                setExternalElapsedSeconds(0);
                 setPassed(null);
                 setIsSubmitted(false);
                 setEmbedRound(round => round + 1);
@@ -204,14 +225,16 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
             <button
               type="button"
               onClick={handleExternalGameComplete}
-              disabled={!externalGameOpened}
+              disabled={!externalGameOpened || !externalPlayReady}
               className="flex-1 px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
             >
               <CheckCircle2 className="w-5 h-5" />
               <span>
-                {externalGameOpened
-                  ? 'TÔI ĐÃ CHƠI XONG – KIỂM TRA'
-                  : 'HOÀN THÀNH SAU KHI CHƠI'}
+                {!externalGameOpened
+                  ? 'HOÀN THÀNH SAU KHI CHƠI'
+                  : !externalPlayReady
+                  ? `ĐANG CHƠI... ${MIN_EXTERNAL_PLAY_SECONDS - externalElapsedSeconds}s`
+                  : 'TÔI ĐÃ CHƠI XONG – KIỂM TRA'}
               </span>
             </button>
           </div>
@@ -248,6 +271,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               audioService.playSfx('click');
               handleRetry();
               setExternalGameFinished(false);
+              setExternalGameStartedAt(null);
+              setExternalElapsedSeconds(0);
               setShowRewardModal(false);
               setUseInternalChallenge(true);
             }}

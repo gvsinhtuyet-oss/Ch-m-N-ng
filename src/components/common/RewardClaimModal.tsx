@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Reward } from '../../types';
 import { audioService } from '../../services/AudioService';
-import { Sparkles, CheckCircle2, ArrowRight, Award } from 'lucide-react';
+import { Sparkles, Award, Map } from 'lucide-react';
 import { RewardBadge } from './RewardBadge';
 
 interface Props {
@@ -19,17 +19,13 @@ export const RewardClaimModal: React.FC<Props> = ({
   onClaim,
   onContinue,
 }) => {
-  const [claimed, setClaimed] = useState<boolean>(alreadyClaimed);
-
   if (!reward) return null;
 
-  const handleClaim = () => {
+  const handleClaimAndContinue = () => {
     audioService.playSfx('reward');
     onClaim();
-    setClaimed(true);
+    onContinue();
   };
-
-  const nextStageNum = stage < 4 ? stage + 1 : 4;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in">
@@ -60,35 +56,24 @@ export const RewardClaimModal: React.FC<Props> = ({
           </p>
         </div>
 
-        {/* Actions & Status */}
-        <div className="relative z-10 pt-2 space-y-3">
-          {!claimed ? (
+        {/* Single-step action: receive item, then show the shared journey map */}
+        <div className="relative z-10 pt-2">
+          {alreadyClaimed ? (
             <button
-              onClick={handleClaim}
+              onClick={onContinue}
+              className="w-full py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-black text-sm shadow-lg shadow-sky-600/30 transition transform hover:scale-102 active:scale-95 inline-flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <Map className="w-5 h-5" />
+              <span>XEM BẢN ĐỒ TIẾN TRÌNH</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleClaimAndContinue}
               className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black text-sm sm:text-base shadow-xl shadow-amber-500/30 transition transform hover:scale-102 active:scale-95 inline-flex items-center justify-center gap-2 cursor-pointer"
             >
               <Award className="w-5 h-5" />
               <span>NHẬN VẬT PHẨM</span>
             </button>
-          ) : (
-            <div className="space-y-4 animate-fade-in">
-              <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold flex items-center justify-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>
-                  {alreadyClaimed
-                    ? 'Vật phẩm này em đã sưu tầm rồi.'
-                    : `Em đã nhận được ${reward.nameVi}!`}
-                </span>
-              </div>
-
-              <button
-                onClick={onContinue}
-                className="w-full py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-black text-sm shadow-lg shadow-sky-600/30 transition transform hover:scale-102 active:scale-95 inline-flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>TIẾP TỤC CHẶNG {nextStageNum}</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
           )}
         </div>
       </div>

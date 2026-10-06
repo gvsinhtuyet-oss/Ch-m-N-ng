@@ -47,8 +47,8 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6">
       {completedStagePreview !== null && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div role="dialog" aria-modal="true" aria-label="Bản đồ tiến trình" className="w-full max-w-lg rounded-3xl bg-amber-50 border-4 border-amber-300 p-6 shadow-2xl space-y-5 text-center">
-            <h2 className="text-xl font-black text-sky-950">🗺️ Bản đồ tiến trình</h2>
+          <div role="dialog" aria-modal="true" aria-label="Bản đồ hành trình" className="w-full max-w-lg rounded-3xl bg-amber-50 border-4 border-amber-300 p-6 shadow-2xl space-y-5 text-center">
+            <h2 className="text-xl font-black text-sky-950">🗺️ Bản đồ hành trình</h2>
             <p className="font-bold text-emerald-800">Em vừa hoàn thành Chặng {completedStagePreview}!</p>
             <div className="grid grid-cols-2 gap-3">
               {stages.map(step => {

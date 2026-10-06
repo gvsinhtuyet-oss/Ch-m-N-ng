@@ -168,8 +168,62 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       try {
         const user = await authService.restore();
         if (!active) return;
-        if (user) { setCurrentUser(user); setRoleState(user.role); setCurrentView(user.role === 'admin' ? 'admin-view' : 'teacher-view'); }
-      } catch { /* Staff login shows configuration errors explicitly. */ }
+        if (user) {
+          setCurrentUser(user);
+          setRoleState(user.role);
+          setCurrentView(user.role === 'admin' ? 'admin-view' : 'teacher-view');
+          return;
+        }
+      } catch {
+        // Nếu máy chủ nhân sự chưa sẵn sàng, vẫn thử khôi phục học sinh cục bộ.
+      }
+
+      if (!active) return;
+      try {
+        const raw = localStorage.getItem('cham_danang_student_profile_v1');
+        if (!raw) return;
+        const saved = JSON.parse(raw);
+        const inferredGrade = typeof saved?.className === 'string'
+          ? Number(saved.className.split('/')[0])
+          : NaN;
+        const grade = Number.isInteger(Number(saved?.grade))
+          ? Number(saved.grade)
+          : inferredGrade;
+
+        if (
+          typeof saved?.id !== 'string' ||
+          !saved.id ||
+          typeof saved?.name !== 'string' ||
+          !saved.name.trim() ||
+          typeof saved?.className !== 'string' ||
+          !/^([1-5])\/[1-9][0-9]{0,2}$/.test(saved.className) ||
+          !Number.isInteger(grade) ||
+          grade < 1 ||
+          grade > 5
+        ) return;
+
+        const student: Student = {
+          id: saved.id,
+          role: 'student',
+          name: saved.name.trim(),
+          displayName: saved.name.trim(),
+          studentCode: saved.id,
+          classId: `class-${saved.className.replace('/', '-')}`,
+          className: saved.className,
+          grade,
+          status: 'active',
+          isGuest: false,
+        };
+
+        setCurrentUser(student);
+        setRoleState('student');
+        setGradeState(grade);
+        setCurrentStation(null);
+        setCurrentStage(1);
+        setCurrentView('student-journey');
+      } catch {
+        // Hồ sơ cục bộ lỗi thì quay về trang bắt đầu, không làm mất dữ liệu tiến độ.
+      }
     };
     void restore();
     return () => { active = false; };

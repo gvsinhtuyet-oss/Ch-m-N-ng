@@ -5,6 +5,7 @@ import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import confetti from 'canvas-confetti';
 import { Award, Compass, Sparkles, CheckCircle2, RotateCcw, ArrowRight, Map, KeyRound, Gift, ZoomIn, X } from 'lucide-react';
+import { RewardBadge } from '../common/RewardBadge';
 
 interface Props {
   station: Station;
@@ -12,16 +13,6 @@ interface Props {
   onExploreNext: () => void;
 }
 
-const REWARD_ICON_BY_TEMPLATE: Record<string, string> = {
-  discovery_compass: '🧭',
-  scholar_scroll: '📜',
-  heritage_lantern: '🏮',
-  nature_leaf: '🍃',
-  dragon_gem: '💎',
-  pottery_vase: '🏺',
-  sea_pearl: '🫧',
-  silk_ribbon: '🎀',
-};
 
 export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExploreNext }) => {
   const { currentUser, role } = useApp();
@@ -223,7 +214,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
             const received = isReadOnly || progress.rewardsCollected.includes(reward.id);
             return (
               <div key={reward.id} className={`rounded-2xl border p-3 ${received ? 'bg-amber-50 border-amber-300' : 'bg-slate-50 border-slate-200'}`}>
-                <div className="text-3xl mb-2">{REWARD_ICON_BY_TEMPLATE[reward.template] || '🎁'}</div>
+                <div className="mb-2 flex justify-center"><RewardBadge template={reward.template} size="sm" muted={!received} /></div>
                 <p className="text-xs font-bold text-slate-900">{reward.nameVi}</p>
                 <p className="text-[11px] mt-1 text-emerald-700">{received ? '✓ Đã nhận' : 'Chưa nhận'}</p>
               </div>

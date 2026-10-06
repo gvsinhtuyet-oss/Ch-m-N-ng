@@ -2,18 +2,8 @@ import React from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { progressService } from '../../services/ProgressService';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
-import { Heart, Sparkles, Award, MessageCircle, Calendar } from 'lucide-react';
-
-const REWARD_ICON_BY_TEMPLATE: Record<string, string> = {
-  discovery_compass: '🧭',
-  scholar_scroll: '📜',
-  heritage_lantern: '🏮',
-  nature_leaf: '🍃',
-  dragon_gem: '💎',
-  pottery_vase: '🏺',
-  sea_pearl: '🫧',
-  silk_ribbon: '🎀',
-};
+import { Heart, Sparkles, MessageCircle, Calendar } from 'lucide-react';
+import { RewardBadge } from '../../components/common/RewardBadge';
 
 export const StudentMemoriesView: React.FC = () => {
   const { currentUser, allStationsInCurrentGrade } = useApp();
@@ -60,9 +50,7 @@ export const StudentMemoriesView: React.FC = () => {
                       : 'bg-slate-50 border-slate-200/60 opacity-40'
                   }`}
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center text-xl shrink-0 font-bold shadow-xs">
-                    {REWARD_ICON_BY_TEMPLATE[rw.template] ?? '🎁'}
-                  </div>
+                  <RewardBadge template={rw.template} size="sm" muted={!isUnlocked} />
                   <div>
                     <div className="flex items-center gap-1.5">
                       <span className="text-[10px] font-bold uppercase text-amber-800">

@@ -296,7 +296,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
     grade: 2,
     titleVi: 'Bản đồ hành trình Hội An',
     subtitleVi: 'Những dấu ấn của đô thị cổ',
-    image: 'https://drive.google.com/thumbnail?id=1rgio5KckaUng8ERE3dtf5qYj_AbyLwFS&sz=w2000',
+    image: 'https://drive.google.com/thumbnail?id=1rgio5KckaUng8ERE3dtf5qYj_AbyLwFS&sz=w900',
     summaryNodes: [
       { id: 'map-ha-1', titleVi: 'Chùa Cầu', textVi: 'Một dấu ấn văn hóa tiêu biểu, gợi nhắc sự giao lưu văn hóa ở Hội An.', icon: '🌉' },
       { id: 'map-ha-2', titleVi: 'Nhà cổ', textVi: 'Không gian giúp em hình dung đời sống gia đình và hoạt động buôn bán trong đô thị cổ.', icon: '🏠' },

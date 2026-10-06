@@ -174,7 +174,30 @@ export interface Reward {
   stage: 1 | 2 | 3;
   nameVi: string;
   nameEn: string;
-  template: 'discovery_compass' | 'scholar_scroll' | 'heritage_lantern' | 'nature_leaf' | 'dragon_gem' | 'pottery_vase' | 'sea_pearl' | 'silk_ribbon';
+  template:
+    | 'discovery_compass'
+    | 'scholar_scroll'
+    | 'heritage_lantern'
+    | 'nature_leaf'
+    | 'dragon_gem'
+    | 'pottery_vase'
+    | 'sea_pearl'
+    | 'silk_ribbon'
+    | 'hoi_an_lantern'
+    | 'hoi_an_port_compass'
+    | 'hoi_an_heritage_heart'
+    | 'citadel_shield'
+    | 'historic_cannon_badge'
+    | 'guardian_star'
+    | 'enlightenment_book'
+    | 'reform_torch'
+    | 'junior_enlightener'
+    | 'detective_magnifier'
+    | 'artifact_card'
+    | 'museum_conservator'
+    | 'heritage_stone'
+    | 'culture_lotus'
+    | 'mountain_conservator';
   descriptionVi: string;
   unlockedAt?: string;
 }

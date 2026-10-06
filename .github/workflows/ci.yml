@@ -34,5 +34,11 @@ jobs:
       - name: TypeScript check
         run: npm run lint
 
+      - name: Server syntax check
+        run: node --check auth-server.mjs && node --check content-server.mjs && node --check content-storage.mjs
+
+      - name: Authentication tests
+        run: node --test auth-test.mjs
+
       - name: Production build
         run: npm run build

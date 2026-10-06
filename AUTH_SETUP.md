@@ -17,7 +17,7 @@
    | Biến | Giá trị |
    |---|---|
    | `AUTH_FIRESTORE_PROJECT` | `boreal-doodad-j6shk` |
-   | `AUTH_FIRESTORE_DATABASE` | `ai-studio-chmnnghnhtrnhskh-71b45c71-26f3-4479-9372-306c6b35245a` (Database ID đã tạo) |
+   | `AUTH_FIRESTORE_DATABASE` | `ai-studio-71b45c71-26f3-4479-9372-306c6b35245a` (Database ID đã tạo) |
    | `AUTH_ADMIN_EMAIL` | Email thật của người quản trị đầu tiên |
    | `AUTH_ADMIN_PASSWORD` | Mật khẩu riêng từ 12–128 ký tự, nên gán bằng Secret Manager |
 

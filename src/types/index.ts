@@ -12,6 +12,7 @@ export interface User {
 
 export interface Student extends User {
   role: 'student';
+  isGuest?: boolean;
   studentCode: string;
   displayName: string;
   classId: string;

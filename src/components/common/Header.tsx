@@ -81,7 +81,7 @@ export const Header: React.FC = () => {
                   ? 'Giáo viên'
                   : role === 'admin'
                   ? 'Quản trị'
-                  : `HS: ${(currentUser as any)?.displayName || 'Lớp ' + currentGrade}`}
+                  : (currentUser as any)?.isGuest ? 'Nhà phiêu lưu tự do' : `HS: ${(currentUser as any)?.displayName || 'Lớp ' + currentGrade}`}
               </span>
             </button>
           </div>
@@ -192,7 +192,7 @@ export const Header: React.FC = () => {
           <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-slate-100">
             <h3 className="text-lg font-extrabold text-slate-900 mb-1 text-center">Chọn Vai Trò Trải Nghiệm</h3>
             <p className="text-xs text-slate-500 text-center mb-6">
-              Phiên bản demo có 3 cách trải nghiệm:
+              Chọn vai trò để khám phá:
             </p>
 
             <div className="grid grid-cols-1 gap-3">
@@ -253,7 +253,7 @@ export const Header: React.FC = () => {
             </div>
 
             {/* Grade Selector */}
-            {role !== 'student' && <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
+            {(role !== 'student' || (currentUser as any)?.isGuest) && <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
               <span className="text-xs font-semibold text-slate-600">Đổi khối lớp:</span>
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map(g => (

@@ -89,8 +89,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const currentGrade = role === 'student' && currentUser
     ? (currentUser as Student).grade : selectedGrade;
   const setCurrentGrade = (grade: number) => {
-    if (role === 'student' || !Number.isInteger(grade) || grade < 1 || grade > 5) return;
+    if ((role === 'student' && !(currentUser as Student)?.isGuest) || !Number.isInteger(grade) || grade < 1 || grade > 5) return;
     setGradeState(grade);
+    if ((currentUser as Student)?.isGuest) {
+      setCurrentUser({ ...currentUser, grade } as Student);
+      setCurrentView('student-journey');
+      try { localStorage.setItem('cham_danang_guest_grade_v1', String(grade)); } catch {}
+    }
     setCurrentStation(null);
     setCurrentStage(1);
   };

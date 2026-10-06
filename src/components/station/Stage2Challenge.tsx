@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
+import { backgroundMusic } from '../../services/BackgroundMusic';
 import { progressService } from '../../services/ProgressService';
 import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle, ExternalLink, Gamepad2 } from 'lucide-react';
 import { RewardClaimModal } from '../common/RewardClaimModal';
@@ -58,6 +59,13 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   useEffect(() => {
     if (!isOnline && challenge.externalGame) setUseInternalChallenge(true);
   }, [isOnline, challenge]);
+
+  useEffect(() => {
+    if (!externalGameOpened || useInternalChallenge || !isOnline || !embedUrl) return;
+    backgroundMusic.beginForegroundAudio();
+    return () => backgroundMusic.endForegroundAudio();
+  }, [externalGameOpened, useInternalChallenge, isOnline, embedUrl]);
+
 
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);

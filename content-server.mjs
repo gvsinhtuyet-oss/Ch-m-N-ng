@@ -55,19 +55,26 @@ const cleanProgressRecord = (record, studentId, stationId) => {
   if (!record || typeof record !== 'object') return null;
   const arr = value => Array.isArray(value) ? [...new Set(value.filter(v => typeof v === 'string').slice(0,100))] : [];
   const iso = value => typeof value === 'string' && !Number.isNaN(Date.parse(value)) ? value : undefined;
+  const stage1Completed = !!record.stage1Completed;
+  const stage2Completed = !!record.stage2Completed;
+  const stage3Completed = !!record.stage3Completed;
+  const baseCompleted = stage1Completed && stage2Completed && stage3Completed;
+  const journeyMapReceived = baseCompleted && !!record.journeyMapReceived;
+  const keyFragmentReceived = baseCompleted && !!record.keyFragmentReceived;
+  const finalCompleted = journeyMapReceived && keyFragmentReceived && !!record.stage4Completed;
   const clean = {
     studentId,
     stationId,
-    stage1Completed: !!record.stage1Completed,
-    stage2Completed: !!record.stage2Completed,
-    stage3Completed: !!record.stage3Completed,
-    stage4Completed: !!record.stage4Completed,
-    stationCompleted: !!record.stationCompleted,
+    stage1Completed,
+    stage2Completed,
+    stage3Completed,
+    stage4Completed: finalCompleted,
+    stationCompleted: finalCompleted && !!record.stationCompleted,
     exploredHotspotIds: arr(record.exploredHotspotIds),
     rewardsCollected: arr(record.rewardsCollected),
-    stampReceived: !!record.stampReceived,
-    journeyMapReceived: !!record.journeyMapReceived,
-    keyFragmentReceived: !!record.keyFragmentReceived,
+    stampReceived: finalCompleted && !!record.stampReceived,
+    journeyMapReceived,
+    keyFragmentReceived,
     lastVisitedAt: iso(record.lastVisitedAt) || new Date().toISOString(),
     syncStatus: 'synced',
   };

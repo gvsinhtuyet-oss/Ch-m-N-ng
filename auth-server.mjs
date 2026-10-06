@@ -94,7 +94,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
     if(!String(req.headers['content-type'] || '').startsWith('application/json')) throw fail(415,'Yêu cầu phải dùng JSON.');
   }
   async function handle(req,res,pathname,body,json) {
-    if(!pathname.startsWith('/api/auth/') && pathname !== '/api/admin/users') return false;
+    if(!pathname.startsWith('/api/auth/') && pathname !== '/api/admin/users' && pathname !== '/api/teacher/classes') return false;
     if(!['GET','POST','PUT'].includes(req.method)) { json(res,405,{error:'Method not allowed'}); return true; }
     if(req.method !== 'GET') sameOrigin(req);
     await ready();
@@ -151,6 +151,33 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       if(typeof data.currentPassword !== 'string' || data.currentPassword.length>128 || !(await matches(data.currentPassword,user.passwordHash))) throw fail(401,'Mật khẩu hiện tại chưa đúng.');
       await store.put('cham_users',user.id,{...user,passwordHash:await passwordHash(data.password),version:user.version+1});
       cookie(res,'',0); json(res,200,{ok:true}); return true;
+    }
+    if(pathname === '/api/teacher/classes') {
+      const staff=await userFor(req);
+      if(!staff) throw fail(401,'Vui lòng đăng nhập lại.');
+      if(staff.role !== 'teacher' && staff.role !== 'admin') throw fail(403,'Không có quyền quản lý lớp.');
+      if(req.method === 'GET') {
+        const classes=(await store.list('cham_classes')).filter(c=>staff.role === 'admin' || c.teacherId === staff.id);
+        json(res,200,{classes}); return true;
+      }
+      const data=await body(req);
+      if(!Number.isInteger(data.grade) || data.grade<1 || data.grade>5 ||
+         typeof data.name !== 'string' || !new RegExp(`^${data.grade}/[1-9][0-9]{0,2}$`).test(data.name) ||
+         typeof data.academicYear !== 'string' || !/^20[0-9]{2}-20[0-9]{2}$/.test(data.academicYear))
+        throw fail(400,'Nhập đúng khối, tên lớp (ví dụ 2/24) và năm học (2026-2027).');
+      if(!Array.isArray(data.students) || data.students.length>100 || data.students.some(n=>typeof n !== 'string' || !n.trim() || n.length>100))
+        throw fail(400,'Danh sách tối đa 100 học sinh; mỗi họ tên từ 1 đến 100 ký tự.');
+      const id=hash(data.academicYear+':'+data.name);
+      const existing=await store.get('cham_classes',id);
+      if(existing && existing.teacherId !== staff.id && staff.role !== 'admin') throw fail(403,'Lớp này thuộc giáo viên khác.');
+      if(req.method === 'POST' && existing) throw fail(409,'Lớp đã tồn tại. Chọn lớp để cập nhật danh sách.');
+      if(req.method === 'PUT' && !existing) throw fail(404,'Không tìm thấy lớp.');
+      const names=data.students.map(n=>n.trim());
+      const classroom={id,name:data.name,grade:data.grade,academicYear:data.academicYear,
+        teacherId:existing?.teacherId || staff.id,teacherName:existing?.teacherName || staff.name,
+        students:names,totalStudents:names.length,updatedAt:Date.now()};
+      await store.put('cham_classes',id,classroom,req.method === 'POST');
+      json(res,200,{classroom}); return true;
     }
     if(pathname === '/api/admin/users') {
       await requireAdmin(req);

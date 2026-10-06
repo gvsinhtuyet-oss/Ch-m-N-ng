@@ -188,6 +188,8 @@ export const LandingView: React.FC = () => {
         </div>
       </header>
 
+      <button type="button" className="relative z-20 mx-auto text-white text-sm underline p-2" onClick={()=>{openRolePicker();setShowTeacherLogin(true);setAdminLogin(false);}}>Đăng nhập giáo viên được cấp tài khoản</button>
+
       {/* Main Center Hero Cover Content */}
       <main className="relative z-20 w-full max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10 flex flex-col items-center text-center my-auto space-y-6 sm:space-y-8">
         {/* Subtle pill badge */}

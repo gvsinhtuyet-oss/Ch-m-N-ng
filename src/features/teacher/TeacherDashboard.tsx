@@ -1,3 +1,4 @@
+import { ClassRoster } from './ClassRoster';
 import React, { useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { Station } from '../../types';
@@ -70,7 +71,7 @@ export const TeacherDashboard: React.FC = () => {
               Không Gian Dạy Học – Giáo Viên
             </span>
             <span className="px-3 py-1 rounded-full bg-amber-300 text-slate-950 font-black text-[10px] uppercase tracking-wide">
-              Tài khoản demo • Dữ liệu minh họa
+              {currentUser?.id === 'teacher-demo' ? 'Tài khoản demo • Dữ liệu minh họa' : 'Tài khoản giáo viên'}
             </span>
             <span className="text-xs text-emerald-200">Trường TH Trần Đại Nghĩa</span>
           </div>
@@ -261,7 +262,8 @@ export const TeacherDashboard: React.FC = () => {
       )}
 
       {/* TAB 2: LỚP HỌC */}
-      {activeTab === 'classrooms' && (
+      {activeTab === 'classrooms' && currentUser?.id !== 'teacher-demo' && <ClassRoster />}
+      {activeTab === 'classrooms' && currentUser?.id === 'teacher-demo' && (
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>

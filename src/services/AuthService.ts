@@ -1,6 +1,7 @@
-import { Admin, Teacher } from '../types';
+import { Admin, Teacher, Classroom } from '../types';
 import { fetchWithTimeout } from './NetworkService';
 export type StaffUser = (Admin | Teacher) & { email: string };
+export type ManagedClass = Classroom & { students: string[] };
 let user: StaffUser | null = null;
 async function request(path: string, method='GET', data?: unknown) {
   const response = await fetchWithTimeout(path, { method, credentials:'same-origin', cache:'no-store',
@@ -12,6 +13,8 @@ async function request(path: string, method='GET', data?: unknown) {
 }
 export const authService = {
   current: () => user,
+  async classes(): Promise<ManagedClass[]> { return (await request('/api/teacher/classes')).classes; },
+  async saveClass(data: Pick<ManagedClass, 'name' | 'grade' | 'academicYear' | 'students'>, create: boolean) { await request('/api/teacher/classes', create ? 'POST' : 'PUT', data); },
   async restore() { user=(await request('/api/auth/session')).user; return user; },
   async login(email: string,password: string) { user=(await request('/api/auth/login','POST',{email,password})).user; return user!; },
   async logout() { await request('/api/auth/logout','POST',{}); user=null; },

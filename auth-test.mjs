@@ -23,6 +23,26 @@ try {
  assert.equal((await call('/api/admin/users','POST',{email:'teacher@example.com',name:'Cô giáo',password:'Teacher-test-password-42'},admin.cookie)).status,200);
  assert.equal((await call('/api/admin/users','POST',{email:'teacher@example.com',name:'Duplicate',password:'Teacher-test-password-42'},admin.cookie)).status,409);
  const teacher=await call('/api/auth/login','POST',{email:'teacher@example.com',password:'Teacher-test-password-42'});assert.equal(teacher.status,200);
+
+ const roster={name:'2/24',grade:2,academicYear:'2026-2027',students:['Nguyễn An','Trần Bình']};
+ assert.equal((await call('/api/teacher/classes','POST',roster)).status,401);
+ assert.equal((await call('/api/teacher/classes','POST',roster,teacher.cookie,'https://attacker.example')).status,403);
+ assert.equal((await call('/api/teacher/classes','POST',roster,teacher.cookie)).status,200);
+ assert.equal((await call('/api/teacher/classes','POST',roster,teacher.cookie)).status,409);
+ assert.deepEqual((await call('/api/teacher/classes','GET',undefined,teacher.cookie)).body.classes[0].students,roster.students);
+ assert.equal((await call('/api/admin/users','POST',{email:'second@example.com',name:'GV hai',password:'Second-teacher-password-42'},admin.cookie)).status,200);
+ const second=await call('/api/auth/login','POST',{email:'second@example.com',password:'Second-teacher-password-42'});
+ assert.equal((await call('/api/teacher/classes','GET',undefined,second.cookie)).body.classes.length,0);
+ assert.equal((await call('/api/teacher/classes','PUT',roster,second.cookie)).status,403);
+ assert.equal((await call('/api/teacher/classes','POST',roster,second.cookie)).status,403);
+ assert.equal((await call('/api/teacher/classes','PUT',{...roster,students:['Nguyễn An','Trần Bình','Lê Chi']},teacher.cookie)).status,200);
+ assert.equal((await call('/api/teacher/classes','PUT',{...roster,grade:3},teacher.cookie)).status,400);
+ assert.equal((await call('/api/teacher/classes','PUT',{...roster,students:Array(101).fill('An')},teacher.cookie)).status,400);
+ assert.equal((await call('/api/teacher/classes','GET',undefined,admin.cookie)).body.classes[0].totalStudents,3);
+ const restart=createAuth({store,adminEmail:'owner@example.com',adminPassword:'Strong-test-owner-42',secureCookie:false});
+ const beforeRestart=auth;auth=restart;
+ assert.equal((await call('/api/teacher/classes','GET',undefined,teacher.cookie)).body.classes[0].totalStudents,3);
+ auth=beforeRestart;
  assert.equal((await call('/api/protected','POST',{},teacher.cookie)).status,403);
  assert.equal((await call('/api/admin/users','GET',undefined,teacher.cookie)).status,403);
  assert.equal((await call('/api/admin/users','PUT',{email:'teacher@example.com',active:false},admin.cookie)).status,200);

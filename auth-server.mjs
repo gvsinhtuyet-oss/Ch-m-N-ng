@@ -14,9 +14,12 @@ export async function passwordHash(password) {
   return salt + ':' + (await scrypt(password, salt, 64)).toString('hex');
 }
 async function matches(password, encoded) {
+  if (typeof password !== 'string' || typeof encoded !== 'string') return false;
   const [salt, key] = encoded.split(':');
+  if (!salt || !/^[a-f0-9]{128}$/i.test(key || '')) return false;
   const actual = await scrypt(password, salt, 64);
-  return timingSafeEqual(actual, Buffer.from(key, 'hex'));
+  const expected = Buffer.from(key, 'hex');
+  return actual.length === expected.length && timingSafeEqual(actual, expected);
 }
 // IAM credentials stay on the server. No service-account key is sent to the app.
 export function firestoreStore(project, database = '(default)', fetchRequest = fetch) {
@@ -64,7 +67,8 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
   const owner = emailOf(adminEmail);
   let bootstrap;
   async function ready() {
-    if (!store || !validEmail(owner)) throw fail(503,'Đăng nhập nhân sự chưa được cấu hình trên máy chủ.');
+    if (!store || !validEmail(owner) || typeof adminPassword !== 'string' || adminPassword.length < 12 || adminPassword.length > 128)
+      throw fail(503,'Đăng nhập nhân sự chưa được cấu hình đầy đủ trên máy chủ.');
     if (!bootstrap) bootstrap=(async()=>{
       const id=hash(owner); if (await store.get('cham_users',id)) return;
       const user={ id,email:owner,name:'Quản trị nhà trường',role:'admin',active:true,version:1,passwordHash:await passwordHash(adminPassword) };

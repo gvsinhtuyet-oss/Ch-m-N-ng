@@ -50,6 +50,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const [passed, setPassed] = useState<boolean | null>(null);
   const [showRewardModal, setShowRewardModal] = useState<boolean>(false);
   const [externalGameOpened, setExternalGameOpened] = useState<boolean>(false);
+  const [externalGameFinished, setExternalGameFinished] = useState<boolean>(false);
 
   const [useInternalChallenge, setUseInternalChallenge] = useState(false);
   const [embedRound, setEmbedRound] = useState(0);
@@ -102,13 +103,16 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   };
 
   const handleExternalGameComplete = () => {
-    audioService.playSfx('correct');
-    if (!isReadOnly) {
-      progressService.completeStage2(studentId, station.id);
-    }
-    setPassed(true);
-    setIsSubmitted(true);
-    setShowRewardModal(true);
+    if (!externalGameOpened) return;
+    audioService.playSfx('transition');
+    setExternalGameFinished(true);
+    setUseInternalChallenge(true);
+    setShuffleRound(round => round + 1);
+    setSelectedAnswers({});
+    setCurrentQIndex(0);
+    setIsSubmitted(false);
+    setPassed(null);
+    setShowRewardModal(false);
   };
 
   const wrongQuestions = questions.filter(q =>
@@ -158,7 +162,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 {challenge.externalGame.titleVi}
               </h3>
               <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
-                Bấm “Bắt đầu thử thách” để chơi. Sau khi hoàn thành trò chơi, em chọn “Xác nhận đã hoàn thành” để nhận phần thưởng Chặng 2.
+                Bấm “Bắt đầu thử thách” để chơi Wordwall. Khi chơi xong, chọn “Tôi đã chơi xong – Kiểm tra” và vượt qua 5 câu kiểm tra trong app để hoàn thành Chặng 2.
               </p>
             </div>
           </div>
@@ -167,12 +171,15 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
             {!externalGameOpened && passed !== true && (
               <span className="text-slate-600">Trạng thái: Chưa bắt đầu thử thách</span>
             )}
-            {externalGameOpened && passed !== true && (
-              <span className="text-violet-700">Trạng thái: Đang thực hiện thử thách</span>
+            {externalGameOpened && !externalGameFinished && (
+              <span className="text-violet-700">Trạng thái: Đang chơi thử thách Wordwall</span>
+            )}
+            {externalGameFinished && passed !== true && (
+              <span className="text-sky-700">Trạng thái: Đang kiểm tra kết quả thử thách</span>
             )}
             {passed === true && (
               <span className="text-emerald-700 inline-flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4" /> Trạng thái: Đã hoàn thành thử thách
+                <CheckCircle2 className="w-4 h-4" /> Trạng thái: Đã vượt qua thử thách
               </span>
             )}
           </div>
@@ -183,6 +190,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               onClick={() => {
                 audioService.playSfx('click');
                 setExternalGameOpened(true);
+                setExternalGameFinished(false);
                 setPassed(null);
                 setIsSubmitted(false);
                 setEmbedRound(round => round + 1);
@@ -196,16 +204,14 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
             <button
               type="button"
               onClick={handleExternalGameComplete}
-              disabled={!externalGameOpened || passed === true}
+              disabled={!externalGameOpened}
               className="flex-1 px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
             >
               <CheckCircle2 className="w-5 h-5" />
               <span>
-                {passed === true
-                  ? 'Đã hoàn thành thử thách'
-                  : externalGameOpened
-                  ? 'Xác nhận đã hoàn thành'
-                  : 'Hoàn thành sau khi chơi'}
+                {externalGameOpened
+                  ? 'TÔI ĐÃ CHƠI XONG – KIỂM TRA'
+                  : 'HOÀN THÀNH SAU KHI CHƠI'}
               </span>
             </button>
           </div>
@@ -241,6 +247,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
             onClick={() => {
               audioService.playSfx('click');
               handleRetry();
+              setExternalGameFinished(false);
               setShowRewardModal(false);
               setUseInternalChallenge(true);
             }}
@@ -263,7 +270,9 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
 
           {challenge.externalGame && isOnline && (useInternalChallenge || !embedUrl) && (
             <div className="p-4 rounded-2xl bg-sky-50 border border-sky-200 text-sky-900 text-sm font-semibold">
-              Em làm 5 câu hỏi trong app để tiếp tục hành trình và nhận phần thưởng nhé!
+              {externalGameFinished
+                ? 'Bước kiểm tra hoàn thành: em cần trả lời đúng cả 5 câu dưới đây. Chỉ khi vượt qua phần kiểm tra này, Chặng 2 mới được ghi nhận hoàn thành.'
+                : 'Em làm 5 câu hỏi trong app để tiếp tục hành trình và nhận phần thưởng nhé!'}
             </div>
           )}
 

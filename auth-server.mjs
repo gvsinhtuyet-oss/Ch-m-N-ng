@@ -19,21 +19,27 @@ async function matches(password, encoded) {
   return timingSafeEqual(actual, Buffer.from(key, 'hex'));
 }
 // IAM credentials stay on the server. No service-account key is sent to the app.
-export function firestoreStore(project, database = '(default)') {
+export function firestoreStore(project, database = '(default)', fetchRequest = fetch) {
   const root = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/${encodeURIComponent(database)}/documents`;
   let cachedToken, expires = 0;
   async function request(route, method='GET', data, query='') {
     if (!cachedToken || expires < Date.now()) {
-      const response = await fetch('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token',
+      const response = await fetchRequest('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token',
         { headers:{ 'Metadata-Flavor':'Google' }, signal:AbortSignal.timeout(5000) });
       if (!response.ok) throw fail(503, 'Chưa kết nối được danh tính máy chủ.');
       const token = await response.json(); cachedToken = token.access_token; expires = Date.now() + (token.expires_in - 60)*1000;
     }
-    const response = await fetch(root + '/' + route + query, { method,
+    const response = await fetchRequest(root + '/' + route + query, { method,
       headers:{ Authorization:'Bearer ' + cachedToken, 'Content-Type':'application/json' },
       ...(data ? { body:JSON.stringify({ fields:{ payload:{ stringValue:JSON.stringify(data) }, ...(Number.isFinite(data.expiresAt) ? {expireAt:{timestampValue:new Date(data.expiresAt).toISOString()}} : {}) } }) } : {}),
       signal:AbortSignal.timeout(10000) });
-    if (response.status === 404) return null;
+    if (response.status === 404) {
+      // Missing documents are normal; a missing database or failed write is not.
+      const detail = await response.json().catch(() => ({}));
+      const missingDatabase = /database.*(?:does not exist|not found)|(?:does not exist|not found).*database/i.test(detail.error?.message || '');
+      if (!missingDatabase && ((method === 'GET' && route.includes('/')) || method === 'DELETE')) return null;
+      throw fail(503, 'Cơ sở dữ liệu tài khoản chưa tồn tại hoặc cấu hình chưa đúng. Hãy bật Firestore và kiểm tra AUTH_FIRESTORE_PROJECT, AUTH_FIRESTORE_DATABASE.');
+    }
     if (response.status === 409 || response.status === 412) throw fail(409, 'Tài khoản đã tồn tại hoặc vừa được thay đổi.');
     if (!response.ok) { console.error('Auth storage HTTP',response.status); throw fail(503, 'Chưa kết nối được kho tài khoản. Hãy kiểm tra cấu hình Firestore.'); }
     if (method === 'DELETE') return null;

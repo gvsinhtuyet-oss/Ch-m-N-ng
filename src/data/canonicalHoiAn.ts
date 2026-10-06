@@ -132,7 +132,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       titleEn: '4. Hoai River – Pulse of the Trading Port',
       subtitleVi: 'Sông và bến gắn với hoạt động của thương cảng',
       subtitleEn: 'Gentle waterway carrying commerce',
-      image: 'https://commons.wikimedia.org/wiki/Special:FilePath/Thu%20Bon%20River%20in%20Hoi%20An%204.jpg',
+      image: 'https://hoianheritage.danang.gov.vn/uploads/bao-chi/2020_10/1_1.jpg',
       narrationVi: 'Hội An phát triển trong mối quan hệ chặt chẽ với sông và bến thuyền. Thuyền bè vận chuyển hàng hóa, còn các bến giúp kết nối hoạt động giao thương với khu phố.',
       narrationEn: 'In old times, merchant boats brought merchandise upriver. From riverside docks, goods flowed into market streets, making the river the lifeblood of the trade port.',
       keyFactVi: 'UNESCO ghi nhận cấu trúc đô thị Hội An phát triển gắn với dòng sông, trong đó có bến phà và các tuyến phố phục vụ hoạt động thương mại.',
@@ -152,7 +152,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       },
       sources: ['UNESCO World Heritage Centre – Hoi An Ancient Town'],
       mediaRights: 'LINK_ONLY',
-      mediaCredit: 'Wikimedia Commons – Sông Thu Bồn tại Hội An (Christophe95)',
+      mediaCredit: 'Trung tâm Bảo tồn Di sản Văn hóa Thế giới Hội An – ảnh Sông Hoài nhìn từ trên cao (nguồn Hội An TV)',
     },
   ],
   challenge: {
@@ -314,7 +314,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
     status: 'IN_REVIEW',
     createdBy: 'Nhóm biên soạn CHẠM ĐÀ NẴNG',
     createdAt: '2026-10-01T08:00:00Z',
-    changelog: 'Rà soát Khối 2: bám 3 yêu cầu cần đạt; kiểm định lại hình ảnh Chùa Cầu, nhà cổ Tấn Ký, Hội quán Phúc Kiến và sông/bến Hội An bằng nguồn Wikimedia Commons; giữ nguyên VR360 đã kiểm chứng',
+    changelog: 'Rà soát Khối 2: bám 3 yêu cầu cần đạt; kiểm định lại hình ảnh Chùa Cầu, nhà cổ Tấn Ký, Hội quán Phúc Kiến; thay riêng ảnh điểm Sông Hoài bằng ảnh được Trung tâm Bảo tồn Di sản Văn hóa Thế giới Hội An chú thích đúng là Sông Hoài; giữ nguyên VR360 đã kiểm chứng',
   },
   sources: [
     {

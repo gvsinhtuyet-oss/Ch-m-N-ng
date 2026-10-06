@@ -18,8 +18,6 @@ function shuffleOptions<T>(options: readonly T[]): T[] {
 }
 
 // Official embed URLs returned by Wordwall's oEmbed API.
-const MIN_EXTERNAL_PLAY_SECONDS = 30;
-
 const WORDWALL_EMBED_URLS: Record<string, string> = {
   "120604647": "https://wordwall.net/embed/9bf5318dbfc94898902ef662795c3973?themeId=65&ref=oembed",
   "120605543": "https://wordwall.net/embed/998e4ceb735f4333b8e89dc347a8ac33?themeId=46&ref=oembed",
@@ -52,10 +50,6 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const [passed, setPassed] = useState<boolean | null>(null);
   const [showRewardModal, setShowRewardModal] = useState<boolean>(false);
   const [externalGameOpened, setExternalGameOpened] = useState<boolean>(false);
-  const [externalGameFinished, setExternalGameFinished] = useState<boolean>(false);
-  const [externalGameStartedAt, setExternalGameStartedAt] = useState<number | null>(null);
-  const [externalElapsedSeconds, setExternalElapsedSeconds] = useState(0);
-
   const [useInternalChallenge, setUseInternalChallenge] = useState(false);
   const [embedRound, setEmbedRound] = useState(0);
   const resourceId = challenge.externalGame?.url.match(/\/resource\/(\d+)/)?.[1];
@@ -64,18 +58,6 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   useEffect(() => {
     if (!isOnline && challenge.externalGame) setUseInternalChallenge(true);
   }, [isOnline, challenge]);
-
-  useEffect(() => {
-    if (!externalGameOpened || externalGameFinished || !externalGameStartedAt) return;
-    const updateElapsed = () => {
-      setExternalElapsedSeconds(Math.floor((Date.now() - externalGameStartedAt) / 1000));
-    };
-    updateElapsed();
-    const timer = window.setInterval(updateElapsed, 1000);
-    return () => window.clearInterval(timer);
-  }, [externalGameOpened, externalGameFinished, externalGameStartedAt]);
-
-  const externalPlayReady = externalElapsedSeconds >= MIN_EXTERNAL_PLAY_SECONDS;
 
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
@@ -119,16 +101,14 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   };
 
   const handleExternalGameComplete = () => {
-    if (!externalGameOpened || !externalPlayReady) return;
-    audioService.playSfx('transition');
-    setExternalGameFinished(true);
-    setUseInternalChallenge(true);
-    setShuffleRound(round => round + 1);
-    setSelectedAnswers({});
-    setCurrentQIndex(0);
-    setIsSubmitted(false);
-    setPassed(null);
-    setShowRewardModal(false);
+    if (!externalGameOpened) return;
+    audioService.playSfx('correct');
+    setPassed(true);
+    setIsSubmitted(true);
+    if (!isReadOnly) {
+      progressService.completeStage2(studentId, station.id);
+    }
+    setShowRewardModal(true);
   };
 
   const wrongQuestions = questions.filter(q =>
@@ -155,7 +135,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
           <h2 className="text-xl sm:text-2xl font-black text-slate-900">{challenge.titleVi}</h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
             {challenge.externalGame && isOnline && !useInternalChallenge && Boolean(embedUrl)
-              ? 'Có kết nối Internet: em sẽ thực hiện trò chơi Wordwall. Nếu mất mạng, hệ thống tự chuyển sang thử thách nội bộ.'
+              ? 'Thử thách chính được thực hiện trên Wordwall. Khi mất kết nối, app sẽ mở thử thách dự phòng.'
               : challenge.instructionsVi}
           </p>
         </div>
@@ -165,139 +145,110 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
       </div>
 
       {challenge.externalGame && isOnline && !useInternalChallenge && Boolean(embedUrl) ? (
-        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-violet-200 space-y-6">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-violet-200 space-y-5">
           <div className="flex items-start gap-3">
             <div className="w-12 h-12 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center shrink-0">
               <Gamepad2 className="w-7 h-7" />
             </div>
             <div>
               <span className="inline-block px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-wide mb-1">
-                Đang có mạng • Chơi Wordwall
+                Thử thách chính • Wordwall
               </span>
               <h3 className="font-black text-slate-900 text-base sm:text-lg">
                 {challenge.externalGame.titleVi}
               </h3>
               <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
-                Bấm “Bắt đầu thử thách” để chơi Wordwall. Khi chơi xong, chọn “Tôi đã chơi xong – Kiểm tra” và vượt qua 5 câu kiểm tra trong app để hoàn thành Chặng 2.
+                Chơi xong trò chơi bên dưới, em bấm “Hoàn thành thử thách” để nhận vật phẩm Chặng 2.
               </p>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs sm:text-sm font-bold">
-            {!externalGameOpened && passed !== true && (
-              <span className="text-slate-600">Trạng thái: Chưa bắt đầu thử thách</span>
-            )}
-            {externalGameOpened && !externalGameFinished && (
-              <span className="text-violet-700">
-                Trạng thái: Đang chơi thử thách Wordwall
-                {!externalPlayReady && ` • Còn ${MIN_EXTERNAL_PLAY_SECONDS - externalElapsedSeconds}s trước khi mở bước kiểm tra`}
-              </span>
-            )}
-            {externalGameFinished && passed !== true && (
-              <span className="text-sky-700">Trạng thái: Đang kiểm tra kết quả thử thách</span>
-            )}
-            {passed === true && (
-              <span className="text-emerald-700 inline-flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4" /> Trạng thái: Đã vượt qua thử thách
-              </span>
-            )}
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-3">
+          {!externalGameOpened ? (
             <button
               type="button"
               onClick={() => {
                 audioService.playSfx('click');
                 setExternalGameOpened(true);
-                setExternalGameFinished(false);
-                setExternalGameStartedAt(Date.now());
-                setExternalElapsedSeconds(0);
                 setPassed(null);
                 setIsSubmitted(false);
                 setEmbedRound(round => round + 1);
               }}
-              className="flex-1 px-5 py-3.5 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
+              className="w-full px-5 py-3.5 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
             >
               <Gamepad2 className="w-5 h-5" />
-              <span>{externalGameOpened ? 'Chơi lại thử thách' : 'Bắt đầu thử thách'}</span>
+              <span>BẮT ĐẦU THỬ THÁCH</span>
             </button>
+          ) : (
+            <>
+              <div className="overflow-hidden rounded-2xl border border-violet-200 bg-slate-50">
+                <iframe
+                  key={`${station.id}-${embedRound}`}
+                  src={embedUrl}
+                  title={challenge.externalGame.titleVi}
+                  className="w-full h-[520px] sm:h-[640px] border-0"
+                  allow="fullscreen"
+                  allowFullScreen
+                  onError={() => setUseInternalChallenge(true)}
+                />
+              </div>
 
-            <button
-              type="button"
-              onClick={handleExternalGameComplete}
-              disabled={!externalGameOpened || !externalPlayReady}
-              className="flex-1 px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
-            >
-              <CheckCircle2 className="w-5 h-5" />
-              <span>
-                {!externalGameOpened
-                  ? 'HOÀN THÀNH SAU KHI CHƠI'
-                  : !externalPlayReady
-                  ? `ĐANG CHƠI... ${MIN_EXTERNAL_PLAY_SECONDS - externalElapsedSeconds}s`
-                  : 'TÔI ĐÃ CHƠI XONG – KIỂM TRA'}
-              </span>
-            </button>
-          </div>
+              <button
+                type="button"
+                onClick={handleExternalGameComplete}
+                className="w-full px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
+              >
+                <CheckCircle2 className="w-5 h-5" />
+                <span>HOÀN THÀNH THỬ THÁCH</span>
+              </button>
 
-          {externalGameOpened && embedUrl && (
-            <div className="overflow-hidden rounded-2xl border border-violet-200 bg-slate-50">
-              <iframe
-                key={`${station.id}-${embedRound}`}
-                src={embedUrl}
-                title={challenge.externalGame.titleVi}
-                className="w-full h-[520px] sm:h-[640px] border-0"
-                allow="fullscreen"
-                allowFullScreen
-                onError={() => setUseInternalChallenge(true)}
-              />
-            </div>
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+                <button
+                  type="button"
+                  onClick={() => {
+                    audioService.playSfx('click');
+                    setEmbedRound(round => round + 1);
+                  }}
+                  className="font-semibold text-violet-700 hover:text-violet-900"
+                >
+                  Chơi lại Wordwall
+                </button>
+                <a
+                  href={challenge.externalGame.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 font-semibold text-violet-700 underline"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  Mở trò chơi ở cửa sổ riêng
+                </a>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  audioService.playSfx('click');
+                  handleRetry();
+                  setShowRewardModal(false);
+                  setUseInternalChallenge(true);
+                }}
+                className="w-full px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs"
+              >
+                Wordwall không tải được? Làm thử thách dự phòng
+              </button>
+            </>
           )}
-
-          {externalGameOpened && (
-            <a
-              href={challenge.externalGame.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-xs font-semibold text-violet-700 underline"
-            >
-              <ExternalLink className="w-4 h-4" />
-              Nếu trò chơi chưa hiển thị, mở trong cửa sổ riêng
-            </a>
-          )}
-
-          <button
-            type="button"
-            onClick={() => {
-              audioService.playSfx('click');
-              handleRetry();
-              setExternalGameFinished(false);
-              setExternalGameStartedAt(null);
-              setExternalElapsedSeconds(0);
-              setShowRewardModal(false);
-              setUseInternalChallenge(true);
-            }}
-            className="w-full px-5 py-3 rounded-2xl bg-sky-100 hover:bg-sky-200 text-sky-900 font-bold text-sm"
-          >
-            Trò chơi gặp sự cố? Làm 5 câu hỏi trong app
-          </button>
-
-          <div className="p-3 rounded-2xl bg-sky-50 border border-sky-100 text-xs text-sky-800">
-            Khi mất mạng, hệ thống sẽ tự chuyển sang thử thách nội bộ để em vẫn hoàn thành bài học.
-          </div>
         </div>
       ) : (
         <>
           {challenge.externalGame && !isOnline && (
             <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm font-semibold">
-              <span className="font-black">Đang ngoại tuyến:</span> Wordwall cần kết nối Internet, vì vậy hệ thống đã chuyển sang thử thách nội bộ.
+              <span className="font-black">Đang ngoại tuyến:</span> Wordwall cần kết nối Internet, vì vậy hệ thống chuyển sang thử thách dự phòng trong app.
             </div>
           )}
 
           {challenge.externalGame && isOnline && (useInternalChallenge || !embedUrl) && (
             <div className="p-4 rounded-2xl bg-sky-50 border border-sky-200 text-sky-900 text-sm font-semibold">
-              {externalGameFinished
-                ? 'Bước kiểm tra hoàn thành: em cần trả lời đúng cả 5 câu dưới đây. Chỉ khi vượt qua phần kiểm tra này, Chặng 2 mới được ghi nhận hoàn thành.'
-                : 'Em làm 5 câu hỏi trong app để tiếp tục hành trình và nhận phần thưởng nhé!'}
+              Wordwall chưa thể tải. Em làm 5 câu hỏi dự phòng trong app để tiếp tục hành trình nhé!
             </div>
           )}
 
@@ -388,7 +339,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 </span>
                 <h3 className="text-2xl font-black text-slate-900 mt-2">Xuất sắc! Em đã vượt qua thử thách.</h3>
                 <p className="text-sm text-slate-600 max-w-md mx-auto mt-1">
-                  Em đã hoàn thành thử thách nội bộ và mở khóa phần thưởng Chặng 2.
+                  Em đã vượt qua thử thách dự phòng và mở khóa phần thưởng Chặng 2.
                 </p>
               </div>
             </div>

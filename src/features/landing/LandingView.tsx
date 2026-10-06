@@ -3,6 +3,8 @@ import { useApp } from '../../contexts/AppContext';
 import { DEMO_STUDENTS, DEMO_CLASSROOMS } from '../../data/mockUsers';
 import { authService } from '../../services/AuthService';
 import { audioService } from '../../services/AudioService';
+import { studentSyncService } from '../../services/StudentSyncService';
+import { progressService } from '../../services/ProgressService';
 import {
   Compass,
   GraduationCap,
@@ -43,6 +45,9 @@ export const LandingView: React.FC = () => {
   const [savedStudentName, setSavedStudentName] = useState<string>('');
   const [savedStudentClass, setSavedStudentClass] = useState<string>('');
   const [savedStudentGrade, setSavedStudentGrade] = useState<number | null>(null);
+  const [savedSyncCode, setSavedSyncCode] = useState<string>('');
+  const [syncCodeInput, setSyncCodeInput] = useState<string>('');
+  const [syncBusy, setSyncBusy] = useState(false);
   const [loginError, setLoginError] = useState<string>('');
 
   const STUDENT_PROFILE_KEY = 'cham_danang_student_profile_v1';
@@ -61,6 +66,7 @@ export const LandingView: React.FC = () => {
         setSavedStudentClass(saved.className);
       }
       if (typeof saved?.id === 'string') setSavedStudentId(saved.id);
+      if (typeof saved?.syncCode === 'string') setSavedSyncCode(saved.syncCode);
       const storedGrade = Number(saved?.grade);
       const inferredGrade = typeof saved?.className === 'string'
         ? Number(saved.className.split('/')[0])
@@ -93,7 +99,52 @@ export const LandingView: React.FC = () => {
 
   const handleStudentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (syncBusy) return;
     audioService.playSfx('click');
+    setLoginError('');
+
+    const requestedSyncCode = syncCodeInput.trim().toUpperCase();
+    if (!guestMode && requestedSyncCode) {
+      setSyncBusy(true);
+      try {
+        const restored = await studentSyncService.restore(requestedSyncCode);
+        const profile = restored.profile;
+        const student = {
+          ...DEMO_STUDENTS[0],
+          id: profile.id,
+          studentCode: profile.id,
+          isGuest: false,
+          classId: `class-${profile.className.replace('/', '-')}`,
+          className: profile.className,
+          grade: profile.grade,
+          displayName: profile.name,
+          name: profile.name,
+          pinHash: undefined,
+        };
+        progressService.mergeStudentProgressRecords(profile.id, restored.progress || {});
+        localStorage.setItem(
+          STUDENT_PROFILE_KEY,
+          JSON.stringify({ ...profile, syncCode: requestedSyncCode })
+        );
+        setSavedStudentId(profile.id);
+        setSavedStudentName(profile.name);
+        setSavedStudentClass(profile.className);
+        setSavedStudentGrade(profile.grade);
+        setSavedSyncCode(requestedSyncCode);
+        setStudentName(profile.name);
+        setSelectedClass(profile.className);
+        setChosenGrade(profile.grade);
+        setSyncCodeInput('');
+        loginAsStudent(student);
+        setShowRolePicker(false);
+        return;
+      } catch (error) {
+        setLoginError((error as Error).message);
+        return;
+      } finally {
+        setSyncBusy(false);
+      }
+    }
 
     const normalizedName = guestMode ? 'Nhà phiêu lưu tự do' : studentName.trim();
     if (!normalizedName || !chosenGrade) {
@@ -135,14 +186,29 @@ export const LandingView: React.FC = () => {
         localStorage.setItem('cham_danang_guest_id_v1', id);
         localStorage.setItem('cham_danang_guest_grade_v1', String(chosenGrade));
       } else {
-      localStorage.setItem(
-        STUDENT_PROFILE_KEY,
-        JSON.stringify({ id, name: normalizedName, className: selectedClass, grade: chosenGrade })
-      );
-      setSavedStudentId(id);
-      setSavedStudentName(normalizedName);
-      setSavedStudentClass(selectedClass);
-      setSavedStudentGrade(chosenGrade);
+        let syncCode = isSameSavedStudent ? savedSyncCode : '';
+        if (!syncCode) {
+          try {
+            const registered = await studentSyncService.register({
+              id,
+              name: normalizedName,
+              className: selectedClass,
+              grade: chosenGrade,
+            });
+            syncCode = registered.syncCode;
+          } catch {
+            // Máy chủ đồng bộ có thể chưa sẵn sàng; vẫn cho phép học và lưu cục bộ.
+          }
+        }
+        localStorage.setItem(
+          STUDENT_PROFILE_KEY,
+          JSON.stringify({ id, name: normalizedName, className: selectedClass, grade: chosenGrade, syncCode })
+        );
+        setSavedStudentId(id);
+        setSavedStudentName(normalizedName);
+        setSavedStudentClass(selectedClass);
+        setSavedStudentGrade(chosenGrade);
+        setSavedSyncCode(syncCode);
       }
     } catch {
       // Nếu không lưu được cục bộ, vẫn cho phép vào học.
@@ -425,6 +491,21 @@ export const LandingView: React.FC = () => {
                   />
                 </div>}
 
+                {!guestMode && <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3">
+                  <label htmlFor="student-sync-code" className="font-bold text-emerald-900 block mb-1">
+                    Học trên thiết bị khác? Nhập mã đồng bộ
+                  </label>
+                  <input
+                    id="student-sync-code"
+                    value={syncCodeInput}
+                    onChange={e => { setSyncCodeInput(e.target.value.toUpperCase()); setLoginError(''); }}
+                    maxLength={14}
+                    placeholder="Ví dụ: AB3D-K8M2-PQ7R"
+                    className="w-full p-3 rounded-xl border border-emerald-200 bg-white font-mono font-black tracking-wider text-slate-800"
+                  />
+                  <p className="mt-1 text-[10px] text-emerald-800">Nếu có mã, app sẽ khôi phục đúng hồ sơ, Bản đồ, chìa khóa và Hộ chiếu từ máy chủ.</p>
+                </div>}
+
                 <div className="rounded-xl bg-sky-50 border border-sky-100 px-3 py-2.5 text-[10px] text-sky-800 leading-relaxed">
                   {guestMode ? 'Khám phá đủ các chặng, nhận vật phẩm, quà và đóng dấu như học sinh. Tiến độ khách lưu riêng trên thiết bị này. Có thể đổi khối tại nút vai trò ở đầu trang.' : 'Thiết bị này ghi nhớ tên, lớp và tiến độ của em. Em sẽ khám phá các chặng đúng khối đã chọn.'}
                 </div>
@@ -447,7 +528,7 @@ export const LandingView: React.FC = () => {
                     type="submit"
                     className="flex-2 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold shadow-md shadow-sky-600/30 transition"
                   >
-                    {guestMode ? 'Bắt đầu phiêu lưu' : 'Vào Học Ngay'}
+                    {syncBusy ? 'Đang khôi phục…' : guestMode ? 'Bắt đầu phiêu lưu' : syncCodeInput.trim() ? 'Khôi phục hành trình' : 'Vào Học Ngay'}
                   </button>
                 </div>
                 </>}

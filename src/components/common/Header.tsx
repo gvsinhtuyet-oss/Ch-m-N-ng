@@ -1,3 +1,4 @@
+import { MusicControl } from './MusicControl';
 import React, { useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { PWAInstallButton } from './PWAInstallButton';
@@ -87,6 +88,7 @@ export const Header: React.FC = () => {
           </div>
         </div>
 
+        {currentView !== 'station-view' && currentView !== 'presentation-view' && <div className="max-w-7xl mx-auto px-3 sm:px-6 pb-2 flex justify-end"><MusicControl /></div>}
         {/* Main Brand & Navigation */}
         <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-4">
           {/* Logo & Slogan */}

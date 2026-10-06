@@ -1,3 +1,4 @@
+import { MusicControl } from '../../components/common/MusicControl';
 import React, { useEffect, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { DEMO_STUDENTS, DEMO_CLASSROOMS } from '../../data/mockUsers';
@@ -256,6 +257,7 @@ export const LandingView: React.FC = () => {
             <ArrowRight className="w-5 h-5 text-slate-950 group-hover:translate-x-1 transition duration-200" />
           </button>
 
+          <MusicControl />
           {/* Secondary Quick Access Links */}
           <div className="flex items-center gap-4 text-xs font-semibold text-slate-300">
             <button

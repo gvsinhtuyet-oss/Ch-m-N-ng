@@ -1,3 +1,4 @@
+import { backgroundMusic } from './services/BackgroundMusic';
 import { StaffPassword } from './components/common/StaffPassword';
 import { AppBackground } from './components/common/AppBackground';
 import React, { useState, useEffect } from 'react';
@@ -17,7 +18,26 @@ import { ClassroomPresentationMode } from './features/teacher/ClassroomPresentat
 import { WifiOff } from 'lucide-react';
 
 const AppContent: React.FC = () => {
-  const { currentUser, role, currentView, currentStation, isOnline, closeStation, exitPresentationMode } = useApp();
+  const { currentUser, role, currentView, currentStation, isOnline, soundEnabled, closeStation, exitPresentationMode } = useApp();
+
+  useEffect(() => {
+    const unlock = () => { void backgroundMusic.unlock(); };
+    const keyUnlock = (event: KeyboardEvent) => { if (!event.ctrlKey && !event.metaKey && !event.altKey) unlock(); };
+    const visibility = () => backgroundMusic.refreshVisibility();
+    document.addEventListener('pointerdown', unlock);
+    document.addEventListener('keydown', keyUnlock);
+    document.addEventListener('visibilitychange', visibility);
+    return () => {
+      document.removeEventListener('pointerdown', unlock);
+      document.removeEventListener('keydown', keyUnlock);
+      document.removeEventListener('visibilitychange', visibility);
+      backgroundMusic.stop();
+    };
+  }, []);
+  useEffect(() => {
+    const lessonOpen = currentView === 'station-view' || currentView === 'presentation-view';
+    backgroundMusic.setScene(!lessonOpen, soundEnabled);
+  }, [currentView, soundEnabled]);
 
   const [storageWarning, setStorageWarning] = useState(false);
   useEffect(() => {

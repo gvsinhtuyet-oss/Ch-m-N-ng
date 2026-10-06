@@ -36,6 +36,7 @@ try {
  assert.equal((await call('/api/teacher/classes','PUT',roster,second.cookie)).status,403);
  assert.equal((await call('/api/teacher/classes','POST',roster,second.cookie)).status,403);
  assert.equal((await call('/api/teacher/classes','PUT',{...roster,students:['Nguyễn An','Trần Bình','Lê Chi']},teacher.cookie)).status,200);
+ assert.equal((await call('/api/teacher/classes','PUT',{...roster,academicYear:'2026-2028'},teacher.cookie)).status,400);
  assert.equal((await call('/api/teacher/classes','PUT',{...roster,grade:3},teacher.cookie)).status,400);
  assert.equal((await call('/api/teacher/classes','PUT',{...roster,students:Array(101).fill('An')},teacher.cookie)).status,400);
  assert.equal((await call('/api/teacher/classes','GET',undefined,admin.cookie)).body.classes[0].totalStudents,3);

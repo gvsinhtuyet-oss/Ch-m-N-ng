@@ -165,6 +165,8 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
          typeof data.name !== 'string' || !new RegExp(`^${data.grade}/[1-9][0-9]{0,2}$`).test(data.name) ||
          typeof data.academicYear !== 'string' || !/^20[0-9]{2}-20[0-9]{2}$/.test(data.academicYear))
         throw fail(400,'Nhập đúng khối, tên lớp (ví dụ 2/24) và năm học (2026-2027).');
+      const [startYear,endYear]=data.academicYear.split('-').map(Number);
+      if(endYear !== startYear+1) throw fail(400,'Năm học phải gồm hai năm liên tiếp.');
       if(!Array.isArray(data.students) || data.students.length>100 || data.students.some(n=>typeof n !== 'string' || !n.trim() || n.length>100))
         throw fail(400,'Danh sách tối đa 100 học sinh; mỗi họ tên từ 1 đến 100 ký tự.');
       const id=hash(data.academicYear+':'+data.name);

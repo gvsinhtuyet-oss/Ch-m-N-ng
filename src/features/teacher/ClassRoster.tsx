@@ -4,7 +4,9 @@ export const ClassRoster: React.FC = () => {
   const [classes,setClasses]=useState<ManagedClass[]>([]);
   const [selected,setSelected]=useState('');
   const [grade,setGrade]=useState(2), [name,setName]=useState('2/24');
-  const [year,setYear]=useState('2026-2027'), [names,setNames]=useState('');
+  const today=new Date();
+  const schoolYear=today.getMonth()>=7 ? today.getFullYear() : today.getFullYear()-1;
+  const [year,setYear]=useState(`${schoolYear}-${schoolYear+1}`), [names,setNames]=useState('');
   const [busy,setBusy]=useState(false), [message,setMessage]=useState('');
   const load=async()=>setClasses(await authService.classes());
   useEffect(()=>{void load().catch(e=>setMessage(e.message));},[]);
@@ -12,7 +14,7 @@ export const ClassRoster: React.FC = () => {
     setSelected(id);setMessage('');
     const c=classes.find(c=>c.id===id);
     if(c){setGrade(c.grade);setName(c.name);setYear(c.academicYear);setNames(c.students.join('\n'));}
-    else {setNames('');}
+    else {setGrade(2);setName('2/1');setNames('');}
   };
   return <section className="bg-white rounded-3xl p-6 border space-y-4">
     <h2 className="text-xl font-black">Lớp và danh sách học sinh của tôi</h2>

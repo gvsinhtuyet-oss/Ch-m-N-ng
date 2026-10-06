@@ -40,6 +40,9 @@ export const LandingView: React.FC = () => {
   const [selectedClass, setSelectedClass] = useState<string>('2/24');
   const [studentName, setStudentName] = useState<string>('');
   const [savedStudentId, setSavedStudentId] = useState<string>('');
+  const [savedStudentName, setSavedStudentName] = useState<string>('');
+  const [savedStudentClass, setSavedStudentClass] = useState<string>('');
+  const [savedStudentGrade, setSavedStudentGrade] = useState<number | null>(null);
   const [loginError, setLoginError] = useState<string>('');
 
   const STUDENT_PROFILE_KEY = 'cham_danang_student_profile_v1';
@@ -49,9 +52,25 @@ export const LandingView: React.FC = () => {
       const raw = localStorage.getItem(STUDENT_PROFILE_KEY);
       if (!raw) return;
       const saved = JSON.parse(raw);
-      if (typeof saved?.name === 'string') setStudentName(saved.name);
-      if (typeof saved?.className === 'string') setSelectedClass(saved.className);
+      if (typeof saved?.name === 'string') {
+        setStudentName(saved.name);
+        setSavedStudentName(saved.name);
+      }
+      if (typeof saved?.className === 'string') {
+        setSelectedClass(saved.className);
+        setSavedStudentClass(saved.className);
+      }
       if (typeof saved?.id === 'string') setSavedStudentId(saved.id);
+      const storedGrade = Number(saved?.grade);
+      const inferredGrade = typeof saved?.className === 'string'
+        ? Number(saved.className.split('/')[0])
+        : NaN;
+      const validGrade = Number.isInteger(storedGrade) && storedGrade >= 1 && storedGrade <= 5
+        ? storedGrade
+        : inferredGrade;
+      if (Number.isInteger(validGrade) && validGrade >= 1 && validGrade <= 5) {
+        setSavedStudentGrade(validGrade);
+      }
     } catch {
       // Dữ liệu cũ không hợp lệ thì cho học sinh nhập lại.
     }
@@ -87,7 +106,15 @@ export const LandingView: React.FC = () => {
     }
     let guestId = '';
     if (guestMode) { try { guestId = localStorage.getItem('cham_danang_guest_id_v1') || ''; } catch {} }
-    const id = (guestMode ? guestId : savedStudentId) ||
+
+    const isSameSavedStudent =
+      !guestMode &&
+      !!savedStudentId &&
+      savedStudentName.trim().toLocaleLowerCase('vi-VN') === normalizedName.toLocaleLowerCase('vi-VN') &&
+      savedStudentClass === selectedClass &&
+      (savedStudentGrade === null || savedStudentGrade === chosenGrade);
+
+    const id = (guestMode ? guestId : (isSameSavedStudent ? savedStudentId : '')) ||
       `${guestMode ? 'guest' : 'local-student'}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 
     const student = {
@@ -110,9 +137,12 @@ export const LandingView: React.FC = () => {
       } else {
       localStorage.setItem(
         STUDENT_PROFILE_KEY,
-        JSON.stringify({ id, name: normalizedName, className: selectedClass })
+        JSON.stringify({ id, name: normalizedName, className: selectedClass, grade: chosenGrade })
       );
       setSavedStudentId(id);
+      setSavedStudentName(normalizedName);
+      setSavedStudentClass(selectedClass);
+      setSavedStudentGrade(chosenGrade);
       }
     } catch {
       // Nếu không lưu được cục bộ, vẫn cho phép vào học.

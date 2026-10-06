@@ -282,6 +282,7 @@ export const CANONICAL_THANH_DIEN_HAI_STATION: Station = {
     grade: 1,
     titleVi: 'Bản đồ hành trình Thành Điện Hải',
     subtitleVi: 'Dấu ấn người giữ thành',
+    image: 'https://drive.google.com/thumbnail?id=1ScwHRWWFfeY8daHO3jJobyzs_LqJjKlT&sz=w900',
     summaryNodes: [
       { id: 'map-tdh-1', titleVi: 'Di tích lịch sử', textVi: 'Thành Điện Hải là một di tích lịch sử tiêu biểu của thành phố Đà Nẵng.', icon: '🏯' },
       { id: 'map-tdh-2', titleVi: 'Tường thành và hào', textVi: 'Những dấu tích giúp em hình dung ngôi thành và nhiệm vụ bảo vệ khu vực bên trong.', icon: '🧱' },

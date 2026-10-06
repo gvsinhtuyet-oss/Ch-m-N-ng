@@ -244,7 +244,7 @@ export const CANONICAL_THANH_DIEN_HAI_STATION: Station = {
       stage: 1,
       nameVi: 'KHIÊN THÀNH CỔ',
       nameEn: 'Ancient Citadel Shield',
-      template: 'discovery_compass',
+      template: 'citadel_shield',
       descriptionVi: 'Ghi nhận em đã khám phá 4 điểm chạm về Thành Điện Hải.',
     },
     {
@@ -253,7 +253,7 @@ export const CANONICAL_THANH_DIEN_HAI_STATION: Station = {
       stage: 2,
       nameVi: 'HUY HIỆU ĐẠI BÁC LỊCH SỬ',
       nameEn: 'Historic Cannon Badge',
-      template: 'dragon_gem',
+      template: 'historic_cannon_badge',
       descriptionVi: 'Ghi nhận em đã hoàn thành thử thách Nhà thám hiểm thành cổ.',
     },
     {
@@ -262,7 +262,7 @@ export const CANONICAL_THANH_DIEN_HAI_STATION: Station = {
       stage: 3,
       nameVi: 'NGÔI SAO NGƯỜI GIỮ THÀNH',
       nameEn: 'Guardian Star',
-      template: 'scholar_scroll',
+      template: 'guardian_star',
       descriptionVi: 'Phần thưởng dành cho bạn nhỏ có ý thức giữ gìn và trân trọng di tích lịch sử.',
     },
   ],

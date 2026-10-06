@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Reward } from '../../types';
 import { audioService } from '../../services/AudioService';
 import { Sparkles, CheckCircle2, ArrowRight, Award } from 'lucide-react';
+import { RewardBadge } from './RewardBadge';
 
 interface Props {
   reward?: Reward | null;
@@ -28,16 +29,6 @@ export const RewardClaimModal: React.FC<Props> = ({
     setClaimed(true);
   };
 
-  const getRewardIcon = () => {
-    if (reward.template === 'heritage_lantern') return '🏮';
-    if (reward.template === 'discovery_compass') return '🧭';
-    if (reward.template === 'sea_pearl') return '💖';
-    if (reward.template === 'scholar_scroll') return '📜';
-    if (stage === 1) return '🏮';
-    if (stage === 2) return '🧭';
-    return '💖';
-  };
-
   const nextStageNum = stage < 4 ? stage + 1 : 4;
 
   return (
@@ -56,9 +47,7 @@ export const RewardClaimModal: React.FC<Props> = ({
 
         {/* Large Item Visual with Glow */}
         <div className="relative z-10 flex justify-center">
-          <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl bg-gradient-to-tr from-amber-400 via-amber-300 to-yellow-200 text-slate-950 flex items-center justify-center text-5xl sm:text-6xl shadow-xl shadow-amber-400/40 border-4 border-white animate-pulse-glow">
-            {getRewardIcon()}
-          </div>
+          <RewardBadge template={reward.template} size="lg" className="animate-pulse-glow" />
         </div>
 
         {/* Item Info */}

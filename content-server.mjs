@@ -8,7 +8,15 @@ import path from 'node:path';
 
 const dataDir = path.resolve(process.env.CONTENT_DATA_DIR || './content-data');
 const dataFile = path.join(dataDir, 'stations.json');
-const cloudStore = process.env.AUTH_FIRESTORE_PROJECT ? firestoreStore(process.env.AUTH_FIRESTORE_PROJECT, process.env.AUTH_FIRESTORE_DATABASE || '(default)') : null;
+const LEGACY_FIRESTORE_DATABASE = 'ai-studio-chmnnghnhtrnhskh-71b45c71-26f3-4479-9372-306c6b35245a';
+const DEFAULT_FIRESTORE_DATABASE = 'ai-studio-71b45c71-26f3-4479-9372-306c6b35245a';
+const configuredFirestoreDatabase = process.env.AUTH_FIRESTORE_DATABASE || DEFAULT_FIRESTORE_DATABASE;
+const firestoreDatabase = configuredFirestoreDatabase === LEGACY_FIRESTORE_DATABASE
+  ? DEFAULT_FIRESTORE_DATABASE
+  : configuredFirestoreDatabase;
+const cloudStore = process.env.AUTH_FIRESTORE_PROJECT
+  ? firestoreStore(process.env.AUTH_FIRESTORE_PROJECT, firestoreDatabase)
+  : null;
 const durableContent = cloudStore ? contentStorage(cloudStore) : null;
 const auth = createAuth({
   store: cloudStore,
@@ -154,7 +162,7 @@ const server = createServer(async (req,res) => {
       return json(res, 200, {
         status: 'ok',
         project: process.env.AUTH_FIRESTORE_PROJECT || null,
-        database: process.env.AUTH_FIRESTORE_DATABASE || '(default)',
+        database: firestoreDatabase,
         firestore: firestoreStatus,
         auth: {
           adminEmailConfigured: !!adminEmail,

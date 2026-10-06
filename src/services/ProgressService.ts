@@ -44,14 +44,14 @@ class ProgressService {
     }
   }
 
-  private saveToStorage() {
+  private saveToStorage(notify = true) {
     try {
       const obj: Record<string, StudentStationProgress> = {};
       this.memoryCache.forEach((val, key) => {
         obj[key] = val;
       });
       localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(obj));
-      window.dispatchEvent(new Event('cham-progress-changed'));
+      if (notify) window.dispatchEvent(new Event('cham-progress-changed'));
     } catch (e) {
       console.warn('Could not save progress to storage:', e);
       window.dispatchEvent(new Event('cham-progress-storage-error'));
@@ -447,7 +447,7 @@ class ProgressService {
       changed++;
     });
 
-    if (changed) this.saveToStorage();
+    if (changed) this.saveToStorage(false);
     return changed;
   }
 

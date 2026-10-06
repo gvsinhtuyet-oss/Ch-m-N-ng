@@ -1,11 +1,10 @@
-import { fetchWithTimeout } from '../../services/NetworkService';
 import React, { useState, useEffect, useRef } from 'react';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import confetti from 'canvas-confetti';
-import { Award, Compass, Sparkles, CheckCircle2, RotateCcw, ArrowRight, Map, KeyRound, Gift, Download } from 'lucide-react';
+import { Award, Compass, Sparkles, CheckCircle2, RotateCcw, ArrowRight, Map, KeyRound, Gift, ZoomIn, X } from 'lucide-react';
 
 interface Props {
   station: Station;
@@ -36,70 +35,27 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
   );
 
   const [showGiftReveal, setShowGiftReveal] = useState(false);
+  const [mapZoomed, setMapZoomed] = useState(false);
+  const [mapImageFailed, setMapImageFailed] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
-  const [savingMap, setSavingMap] = useState(false);
   const canExchange = isReadOnly || (progress.stage1Completed && progress.stage2Completed && progress.stage3Completed);
 
-  const saveMap = async () => {
-    setSavingMap(true); setSaveMessage('');
-    try {
-      let blob: Blob;
-      if (station.journeyMap?.image) {
-        const response = await fetchWithTimeout(station.journeyMap.image);
-        if (!response.ok) throw new Error('Không tải được ảnh bản đồ.');
-        blob = await response.blob();
-        if (!blob.type.startsWith('image/')) throw new Error('Đường dẫn bản đồ chưa phải tệp ảnh.');
-      } else {
-        const canvas = document.createElement('canvas');
-        canvas.width = 1000; canvas.height = 900;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) throw new Error('Trình duyệt chưa hỗ trợ lưu bản đồ.');
-        ctx.fillStyle = '#fffbeb'; ctx.fillRect(0, 0, 1000, 900);
-        ctx.fillStyle = '#075985'; ctx.font = 'bold 30px Arial';
-        ctx.textAlign = 'center'; ctx.fillText('CHẠM ĐÀ NẴNG – BẢN ĐỒ HÀNH TRÌNH', 500, 55);
-        ctx.font = 'bold 26px Arial';
-        const wrap = (text: string, x: number, y: number, width: number, lineHeight: number) => {
-          let line = '';
-          for (const word of text.split(/\\s+/)) {
-            const next = line ? line + ' ' + word : word;
-            if (ctx.measureText(next).width > width && line) {
-              ctx.fillText(line, x, y); y += lineHeight; line = word;
-            } else line = next;
-          }
-          if (line) { ctx.fillText(line, x, y); y += lineHeight; }
-          return y;
-        };
-        wrap(station.titleVi, 500, 100, 900, 34);
-        ctx.strokeStyle = '#b45309'; ctx.lineWidth = 7; ctx.setLineDash([15, 12]);
-        ctx.beginPath(); ctx.moveTo(150,230); ctx.bezierCurveTo(300,140,700,140,850,230);
-        ctx.bezierCurveTo(950,390,600,420,500,320); ctx.bezierCurveTo(300,500,80,370,150,230); ctx.stroke();
-        ctx.setLineDash([]);
-        [[150,230],[850,230],[850,370],[150,370]].forEach(([x,y],i) => {
-          ctx.fillStyle = '#0284c7'; ctx.beginPath(); ctx.arc(x,y,35,0,Math.PI*2); ctx.fill();
-          ctx.fillStyle = '#fff'; ctx.font = 'bold 30px Arial'; ctx.fillText(String(i+1),x,y+10);
-        });
-        ctx.fillStyle = '#92400e'; ctx.font = 'bold 24px Arial'; ctx.fillText('Hành trình khám phá quê hương',500,280);
-        ctx.textAlign = 'left';
-        const nodes = station.journeyMap?.summaryNodes || station.hotspots.map(h => ({ titleVi: h.titleVi,textVi: h.keyFactVi }));
-        nodes.slice(0,4).forEach((node,i) => {
-          const x = i % 2 === 0 ? 50 : 520, y = 470 + Math.floor(i / 2) * 195;
-          ctx.fillStyle = '#fef3c7'; ctx.fillRect(x,y,430,180);
-          ctx.fillStyle = '#78350f'; ctx.font = 'bold 20px Arial';
-          const nextY = wrap((i+1) + '. ' + node.titleVi,x+16,y+32,400,25);
-          ctx.font = '18px Arial'; wrap(node.textVi,x+16,nextY+8,400,24);
-        });
-        blob = await new Promise<Blob>((resolve,reject) => canvas.toBlob(result => result ? resolve(result) : reject(new Error('Chưa lưu được bản đồ.')),'image/png'));
-      }
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      const extension = blob.type === 'image/jpeg' ? 'jpg' : blob.type === 'image/webp' ? 'webp' : blob.type === 'image/svg+xml' ? 'svg' : blob.type === 'image/gif' ? 'gif' : 'png';
-      link.href = url; link.download = 'Ban-do-' + station.id + '.' + extension;
-      document.body.appendChild(link); link.click(); link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 10000);
-      setSaveMessage('Đã gửi bản đồ đến thư mục tải xuống.');
-    } catch {
-      setSaveMessage('Chưa tải được ảnh. Em có thể mở ảnh bản đồ để lưu trực tiếp hoặc thử lại.');
-    } finally { setSavingMap(false); }
+  const saveMapToCollection = () => {
+    setSaveMessage('');
+    if (isReadOnly) {
+      setSaveMessage('Bản xem thử – bản đồ chưa được lưu vào tài khoản.');
+      return;
+    }
+
+    const updated = progressService.claimJourneyGift(studentId, station.id);
+    if (!updated.journeyMapReceived || !updated.keyFragmentReceived) {
+      setSaveMessage('Chưa lưu được bản đồ. Em hãy thử lại.');
+      return;
+    }
+
+    setGiftClaimed(true);
+    setSaveMessage('✓ Đã lưu bản đồ vào menu BẢN ĐỒ và nhận 1 mảnh chìa khóa.');
+    audioService.playSfx('reward');
   };
 
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -119,36 +75,36 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     exchanging.current = true;
     if (!stamped) handleStamp();
 
-    if (!isReadOnly) {
-      const updated = progressService.claimJourneyGift(studentId, station.id);
-      if (!updated.journeyMapReceived || !updated.keyFragmentReceived) {
-        exchanging.current = false;
-        return;
-      }
-    }
+    setSaveMessage('');
+    setMapImageFailed(false);
+    setMapZoomed(false);
 
     audioService.playSfx('map');
-    schedule(() => audioService.playSfx('treasure'), 360);
+    schedule(() => audioService.playSfx('victory'), 180);
+    schedule(() => audioService.playSfx('treasure'), 760);
 
     try {
       confetti({
-        particleCount: 65,
-        spread: 95,
-        startVelocity: 38,
-        origin: { y: 0.35 },
+        particleCount: 110,
+        spread: 105,
+        startVelocity: 46,
+        origin: { y: 0.38 },
         zIndex: 10000,
         disableForReducedMotion: true,
       });
       schedule(() => {
-        confetti({ particleCount: 35, angle: 60, spread: 70, origin: { x: 0, y: 0.65 }, zIndex: 10000, disableForReducedMotion: true });
-        confetti({ particleCount: 35, angle: 120, spread: 70, origin: { x: 1, y: 0.65 }, zIndex: 10000, disableForReducedMotion: true });
+        confetti({ particleCount: 55, angle: 60, spread: 78, origin: { x: 0, y: 0.65 }, zIndex: 10000, disableForReducedMotion: true });
+        confetti({ particleCount: 55, angle: 120, spread: 78, origin: { x: 1, y: 0.65 }, zIndex: 10000, disableForReducedMotion: true });
       }, 280);
+      schedule(() => {
+        confetti({ particleCount: 70, spread: 100, startVelocity: 34, origin: { x: 0.5, y: 0.28 }, zIndex: 10000, disableForReducedMotion: true });
+      }, 650);
     } catch {
       // Celebration is optional if the browser blocks canvas effects.
     }
 
-    setGiftClaimed(true);
     setShowGiftReveal(true);
+    exchanging.current = false;
   };
 
   return (
@@ -174,8 +130,27 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
             <h3 className="text-2xl font-black text-sky-950">🎉 Quà hành trình của em!</h3>
             <div className="journey-map-reveal rounded-2xl border-2 border-amber-400 bg-amber-100 p-4 shadow-lg" style={{ animation: 'journey-map-reveal .8s ease-out both' }}>
               <h4 className="font-black text-lg text-amber-950">{station.journeyMap?.titleVi || 'Bản đồ hành trình ' + station.titleVi}</h4>
-              {station.journeyMap?.image ? (
-                <img src={station.journeyMap.image} alt={'Bản đồ hành trình ' + station.titleVi} className="w-full rounded-xl mt-3" />
+              {station.journeyMap?.image && !mapImageFailed ? (
+                <div className="mt-3">
+                  <button
+                    type="button"
+                    onClick={() => setMapZoomed(true)}
+                    className="group relative mx-auto block max-w-sm overflow-hidden rounded-xl border border-amber-300 bg-white shadow-sm"
+                    aria-label="Phóng to bản đồ hành trình"
+                  >
+                    <img
+                      loading="eager"
+                      decoding="async"
+                      src={station.journeyMap.image}
+                      alt={'Bản đồ hành trình ' + station.titleVi}
+                      onError={() => setMapImageFailed(true)}
+                      className="max-h-[44vh] w-auto max-w-full object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+                    />
+                    <span className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-lg bg-slate-950/75 px-2 py-1 text-[11px] font-bold text-white">
+                      <ZoomIn className="h-3.5 w-3.5" /> Phóng to
+                    </span>
+                  </button>
+                </div>
               ) : (
                 <svg viewBox="0 0 480 240" role="img" aria-label={'Bản đồ khám phá ' + station.titleVi} className="w-full mt-3 rounded-xl bg-amber-50">
                   <path d="M65 65 C140 0 320 0 405 65 S340 230 250 175 S80 260 65 65" fill="none" stroke="#b45309" strokeWidth="5" strokeDasharray="10 8" />
@@ -205,15 +180,38 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                 <p className="text-xs">Sưu tập đủ 5 mảnh để mở rương kho báu Khối {station.grade}.</p>
               </div>
             </div>
-            <button type="button" disabled={savingMap} onClick={() => void saveMap()} className="w-full rounded-2xl bg-amber-400 py-3 text-amber-950 font-black inline-flex items-center justify-center gap-2 disabled:opacity-50">
-              <Download className="w-5 h-5" />{savingMap ? 'Đang lưu...' : 'LƯU BẢN ĐỒ'}
+            <button
+              type="button"
+              onClick={saveMapToCollection}
+              disabled={giftClaimed && !isReadOnly}
+              className="w-full rounded-2xl bg-amber-400 py-3 text-amber-950 font-black inline-flex items-center justify-center gap-2 disabled:opacity-60"
+            >
+              <Map className="w-5 h-5" />{giftClaimed && !isReadOnly ? 'ĐÃ LƯU VÀO BẢN ĐỒ' : 'LƯU BẢN ĐỒ'}
             </button>
             {saveMessage && <p role="status" className="text-sm text-sky-900">{saveMessage}</p>}
-            {station.journeyMap?.image && <a href={station.journeyMap.image} target="_blank" rel="noopener noreferrer" className="block text-xs text-sky-800 underline">Mở ảnh bản đồ</a>}
             <button autoFocus type="button" onClick={() => setShowGiftReveal(false)} className="w-full rounded-2xl bg-sky-700 py-3 text-white font-black">
               CẤT QUÀ VÀO BỘ SƯU TẬP
             </button>
           </div>
+        </div>
+      )}
+      {mapZoomed && station.journeyMap?.image && !mapImageFailed && (
+        <div className="fixed inset-0 z-[70] bg-slate-950/95 p-3 sm:p-6 flex items-center justify-center" onClick={() => setMapZoomed(false)}>
+          <button
+            type="button"
+            onClick={() => setMapZoomed(false)}
+            className="absolute top-4 right-4 z-10 h-11 w-11 rounded-xl bg-white/15 text-white flex items-center justify-center hover:bg-white/25"
+            aria-label="Đóng ảnh phóng to"
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <img
+            src={station.journeyMap.image}
+            alt={'Bản đồ hành trình phóng to ' + station.titleVi}
+            className="max-h-full max-w-full object-contain rounded-xl shadow-2xl"
+            onClick={event => event.stopPropagation()}
+            onError={() => { setMapImageFailed(true); setMapZoomed(false); }}
+          />
         </div>
       )}
       <section className="rounded-3xl bg-white border border-amber-200 shadow-sm p-5 sm:p-7 space-y-5 text-center">
@@ -243,7 +241,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
         ) : (
           <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-4 space-y-3">
             <p className="font-bold text-emerald-900">✓ Đã nhận bản đồ và 1 mảnh chìa khóa</p>
-            <button type="button" onClick={() => { setSaveMessage(''); setShowGiftReveal(true); }} className="rounded-xl bg-sky-700 px-5 py-3 text-white font-bold inline-flex items-center gap-2"><Map className="w-4 h-4" />XEM VÀ LƯU BẢN ĐỒ</button>
+            <button type="button" onClick={() => { setSaveMessage(''); setMapImageFailed(false); setMapZoomed(false); setShowGiftReveal(true); }} className="rounded-xl bg-sky-700 px-5 py-3 text-white font-bold inline-flex items-center gap-2"><Map className="w-4 h-4" />XEM VÀ LƯU BẢN ĐỒ</button>
           </div>
         )}
         {isReadOnly && <p className="text-xs text-amber-800">Bản xem thử – phần thưởng không lưu vào tài khoản.</p>}

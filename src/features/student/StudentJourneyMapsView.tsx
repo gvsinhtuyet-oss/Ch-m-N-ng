@@ -200,10 +200,16 @@ export const StudentJourneyMapsView: React.FC = () => {
                 }`}
               >
                 <div className="aspect-[4/3] relative overflow-hidden bg-slate-200">
-                  <img loading="lazy" decoding="async"
-                    src={station.coverImage}
-                    alt=""
-                    className={`w-full h-full object-cover ${unlocked ? '' : 'grayscale blur-[1px]'}`}
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    src={unlocked ? (station.journeyMap?.image || station.coverImage) : station.coverImage}
+                    alt={unlocked ? `Bản đồ hành trình ${station.titleVi}` : ''}
+                    className={`w-full h-full ${unlocked ? 'object-contain bg-white' : 'object-cover grayscale blur-[1px]'}`}
+                    onError={event => {
+                      const img = event.currentTarget;
+                      if (img.src !== station.coverImage) img.src = station.coverImage;
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                   <span className="absolute top-3 left-3 px-2.5 py-1 rounded-xl bg-white/90 text-slate-900 text-[10px] font-black">

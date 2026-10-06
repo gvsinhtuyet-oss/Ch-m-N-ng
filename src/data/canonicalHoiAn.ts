@@ -258,7 +258,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       stage: 1,
       nameVi: 'ĐÈN LỒNG KHÁM PHÁ',
       nameEn: 'Exploration Lantern',
-      template: 'heritage_lantern',
+      template: 'hoi_an_lantern',
       descriptionVi: 'Ghi nhận em đã hoàn thành chặng giải mã 4 điểm chạm di sản Hội An.',
     },
     {
@@ -267,7 +267,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       stage: 2,
       nameVi: 'LA BÀN THƯƠNG CẢNG',
       nameEn: 'Port Compass',
-      template: 'discovery_compass',
+      template: 'hoi_an_port_compass',
       descriptionVi: 'Vinh danh bản lĩnh xuất sắc vượt qua toàn bộ thử thách thương cảng Hội An.',
     },
     {
@@ -276,7 +276,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       stage: 3,
       nameVi: 'TRÁI TIM DI SẢN',
       nameEn: 'Heritage Heart',
-      template: 'sea_pearl',
+      template: 'hoi_an_heritage_heart',
       descriptionVi: 'Minh chứng cho ý thức tôn trọng, giữ gìn và tình yêu di sản quê hương.',
     },
   ],

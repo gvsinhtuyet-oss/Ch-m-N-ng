@@ -8,7 +8,7 @@ import { Stage1Exploration } from '../../components/station/Stage1Exploration';
 import { Stage2Challenge } from '../../components/station/Stage2Challenge';
 import { Stage3CheckIn } from '../../components/station/Stage3CheckIn';
 import { Stage4Stamp } from '../../components/station/Stage4Stamp';
-import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles } from 'lucide-react';
+import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles, ChevronRight } from 'lucide-react';
 
 interface Props {
   station: Station;
@@ -46,30 +46,115 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6">
       {completedStagePreview !== null && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div role="dialog" aria-modal="true" aria-label="Bản đồ hành trình" className="w-full max-w-lg rounded-3xl bg-amber-50 border-4 border-amber-300 p-6 shadow-2xl space-y-5 text-center">
-            <h2 className="text-xl font-black text-sky-950">🗺️ Bản đồ hành trình</h2>
-            <p className="font-bold text-emerald-800">Em vừa hoàn thành Chặng {completedStagePreview}!</p>
-            <div className="grid grid-cols-2 gap-3">
-              {stages.map(step => {
-                const Icon = step.icon;
-                const done = step.num <= completedStagePreview;
-                return (
-                  <div key={step.num} className={`p-4 rounded-2xl border-2 ${done ? 'bg-emerald-100 border-emerald-400 text-emerald-950' : 'bg-white border-slate-200 text-slate-500'}`}>
-                    <Icon className="w-8 h-8 mx-auto mb-2" />
-                    <p className="text-xs font-bold">{step.num}. {step.name}</p>
-                    {done && <CheckCircle2 className="w-5 h-5 mx-auto mt-2" />}
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-lg flex items-center justify-center p-4">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Bản đồ hành trình"
+            className="w-full max-w-3xl overflow-hidden rounded-[2rem] bg-white shadow-2xl border border-white/70"
+          >
+            <div className="relative overflow-hidden bg-gradient-to-br from-sky-700 via-cyan-700 to-emerald-700 px-5 py-6 sm:px-8 sm:py-7 text-white">
+              <div className="absolute -top-16 -right-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+              <div className="absolute -bottom-20 -left-8 h-44 w-44 rounded-full bg-amber-300/15 blur-2xl" />
+              <div className="relative flex items-start justify-between gap-4">
+                <div>
+                  <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-sky-50">
+                    <Compass className="h-3.5 w-3.5" />
+                    Hành trình khám phá
                   </div>
-                );
-              })}
+                  <h2 className="text-2xl sm:text-3xl font-black tracking-tight">Bản đồ hành trình</h2>
+                  <p className="mt-1 text-sm font-semibold text-sky-100">
+                    Hoàn thành Chặng {completedStagePreview} • Chặng {completedStagePreview + 1} đang chờ em
+                  </p>
+                </div>
+                <div className="hidden sm:flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/15 ring-1 ring-white/20 shadow-lg">
+                  <Sparkles className="h-7 w-7 text-amber-200" />
+                </div>
+              </div>
             </div>
-            <button autoFocus type="button" onClick={() => {
-              audioService.playSfx('click');
-              setCurrentStage((completedStagePreview + 1) as 1 | 2 | 3 | 4);
-              setCompletedStagePreview(null);
-            }} className="w-full py-3 rounded-2xl bg-sky-700 text-white font-black">
-              TIẾP TỤC CHẶNG {completedStagePreview + 1}
-            </button>
+
+            <div className="p-5 sm:p-8">
+              <div className="relative">
+                <div className="absolute left-6 right-6 top-7 hidden h-1 rounded-full bg-slate-100 sm:block" />
+                <div
+                  className="absolute left-6 top-7 hidden h-1 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 transition-all duration-500 sm:block"
+                  style={{ width: `calc((100% - 3rem) * ${Math.max(0, completedStagePreview - 1)} / 3)` }}
+                />
+
+                <div className="relative grid grid-cols-1 gap-3 sm:grid-cols-4 sm:gap-4">
+                  {stages.map(step => {
+                    const Icon = step.icon;
+                    const done = step.num <= completedStagePreview;
+                    const next = step.num === completedStagePreview + 1;
+
+                    return (
+                      <div
+                        key={step.num}
+                        className={`relative flex items-center gap-3 rounded-2xl border p-3.5 transition-all sm:flex-col sm:gap-2 sm:border-0 sm:bg-transparent sm:p-0 sm:text-center ${
+                          done
+                            ? 'border-emerald-200 bg-emerald-50'
+                            : next
+                            ? 'border-amber-300 bg-amber-50 shadow-sm ring-1 ring-amber-200'
+                            : 'border-slate-200 bg-slate-50'
+                        }`}
+                      >
+                        <div
+                          className={`relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border-2 shadow-sm transition-all ${
+                            done
+                              ? 'border-emerald-500 bg-emerald-500 text-white'
+                              : next
+                              ? 'border-amber-400 bg-gradient-to-br from-amber-300 to-orange-400 text-amber-950 shadow-amber-300/40'
+                              : 'border-slate-200 bg-white text-slate-400'
+                          }`}
+                        >
+                          {done ? <CheckCircle2 className="h-7 w-7" /> : <Icon className="h-6 w-6" />}
+                          {next && (
+                            <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-amber-400 ring-4 ring-white animate-pulse" />
+                          )}
+                        </div>
+
+                        <div className="min-w-0 sm:pt-1">
+                          <p className={`text-[10px] font-black uppercase tracking-wider ${
+                            done ? 'text-emerald-700' : next ? 'text-amber-700' : 'text-slate-400'
+                          }`}>
+                            {done ? 'Đã hoàn thành' : next ? 'Tiếp theo' : 'Chưa mở'}
+                          </p>
+                          <p className={`mt-0.5 text-xs font-extrabold leading-snug ${
+                            done ? 'text-emerald-950' : next ? 'text-slate-950' : 'text-slate-500'
+                          }`}>
+                            {step.num}. {step.name}
+                          </p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="mt-7 rounded-2xl border border-sky-100 bg-gradient-to-r from-sky-50 to-cyan-50 p-4 text-left">
+                <p className="text-[11px] font-black uppercase tracking-wider text-sky-700">Điểm đến tiếp theo</p>
+                <p className="mt-1 text-base font-black text-slate-950">
+                  Chặng {completedStagePreview + 1}: {stages[completedStagePreview]?.name}
+                </p>
+                <p className="mt-1 text-xs font-medium text-slate-600">
+                  Em đã nhận vật phẩm của chặng vừa rồi. Tiếp tục hành trình để mở thêm dấu ấn mới.
+                </p>
+              </div>
+
+              <button
+                autoFocus
+                type="button"
+                onClick={() => {
+                  audioService.playSfx('click');
+                  setCurrentStage((completedStagePreview + 1) as 1 | 2 | 3 | 4);
+                  setCompletedStagePreview(null);
+                }}
+                className="mt-5 w-full rounded-2xl bg-gradient-to-r from-sky-600 via-cyan-600 to-emerald-600 px-5 py-4 text-sm font-black text-white shadow-lg shadow-cyan-700/20 transition hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 inline-flex items-center justify-center gap-2"
+              >
+                <span>TIẾP TỤC CHẶNG {completedStagePreview + 1}</span>
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
           </div>
         </div>
       )}

@@ -278,6 +278,7 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
     grade: 5,
     titleVi: 'Bản đồ hành trình Ngũ Hành Sơn',
     subtitleVi: 'Giải mã miền di sản',
+    image: 'https://drive.google.com/thumbnail?id=1ht2hWNQ0xqg4WhAp5bdK-PvvENEj-R2-&sz=w900',
     summaryNodes: [
       { id: 'map-nhs-1', titleVi: 'Cảnh quan', textVi: 'Ngũ Hành Sơn có cảnh quan núi đá, hang động và nhiều không gian tham quan đặc sắc.', icon: '⛰️' },
       { id: 'map-nhs-2', titleVi: 'Dấu ấn văn hóa – lịch sử', textVi: 'Di sản lưu giữ nhiều giá trị văn hóa và lịch sử của vùng đất Đà Nẵng.', icon: '🏯' },

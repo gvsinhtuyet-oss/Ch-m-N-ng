@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User, Student, Teacher, Admin, Station, UserRole } from '../types';
+import { User, Student, Teacher, Admin, Station, UserRole, ExplorationHotspot } from '../types';
 import { authService } from '../services/AuthService';
 import { contentService } from '../services/ContentService';
 import { ALL_25_STATIONS, getStationsForGrade } from '../data/allStations';
@@ -26,6 +26,7 @@ interface AppContextType {
   role: UserRole;
   currentGrade: number;
   currentStation: Station | null;
+  currentAssistantHotspot: ExplorationHotspot | null;
   currentStage: 1 | 2 | 3 | 4;
   currentView: AppView;
   isOnline: boolean;
@@ -42,6 +43,7 @@ interface AppContextType {
   loginAsAdmin: (admin: Admin) => void;
   logout: () => Promise<void>;
   setCurrentGrade: (grade: number) => void;
+  setAssistantHotspot: (hotspot: ExplorationHotspot | null) => void;
   openStation: (station: Station, initialStage?: 1 | 2 | 3 | 4) => void;
   closeStation: () => void;
   setCurrentStage: (stage: 1 | 2 | 3 | 4) => void;
@@ -59,6 +61,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [role, setRoleState] = useState<UserRole>('student');
   const [selectedGrade, setGradeState] = useState<number>(2);
   const [currentStation, setCurrentStation] = useState<Station | null>(null);
+  const [currentAssistantHotspot, setAssistantHotspot] = useState<ExplorationHotspot | null>(null);
   const [currentStage, setCurrentStage] = useState<1 | 2 | 3 | 4>(1);
   const [currentView, setCurrentView] = useState<AppView>('landing');
   const [isOnline, setIsOnline] = useState<boolean>(typeof navigator !== 'undefined' ? navigator.onLine : true);
@@ -98,6 +101,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       try { localStorage.setItem('cham_danang_guest_grade_v1', String(grade)); } catch {}
     }
     setCurrentStation(null);
+    setAssistantHotspot(null);
     setCurrentStage(1);
   };
 
@@ -109,6 +113,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setRoleState(newRole);
     setCurrentUser(null);
     setCurrentStation(null);
+    setAssistantHotspot(null);
     setCurrentStage(1);
     setCurrentView('landing');
   };
@@ -119,6 +124,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setRoleState('student');
     setGradeState(student.grade);
     setCurrentStation(null);
+    setAssistantHotspot(null);
     setCurrentStage(1);
     setCurrentView('student-journey');
   };
@@ -130,6 +136,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setRoleState('teacher');
     setGradeState(2);
     setCurrentStation(null);
+    setAssistantHotspot(null);
     setCurrentStage(1);
     setCurrentView('teacher-view');
   };
@@ -141,6 +148,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setRoleState('teacher');
     setGradeState(2);
     setCurrentStation(null);
+    setAssistantHotspot(null);
     setCurrentStage(1);
     setCurrentView('teacher-view');
   };
@@ -294,6 +302,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (role === 'student' && station.grade !== (currentUser as Student).grade) return;
     audioService.playSfx('click');
     setCurrentStation(station);
+    setAssistantHotspot(null);
     setCurrentStage(initialStage);
     setCurrentView('station-view');
 
@@ -307,6 +316,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     audioService.playSfx('click');
     audioService.stopNarration();
     setCurrentStation(null);
+    setAssistantHotspot(null);
     if (role === 'admin') {
       setCurrentView('admin-view');
     } else if (role === 'teacher') {
@@ -330,6 +340,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!currentUser || (role !== 'teacher' && role !== 'admin')) return;
     audioService.playSfx('click');
     setCurrentStation(station);
+    setAssistantHotspot(null);
     setCurrentStage(1);
     setCurrentView('presentation-view');
   };
@@ -338,6 +349,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     audioService.playSfx('click');
     audioService.stopNarration();
     setCurrentStation(null);
+    setAssistantHotspot(null);
     setCurrentStage(1);
     setCurrentView(role === 'admin' ? 'admin-view' : 'teacher-view');
   };
@@ -349,6 +361,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         role,
         currentGrade,
         currentStation,
+        currentAssistantHotspot,
         currentStage,
         currentView,
         isOnline,
@@ -363,6 +376,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         loginAsAdmin,
         logout,
         setCurrentGrade,
+        setAssistantHotspot,
         openStation,
         closeStation,
         setCurrentStage,

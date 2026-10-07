@@ -90,9 +90,12 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         <span className="pointer-events-none absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-orange-500 shadow-md ring-1 ring-orange-100">
           <MessageCircle className="h-3 w-3" />
         </span>
-        <span className="pointer-events-none absolute left-full ml-2 inline-flex items-center gap-1.5 whitespace-nowrap rounded-2xl border border-orange-100 bg-white/96 px-3 py-2 text-[11px] font-black text-slate-700 shadow-lg backdrop-blur-md">
-          <MessageCircle className="h-3.5 w-3.5 text-orange-500" />
-          Hỏi Trợ lý khám phá
+        <span className="pointer-events-none absolute left-full ml-2 inline-flex min-w-[150px] items-center gap-2 rounded-[1.15rem] border border-emerald-200 bg-emerald-50/95 px-3.5 py-2.5 text-left shadow-lg shadow-emerald-100/70 backdrop-blur-md">
+          <MessageCircle className="h-4 w-4 shrink-0 text-emerald-600" />
+          <span className="flex min-w-0 flex-col leading-tight">
+            <span className="text-[12px] font-black text-emerald-800">Trợ lý khám phá</span>
+            <span className="mt-0.5 text-[9px] font-bold text-emerald-700/85">Hỏi mình về điểm đến này</span>
+          </span>
         </span>
       </button>
 

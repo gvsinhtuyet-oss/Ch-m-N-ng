@@ -38,9 +38,9 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   };
 
   const stages = [
-    { num: 1, title: 'Chặng 1', name: 'Giải mã điểm đến', icon: Compass },
-    { num: 2, title: 'Chặng 2', name: 'Chinh phục thử thách', icon: Award },
-    { num: 3, title: 'Chặng 3', name: 'Check-in cảm xúc', icon: Heart },
+    { num: 1, title: 'Chặng 1', name: 'Đánh thức điểm đến', icon: Compass },
+    { num: 2, title: 'Chặng 2', name: 'Giải mã điểm đến', icon: Award },
+    { num: 3, title: 'Chặng 3', name: 'Chinh phục thử thách', icon: Heart },
     { num: 4, title: 'Chặng 4', name: 'Lưu dấu hành trình', icon: Sparkles },
   ];
 
@@ -251,10 +251,10 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
           <span className="text-slate-700">Hành trình lần đầu (hoàn thành tuần tự):</span>
           <div className="flex items-center gap-1.5 overflow-x-auto">
             {[
-              { num: 1, label: 'Chặng 1: Khám phá' },
-              { num: 2, label: 'Chặng 2: Thử thách' },
-              { num: 3, label: 'Chặng 3: Check-in' },
-              { num: 4, label: 'Chặng 4: Lưu dấu' },
+              { num: 1, label: 'Chặng 1: Đánh thức điểm đến' },
+              { num: 2, label: 'Chặng 2: Giải mã điểm đến' },
+              { num: 3, label: 'Chặng 3: Chinh phục thử thách' },
+              { num: 4, label: 'Chặng 4: Lưu dấu hành trình' },
             ].map((step) => (
               <div
                 key={step.num}

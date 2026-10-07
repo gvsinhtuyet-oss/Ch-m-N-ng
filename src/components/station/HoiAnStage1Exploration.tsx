@@ -266,7 +266,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
           </div>
 
           {/* RIGHT: information rail */}
-          <aside className="grid min-h-0 gap-3 lg:grid-rows-[auto_1fr_auto]">
+          <aside className="hoi-an-right-rail flex min-h-0 h-full flex-col gap-3 overflow-y-auto overscroll-contain pr-1.5 lg:max-h-full">
             <div className="rounded-[1.5rem] border border-orange-200 bg-[#fff8ee] p-4 shadow-sm">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
@@ -292,7 +292,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 </div>
               </div>
 
-              <p className="mt-3 max-h-28 overflow-y-auto pr-1 text-[12px] font-semibold leading-5 text-slate-700">
+              <p className="mt-3 pr-1 text-[13px] font-semibold leading-6 text-slate-700 sm:text-[14px]">
                 {hotspot.narrationVi}
               </p>
 
@@ -314,10 +314,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-orange-500 text-xs font-black text-white">
                     ?
                   </span>
-                  <h3 className="text-sm font-black text-slate-950">Thử tài quan sát</h3>
+                  <h3 className="text-[15px] font-black text-slate-950 sm:text-base">Thử tài quan sát</h3>
                 </div>
 
-                <p className="text-[12px] font-black leading-5 text-slate-800">
+                <p className="text-[13px] font-black leading-6 text-slate-800 sm:text-[14px]">
                   {hotspot.interaction.questionVi}
                 </p>
 
@@ -343,7 +343,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                         type="button"
                         disabled={submitted}
                         onClick={() => choose(option.id)}
-                        className={`w-full rounded-xl border px-3 py-2.5 text-left text-[11px] font-bold transition ${className}`}
+                        className={`w-full rounded-xl border px-3.5 py-3 text-left text-[13px] font-bold leading-5 transition sm:text-[14px] ${className}`}
                       >
                         {option.textVi}
                       </button>
@@ -353,7 +353,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
                 {submitted && (
                   <p
-                    className={`mt-2 rounded-xl p-2.5 text-[11px] font-bold ${correct
+                    className={`mt-2 rounded-xl p-3 text-[13px] font-bold leading-5 sm:text-[14px] ${correct
                       ? 'bg-emerald-50 text-emerald-700'
                       : 'bg-amber-50 text-amber-800'}`}
                   >
@@ -369,7 +369,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       type="button"
                       disabled={!selected}
                       onClick={check}
-                      className="w-full rounded-xl bg-orange-500 py-3 text-xs font-black text-white disabled:bg-slate-200 disabled:text-slate-400"
+                      className="w-full rounded-xl bg-orange-500 py-3.5 text-sm font-black text-white disabled:bg-slate-200 disabled:text-slate-400"
                     >
                       KIỂM TRA
                     </button>
@@ -382,7 +382,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                         setSubmitted(false);
                         setSelected(null);
                       }}
-                      className="w-full rounded-xl bg-amber-400 py-3 text-xs font-black text-slate-950"
+                      className="w-full rounded-xl bg-amber-400 py-3.5 text-sm font-black text-slate-950"
                     >
                       THỬ LẠI
                     </button>
@@ -403,7 +403,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 <button
                   type="button"
                   onClick={next}
-                  className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 py-3 text-xs font-black text-white shadow-lg shadow-orange-500/20"
+                  className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 py-3.5 text-sm font-black text-white shadow-lg shadow-orange-500/20"
                 >
                   {index === station.hotspots.length - 1
                     ? 'HOÀN THÀNH CHẶNG 1'

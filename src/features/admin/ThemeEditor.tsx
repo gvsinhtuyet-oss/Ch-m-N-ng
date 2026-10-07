@@ -98,16 +98,20 @@ export const ThemeEditor: React.FC = () => {
     return (
       <div className="rounded-2xl bg-white p-4 space-y-3 border border-slate-200">
         <h4 className="font-bold text-sm text-slate-900">{label}</h4>
-        <input
-          aria-label={'Tải ' + label}
-          type="file"
-          accept="image/png,image/jpeg,image/webp,image/gif"
-          disabled={busy}
-          onChange={e => {
-            void upload(e.target.files?.[0], target);
-            e.target.value = '';
-          }}
-        />
+        <label className={`inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-xs font-black text-white shadow-sm transition hover:bg-orange-600 ${busy ? 'pointer-events-none opacity-60' : ''}`}>
+          📁 TẢI ẢNH LÊN
+          <input
+            aria-label={'Tải ' + label}
+            type="file"
+            accept="image/png,image/jpeg,image/webp,image/gif"
+            disabled={busy}
+            className="sr-only"
+            onChange={e => {
+              void upload(e.target.files?.[0], target);
+              e.target.value = '';
+            }}
+          />
+        </label>
         <input
           aria-label={'Đường dẫn ' + label}
           className="w-full border rounded-xl p-3 text-sm"

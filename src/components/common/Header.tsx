@@ -21,12 +21,13 @@ export const Header: React.FC = () => {
   } = useApp();
 
   const [showRoleModal, setShowRoleModal] = useState(false);
+  const compactJourneyHeader = role === 'student' && currentView === 'student-journey';
 
   return (
     <>
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-sky-100 shadow-xs">
         {/* Top utility bar */}
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 flex items-center justify-between gap-2 border-b border-slate-100/80 text-xs">
+        {!compactJourneyHeader && <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 flex items-center justify-between gap-2 border-b border-slate-100/80 text-xs">
           <div className="flex items-center gap-2">
             <span className="font-semibold text-slate-500 hidden sm:inline">{t.schoolName}</span>
             <span className="hidden sm:inline text-slate-300">|</span>
@@ -66,7 +67,7 @@ export const Header: React.FC = () => {
             {/* Role indicator & switcher */}
             <button
               onClick={() => setShowRoleModal(true)}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sky-600 hover:bg-sky-700 text-white font-medium text-xs shadow-xs transition"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-medium text-xs shadow-xs transition"
             >
               <User className="w-3 h-3" />
               <span className="font-bold">
@@ -78,10 +79,10 @@ export const Header: React.FC = () => {
               </span>
             </button>
           </div>
-        </div>
+        </div>}
 
         {/* Main Brand & Navigation */}
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-4">
+        <div className={`max-w-7xl mx-auto px-3 sm:px-6 flex items-center justify-between gap-4 ${compactJourneyHeader ? 'py-2' : 'py-2.5'}`}>
           {/* Logo & Slogan */}
           <div
             onClick={() => {
@@ -91,14 +92,14 @@ export const Header: React.FC = () => {
             }}
             className="flex items-center gap-3 cursor-pointer group"
           >
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-sky-600 to-amber-400 flex items-center justify-center p-0.5 shadow-md shadow-sky-500/20 group-hover:scale-105 transition">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-300 flex items-center justify-center p-0.5 shadow-md shadow-orange-500/20 group-hover:scale-105 transition">
               <div className="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center">
                 <Compass className="w-6 h-6 text-amber-400 animate-spin-slow" />
               </div>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-lg sm:text-xl font-extrabold tracking-tight bg-gradient-to-r from-sky-700 via-sky-600 to-amber-600 bg-clip-text text-transparent">
+                <span className="text-lg sm:text-xl font-extrabold tracking-tight bg-gradient-to-r from-orange-600 via-amber-500 to-orange-700 bg-clip-text text-transparent">
                   CHẠM ĐÀ NẴNG
                 </span>
                 <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">Khối {currentGrade}</span>
@@ -125,11 +126,11 @@ export const Header: React.FC = () => {
                 onClick={() => setCurrentView('student-journey')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
                   currentView === 'student-journey' || currentView === 'station-view'
-                    ? 'bg-sky-100 text-sky-800 shadow-inner'
-                    : 'text-slate-600 hover:bg-slate-100'
+                    ? 'bg-orange-100 text-orange-800 shadow-inner'
+                    : 'text-slate-600 hover:bg-orange-50'
                 }`}
               >
-                <Compass className="w-4 h-4 text-sky-600" />
+                <Compass className="w-4 h-4 text-orange-600" />
                 <span>HÀNH TRÌNH</span>
               </button>
               <button

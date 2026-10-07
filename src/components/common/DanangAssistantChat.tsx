@@ -8,12 +8,14 @@ import {
 
 interface Props {
   station?: Station | null;
+  hotspot?: ExplorationHotspot | null;
 }
 
 interface ChatMessage {
   id: string;
   role: 'assistant' | 'student';
   text: string;
+  relatedStationTitle?: string;
 }
 
 const WELCOME =
@@ -34,27 +36,13 @@ const SimpleBold: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-export const DanangAssistantChat: React.FC<Props> = ({ station = null }) => {
+export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null }) => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
-  const [hotspot, setHotspot] = useState<ExplorationHotspot | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([
     { id: 'welcome', role: 'assistant', text: WELCOME },
   ]);
   const endRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const onHotspot = (event: Event) => {
-      const custom = event as CustomEvent<ExplorationHotspot | null>;
-      setHotspot(custom.detail || null);
-    };
-    window.addEventListener('cham-assistant-hotspot', onHotspot);
-    return () => window.removeEventListener('cham-assistant-hotspot', onHotspot);
-  }, []);
-
-  useEffect(() => {
-    if (!station) setHotspot(null);
-  }, [station?.id]);
 
   useEffect(() => {
     if (open) endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -74,7 +62,12 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null }) => {
     append({ id: `q-${Date.now()}`, role: 'student', text: question });
     const result = retrieveDanangAssistantAnswer(question, context);
     window.setTimeout(() => {
-      append({ id: `a-${Date.now()}`, role: 'assistant', text: result.answer });
+      append({
+        id: `a-${Date.now()}`,
+        role: 'assistant',
+        text: result.answer,
+        relatedStationTitle: result.relatedStationTitle,
+      });
     }, 80);
     setInput('');
   };
@@ -153,6 +146,12 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null }) => {
                       </span>
                     )}
                     <p className="whitespace-pre-wrap"><SimpleBold text={message.text} /></p>
+                    {message.role === 'assistant' && message.relatedStationTitle && (
+                      <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-bold text-amber-800 ring-1 ring-amber-200">
+                        <MapPin className="h-3 w-3" />
+                        Liên quan: {message.relatedStationTitle}
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

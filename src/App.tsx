@@ -16,6 +16,7 @@ import { TeacherDashboard } from './features/teacher/TeacherDashboard';
 import { AdminDashboard } from './features/admin/AdminDashboard';
 import { ClassroomPresentationMode } from './features/teacher/ClassroomPresentationMode';
 import { WifiOff } from 'lucide-react';
+import { DanangAssistantChat } from './components/common/DanangAssistantChat';
 
 const AppContent: React.FC = () => {
   const { currentUser, role, currentView, currentStation, isOnline, soundEnabled, closeStation, exitPresentationMode } = useApp();
@@ -76,6 +77,10 @@ const AppContent: React.FC = () => {
       </main>
 
       <Footer />
+
+      {role === 'student' && currentUser && currentView !== 'landing' && currentView !== 'presentation-view' && (
+        <DanangAssistantChat station={currentView === 'station-view' ? currentStation : null} />
+      )}
 
       {storageWarning && (
         <div role="alert" className="fixed bottom-4 right-4 z-50 max-w-sm rounded-2xl bg-amber-100 border border-amber-400 p-4 text-sm text-amber-950 shadow-xl">

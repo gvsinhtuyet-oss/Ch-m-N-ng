@@ -293,7 +293,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
           {/* RIGHT: information rail */}
           <aside className="hoi-an-right-rail flex h-full min-h-0 flex-col gap-3 overflow-y-auto overscroll-contain pr-2 pb-2 lg:max-h-full">
-            <div className="shrink-0 rounded-[1.5rem] border border-orange-200 bg-[#fff8ee] p-4 shadow-sm">
+            <div className="shrink-0 rounded-[1.5rem] border border-orange-200 bg-gradient-to-br from-orange-50 via-white to-amber-50/70 p-4 shadow-sm">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
@@ -323,8 +323,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               </p>
 
               {hotspot.keyFactVi && (
-                <div className="mt-3 rounded-2xl border border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50 p-3">
-                  <p className="text-[9px] font-black uppercase tracking-wide text-orange-700">
+                <div className="mt-3 rounded-2xl border border-amber-300 bg-gradient-to-r from-yellow-50 via-amber-50 to-orange-50 p-3 shadow-sm shadow-amber-100/60">
+                  <p className="text-[9px] font-black uppercase tracking-wide text-amber-700">
                     Điều thú vị cần nhớ
                   </p>
                   <p className="mt-1 text-[11px] font-black leading-4 text-slate-800">
@@ -335,9 +335,9 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             </div>
 
             {hotspot.interaction ? (
-              <div className="shrink-0 rounded-[1.5rem] border border-orange-200 bg-white p-4 shadow-sm">
+              <div className="shrink-0 rounded-[1.5rem] border border-sky-200 bg-gradient-to-br from-sky-50 via-white to-cyan-50/70 p-4 shadow-sm shadow-sky-100/50">
                 <div className="mb-2 flex items-center gap-2">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-orange-500 text-xs font-black text-white">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-600 text-xs font-black text-white shadow-sm shadow-sky-300/60">
                     ?
                   </span>
                   <h3 className="text-[15px] font-black text-slate-950 sm:text-base">Thử tài quan sát</h3>
@@ -351,7 +351,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   {options.map(option => {
                     const active = selected === option.id;
                     let className =
-                      'border-slate-200 bg-white text-slate-700 hover:bg-orange-50';
+                      'border-sky-100 bg-white text-slate-800 hover:border-sky-300 hover:bg-sky-50';
 
                     if (submitted && correct && option.isCorrect) {
                       className =
@@ -360,7 +360,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       className = 'border-rose-400 bg-rose-50 text-rose-700';
                     } else if (active) {
                       className =
-                        'border-orange-400 bg-orange-50 text-orange-800 ring-2 ring-orange-200';
+                        'border-sky-500 bg-sky-100 text-sky-900 ring-2 ring-sky-200';
                     }
 
                     return (
@@ -395,7 +395,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       type="button"
                       disabled={!selected}
                       onClick={check}
-                      className="w-full rounded-xl bg-orange-500 py-3.5 text-sm font-black text-white disabled:bg-slate-200 disabled:text-slate-400"
+                      className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 py-3.5 text-sm font-black text-white shadow-md shadow-orange-200/70 transition hover:from-orange-600 hover:to-amber-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
                     >
                       KIỂM TRA
                     </button>
@@ -419,8 +419,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               <div />
             )}
 
-            <div className="shrink-0 rounded-[1.5rem] border border-orange-200 bg-gradient-to-r from-[#fff7ea] to-[#fffdf8] p-3 shadow-sm">
-              <p className="text-[10px] font-black text-orange-700">NHÀ PHIÊU LƯU ƠI!</p>
+            <div className="shrink-0 rounded-[1.5rem] border border-emerald-200 bg-gradient-to-r from-emerald-50 via-teal-50 to-white p-3 shadow-sm shadow-emerald-100/50">
+              <p className="text-[10px] font-black text-emerald-700">NHÀ PHIÊU LƯU ƠI!</p>
               <p className="mt-1 text-[11px] font-semibold leading-4 text-slate-600">
                 Quan sát thật kĩ, nghe câu chuyện và hoàn thành câu hỏi để mở điểm tiếp theo nhé.
               </p>

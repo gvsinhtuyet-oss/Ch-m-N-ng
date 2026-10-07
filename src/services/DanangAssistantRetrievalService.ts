@@ -114,6 +114,30 @@ const words = (value: string) =>
 
 const unique = <T,>(items: T[]) => [...new Set(items)];
 
+const QUESTION_STOPWORDS = new Set([
+  'la', 'gi', 'o', 'dau', 'tai', 'sao', 'vi', 'co', 'khong', 'ai',
+  'cai', 'nay', 'do', 'ay', 'dung', 'de', 'lam', 'nhu', 'the', 'nao',
+  'cho', 'minh', 'em', 'ban', 'noi', 'ke', 've',
+]);
+
+const meaningfulWords = (value: string) =>
+  unique(words(value).filter(word => !QUESTION_STOPWORDS.has(word)));
+
+const longTextScore = (query: string, candidate: string): number => {
+  const q = normalizeForSearch(query);
+  const c = normalizeForSearch(candidate);
+  if (!q || !c) return 0;
+  if (c.includes(q) && q.length >= 4) return 96;
+
+  const qTokens = meaningfulWords(q);
+  if (!qTokens.length) return tokenScore(query, candidate);
+
+  const candidateTokens = new Set(words(c));
+  const hits = qTokens.filter(token => candidateTokens.has(token)).length;
+  const coverage = hits / qTokens.length;
+  return Math.round(coverage * 92 + Math.min(hits, 4) * 2);
+};
+
 const tokenScore = (query: string, candidate: string): number => {
   const q = normalizeForSearch(query);
   const c = normalizeForSearch(candidate);
@@ -188,11 +212,11 @@ const stationCorpusScore = (query: string, station: Station): number => {
     station.pedagogyGoals.behaviorGoalVi,
     ...station.hotspots.flatMap(h => [h.titleVi, h.subtitleVi || '', h.narrationVi, h.keyFactVi]),
   ].join(' ');
-  return tokenScore(query, corpus);
+  return longTextScore(query, corpus);
 };
 
 const hotspotCorpusScore = (query: string, hotspot: ExplorationHotspot): number =>
-  tokenScore(
+  longTextScore(
     query,
     [hotspot.titleVi, hotspot.subtitleVi || '', hotspot.narrationVi, hotspot.keyFactVi].join(' '),
   );

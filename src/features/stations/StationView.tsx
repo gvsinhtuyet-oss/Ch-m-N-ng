@@ -20,6 +20,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const { currentUser, currentStage, setCurrentStage } = useApp();
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
+  const isHoiAnDemo = station.id === 'g2-station-4';
 
   const [completedStagePreview, setCompletedStagePreview] = useState<number | null>(null);
   const [downloading, setDownloading] = useState(false);
@@ -45,7 +46,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6">
+    <div className={isHoiAnDemo ? "mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6"}>
       {completedStagePreview !== null && (
         <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-lg flex items-center justify-center p-4">
           <div
@@ -160,7 +161,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </div>
       )}
       {/* Top Station Header bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/95 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-xs">
+      <div className={isHoiAnDemo ? "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/94 backdrop-blur-xl px-4 py-3 rounded-[1.5rem] border border-orange-200 shadow-lg shadow-orange-950/5" : "flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/95 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-xs"}>
         <div className="flex items-center gap-3.5">
           <button
             onClick={() => {
@@ -174,14 +175,14 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
           </button>
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-md text-[11px] font-black bg-gradient-to-r from-sky-600 to-sky-700 text-white shadow-2xs">
+              <span className={`px-2.5 py-0.5 rounded-md text-[11px] font-black text-white shadow-2xs ${isHoiAnDemo ? "bg-gradient-to-r from-orange-500 to-amber-400" : "bg-gradient-to-r from-sky-600 to-sky-700"}`}>
                 Trạm {station.number}
               </span>
               <span className="text-xs text-slate-400 font-bold">Khối {station.grade}</span>
               <span className="text-slate-300">•</span>
               <span className="text-xs text-amber-700 font-semibold">{station.themeNameVi}</span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight mt-0.5">
+            <h1 className={isHoiAnDemo ? "text-xl sm:text-2xl lg:text-[1.7rem] font-black text-slate-950 leading-tight mt-0.5" : "text-xl sm:text-2xl font-black text-slate-900 leading-tight mt-0.5"}>
               {station.titleVi}
             </h1>
           </div>
@@ -190,9 +191,9 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         {/* Offline Download button */}
         <div className="flex flex-col items-start sm:items-end gap-1 shrink-0">
           {offlinePkg ? (
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200 shadow-2xs">
+            <div className={isHoiAnDemo ? "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 text-[10px] font-black border border-emerald-200" : "inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200 shadow-2xs"}>
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>Demo offline đã lưu cục bộ ({offlinePkg.sizeMb}MB)</span>
+              <span>{isHoiAnDemo ? 'OFFLINE ĐÃ SẴN SÀNG' : `Demo offline đã lưu cục bộ (${offlinePkg.sizeMb}MB)`}</span>
             </div>
           ) : (
             <button
@@ -204,15 +205,15 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
               <span>{downloading ? 'Đang lưu demo...' : 'DEMO TẢI OFFLINE'}</span>
             </button>
           )}
-          <span className="text-[10px] text-slate-400 font-medium">
+          {!isHoiAnDemo && <span className="text-[10px] text-slate-400 font-medium">
             Phiên bản demo – dữ liệu được lưu cục bộ trên thiết bị, chưa phải gói offline hoàn chỉnh.
-          </span>
+          </span>}
         </div>
       </div>
 
       {/* Verification notice if draft */}
       {!station.isFullyVerified && (
-        <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 text-xs font-medium flex items-center gap-2.5">
+        <div className={isHoiAnDemo ? "px-3 py-2 rounded-xl bg-amber-50/95 border border-amber-200 text-amber-950 text-[10px] font-semibold flex items-center gap-2" : "p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 text-xs font-medium flex items-center gap-2.5"}>
           <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping shrink-0" />
           <span>
             <strong>Lưu ý:</strong> Nội dung đang được hoàn thiện từ nguồn đã kiểm chứng của Sở Giáo dục và Đào tạo TP Đà Nẵng.
@@ -221,6 +222,47 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
       )}
 
       {/* 4 Stages Navigation */}
+      {isHoiAnDemo ? (
+        <div className="rounded-[1.6rem] border border-orange-200 bg-white/92 p-2.5 shadow-lg shadow-orange-950/5 backdrop-blur-xl">
+          <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+            {stages.map((st) => {
+              const Icon = st.icon;
+              const active = currentStage === st.num;
+              const done = currentStage > st.num || isUnlockedAllStages;
+              const clickable = isUnlockedAllStages || st.num <= currentStage;
+              return (
+                <button
+                  key={st.num}
+                  type="button"
+                  disabled={!clickable}
+                  onClick={() => {
+                    if (!clickable) return;
+                    audioService.playSfx('click');
+                    setCurrentStage(st.num as 1 | 2 | 3 | 4);
+                  }}
+                  className={`group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition ${active
+                    ? 'bg-gradient-to-r from-orange-500 to-amber-400 text-white shadow-lg shadow-orange-500/25'
+                    : done
+                      ? 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100'
+                      : 'bg-slate-50 text-slate-400'} disabled:cursor-not-allowed`}
+                >
+                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 ${active
+                    ? 'border-white/70 bg-white/15'
+                    : done
+                      ? 'border-emerald-300 bg-white text-emerald-600'
+                      : 'border-slate-200 bg-white text-slate-400'}`}>
+                    {done && !active ? <CheckCircle2 className="h-5 w-5" /> : <Icon className="h-5 w-5" />}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[10px] font-black uppercase tracking-wide opacity-80">Chặng {st.num}</span>
+                    <span className="block truncate text-xs font-black sm:text-sm">{st.name}</span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      ) : (
       {isUnlockedAllStages ? (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-slate-100/80 p-1.5 rounded-2xl">
           {stages.map((st) => {
@@ -273,7 +315,9 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </div>
       )}
 
-      {/* Stage Views with subtle container transition */}
+      )}
+      
+            {/* Stage Views with subtle container transition */}
       <div className="transition-all duration-300">
         {currentStage === 1 && (
           station.id === 'g2-station-4' ? (

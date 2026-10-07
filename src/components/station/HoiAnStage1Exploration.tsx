@@ -266,8 +266,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
           </div>
 
           {/* RIGHT: information rail */}
-          <aside className="hoi-an-right-rail flex min-h-0 h-full flex-col gap-3 overflow-y-auto overscroll-contain pr-1.5 lg:max-h-full">
-            <div className="rounded-[1.5rem] border border-orange-200 bg-[#fff8ee] p-4 shadow-sm">
+          <aside className="hoi-an-right-rail flex h-full min-h-0 flex-col gap-3 overflow-y-auto overscroll-contain pr-2 pb-2 lg:max-h-full">
+            <div className="shrink-0 rounded-[1.5rem] border border-orange-200 bg-[#fff8ee] p-4 shadow-sm">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
@@ -309,7 +309,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             </div>
 
             {hotspot.interaction ? (
-              <div className="min-h-0 rounded-[1.5rem] border border-orange-200 bg-white p-4 shadow-sm">
+              <div className="shrink-0 rounded-[1.5rem] border border-orange-200 bg-white p-4 shadow-sm">
                 <div className="mb-2 flex items-center gap-2">
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-orange-500 text-xs font-black text-white">
                     ?
@@ -393,7 +393,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               <div />
             )}
 
-            <div className="rounded-[1.5rem] border border-orange-200 bg-gradient-to-r from-[#fff7ea] to-[#fffdf8] p-3 shadow-sm">
+            <div className="shrink-0 rounded-[1.5rem] border border-orange-200 bg-gradient-to-r from-[#fff7ea] to-[#fffdf8] p-3 shadow-sm">
               <p className="text-[10px] font-black text-orange-700">NHÀ PHIÊU LƯU ƠI!</p>
               <p className="mt-1 text-[11px] font-semibold leading-4 text-slate-600">
                 Quan sát thật kĩ, nghe câu chuyện và hoàn thành câu hỏi để mở điểm tiếp theo nhé.

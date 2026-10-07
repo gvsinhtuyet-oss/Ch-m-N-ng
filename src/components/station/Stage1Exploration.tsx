@@ -58,6 +58,14 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
     [hotspot],
   );
 
+  // Share the currently visible hotspot with the local assistant.
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('cham-assistant-hotspot', { detail: hotspot }));
+    return () => {
+      window.dispatchEvent(new CustomEvent('cham-assistant-hotspot', { detail: null }));
+    };
+  }, [station.id, hotspot.id]);
+
   // Subscribe to audio service state
   useEffect(() => {
     const unsubscribe = audioService.subscribeState((state) => {

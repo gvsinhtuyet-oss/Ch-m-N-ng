@@ -2,7 +2,19 @@ import { MusicControl } from './MusicControl';
 import React, { useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { PWAInstallButton } from './PWAInstallButton';
-import { Globe, Wifi, WifiOff, User, Compass, Award, Heart, Presentation, Map as MapIcon } from 'lucide-react';
+import {
+  Globe,
+  Wifi,
+  WifiOff,
+  User,
+  Compass,
+  Award,
+  Heart,
+  Presentation,
+  Map as MapIcon,
+  Home,
+  ChevronDown,
+} from 'lucide-react';
 
 export const Header: React.FC = () => {
   const {
@@ -21,173 +33,188 @@ export const Header: React.FC = () => {
   } = useApp();
 
   const [showRoleModal, setShowRoleModal] = useState(false);
-  const compactJourneyHeader = role === 'student' && currentView === 'student-journey';
+  const studentHeader = role === 'student';
+  const studentName =
+    (currentUser as { displayName?: string; avatar?: string; isGuest?: boolean } | null)?.displayName ||
+    currentUser?.name ||
+    'Nhà phiêu lưu';
+  const studentAvatar = (currentUser as { avatar?: string } | null)?.avatar;
+
+  const studentNav = [
+    { label: 'Trang bìa', icon: Home, view: 'landing', active: currentView === 'landing', iconClass: 'text-orange-500' },
+    {
+      label: 'Hành trình',
+      icon: Compass,
+      view: 'student-journey',
+      active: currentView === 'student-journey' || currentView === 'station-view',
+      iconClass: 'text-sky-600',
+    },
+    { label: 'Hộ chiếu', icon: Award, view: 'student-passport', active: currentView === 'student-passport', iconClass: 'text-amber-500' },
+    { label: 'Bản đồ', icon: MapIcon, view: 'student-maps', active: currentView === 'student-maps', iconClass: 'text-emerald-600' },
+    { label: 'Kỉ niệm', icon: Heart, view: 'student-memories', active: currentView === 'student-memories', iconClass: 'text-rose-500' },
+    { label: 'Hồ sơ', icon: User, view: 'student-profile', active: currentView === 'student-profile', iconClass: 'text-indigo-500' },
+  ] as const;
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-sky-100 shadow-xs">
-        {/* Top utility bar */}
-        {!compactJourneyHeader && <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 flex items-center justify-between gap-2 border-b border-slate-100/80 text-xs">
-          <div className="flex items-center gap-2">
-            <span className="font-semibold text-slate-500 hidden sm:inline">{t.schoolName}</span>
-            <span className="hidden sm:inline text-slate-300">|</span>
-            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              {t.verifiedSource}
-            </span>
-          </div>
+      <header className="sticky top-0 z-40 border-b border-orange-100/70 bg-white/92 shadow-sm backdrop-blur-xl">
+        {!studentHeader && (
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 border-b border-slate-100/80 px-3 py-2 text-xs sm:px-6">
+            <div className="flex items-center gap-2">
+              <span className="hidden font-semibold text-slate-500 sm:inline">{t.schoolName}</span>
+              <span className="hidden text-slate-300 sm:inline">|</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-700">
+                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+                {t.verifiedSource}
+              </span>
+            </div>
 
-          <div className="flex items-center gap-3">
-            {/* Online / Offline status */}
+            <div className="flex items-center gap-3">
+              <div
+                className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${
+                  isOnline ? 'border border-sky-200 bg-sky-50 text-sky-700' : 'bg-amber-100 text-amber-800'
+                }`}
+              >
+                {isOnline ? <Wifi className="h-3 w-3 text-sky-600" /> : <WifiOff className="h-3 w-3 text-amber-600" />}
+                <span>{isOnline ? t.online : t.offline}</span>
+              </div>
+
+              <button
+                onClick={toggleLanguage}
+                className="flex items-center gap-1 rounded-md px-2 py-1 text-xs font-bold text-slate-600 transition hover:bg-slate-100"
+                title="Đổi ngôn ngữ VI | EN"
+              >
+                <Globe className="h-3.5 w-3.5 text-sky-600" />
+                <span>{language.toUpperCase()}</span>
+              </button>
+
+              <MusicControl />
+              <PWAInstallButton />
+
+              <button
+                onClick={() => setShowRoleModal(true)}
+                className="flex items-center gap-1.5 rounded-full bg-orange-500 px-2.5 py-1 text-xs font-medium text-white shadow-xs transition hover:bg-orange-600"
+              >
+                <User className="h-3 w-3" />
+                <span className="font-bold">{role === 'teacher' ? 'Giáo viên' : 'Quản trị'}</span>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {studentHeader ? (
+          <div className="mx-auto flex max-w-[1500px] items-center gap-3 px-3 py-2 sm:px-5 lg:px-7">
+            <button
+              type="button"
+              onClick={() => setCurrentView('student-journey')}
+              className="flex shrink-0 items-center gap-2.5 text-left"
+              title="CHẠM ĐÀ NẴNG"
+            >
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 via-amber-300 to-sky-500 p-[2px] shadow-md shadow-orange-500/20">
+                <div className="flex h-full w-full items-center justify-center rounded-full bg-white">
+                  <Compass className="h-6 w-6 text-orange-500" />
+                </div>
+              </div>
+              <div className="hidden sm:block">
+                <div className="whitespace-nowrap text-[18px] font-black leading-none tracking-tight text-slate-900">
+                  <span className="text-sky-700">CHẠM</span> <span className="text-orange-600">ĐÀ NẴNG</span>
+                </div>
+                <div className="mt-1 whitespace-nowrap text-[10px] font-semibold text-slate-500">
+                  Hành trình số khám phá quê hương
+                </div>
+              </div>
+            </button>
+
+            <nav className="mx-auto flex min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto rounded-2xl border border-white/80 bg-white/80 p-1 shadow-sm">
+              {studentNav.map(item => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => setCurrentView(item.view as any)}
+                    className={`group flex shrink-0 items-center gap-1.5 rounded-xl px-2.5 py-2 text-[11px] font-extrabold transition sm:px-3 lg:text-xs ${
+                      item.active
+                        ? 'bg-orange-50 text-orange-700 shadow-sm ring-1 ring-orange-100'
+                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                    }`}
+                  >
+                    <Icon className={`h-4 w-4 ${
+                      item.active ? 'text-orange-500' : item.iconClass
+                    }`} />
+                    <span className="whitespace-nowrap">{item.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
+
+            <div className="flex shrink-0 items-center gap-2">
+              <div className="hidden md:block">
+                <MusicControl />
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowRoleModal(true)}
+                className="flex items-center gap-2 rounded-2xl border border-orange-100 bg-white px-2 py-1.5 shadow-sm transition hover:border-orange-200 hover:bg-orange-50"
+                title="Tài khoản học sinh"
+              >
+                {studentAvatar ? (
+                  <img
+                    src={studentAvatar}
+                    alt={studentName}
+                    className="h-8 w-8 rounded-full object-cover ring-2 ring-orange-100"
+                  />
+                ) : (
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-orange-100 to-amber-100 text-sm font-black text-orange-700 ring-2 ring-orange-100">
+                    {studentName.trim().charAt(0).toUpperCase() || 'N'}
+                  </div>
+                )}
+                <span className="hidden max-w-[110px] truncate text-xs font-black text-slate-800 lg:block">{studentName}</span>
+                <ChevronDown className="hidden h-4 w-4 text-slate-400 lg:block" />
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-3 py-2.5 sm:px-6">
             <div
-              className={`flex items-center gap-1 px-2 py-0.5 rounded-full font-medium text-[11px] ${
-                isOnline ? 'bg-sky-50 text-sky-700 border border-sky-200' : 'bg-amber-100 text-amber-800'
-              }`}
+              onClick={() => {
+                if (role === 'admin') setCurrentView('admin-view');
+                else setCurrentView('teacher-view');
+              }}
+              className="group flex cursor-pointer items-center gap-3"
             >
-              {isOnline ? <Wifi className="w-3 h-3 text-sky-600" /> : <WifiOff className="w-3 h-3 text-amber-600" />}
-              <span>{isOnline ? t.online : t.offline}</span>
-            </div>
-
-            {/* Language toggle */}
-            <button
-              onClick={toggleLanguage}
-              className="flex items-center gap-1 px-2 py-1 rounded-md text-slate-600 hover:bg-slate-100 font-bold text-xs transition"
-              title="Đổi ngôn ngữ VI | EN"
-            >
-              <Globe className="w-3.5 h-3.5 text-sky-600" />
-              <span>{language.toUpperCase()}</span>
-            </button>
-
-            {/* Compact global audio control */}
-            <MusicControl />
-
-            {/* PWA Install Button */}
-            <PWAInstallButton />
-
-            {/* Role indicator & switcher */}
-            <button
-              onClick={() => setShowRoleModal(true)}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-medium text-xs shadow-xs transition"
-            >
-              <User className="w-3 h-3" />
-              <span className="font-bold">
-                {role === 'teacher'
-                  ? 'Giáo viên'
-                  : role === 'admin'
-                  ? 'Quản trị'
-                  : (currentUser as any)?.isGuest ? 'Nhà phiêu lưu tự do' : `HS: ${(currentUser as any)?.displayName || 'Lớp ' + currentGrade}`}
-              </span>
-            </button>
-          </div>
-        </div>}
-
-        {/* Main Brand & Navigation */}
-        <div className={`max-w-7xl mx-auto px-3 sm:px-6 flex items-center justify-between gap-4 ${compactJourneyHeader ? 'py-2' : 'py-2.5'}`}>
-          {/* Logo & Slogan */}
-          <div
-            onClick={() => {
-              if (role === 'admin') setCurrentView('admin-view');
-              else if (role === 'teacher') setCurrentView('teacher-view');
-              else setCurrentView('student-journey');
-            }}
-            className="flex items-center gap-3 cursor-pointer group"
-          >
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-300 flex items-center justify-center p-0.5 shadow-md shadow-orange-500/20 group-hover:scale-105 transition">
-              <div className="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center">
-                <Compass className="w-6 h-6 text-amber-400 animate-spin-slow" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-300 p-0.5 shadow-md shadow-orange-500/20 transition group-hover:scale-105 sm:h-11 sm:w-11">
+                <div className="flex h-full w-full items-center justify-center rounded-[14px] bg-slate-900">
+                  <Compass className="h-6 w-6 text-amber-400" />
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="bg-gradient-to-r from-orange-600 via-amber-500 to-orange-700 bg-clip-text text-lg font-extrabold tracking-tight text-transparent sm:text-xl">
+                    CHẠM ĐÀ NẴNG
+                  </span>
+                  <span className="rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold text-amber-800">Khối {currentGrade}</span>
+                </div>
+                <p className="hidden text-[11px] font-medium text-slate-500 sm:block">Hành trình số khám phá quê hương</p>
               </div>
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-lg sm:text-xl font-extrabold tracking-tight bg-gradient-to-r from-orange-600 via-amber-500 to-orange-700 bg-clip-text text-transparent">
-                  CHẠM ĐÀ NẴNG
+
+            {role === 'teacher' && (
+              <nav className="flex items-center gap-1 sm:gap-2">
+                <span className="rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-800">
+                  Cổng Giáo Viên
                 </span>
-                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800">Khối {currentGrade}</span>
-              </div>
-              <p className="text-[11px] font-medium text-slate-500 hidden sm:block">Hành trình số khám phá quê hương</p>
-            </div>
+              </nav>
+            )}
           </div>
-
-          {/* Role Navigation */}
-          {role === 'student' ? (
-            <nav className="flex items-center gap-1 sm:gap-2">
-              <button
-                onClick={() => setCurrentView('landing')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
-                  currentView === 'landing'
-                    ? 'bg-sky-100 text-sky-800 shadow-inner'
-                    : 'text-slate-600 hover:bg-slate-100'
-                }`}
-                title="Quay lại trang bìa mở đầu"
-              >
-                <span>TRANG BÌA</span>
-              </button>
-              <button
-                onClick={() => setCurrentView('student-journey')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
-                  currentView === 'student-journey' || currentView === 'station-view'
-                    ? 'bg-orange-100 text-orange-800 shadow-inner'
-                    : 'text-slate-600 hover:bg-orange-50'
-                }`}
-              >
-                <Compass className="w-4 h-4 text-orange-600" />
-                <span>HÀNH TRÌNH</span>
-              </button>
-              <button
-                onClick={() => setCurrentView('student-passport')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
-                  currentView === 'student-passport' ? 'bg-sky-100 text-sky-800 shadow-inner' : 'text-slate-600 hover:bg-slate-100'
-                }`}
-              >
-                <Award className="w-4 h-4 text-amber-500" />
-                <span>HỘ CHIẾU</span>
-              </button>
-              <button
-                onClick={() => setCurrentView('student-maps')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
-                  currentView === 'student-maps' ? 'bg-sky-100 text-sky-800 shadow-inner' : 'text-slate-600 hover:bg-slate-100'
-                }`}
-              >
-                <MapIcon className="w-4 h-4 text-emerald-600" />
-                <span>BẢN ĐỒ</span>
-              </button>
-              <button
-                onClick={() => setCurrentView('student-memories')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
-                  currentView === 'student-memories' ? 'bg-sky-100 text-sky-800 shadow-inner' : 'text-slate-600 hover:bg-slate-100'
-                }`}
-              >
-                <Heart className="w-4 h-4 text-rose-500" />
-                <span>KỈ NIỆM</span>
-              </button>
-              <button
-                onClick={() => setCurrentView('student-profile')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition ${
-                  currentView === 'student-profile' ? 'bg-sky-100 text-sky-800 shadow-inner' : 'text-slate-600 hover:bg-slate-100'
-                }`}
-              >
-                <User className="w-4 h-4 text-indigo-500" />
-                <span>HỒ SƠ</span>
-              </button>
-            </nav>
-          ) : role === 'teacher' ? (
-            <nav className="flex items-center gap-1 sm:gap-2">
-              <span className="px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200">
-                Cổng Giáo Viên
-              </span>
-            </nav>
-          ) : null}
-        </div>
+        )}
       </header>
 
-      {/* Role Selection Modal */}
       {showRoleModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-          <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl border border-slate-100">
-            <h3 className="text-lg font-extrabold text-slate-900 mb-1 text-center">Chọn Vai Trò Trải Nghiệm</h3>
-            <p className="text-xs text-slate-500 text-center mb-6">
-              Chọn vai trò để khám phá:
-            </p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs">
+          <div className="w-full max-w-md rounded-3xl border border-slate-100 bg-white p-6 shadow-2xl">
+            <h3 className="mb-1 text-center text-lg font-extrabold text-slate-900">Chọn Vai Trò Trải Nghiệm</h3>
+            <p className="mb-6 text-center text-xs text-slate-500">Chọn vai trò để khám phá:</p>
 
             <div className="grid grid-cols-1 gap-3">
               <button
@@ -195,33 +222,37 @@ export const Header: React.FC = () => {
                   setShowRoleModal(false);
                   logout();
                 }}
-                className={`flex items-center gap-4 p-3.5 rounded-2xl border text-left transition ${
+                className={`flex items-center gap-4 rounded-2xl border p-3.5 text-left transition ${
                   role === 'student' ? 'border-sky-500 bg-sky-50/70' : 'border-slate-200 hover:bg-slate-50'
                 }`}
               >
-                <div className="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold">
-                  <Compass className="w-5 h-5" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-100 font-bold text-sky-600">
+                  <Compass className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="font-bold text-slate-900 text-sm">HỌC SINH (Tiểu học)</div>
+                  <div className="text-sm font-bold text-slate-900">HỌC SINH (Tiểu học)</div>
                   <div className="text-xs text-slate-500">Trở về trang đầu để đăng nhập/chọn học sinh rõ ràng</div>
                 </div>
               </button>
 
               <button
                 onClick={async () => {
-                  try { await enterTeacherDemo(); setShowRoleModal(false); }
-                  catch (error) { alert((error as Error).message); }
+                  try {
+                    await enterTeacherDemo();
+                    setShowRoleModal(false);
+                  } catch (error) {
+                    alert((error as Error).message);
+                  }
                 }}
-                className={`flex items-center gap-4 p-3.5 rounded-2xl border text-left transition ${
+                className={`flex items-center gap-4 rounded-2xl border p-3.5 text-left transition ${
                   role === 'teacher' ? 'border-emerald-500 bg-emerald-50/70' : 'border-slate-200 hover:bg-slate-50'
                 }`}
               >
-                <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
-                  <Presentation className="w-5 h-5" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 font-bold text-emerald-600">
+                  <Presentation className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="font-bold text-slate-900 text-sm">GIÁO VIÊN</div>
+                  <div className="text-sm font-bold text-slate-900">GIÁO VIÊN</div>
                   <div className="text-xs text-slate-500">Trải nghiệm giáo viên không cần đăng nhập</div>
                 </div>
               </button>
@@ -231,46 +262,46 @@ export const Header: React.FC = () => {
                   setShowRoleModal(false);
                   logout();
                 }}
-                className={`flex items-center gap-4 p-3.5 rounded-2xl border text-left transition ${
+                className={`flex items-center gap-4 rounded-2xl border p-3.5 text-left transition ${
                   role === 'admin' ? 'border-amber-500 bg-amber-50/70' : 'border-slate-200 hover:bg-slate-50'
                 }`}
               >
-                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
-                  <Globe className="w-5 h-5" />
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 font-bold text-amber-600">
+                  <Globe className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="font-bold text-slate-900 text-sm">QUẢN TRỊ</div>
+                  <div className="text-sm font-bold text-slate-900">QUẢN TRỊ</div>
                   <div className="text-xs text-slate-500">Quản lý giao diện, hình ảnh và học liệu</div>
                 </div>
               </button>
-
             </div>
 
-            {/* Grade Selector */}
-            {(role !== 'student' || (currentUser as any)?.isGuest) && <div className="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-600">Đổi khối lớp:</span>
-              <div className="flex gap-1">
-                {[1, 2, 3, 4, 5].map(g => (
-                  <button
-                    key={g}
-                    onClick={() => setCurrentGrade(g)}
-                    className={`w-7 h-7 rounded-lg text-xs font-bold transition ${
-                      currentGrade === g ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                    }`}
-                  >
-                    {g}
-                  </button>
-                ))}
+            {(role !== 'student' || (currentUser as any)?.isGuest) && (
+              <div className="mt-5 flex items-center justify-between border-t border-slate-100 pt-4">
+                <span className="text-xs font-semibold text-slate-600">Đổi khối lớp:</span>
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map(g => (
+                    <button
+                      key={g}
+                      onClick={() => setCurrentGrade(g)}
+                      className={`h-7 w-7 rounded-lg text-xs font-bold transition ${
+                        currentGrade === g ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      }`}
+                    >
+                      {g}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>}
+            )}
 
-            <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
               <button
                 onClick={() => {
                   setShowRoleModal(false);
                   setCurrentView('landing');
                 }}
-                className="text-xs font-semibold text-slate-500 hover:text-sky-600 transition flex items-center gap-1.5 cursor-pointer"
+                className="flex cursor-pointer items-center gap-1.5 text-xs font-semibold text-slate-500 transition hover:text-sky-600"
               >
                 <span>← Trở về Trang bìa mở đầu</span>
               </button>
@@ -278,7 +309,7 @@ export const Header: React.FC = () => {
 
             <button
               onClick={() => setShowRoleModal(false)}
-              className="mt-3 w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition"
+              className="mt-3 w-full rounded-xl bg-slate-100 py-2.5 text-xs font-bold text-slate-700 transition hover:bg-slate-200"
             >
               Đóng
             </button>

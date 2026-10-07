@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { backgroundMusic } from '../../services/BackgroundMusic';
 import { useApp } from '../../contexts/AppContext';
@@ -7,8 +7,26 @@ export const MusicControl: React.FC = () => {
   const { soundEnabled, toggleSound } = useApp();
   const [musicState, setMusicState] = useState(backgroundMusic.state());
   const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => backgroundMusic.subscribe(() => setMusicState(backgroundMusic.state())), []);
+
+  useEffect(() => {
+    if (!open) return;
+    const closeOnOutside = (event: PointerEvent) => {
+      const target = event.target as Node | null;
+      if (target && rootRef.current && !rootRef.current.contains(target)) setOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('pointerdown', closeOnOutside);
+    document.addEventListener('keydown', closeOnEscape);
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutside);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, [open]);
 
   const handleMasterToggle = () => {
     const willEnable = !soundEnabled;
@@ -26,7 +44,7 @@ export const MusicControl: React.FC = () => {
   const percent = Math.round(musicState.volume * 100);
 
   return (
-    <div className="relative">
+    <div ref={rootRef} className="relative">
       <button
         type="button"
         onClick={() => setOpen(value => !value)}

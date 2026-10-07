@@ -76,7 +76,7 @@ const AppContent: React.FC = () => {
         {currentView === 'admin-view' && role === 'admin' && <AdminDashboard />}
       </main>
 
-      <Footer />
+      {currentView !== 'student-journey' && <Footer />}
 
       {role === 'student' && currentUser && currentView !== 'presentation-view' && (
         <DanangAssistantChat station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} />

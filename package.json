@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
-    "start": "node content-server.mjs"
+    "start": "node content-server.mjs",
+    "test:assistant": "tsx --test danang-assistant-retrieval-test.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

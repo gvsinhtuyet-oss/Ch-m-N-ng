@@ -47,11 +47,19 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const [showImage, setShowImage] = useState(false);
   const [showVr, setShowVr] = useState(false);
   const [showReward, setShowReward] = useState(false);
+  const [sessionCompletedHotspotIds, setSessionCompletedHotspotIds] = useState<string[]>(() =>
+    progressService.getStationProgress(studentId, station.id).exploredHotspotIds
+  );
 
   const hotspot: ExplorationHotspot = station.hotspots[index] || station.hotspots[0];
   const progress = progressService.getStationProgress(studentId, station.id);
   const options = useMemo(() => shuffle(hotspot.interaction?.options || []), [hotspot]);
-  const explored = progress.exploredHotspotIds.includes(hotspot.id);
+  const completedHotspotIds = new Set([
+    ...progress.exploredHotspotIds,
+    ...sessionCompletedHotspotIds,
+  ]);
+  const explored = completedHotspotIds.has(hotspot.id);
+  const remainingHotspotCount = station.hotspots.filter(item => !completedHotspotIds.has(item.id)).length;
   const playing = narrationState === 'playing';
   const paused = narrationState === 'paused';
 
@@ -94,8 +102,13 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
     setCorrect(ok);
     setSubmitted(true);
     audioService.playSfx(ok ? 'correct' : 'wrong');
-    if (ok && !readOnly) {
-      progressService.completeHotspot(studentId, station.id, hotspot.id);
+    if (ok) {
+      setSessionCompletedHotspotIds(current =>
+        current.includes(hotspot.id) ? current : [...current, hotspot.id]
+      );
+      if (!readOnly) {
+        progressService.completeHotspot(studentId, station.id, hotspot.id);
+      }
     }
   };
 
@@ -106,13 +119,26 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   };
 
   const next = () => {
-    if (!readOnly) {
-      progressService.completeHotspot(studentId, station.id, hotspot.id);
-    }
-    if (index < station.hotspots.length - 1) {
-      go(index + 1);
+    const completedAfterCurrent = new Set([
+      ...progressService.getStationProgress(studentId, station.id).exploredHotspotIds,
+      ...sessionCompletedHotspotIds,
+      hotspot.id,
+    ]);
+
+    const searchOrder = [
+      ...station.hotspots.slice(index + 1),
+      ...station.hotspots.slice(0, index + 1),
+    ];
+    const nextIncomplete = searchOrder.find(item => !completedAfterCurrent.has(item.id));
+
+    if (nextIncomplete) {
+      const nextIncompleteIndex = station.hotspots.findIndex(item => item.id === nextIncomplete.id);
+      if (nextIncompleteIndex >= 0) {
+        go(nextIncompleteIndex);
+      }
       return;
     }
+
     if (!readOnly) {
       progressService.completeStage1(studentId, station.id);
     }
@@ -232,7 +258,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             {/* hotspot shortcut cards */}
             <div className="grid shrink-0 grid-cols-2 gap-2 sm:grid-cols-4">
               {station.hotspots.map((item, itemIndex) => {
-                const done = progress.exploredHotspotIds.includes(item.id);
+                const done = completedHotspotIds.has(item.id);
                 const active = itemIndex === index;
                 return (
                   <button
@@ -400,16 +426,23 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               </p>
 
               {submitted && correct ? (
-                <button
-                  type="button"
-                  onClick={next}
-                  className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 py-3.5 text-sm font-black text-white shadow-lg shadow-orange-500/20"
-                >
-                  {index === station.hotspots.length - 1
-                    ? 'HOÀN THÀNH CHẶNG 1'
-                    : 'KHÁM PHÁ ĐIỂM TIẾP THEO'}
-                  <ChevronRight className="h-4 w-4" />
-                </button>
+                <>
+                  {remainingHotspotCount > 0 && (
+                    <p className="mt-2 rounded-xl bg-amber-50 px-3 py-2 text-[11px] font-bold leading-4 text-amber-800 ring-1 ring-amber-200">
+                      Em còn {remainingHotspotCount} câu hỏi phụ chưa hoàn thành. Hãy trả lời đủ trước khi qua Chặng 2.
+                    </p>
+                  )}
+                  <button
+                    type="button"
+                    onClick={next}
+                    className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 py-3.5 text-sm font-black text-white shadow-lg shadow-orange-500/20"
+                  >
+                    {remainingHotspotCount === 0
+                      ? 'HOÀN THÀNH CHẶNG 1'
+                      : `ĐẾN CÂU HỎI CÒN LẠI (${remainingHotspotCount})`}
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </>
               ) : (
                 <div className="mt-2 flex items-center gap-1.5">
                   {station.hotspots.map((item, itemIndex) => (
@@ -417,7 +450,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       key={item.id}
                       className={`h-2 flex-1 rounded-full ${itemIndex === index
                         ? 'bg-orange-500'
-                        : progress.exploredHotspotIds.includes(item.id)
+                        : completedHotspotIds.has(item.id)
                           ? 'bg-emerald-400'
                           : 'bg-slate-200'}`}
                     />

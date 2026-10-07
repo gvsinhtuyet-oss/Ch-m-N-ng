@@ -71,10 +71,10 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null }) => {
     const question = rawQuestion.trim();
     if (!question) return;
 
-    append({ id: \`q-\${Date.now()}\`, role: 'student', text: question });
+    append({ id: `q-${Date.now()}`, role: 'student', text: question });
     const result = retrieveDanangAssistantAnswer(question, context);
     window.setTimeout(() => {
-      append({ id: \`a-\${Date.now()}\`, role: 'assistant', text: result.answer });
+      append({ id: `a-${Date.now()}`, role: 'assistant', text: result.answer });
     }, 80);
     setInput('');
   };
@@ -139,13 +139,13 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null }) => {
               {messages.map(message => (
                 <div
                   key={message.id}
-                  className={\`flex \${message.role === 'student' ? 'justify-end' : 'justify-start'}\`}
+                  className={`flex ${message.role === 'student' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={\`max-w-[88%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-sm \${message.role === 'student'
+                    className={`max-w-[88%] rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed shadow-sm ${message.role === 'student'
                         ? 'rounded-br-md bg-sky-700 text-white'
                         : 'rounded-bl-md border border-sky-100 bg-white text-slate-700'
-                    }\`}
+                    }`}
                   >
                     {message.role === 'assistant' && (
                       <span className="mb-1 flex items-center gap-1 text-[10px] font-black uppercase tracking-wide text-cyan-700">

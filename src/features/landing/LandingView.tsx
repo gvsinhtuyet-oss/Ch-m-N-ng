@@ -5,6 +5,8 @@ import { authService } from '../../services/AuthService';
 import { audioService } from '../../services/AudioService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
 import { studentSyncService } from '../../services/StudentSyncService';
+import { readTheme } from '../../services/ThemeService';
+import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import {
   Compass,
   GraduationCap,
@@ -48,9 +50,38 @@ export const LandingView: React.FC = () => {
   const [savedSyncCode, setSavedSyncCode] = useState<string>('');
   const [loginError, setLoginError] = useState<string>('');
   const [introActive, setIntroActive] = useState(true);
+  const [theme, setTheme] = useState(readTheme);
+  const [mobileBackground, setMobileBackground] = useState(() => window.matchMedia('(max-width: 767px)').matches);
   const introFrameRef = useRef<HTMLIFrameElement | null>(null);
 
   const STUDENT_PROFILE_KEY = 'cham_danang_student_profile_v1';
+
+  useEffect(() => {
+    const refresh = () => setTheme(readTheme());
+    const refreshStorage = () => setTheme(readTheme(true));
+    const query = window.matchMedia('(max-width: 767px)');
+    const resize = () => setMobileBackground(query.matches);
+    window.addEventListener('cham-theme-changed', refresh);
+    window.addEventListener('storage', refreshStorage);
+    query.addEventListener('change', resize);
+    return () => {
+      window.removeEventListener('cham-theme-changed', refresh);
+      window.removeEventListener('storage', refreshStorage);
+      query.removeEventListener('change', resize);
+    };
+  }, []);
+
+  const coverBackground = (
+    mobileBackground
+      ? theme.coverMobile || theme.coverDesktop
+      : theme.coverDesktop || theme.coverMobile
+  ) || DEFAULT_APP_BACKGROUND_DATA_URL;
+
+  const roleBackground = (
+    mobileBackground
+      ? theme.roleMobile || theme.roleDesktop
+      : theme.roleDesktop || theme.roleMobile
+  ) || coverBackground || DEFAULT_APP_BACKGROUND_DATA_URL;
 
   useEffect(() => {
     try {
@@ -218,7 +249,15 @@ export const LandingView: React.FC = () => {
 
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-between overflow-x-hidden bg-transparent text-white select-none">
-      {/* Global background comes from AppBackground so Admin > GIAO DIỆN controls every screen. */}
+      {/* Nền trang bìa do Quản trị cài riêng. */}
+      <img
+        src={coverBackground}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{ filter: 'blur(' + theme.blur + 'px)', transform: 'scale(1.025)' }}
+      />
+      <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950/65 via-slate-950/28 to-slate-950/72 pointer-events-none" />
       <div className="absolute inset-0 bg-radial from-transparent via-slate-950/10 to-slate-950/45 pointer-events-none" />
 
@@ -358,8 +397,17 @@ export const LandingView: React.FC = () => {
 
       {/* Role Picker Modal */}
       {showRolePicker && (
-        <div className="fixed inset-0 z-50 bg-slate-950/38 backdrop-blur-[2px] flex items-center justify-center p-4">
-          <div className="bg-white/95 backdrop-blur-xl text-slate-800 rounded-3xl p-6 sm:p-8 max-w-4xl w-full max-h-[90dvh] overflow-y-auto shadow-2xl border border-white/80 space-y-5 animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden">
+          <img
+            src={roleBackground}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ filter: 'blur(' + theme.blur + 'px)', transform: 'scale(1.025)' }}
+          />
+          <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
+          <div className="absolute inset-0 bg-slate-950/38 backdrop-blur-[2px] pointer-events-none" />
+          <div className="relative z-10 bg-white/95 backdrop-blur-xl text-slate-800 rounded-3xl p-6 sm:p-8 max-w-4xl w-full max-h-[90dvh] overflow-y-auto shadow-2xl border border-white/80 space-y-5 animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between">
               <div>
                 <span className="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 text-[11px] font-bold">

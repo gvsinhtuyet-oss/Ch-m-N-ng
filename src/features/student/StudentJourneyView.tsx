@@ -4,7 +4,6 @@ import { Station } from '../../types';
 import { progressService } from '../../services/ProgressService';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
 import {
-  Award,
   CheckCircle2,
   Compass,
   KeyRound,
@@ -13,7 +12,6 @@ import {
   MapPinned,
   Play,
   RotateCcw,
-  Sparkles,
   Stamp,
 } from 'lucide-react';
 
@@ -61,204 +59,151 @@ export const StudentJourneyView: React.FC = () => {
     progressByStation.find(item => !item.progress.stationCompleted)?.station ||
     demoStations[0];
 
-  const allDone =
-    demoStations.length > 0 &&
-    gradeProgress.completedStations === demoStations.length;
-
   const studentName =
     (currentUser as { displayName?: string } | null)?.displayName ||
     currentUser?.name ||
     'Nhà phiêu lưu';
 
-  return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8 space-y-6 sm:space-y-8">
-      {/* HERO: lời chào + tiến độ hành trình */}
-      <section className="relative overflow-hidden rounded-[2rem] border border-white/50 bg-gradient-to-br from-sky-500 via-blue-700 to-violet-800 p-6 sm:p-8 lg:p-10 text-white shadow-2xl">
-        <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-amber-300/25 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 left-1/3 h-64 w-64 rounded-full bg-cyan-300/20 blur-3xl" />
-        <div className="pointer-events-none absolute right-8 bottom-5 hidden lg:block opacity-15">
-          <Compass className="h-44 w-44" />
-        </div>
+  const completed = gradeProgress.completedStations;
+  const total = Math.max(1, demoStations.length);
+  const progressPercent = Math.round((completed / total) * 100);
 
-        <div className="relative z-10 grid gap-7 lg:grid-cols-[1fr_280px] lg:items-center">
-          <div>
-            <div className="mb-4 flex flex-wrap items-center gap-2">
-              <span className="rounded-full bg-white/16 px-3 py-1.5 text-[11px] font-extrabold backdrop-blur-md">
-                Chương trình GDĐP TP Đà Nẵng
+  const stats = [
+    { label: 'Trạm', value: `${completed}/${total}`, icon: CheckCircle2, accent: 'text-orange-600 bg-orange-100' },
+    { label: 'Chìa khóa', value: String(keysCollected), icon: KeyRound, accent: 'text-amber-700 bg-amber-100' },
+    { label: 'Bản đồ', value: String(mapsCollected), icon: Map, accent: 'text-emerald-700 bg-emerald-100' },
+    { label: 'Dấu hộ chiếu', value: String(stampsCollected), icon: Stamp, accent: 'text-rose-600 bg-rose-100' },
+  ];
+
+  return (
+    <div className="mx-auto flex min-h-[calc(100dvh-112px)] max-w-[1600px] flex-col gap-3 px-3 py-3 sm:px-5 lg:px-7">
+      {/* Compact hero */}
+      <section className="relative overflow-hidden rounded-[2rem] border border-orange-200/70 bg-white/78 px-4 py-4 shadow-[0_16px_45px_rgba(154,52,18,0.15)] backdrop-blur-xl sm:px-6">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-orange-50/95 via-white/78 to-amber-50/80" />
+        <div className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full bg-orange-300/30 blur-3xl" />
+        <div className="relative z-10 grid items-center gap-4 lg:grid-cols-[1fr_auto]">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="rounded-full bg-orange-100 px-3 py-1 text-[10px] font-black uppercase tracking-wide text-orange-700">
+                GDĐP Đà Nẵng
               </span>
-              <span className="rounded-full bg-amber-300 px-3 py-1.5 text-[11px] font-black text-slate-900">
+              <span className="rounded-full bg-amber-300 px-3 py-1 text-[10px] font-black text-slate-900">
                 Khối {currentGrade}
               </span>
             </div>
 
-            <h1 className="max-w-3xl text-3xl font-black tracking-tight sm:text-4xl lg:text-5xl">
-              {role === 'student'
-                ? `Chào Nhà phiêu lưu ${studentName}!`
-                : 'Hành trình khám phá quê hương'}
-            </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-sky-50 sm:text-base">
-              Cùng khám phá những điểm đến thú vị của Đà Nẵng, hoàn thành từng trạm để sưu tầm
-              chìa khóa, bản đồ và dấu hộ chiếu.
-            </p>
+            <div className="mt-2 flex flex-wrap items-end gap-x-5 gap-y-2">
+              <div className="min-w-0">
+                <h1 className="truncate text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
+                  {role === 'student'
+                    ? <>Chào Nhà phiêu lưu <span className="text-orange-600">{studentName}!</span></>
+                    : 'Hành trình khám phá quê hương'}
+                </h1>
+                <p className="mt-1 text-xs font-bold text-slate-600 sm:text-sm">
+                  Khối {currentGrade} &nbsp;•&nbsp; {completed}/{total} trạm hoàn thành
+                </p>
+              </div>
 
-            <div className="mt-6 flex flex-wrap gap-3">
-              {nextStation && (
-                <button
-                  type="button"
-                  onClick={() => openStation(nextStation)}
-                  className="inline-flex items-center gap-2 rounded-2xl bg-amber-300 px-5 py-3 text-sm font-black text-slate-950 shadow-lg shadow-amber-950/15 transition hover:-translate-y-0.5 hover:bg-amber-200 active:translate-y-0"
-                >
-                  <Play className="h-4 w-4 fill-current" />
-                  KHÁM PHÁ TIẾP
-                </button>
-              )}
-              <button
-                type="button"
-                onClick={() => setCurrentView('student-maps')}
-                className="inline-flex items-center gap-2 rounded-2xl border border-white/30 bg-white/14 px-5 py-3 text-sm font-extrabold text-white backdrop-blur-md transition hover:bg-white/22"
-              >
-                <MapPinned className="h-4 w-4" />
-                XEM BẢN ĐỒ HÀNH TRÌNH
-              </button>
-            </div>
-          </div>
-
-          <div className="rounded-[1.75rem] border border-white/20 bg-white/12 p-5 text-center shadow-xl backdrop-blur-xl">
-            <div className="mx-auto flex h-28 w-28 items-center justify-center rounded-full border-[9px] border-white/15 bg-slate-950/15 shadow-inner">
-              <div>
-                <div className="text-3xl font-black text-amber-300">
-                  {gradeProgress.completedStations}/{Math.max(1, demoStations.length)}
+              <div className="hidden min-w-[220px] flex-1 items-center gap-2 sm:flex lg:max-w-sm">
+                <div className="h-3 flex-1 overflow-hidden rounded-full bg-slate-200/90">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-500 transition-all duration-700"
+                    style={{ width: `${progressPercent}%` }}
+                  />
                 </div>
-                <div className="mt-0.5 text-[10px] font-extrabold uppercase tracking-wide text-white/80">
-                  trạm
-                </div>
+                <span className="text-xs font-black text-orange-700">{progressPercent}%</span>
               </div>
             </div>
-            <p className="mt-4 text-sm font-black">Tiến độ hành trình</p>
-            <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-white/15">
-              <div
-                className="h-full rounded-full bg-amber-300 transition-all duration-700"
-                style={{
-                  width: `${(gradeProgress.completedStations / Math.max(1, demoStations.length)) * 100}%`,
-                }}
-              />
-            </div>
-            <p className="mt-2 text-[11px] text-sky-100">
-              Mỗi trạm hoàn thành sẽ mở thêm một dấu ấn mới.
-            </p>
+
+            {role !== 'student' && (
+              <div className="mt-3 flex items-center gap-1.5 overflow-x-auto">
+                {[1, 2, 3, 4, 5].map(grade => (
+                  <button
+                    key={grade}
+                    type="button"
+                    onClick={() => setCurrentGrade(grade)}
+                    className={`shrink-0 rounded-xl px-3 py-1.5 text-[11px] font-black transition ${
+                      currentGrade === grade
+                        ? 'bg-orange-500 text-white shadow'
+                        : 'bg-white/85 text-slate-700 hover:bg-orange-50'
+                    }`}
+                  >
+                    Khối {grade}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="flex shrink-0 items-center gap-2">
+            {nextStation && (
+              <button
+                type="button"
+                onClick={() => openStation(nextStation)}
+                className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 px-5 py-3 text-sm font-black text-white shadow-lg shadow-orange-500/25 transition hover:-translate-y-0.5"
+              >
+                <Play className="h-4 w-4 fill-current" />
+                TIẾP TỤC
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setCurrentView('student-maps')}
+              className="inline-flex items-center gap-2 rounded-2xl border-2 border-orange-300 bg-white/90 px-4 py-2.5 text-sm font-black text-orange-700 transition hover:bg-orange-50"
+            >
+              <MapPinned className="h-4 w-4" />
+              BẢN ĐỒ
+            </button>
           </div>
         </div>
-
-        {role !== 'student' && (
-          <div className="relative z-10 mt-7 flex items-center gap-2 overflow-x-auto border-t border-white/15 pt-5">
-            <span className="mr-1 shrink-0 text-xs font-bold text-sky-100">Chọn khối:</span>
-            {[1, 2, 3, 4, 5].map(grade => (
-              <button
-                key={grade}
-                type="button"
-                onClick={() => setCurrentGrade(grade)}
-                className={`shrink-0 rounded-xl px-4 py-2 text-xs font-black transition ${
-                  currentGrade === grade
-                    ? 'bg-amber-300 text-slate-950 shadow-md'
-                    : 'bg-white/10 text-white hover:bg-white/20'
-                }`}
-              >
-                Khối {grade}
-              </button>
-            ))}
-          </div>
-        )}
       </section>
 
-      {/* Dải thành tích nhanh */}
-      <section className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        {[
-          {
-            label: 'Trạm đã qua',
-            value: `${gradeProgress.completedStations}/${Math.max(1, demoStations.length)}`,
-            icon: CheckCircle2,
-            box: 'from-emerald-50 to-white border-emerald-200',
-            iconBox: 'bg-emerald-100 text-emerald-700',
-          },
-          {
-            label: 'Mảnh chìa khóa',
-            value: `${keysCollected}/${Math.max(1, demoStations.length)}`,
-            icon: KeyRound,
-            box: 'from-amber-50 to-white border-amber-200',
-            iconBox: 'bg-amber-100 text-amber-700',
-          },
-          {
-            label: 'Bản đồ đã lưu',
-            value: String(mapsCollected),
-            icon: Map,
-            box: 'from-sky-50 to-white border-sky-200',
-            iconBox: 'bg-sky-100 text-sky-700',
-          },
-          {
-            label: 'Dấu hộ chiếu',
-            value: String(stampsCollected),
-            icon: Stamp,
-            box: 'from-violet-50 to-white border-violet-200',
-            iconBox: 'bg-violet-100 text-violet-700',
-          },
-        ].map(item => {
+      {/* Compact stat chips */}
+      <section className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {stats.map(item => {
           const Icon = item.icon;
           return (
             <div
               key={item.label}
-              className={`flex items-center gap-3 rounded-2xl border bg-gradient-to-br p-4 shadow-sm ${item.box}`}
+              className="flex items-center gap-3 rounded-2xl border border-white/80 bg-white/88 px-3 py-2 shadow-md shadow-orange-950/5 backdrop-blur-lg"
             >
-              <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${item.iconBox}`}>
-                <Icon className="h-5 w-5" />
+              <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${item.accent}`}>
+                <Icon className="h-4 w-4" />
               </div>
-              <div>
-                <div className="text-xl font-black text-slate-900">{item.value}</div>
-                <div className="text-[11px] font-bold text-slate-500">{item.label}</div>
+              <div className="min-w-0">
+                <div className="text-lg font-black leading-none text-slate-950">{item.value}</div>
+                <div className="mt-1 truncate text-[10px] font-bold text-slate-500">{item.label}</div>
               </div>
             </div>
           );
         })}
       </section>
 
-      {allDone && (
-        <section className="flex items-center gap-4 rounded-3xl border border-emerald-200 bg-gradient-to-r from-emerald-500 to-teal-600 p-5 text-white shadow-lg">
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/20">
-            <Award className="h-7 w-7" />
-          </div>
-          <div>
-            <h3 className="font-black sm:text-lg">
-              Chúc mừng! Em đã hoàn thành hành trình đang mở của Khối {currentGrade}!
-            </h3>
-            <p className="mt-1 text-xs text-emerald-50">
-              Bản đồ, chìa khóa và dấu hộ chiếu của em đã được lưu.
-            </p>
-          </div>
-        </section>
-      )}
-
-      {/* Các trạm */}
-      <section className="space-y-4">
-        <div className="flex flex-col justify-between gap-2 sm:flex-row sm:items-end">
-          <div>
-            <div className="flex items-center gap-2">
-              <Compass className="h-6 w-6 text-sky-600" />
-              <h2 className="text-xl font-black text-slate-950 sm:text-2xl">
+      {/* Stations are the main focus */}
+      <section className="flex min-h-0 flex-1 flex-col rounded-[2rem] border border-orange-200/60 bg-white/42 p-3 shadow-xl shadow-orange-950/5 backdrop-blur-md">
+        <div className="mb-2 flex items-center justify-between gap-3 px-1">
+          <div className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-orange-500 text-white shadow-md">
+              <Compass className="h-4 w-4" />
+            </div>
+            <div>
+              <h2 className="text-base font-black text-slate-950 sm:text-lg">
                 Hành trình khám phá Khối {currentGrade}
               </h2>
+              <p className="hidden text-[10px] font-semibold text-slate-500 sm:block">
+                Chạm vào một trạm để bắt đầu hoặc tiếp tục hành trình.
+              </p>
             </div>
-            <p className="mt-1 text-xs text-slate-500 sm:text-sm">
-              Hoàn thành từng trạm để nhận chìa khóa, bản đồ và con dấu hộ chiếu.
-            </p>
           </div>
-          <span className="rounded-full border border-sky-100 bg-white/80 px-3 py-1.5 text-[11px] font-bold text-slate-500 shadow-sm">
-            {String(demoStations.length).padStart(2, '0')} trạm đang mở • {String(Math.max(0, stations.length - demoStations.length)).padStart(2, '0')} trạm đang phát triển
+          <span className="hidden rounded-full bg-white/80 px-3 py-1 text-[10px] font-black text-orange-700 sm:inline">
+            {demoStations.length} trạm đang mở
           </span>
         </div>
 
-        <div className="relative">
-          <div className="pointer-events-none absolute left-6 right-6 top-8 hidden border-t-2 border-dashed border-sky-200 lg:block" />
+        <div className="relative min-h-0 flex-1">
+          <div className="pointer-events-none absolute bottom-3 left-4 right-4 hidden border-t-2 border-dashed border-orange-300/80 xl:block" />
 
-          <div className="relative grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="relative grid h-full min-h-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {displayStations.map(station => {
               const isDemoReady = DEMO_STATION_IDS.has(station.id);
               const progress = isDemoReady
@@ -271,124 +216,89 @@ export const StudentJourneyView: React.FC = () => {
                 (progress.stage1Completed || progress.exploredHotspotIds.length > 0);
 
               const statusLabel = isCompleted
-                ? 'ĐÃ HOÀN THÀNH'
+                ? 'Hoàn thành'
                 : isInProgress
-                  ? 'ĐANG KHÁM PHÁ'
+                  ? 'Đang học'
                   : isDemoReady
-                    ? 'SẴN SÀNG KHÁM PHÁ'
-                    : 'ĐANG PHÁT TRIỂN';
+                    ? 'Mở'
+                    : 'Khóa';
 
               const statusStyle = isCompleted
-                ? 'bg-emerald-500 text-white'
+                ? 'bg-emerald-100 text-emerald-700'
                 : isInProgress
-                  ? 'bg-amber-300 text-slate-950'
+                  ? 'bg-sky-100 text-sky-700'
                   : isDemoReady
-                    ? 'bg-sky-500 text-white'
-                    : 'bg-slate-900/75 text-white';
+                    ? 'bg-orange-100 text-orange-700'
+                    : 'bg-slate-200 text-slate-600';
 
               return (
                 <article
                   key={station.id}
-                  className={`group overflow-hidden rounded-[1.75rem] border bg-white/95 shadow-md transition-all duration-300 ${
+                  className={`group flex min-h-0 flex-col overflow-hidden rounded-[1.55rem] border bg-white/96 shadow-lg transition-all duration-300 ${
                     isDemoReady
-                      ? 'border-white hover:-translate-y-1 hover:shadow-2xl'
-                      : 'border-slate-200/80'
+                      ? 'border-orange-100 hover:-translate-y-1 hover:border-orange-300 hover:shadow-2xl'
+                      : 'border-slate-200'
                   }`}
                 >
-                  <div className="relative aspect-[16/10] overflow-hidden bg-slate-900">
+                  <div className="relative min-h-[150px] flex-[1.15] overflow-hidden bg-slate-900 sm:min-h-[165px] xl:min-h-0">
                     <img
                       loading="lazy"
                       decoding="async"
                       src={station.coverImage}
                       alt={station.titleVi}
                       className={`h-full w-full object-cover transition duration-700 ${
-                        isDemoReady ? 'group-hover:scale-105' : 'scale-105 blur-[1px] grayscale-[20%]'
+                        isDemoReady ? 'group-hover:scale-105' : 'scale-105 blur-[1px] grayscale-[25%]'
                       }`}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/12 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 via-transparent to-slate-950/8" />
 
-                    <div className="absolute left-3 top-3 flex flex-wrap gap-2">
-                      <span className="rounded-full bg-white/95 px-3 py-1.5 text-[10px] font-black text-sky-800 shadow">
-                        TRẠM {station.number}
-                      </span>
-                      <span className={`rounded-full px-3 py-1.5 text-[10px] font-black shadow ${statusStyle}`}>
-                        {statusLabel}
-                      </span>
+                    <div className="absolute left-2.5 top-2.5 rounded-full bg-orange-500 px-3 py-1 text-[10px] font-black text-white shadow">
+                      Trạm {station.number}
                     </div>
 
                     {!isDemoReady && (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/25 bg-slate-950/45 text-white backdrop-blur-md">
-                          <LockKeyhole className="h-6 w-6" />
+                      <div className="absolute inset-0 flex items-center justify-center bg-slate-950/15">
+                        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/80 text-slate-500 shadow-lg backdrop-blur">
+                          <LockKeyhole className="h-5 w-5" />
                         </div>
                       </div>
                     )}
-
-                    {isCompleted && (
-                      <div className="absolute right-3 top-3 rotate-[-8deg] rounded-full border-4 border-rose-100/80 bg-rose-600 px-3 py-3 text-center text-[9px] font-black leading-tight text-white shadow-xl">
-                        <Stamp className="mx-auto mb-0.5 h-4 w-4" />
-                        ĐÃ ĐÓNG DẤU
-                      </div>
-                    )}
-
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <span className="text-[10px] font-black uppercase tracking-[0.16em] text-amber-300">
-                        {station.themeNameVi}
-                      </span>
-                      <h3 className="mt-1 text-xl font-black leading-tight text-white">
-                        {station.titleVi}
-                      </h3>
-                    </div>
                   </div>
 
-                  <div className="space-y-4 p-5">
-                    <p className="min-h-[2.5rem] text-xs leading-5 text-slate-600">
-                      {station.subtitleVi}
-                    </p>
+                  <div className="flex shrink-0 flex-col gap-2 p-3">
+                    <h3 className="line-clamp-2 min-h-[2.5rem] text-[15px] font-black leading-5 text-slate-950">
+                      {station.titleVi}
+                    </h3>
 
-                    {isDemoReady ? (
-                      <div className="flex items-center justify-between rounded-2xl bg-slate-50 px-3 py-2.5">
-                        <div className="flex items-center gap-2 text-[11px] font-bold text-slate-600">
-                          <Sparkles className="h-4 w-4 text-amber-500" />
-                          <span>Phần thưởng: chìa khóa + bản đồ + dấu</span>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-[11px] font-semibold text-slate-500">
-                        Hoàn thành nội dung và kiểm duyệt nguồn để mở trạm này.
-                      </div>
-                    )}
+                    <div className="flex items-center justify-between gap-2">
+                      <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-black ${statusStyle}`}>
+                        {statusLabel}
+                      </span>
+                      {isCompleted && <Stamp className="h-5 w-5 rotate-[-10deg] text-rose-500" />}
+                    </div>
 
                     {isDemoReady ? (
                       <button
                         type="button"
                         onClick={() => openStation(station)}
-                        className={`flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 text-xs font-black text-white shadow-sm transition active:scale-[0.99] ${
+                        className={`mt-1 flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-[11px] font-black text-white shadow-sm transition active:scale-[0.99] ${
                           isCompleted
-                            ? 'bg-slate-700 hover:bg-slate-800'
+                            ? 'bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600'
                             : isInProgress
-                              ? 'bg-amber-500 hover:bg-amber-600'
-                              : 'bg-sky-600 hover:bg-sky-700'
+                              ? 'bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700'
+                              : 'bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600'
                         }`}
                       >
-                        {isCompleted ? (
-                          <RotateCcw className="h-4 w-4" />
-                        ) : (
-                          <Play className="h-4 w-4 fill-current" />
-                        )}
-                        {isCompleted
-                          ? 'XEM LẠI HÀNH TRÌNH'
-                          : isInProgress
-                            ? 'TIẾP TỤC KHÁM PHÁ'
-                            : 'BẮT ĐẦU HÀNH TRÌNH'}
+                        {isCompleted ? <RotateCcw className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5 fill-current" />}
+                        {isCompleted ? 'XEM LẠI' : isInProgress ? 'TIẾP TỤC' : 'BẮT ĐẦU'}
                       </button>
                     ) : (
                       <button
                         type="button"
                         disabled
-                        className="flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-2xl bg-slate-200 px-4 py-3 text-xs font-black text-slate-500"
+                        className="mt-1 flex w-full cursor-not-allowed items-center justify-center gap-1.5 rounded-xl bg-slate-200 px-3 py-2.5 text-[11px] font-black text-slate-500"
                       >
-                        <LockKeyhole className="h-4 w-4" />
+                        <LockKeyhole className="h-3.5 w-3.5" />
                         ĐANG PHÁT TRIỂN
                       </button>
                     )}

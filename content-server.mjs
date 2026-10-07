@@ -28,7 +28,7 @@ let stations = {};
 try { stations = JSON.parse(await readFile(dataFile, 'utf8')); }
 catch (error) { if (error.code !== 'ENOENT') throw error; }
 const themeFile = path.join(dataDir, 'theme.json');
-let theme = { desktop:'',mobile:'',lightness:.12,blur:0 };
+let theme = { coverDesktop:'',coverMobile:'',roleDesktop:'',roleMobile:'',journeyDesktop:'',journeyMobile:'',lightness:.12,blur:0 };
 try { theme = JSON.parse(await readFile(themeFile,'utf8')); }
 catch (error) { if (error.code !== 'ENOENT') throw error; }
 let writes = Promise.resolve();
@@ -235,9 +235,28 @@ const server = createServer(async (req,res) => {
       auth.sameOrigin(req); await auth.requireAdmin(req);
       const data = await body(req);
       const validImage = value => value === '' || (typeof value === 'string' && (/^https:\/\//i.test(value) || /^data:image\/(png|jpeg|webp|gif);base64,/i.test(value)));
-      if (!validImage(data.desktop) || !validImage(data.mobile) || !Number.isFinite(data.lightness) || data.lightness < 0 || data.lightness > .65 || !Number.isFinite(data.blur) || data.blur < 0 || data.blur > 6)
-        return json(res,400,{ error:'Invalid theme settings' });
-      const clean = { desktop:data.desktop,mobile:data.mobile,lightness:data.lightness,blur:data.blur };
+      const legacyDesktop = validImage(data.desktop) ? data.desktop : '';
+      const legacyMobile = validImage(data.mobile) ? data.mobile : '';
+      const pickImage = (value, fallback = '') => validImage(value) ? value : fallback;
+      const clean = {
+        coverDesktop: pickImage(data.coverDesktop, legacyDesktop),
+        coverMobile: pickImage(data.coverMobile, legacyMobile || legacyDesktop),
+        roleDesktop: pickImage(data.roleDesktop, legacyDesktop),
+        roleMobile: pickImage(data.roleMobile, legacyMobile || legacyDesktop),
+        journeyDesktop: pickImage(data.journeyDesktop, legacyDesktop),
+        journeyMobile: pickImage(data.journeyMobile, legacyMobile || legacyDesktop),
+        lightness: data.lightness,
+        blur: data.blur,
+      };
+      if (
+        ![
+          clean.coverDesktop, clean.coverMobile,
+          clean.roleDesktop, clean.roleMobile,
+          clean.journeyDesktop, clean.journeyMobile,
+        ].every(validImage) ||
+        !Number.isFinite(clean.lightness) || clean.lightness < 0 || clean.lightness > .65 ||
+        !Number.isFinite(clean.blur) || clean.blur < 0 || clean.blur > 6
+      ) return json(res,400,{ error:'Invalid theme settings' });
       const operation = writes.then(async () => {
         if (durableContent) { await durableContent.saveTheme(clean); return; }
         if (process.env.K_SERVICE) throw Object.assign(new Error('Chưa cấu hình kho học liệu lâu dài.'),{status:503});

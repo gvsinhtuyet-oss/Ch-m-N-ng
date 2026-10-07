@@ -5,7 +5,6 @@ import { authService } from '../../services/AuthService';
 import { audioService } from '../../services/AudioService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
 import { studentSyncService } from '../../services/StudentSyncService';
-import { progressService } from '../../services/ProgressService';
 import {
   Compass,
   GraduationCap,
@@ -47,8 +46,6 @@ export const LandingView: React.FC = () => {
   const [savedStudentClass, setSavedStudentClass] = useState<string>('');
   const [savedStudentGrade, setSavedStudentGrade] = useState<number | null>(null);
   const [savedSyncCode, setSavedSyncCode] = useState<string>('');
-  const [syncCodeInput, setSyncCodeInput] = useState<string>('');
-  const [syncBusy, setSyncBusy] = useState(false);
   const [loginError, setLoginError] = useState<string>('');
   const [introActive, setIntroActive] = useState(true);
   const introFrameRef = useRef<HTMLIFrameElement | null>(null);
@@ -142,52 +139,8 @@ export const LandingView: React.FC = () => {
 
   const handleStudentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (syncBusy) return;
     audioService.playSfx('click');
     setLoginError('');
-
-    const requestedSyncCode = syncCodeInput.trim().toUpperCase();
-    if (!guestMode && requestedSyncCode) {
-      setSyncBusy(true);
-      try {
-        const restored = await studentSyncService.restore(requestedSyncCode);
-        const profile = restored.profile;
-        const student = {
-          ...DEMO_STUDENTS[0],
-          id: profile.id,
-          studentCode: profile.id,
-          isGuest: false,
-          classId: `class-${profile.className.replace('/', '-')}`,
-          className: profile.className,
-          grade: profile.grade,
-          displayName: profile.name,
-          name: profile.name,
-          pinHash: undefined,
-        };
-        progressService.mergeStudentProgressRecords(profile.id, restored.progress || {});
-        localStorage.setItem(
-          STUDENT_PROFILE_KEY,
-          JSON.stringify({ ...profile, syncCode: requestedSyncCode })
-        );
-        setSavedStudentId(profile.id);
-        setSavedStudentName(profile.name);
-        setSavedStudentClass(profile.className);
-        setSavedStudentGrade(profile.grade);
-        setSavedSyncCode(requestedSyncCode);
-        setStudentName(profile.name);
-        setSelectedClass(profile.className);
-        setChosenGrade(profile.grade);
-        setSyncCodeInput('');
-        loginAsStudent(student);
-        setShowRolePicker(false);
-        return;
-      } catch (error) {
-        setLoginError((error as Error).message);
-        return;
-      } finally {
-        setSyncBusy(false);
-      }
-    }
 
     const normalizedName = guestMode ? 'Nhà phiêu lưu tự do' : studentName.trim();
     if (!normalizedName || !chosenGrade) {
@@ -414,7 +367,7 @@ export const LandingView: React.FC = () => {
       {/* Role Picker Modal */}
       {showRolePicker && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white text-slate-800 rounded-3xl p-6 sm:p-8 max-w-xl w-full max-h-[90dvh] overflow-y-auto shadow-2xl border border-sky-100 space-y-5 animate-in fade-in zoom-in-95 duration-200">
+          <div className="bg-white text-slate-800 rounded-3xl p-6 sm:p-8 max-w-4xl w-full max-h-[90dvh] overflow-y-auto shadow-2xl border border-sky-100 space-y-5 animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between">
               <div>
                 <span className="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 text-[11px] font-bold">
@@ -492,106 +445,145 @@ export const LandingView: React.FC = () => {
 
               </div>
             ) : showStudentLogin ? (
-              /* Student Login Form */
-              <form onSubmit={handleStudentSubmit} className="space-y-4 text-xs">
-                {!chosenGrade ? <>
-                  <h4 className="text-lg font-black text-slate-900">{guestMode ? 'Chọn khối để khám phá' : 'Em học khối nào?'}</h4>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              /* Student Login Form: chọn khối và nhập thông tin ngay trên cùng một màn hình */
+              <form onSubmit={handleStudentSubmit} className="space-y-5 text-xs">
+                <div>
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <h4 className="text-lg font-black text-slate-900">
+                      {guestMode ? 'Chọn khối để khám phá' : 'Em học khối nào?'}
+                    </h4>
+                    <button
+                      type="button"
+                      onClick={() => setShowStudentLogin(false)}
+                      className="text-xs font-bold text-slate-500 hover:text-sky-700"
+                    >
+                      ← Chọn vai trò khác
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-5 gap-2 sm:gap-3">
                     {[
                       'from-sky-500 to-blue-700', 'from-emerald-500 to-teal-700',
                       'from-amber-400 to-orange-600', 'from-rose-500 to-pink-700', 'from-violet-500 to-indigo-700',
-                    ].map((color, index) => <button key={index} type="button"
-                      onClick={() => {
-                        const grade = index + 1; setChosenGrade(grade); setLoginError('');
-                        if (!guestMode && Number(selectedClass.split('/')[0]) !== grade) {
-                          const classroom = DEMO_CLASSROOMS.find(c => c.grade === grade);
-                          setSelectedClass(classroom?.name.replace('Lớp ', '') || `${grade}/1`);
-                          setSavedStudentId('');
-                        }
-                      }}
-                      className={`rounded-2xl bg-gradient-to-br ${color} p-5 text-white shadow-lg hover:scale-105 focus-visible:ring-4 focus-visible:ring-sky-300 transition text-left`}>
-                      <GraduationCap className="w-7 h-7 mb-3" /><span className="block text-2xl font-black">Khối {index + 1}</span>
-                      <span className="block text-xs mt-1 text-white/90">Chạm để bắt đầu →</span>
-                    </button>)}
+                    ].map((color, index) => {
+                      const grade = index + 1;
+                      const active = chosenGrade === grade;
+                      return (
+                        <button
+                          key={grade}
+                          type="button"
+                          onClick={() => {
+                            setChosenGrade(grade);
+                            setLoginError('');
+                            if (!guestMode && Number(selectedClass.split('/')[0]) !== grade) {
+                              const classroom = DEMO_CLASSROOMS.find(item => item.grade === grade);
+                              setSelectedClass(classroom?.name.replace('Lớp ', '') || `${grade}/1`);
+                              setSavedStudentId('');
+                            }
+                          }}
+                          className={`min-w-0 rounded-2xl bg-gradient-to-br ${color} px-2 py-4 sm:px-4 sm:py-5 text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-sky-300 ${
+                            active ? 'ring-4 ring-sky-200 scale-[1.02]' : ''
+                          }`}
+                        >
+                          <GraduationCap className="mx-auto mb-2 h-5 w-5 sm:h-6 sm:w-6" />
+                          <span className="block whitespace-nowrap text-sm sm:text-lg font-black">Khối {grade}</span>
+                          <span className="mt-1 block text-[9px] sm:text-[10px] text-white/90">
+                            {active ? 'Đã chọn ✓' : 'Chạm để chọn'}
+                          </span>
+                        </button>
+                      );
+                    })}
                   </div>
-                </> : <>
-                  <div className="flex items-center justify-between rounded-xl bg-sky-50 p-3">
-                    <h4 className="text-base font-black text-sky-900">Khối {chosenGrade} · {guestMode ? 'Nhà phiêu lưu tự do' : 'Thông tin học sinh'}</h4>
-                    <button type="button" onClick={() => { setChosenGrade(null); setLoginError(''); }} className="font-bold text-sky-700 underline">Đổi khối</button>
-                  </div>
-                  {!guestMode && <div>
-                    <label className="font-bold text-slate-700 block mb-2">Chọn lớp của em:</label>
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {DEMO_CLASSROOMS.filter(c => c.grade === chosenGrade).map(c => {
-                        const name = c.name.replace('Lớp ', '');
-                        return <button key={c.id} type="button" onClick={() => { if (selectedClass !== name) setSavedStudentId(''); setSelectedClass(name); setLoginError(''); }}
-                          className={`px-4 py-3 rounded-xl border-2 font-bold ${selectedClass === name ? 'bg-sky-600 border-sky-600 text-white' : 'border-sky-200 text-sky-800 hover:bg-sky-50'}`}>{c.name}</button>;
-                      })}
-                    </div>
-                    <label className="block text-slate-500">Nếu chưa có lớp của em, nhập số lớp (ví dụ {chosenGrade}/24):
-                      <input value={selectedClass} onChange={e => {setSelectedClass(e.target.value);setSavedStudentId('');setLoginError('');}} required maxLength={5} className="mt-1 w-full p-3 rounded-xl border border-slate-200 font-bold text-slate-800" />
-                    </label>
-                  </div>}
-                {!guestMode && <div>
-                  <label htmlFor="student-name" className="font-bold text-slate-700 block mb-1">Họ và tên học sinh:</label>
-                  <input
-                    id="student-name"
-                    type="text"
-                    maxLength={100}
-                    value={studentName}
-                    onChange={(e) => {
-                      setStudentName(e.target.value);
-                      setSavedStudentId('');
-                      setLoginError('');
-                    }}
-                    placeholder="Ví dụ: Nguyễn Minh Khang"
-                    required
-                    className="w-full p-3 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                  />
-                </div>}
-
-                {!guestMode && <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-3">
-                  <label htmlFor="student-sync-code" className="font-bold text-emerald-900 block mb-1">
-                    Học trên thiết bị khác? Nhập mã đồng bộ
-                  </label>
-                  <input
-                    id="student-sync-code"
-                    value={syncCodeInput}
-                    onChange={e => { setSyncCodeInput(e.target.value.toUpperCase()); setLoginError(''); }}
-                    maxLength={14}
-                    placeholder="Ví dụ: AB3D-K8M2-PQ7R"
-                    className="w-full p-3 rounded-xl border border-emerald-200 bg-white font-mono font-black tracking-wider text-slate-800"
-                  />
-                  <p className="mt-1 text-[10px] text-emerald-800">Nếu có mã, app sẽ khôi phục đúng hồ sơ, Bản đồ, chìa khóa và Hộ chiếu từ máy chủ.</p>
-                </div>}
-
-                <div className="rounded-xl bg-sky-50 border border-sky-100 px-3 py-2.5 text-[10px] text-sky-800 leading-relaxed">
-                  {guestMode ? 'Khám phá đủ các chặng, nhận vật phẩm, quà và đóng dấu như học sinh. Tiến độ khách lưu riêng trên thiết bị này. Có thể đổi khối tại nút vai trò ở đầu trang.' : 'Thiết bị này ghi nhớ tên, lớp và tiến độ của em. Em sẽ khám phá các chặng đúng khối đã chọn.'}
                 </div>
 
-                {loginError && (
-                  <div className="p-2.5 rounded-xl bg-rose-50 text-rose-700 text-xs font-semibold">
-                    {loginError}
+                {chosenGrade && (
+                  <div className="animate-in fade-in slide-in-from-top-2 duration-200 space-y-4 rounded-2xl border border-sky-100 bg-sky-50/60 p-4 sm:p-5">
+                    {!guestMode && (
+                      <>
+                        <div>
+                          <label className="font-bold text-slate-700 block mb-2">
+                            Lớp cụ thể của em
+                          </label>
+                          <div className="flex flex-wrap gap-2 mb-2">
+                            {DEMO_CLASSROOMS.filter(item => item.grade === chosenGrade).map(item => {
+                              const name = item.name.replace('Lớp ', '');
+                              return (
+                                <button
+                                  key={item.id}
+                                  type="button"
+                                  onClick={() => {
+                                    if (selectedClass !== name) setSavedStudentId('');
+                                    setSelectedClass(name);
+                                    setLoginError('');
+                                  }}
+                                  className={`px-4 py-2.5 rounded-xl border-2 font-bold transition ${
+                                    selectedClass === name
+                                      ? 'bg-sky-600 border-sky-600 text-white shadow-sm'
+                                      : 'bg-white border-sky-200 text-sky-800 hover:bg-sky-50'
+                                  }`}
+                                >
+                                  {item.name}
+                                </button>
+                              );
+                            })}
+                          </div>
+                          <input
+                            value={selectedClass}
+                            onChange={event => {
+                              setSelectedClass(event.target.value);
+                              setSavedStudentId('');
+                              setLoginError('');
+                            }}
+                            required
+                            maxLength={5}
+                            placeholder={`Ví dụ: ${chosenGrade}/24`}
+                            className="w-full p-3 rounded-xl border border-slate-200 bg-white font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            aria-label="Lớp cụ thể"
+                          />
+                        </div>
+
+                        <div>
+                          <label htmlFor="student-name" className="font-bold text-slate-700 block mb-1">
+                            Họ và tên học sinh
+                          </label>
+                          <input
+                            id="student-name"
+                            type="text"
+                            maxLength={100}
+                            value={studentName}
+                            onChange={event => {
+                              setStudentName(event.target.value);
+                              setSavedStudentId('');
+                              setLoginError('');
+                            }}
+                            placeholder="Ví dụ: Nguyễn Minh Khang"
+                            required
+                            className="w-full p-3 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          />
+                        </div>
+                      </>
+                    )}
+
+                    <div className="rounded-xl bg-white/90 border border-sky-100 px-3 py-2.5 text-[10px] text-sky-800 leading-relaxed">
+                      {guestMode
+                        ? 'Chọn khối xong là có thể bắt đầu hành trình ngay.'
+                        : 'App sẽ ghi nhớ tên, lớp và tiến độ của em trên thiết bị này. Dữ liệu đồng bộ được xử lý tự động, em không cần nhập mã.'}
+                    </div>
+
+                    {loginError && (
+                      <div className="p-2.5 rounded-xl bg-rose-50 text-rose-700 text-xs font-semibold">
+                        {loginError}
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      className="w-full py-3.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-sm font-black shadow-md shadow-sky-600/30 transition active:scale-[0.99]"
+                    >
+                      KHÁM PHÁ NGAY
+                    </button>
                   </div>
                 )}
-
-                <div className="flex gap-2 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setShowStudentLogin(false)}
-                    className="flex-1 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition"
-                  >
-                    Quay lại
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-2 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold shadow-md shadow-sky-600/30 transition"
-                  >
-                    {syncBusy ? 'Đang khôi phục…' : guestMode ? 'Bắt đầu phiêu lưu' : syncCodeInput.trim() ? 'Khôi phục hành trình' : 'Vào Học Ngay'}
-                  </button>
-                </div>
-                </>}
-                {!chosenGrade && <button type="button" onClick={() => setShowStudentLogin(false)} className="w-full p-3 rounded-xl bg-slate-100 font-bold">Quay lại chọn vai trò</button>}
               </form>
             ) : (
               <form className="space-y-4 text-sm" onSubmit={async e => {

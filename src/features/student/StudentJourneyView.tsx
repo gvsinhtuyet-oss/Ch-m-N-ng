@@ -14,50 +14,6 @@ import {
   Stamp,
 } from 'lucide-react';
 
-const ExplorerKid: React.FC<{ avatar?: string; name: string }> = ({ avatar, name }) => {
-  if (avatar) {
-    return (
-      <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-[2rem] border-4 border-white/90 bg-white shadow-xl sm:h-32 sm:w-32">
-        <img src={avatar} alt={name} className="h-full w-full object-cover" />
-      </div>
-    );
-  }
-
-  return (
-    <div
-      className="relative flex h-28 w-28 shrink-0 items-end justify-center overflow-hidden rounded-[2rem] border-4 border-white/90 bg-gradient-to-br from-amber-100 via-orange-50 to-sky-100 shadow-xl sm:h-32 sm:w-32"
-      aria-label="Minh họa Nhà phiêu lưu"
-    >
-      <svg viewBox="0 0 180 180" className="h-[118%] w-[118%]" role="img" aria-hidden="true">
-        <defs>
-          <linearGradient id="hat" x1="0" x2="1">
-            <stop offset="0%" stopColor="#f4b942" />
-            <stop offset="100%" stopColor="#f59e0b" />
-          </linearGradient>
-          <linearGradient id="shirt" x1="0" x2="1">
-            <stop offset="0%" stopColor="#fff7ed" />
-            <stop offset="100%" stopColor="#fed7aa" />
-          </linearGradient>
-        </defs>
-        <ellipse cx="92" cy="160" rx="55" ry="30" fill="#0ea5e9" opacity=".16" />
-        <path d="M47 74c0-34 18-55 46-55 29 0 48 22 48 56 0 31-21 47-48 47S47 105 47 74Z" fill="#3f2a21" />
-        <circle cx="94" cy="72" r="36" fill="#ffd7bd" />
-        <path d="M61 63c6-23 19-33 36-33 20 0 35 13 39 35-12-9-24-13-38-13-14 0-25 3-37 11Z" fill="#3f2a21" />
-        <ellipse cx="80" cy="75" rx="4" ry="5" fill="#1e293b" />
-        <ellipse cx="108" cy="75" rx="4" ry="5" fill="#1e293b" />
-        <path d="M84 92c7 6 14 6 21 0" fill="none" stroke="#e87979" strokeWidth="4" strokeLinecap="round" />
-        <path d="M52 46c7-27 24-38 44-38 23 0 41 12 49 38-32 8-63 8-93 0Z" fill="url(#hat)" />
-        <ellipse cx="98" cy="46" rx="58" ry="13" fill="#fbbf24" />
-        <path d="M55 116c13-12 26-17 40-17 15 0 31 6 44 18l13 55H40Z" fill="url(#shirt)" />
-        <path d="M67 115c-8 12-14 29-17 49" fill="none" stroke="#f97316" strokeWidth="8" strokeLinecap="round" />
-        <path d="M124 115c9 12 15 29 18 49" fill="none" stroke="#f97316" strokeWidth="8" strokeLinecap="round" />
-        <path d="M137 124c14 0 25-8 31-20" fill="none" stroke="#ffd7bd" strokeWidth="11" strokeLinecap="round" />
-        <circle cx="169" cy="101" r="7" fill="#ffd7bd" />
-      </svg>
-    </div>
-  );
-};
-
 export const StudentJourneyView: React.FC = () => {
   const {
     currentUser,
@@ -97,12 +53,6 @@ export const StudentJourneyView: React.FC = () => {
     progressByStation.find(item => !item.progress.stationCompleted)?.station ||
     demoStations[0];
 
-  const studentName =
-    (currentUser as { displayName?: string } | null)?.displayName ||
-    currentUser?.name ||
-    'Nhà phiêu lưu';
-
-  const studentAvatar = (currentUser as { avatar?: string } | null)?.avatar;
   const completed = gradeProgress.completedStations;
   const total = Math.max(1, displayStations.length);
   const progressPercent = Math.round((completed / total) * 100);
@@ -118,51 +68,46 @@ export const StudentJourneyView: React.FC = () => {
 
   return (
     <div className="mx-auto flex min-h-[calc(100dvh-70px)] max-w-[1600px] flex-col gap-3 px-3 py-3 sm:px-5 lg:px-7">
-      <section className="relative overflow-hidden rounded-[2rem] border border-white/80 bg-white/82 shadow-[0_18px_55px_rgba(124,45,18,0.16)] backdrop-blur-xl">
+      <section className="relative overflow-hidden rounded-[1.65rem] border border-white/80 bg-white/86 shadow-[0_12px_34px_rgba(124,45,18,0.12)] backdrop-blur-xl">
         {heroImage && (
           <img
             src={heroImage}
             alt=""
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30"
+            className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.12]"
           />
         )}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/96 via-orange-50/91 to-amber-100/72" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-orange-100/35 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/98 via-orange-50/94 to-amber-50/88" />
 
-        <div className="relative z-10 grid items-center gap-4 px-4 py-4 sm:px-6 lg:grid-cols-[auto_minmax(0,1fr)_auto]">
-          <ExplorerKid avatar={studentAvatar} name={studentName} />
+        <div className="relative z-10 flex min-h-[86px] flex-col justify-center gap-3 px-4 py-3 sm:px-5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <h1 className="truncate text-[21px] font-black tracking-tight text-slate-950 sm:text-[23px]">
+                Hành trình khám phá <span className="text-orange-600">– Khối {currentGrade}</span>
+              </h1>
+              <span className="rounded-full bg-orange-100 px-2.5 py-1 text-[10px] font-black text-orange-700">
+                {completed}/{total} trạm hoàn thành
+              </span>
+            </div>
 
-          <div className="min-w-0">
-            <h1 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl lg:text-[2.15rem]">
-              {role === 'student' ? (
-                <>Chào Nhà phiêu lưu <span className="text-orange-600">{studentName}!</span></>
-              ) : (
-                'Hành trình khám phá quê hương'
-              )}
-            </h1>
-            <p className="mt-1 text-sm font-extrabold text-slate-700">
-              Khối {currentGrade} <span className="mx-2 text-orange-300">•</span> {completed}/{total} trạm hoàn thành
-            </p>
-
-            <div className="mt-3 flex max-w-xl items-center gap-3">
-              <div className="h-4 flex-1 overflow-hidden rounded-full bg-white/90 p-1 shadow-inner ring-1 ring-slate-200/80">
+            <div className="mt-2 flex max-w-2xl items-center gap-2.5">
+              <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-slate-200/90">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-amber-400 to-orange-500 transition-all duration-700"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
-              <span className="min-w-[3rem] text-sm font-black text-slate-700">{progressPercent}%</span>
+              <span className="min-w-[2.25rem] text-[11px] font-black text-slate-700">{progressPercent}%</span>
             </div>
 
             {role !== 'student' && (
-              <div className="mt-3 flex items-center gap-1.5 overflow-x-auto">
+              <div className="mt-2 flex items-center gap-1.5 overflow-x-auto">
                 {[1, 2, 3, 4, 5].map(grade => (
                   <button
                     key={grade}
                     type="button"
                     onClick={() => setCurrentGrade(grade)}
-                    className={`shrink-0 rounded-xl px-3 py-1.5 text-[11px] font-black transition ${
+                    className={`shrink-0 rounded-lg px-2.5 py-1 text-[10px] font-black transition ${
                       currentGrade === grade
                         ? 'bg-orange-500 text-white shadow'
                         : 'bg-white/85 text-slate-700 hover:bg-orange-50'
@@ -175,14 +120,14 @@ export const StudentJourneyView: React.FC = () => {
             )}
           </div>
 
-          <div className="flex shrink-0 flex-wrap items-center gap-2 lg:justify-end">
+          <div className="flex shrink-0 items-center gap-2">
             {nextStation && (
               <button
                 type="button"
                 onClick={() => openStation(nextStation)}
-                className="inline-flex min-w-[150px] items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-3.5 text-sm font-black text-white shadow-lg shadow-orange-500/25 transition hover:-translate-y-0.5"
+                className="inline-flex h-10 min-w-[124px] items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 px-4 text-[12px] font-black text-white shadow-md shadow-orange-500/20 transition hover:-translate-y-0.5"
               >
-                <Play className="h-4 w-4 fill-current" />
+                <Play className="h-3.5 w-3.5 fill-current" />
                 Tiếp tục
                 <span aria-hidden="true">→</span>
               </button>
@@ -190,9 +135,9 @@ export const StudentJourneyView: React.FC = () => {
             <button
               type="button"
               onClick={() => setCurrentView('student-maps')}
-              className="inline-flex min-w-[140px] items-center justify-center gap-2 rounded-2xl border-2 border-orange-400 bg-white/90 px-5 py-3 text-sm font-black text-orange-700 transition hover:bg-orange-50"
+              className="inline-flex h-10 min-w-[116px] items-center justify-center gap-1.5 rounded-xl border-2 border-orange-300 bg-white/92 px-4 text-[12px] font-black text-orange-700 transition hover:bg-orange-50"
             >
-              <MapPinned className="h-4 w-4" />
+              <MapPinned className="h-3.5 w-3.5" />
               Bản đồ
               <span aria-hidden="true">→</span>
             </button>
@@ -206,14 +151,14 @@ export const StudentJourneyView: React.FC = () => {
           return (
             <div
               key={item.label}
-              className="flex items-center gap-3 rounded-2xl border border-white/90 bg-white/92 px-4 py-3 shadow-md shadow-orange-950/5 backdrop-blur-lg"
+              className="flex min-h-[52px] items-center gap-2.5 rounded-2xl border border-white/90 bg-white/92 px-3 py-2 shadow-md shadow-orange-950/5 backdrop-blur-lg"
             >
-              <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${item.accent}`}>
-                <Icon className="h-5 w-5" />
+              <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl ${item.accent}`}>
+                <Icon className="h-4 w-4" />
               </div>
               <div className="min-w-0">
-                <div className="text-xl font-black leading-none text-slate-950">{item.value}</div>
-                <div className="mt-1 truncate text-xs font-bold text-slate-500">{item.label}</div>
+                <div className="text-lg font-black leading-none text-slate-950">{item.value}</div>
+                <div className="mt-0.5 truncate text-[10px] font-bold text-slate-500">{item.label}</div>
               </div>
             </div>
           );

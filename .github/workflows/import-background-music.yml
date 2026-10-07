@@ -23,15 +23,20 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p public/audio
-          curl -L --fail --retry 3             "https://drive.google.com/uc?export=download&id=10gje9w4Mjz2wNRXFG8iDt2UcZ6eVxwT0"             -o /tmp/cham-danang-source.mp3
+          python -m pip install --quiet gdown
+          gdown --id "10gje9w4Mjz2wNRXFG8iDt2UcZ6eVxwT0" -O /tmp/cham-danang-source.mp3
           test -s /tmp/cham-danang-source.mp3
+          file /tmp/cham-danang-source.mp3
 
       - name: Create compact local MP3
         run: |
           set -euo pipefail
-          ffmpeg -y -i /tmp/cham-danang-source.mp3             -vn -codec:a libmp3lame -b:a 32k -ar 44100 -ac 1             public/audio/cham-danang-background.mp3
+          ffmpeg -y -i /tmp/cham-danang-source.mp3 \
+            -vn -codec:a libmp3lame -b:a 32k -ar 44100 -ac 1 \
+            public/audio/cham-danang-background.mp3
           test "$(stat -c%s public/audio/cham-danang-background.mp3)" -gt 100000
-          ffprobe -v error -show_entries format=duration,size,bit_rate             -of default=noprint_wrappers=1 public/audio/cham-danang-background.mp3
+          ffprobe -v error -show_entries format=duration,size,bit_rate \
+            -of default=noprint_wrappers=1 public/audio/cham-danang-background.mp3
 
       - name: Commit music into the repository
         run: |

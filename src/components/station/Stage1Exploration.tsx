@@ -38,7 +38,7 @@ interface Props {
 }
 
 export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage }) => {
-  const { currentUser, role, isOnline, language } = useApp();
+  const { currentUser, role, isOnline, language, setAssistantHotspot } = useApp();
   const isReadOnly = role !== 'student';
   const [currentHotspotIdx, setCurrentHotspotIdx] = useState(0);
   const [narrationState, setNarrationState] = useState<NarrationState>('idle');
@@ -60,11 +60,9 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   // Share the currently visible hotspot with the local assistant.
   useEffect(() => {
-    window.dispatchEvent(new CustomEvent('cham-assistant-hotspot', { detail: hotspot }));
-    return () => {
-      window.dispatchEvent(new CustomEvent('cham-assistant-hotspot', { detail: null }));
-    };
-  }, [station.id, hotspot.id]);
+    setAssistantHotspot(hotspot);
+    return () => setAssistantHotspot(null);
+  }, [station.id, hotspot.id, setAssistantHotspot]);
 
   // Subscribe to audio service state
   useEffect(() => {

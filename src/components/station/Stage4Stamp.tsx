@@ -81,53 +81,44 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     exchanging.current = false;
   };
 
-  const saveMapToCollection = () => {
+  const saveMapAndStamp = () => {
     setSaveMessage('');
-
-    if (isReadOnly) {
-      setGiftClaimed(true);
-      setSaveMessage('Bản xem thử – bản đồ và mảnh chìa khóa chưa được lưu vào tài khoản.');
-      audioService.playSfx('reward');
-      return;
-    }
-
-    const updated = progressService.claimJourneyGift(studentId, station.id);
-    if (!updated.journeyMapReceived || !updated.keyFragmentReceived) {
-      setSaveMessage('Chưa thu thập được bản đồ. Em hãy hoàn thành đủ 3 chặng trước rồi thử lại.');
-      return;
-    }
-
-    setGiftClaimed(true);
-    setSaveMessage('✓ Bản đồ đã được lưu vào menu BẢN ĐỒ và em nhận 1 mảnh chìa khóa.');
-    audioService.playSfx('reward');
-  };
-
-  const handleStamp = () => {
-    if (!giftClaimed) return;
-
     audioService.playSfx('stamp');
 
     if (isReadOnly) {
+      setGiftClaimed(true);
       setStamped(true);
+      setSaveMessage('Bản xem thử – hiệu ứng hoàn thành được mô phỏng, dữ liệu không lưu vào tài khoản.');
     } else {
-      const updated = progressService.completeStage4(studentId, station.id);
-      if (!updated.stage4Completed || !updated.stationCompleted || !updated.stampReceived) {
-        setSaveMessage('Chưa thể đóng dấu. Em hãy thu thập bản đồ trước rồi thử lại.');
+      const updated = progressService.finalizeJourneyAndStamp(studentId, station.id);
+      if (
+        !updated.journeyMapReceived ||
+        !updated.keyFragmentReceived ||
+        !updated.stage4Completed ||
+        !updated.stationCompleted ||
+        !updated.stampReceived
+      ) {
+        setSaveMessage('Chưa thể hoàn thành. Em hãy hoàn thành đủ 3 chặng trước rồi thử lại.');
         return;
       }
+      setGiftClaimed(true);
       setStamped(true);
+      setSaveMessage('✓ Bản đồ đã lưu • Đã nhận 1 mảnh chìa khóa • Hộ chiếu đã được đóng dấu.');
     }
 
     try {
       confetti({
-        particleCount: 70,
-        spread: 90,
-        origin: { y: 0.58 },
+        particleCount: 100,
+        spread: 105,
+        startVelocity: 48,
+        origin: { y: 0.5 },
         zIndex: 10000,
         disableForReducedMotion: true,
       });
+      schedule(() => audioService.playSfx('victory'), 240);
+      schedule(() => audioService.playSfx('treasure'), 700);
     } catch {
-      // Không ảnh hưởng việc hoàn thành trạm.
+      // Hiệu ứng chỉ là trang trí.
     }
   };
 
@@ -138,8 +129,13 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
           from { opacity: 0; transform: translateY(40px) scale(.72) rotate(-4deg); }
           to { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
         }
+        @keyframes passport-stamp-hit {
+          0% { opacity: 0; transform: translate(18%, 18%) scale(1.8) rotate(-20deg); }
+          65% { opacity: 1; transform: translate(0, 0) scale(.92) rotate(-11deg); }
+          100% { opacity: 1; transform: translate(0, 0) scale(1) rotate(-11deg); }
+        }
         @media (prefers-reduced-motion: reduce) {
-          .journey-map-reveal { animation: none !important; }
+          .journey-map-reveal, .passport-stamp-hit { animation: none !important; }
         }
       `}</style>
 
@@ -191,6 +187,19 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                       onError={() => setMapImageFailed(true)}
                       className="max-h-[44vh] w-auto max-w-full object-contain transition-transform duration-200 group-hover:scale-[1.02]"
                     />
+                    {stamped && (
+                      <div
+                        className="passport-stamp-hit pointer-events-none absolute bottom-[8%] right-[4%] flex aspect-square w-[50%] max-w-[190px] items-center justify-center rounded-full border-[6px] border-double border-red-700/90 bg-red-50/20 text-red-700 shadow-lg backdrop-blur-[1px]"
+                        style={{ animation: 'passport-stamp-hit .55s cubic-bezier(.2,.9,.25,1.25) both' }}
+                      >
+                        <div className="flex h-[86%] w-[86%] flex-col items-center justify-center rounded-full border-2 border-red-700/75 px-2 text-center">
+                          <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-[0.16em]">CHẠM ĐÀ NẴNG</span>
+                          <Award className="my-1 h-7 w-7 sm:h-9 sm:w-9" />
+                          <span className="text-[10px] sm:text-xs font-black uppercase leading-tight">{station.stamp.nameVi}</span>
+                          <span className="mt-1 text-[8px] sm:text-[10px] font-black">ĐÃ HOÀN THÀNH</span>
+                        </div>
+                      </div>
+                    )}
                     <span className="absolute bottom-2 right-2 inline-flex items-center gap-1 rounded-lg bg-slate-950/75 px-2 py-1 text-[11px] font-bold text-white">
                       <ZoomIn className="h-3.5 w-3.5" /> Phóng to
                     </span>
@@ -228,40 +237,40 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
               <KeyRound className="w-11 h-11 shrink-0" />
               <div className="text-left">
                 <p className="font-black">
-                  {giftClaimed ? 'Em đã nhận 1 mảnh chìa khóa!' : 'Thu thập bản đồ để nhận 1 mảnh chìa khóa'}
+                  {stamped ? 'Hoàn thành! Em đã nhận 1 mảnh chìa khóa.' : 'Lưu bản đồ và đóng dấu để nhận 1 mảnh chìa khóa'}
                 </p>
                 <p className="text-xs">
-                  {giftClaimed
+                  {stamped
                     ? `Sưu tập đủ 5 mảnh để mở rương kho báu Khối ${station.grade}.`
-                    : 'Bản đồ sẽ được lưu vào menu BẢN ĐỒ của em.'}
+                    : 'Chỉ cần bấm một lần: bản đồ sẽ được lưu và Hộ chiếu sẽ được đóng dấu.'}
                 </p>
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={saveMapToCollection}
-              disabled={giftClaimed}
-              className="w-full rounded-2xl bg-amber-400 py-3.5 text-amber-950 font-black inline-flex items-center justify-center gap-2 disabled:bg-emerald-100 disabled:text-emerald-800"
-            >
-              <Map className="w-5 h-5" />
-              {giftClaimed ? '✓ ĐÃ THU THẬP BẢN ĐỒ' : 'THU THẬP BẢN ĐỒ'}
-            </button>
-
-            {saveMessage && (
-              <p role="status" className="text-sm font-semibold text-sky-900">{saveMessage}</p>
-            )}
-
-            {giftClaimed && (
+            {!stamped ? (
+              <button
+                type="button"
+                onClick={saveMapAndStamp}
+                className="w-full rounded-2xl bg-gradient-to-r from-amber-400 via-orange-400 to-red-500 py-4 text-slate-950 font-black inline-flex items-center justify-center gap-2 shadow-lg"
+              >
+                <Map className="w-5 h-5" />
+                <Stamp className="w-5 h-5" />
+                LƯU BẢN ĐỒ & ĐÓNG DẤU HỘ CHIẾU
+              </button>
+            ) : (
               <button
                 autoFocus
                 type="button"
                 onClick={() => setShowGiftReveal(false)}
-                className="w-full rounded-2xl bg-sky-700 py-3.5 text-white font-black inline-flex items-center justify-center gap-2"
+                className="w-full rounded-2xl bg-emerald-700 py-3.5 text-white font-black inline-flex items-center justify-center gap-2"
               >
-                <Stamp className="w-5 h-5" />
-                TIẾP TỤC ĐÓNG DẤU HỘ CHIẾU
+                <CheckCircle2 className="w-5 h-5" />
+                HOÀN THÀNH TRẠM
               </button>
+            )}
+
+            {saveMessage && (
+              <p role="status" className="text-sm font-semibold text-sky-900">{saveMessage}</p>
             )}
           </div>
         </div>
@@ -353,53 +362,18 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
           )}
         </div>
 
-        <div className={`rounded-3xl border p-5 sm:p-6 transition ${
-          giftClaimed
-            ? stamped
-              ? 'border-red-200 bg-gradient-to-br from-red-50 to-amber-50'
-              : 'border-sky-200 bg-gradient-to-r from-sky-50 to-cyan-50'
-            : 'border-slate-200 bg-slate-50 opacity-65'
-        }`}>
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-white shadow-sm">
-            <Stamp className={`w-6 h-6 ${giftClaimed ? 'text-red-700' : 'text-slate-400'}`} />
-          </div>
-          <p className="text-xs font-black uppercase tracking-wider text-red-700">Đóng dấu hộ chiếu</p>
-
-          {!giftClaimed ? (
-            <>
-              <h3 className="mt-1 text-lg font-black text-slate-700">Thu thập bản đồ để mở bước cuối</h3>
-              <p className="mt-2 text-sm text-slate-500">Sau khi nhận bản đồ và mảnh chìa khóa, em sẽ được đóng dấu hoàn thành trạm.</p>
-            </>
-          ) : !stamped ? (
-            <>
-              <h3 className="mt-1 text-lg font-black text-slate-950">Sẵn sàng đóng dấu hoàn thành</h3>
-              <p className="mt-2 text-sm text-slate-600">Dấu ấn của trạm sẽ được lưu vào menu HỘ CHIẾU.</p>
-              <button
-                type="button"
-                onClick={handleStamp}
-                className="mt-4 w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-red-700 to-amber-700 text-white font-black shadow-lg inline-flex items-center justify-center gap-2"
-              >
-                <Stamp className="w-5 h-5" />
-                ĐÓNG DẤU HOÀN THÀNH TRẠM
-              </button>
-            </>
-          ) : (
-            <div className="space-y-4">
-              <div className="mx-auto w-28 h-28 rounded-full border-4 border-double border-red-700 bg-red-50 p-2 flex flex-col items-center justify-center text-red-700 shadow-md rotate-[-3deg]">
-                <div className="w-full h-full rounded-full border border-red-600/60 p-1.5 flex flex-col items-center justify-center">
-                  <span className="text-[7px] font-black uppercase tracking-widest text-red-900">CHẠM ĐÀ NẴNG</span>
-                  <Award className="w-5 h-5 text-red-700 my-1" />
-                  <span className="text-[9px] font-black uppercase text-red-800 leading-tight">{station.stamp.nameVi}</span>
-                  <span className="text-[7px] font-bold text-red-600">ĐÃ HOÀN THÀNH</span>
-                </div>
-              </div>
-              <div>
-                <h3 className="text-xl font-black text-slate-950">🏅 Hoàn thành trạm!</h3>
-                <p className="mt-1 text-sm text-slate-600">Dấu ấn đã được lưu vào HỘ CHIẾU của em.</p>
-              </div>
+        {stamped && (
+          <div className="rounded-3xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-amber-50 p-5 sm:p-6 text-center">
+            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
+              <CheckCircle2 className="w-7 h-7" />
             </div>
-          )}
-        </div>
+            <p className="text-xs font-black uppercase tracking-wider text-emerald-700">Dấu ấn cuối hành trình</p>
+            <h3 className="mt-1 text-xl font-black text-slate-950">🏅 Hoàn thành trạm!</h3>
+            <p className="mt-2 text-sm text-slate-600">
+              Bản đồ đã lưu vào BẢN ĐỒ • Đã nhận 1 mảnh chìa khóa • Dấu ấn đã lưu vào HỘ CHIẾU.
+            </p>
+          </div>
+        )}
 
         {isReadOnly && (
           <p className="text-xs text-amber-800">Bản xem thử – phần thưởng và dấu ấn không lưu vào tài khoản.</p>

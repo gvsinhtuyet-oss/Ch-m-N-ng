@@ -4,7 +4,8 @@ import { useApp } from '../../contexts/AppContext';
 import { audioService, NarrationState } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import { RewardClaimModal } from '../common/RewardClaimModal';
-import { CheckCircle2, ChevronLeft, ChevronRight, MapPin, Maximize2, Pause, Play, RotateCcw, Volume2, X } from 'lucide-react';
+import { backgroundMusic } from '../../services/BackgroundMusic';
+import { CheckCircle2, ChevronLeft, ChevronRight, ExternalLink, Globe, MapPin, Maximize2, Pause, Play, RotateCcw, Volume2, X } from 'lucide-react';
 
 interface Props { station: Station; onCompleteStage: () => void; }
 
@@ -27,6 +28,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const [submitted, setSubmitted] = useState(false);
   const [correct, setCorrect] = useState(false);
   const [showImage, setShowImage] = useState(false);
+  const [showVr, setShowVr] = useState(false);
   const [showReward, setShowReward] = useState(false);
   const hotspot: ExplorationHotspot = station.hotspots[index] || station.hotspots[0];
   const progress = progressService.getStationProgress(studentId, station.id);
@@ -41,6 +43,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   }, [hotspot.id, setAssistantHotspot]);
 
   useEffect(() => audioService.subscribeState(setNarrationState), []);
+  useEffect(() => {
+    backgroundMusic.setForegroundSource('hoi-an-vr360', showVr);
+    return () => backgroundMusic.setForegroundSource('hoi-an-vr360', false);
+  }, [showVr]);
   useEffect(() => {
     setSelected(null); setSubmitted(false); setCorrect(false); audioService.stopNarration();
   }, [index]);
@@ -98,7 +104,24 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               <div className="flex items-center gap-2 text-orange-600"><MapPin className="h-4 w-4" /><span className="text-sm font-black">Khám phá bức tranh Hội An</span></div>
               <p className="mt-0.5 text-[11px] font-semibold text-slate-600">Chạm vào ảnh để xem thật lớn và đọc nội dung.</p>
             </div>
-            <button type="button" onClick={() => setShowImage(true)} className="absolute right-4 top-4 z-20 inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-orange-700 shadow-xl"><Maximize2 className="h-4 w-4" /> XEM ẢNH LỚN</button>
+            <div className="absolute right-4 top-4 z-20 flex flex-col items-end gap-2 sm:flex-row">
+              {station.vr360Experience?.verified && station.vr360Experience.url && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    audioService.playSfx('click');
+                    setShowVr(true);
+                  }}
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-xs font-black text-white shadow-xl transition hover:-translate-y-0.5"
+                >
+                  <Globe className="h-4 w-4" />
+                  KHÁM PHÁ 360°
+                </button>
+              )}
+              <button type="button" onClick={() => setShowImage(true)} className="inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-orange-700 shadow-xl">
+                <Maximize2 className="h-4 w-4" /> XEM ẢNH LỚN
+              </button>
+            </div>
             <div className="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 rounded-2xl bg-slate-950/72 p-1.5 backdrop-blur">
                 {!playing && !paused && <button type="button" onClick={speak} className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2.5 text-xs font-black text-white"><Volume2 className="h-4 w-4" /> NGHE THUYẾT MINH</button>}
@@ -156,6 +179,54 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
           </div>
         </div>
       </div>}
+
+      {showVr && station.vr360Experience?.url && (
+        <div className="fixed inset-0 z-[95] flex items-center justify-center bg-slate-950/90 p-3 backdrop-blur-md sm:p-6">
+          <div className="flex h-[90vh] w-full max-w-6xl flex-col overflow-hidden rounded-[2rem] border border-orange-200 bg-slate-950 shadow-2xl">
+            <div className="flex items-center justify-between gap-3 border-b border-white/10 bg-slate-900/95 px-4 py-3 text-white sm:px-5">
+              <div className="flex min-w-0 items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400">
+                  <Globe className="h-5 w-5" />
+                </div>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-black">{station.vr360Experience.titleVi || 'Khám phá Hội An 360°'}</p>
+                  <p className="text-[10px] font-semibold text-slate-400">Không gian thực tế ảo • Trạm Phố cổ Hội An</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <a
+                  href={station.vr360Experience.fallbackUrl || station.vr360Experience.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden items-center gap-1.5 rounded-xl bg-white/10 px-3 py-2 text-[10px] font-black text-white hover:bg-white/15 sm:inline-flex"
+                >
+                  MỞ TAB MỚI <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setShowVr(false)}
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white hover:bg-rose-500"
+                  aria-label="Đóng trải nghiệm 360 độ"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+            <div className="relative flex-1 bg-slate-950">
+              <iframe
+                src={station.vr360Experience.url}
+                title={station.vr360Experience.titleVi || 'Khám phá Hội An 360°'}
+                className="h-full w-full border-0"
+                allowFullScreen
+                sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+              />
+              <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-slate-950/70 px-4 py-2 text-[10px] font-bold text-white/85 backdrop-blur-md">
+                Kéo để quan sát • Chạm để khám phá không gian 360°
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showReward && <RewardClaimModal reward={station.rewards.find(r => r.stage === 1) || station.rewards[0]} stage={1} alreadyClaimed={!readOnly && progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 1)?.id || '')} onClaim={() => { if (!readOnly) { const reward = station.rewards.find(r => r.stage === 1); if (reward) progressService.claimReward(studentId, station.id, reward.id); } }} onContinue={() => { setShowReward(false); onCompleteStage(); }} />}
     </div>

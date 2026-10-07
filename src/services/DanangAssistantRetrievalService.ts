@@ -143,7 +143,16 @@ const tokenScore = (query: string, candidate: string): number => {
   const c = normalizeForSearch(candidate);
   if (!q || !c) return 0;
   if (q === c) return 120;
-  if (q.includes(c) && c.length >= 4) return 95;
+
+  // Ưu tiên cụm từ xuất hiện trọn vẹn trong câu hỏi. Cụm nhiều từ
+  // phải thắng alias quá chung (ví dụ "hào thành" thắng "thành").
+  const paddedQuery = ` ${q} `;
+  const paddedCandidate = ` ${c} `;
+  if (paddedQuery.includes(paddedCandidate)) {
+    const candidateTokens = words(c);
+    if (candidateTokens.length >= 2) return Math.min(119, 105 + Math.min(10, c.length));
+    if (c.length >= 2) return 92 + Math.min(5, c.length);
+  }
   if (c.includes(q) && q.length >= 4) return 88;
 
   const qTokens = unique(words(q));

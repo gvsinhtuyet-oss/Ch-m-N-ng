@@ -109,3 +109,25 @@
 @media (max-width: 767px) {
   .game-content .backdrop-blur-md { backdrop-filter: none; }
 }
+
+
+/* Hội An learning rail: clearly independent scrolling area on desktop. */
+.hoi-an-right-rail {
+  scrollbar-width: thin;
+  scrollbar-color: #fb923c rgba(255,255,255,.55);
+}
+.hoi-an-right-rail::-webkit-scrollbar {
+  width: 9px;
+}
+.hoi-an-right-rail::-webkit-scrollbar-track {
+  background: rgba(255,255,255,.55);
+  border-radius: 9999px;
+}
+.hoi-an-right-rail::-webkit-scrollbar-thumb {
+  background: linear-gradient(#fb923c, #f59e0b);
+  border-radius: 9999px;
+  border: 2px solid rgba(255,255,255,.75);
+}
+.hoi-an-right-rail::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(#f97316, #ea580c);
+}

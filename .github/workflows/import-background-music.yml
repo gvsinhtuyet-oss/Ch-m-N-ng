@@ -24,7 +24,7 @@ jobs:
           set -euo pipefail
           mkdir -p public/audio
           python -m pip install --quiet gdown
-          gdown --id "10gje9w4Mjz2wNRXFG8iDt2UcZ6eVxwT0" -O /tmp/cham-danang-source.mp3
+          gdown "10gje9w4Mjz2wNRXFG8iDt2UcZ6eVxwT0" -O /tmp/cham-danang-source.mp3
           test -s /tmp/cham-danang-source.mp3
           file /tmp/cham-danang-source.mp3
 

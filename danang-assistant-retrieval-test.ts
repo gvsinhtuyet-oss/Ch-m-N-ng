@@ -23,6 +23,9 @@ test('01 - câu hỏi chung trả về hướng dẫn thân thiện', () => {
   assert.equal(result.found, true);
   assert.match(result.answer, /khám phá Đà Nẵng/i);
   assert.match(result.answer, /từ địa phương/i);
+  assert.match(result.answer, /địa danh ở đâu/i);
+  assert.match(result.answer, /chuyện lịch sử/i);
+  assert.match(result.answer, /ưu tiên trả lời theo đúng trạm/i);
 });
 
 test('02 - hiểu phương ngữ "ở mô" khi hỏi về Sông Hoài', () => {
@@ -135,8 +138,8 @@ test('14 - câu hỏi địa phương dài vẫn được chuẩn hóa', () => {
   assert.notEqual(result.layer, 'unknown');
 });
 
-test('15 - không cần đăng nhập hay bộ đếm lượt để tra cứu', () => {
-  for (let i = 0; i < 100; i += 1) {
+test('15 - mô phỏng 1000 lượt hỏi liên tiếp không có bộ đếm hay giới hạn lượt', () => {
+  for (let i = 0; i < 1000; i += 1) {
     const result = retrieveDanangAssistantAnswer('Hội quán là chi?', { station: hoiAn });
     assert.equal(result.found, true);
   }

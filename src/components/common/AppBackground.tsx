@@ -1,12 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { readTheme } from '../../services/ThemeService';
+import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 
 export const AppBackground: React.FC = () => {
   const [theme, setTheme] = useState(readTheme);
   const [mobile, setMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
   const [imageFailed, setImageFailed] = useState(false);
-  const source = (mobile ? theme.mobile || theme.desktop : theme.desktop || theme.mobile);
+  const customSource = (mobile ? theme.mobile || theme.desktop : theme.desktop || theme.mobile);
+  const source = customSource || DEFAULT_APP_BACKGROUND_DATA_URL;
   useEffect(() => { setImageFailed(false); }, [source]);
   useEffect(() => {
     const refresh = () => setTheme(readTheme());

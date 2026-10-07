@@ -2,19 +2,17 @@ import { MusicControl } from './MusicControl';
 import React, { useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { PWAInstallButton } from './PWAInstallButton';
-import { Volume2, VolumeX, Globe, Wifi, WifiOff, User, Compass, Award, Heart, Presentation, Map as MapIcon } from 'lucide-react';
+import { Globe, Wifi, WifiOff, User, Compass, Award, Heart, Presentation, Map as MapIcon } from 'lucide-react';
 
 export const Header: React.FC = () => {
   const {
     currentUser,
     role,
     isOnline,
-    soundEnabled,
     language,
     currentView,
     currentGrade,
     setCurrentGrade,
-    toggleSound,
     toggleLanguage,
     setCurrentView,
     logout,
@@ -59,14 +57,8 @@ export const Header: React.FC = () => {
               <span>{language.toUpperCase()}</span>
             </button>
 
-            {/* Sound toggle */}
-            <button
-              onClick={toggleSound}
-              className="p-1 rounded-md text-slate-600 hover:bg-slate-100 transition"
-              title={soundEnabled ? t.soundOn : t.soundOff}
-            >
-              {soundEnabled ? <Volume2 className="w-4 h-4 text-sky-600" /> : <VolumeX className="w-4 h-4 text-slate-400" />}
-            </button>
+            {/* Compact global audio control */}
+            <MusicControl />
 
             {/* PWA Install Button */}
             <PWAInstallButton />
@@ -88,7 +80,6 @@ export const Header: React.FC = () => {
           </div>
         </div>
 
-        {currentView !== 'station-view' && currentView !== 'presentation-view' && <div className="max-w-7xl mx-auto px-3 sm:px-6 pb-2 flex justify-end"><MusicControl /></div>}
         {/* Main Brand & Navigation */}
         <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-4">
           {/* Logo & Slogan */}

@@ -37,11 +37,15 @@ export function firestoreStore(project, database = '(default)', fetchRequest = f
       ...(data ? { body:JSON.stringify({ fields:{ payload:{ stringValue:JSON.stringify(data) }, ...(Number.isFinite(data.expiresAt) ? {expireAt:{timestampValue:new Date(data.expiresAt).toISOString()}} : {}) } }) } : {}),
       signal:AbortSignal.timeout(10000) });
     if (response.status === 404) {
-      // Missing documents are normal; a missing database or failed write is not.
+      // A GET for one document returns 404 when the collection/document has not
+      // been created yet. That is the expected state before the very first
+      // admin account is bootstrapped, so never treat it as a missing database.
+      // A real missing database will still fail on the following create/write.
+      if ((method === 'GET' && route.includes('/')) || method === 'DELETE') return null;
+
       const detail = await response.json().catch(() => ({}));
-      const missingDatabase = /database.*(?:does not exist|not found)|(?:does not exist|not found).*database/i.test(detail.error?.message || '');
-      if (!missingDatabase && ((method === 'GET' && route.includes('/')) || method === 'DELETE')) return null;
-      throw fail(503, 'Cơ sở dữ liệu tài khoản chưa tồn tại hoặc cấu hình chưa đúng. Hãy bật Firestore và kiểm tra AUTH_FIRESTORE_PROJECT, AUTH_FIRESTORE_DATABASE.');
+      console.error('Firestore 404', detail.error?.message || 'Not found');
+      throw fail(503, 'Không thể ghi dữ liệu vào Firestore. Hãy kiểm tra quyền truy cập của dịch vụ máy chủ tới cơ sở dữ liệu.');
     }
     if (response.status === 409 || response.status === 412) throw fail(409, 'Tài khoản đã tồn tại hoặc vừa được thay đổi.');
     if (!response.ok) { console.error('Auth storage HTTP',response.status); throw fail(503, 'Chưa kết nối được kho tài khoản. Hãy kiểm tra cấu hình Firestore.'); }

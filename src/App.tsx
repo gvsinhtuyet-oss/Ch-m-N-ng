@@ -19,7 +19,7 @@ import { WifiOff } from 'lucide-react';
 import { DanangAssistantChat } from './components/common/DanangAssistantChat';
 
 const AppContent: React.FC = () => {
-  const { currentUser, role, currentView, currentStation, isOnline, soundEnabled, closeStation, exitPresentationMode } = useApp();
+  const { currentUser, role, currentView, currentStation, currentAssistantHotspot, isOnline, soundEnabled, closeStation, exitPresentationMode } = useApp();
 
   useEffect(() => {
     const unlock = () => { void backgroundMusic.unlock(); };
@@ -79,7 +79,7 @@ const AppContent: React.FC = () => {
       <Footer />
 
       {role === 'student' && currentUser && currentView !== 'landing' && currentView !== 'presentation-view' && (
-        <DanangAssistantChat station={currentView === 'station-view' ? currentStation : null} />
+        <DanangAssistantChat station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} />
       )}
 
       {storageWarning && (

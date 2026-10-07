@@ -240,17 +240,23 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
                     audioService.playSfx('click');
                     setCurrentStage(st.num as 1 | 2 | 3 | 4);
                   }}
-                  className={`group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition ${active
-                    ? 'bg-gradient-to-r from-orange-500 to-amber-400 text-white shadow-lg shadow-orange-500/25'
-                    : done
-                      ? 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100'
-                      : 'bg-slate-50 text-slate-400'} disabled:cursor-not-allowed`}
+                  className={`group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition ${
+                    active
+                      ? 'bg-gradient-to-r from-orange-500 to-amber-400 text-white shadow-lg shadow-orange-500/25'
+                      : done
+                        ? 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100'
+                        : 'bg-slate-50 text-slate-400'
+                  } disabled:cursor-not-allowed`}
                 >
-                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 ${active
-                    ? 'border-white/70 bg-white/15'
-                    : done
-                      ? 'border-emerald-300 bg-white text-emerald-600'
-                      : 'border-slate-200 bg-white text-slate-400'}`}>
+                  <span
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 ${
+                      active
+                        ? 'border-white/70 bg-white/15'
+                        : done
+                          ? 'border-emerald-300 bg-white text-emerald-600'
+                          : 'border-slate-200 bg-white text-slate-400'
+                    }`}
+                  >
                     {done && !active ? <CheckCircle2 className="h-5 w-5" /> : <Icon className="h-5 w-5" />}
                   </span>
                   <span className="min-w-0">
@@ -262,8 +268,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
             })}
           </div>
         </div>
-      ) : (
-      {isUnlockedAllStages ? (
+      ) : isUnlockedAllStages ? (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-slate-100/80 p-1.5 rounded-2xl">
           {stages.map((st) => {
             const Icon = st.icon;
@@ -273,7 +278,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
                 key={st.num}
                 onClick={() => {
                   audioService.playSfx('click');
-                  setCurrentStage(st.num as any);
+                  setCurrentStage(st.num as 1 | 2 | 3 | 4);
                 }}
                 className={`py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition ${
                   isActive
@@ -288,7 +293,6 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
           })}
         </div>
       ) : (
-        /* First time flow stepper */
         <div className="bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-slate-100 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-bold text-slate-500">
           <span className="text-slate-700">Hành trình lần đầu (hoàn thành tuần tự):</span>
           <div className="flex items-center gap-1.5 overflow-x-auto">
@@ -304,8 +308,8 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
                   currentStage === step.num
                     ? 'bg-sky-600 text-white shadow-xs'
                     : currentStage > step.num
-                    ? 'bg-emerald-100 text-emerald-800'
-                    : 'bg-slate-100 text-slate-400'
+                      ? 'bg-emerald-100 text-emerald-800'
+                      : 'bg-slate-100 text-slate-400'
                 }`}
               >
                 <span>{step.label}</span>
@@ -315,9 +319,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </div>
       )}
 
-      )}
-      
-            {/* Stage Views with subtle container transition */}
+      {/* Stage Views with subtle container transition */}
       <div className="transition-all duration-300">
         {currentStage === 1 && (
           station.id === 'g2-station-4' ? (

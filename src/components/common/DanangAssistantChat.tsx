@@ -82,7 +82,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
       <button
         type="button"
         onClick={() => setOpen(value => !value)}
-        className="fixed bottom-20 right-4 z-[58] flex items-center gap-2 rounded-full border border-sky-200 bg-gradient-to-r from-sky-700 to-cyan-600 px-4 py-3 text-white shadow-xl shadow-sky-950/20 transition hover:-translate-y-0.5 active:translate-y-0"
+        className="fixed bottom-4 right-4 z-[58] flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/80 bg-gradient-to-br from-sky-700 to-cyan-600 text-white shadow-xl shadow-sky-950/20 transition hover:-translate-y-0.5 hover:scale-105 active:translate-y-0 active:scale-95"
         aria-label="Mở Trợ lý khám phá Đà Nẵng"
         title="Trợ lý khám phá Đà Nẵng"
       >
@@ -94,7 +94,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         <section
           role="dialog"
           aria-label="Trợ lý khám phá Đà Nẵng"
-          className="fixed bottom-36 right-3 z-[60] flex max-h-[72vh] w-[calc(100vw-1.5rem)] max-w-[390px] flex-col overflow-hidden rounded-[1.75rem] border border-sky-200 bg-white shadow-2xl"
+          className="fixed bottom-[4.5rem] right-3 z-[60] flex max-h-[72vh] w-[calc(100vw-1.5rem)] max-w-[390px] flex-col overflow-hidden rounded-[1.75rem] border border-sky-200 bg-white shadow-2xl"
         >
           <header className="relative overflow-hidden bg-gradient-to-r from-sky-800 via-sky-700 to-cyan-600 px-4 py-4 text-white">
             <div className="absolute -right-7 -top-8 h-24 w-24 rounded-full bg-white/10" />

@@ -52,7 +52,13 @@ export function firestoreStore(project, database = '(default)', fetchRequest = f
   return {
     async get(collection,id) { return unpack(await request(collection+'/'+id)); },
     async put(collection,id,data,create=false) {
-      await request(collection+'/'+id,'PATCH',data,create ? '?currentDocument.exists=false' : '');
+      // Firestore createDocument is more reliable than PATCH + currentDocument.exists=false
+      // for the very first document in a named database.
+      if (create) {
+        await request(collection,'POST',data,'?documentId='+encodeURIComponent(id));
+        return;
+      }
+      await request(collection+'/'+id,'PATCH',data);
     },
     async remove(collection,id) { await request(collection+'/'+id,'DELETE'); },
     async list(collection) {

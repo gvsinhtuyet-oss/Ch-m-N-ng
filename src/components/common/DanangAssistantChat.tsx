@@ -45,6 +45,11 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const endRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    setMessages([{ id: 'welcome', role: 'assistant', text: WELCOME }]);
+    setInput('');
+  }, [station?.id]);
+
+  useEffect(() => {
     if (open) endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [messages, open]);
 

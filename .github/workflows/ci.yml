@@ -43,5 +43,8 @@ jobs:
       - name: Content storage tests
         run: node --test content-storage-test.mjs
 
+      - name: Da Nang assistant retrieval tests
+        run: npm run test:assistant
+
       - name: Production build
         run: npm run build

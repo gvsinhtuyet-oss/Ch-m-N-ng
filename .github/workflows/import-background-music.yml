@@ -28,6 +28,11 @@ jobs:
           test -s /tmp/cham-danang-source.mp3
           file /tmp/cham-danang-source.mp3
 
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
       - name: Create compact local MP3
         run: |
           set -euo pipefail

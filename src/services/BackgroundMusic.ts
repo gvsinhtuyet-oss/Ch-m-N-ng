@@ -1,5 +1,4 @@
-const BACKGROUND_MUSIC_URL =
-  'https://drive.google.com/uc?export=download&id=10gje9w4Mjz2wNRXFG8iDt2UcZ6eVxwT0';
+const BACKGROUND_MUSIC_URL = '/audio/cham-danang-background.mp3';
 
 class BackgroundMusic {
   private audio: HTMLAudioElement | null = null;
@@ -7,7 +6,7 @@ class BackgroundMusic {
   private soundAllowed = true;
   private unlocked = false;
   private enabled = true;
-  private volume = .35;
+  private volume = .28;
   private foregroundLocks = 0;
   private foregroundSources = new Set<string>();
   private resumeTimer: number | null = null;
@@ -27,11 +26,18 @@ class BackgroundMusic {
     if (this.audio || typeof window === 'undefined') return;
     const audio = new Audio(BACKGROUND_MUSIC_URL);
     audio.loop = true;
-    audio.preload = 'metadata';
+    audio.preload = 'auto';
     audio.volume = this.volume;
     audio.addEventListener('play', () => this.notify());
     audio.addEventListener('pause', () => this.notify());
-    audio.addEventListener('ended', () => this.notify());
+    audio.addEventListener('ended', () => {
+      // loop=true is the primary behavior; this is a defensive fallback.
+      if (this.canPlay()) {
+        audio.currentTime = 0;
+        void audio.play().catch(() => this.notify());
+      }
+      this.notify();
+    });
     audio.addEventListener('error', () => this.notify());
     this.audio = audio;
   }

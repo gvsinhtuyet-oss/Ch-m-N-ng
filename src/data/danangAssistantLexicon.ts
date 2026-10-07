@@ -199,7 +199,7 @@ export const DANANG_DIALECT_NORMALIZATION: Record<string, string> = {
 };
 
 export const DANANG_ASSISTANT_HELP_RESPONSE =
-  'Mình có thể giúp bạn khám phá Đà Nẵng nè 😊 Bạn có thể hỏi mình về từ khó, từ địa phương, địa danh, lịch sử, địa lý, văn hóa, danh thắng hoặc nội dung trong bài học. Bạn cứ hỏi tự nhiên như “ở mô?”, “là chi?”, “răng rứa?” mình vẫn hiểu nhé!';
+  'Mình có thể giúp bạn khám phá Đà Nẵng đó! 😊\nBạn có thể hỏi mình về:\n\n- nghĩa của từ khó hoặc từ địa phương,\n- một địa danh ở đâu,\n- chuyện lịch sử liên quan đến bài học,\n- nhân vật, di tích, danh thắng,\n- văn hóa, làng nghề, sông núi,\n- hoặc hỏi “điều này liên quan gì đến bài đang học?”.\n\nNếu bạn đang ở một trạm cụ thể, mình sẽ ưu tiên trả lời theo đúng trạm đó trước nhé. 🌟';
 
 export function normalizeDanangDialect(input: string): string {
   let normalized = input.trim().toLowerCase();

@@ -82,21 +82,18 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
       <button
         type="button"
         onClick={() => setOpen(value => !value)}
-        className="group fixed bottom-16 left-3 z-[58] flex h-14 w-14 items-center justify-center rounded-full border-[3px] border-white bg-gradient-to-br from-orange-500 via-amber-400 to-sky-600 text-white shadow-[0_12px_30px_rgba(15,23,42,0.28)] ring-4 ring-orange-200/45 transition hover:-translate-y-1 hover:scale-105 active:translate-y-0 active:scale-95 sm:left-4 sm:h-16 sm:w-16"
+        className="group fixed bottom-14 left-4 z-[58] inline-flex h-12 items-center gap-2.5 rounded-full border border-sky-200 bg-gradient-to-r from-sky-700 via-sky-600 to-cyan-500 px-4 pr-5 text-white shadow-[0_12px_28px_rgba(3,105,161,0.28)] ring-2 ring-white/70 transition hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(3,105,161,0.34)] active:translate-y-0"
         aria-label="Mở Trợ lý khám phá Đà Nẵng"
         title="Trợ lý khám phá Đà Nẵng"
       >
-        <Compass className="h-7 w-7 animate-spin-slow drop-shadow-sm sm:h-8 sm:w-8" />
-        <span className="pointer-events-none absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-orange-500 shadow-md ring-1 ring-orange-100">
-          <MessageCircle className="h-3 w-3" />
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25">
+          <Compass className="h-5 w-5 animate-spin-slow drop-shadow-sm" />
         </span>
-        <span className="pointer-events-none absolute left-full ml-2 inline-flex min-w-[150px] items-center gap-2 rounded-[1.15rem] border border-emerald-200 bg-emerald-50/95 px-3.5 py-2.5 text-left shadow-lg shadow-emerald-100/70 backdrop-blur-md">
-          <MessageCircle className="h-4 w-4 shrink-0 text-emerald-600" />
-          <span className="flex min-w-0 flex-col leading-tight">
-            <span className="text-[12px] font-black text-emerald-800">Trợ lý khám phá</span>
-            <span className="mt-0.5 text-[9px] font-bold text-emerald-700/85">Hỏi mình về điểm đến này</span>
-          </span>
+        <span className="flex flex-col items-start leading-tight">
+          <span className="text-[12px] font-black sm:text-[13px]">Trợ lý khám phá</span>
+          <span className="mt-0.5 text-[9px] font-semibold text-sky-100 sm:text-[10px]">Hỏi mình về điểm đến này</span>
         </span>
+        <MessageCircle className="ml-1 h-4 w-4 text-white/90" />
       </button>
 
       {open && (

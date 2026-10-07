@@ -217,18 +217,10 @@ export const LandingView: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col justify-between overflow-x-hidden bg-slate-950 text-white select-none">
-      {/* Fullscreen Hero Background Image of Da Nang (Dragon Bridge & Han River skyline) */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000 ease-out scale-102"
-        style={{
-          backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Dragon_Bridge%2C_Da_Nang_during_day_-_20230819_%28cropped%29.jpg/1920px-Dragon_Bridge%2C_Da_Nang_during_day_-_20230819_%28cropped%29.jpg')`,
-        }}
-      />
-
-      {/* Balanced elegant overlay: preserves photo vibrance while making text clear */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/50 to-slate-950/90 pointer-events-none" />
-      <div className="absolute inset-0 bg-radial from-transparent via-slate-950/20 to-slate-950/70 pointer-events-none" />
+    <div className="relative min-h-screen w-full flex flex-col justify-between overflow-x-hidden bg-transparent text-white select-none">
+      {/* Global background comes from AppBackground so Admin > GIAO DIỆN controls every screen. */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/65 via-slate-950/28 to-slate-950/72 pointer-events-none" />
+      <div className="absolute inset-0 bg-radial from-transparent via-slate-950/10 to-slate-950/45 pointer-events-none" />
 
       {/* Top Bar on Cover Page */}
       <header className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 pt-5 pb-3 flex items-center justify-between gap-4">
@@ -366,8 +358,8 @@ export const LandingView: React.FC = () => {
 
       {/* Role Picker Modal */}
       {showRolePicker && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white text-slate-800 rounded-3xl p-6 sm:p-8 max-w-4xl w-full max-h-[90dvh] overflow-y-auto shadow-2xl border border-sky-100 space-y-5 animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50 bg-slate-950/38 backdrop-blur-[2px] flex items-center justify-center p-4">
+          <div className="bg-white/95 backdrop-blur-xl text-slate-800 rounded-3xl p-6 sm:p-8 max-w-4xl w-full max-h-[90dvh] overflow-y-auto shadow-2xl border border-white/80 space-y-5 animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between">
               <div>
                 <span className="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 text-[11px] font-bold">

@@ -5,6 +5,7 @@ import { progressService } from '../../services/ProgressService';
 import { offlineService } from '../../services/OfflineService';
 import { audioService } from '../../services/AudioService';
 import { Stage1Exploration } from '../../components/station/Stage1Exploration';
+import { HoiAnStage1Exploration } from '../../components/station/HoiAnStage1Exploration';
 import { Stage2Challenge } from '../../components/station/Stage2Challenge';
 import { Stage3CheckIn } from '../../components/station/Stage3CheckIn';
 import { Stage4Stamp } from '../../components/station/Stage4Stamp';
@@ -275,10 +276,11 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
       {/* Stage Views with subtle container transition */}
       <div className="transition-all duration-300">
         {currentStage === 1 && (
-          <Stage1Exploration
-            station={station}
-            onCompleteStage={() => setCompletedStagePreview(1)}
-          />
+          station.id === 'g2-station-4' ? (
+            <HoiAnStage1Exploration station={station} onCompleteStage={() => setCompletedStagePreview(1)} />
+          ) : (
+            <Stage1Exploration station={station} onCompleteStage={() => setCompletedStagePreview(1)} />
+          )
         )}
 
         {currentStage === 2 && (

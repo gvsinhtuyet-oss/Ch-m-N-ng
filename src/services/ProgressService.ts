@@ -244,6 +244,43 @@ class ProgressService {
     return { ...current };
   }
 
+  public finalizeJourneyAndStamp(studentId: string, stationId: string): StudentStationProgress {
+    const current = this.getStationProgress(studentId, stationId);
+
+    if (
+      this.isGuest(studentId) ||
+      !current.stage1Completed ||
+      !current.stage2Completed ||
+      !current.stage3Completed
+    ) {
+      return current;
+    }
+
+    const now = new Date().toISOString();
+
+    if (!current.journeyMapReceived) {
+      current.journeyMapReceived = true;
+      current.journeyMapReceivedAt = now;
+    }
+    if (!current.keyFragmentReceived) {
+      current.keyFragmentReceived = true;
+      current.keyFragmentReceivedAt = now;
+    }
+
+    current.stage4Completed = true;
+    current.stationCompleted = true;
+    current.stampReceived = true;
+    current.completedAt = current.completedAt || now;
+    current.lastVisitedAt = now;
+
+    const key = this.getCompositeKey(studentId, stationId);
+    this.memoryCache.set(key, current);
+    this.saveToStorage();
+    this.queueSyncEvent(studentId, stationId, 'JOURNEY_MAP_SAVED_AND_STAMPED');
+
+    return { ...current };
+  }
+
   public claimJourneyGift(studentId: string, stationId: string): StudentStationProgress {
     const current = this.getStationProgress(studentId, stationId);
 

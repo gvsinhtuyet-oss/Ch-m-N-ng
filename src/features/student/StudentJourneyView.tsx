@@ -55,7 +55,9 @@ export const StudentJourneyView: React.FC = () => {
     demoStations[0];
 
   const completed = gradeProgress.completedStations;
-  const total = Math.max(1, displayStations.length);
+  // Progress is measured only against stations that are actually open.
+  // Locked "Đang phát triển" cards remain visible but must not make completion impossible.
+  const total = Math.max(1, demoStations.length);
   const progressPercent = Math.round((completed / total) * 100);
 
   const stats = [

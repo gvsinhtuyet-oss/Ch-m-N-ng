@@ -41,7 +41,7 @@ export const Header: React.FC = () => {
   const studentAvatar = (currentUser as { avatar?: string } | null)?.avatar;
 
   const studentNav = [
-    { label: 'Trang bìa', icon: Home, view: 'landing', active: currentView === 'landing', iconClass: 'text-orange-500' },
+    { label: 'Trang chủ', icon: Home, view: 'landing', active: currentView === 'landing', iconClass: 'text-orange-500' },
     {
       label: 'Hành trình',
       icon: Compass,
@@ -51,8 +51,8 @@ export const Header: React.FC = () => {
     },
     { label: 'Hộ chiếu', icon: Award, view: 'student-passport', active: currentView === 'student-passport', iconClass: 'text-amber-500' },
     { label: 'Bản đồ', icon: MapIcon, view: 'student-maps', active: currentView === 'student-maps', iconClass: 'text-emerald-600' },
-    { label: 'Kỉ niệm', icon: Heart, view: 'student-memories', active: currentView === 'student-memories', iconClass: 'text-rose-500' },
-    { label: 'Hồ sơ', icon: User, view: 'student-profile', active: currentView === 'student-profile', iconClass: 'text-indigo-500' },
+    { label: 'Bộ sưu tập', icon: Heart, view: 'student-memories', active: currentView === 'student-memories', iconClass: 'text-rose-500' },
+    { label: 'Nhà phiêu lưu', icon: User, view: 'student-profile', active: currentView === 'student-profile', iconClass: 'text-indigo-500' },
   ] as const;
 
   return (
@@ -303,7 +303,7 @@ export const Header: React.FC = () => {
                 }}
                 className="flex cursor-pointer items-center gap-1.5 text-xs font-semibold text-slate-500 transition hover:text-sky-600"
               >
-                <span>← Trở về Trang bìa mở đầu</span>
+                <span>← Trở về Trang chủ</span>
               </button>
             </div>
 

@@ -168,6 +168,51 @@ export const LandingView: React.FC = () => {
     openRolePicker();
   };
 
+  const enterGuestJourney = (grade: number) => {
+    setChosenGrade(grade);
+    setLoginError('');
+    audioService.playSfx('click');
+
+    window.setTimeout(() => {
+      const normalizedName = 'Nhà phiêu lưu tự do';
+      let guestId = '';
+      try {
+        guestId = localStorage.getItem('cham_danang_guest_id_v1') || '';
+      } catch {}
+
+      const id =
+        guestId ||
+        `guest-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+
+      const student = {
+        ...DEMO_STUDENTS[0],
+        id,
+        studentCode: id,
+        isGuest: true,
+        classId: 'guest',
+        className: 'Khách trải nghiệm',
+        grade,
+        displayName: normalizedName,
+        name: normalizedName,
+        pinHash: undefined,
+      };
+
+      try {
+        localStorage.setItem('cham_danang_guest_id_v1', id);
+        localStorage.setItem('cham_danang_guest_grade_v1', String(grade));
+      } catch {}
+
+      try {
+        if (authService.current()) {
+          authService.logout().catch(() => {});
+        }
+        loginAsStudent(student);
+      } catch (error) {
+        setLoginError((error as Error).message);
+      }
+    }, 320);
+  };
+
   const handleStudentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     audioService.playSfx('click');
@@ -513,22 +558,32 @@ export const LandingView: React.FC = () => {
                           key={grade}
                           type="button"
                           onClick={() => {
+                            if (guestMode) {
+                              enterGuestJourney(grade);
+                              return;
+                            }
                             setChosenGrade(grade);
                             setLoginError('');
-                            if (!guestMode && Number(selectedClass.split('/')[0]) !== grade) {
+                            if (Number(selectedClass.split('/')[0]) !== grade) {
                               const classroom = DEMO_CLASSROOMS.find(item => item.grade === grade);
                               setSelectedClass(classroom?.name.replace('Lớp ', '') || `${grade}/1`);
                               setSavedStudentId('');
                             }
                           }}
-                          className={`min-w-0 rounded-2xl bg-gradient-to-br ${color} px-2 py-4 sm:px-4 sm:py-5 text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-sky-300 ${
-                            active ? 'ring-4 ring-sky-200 scale-[1.02]' : ''
+                          className={`min-w-0 rounded-2xl bg-gradient-to-br ${color} px-2 py-4 sm:px-4 sm:py-5 text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-sky-300 ${
+                            active
+                              ? 'ring-4 ring-white/90 scale-[1.12] sm:scale-[1.14] shadow-2xl z-10'
+                              : guestMode && chosenGrade
+                                ? 'scale-[0.86] opacity-45'
+                                : ''
                           }`}
                         >
                           <GraduationCap className="mx-auto mb-2 h-5 w-5 sm:h-6 sm:w-6" />
                           <span className="block whitespace-nowrap text-sm sm:text-lg font-black">Khối {grade}</span>
                           <span className="mt-1 block text-[9px] sm:text-[10px] text-white/90">
-                            {active ? 'Đã chọn ✓' : 'Chạm để chọn'}
+                            {active
+                              ? (guestMode ? 'Đang vào hành trình…' : 'Đã chọn ✓')
+                              : (guestMode ? 'Chạm để vào học' : 'Chạm để chọn')}
                           </span>
                         </button>
                       );
@@ -536,10 +591,9 @@ export const LandingView: React.FC = () => {
                   </div>
                 </div>
 
-                {chosenGrade && (
+                {chosenGrade && !guestMode && (
                   <div className="animate-in fade-in slide-in-from-top-2 duration-200 space-y-4 rounded-2xl border border-sky-100 bg-sky-50/60 p-4 sm:p-5">
-                    {!guestMode && (
-                      <>
+                    <>
                         <div>
                           <label className="font-bold text-slate-700 block mb-2">
                             Lớp cụ thể của em
@@ -602,12 +656,9 @@ export const LandingView: React.FC = () => {
                           />
                         </div>
                       </>
-                    )}
 
                     <div className="rounded-xl bg-white/90 border border-sky-100 px-3 py-2.5 text-[10px] text-sky-800 leading-relaxed">
-                      {guestMode
-                        ? 'Chọn khối xong là có thể bắt đầu hành trình ngay.'
-                        : 'App sẽ ghi nhớ tên, lớp và tiến độ của em trên thiết bị này. Dữ liệu đồng bộ được xử lý tự động, em không cần nhập mã.'}
+                      App sẽ ghi nhớ tên, lớp và tiến độ của em trên thiết bị này. Dữ liệu đồng bộ được xử lý tự động, em không cần nhập mã.
                     </div>
 
                     {loginError && (

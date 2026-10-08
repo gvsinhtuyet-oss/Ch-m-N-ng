@@ -11,6 +11,7 @@ import {
   ChevronRight,
   ExternalLink,
   Globe,
+  LockKeyhole,
   MapPin,
   Maximize2,
   Pause,
@@ -47,6 +48,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const [showImage, setShowImage] = useState(false);
   const [showVr, setShowVr] = useState(false);
   const [showReward, setShowReward] = useState(false);
+  const [lockMessage, setLockMessage] = useState('');
   const [sessionCompletedHotspotIds, setSessionCompletedHotspotIds] = useState<string[]>(() =>
     progressService.getStationProgress(studentId, station.id).exploredHotspotIds
   );
@@ -60,6 +62,11 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   ]);
   const explored = completedHotspotIds.has(hotspot.id);
   const remainingHotspotCount = station.hotspots.filter(item => !completedHotspotIds.has(item.id)).length;
+  const freeReview = progress.stage1Completed || progress.stationCompleted || progress.stampReceived;
+  const firstIncompleteIndex = station.hotspots.findIndex(item => !completedHotspotIds.has(item.id));
+  const activeUnlockIndex = firstIncompleteIndex === -1 ? station.hotspots.length - 1 : firstIncompleteIndex;
+  const canAccessHotspot = (itemIndex: number) =>
+    freeReview || completedHotspotIds.has(station.hotspots[itemIndex]?.id) || itemIndex === activeUnlockIndex;
   const playing = narrationState === 'playing';
   const paused = narrationState === 'paused';
 
@@ -79,6 +86,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
     setSelected(null);
     setSubmitted(false);
     setCorrect(false);
+    setLockMessage('');
     audioService.stopNarration();
   }, [index]);
 
@@ -114,6 +122,13 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
   const go = (nextIndex: number) => {
     if (nextIndex < 0 || nextIndex >= station.hotspots.length) return;
+    if (!canAccessHotspot(nextIndex)) {
+      const requiredIndex = Math.max(0, activeUnlockIndex);
+      setLockMessage(`Em hãy trả lời đúng câu hỏi ở Điểm ${requiredIndex + 1} trước để mở Điểm ${nextIndex + 1} nhé!`);
+      audioService.playSfx('wrong');
+      return;
+    }
+    setLockMessage('');
     audioService.playSfx('transition');
     setIndex(nextIndex);
   };
@@ -260,35 +275,63 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               {station.hotspots.map((item, itemIndex) => {
                 const done = completedHotspotIds.has(item.id);
                 const active = itemIndex === index;
+                const unlocked = canAccessHotspot(itemIndex);
+                const isCurrentOpen = !done && unlocked;
                 return (
                   <button
                     key={item.id}
                     type="button"
                     onClick={() => go(itemIndex)}
-                    className={`group flex min-w-0 items-center gap-2 rounded-2xl border p-2 text-left transition ${active
-                      ? 'border-orange-400 bg-orange-50 shadow-md ring-2 ring-orange-200'
-                      : done
-                        ? 'border-emerald-200 bg-emerald-50'
-                        : 'border-orange-100 bg-white hover:border-orange-300 hover:bg-orange-50'}`}
+                    aria-disabled={!unlocked}
+                    className={`group relative flex min-w-0 items-center gap-2 overflow-hidden rounded-2xl border p-2 text-left transition ${
+                      active
+                        ? 'border-orange-400 bg-orange-50 shadow-md ring-2 ring-orange-200'
+                        : done
+                          ? 'border-emerald-200 bg-emerald-50 hover:bg-emerald-100'
+                          : isCurrentOpen
+                            ? 'border-sky-300 bg-sky-50 hover:bg-sky-100'
+                            : 'border-slate-200 bg-slate-100/90 text-slate-400'
+                    }`}
                   >
                     <img
                       src={item.image}
                       alt=""
-                      className="h-12 w-14 shrink-0 rounded-xl object-cover"
+                      className={`h-12 w-14 shrink-0 rounded-xl object-cover ${!unlocked ? 'grayscale opacity-45' : ''}`}
                     />
                     <span className="min-w-0">
-                      <span className="flex items-center gap-1 text-[9px] font-black uppercase text-orange-600">
+                      <span className={`flex items-center gap-1 text-[9px] font-black uppercase ${
+                        done ? 'text-emerald-700' : isCurrentOpen ? 'text-sky-700' : 'text-slate-400'
+                      }`}>
                         Điểm {itemIndex + 1}
-                        {done && <CheckCircle2 className="h-3 w-3 text-emerald-600" />}
+                        {done ? (
+                          <CheckCircle2 className="h-3 w-3 text-emerald-600" />
+                        ) : !unlocked ? (
+                          <LockKeyhole className="h-3 w-3" />
+                        ) : (
+                          <Play className="h-3 w-3 fill-current" />
+                        )}
                       </span>
-                      <span className="mt-0.5 line-clamp-2 block text-[11px] font-black leading-4 text-slate-800">
+                      <span className={`mt-0.5 line-clamp-2 block text-[11px] font-black leading-4 ${
+                        !unlocked ? 'text-slate-400' : 'text-slate-800'
+                      }`}>
                         {item.titleVi}
                       </span>
+                      <span className={`mt-0.5 block text-[9px] font-bold ${
+                        done ? 'text-emerald-600' : isCurrentOpen ? 'text-sky-600' : 'text-slate-400'
+                      }`}>
+                        {done ? 'Hoàn thành' : isCurrentOpen ? 'Đang khám phá' : 'Chưa mở'}
+                      </span>
                     </span>
+                    {!unlocked && <span className="absolute inset-0 bg-white/15" />}
                   </button>
                 );
               })}
             </div>
+            {lockMessage && (
+              <div className="shrink-0 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-[11px] font-bold text-amber-800 shadow-sm">
+                {lockMessage}
+              </div>
+            )}
           </div>
 
           {/* RIGHT: information rail */}
@@ -384,7 +427,9 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       : 'bg-amber-50 text-amber-800'}`}
                   >
                     {correct
-                      ? 'Chính xác! Em đã mở thêm một dấu ấn của Hội An.'
+                      ? (index < station.hotspots.length - 1
+                          ? `Chính xác! Em đã mở Điểm ${index + 2}. Hãy tiếp tục khám phá nhé!`
+                          : 'Chính xác! Em đã hoàn thành câu hỏi ở điểm cuối.')
                       : 'Chưa đúng rồi. Em nhìn lại ảnh hoặc nghe thuyết minh nhé!'}
                   </p>
                 )}
@@ -422,14 +467,16 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             <div className="shrink-0 rounded-[1.5rem] border border-emerald-200 bg-gradient-to-r from-emerald-50 via-teal-50 to-white p-3 shadow-sm shadow-emerald-100/50">
               <p className="text-[10px] font-black text-emerald-700">NHÀ PHIÊU LƯU ƠI!</p>
               <p className="mt-1 text-[11px] font-semibold leading-4 text-slate-600">
-                Quan sát thật kĩ, nghe câu chuyện và hoàn thành câu hỏi để mở điểm tiếp theo nhé.
+                {freeReview
+                  ? 'Em đã hoàn thành Chặng 1. Bây giờ có thể chọn xem lại bất kỳ điểm nào.'
+                  : 'Lần đầu khám phá: trả lời đúng câu hỏi ở từng điểm để mở điểm tiếp theo nhé.'}
               </p>
 
               {submitted && correct ? (
                 <>
                   {remainingHotspotCount > 0 && (
-                    <p className="mt-2 rounded-xl bg-amber-50 px-3 py-2 text-[11px] font-bold leading-4 text-amber-800 ring-1 ring-amber-200">
-                      Em còn {remainingHotspotCount} câu hỏi phụ chưa hoàn thành. Hãy trả lời đủ trước khi qua Chặng 2.
+                    <p className="mt-2 rounded-xl bg-sky-50 px-3 py-2 text-[11px] font-bold leading-4 text-sky-800 ring-1 ring-sky-200">
+                      Đã hoàn thành Điểm {index + 1}. Em còn {remainingHotspotCount} điểm cần khám phá trước khi qua Chặng 2.
                     </p>
                   )}
                   <button
@@ -439,7 +486,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   >
                     {remainingHotspotCount === 0
                       ? 'HOÀN THÀNH CHẶNG 1'
-                      : `ĐẾN CÂU HỎI CÒN LẠI (${remainingHotspotCount})`}
+                      : `KHÁM PHÁ ĐIỂM ${Math.min(index + 2, station.hotspots.length)}`}
                     <ChevronRight className="h-4 w-4" />
                   </button>
                 </>
@@ -475,7 +522,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               <div className="absolute bottom-5 left-5 right-5 flex justify-between">
                 <button
                   type="button"
-                  disabled={index === 0}
+                  disabled={index === 0 || !canAccessHotspot(index - 1)}
                   onClick={() => go(index - 1)}
                   className="inline-flex items-center gap-1 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-slate-700 shadow disabled:opacity-40"
                 >
@@ -484,7 +531,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 </button>
                 <button
                   type="button"
-                  disabled={index === station.hotspots.length - 1}
+                  disabled={index === station.hotspots.length - 1 || !canAccessHotspot(index + 1)}
                   onClick={() => go(index + 1)}
                   className="inline-flex items-center gap-1 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-orange-700 shadow disabled:opacity-40"
                 >

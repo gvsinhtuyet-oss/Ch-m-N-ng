@@ -46,7 +46,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   ];
 
   return (
-    <div className={isHoiAnDemo ? "mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "max-w-7xl mx-auto px-3 sm:px-6 py-6 space-y-6"}>
+    <div className={isHoiAnDemo ? "mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}>
       {completedStagePreview !== null && (
         <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-lg flex items-center justify-center p-4">
           <div
@@ -161,14 +161,14 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </div>
       )}
       {/* Top Station Header bar */}
-      <div className={isHoiAnDemo ? "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/94 backdrop-blur-xl px-4 py-3 rounded-[1.5rem] border border-orange-200 shadow-lg shadow-orange-950/5" : "flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white/95 backdrop-blur-md p-4 sm:p-5 rounded-3xl border border-slate-200 shadow-xs"}>
+      <div className={isHoiAnDemo ? "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/94 backdrop-blur-xl px-4 py-3 rounded-[1.5rem] border border-orange-200 shadow-lg shadow-orange-950/5" : "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/96 backdrop-blur-md px-4 py-3.5 sm:px-5 sm:py-4 rounded-[1.6rem] border border-white/80 shadow-[0_10px_32px_rgba(15,23,42,0.08)]"}>
         <div className="flex items-center gap-3.5">
           <button
             onClick={() => {
               audioService.playSfx('click');
               onBack();
             }}
-            className="w-11 h-11 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition shadow-2xs shrink-0"
+            className="w-10 h-10 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition shadow-2xs shrink-0"
             title="Quay lại danh sách trạm"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -182,7 +182,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
               <span className="text-slate-300">•</span>
               <span className="text-xs text-amber-700 font-semibold">{station.themeNameVi}</span>
             </div>
-            <h1 className={isHoiAnDemo ? "text-xl sm:text-2xl lg:text-[1.7rem] font-black text-slate-950 leading-tight mt-0.5" : "text-xl sm:text-2xl font-black text-slate-900 leading-tight mt-0.5"}>
+            <h1 className={isHoiAnDemo ? "text-xl sm:text-2xl lg:text-[1.7rem] font-black text-slate-950 leading-tight mt-0.5" : "text-[22px] sm:text-[24px] font-black text-slate-950 leading-tight mt-0.5 tracking-tight"}>
               {station.titleVi}
             </h1>
           </div>
@@ -213,7 +213,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
 
       {/* Verification notice if draft */}
       {!station.isFullyVerified && (
-        <div className={isHoiAnDemo ? "px-3 py-2 rounded-xl bg-amber-50/95 border border-amber-200 text-amber-950 text-[10px] font-semibold flex items-center gap-2" : "p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 text-xs font-medium flex items-center gap-2.5"}>
+        <div className={isHoiAnDemo ? "px-3 py-2 rounded-xl bg-amber-50/95 border border-amber-200 text-amber-950 text-[10px] font-semibold flex items-center gap-2" : "px-3 py-2 rounded-xl bg-amber-50/95 border border-amber-200 text-amber-950 text-[10px] sm:text-[11px] font-medium flex items-center gap-2"}>
           <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping shrink-0" />
           <span>
             <strong>Lưu ý:</strong> Nội dung đang được hoàn thiện từ nguồn đã kiểm chứng của Sở Giáo dục và Đào tạo TP Đà Nẵng.
@@ -293,8 +293,8 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
           })}
         </div>
       ) : (
-        <div className="bg-white/95 backdrop-blur-md p-3.5 rounded-2xl border border-slate-100 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs font-bold text-slate-500">
-          <span className="text-slate-700">Hành trình lần đầu (hoàn thành tuần tự):</span>
+        <div className="bg-white/94 backdrop-blur-md px-3 py-2.5 rounded-2xl border border-white/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] sm:text-xs font-bold text-slate-500">
+          <span className="text-slate-700 whitespace-nowrap">Hành trình lần đầu:</span>
           <div className="flex items-center gap-1.5 overflow-x-auto">
             {[
               { num: 1, label: 'Chặng 1: Đánh thức điểm đến' },
@@ -304,7 +304,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
             ].map((step) => (
               <div
                 key={step.num}
-                className={`flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition ${
+                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] sm:text-[12px] font-bold whitespace-nowrap transition ${
                   currentStage === step.num
                     ? 'bg-sky-600 text-white shadow-xs'
                     : currentStage > step.num

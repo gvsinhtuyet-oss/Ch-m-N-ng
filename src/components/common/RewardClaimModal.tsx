@@ -19,13 +19,13 @@ export const RewardClaimModal: React.FC<Props> = ({
   onClaim,
   onContinue,
 }) => {
-  if (!reward) return null;
-
   useEffect(() => {
-    if (alreadyClaimed) return;
+    if (!reward || alreadyClaimed) return;
     audioService.playSfx('reward');
     onClaim();
-  }, [alreadyClaimed, onClaim]);
+  }, [reward, alreadyClaimed, onClaim]);
+
+  if (!reward) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in">

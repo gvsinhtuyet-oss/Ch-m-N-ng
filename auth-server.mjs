@@ -70,11 +70,14 @@ export function firestoreStore(project, database = '(default)', fetchRequest = f
         }
 
         if (response.status === 404) {
-          if ((method === 'GET' && route.includes('/')) || method === 'DELETE') return null;
           const detail = await response.json().catch(() => ({}));
           const message = detail.error?.message || 'Not found';
+          const missingDatabase = /database.+(does not exist|not found)|NOT_FOUND:.*database/i.test(message);
+          if (!missingDatabase && ((method === 'GET' && route.includes('/')) || method === 'DELETE')) return null;
           console.error('Firestore 404', message);
-          throw fail(503, 'Không thể ghi dữ liệu vào Firestore. Hãy kiểm tra cơ sở dữ liệu và quyền của Cloud Run.', {
+          throw fail(503, missingDatabase
+            ? 'Không tìm thấy cơ sở dữ liệu Firestore đã cấu hình.'
+            : 'Không thể ghi dữ liệu vào Firestore. Hãy kiểm tra cơ sở dữ liệu và quyền của Cloud Run.', {
             storageStatus: 404,
             storageCode: detail.error?.status || 'NOT_FOUND',
             storageDetail: message,
@@ -248,7 +251,10 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
         const token=randomBytes(32).toString('hex');
         await store.put('cham_sessions',hash(token),{userId:id,version:user.version,expiresAt:Date.now()+28800000});
         cookie(res,token); json(res,200,{user:safeUser(user)}); return true;
-      } finally { await store.remove('cham_auth_locks',id); }
+      } finally {
+        try { await store.remove('cham_auth_locks',id); }
+        catch (cleanupError) { console.error('Auth lock cleanup failed', cleanupError.message); }
+      }
     }
     if(pathname === '/api/auth/logout' && req.method === 'POST') {
       const id=sessionId(req); if(id) await store.remove('cham_sessions',id);

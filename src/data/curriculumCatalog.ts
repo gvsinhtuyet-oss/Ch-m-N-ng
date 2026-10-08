@@ -320,7 +320,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Trình bày được những nét chính về quy trình ươm tơ, dệt lụa Mã Châu nổi tiếng dọc sông Thu Bồn.',
     understandGoalVi: 'Nhận biết được giá trị mịn màng, thoáng mát của sản phẩm tơ tằm thiên nhiên quê hương.',
     behaviorGoalVi: 'Có ý thức bảo tồn giá trị nghề thủ công và yêu quý các sản phẩm dệt may truyền thống.',
-    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Van%20Phuc%20weaver%20at%20Jacquard%20loom.jpg',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Rio%20m%C3%A3%20ch%C3%A2u%20%C3%A1o%20t%E1%BA%A5c.jpg',
     isFullyVerified: true,
   },
 

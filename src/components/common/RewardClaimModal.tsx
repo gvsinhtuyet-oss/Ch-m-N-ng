@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Reward } from '../../types';
 import { audioService } from '../../services/AudioService';
-import { Sparkles, Award, Map } from 'lucide-react';
+import { Sparkles, Map } from 'lucide-react';
 import { RewardBadge } from './RewardBadge';
 
 interface Props {
@@ -21,11 +21,11 @@ export const RewardClaimModal: React.FC<Props> = ({
 }) => {
   if (!reward) return null;
 
-  const handleClaimAndContinue = () => {
+  useEffect(() => {
+    if (alreadyClaimed) return;
     audioService.playSfx('reward');
     onClaim();
-    onContinue();
-  };
+  }, [alreadyClaimed, onClaim]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in">
@@ -56,25 +56,18 @@ export const RewardClaimModal: React.FC<Props> = ({
           </p>
         </div>
 
-        {/* Single-step action: receive item, then show the shared journey map */}
-        <div className="relative z-10 pt-2">
-          {alreadyClaimed ? (
-            <button
-              onClick={onContinue}
-              className="w-full py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-black text-sm shadow-lg shadow-sky-600/30 transition transform hover:scale-102 active:scale-95 inline-flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <Map className="w-5 h-5" />
-              <span>XEM BẢN ĐỒ HÀNH TRÌNH</span>
-            </button>
-          ) : (
-            <button
-              onClick={handleClaimAndContinue}
-              className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-black text-sm sm:text-base shadow-xl shadow-amber-500/30 transition transform hover:scale-102 active:scale-95 inline-flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <Award className="w-5 h-5" />
-              <span>NHẬN VẬT PHẨM</span>
-            </button>
-          )}
+        <div className="relative z-10 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+          <p className="text-xs font-black text-emerald-800">✓ Vật phẩm đã được tự động lưu vào hành trình.</p>
+        </div>
+
+        <div className="relative z-10 pt-1">
+          <button
+            onClick={onContinue}
+            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-700 hover:to-emerald-700 text-white font-black text-sm sm:text-base shadow-xl shadow-sky-600/25 transition transform hover:scale-102 active:scale-95 inline-flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <Map className="w-5 h-5" />
+            <span>TIẾP TỤC HÀNH TRÌNH</span>
+          </button>
         </div>
       </div>
     </div>

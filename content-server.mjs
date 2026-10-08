@@ -143,6 +143,7 @@ const server = createServer(async (req,res) => {
     const pathname = new URL(req.url, 'http://localhost').pathname;
     if (pathname === '/api/health' && req.method === 'GET') {
       let firestoreStatus = 'unknown';
+      let firestoreWriteStatus = 'unknown';
       let adminAccountExists = false;
       const adminEmail = typeof process.env.AUTH_ADMIN_EMAIL === 'string'
         ? process.env.AUTH_ADMIN_EMAIL.trim().toLowerCase()
@@ -156,11 +157,23 @@ const server = createServer(async (req,res) => {
             const adminUser = await cloudStore.get('cham_users', adminId);
             adminAccountExists = !!(adminUser && adminUser.role === 'admin' && adminUser.active);
           }
+          const writeProbeId = 'cloud-run-' + createHash('sha256')
+            .update(String(process.env.K_REVISION || process.env.K_SERVICE || 'local'))
+            .digest('hex').slice(0, 16);
+          try {
+            await cloudStore.put('cham_health_checks', writeProbeId, { checkedAt: Date.now() });
+            await cloudStore.remove('cham_health_checks', writeProbeId);
+            firestoreWriteStatus = 'connected';
+          } catch (err) {
+            firestoreWriteStatus = `error: ${err.message}`;
+          }
         } catch (err) {
           firestoreStatus = `error: ${err.message}`;
+          firestoreWriteStatus = 'not-tested';
         }
       } else {
         firestoreStatus = 'unconfigured';
+        firestoreWriteStatus = 'unconfigured';
       }
       const bootstrapSecretConfigured =
         typeof process.env.AUTH_ADMIN_PASSWORD === 'string' &&
@@ -171,11 +184,16 @@ const server = createServer(async (req,res) => {
         project: process.env.AUTH_FIRESTORE_PROJECT || null,
         database: firestoreDatabase,
         firestore: firestoreStatus,
+        firestoreWrite: firestoreWriteStatus,
         auth: {
           adminEmailConfigured: !!adminEmail,
           adminAccountExists,
           bootstrapSecretConfigured,
-          ready: firestoreStatus === 'connected' && !!adminEmail && (adminAccountExists || bootstrapSecretConfigured),
+          ready:
+            firestoreStatus === 'connected' &&
+            firestoreWriteStatus === 'connected' &&
+            !!adminEmail &&
+            (adminAccountExists || bootstrapSecretConfigured),
         },
         contentStorage: durableContent ? 'firestore' : 'local',
       });

@@ -7,35 +7,40 @@ type ThemeImageKey =
   | 'roleDesktop' | 'roleMobile'
   | 'journeyDesktop' | 'journeyMobile';
 
-const sharedDesktop = (theme: ThemeSettings) =>
-  theme.journeyDesktop || theme.coverDesktop || theme.roleDesktop || theme.journeyMobile || theme.coverMobile || theme.roleMobile || '';
-
-const sharedMobile = (theme: ThemeSettings) =>
-  theme.journeyMobile || theme.coverMobile || theme.roleMobile || theme.journeyDesktop || theme.coverDesktop || theme.roleDesktop || '';
+const groups: Array<{
+  id: 'cover' | 'role' | 'journey';
+  title: string;
+  description: string;
+  desktop: ThemeImageKey;
+  mobile: ThemeImageKey;
+}> = [
+  {
+    id: 'cover',
+    title: 'Nền trang bìa',
+    description: 'Màn hình giới thiệu CHẠM ĐÀ NẴNG trước khi chọn vai trò.',
+    desktop: 'coverDesktop',
+    mobile: 'coverMobile',
+  },
+  {
+    id: 'role',
+    title: 'Nền chọn vai trò / nhập thông tin',
+    description: 'Màn chọn Học sinh, Giáo viên, Quản trị, Khách và phần nhập thông tin. Cùng một nền cho mọi vai trò.',
+    desktop: 'roleDesktop',
+    mobile: 'roleMobile',
+  },
+  {
+    id: 'journey',
+    title: 'Nền phần hành trình',
+    description: 'Các màn bên trong app như Hành trình, Hộ chiếu, Bản đồ, học tập, Giáo viên và Quản trị.',
+    desktop: 'journeyDesktop',
+    mobile: 'journeyMobile',
+  },
+];
 
 export const ThemeEditor: React.FC = () => {
-  const [draft, setDraft] = useState<ThemeSettings>(() => {
-    const current = readTheme();
-    const desktop = sharedDesktop(current);
-    const mobile = sharedMobile(current);
-    return {
-      ...current,
-      coverDesktop: desktop,
-      roleDesktop: desktop,
-      journeyDesktop: desktop,
-      coverMobile: mobile,
-      roleMobile: mobile,
-      journeyMobile: mobile,
-    };
-  });
+  const [draft, setDraft] = useState<ThemeSettings>(readTheme);
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
-  const setSharedImage = (device: 'desktop' | 'mobile', value: string) => {
-    setDraft(prev => device === 'desktop'
-      ? { ...prev, coverDesktop: value, roleDesktop: value, journeyDesktop: value }
-      : { ...prev, coverMobile: value, roleMobile: value, journeyMobile: value }
-    );
-  };
   const set = (patch: Partial<ThemeSettings>) => setDraft(prev => ({ ...prev, ...patch }));
 
   const upload = async (file: File | undefined, target: ThemeImageKey) => {
@@ -56,8 +61,8 @@ export const ThemeEditor: React.FC = () => {
         reader.onerror = () => reject(new Error('Không đọc được ảnh.'));
         reader.readAsDataURL(file);
       });
-      setSharedImage(target.endsWith('Desktop') ? 'desktop' : 'mobile', url);
-      setMessage('Ảnh nền chung đã sẵn sàng. Bấm Xem trước để áp dụng ngay cho mọi vai trò.');
+      set({ [target]: url });
+      setMessage('Ảnh đã sẵn sàng. Bấm Xem trước để thử nền.');
     } catch (error) {
       setMessage((error as Error).message);
     } finally {
@@ -68,7 +73,7 @@ export const ThemeEditor: React.FC = () => {
   const preview = () => {
     try {
       saveTheme(draft);
-      setMessage('Đã áp dụng nền chung trên máy này cho tất cả vai trò. Bấm Xuất bản giao diện để dùng trên các thiết bị khác.');
+      setMessage('Đã áp dụng trên máy này. Xuất bản để mọi thiết bị nhận đủ 3 nhóm nền.');
     } catch {
       setMessage('Bộ nhớ máy đầy. Hãy giảm dung lượng ảnh hoặc xuất bản trực tuyến.');
     }
@@ -80,7 +85,7 @@ export const ThemeEditor: React.FC = () => {
     try {
       await contentService.login();
       await contentService.publishTheme(draft);
-      setMessage('Đã xuất bản nền chung cho tất cả vai trò và màn hình. Tải lại app trên thiết bị khác để nhận giao diện mới.');
+      setMessage('Đã xuất bản 3 nhóm nền. Tải lại app trên thiết bị khác để nhận giao diện mới.');
     } catch (error) {
       setMessage((error as Error).message);
     } finally {
@@ -114,7 +119,7 @@ export const ThemeEditor: React.FC = () => {
           value={value.startsWith('data:') ? '' : value}
           onChange={e => {
             const next = e.target.value;
-            if (!next || /^https:\/\//i.test(next)) setSharedImage(target.endsWith('Desktop') ? 'desktop' : 'mobile', next);
+            if (!next || /^https:\/\//i.test(next)) set({ [target]: next });
             else setMessage('Đường dẫn ảnh cần bắt đầu bằng HTTPS.');
           }}
         />
@@ -128,11 +133,7 @@ export const ThemeEditor: React.FC = () => {
             />
           )}
         </div>
-        <button
-          type="button"
-          className="text-red-700 underline text-xs"
-          onClick={() => setSharedImage(target.endsWith('Desktop') ? 'desktop' : 'mobile', '')}
-        >
+        <button type="button" className="text-red-700 underline text-xs" onClick={() => set({ [target]: '' })}>
           Dùng nền cơ bản
         </button>
       </div>
@@ -142,20 +143,26 @@ export const ThemeEditor: React.FC = () => {
   return (
     <section className="max-w-6xl mx-auto rounded-3xl border-2 border-amber-300 bg-amber-50 p-5 sm:p-7 space-y-6">
       <div>
-        <h2 className="text-xl font-black text-sky-950">Quản lý hình nền chung</h2>
+        <h2 className="text-xl font-black text-sky-950">Quản lý hình nền theo từng khu vực</h2>
         <p className="text-sm text-slate-700 mt-1">
-          Một bộ nền dùng chung cho toàn app: Học sinh, Giáo viên, Quản trị và Khách đều nhìn cùng một hình nền. Chỉ tách ảnh máy tính 16:9 và điện thoại 9:16 để hiển thị đẹp hơn.
+          Có 3 nhóm nền riêng: trang bìa, chọn vai trò/nhập thông tin và phần hành trình. Trong mỗi nhóm, mọi vai trò dùng chung một nền; chỉ tách máy tính 16:9 và điện thoại 9:16.
         </p>
       </div>
 
-      <div className="rounded-3xl border border-amber-200 bg-amber-100/40 p-4 sm:p-5 space-y-4">
-        <div>
-          <h3 className="font-black text-base text-slate-900">Nền dùng chung toàn app</h3>
-          <p className="text-xs text-slate-600 mt-0.5">
-            Ảnh này áp dụng đồng nhất cho mọi vai trò và mọi màn hình. Không còn nền riêng theo vai trò.
-          </p>
+      {groups.map(group => (
+        <div key={group.id} className="rounded-3xl border border-amber-200 bg-amber-100/40 p-4 sm:p-5 space-y-4">
+          <div>
+            <h3 className="font-black text-base text-slate-900">{group.title}</h3>
+            <p className="text-xs text-slate-600 mt-0.5">{group.description}</p>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {imageField(group.desktop, 'Máy tính · 16:9', 'aspect-video')}
+            {imageField(group.mobile, 'Điện thoại · 9:16', 'aspect-[9/16] max-h-64')}
+          </div>
         </div>
-        <div className="grid sm:grid-cols-2 gap-4">
+      ))}
+
+      <div className="grid sm:grid-cols-2 gap-4">
           {imageField('journeyDesktop', 'Máy tính · 16:9', 'aspect-video')}
           {imageField('journeyMobile', 'Điện thoại · 9:16', 'aspect-[9/16] max-h-64')}
         </div>
@@ -221,7 +228,7 @@ export const ThemeEditor: React.FC = () => {
       </div>
 
       <p className="text-xs text-slate-600">
-        Nếu chỉ cài ảnh máy tính hoặc điện thoại, app sẽ dùng ảnh còn lại làm dự phòng. Nếu chưa cài ảnh, app dùng nền mặc định tích hợp sẵn.
+        Nếu chỉ cài ảnh máy tính hoặc chỉ cài ảnh điện thoại trong một nhóm, app sẽ tự dùng ảnh còn lại làm dự phòng. Nếu chưa cài ảnh, app dùng nền mặc định tích hợp sẵn.
       </p>
       {message && <p role="status" className="text-sm font-semibold rounded-xl bg-white p-3">{message}</p>}
     </section>

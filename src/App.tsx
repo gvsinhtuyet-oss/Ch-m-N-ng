@@ -19,7 +19,7 @@ import { WifiOff } from 'lucide-react';
 import { DanangAssistantChat } from './components/common/DanangAssistantChat';
 
 const AppContent: React.FC = () => {
-  const { currentUser, role, currentView, currentStation, currentAssistantHotspot, isOnline, soundEnabled, closeStation, exitPresentationMode } = useApp();
+  const { currentUser, role, currentView, currentStation, currentAssistantHotspot, isOnline, closeStation, exitPresentationMode } = useApp();
 
   useEffect(() => {
     const unlock = () => { void backgroundMusic.unlock(); };

@@ -305,7 +305,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được những nét chính về làng nghề đúc đồng Phước Kiều (chiêng, cồng, chuông đồng, đồ đồng mỹ nghệ).',
     understandGoalVi: 'Hiểu được giá trị kinh tế, văn hóa và kỹ nghệ thẩm âm tài tình của các nghệ nhân đúc đồng.',
     behaviorGoalVi: 'Có ý thức bảo tồn nghề truyền thống và trân trọng giá trị giọt mồ hôi của người thợ.',
-    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ch%C3%B9a%20Ph%C3%A1p%20V%C3%A2n%20th10n2022%20%28%C4%90%E1%BA%A1i%20h%E1%BB%93ng%20chung%29.jpg',
+    coverImage: 'https://dienban.danang.gov.vn/Portals/0/3_%20Nhng%20sn%20phm%20tieu%20biu%20ca%20lang%20ngh%20duc%20dng%20Phuc%20Kiu.jpg',
     isFullyVerified: true,
   },
   {

@@ -51,6 +51,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const [passed, setPassed] = useState<boolean | null>(null);
   const [showRewardModal, setShowRewardModal] = useState<boolean>(false);
   const [externalGameOpened, setExternalGameOpened] = useState<boolean>(false);
+  const [externalGameReadyToComplete, setExternalGameReadyToComplete] = useState(false);
+  const [externalGameCountdown, setExternalGameCountdown] = useState(45);
   const [useInternalChallenge, setUseInternalChallenge] = useState(false);
   const [embedRound, setEmbedRound] = useState(0);
   const resourceId = challenge.externalGame?.url.match(/\/resource\/(\d+)/)?.[1];
@@ -65,6 +67,44 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
     backgroundMusic.setForegroundSource('wordwall', true);
     return () => backgroundMusic.setForegroundSource('wordwall', false);
   }, [externalGameOpened, useInternalChallenge, isOnline, embedUrl]);
+
+  useEffect(() => {
+    if (!externalGameOpened || useInternalChallenge || !isOnline || !embedUrl) return;
+
+    setExternalGameReadyToComplete(false);
+    setExternalGameCountdown(45);
+
+    const countdownTimer = window.setInterval(() => {
+      setExternalGameCountdown(value => {
+        if (value <= 1) {
+          window.clearInterval(countdownTimer);
+          setExternalGameReadyToComplete(true);
+          return 0;
+        }
+        return value - 1;
+      });
+    }, 1000);
+
+    const handleWordwallMessage = (event: MessageEvent) => {
+      if (typeof event.origin !== 'string' || !/wordwall\.net$/i.test(new URL(event.origin).hostname)) return;
+      let payload = '';
+      try {
+        payload = typeof event.data === 'string' ? event.data : JSON.stringify(event.data);
+      } catch {
+        payload = '';
+      }
+      if (/complete|completed|finish|finished|result|score/i.test(payload)) {
+        setExternalGameReadyToComplete(true);
+        setExternalGameCountdown(0);
+      }
+    };
+
+    window.addEventListener('message', handleWordwallMessage);
+    return () => {
+      window.clearInterval(countdownTimer);
+      window.removeEventListener('message', handleWordwallMessage);
+    };
+  }, [externalGameOpened, useInternalChallenge, isOnline, embedUrl, embedRound]);
 
 
   const studentId = currentUser?.id || 'guest';
@@ -109,7 +149,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   };
 
   const handleExternalGameComplete = () => {
-    if (!externalGameOpened) return;
+    if (!externalGameOpened || !externalGameReadyToComplete) return;
     audioService.playSfx('correct');
     setPassed(true);
     setIsSubmitted(true);
@@ -177,6 +217,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               onClick={() => {
                 audioService.playSfx('click');
                 setExternalGameOpened(true);
+                setExternalGameReadyToComplete(false);
+                setExternalGameCountdown(45);
                 setPassed(null);
                 setIsSubmitted(false);
                 setEmbedRound(round => round + 1);
@@ -200,20 +242,34 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 />
               </div>
 
-              <button
-                type="button"
-                onClick={handleExternalGameComplete}
-                className="w-full px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
-              >
-                <CheckCircle2 className="w-5 h-5" />
-                <span>HOÀN THÀNH THỬ THÁCH</span>
-              </button>
+              {externalGameReadyToComplete ? (
+                <button
+                  type="button"
+                  onClick={handleExternalGameComplete}
+                  className="w-full px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
+                >
+                  <CheckCircle2 className="w-5 h-5" />
+                  <span>HOÀN THÀNH THỬ THÁCH</span>
+                </button>
+              ) : (
+                <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-center">
+                  <p className="text-sm font-extrabold text-amber-900">
+                    Hãy chơi và hoàn thành Wordwall trước nhé!
+                  </p>
+                  <p className="mt-1 text-[11px] font-semibold text-amber-700">
+                    Nút hoàn thành sẽ mở sau khi em có đủ thời gian làm thử thách
+                    {externalGameCountdown > 0 ? ` • còn ${externalGameCountdown}s` : ''}.
+                  </p>
+                </div>
+              )}
 
               <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
                 <button
                   type="button"
                   onClick={() => {
                     audioService.playSfx('click');
+                    setExternalGameReadyToComplete(false);
+                    setExternalGameCountdown(45);
                     setEmbedRound(round => round + 1);
                   }}
                   className="font-semibold text-violet-700 hover:text-violet-900"

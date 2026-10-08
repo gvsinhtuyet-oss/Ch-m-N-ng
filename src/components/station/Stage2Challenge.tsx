@@ -5,7 +5,6 @@ import { audioService } from '../../services/AudioService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
 import { progressService } from '../../services/ProgressService';
 import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle, ExternalLink, Gamepad2 } from 'lucide-react';
-import { RewardClaimModal } from '../common/RewardClaimModal';
 
 
 // Shuffle a copy so option IDs and correctness stay unchanged.
@@ -49,7 +48,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [passed, setPassed] = useState<boolean | null>(null);
-  const [showRewardModal, setShowRewardModal] = useState<boolean>(false);
+  const [bonusClaimed, setBonusClaimed] = useState<boolean>(false);
   const [externalGameOpened, setExternalGameOpened] = useState<boolean>(false);
   const [externalGameReadyToComplete, setExternalGameReadyToComplete] = useState(false);
   const [externalGameCountdown, setExternalGameCountdown] = useState(45);
@@ -109,6 +108,9 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
 
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
+  const mainReward = station.rewards.find(r => r.stage === 2) || station.rewards[1];
+  const bonusRewardId = `${station.id}-wordwall-star`;
+  const wordwallBonusAlreadyClaimed = progress.rewardsCollected.includes(bonusRewardId) || bonusClaimed;
   const currentQ = questions[currentQIndex];
 
   const handleSelect = (questionId: string, optionId: string) => {
@@ -139,9 +141,9 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
       if (pass) {
         audioService.playSfx('correct');
         if (!isReadOnly) {
-          progressService.completeStage2(studentId, station.id);
+          progressService.completeStage2(studentId, station.id, mainReward?.id);
         }
-        setShowRewardModal(true);
+        audioService.playSfx('reward');
       } else {
         audioService.playSfx('wrong');
       }
@@ -149,14 +151,12 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   };
 
   const handleExternalGameComplete = () => {
-    if (!externalGameOpened || !externalGameReadyToComplete) return;
-    audioService.playSfx('correct');
-    setPassed(true);
-    setIsSubmitted(true);
+    if (!externalGameOpened || !externalGameReadyToComplete || wordwallBonusAlreadyClaimed) return;
+    audioService.playSfx('treasure');
     if (!isReadOnly) {
-      progressService.completeStage2(studentId, station.id);
+      progressService.claimReward(studentId, station.id, bonusRewardId);
     }
-    setShowRewardModal(true);
+    setBonusClaimed(true);
   };
 
   const wrongQuestions = questions.filter(q =>
@@ -182,9 +182,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
           </span>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900">{challenge.titleVi}</h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            {challenge.externalGame && isOnline && !useInternalChallenge && Boolean(embedUrl)
-              ? 'Thử thách chính được thực hiện trên Wordwall. Khi mất kết nối, app sẽ mở thử thách dự phòng.'
-              : challenge.instructionsVi}
+            {challenge.instructionsVi || 'Hoàn thành các câu hỏi trong app để vượt qua Chặng 2.'}
           </p>
         </div>
         <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-lg shadow-amber-500/30 shrink-0">
@@ -192,7 +190,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
         </div>
       </div>
 
-      {challenge.externalGame && isOnline && !useInternalChallenge && Boolean(embedUrl) ? (
+      {false ? (
         <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-violet-200 space-y-5">
           <div className="flex items-start gap-3">
             <div className="w-12 h-12 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center shrink-0">
@@ -292,7 +290,6 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 onClick={() => {
                   audioService.playSfx('click');
                   handleRetry();
-                  setShowRewardModal(false);
                   setUseInternalChallenge(true);
                 }}
                 className="w-full px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs"
@@ -304,20 +301,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
         </div>
       ) : (
         <>
-          {challenge.externalGame && !isOnline && (
-            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs sm:text-sm font-semibold">
-              <span className="font-black">Đang ngoại tuyến:</span> Wordwall cần kết nối Internet, vì vậy hệ thống chuyển sang thử thách dự phòng trong app.
-            </div>
-          )}
-
-          {challenge.externalGame && isOnline && (useInternalChallenge || !embedUrl) && (
-            <div className="p-4 rounded-2xl bg-sky-50 border border-sky-200 text-sky-900 text-sm font-semibold">
-              Wordwall chưa thể tải. Em làm 5 câu hỏi dự phòng trong app để tiếp tục hành trình nhé!
-            </div>
-          )}
-
           {!isSubmitted ? (
-            /* Offline / fallback internal challenge */
+            /* Main in-app challenge */
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
               <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                 <span className="font-extrabold text-sm text-sky-700">
@@ -392,8 +377,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               </div>
             </div>
           ) : passed ? (
-            /* Internal challenge success */
-            <div className="bg-white rounded-3xl p-8 shadow-sm border border-emerald-200 text-center space-y-6">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-emerald-200 text-center space-y-5">
               <div className="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-inner">
                 <CheckCircle2 className="w-12 h-12" />
               </div>
@@ -403,9 +387,86 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 </span>
                 <h3 className="text-2xl font-black text-slate-900 mt-2">Xuất sắc! Em đã vượt qua thử thách.</h3>
                 <p className="text-sm text-slate-600 max-w-md mx-auto mt-1">
-                  Em đã vượt qua thử thách dự phòng và mở khóa phần thưởng Chặng 2.
+                  ✓ Phần thưởng Chặng 2 đã được tự động lưu vào hành trình.
                 </p>
               </div>
+
+              {challenge.externalGame && isOnline && embedUrl && (
+                <div className="rounded-3xl border border-violet-200 bg-violet-50/70 p-4 sm:p-5 text-left">
+                  <div className="flex items-start gap-3">
+                    <div className="w-11 h-11 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center shrink-0">
+                      <Gamepad2 className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black uppercase tracking-wide text-violet-700">Thử thách mở rộng</p>
+                      <h4 className="font-black text-slate-900">Thử sức thêm nhé!</h4>
+                      <p className="mt-1 text-xs text-slate-600">
+                        Chơi thêm Wordwall để nhận ⭐ Ngôi sao khám phá. Phần này không bắt buộc để qua chặng.
+                      </p>
+                    </div>
+                  </div>
+
+                  {!externalGameOpened && !wordwallBonusAlreadyClaimed && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        audioService.playSfx('click');
+                        setExternalGameOpened(true);
+                        setExternalGameReadyToComplete(false);
+                        setExternalGameCountdown(45);
+                        setEmbedRound(round => round + 1);
+                      }}
+                      className="mt-4 w-full rounded-2xl bg-violet-600 px-5 py-3 text-sm font-black text-white shadow-md hover:bg-violet-700"
+                    >
+                      CHƠI THÊM WORDWALL
+                    </button>
+                  )}
+
+                  {externalGameOpened && !wordwallBonusAlreadyClaimed && (
+                    <div className="mt-4 space-y-3">
+                      <div className="overflow-hidden rounded-2xl border border-violet-200 bg-white">
+                        <iframe
+                          key={`bonus-${station.id}-${embedRound}`}
+                          src={embedUrl}
+                          title={challenge.externalGame.titleVi}
+                          className="w-full h-[480px] sm:h-[600px] border-0"
+                          allow="fullscreen"
+                          allowFullScreen
+                        />
+                      </div>
+                      {externalGameReadyToComplete ? (
+                        <button
+                          type="button"
+                          onClick={handleExternalGameComplete}
+                          className="w-full rounded-2xl bg-amber-500 px-5 py-3.5 text-sm font-black text-slate-950 shadow-md hover:bg-amber-600"
+                        >
+                          ⭐ NHẬN NGÔI SAO KHÁM PHÁ
+                        </button>
+                      ) : (
+                        <p className="rounded-xl bg-amber-50 px-3 py-2 text-center text-[11px] font-bold text-amber-800">
+                          Hãy chơi thêm một chút nhé
+                          {externalGameCountdown > 0 ? ` • còn ${externalGameCountdown}s` : ''}.
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {wordwallBonusAlreadyClaimed && (
+                    <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-center">
+                      <p className="font-black text-amber-900">⭐ Đã nhận Ngôi sao khám phá!</p>
+                      <p className="mt-1 text-[11px] text-amber-700">Mỗi trạm chỉ nhận phần thưởng mở rộng này một lần.</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <button
+                type="button"
+                onClick={onCompleteStage}
+                className="w-full rounded-2xl bg-gradient-to-r from-sky-600 to-emerald-600 px-6 py-3.5 text-sm font-black text-white shadow-lg shadow-sky-600/20 transition hover:from-sky-700 hover:to-emerald-700"
+              >
+                TIẾP TỤC HÀNH TRÌNH →
+              </button>
             </div>
           ) : (
             /* Internal challenge failure */
@@ -453,26 +514,6 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
         </>
       )}
 
-      {/* Stage 2 Reward Claim Modal */}
-      {showRewardModal && (
-        <RewardClaimModal
-          reward={station.rewards.find(r => r.stage === 2) || station.rewards[1]}
-          stage={2}
-          alreadyClaimed={!isReadOnly && progress.rewardsCollected.includes(station.rewards.find(r => r.stage === 2)?.id || '')}
-          onClaim={() => {
-            if (!isReadOnly) {
-              const rw2 = station.rewards.find(r => r.stage === 2);
-              if (rw2) {
-                progressService.claimReward(studentId, station.id, rw2.id);
-              }
-            }
-          }}
-          onContinue={() => {
-            setShowRewardModal(false);
-            onCompleteStage();
-          }}
-        />
-      )}
     </div>
   );
 };

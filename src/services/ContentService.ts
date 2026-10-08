@@ -36,6 +36,9 @@ function validRecords(value: unknown): Record<string, StationContent> {
 }
 try { records = validRecords(JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')); } catch {}
 
+const isLegacyPlaceholderCover = (url: string) =>
+  /^https:\/\/images\.unsplash\.com\//i.test(url.trim());
+
 export const contentService = {
   get(station: Station): StationContent {
     return records[station.id] || {
@@ -46,7 +49,11 @@ export const contentService = {
   apply(station: Station) {
     const content = records[station.id];
     if (!content) return;
-    station.coverImage = content.coverImage;
+    // Dữ liệu đã xuất bản từ các bản cũ có thể còn ảnh stock Unsplash.
+    // Không cho ảnh placeholder cũ ghi đè bộ cover đã được biên tập đúng theo 25 trạm.
+    if (content.coverImage && !isLegacyPlaceholderCover(content.coverImage)) {
+      station.coverImage = content.coverImage;
+    }
     station.hotspots = content.hotspots;
     if (station.journeyMap) station.journeyMap = { ...station.journeyMap, image: content.mapImage };
     else if (content.mapImage) station.journeyMap = {

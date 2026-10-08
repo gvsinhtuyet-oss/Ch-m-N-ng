@@ -5,7 +5,9 @@ export type NarrationState = 'idle' | 'playing' | 'paused';
 
 class AudioService {
   private audioCtx: AudioContext | null = null;
+  private effectsGain: GainNode | null = null;
   private soundEnabled: boolean = true;
+  private effectsVolume: number = 0.8;
   private currentUtterance: SpeechSynthesisUtterance | null = null;
   private stateChangeListeners: Set<(state: NarrationState) => void> = new Set();
   private currentState: NarrationState = 'idle';
@@ -15,6 +17,10 @@ class AudioService {
     if (saved !== null) {
       this.soundEnabled = saved === 'true';
     }
+    const savedVolume = localStorage.getItem('cham_danang_effects_volume');
+    if (savedVolume !== null && Number.isFinite(Number(savedVolume))) {
+      this.effectsVolume = Math.max(0, Math.min(1, Number(savedVolume)));
+    }
   }
 
   private initAudio() {
@@ -22,6 +28,9 @@ class AudioService {
       const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       if (AudioContextClass) {
         this.audioCtx = new AudioContextClass();
+        this.effectsGain = this.audioCtx.createGain();
+        this.effectsGain.gain.value = this.effectsVolume;
+        this.effectsGain.connect(this.audioCtx.destination);
       }
     }
   }
@@ -33,10 +42,18 @@ class AudioService {
   public toggleSound(): boolean {
     this.soundEnabled = !this.soundEnabled;
     localStorage.setItem('cham_danang_sound_enabled', String(this.soundEnabled));
-    if (!this.soundEnabled) {
-      this.stopNarration();
-    }
+    if (!this.soundEnabled) this.stopNarration();
     return this.soundEnabled;
+  }
+
+  public getEffectsVolume(): number {
+    return this.effectsVolume;
+  }
+
+  public setEffectsVolume(value: number) {
+    this.effectsVolume = Math.max(0, Math.min(1, value));
+    if (this.effectsGain) this.effectsGain.gain.value = this.effectsVolume;
+    try { localStorage.setItem('cham_danang_effects_volume', String(this.effectsVolume)); } catch {}
   }
 
   public subscribeState(listener: (state: NarrationState) => void): () => void {
@@ -59,19 +76,6 @@ class AudioService {
   // Play procedural sound effects using Web Audio API
   public playSfx(type: 'click' | 'correct' | 'wrong' | 'unlock' | 'reward' | 'stamp' | 'victory' | 'transition' | 'map' | 'treasure') {
     if (!this.soundEnabled) return;
-    const muteDurations: Record<typeof type, number> = {
-      click: 180,
-      correct: 700,
-      wrong: 450,
-      unlock: 850,
-      reward: 850,
-      stamp: 650,
-      victory: 1400,
-      transition: 650,
-      map: 900,
-      treasure: 1700,
-    };
-    backgroundMusic.muteFor(muteDurations[type]);
     try {
       this.initAudio();
       if (!this.audioCtx) return;
@@ -90,7 +94,7 @@ class AudioService {
         gain.gain.setValueAtTime(0.12, now);
         gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
         osc.connect(gain);
-        gain.connect(this.audioCtx.destination);
+        gain.connect(this.effectsGain || this.audioCtx.destination);
         osc.start(now);
         osc.stop(now + 0.05);
       } else if (type === 'transition') {
@@ -103,7 +107,7 @@ class AudioService {
           gain.gain.setValueAtTime(0.08, now + i * 0.06);
           gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.06 + 0.2);
           osc.connect(gain);
-          gain.connect(this.audioCtx!.destination);
+          gain.connect(this.effectsGain || this.audioCtx!.destination);
           osc.start(now + i * 0.06);
           osc.stop(now + i * 0.06 + 0.2);
         });
@@ -116,7 +120,7 @@ class AudioService {
           gain.gain.setValueAtTime(0.15, now + i * 0.08);
           gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.18);
           osc.connect(gain);
-          gain.connect(this.audioCtx!.destination);
+          gain.connect(this.effectsGain || this.audioCtx!.destination);
           osc.start(now + i * 0.08);
           osc.stop(now + i * 0.08 + 0.18);
         });
@@ -129,7 +133,7 @@ class AudioService {
         gain.gain.setValueAtTime(0.12, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
         osc.connect(gain);
-        gain.connect(this.audioCtx.destination);
+        gain.connect(this.effectsGain || this.audioCtx.destination);
         osc.start(now);
         osc.stop(now + 0.22);
       } else if (type === 'reward' || type === 'unlock') {
@@ -141,7 +145,7 @@ class AudioService {
           gain.gain.setValueAtTime(0.18, now + i * 0.09);
           gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.09 + 0.25);
           osc.connect(gain);
-          gain.connect(this.audioCtx!.destination);
+          gain.connect(this.effectsGain || this.audioCtx!.destination);
           osc.start(now + i * 0.09);
           osc.stop(now + i * 0.09 + 0.25);
         });
@@ -155,7 +159,7 @@ class AudioService {
         gain.gain.setValueAtTime(0.35, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
         osc.connect(gain);
-        gain.connect(this.audioCtx.destination);
+        gain.connect(this.effectsGain || this.audioCtx.destination);
         osc.start(now);
         osc.stop(now + 0.35);
       } else if (type === 'victory') {
@@ -167,7 +171,7 @@ class AudioService {
           gain.gain.setValueAtTime(0.2, now + idx * 0.12);
           gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.4);
           osc.connect(gain);
-          gain.connect(this.audioCtx!.destination);
+          gain.connect(this.effectsGain || this.audioCtx!.destination);
           osc.start(now + idx * 0.12);
           osc.stop(now + idx * 0.12 + 0.4);
         });
@@ -180,7 +184,7 @@ class AudioService {
           gain.gain.setValueAtTime(0.16, now + idx * 0.08);
           gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.3);
           osc.connect(gain);
-          gain.connect(this.audioCtx!.destination);
+          gain.connect(this.effectsGain || this.audioCtx!.destination);
           osc.start(now + idx * 0.08);
           osc.stop(now + idx * 0.08 + 0.3);
         });
@@ -193,7 +197,7 @@ class AudioService {
           gain.gain.setValueAtTime(0.18, now + idx * 0.09);
           gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.09 + 0.42);
           osc.connect(gain);
-          gain.connect(this.audioCtx!.destination);
+          gain.connect(this.effectsGain || this.audioCtx!.destination);
           osc.start(now + idx * 0.09);
           osc.stop(now + idx * 0.09 + 0.42);
         });
@@ -220,7 +224,7 @@ class AudioService {
         utterance.lang = lang;
         utterance.rate = 0.92;
         utterance.pitch = 1.03;
-        utterance.volume = 1;
+        utterance.volume = this.effectsVolume;
 
         const voices = synth.getVoices();
         const langPrefix = lang.split('-')[0].toLowerCase();

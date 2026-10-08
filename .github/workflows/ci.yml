@@ -40,6 +40,9 @@ jobs:
       - name: Authentication tests
         run: node --test auth-test.mjs
 
+      - name: Firestore authentication storage tests
+        run: node --test auth-storage-test.mjs
+
       - name: Content storage tests
         run: node --test content-storage-test.mjs
 

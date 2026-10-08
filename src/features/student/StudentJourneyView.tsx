@@ -193,7 +193,7 @@ export const StudentJourneyView: React.FC = () => {
                   ? 'Đang khám phá'
                   : isDemoReady
                     ? 'Sẵn sàng'
-                    : 'Chưa mở';
+                    : 'Đang phát triển';
 
               const statusStyle = isCompleted
                 ? 'bg-emerald-100 text-emerald-700'
@@ -285,8 +285,7 @@ export const StudentJourneyView: React.FC = () => {
                         className="mt-1 flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-slate-300 to-slate-400 px-3 py-3 text-xs font-black text-white opacity-80"
                       >
                         <LockKeyhole className="h-4 w-4" />
-                        Bắt đầu khám phá
-                        <span aria-hidden="true">→</span>
+                        Đang phát triển
                       </button>
                     )}
                   </div>

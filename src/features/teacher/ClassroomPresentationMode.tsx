@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
+import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import { Volume2, VolumeX, Eye, ChevronLeft, ChevronRight, X, Sparkles, HelpCircle, CheckCircle2 } from 'lucide-react';
 
 interface Props {
@@ -106,7 +107,15 @@ export const ClassroomPresentationMode: React.FC<Props> = ({ station, onExit }) 
             alt={hotspot.titleVi}
             className="w-full h-full object-cover"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=1200&q=80';
+              const img = e.currentTarget;
+              if (img.dataset.fallback === 'default') return;
+              if (img.dataset.fallback !== 'cover' && hotspot.image !== station.coverImage) {
+                img.dataset.fallback = 'cover';
+                img.src = station.coverImage;
+                return;
+              }
+              img.dataset.fallback = 'default';
+              img.src = DEFAULT_APP_BACKGROUND_DATA_URL;
             }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/30 pointer-events-none" />

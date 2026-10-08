@@ -112,6 +112,7 @@ export const ThemeEditor: React.FC = () => {
             }}
           />
         </label>
+
         <input
           aria-label={'Đường dẫn ' + label}
           className="w-full border rounded-xl p-3 text-sm"
@@ -123,6 +124,7 @@ export const ThemeEditor: React.FC = () => {
             else setMessage('Đường dẫn ảnh cần bắt đầu bằng HTTPS.');
           }}
         />
+
         <div className={aspectClass + ' rounded-xl overflow-hidden adventure-preview'}>
           {value && (
             <img
@@ -133,7 +135,12 @@ export const ThemeEditor: React.FC = () => {
             />
           )}
         </div>
-        <button type="button" className="text-red-700 underline text-xs" onClick={() => set({ [target]: '' })}>
+
+        <button
+          type="button"
+          className="text-red-700 underline text-xs"
+          onClick={() => set({ [target]: '' })}
+        >
           Dùng nền cơ bản
         </button>
       </div>
@@ -145,7 +152,8 @@ export const ThemeEditor: React.FC = () => {
       <div>
         <h2 className="text-xl font-black text-sky-950">Quản lý hình nền theo từng khu vực</h2>
         <p className="text-sm text-slate-700 mt-1">
-          Có 3 nhóm nền riêng: trang bìa, chọn vai trò/nhập thông tin và phần hành trình. Trong mỗi nhóm, mọi vai trò dùng chung một nền; chỉ tách máy tính 16:9 và điện thoại 9:16.
+          Có 3 nhóm nền riêng: trang bìa, chọn vai trò/nhập thông tin và phần hành trình.
+          Trong mỗi nhóm, mọi vai trò dùng chung một nền; chỉ tách máy tính 16:9 và điện thoại 9:16.
         </p>
       </div>
 
@@ -155,20 +163,8 @@ export const ThemeEditor: React.FC = () => {
             <h3 className="font-black text-base text-slate-900">{group.title}</h3>
             <p className="text-xs text-slate-600 mt-0.5">{group.description}</p>
           </div>
+
           <div className="grid sm:grid-cols-2 gap-4">
-            {imageField(group.desktop, 'Máy tính · 16:9', 'aspect-video')}
-            {imageField(group.mobile, 'Điện thoại · 9:16', 'aspect-[9/16] max-h-64')}
-          </div>
-        </div>
-      ))}
-
-      <div className="grid sm:grid-cols-2 gap-4">
-          {imageField('journeyDesktop', 'Máy tính · 16:9', 'aspect-video')}
-          {imageField('journeyMobile', 'Điện thoại · 9:16', 'aspect-[9/16] max-h-64')}
-        </div>
-      </div>
-
-      <div className="grid sm:grid-cols-2 gap-4">
             {imageField(group.desktop, 'Máy tính · 16:9', 'aspect-video')}
             {imageField(group.mobile, 'Điện thoại · 9:16', 'aspect-[9/16] max-h-64')}
           </div>
@@ -189,6 +185,7 @@ export const ThemeEditor: React.FC = () => {
             className="block w-full mt-2"
           />
         </label>
+
         <label className="block text-sm font-bold rounded-2xl bg-white p-4 border border-slate-200">
           Làm mờ nền: {draft.blur}px
           <input
@@ -205,9 +202,15 @@ export const ThemeEditor: React.FC = () => {
       </div>
 
       <div className="flex flex-wrap gap-3">
-        <button type="button" disabled={busy} onClick={preview} className="rounded-xl bg-sky-700 text-white font-bold px-5 py-3">
+        <button
+          type="button"
+          disabled={busy}
+          onClick={preview}
+          className="rounded-xl bg-sky-700 text-white font-bold px-5 py-3"
+        >
           Xem trước và lưu trên máy
         </button>
+
         <button
           type="button"
           disabled={busy}
@@ -222,15 +225,27 @@ export const ThemeEditor: React.FC = () => {
         >
           Khôi phục nền cơ bản
         </button>
-        <button type="button" disabled={busy} onClick={() => void publish()} className="rounded-xl bg-indigo-700 text-white font-bold px-5 py-3 disabled:opacity-50">
+
+        <button
+          type="button"
+          disabled={busy}
+          onClick={() => void publish()}
+          className="rounded-xl bg-indigo-700 text-white font-bold px-5 py-3 disabled:opacity-50"
+        >
           Xuất bản giao diện
         </button>
       </div>
 
       <p className="text-xs text-slate-600">
-        Nếu chỉ cài ảnh máy tính hoặc chỉ cài ảnh điện thoại trong một nhóm, app sẽ tự dùng ảnh còn lại làm dự phòng. Nếu chưa cài ảnh, app dùng nền mặc định tích hợp sẵn.
+        Nếu chỉ cài ảnh máy tính hoặc chỉ cài ảnh điện thoại trong một nhóm, app sẽ tự dùng ảnh còn lại làm dự phòng.
+        Nếu chưa cài ảnh, app dùng nền mặc định tích hợp sẵn.
       </p>
-      {message && <p role="status" className="text-sm font-semibold rounded-xl bg-white p-3">{message}</p>}
+
+      {message && (
+        <p role="status" className="text-sm font-semibold rounded-xl bg-white p-3">
+          {message}
+        </p>
+      )}
     </section>
   );
 };

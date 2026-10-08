@@ -103,29 +103,29 @@ export const Header: React.FC = () => {
         )}
 
         {studentHeader ? (
-          <div className="mx-auto flex max-w-[1500px] items-center gap-3 px-3 py-2 sm:px-5 lg:px-7">
+          <div className="mx-auto flex min-h-[58px] max-w-[1500px] items-center gap-3.5 px-3 py-2.5 sm:px-5 lg:px-7">
             <button
               type="button"
               onClick={() => setCurrentView('student-journey')}
               className="flex shrink-0 items-center gap-2.5 text-left"
               title="CHẠM ĐÀ NẴNG"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 via-amber-300 to-sky-500 p-[2px] shadow-md shadow-orange-500/20">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 via-amber-300 to-sky-500 p-[2px] shadow-md shadow-orange-500/20">
                 <div className="flex h-full w-full items-center justify-center rounded-full bg-white">
-                  <Compass className="h-6 w-6 text-orange-500" />
+                  <Compass className="h-6.5 w-6.5 text-orange-500" />
                 </div>
               </div>
               <div className="hidden sm:block">
-                <div className="whitespace-nowrap text-[18px] font-black leading-none tracking-tight text-slate-900">
+                <div className="whitespace-nowrap text-[19px] font-black leading-none tracking-tight text-slate-900 lg:text-[20px]">
                   <span className="text-sky-700">CHẠM</span> <span className="text-orange-600">ĐÀ NẴNG</span>
                 </div>
-                <div className="mt-1 whitespace-nowrap text-[10px] font-semibold text-slate-500">
+                <div className="mt-1 whitespace-nowrap text-[10px] font-semibold tracking-[0.01em] text-slate-500 lg:text-[10.5px]">
                   Hành trình số khám phá quê hương
                 </div>
               </div>
             </button>
 
-            <nav className="mx-auto flex min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto rounded-2xl border border-white/80 bg-white/80 p-1 shadow-sm">
+            <nav className="mx-auto flex min-w-0 flex-1 items-center justify-center gap-1 overflow-x-auto rounded-[1.15rem] border border-slate-100/90 bg-white/90 p-1.5 shadow-[0_6px_20px_rgba(15,23,42,0.05)]">
               {studentNav.map(item => {
                 const Icon = item.icon;
                 return (
@@ -133,13 +133,13 @@ export const Header: React.FC = () => {
                     key={item.label}
                     type="button"
                     onClick={() => setCurrentView(item.view as any)}
-                    className={`group flex shrink-0 items-center gap-1.5 rounded-xl px-2.5 py-2 text-[11px] font-extrabold transition sm:px-3 lg:text-xs ${
+                    className={`group flex shrink-0 items-center gap-2 rounded-xl px-3 py-2.5 text-[12px] font-extrabold transition sm:px-3.5 lg:text-[13px] ${
                       item.active
-                        ? 'bg-orange-50 text-orange-700 shadow-sm ring-1 ring-orange-100'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                        ? 'bg-gradient-to-r from-orange-50 to-amber-50 text-orange-700 shadow-sm ring-1 ring-orange-200'
+                        : 'text-slate-600 hover:bg-sky-50/70 hover:text-slate-900'
                     }`}
                   >
-                    <Icon className={`h-4 w-4 ${
+                    <Icon className={`h-[17px] w-[17px] ${
                       item.active ? 'text-orange-500' : item.iconClass
                     }`} />
                     <span className="whitespace-nowrap">{item.label}</span>
@@ -155,21 +155,21 @@ export const Header: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowRoleModal(true)}
-                className="flex items-center gap-2 rounded-2xl border border-orange-100 bg-white px-2 py-1.5 shadow-sm transition hover:border-orange-200 hover:bg-orange-50"
+                className="flex items-center gap-2 rounded-2xl border border-orange-100 bg-white px-2.5 py-2 shadow-sm transition hover:border-orange-200 hover:bg-orange-50"
                 title="Tài khoản học sinh"
               >
                 {studentAvatar ? (
                   <img
                     src={studentAvatar}
                     alt={studentName}
-                    className="h-8 w-8 rounded-full object-cover ring-2 ring-orange-100"
+                    className="h-9 w-9 rounded-full object-cover ring-2 ring-orange-100"
                   />
                 ) : (
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-orange-100 to-amber-100 text-sm font-black text-orange-700 ring-2 ring-orange-100">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-orange-100 to-amber-100 text-sm font-black text-orange-700 ring-2 ring-orange-100">
                     {studentName.trim().charAt(0).toUpperCase() || 'N'}
                   </div>
                 )}
-                <span className="hidden max-w-[110px] truncate text-xs font-black text-slate-800 lg:block">{studentName}</span>
+                <span className="hidden max-w-[120px] truncate text-[12px] font-black text-slate-800 lg:block">{studentName}</span>
                 <ChevronDown className="hidden h-4 w-4 text-slate-400 lg:block" />
               </button>
             </div>

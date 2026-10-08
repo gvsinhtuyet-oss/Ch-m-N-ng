@@ -4,7 +4,7 @@ import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
 import { progressService } from '../../services/ProgressService';
-import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle, ExternalLink, Gamepad2 } from 'lucide-react';
+import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle, Gamepad2 } from 'lucide-react';
 
 
 // Shuffle a copy so option IDs and correctness stay unchanged.
@@ -190,117 +190,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
         </div>
       </div>
 
-      {false ? (
-        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-violet-200 space-y-5">
-          <div className="flex items-start gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center shrink-0">
-              <Gamepad2 className="w-7 h-7" />
-            </div>
-            <div>
-              <span className="inline-block px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-wide mb-1">
-                Thử thách chính • Wordwall
-              </span>
-              <h3 className="font-black text-slate-900 text-base sm:text-lg">
-                {challenge.externalGame.titleVi}
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1 leading-relaxed">
-                Chơi xong trò chơi bên dưới, em bấm “Hoàn thành thử thách” để nhận vật phẩm Chặng 2.
-              </p>
-            </div>
-          </div>
-
-          {!externalGameOpened ? (
-            <button
-              type="button"
-              onClick={() => {
-                audioService.playSfx('click');
-                setExternalGameOpened(true);
-                setExternalGameReadyToComplete(false);
-                setExternalGameCountdown(45);
-                setPassed(null);
-                setIsSubmitted(false);
-                setEmbedRound(round => round + 1);
-              }}
-              className="w-full px-5 py-3.5 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
-            >
-              <Gamepad2 className="w-5 h-5" />
-              <span>BẮT ĐẦU THỬ THÁCH</span>
-            </button>
-          ) : (
-            <>
-              <div className="overflow-hidden rounded-2xl border border-violet-200 bg-slate-50">
-                <iframe
-                  key={`${station.id}-${embedRound}`}
-                  src={embedUrl}
-                  title={challenge.externalGame.titleVi}
-                  className="w-full h-[520px] sm:h-[640px] border-0"
-                  allow="fullscreen"
-                  allowFullScreen
-                  onError={() => setUseInternalChallenge(true)}
-                />
-              </div>
-
-              {externalGameReadyToComplete ? (
-                <button
-                  type="button"
-                  onClick={handleExternalGameComplete}
-                  className="w-full px-5 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-md transition inline-flex items-center justify-center gap-2"
-                >
-                  <CheckCircle2 className="w-5 h-5" />
-                  <span>HOÀN THÀNH THỬ THÁCH</span>
-                </button>
-              ) : (
-                <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-center">
-                  <p className="text-sm font-extrabold text-amber-900">
-                    Hãy chơi và hoàn thành Wordwall trước nhé!
-                  </p>
-                  <p className="mt-1 text-[11px] font-semibold text-amber-700">
-                    Nút hoàn thành sẽ mở sau khi em có đủ thời gian làm thử thách
-                    {externalGameCountdown > 0 ? ` • còn ${externalGameCountdown}s` : ''}.
-                  </p>
-                </div>
-              )}
-
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
-                <button
-                  type="button"
-                  onClick={() => {
-                    audioService.playSfx('click');
-                    setExternalGameReadyToComplete(false);
-                    setExternalGameCountdown(45);
-                    setEmbedRound(round => round + 1);
-                  }}
-                  className="font-semibold text-violet-700 hover:text-violet-900"
-                >
-                  Chơi lại Wordwall
-                </button>
-                <a
-                  href={challenge.externalGame.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 font-semibold text-violet-700 underline"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  Mở trò chơi ở cửa sổ riêng
-                </a>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => {
-                  audioService.playSfx('click');
-                  handleRetry();
-                  setUseInternalChallenge(true);
-                }}
-                className="w-full px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs"
-              >
-                Wordwall không tải được? Làm thử thách dự phòng
-              </button>
-            </>
-          )}
-        </div>
-      ) : (
-        <>
+      <>
           {!isSubmitted ? (
             /* Main in-app challenge */
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">

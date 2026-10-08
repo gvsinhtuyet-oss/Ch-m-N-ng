@@ -4,7 +4,8 @@ const scrypt = promisify(scryptCallback);
 const hash = value => createHash('sha256').update(value).digest('hex');
 const emailOf = value => typeof value === 'string' ? value.trim().toLowerCase() : '';
 const validEmail = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 254;
-const fail = (status, message) => Object.assign(new Error(message), { status });
+const fail = (status, message, extra = {}) => Object.assign(new Error(message), { status, ...extra });
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const safeUser = user => ({ id:user.id, email:user.email, name:user.name, role:user.role,
   ...(user.role === 'teacher' ? { assignedClasses:[], schoolName:'Trường Tiểu học Trần Đại Nghĩa' } : { permissions:['manage-content','manage-users'] }) });
 export async function passwordHash(password) {
@@ -26,31 +27,107 @@ export function firestoreStore(project, database = '(default)', fetchRequest = f
   const root = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/${encodeURIComponent(database)}/documents`;
   let cachedToken, expires = 0;
   async function request(route, method='GET', data, query='') {
-    if (!cachedToken || expires < Date.now()) {
-      const response = await fetchRequest('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token',
-        { headers:{ 'Metadata-Flavor':'Google' }, signal:AbortSignal.timeout(5000) });
-      if (!response.ok) throw fail(503, 'Chưa kết nối được danh tính máy chủ.');
-      const token = await response.json(); cachedToken = token.access_token; expires = Date.now() + (token.expires_in - 60)*1000;
-    }
-    const response = await fetchRequest(root + '/' + route + query, { method,
-      headers:{ Authorization:'Bearer ' + cachedToken, 'Content-Type':'application/json' },
-      ...(data ? { body:JSON.stringify({ fields:{ payload:{ stringValue:JSON.stringify(data) }, ...(Number.isFinite(data.expiresAt) ? {expireAt:{timestampValue:new Date(data.expiresAt).toISOString()}} : {}) } }) } : {}),
-      signal:AbortSignal.timeout(10000) });
-    if (response.status === 404) {
-      // A GET for one document returns 404 when the collection/document has not
-      // been created yet. That is the expected state before the very first
-      // admin account is bootstrapped, so never treat it as a missing database.
-      // A real missing database will still fail on the following create/write.
-      if ((method === 'GET' && route.includes('/')) || method === 'DELETE') return null;
+    let lastError;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        if (!cachedToken || expires < Date.now()) {
+          const tokenResponse = await fetchRequest(
+            'http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token',
+            { headers:{ 'Metadata-Flavor':'Google' }, signal:AbortSignal.timeout(5000) }
+          );
+          if (!tokenResponse.ok) {
+            throw fail(503, 'Chưa kết nối được danh tính máy chủ.', {
+              storageStatus: tokenResponse.status,
+              storageCode: 'METADATA_TOKEN_ERROR',
+            });
+          }
+          const token = await tokenResponse.json();
+          cachedToken = token.access_token;
+          expires = Date.now() + Math.max(30, Number(token.expires_in || 300) - 60) * 1000;
+        }
 
-      const detail = await response.json().catch(() => ({}));
-      console.error('Firestore 404', detail.error?.message || 'Not found');
-      throw fail(503, 'Không thể ghi dữ liệu vào Firestore. Hãy kiểm tra quyền truy cập của dịch vụ máy chủ tới cơ sở dữ liệu.');
+        const response = await fetchRequest(root + '/' + route + query, {
+          method,
+          headers:{ Authorization:'Bearer ' + cachedToken, 'Content-Type':'application/json' },
+          ...(data ? {
+            body:JSON.stringify({
+              fields:{
+                payload:{ stringValue:JSON.stringify(data) },
+                ...(Number.isFinite(data.expiresAt)
+                  ? {expireAt:{timestampValue:new Date(data.expiresAt).toISOString()}}
+                  : {})
+              }
+            })
+          } : {}),
+          signal:AbortSignal.timeout(10000)
+        });
+
+        if (response.status === 401 && attempt < 2) {
+          cachedToken = undefined;
+          expires = 0;
+          await sleep(150 * (attempt + 1));
+          continue;
+        }
+
+        if (response.status === 404) {
+          if ((method === 'GET' && route.includes('/')) || method === 'DELETE') return null;
+          const detail = await response.json().catch(() => ({}));
+          const message = detail.error?.message || 'Not found';
+          console.error('Firestore 404', message);
+          throw fail(503, 'Không thể ghi dữ liệu vào Firestore. Hãy kiểm tra cơ sở dữ liệu và quyền của Cloud Run.', {
+            storageStatus: 404,
+            storageCode: detail.error?.status || 'NOT_FOUND',
+            storageDetail: message,
+          });
+        }
+
+        if (response.status === 409 || response.status === 412)
+          throw fail(409, 'Tài khoản đã tồn tại hoặc vừa được thay đổi.', {
+            storageStatus: response.status,
+            storageCode: response.status === 409 ? 'ALREADY_EXISTS' : 'FAILED_PRECONDITION',
+          });
+
+        if (!response.ok) {
+          const detail = await response.json().catch(() => ({}));
+          const message = detail.error?.message || response.statusText || 'Firestore request failed';
+          const code = detail.error?.status || 'HTTP_' + response.status;
+          console.error('Auth storage HTTP', response.status, code, message);
+
+          if ([429,500,502,503,504].includes(response.status) && attempt < 2) {
+            lastError = fail(503, 'Kho tài khoản đang bận. Vui lòng thử lại.', {
+              storageStatus: response.status,
+              storageCode: code,
+              storageDetail: message,
+            });
+            await sleep(250 * (attempt + 1));
+            continue;
+          }
+
+          throw fail(503, 'Chưa kết nối được kho tài khoản. Hãy kiểm tra cấu hình Firestore.', {
+            storageStatus: response.status,
+            storageCode: code,
+            storageDetail: message,
+          });
+        }
+
+        if (method === 'DELETE') return null;
+        return response.json();
+      } catch (error) {
+        if (error?.name === 'TimeoutError' || error?.name === 'AbortError') {
+          lastError = fail(503, 'Kết nối Firestore bị quá thời gian.', {
+            storageCode: 'TIMEOUT',
+            storageDetail: error.message,
+          });
+          if (attempt < 2) {
+            await sleep(250 * (attempt + 1));
+            continue;
+          }
+          throw lastError;
+        }
+        throw error;
+      }
     }
-    if (response.status === 409 || response.status === 412) throw fail(409, 'Tài khoản đã tồn tại hoặc vừa được thay đổi.');
-    if (!response.ok) { console.error('Auth storage HTTP',response.status); throw fail(503, 'Chưa kết nối được kho tài khoản. Hãy kiểm tra cấu hình Firestore.'); }
-    if (method === 'DELETE') return null;
-    return response.json();
+    throw lastError || fail(503, 'Chưa kết nối được kho tài khoản.');
   }
   const unpack = doc => doc ? JSON.parse(doc.fields.payload.stringValue) : null;
   return {
@@ -110,12 +187,20 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
     return user;
   }
   function sameOrigin(req) {
-    // Browser JSON writes require an exact origin; no CORS is enabled.
-    const origin=req.headers.origin;
-    const host=req.headers.host;
-    if(!origin || !host || !['https://'+host, ...(!secureCookie ? ['http://'+host] : [])].includes(origin))
+    // Cloud Run / AI Studio may sit behind a reverse proxy. Accept only the
+    // exact public host announced by Host or X-Forwarded-Host; CORS stays off.
+    const origin=String(req.headers.origin || '');
+    const directHost=String(req.headers.host || '').split(',')[0].trim();
+    const forwardedHost=String(req.headers['x-forwarded-host'] || '').split(',')[0].trim();
+    const forwardedProto=String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim();
+    const hosts=[directHost,forwardedHost].filter(Boolean);
+    const protocols=secureCookie ? ['https'] : ['https','http'];
+    if (forwardedProto && !protocols.includes(forwardedProto)) protocols.push(forwardedProto);
+    const allowed=new Set(hosts.flatMap(host=>protocols.map(proto=>proto+'://'+host)));
+    if(!origin || !allowed.has(origin))
       throw fail(403,'Nguồn yêu cầu không hợp lệ.');
-    if(!String(req.headers['content-type'] || '').startsWith('application/json')) throw fail(415,'Yêu cầu phải dùng JSON.');
+    if(!String(req.headers['content-type'] || '').startsWith('application/json'))
+      throw fail(415,'Yêu cầu phải dùng JSON.');
   }
   async function handle(req,res,pathname,body,json) {
     if(!pathname.startsWith('/api/auth/') && pathname !== '/api/admin/users' && pathname !== '/api/teacher/classes') return false;

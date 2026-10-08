@@ -7,6 +7,8 @@ export const AppBackground: React.FC = () => {
   const [mobile, setMobile] = useState(() => window.matchMedia('(max-width: 767px)').matches);
   const [imageFailed, setImageFailed] = useState(false);
 
+  // Một nền chung cho mọi vai trò và mọi màn hình.
+  // journey* là trường chuẩn mới; các trường cover/role chỉ còn làm dự phòng cho dữ liệu cũ.
   const customSource = mobile
     ? theme.journeyMobile ||
       theme.journeyDesktop ||

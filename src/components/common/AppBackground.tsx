@@ -8,8 +8,18 @@ export const AppBackground: React.FC = () => {
   const [imageFailed, setImageFailed] = useState(false);
 
   const customSource = mobile
-    ? theme.journeyMobile || theme.journeyDesktop
-    : theme.journeyDesktop || theme.journeyMobile;
+    ? theme.journeyMobile ||
+      theme.journeyDesktop ||
+      theme.coverMobile ||
+      theme.coverDesktop ||
+      theme.roleMobile ||
+      theme.roleDesktop
+    : theme.journeyDesktop ||
+      theme.journeyMobile ||
+      theme.coverDesktop ||
+      theme.coverMobile ||
+      theme.roleDesktop ||
+      theme.roleMobile;
   const source = customSource || DEFAULT_APP_BACKGROUND_DATA_URL;
 
   useEffect(() => { setImageFailed(false); }, [source]);

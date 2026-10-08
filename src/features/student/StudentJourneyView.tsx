@@ -58,10 +58,10 @@ export const StudentJourneyView: React.FC = () => {
   const progressPercent = Math.round((completed / total) * 100);
 
   const stats = [
-    { label: 'Trạm', value: `${completed}/${total}`, icon: CheckCircle2, accent: 'text-orange-600 bg-orange-100' },
+    { label: 'Điểm đến', value: `${completed}/${total}`, icon: CheckCircle2, accent: 'text-orange-600 bg-orange-100' },
     { label: 'Chìa khóa', value: String(keysCollected), icon: KeyRound, accent: 'text-amber-700 bg-amber-100' },
-    { label: 'Bản đồ', value: String(mapsCollected), icon: Map, accent: 'text-emerald-700 bg-emerald-100' },
-    { label: 'Dấu hộ chiếu', value: String(stampsCollected), icon: Stamp, accent: 'text-rose-600 bg-rose-100' },
+    { label: 'Mảnh bản đồ', value: String(mapsCollected), icon: Map, accent: 'text-emerald-700 bg-emerald-100' },
+    { label: 'Con dấu', value: String(stampsCollected), icon: Stamp, accent: 'text-rose-600 bg-rose-100' },
   ];
 
   const heroImage = nextStation?.coverImage || displayStations[0]?.coverImage;
@@ -83,10 +83,10 @@ export const StudentJourneyView: React.FC = () => {
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <h1 className="truncate text-[21px] font-black tracking-tight text-slate-950 sm:text-[23px]">
-                Hành trình khám phá <span className="text-orange-600">– Khối {currentGrade}</span>
+                Hành trình Nhà phiêu lưu <span className="text-orange-600">– Khối {currentGrade}</span>
               </h1>
               <span className="rounded-full bg-orange-100 px-2.5 py-1 text-[10px] font-black text-orange-700">
-                {completed}/{total} trạm hoàn thành
+                Đã chinh phục {completed}/{total} điểm đến
               </span>
             </div>
 
@@ -128,7 +128,7 @@ export const StudentJourneyView: React.FC = () => {
                 className="inline-flex h-10 min-w-[124px] items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 px-4 text-[12px] font-black text-white shadow-md shadow-orange-500/20 transition hover:-translate-y-0.5"
               >
                 <Play className="h-3.5 w-3.5 fill-current" />
-                Tiếp tục
+                Tiếp tục hành trình
                 <span aria-hidden="true">→</span>
               </button>
             )}
@@ -183,12 +183,12 @@ export const StudentJourneyView: React.FC = () => {
                 (progress.stage1Completed || progress.exploredHotspotIds.length > 0);
 
               const statusLabel = isCompleted
-                ? 'Hoàn thành'
+                ? 'Đã chinh phục'
                 : isInProgress
-                  ? 'Đang học'
+                  ? 'Đang khám phá'
                   : isDemoReady
-                    ? 'Mở'
-                    : 'Khóa';
+                    ? 'Sẵn sàng'
+                    : 'Chưa mở';
 
               const statusStyle = isCompleted
                 ? 'bg-emerald-100 text-emerald-700'
@@ -227,7 +227,7 @@ export const StudentJourneyView: React.FC = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/38 via-transparent to-slate-950/10" />
                     <div className={`absolute left-3 top-3 rounded-full px-4 py-1.5 text-xs font-black text-white shadow ${stationBadge}`}>
-                      Trạm {station.number}
+                      Điểm đến {station.number}
                     </div>
                     {!isDemoReady && (
                       <div className="absolute inset-0 bg-slate-900/8" />
@@ -266,7 +266,7 @@ export const StudentJourneyView: React.FC = () => {
                         }`}
                       >
                         {isCompleted ? <RotateCcw className="h-4 w-4" /> : <Play className="h-4 w-4 fill-current" />}
-                        {isCompleted ? 'Xem lại' : isInProgress ? 'Tiếp tục' : 'Bắt đầu'}
+                        {isCompleted ? 'Khám phá lại' : isInProgress ? 'Tiếp tục hành trình' : 'Bắt đầu khám phá'}
                         <span aria-hidden="true">→</span>
                       </button>
                     ) : (
@@ -276,7 +276,7 @@ export const StudentJourneyView: React.FC = () => {
                         className="mt-1 flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-slate-300 to-slate-400 px-3 py-3 text-xs font-black text-white opacity-80"
                       >
                         <LockKeyhole className="h-4 w-4" />
-                        Bắt đầu
+                        Bắt đầu khám phá
                         <span aria-hidden="true">→</span>
                       </button>
                     )}

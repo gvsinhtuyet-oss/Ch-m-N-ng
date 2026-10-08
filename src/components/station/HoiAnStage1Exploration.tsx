@@ -81,8 +81,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   useEffect(() => audioService.subscribeState(setNarrationState), []);
 
   useEffect(() => {
-    backgroundMusic.setForegroundSource('hoi-an-vr360', showVr);
-    return () => backgroundMusic.setForegroundSource('hoi-an-vr360', false);
+    backgroundMusic.setForegroundSource('station-vr360', showVr);
+    return () => backgroundMusic.setForegroundSource('station-vr360', false);
   }, [showVr]);
 
   useEffect(() => {
@@ -242,11 +242,11 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 type="button"
                 onClick={() => openImagePreview(index)}
                 className="absolute left-4 top-4 z-20 max-w-[62%] rounded-2xl border border-white/80 bg-white/95 px-4 py-3 text-left shadow-xl backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-orange-50"
-                aria-label="Khám phá bức tranh Hội An ở chế độ ảnh lớn"
+                aria-label={`Khám phá bức tranh ${station.titleVi} ở chế độ ảnh lớn`}
               >
                 <div className="flex items-center gap-2 text-orange-600">
                   <MapPin className="h-4 w-4 shrink-0" />
-                  <span className="truncate text-sm font-black">Khám phá bức tranh Hội An</span>
+                  <span className="truncate text-sm font-black">Khám phá bức tranh</span>
                 </div>
                 <p className="mt-0.5 text-[11px] font-semibold text-slate-600">
                   Chạm để xem ảnh lớn và quan sát kĩ từng chi tiết.
@@ -628,7 +628,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               <div className="pr-10">
                 <span className="inline-flex items-center gap-2 rounded-full bg-orange-100 px-3 py-1.5 text-[10px] font-black uppercase text-orange-700">
                   <MapPin className="h-3.5 w-3.5" />
-                  Điểm nổi bật Hội An
+                  Điểm nổi bật
                 </span>
                 <h3 className="mt-4 text-2xl font-black leading-tight text-slate-950 sm:text-[28px]">
                   {previewHotspot.titleVi}
@@ -682,10 +682,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 </div>
                 <div className="min-w-0">
                   <p className="truncate text-sm font-black">
-                    {station.vr360Experience.titleVi || 'Khám phá Hội An 360°'}
+                    {station.vr360Experience.titleVi || `Khám phá ${station.titleVi} 360°`}
                   </p>
                   <p className="text-[10px] font-semibold text-slate-400">
-                    Không gian thực tế ảo • Trạm Phố cổ Hội An
+                    Không gian thực tế ảo • Khám phá điểm đến
                   </p>
                 </div>
               </div>
@@ -714,7 +714,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             <div className="relative flex-1 bg-slate-950">
               <iframe
                 src={station.vr360Experience.url}
-                title={station.vr360Experience.titleVi || 'Khám phá Hội An 360°'}
+                title={station.vr360Experience.titleVi || `Khám phá ${station.titleVi} 360°`}
                 className="h-full w-full border-0"
                 allowFullScreen
                 sandbox="allow-scripts allow-same-origin allow-popups allow-forms"

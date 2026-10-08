@@ -400,7 +400,6 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
             </div>
           )}
         </>
-      )}
 
     </div>
   );

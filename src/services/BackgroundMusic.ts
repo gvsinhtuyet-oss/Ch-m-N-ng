@@ -3,13 +3,11 @@ const BACKGROUND_MUSIC_URL = '/audio/cham-danang-background.mp3';
 class BackgroundMusic {
   private audio: HTMLAudioElement | null = null;
   private sceneAllowed = true;
-  private soundAllowed = true;
   private unlocked = false;
   private enabled = true;
   private volume = .28;
   private foregroundLocks = 0;
   private foregroundSources = new Set<string>();
-  private resumeTimer: number | null = null;
   private listeners = new Set<() => void>();
 
   constructor() {
@@ -46,6 +44,7 @@ class BackgroundMusic {
     playing: !!this.audio && !this.audio.paused,
     enabled: this.enabled,
     volume: this.volume,
+    ducked: this.foregroundLocks > 0 || this.foregroundSources.size > 0,
   });
 
   subscribe = (listener: () => void) => {
@@ -61,15 +60,21 @@ class BackgroundMusic {
     return this.unlocked &&
       this.enabled &&
       this.sceneAllowed &&
-      this.soundAllowed &&
-      this.foregroundLocks === 0 &&
-      this.foregroundSources.size === 0 &&
       !document.hidden;
   }
 
-  setScene(allowed: boolean, soundAllowed: boolean) {
+  private effectiveVolume() {
+    const hasForegroundAudio = this.foregroundLocks > 0 || this.foregroundSources.size > 0;
+    return this.volume * (hasForegroundAudio ? 0.24 : 1);
+  }
+
+  private applyVolume() {
+    if (this.audio) this.audio.volume = this.effectiveVolume();
+    this.notify();
+  }
+
+  setScene(allowed: boolean) {
     this.sceneAllowed = allowed;
-    this.soundAllowed = soundAllowed;
     if (!this.canPlay()) this.pause();
     else void this.play();
   }
@@ -89,7 +94,7 @@ class BackgroundMusic {
 
   setVolume(value: number) {
     this.volume = Math.max(0, Math.min(1, value));
-    if (this.audio) this.audio.volume = this.volume;
+    this.applyVolume();
     try { localStorage.setItem('cham_music_volume', String(this.volume)); } catch {}
     this.notify();
   }
@@ -99,7 +104,7 @@ class BackgroundMusic {
     try {
       this.ensureAudio();
       if (!this.audio || !this.audio.paused) return;
-      this.audio.volume = this.volume;
+      this.audio.volume = this.effectiveVolume();
       await this.audio.play();
     } catch {
       // Trình duyệt có thể chặn autoplay; lần chạm tiếp theo sẽ thử lại.
@@ -113,47 +118,25 @@ class BackgroundMusic {
   }
 
   beginForegroundAudio() {
-    if (this.resumeTimer !== null) {
-      window.clearTimeout(this.resumeTimer);
-      this.resumeTimer = null;
-    }
     this.foregroundLocks += 1;
-    this.pause();
+    this.applyVolume();
   }
 
   setForegroundSource(sourceId: string, active: boolean) {
     if (!sourceId) return;
-    if (active) {
-      this.foregroundSources.add(sourceId);
-      this.pause();
-      return;
-    }
-    this.foregroundSources.delete(sourceId);
+    if (active) this.foregroundSources.add(sourceId);
+    else this.foregroundSources.delete(sourceId);
+    this.applyVolume();
     if (this.canPlay()) void this.play();
   }
 
   endForegroundAudio() {
     this.foregroundLocks = Math.max(0, this.foregroundLocks - 1);
-    if (this.foregroundLocks === 0 && this.canPlay()) void this.play();
-  }
-
-  muteFor(durationMs: number) {
-    if (this.resumeTimer === null) {
-      this.beginForegroundAudio();
-    } else {
-      window.clearTimeout(this.resumeTimer);
-    }
-    this.resumeTimer = window.setTimeout(() => {
-      this.resumeTimer = null;
-      this.endForegroundAudio();
-    }, Math.max(80, durationMs));
+    this.applyVolume();
+    if (this.canPlay()) void this.play();
   }
 
   stop() {
-    if (this.resumeTimer !== null) {
-      window.clearTimeout(this.resumeTimer);
-      this.resumeTimer = null;
-    }
     this.foregroundLocks = 0;
     this.foregroundSources.clear();
     this.pause();

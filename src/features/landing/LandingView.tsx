@@ -40,6 +40,8 @@ export const LandingView: React.FC = () => {
   const [staffEmail, setStaffEmail] = useState('');
   const [staffPassword, setStaffPassword] = useState('');
   const [staffBusy, setStaffBusy] = useState(false);
+  const [staffHealth, setStaffHealth] = useState<'idle' | 'checking' | 'ready' | 'error'>('idle');
+  const [staffHealthMessage, setStaffHealthMessage] = useState('');
   const [showTeacherLogin, setShowTeacherLogin] = useState<boolean>(false);
   const [selectedClass, setSelectedClass] = useState<string>('2/24');
   const [studentName, setStudentName] = useState<string>('');
@@ -117,6 +119,36 @@ export const LandingView: React.FC = () => {
     backgroundMusic.setForegroundSource('intro-video', introActive);
     return () => backgroundMusic.setForegroundSource('intro-video', false);
   }, [introActive]);
+
+  useEffect(() => {
+    if (!showTeacherLogin) {
+      setStaffHealth('idle');
+      setStaffHealthMessage('');
+      return;
+    }
+    let cancelled = false;
+    setStaffHealth('checking');
+    setStaffHealthMessage('Đang kiểm tra máy chủ đăng nhập…');
+    authService.health()
+      .then(health => {
+        if (cancelled) return;
+        if (health.auth?.ready) {
+          setStaffHealth('ready');
+          setStaffHealthMessage('Máy chủ đăng nhập đã sẵn sàng.');
+          return;
+        }
+        const issue = health.firestoreWriteError || health.firestoreError;
+        const code = issue?.code ? ` (${issue.code})` : '';
+        setStaffHealth('error');
+        setStaffHealthMessage(`Kho tài khoản chưa sẵn sàng${code}. Vui lòng xuất bản lại bản mới hoặc kiểm tra Firestore.`);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setStaffHealth('error');
+        setStaffHealthMessage('Chưa kiểm tra được máy chủ đăng nhập. Vui lòng thử lại.');
+      });
+    return () => { cancelled = true; };
+  }, [showTeacherLogin]);
 
   useEffect(() => {
     if (!introActive) return;
@@ -680,6 +712,12 @@ export const LandingView: React.FC = () => {
               <form className="space-y-4 text-sm" onSubmit={async e => {
                 e.preventDefault(); if(staffBusy) return; setStaffBusy(true); setLoginError('');
                 try {
+                  const health = await authService.health();
+                  if (!health.auth?.ready) {
+                    const issue = health.firestoreWriteError || health.firestoreError;
+                    const code = issue?.code ? ` (${issue.code})` : '';
+                    throw new Error(`Máy chủ quản trị chưa sẵn sàng${code}. Hãy kiểm tra /api/health sau khi xuất bản.`);
+                  }
                   const user = await authService.login(staffEmail,staffPassword);
                   setStaffPassword('');
                   if(user.role === 'admin') loginAsAdmin(user); else loginAsTeacher(user);
@@ -689,6 +727,15 @@ export const LandingView: React.FC = () => {
               }}>
                 <h4 className="font-black text-lg">{adminLogin ? 'Đăng nhập quản trị' : 'Đăng nhập giáo viên'}</h4>
                 <p className="text-slate-500">Dùng email và mật khẩu được nhà trường cấp. Quyền truy cập được xác định theo tài khoản.</p>
+                <div className={`rounded-xl border px-3 py-2 text-xs font-bold ${
+                  staffHealth === 'ready'
+                    ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
+                    : staffHealth === 'error'
+                      ? 'border-rose-200 bg-rose-50 text-rose-700'
+                      : 'border-sky-200 bg-sky-50 text-sky-700'
+                }`}>
+                  {staffHealthMessage || 'Đang kiểm tra máy chủ đăng nhập…'}
+                </div>
                 <label className="block font-bold">Email
                   <input type="email" autoComplete="username" required maxLength={254} value={staffEmail} onChange={e=>setStaffEmail(e.target.value)} className="mt-1 w-full p-3 border rounded-xl" />
                 </label>

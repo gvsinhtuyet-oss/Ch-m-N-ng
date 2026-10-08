@@ -2,6 +2,20 @@ import { Admin, Teacher, Classroom } from '../types';
 import { fetchWithTimeout } from './NetworkService';
 export type StaffUser = (Admin | Teacher) & { email: string };
 export type ManagedClass = Classroom & { students: string[] };
+export interface AuthHealth {
+  status: string;
+  revision?: string | null;
+  firestore?: string;
+  firestoreWrite?: string;
+  firestoreError?: { status?: number | null; code?: string | null; detail?: string | null } | null;
+  firestoreWriteError?: { status?: number | null; code?: string | null; detail?: string | null } | null;
+  auth?: {
+    adminEmailConfigured?: boolean;
+    adminAccountExists?: boolean;
+    bootstrapSecretConfigured?: boolean;
+    ready?: boolean;
+  };
+}
 let user: StaffUser | null = null;
 async function request(path: string, method='GET', data?: unknown) {
   const response = await fetchWithTimeout(path, { method, credentials:'same-origin', cache:'no-store',
@@ -13,6 +27,7 @@ async function request(path: string, method='GET', data?: unknown) {
 }
 export const authService = {
   current: () => user,
+  async health(): Promise<AuthHealth> { return await request('/api/health'); },
   async classes(): Promise<ManagedClass[]> { return (await request('/api/teacher/classes')).classes; },
   async saveClass(data: Pick<ManagedClass, 'name' | 'grade' | 'academicYear' | 'students'>, create: boolean) { await request('/api/teacher/classes', create ? 'POST' : 'PUT', data); },
   async restore() { user=(await request('/api/auth/session')).user; return user; },

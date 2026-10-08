@@ -128,6 +128,16 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
   const go = (nextIndex: number) => {
     if (nextIndex < 0 || nextIndex >= station.hotspots.length) return;
+
+    // Khóa tuyệt đối chiều tiến trong lần học đầu:
+    // dù đi bằng thẻ điểm, ảnh lớn hay nút Tiếp, học sinh phải trả lời đúng
+    // câu hỏi của điểm hiện tại trước khi sang điểm sau.
+    if (nextIndex > index && !freeReview && !explored) {
+      setLockMessage(`Em hãy trả lời đúng câu hỏi ở Điểm ${index + 1} trước khi sang Điểm ${nextIndex + 1} nhé!`);
+      audioService.playSfx('wrong');
+      return;
+    }
+
     if (!canAccessHotspot(nextIndex)) {
       const requiredIndex = Math.max(0, activeUnlockIndex);
       setLockMessage(`Em hãy trả lời đúng câu hỏi ở Điểm ${requiredIndex + 1} trước để mở Điểm ${nextIndex + 1} nhé!`);
@@ -545,15 +555,26 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   <ChevronLeft className="h-4 w-4" />
                   Trước
                 </button>
-                <button
-                  type="button"
-                  disabled={index === station.hotspots.length - 1 || !canAccessHotspot(index + 1)}
-                  onClick={() => go(index + 1)}
-                  className="inline-flex items-center gap-1 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-orange-700 shadow disabled:opacity-40"
-                >
-                  Tiếp
-                  <ChevronRight className="h-4 w-4" />
-                </button>
+                <div className="flex flex-col items-end gap-1">
+                  <button
+                    type="button"
+                    disabled={
+                      index === station.hotspots.length - 1 ||
+                      (!freeReview && !explored) ||
+                      !canAccessHotspot(index + 1)
+                    }
+                    onClick={() => go(index + 1)}
+                    className="inline-flex items-center gap-1 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-orange-700 shadow disabled:cursor-not-allowed disabled:opacity-40"
+                  >
+                    Tiếp
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                  {!freeReview && !explored && index < station.hotspots.length - 1 && (
+                    <span className="rounded-full bg-slate-950/70 px-2.5 py-1 text-[9px] font-bold text-white/90">
+                      Trả lời đúng câu hỏi để mở Điểm {index + 2}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
 

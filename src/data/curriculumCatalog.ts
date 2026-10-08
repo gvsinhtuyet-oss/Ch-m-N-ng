@@ -29,7 +29,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết và giới thiệu được một số đặc điểm cụ thể, gần gũi về nơi em đang ở (vị trí, cảnh vật, con người...).',
     understandGoalVi: 'Hiểu được ý nghĩa của gia đình, khu phố, tình làng nghĩa xóm.',
     behaviorGoalVi: 'Biết giữ gìn nhà ở, trường học và môi trường xung quanh sạch đẹp; hình thành tình yêu nơi mình sinh sống.',
-    coverImage: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/DaNang.jpg',
     isFullyVerified: true,
   },
   {
@@ -44,7 +44,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được một số trò chơi dân gian quen thuộc (ô ăn quan, nhảy dây, trốn tìm...).',
     understandGoalVi: 'Hiểu ý nghĩa gắn kết bạn bè và giá trị tinh thần của trò chơi dân gian.',
     behaviorGoalVi: 'Biết cách tham gia trò chơi, hợp tác chia sẻ với bạn bè và giữ gìn trò chơi dân gian.',
-    coverImage: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ch%C6%A1i%20%C3%B4%20%C4%83n%20quan%20%28Tr%C6%B0%E1%BB%9Dng%20Sa%29.jpg',
     isFullyVerified: true,
   },
   {
@@ -59,7 +59,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được một số dòng suối tiêu biểu (suối Mơ, suối Hoa, suối Lương...), cảnh quan và vai trò của suối.',
     understandGoalVi: 'Hiểu được tầm quan trọng của nguồn nước ngọt đối với đời sống thiên nhiên và con người.',
     behaviorGoalVi: 'Biết giữ gìn nguồn nước, tuyệt đối không xả rác xuống suối, hình thành ý thức bảo vệ môi trường.',
-    coverImage: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://hoavang.danang.gov.vn/UserFiles/image/SH%201.jpg',
     isFullyVerified: true,
   },
   {
@@ -74,7 +74,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được Thành Điện Hải là di tích lịch sử tiêu biểu của Đà Nẵng, gắn với súng thần công và dấu ấn chống Pháp.',
     understandGoalVi: 'Hiểu được tinh thần kiên cường, quả cảm của quân và dân Đà Nẵng trong những ngày đầu kháng chiến.',
     behaviorGoalVi: 'Tự hào, trân trọng di sản lịch sử và cuộc chiến đấu anh hùng của quê hương Đà Nẵng.',
-    coverImage: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Th%C3%A0nh%20c%E1%BB%95%20%C4%90i%E1%BB%87n%20H%E1%BA%A3i%202.jpeg',
     isFullyVerified: true,
   },
   {
@@ -89,7 +89,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết và gọi tên được một số món ăn truyền thống tiêu biểu (Mì Quảng, bánh tráng cuốn thịt heo, bánh xèo...).',
     understandGoalVi: 'Hiểu được câu chuyện văn hóa, nguồn nguyên liệu tự nhiên tươi ngon của sản vật địa phương.',
     behaviorGoalVi: 'Có ý thức giữ gìn nét đẹp văn hóa ẩm thực quê hương và trân trọng công sức người nấu ăn.',
-    coverImage: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/M%C3%AC%20Qu%E1%BA%A3ng%2C%20Da%20Nang%2C%20Vietnam.jpg',
     isFullyVerified: true,
   },
 
@@ -106,7 +106,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được sản phẩm chiếu truyền thống Cẩm Nê, Bàn Thạch và đặc điểm cơ bản của nghề dệt chiếu.',
     understandGoalVi: 'Biết vai trò của nghề thủ công đối với đời sống cộng đồng và nét đẹp bền bỉ của làng nghề xứ Quảng.',
     behaviorGoalVi: 'Trân trọng người lao động và có ý thức giữ gìn sản phẩm truyền thống của quê hương.',
-    coverImage: 'https://images.unsplash.com/photo-1607344645866-009c320c5ab8?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://hoavang.danang.gov.vn/UserFiles/image/Chieu%20CN.jpg',
     isFullyVerified: true,
   },
   {
@@ -121,7 +121,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được những nét nổi bật về cảnh quan, sinh vật quý hiếm (voọc chà và chân nâu, rạn san hô...) ở Cù Lao Chàm, Sơn Trà.',
     understandGoalVi: 'Nêu được giá trị tự nhiên to lớn của hai lá phổi xanh và khu dự trữ sinh quyển thế giới.',
     behaviorGoalVi: 'Biết thực hiện một số việc làm phù hợp để bảo vệ biển, rừng và sinh thái; bồi dưỡng tình yêu biển đảo quê hương.',
-    coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Cham%20Island%20%28C%C3%B9%20Lao%20Ch%C3%A0m%29%20seen%20from%20M%E1%BB%B9%20Kh%C3%AA%20Beach%2C%20%C4%90%C3%A0%20N%E1%BA%B5ng%2C%20Vietnam.jpg',
     isFullyVerified: true,
   },
   {
@@ -136,7 +136,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được những nét chính về cuộc đời, sự nghiệp và di tích của 2 danh tướng Nguyễn Tri Phương và Hoàng Diệu.',
     understandGoalVi: 'Bước đầu mô tả sơ lược về những đóng góp to lớn vào sự nghiệp giữ nước, tinh thần trung quân ái quốc.',
     behaviorGoalVi: 'Hình thành niềm tự hào, lòng biết ơn, kính trọng đối với những anh hùng có công với đất nước.',
-    coverImage: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Vietnam%20Military%20History%20Museum%20in%202014%20A%2007.jpg',
     isFullyVerified: true,
   },
   {
@@ -151,7 +151,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được những nét tiêu biểu của phố cổ Hội An (Chùa Cầu, nhà cổ, hội quán, sông Hoài) và các giá trị di sản.',
     understandGoalVi: 'Nhận biết một số biểu hiện giao thoa lịch sử và văn hóa trong di sản Hội An.',
     behaviorGoalVi: 'Biết bảo vệ, giữ gìn cảnh quan, không xả rác và ứng xử văn minh khi tham quan di sản.',
-    coverImage: 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Hoi%20An%20Ancient%20Town.jpg',
     isFullyVerified: true,
   },
   {
@@ -166,7 +166,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được một số lễ hội truyền thống tiêu biểu (Lễ hội Cầu Ngư, Lễ hội Quán Thế Âm, lễ hội đình làng...).',
     understandGoalVi: 'Hiểu được một số hoạt động, ý nghĩa cầu mong mưa thuận gió hòa, quốc thái dân an của lễ hội.',
     behaviorGoalVi: 'Biết ứng xử phù hợp, trang nghiêm và văn minh khi tham gia lễ hội; yêu quý văn hóa quê hương.',
-    coverImage: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://danangfantasticity.com/wp-content/uploads/2026/04/khai-mac-cac-hoat-dong-phan-hoi-le-hoi-quan-the-am-ngu-hanh-son-nam-2026-1024x683.jpg',
     isFullyVerified: true,
   },
 
@@ -183,7 +183,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết, mô tả được một số đặc điểm nổi bật của bãi biển Mỹ Khê và Bàn Than.',
     understandGoalVi: 'Nhận biết được giá trị của biển đối với đời sống, du lịch và sự phát triển địa phương.',
     behaviorGoalVi: 'Biết thực hiện các hành vi bảo vệ cảnh quan và môi trường biển.',
-    coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Bai%20bien%20My%20Khe.jpg',
     isFullyVerified: true,
   },
   {
@@ -198,7 +198,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nêu được những nét chính về cuộc đời và sự nghiệp của Huỳnh Thúc Kháng và Phan Châu Trinh (Phong trào Duy Tân).',
     understandGoalVi: 'Hiểu được phẩm chất yêu nước, ý chí và tinh thần canh tân đất nước của các bậc tiền bối.',
     behaviorGoalVi: 'Tự hào về chí sĩ quê hương, noi gương tinh thần tự học và ý chí vươn lên.',
-    coverImage: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mr%20Hu%E1%BB%B3nh%20Th%C3%BAc%20Kh%C3%A1ng.jpg',
     isFullyVerified: true,
   },
   {
@@ -213,7 +213,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được sự đa dạng của cộng đồng các dân tộc trên địa bàn (Kinh, Cơ Tu, Hoa...).',
     understandGoalVi: 'Biết một số nét về cuộc sống và phong tục văn hóa tiêu biểu của đồng bào Cơ Tu ở vùng núi Đà Nẵng.',
     behaviorGoalVi: 'Biết tôn trọng sự khác biệt, hòa đồng với mọi người, hình thành phẩm chất nhân ái, đoàn kết.',
-    coverImage: 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Le%20mus%C3%A9e%20Co%20Tu.jpg',
     isFullyVerified: true,
   },
   {
@@ -228,7 +228,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được những nét cơ bản của nghề làm nước mắm Nam Ô truyền thống từ cá cơm than.',
     understandGoalVi: 'Biết giá trị của sản phẩm làng nghề đối với đời sống và bản sắc văn hóa địa phương.',
     behaviorGoalVi: 'Có ý thức trân trọng nghề truyền thống và bảo vệ uy tín sản phẩm an toàn, chất lượng.',
-    coverImage: 'https://images.unsplash.com/photo-1541832676-9b763b0239ab?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://danangfantasticity.com/wp-content/uploads/2025/05/nghe-lam-nuoc-mam-nam-o-da-nang-02-1024x576.jpg',
     isFullyVerified: true,
   },
   {
@@ -243,7 +243,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được đặc điểm và quy trình cơ bản của nghề đan thuyền thúng bằng tre và trét dầu rái.',
     understandGoalVi: 'Hiểu được sự gắn bó keo sơn của chiếc thuyền thúng với ngư dân miền biển Đà Nẵng.',
     behaviorGoalVi: 'Trân trọng người thợ thủ công lao động và có ý thức giữ gìn nghề gia truyền.',
-    coverImage: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://cdn2.tuoitre.vn/phunuonline/image/news/2014/20140329/fckimage/29342_anh-1-ong-liem-bat-tay-dan-mot-chiec-thuyen-thung-moi.JPG',
     isFullyVerified: true,
   },
 
@@ -260,7 +260,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Trình bày được một số nét khái quát, tiêu biểu về thiên nhiên và con người Đà Nẵng.',
     understandGoalVi: 'Nhận biết mối quan hệ giữa điều kiện tự nhiên với đời sống và tính cách con người Đất Quảng nghĩa tình.',
     behaviorGoalVi: 'Hình thành tình yêu, niềm tự hào và trách nhiệm xây dựng quê hương đáng sống.',
-    coverImage: 'https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Han%20River%20in%20Da%20Nang%20at%20sunrise.jpg',
     isFullyVerified: true,
   },
   {
@@ -275,7 +275,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được quá trình hình thành và những giá trị nổi bật của các bảo tàng (Bảo tàng Đà Nẵng, Điêu khắc Chăm, Mỹ thuật...).',
     understandGoalVi: 'Biết quan sát, khai thác thông tin từ hiện vật và không gian bảo tàng.',
     behaviorGoalVi: 'Có ý thức bảo tồn, phát huy di sản và giữ gìn trật tự, văn minh khi tham quan bảo tàng.',
-    coverImage: 'https://images.unsplash.com/photo-1566127444979-b3d2b654e3d7?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/B%E1%BA%A3o%20t%C3%A0ng%20%C4%90%C3%A0%20N%E1%BA%B5ng.jpeg',
     isFullyVerified: true,
   },
   {
@@ -290,7 +290,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết sơ lược về các ngành kinh tế chủ yếu của thành phố (du lịch dịch vụ, cảng biển, công nghệ số).',
     understandGoalVi: 'Nhận biết được vai trò của người điều hành và người lao động sáng tạo trong phát triển kinh tế.',
     behaviorGoalVi: 'Hình thành ý thức chăm chỉ học tập, rèn luyện kỹ năng và tinh thần trách nhiệm.',
-    coverImage: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/DN%20Port%20HQ.jpg',
     isFullyVerified: true,
   },
   {
@@ -305,7 +305,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được những nét chính về làng nghề đúc đồng Phước Kiều (chiêng, cồng, chuông đồng, đồ đồng mỹ nghệ).',
     understandGoalVi: 'Hiểu được giá trị kinh tế, văn hóa và kỹ nghệ thẩm âm tài tình của các nghệ nhân đúc đồng.',
     behaviorGoalVi: 'Có ý thức bảo tồn nghề truyền thống và trân trọng giá trị giọt mồ hôi của người thợ.',
-    coverImage: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Ch%C3%B9a%20Ph%C3%A1p%20V%C3%A2n%20th10n2022%20%28%C4%90%E1%BA%A1i%20h%E1%BB%93ng%20chung%29.jpg',
     isFullyVerified: true,
   },
   {
@@ -320,7 +320,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Trình bày được những nét chính về quy trình ươm tơ, dệt lụa Mã Châu nổi tiếng dọc sông Thu Bồn.',
     understandGoalVi: 'Nhận biết được giá trị mịn màng, thoáng mát của sản phẩm tơ tằm thiên nhiên quê hương.',
     behaviorGoalVi: 'Có ý thức bảo tồn giá trị nghề thủ công và yêu quý các sản phẩm dệt may truyền thống.',
-    coverImage: 'https://images.unsplash.com/photo-1528458876861-544fd1761a91?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Van%20Phuc%20weaver%20at%20Jacquard%20loom.jpg',
     isFullyVerified: true,
   },
 
@@ -337,7 +337,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được vị trí, đặc điểm dòng chảy và thắng cảnh Hòn Kẽm Đá Dừng trên dòng sông Mẹ Thu Bồn.',
     understandGoalVi: 'Nêu được các giá trị tự nhiên, văn hóa, giao thương và nguồn phù sa bồi đắp đôi bờ.',
     behaviorGoalVi: 'Có ý thức bảo vệ nguồn nước sạch, giữ gìn cảnh quan thiên nhiên và trân trọng dòng sông quê hương.',
-    coverImage: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Honkemdadung.jpg',
     isFullyVerified: true,
   },
   {
@@ -352,7 +352,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Trình bày được chiến công Mẹ Dũng sĩ Thanh Khê và tấm gương vĩ đại của Mẹ Việt Nam Anh hùng Nguyễn Thị Thứ.',
     understandGoalVi: 'Hiểu được đức hy sinh vô bờ bến, lòng yêu nước nồng nàn của những người mẹ Đất Quảng kiên trung.',
     behaviorGoalVi: 'Thể hiện lòng biết ơn, tri ân bằng việc học tập tốt và tham gia hoạt động đền ơn đáp nghĩa.',
-    coverImage: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Tuong%20BMVN%20anh%20hung%20Nguyen%20Thi%20Thu.jpg',
     isFullyVerified: true,
   },
   {
@@ -367,7 +367,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết vị trí địa lý, cảnh quan khí hậu bốn mùa ở Bà Nà và vị thế "Thiên hạ đệ nhất hùng quan" của Hải Vân Quan.',
     understandGoalVi: 'Hiểu được giá trị lịch sử quân sự, văn hóa và tiềm năng du lịch sinh thái đỉnh cao.',
     behaviorGoalVi: 'Biết sử dụng thông tin để giới thiệu thắng cảnh và có ý thức giữ gìn vệ sinh môi trường vùng cao.',
-    coverImage: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/The%20Hai%20Van%20Gate%2C%20H%E1%BA%A3i%20V%C3%A2n%20Pass%20%28%22ocean%20cloud%20pass%22%29%2C%20Vietnam%20%287090613449%29.jpg',
     isFullyVerified: true,
   },
   {
@@ -382,7 +382,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Trình bày được cảnh quan 5 ngọn núi (Kim, Mộc, Thủy, Hỏa, Thổ), hang động Huyền Không, chùa Tam Thai và bia Ma nhai.',
     understandGoalVi: 'Nhận biết giá trị lịch sử, địa chất, văn hóa tâm linh và di sản tư liệu Ma nhai được UNESCO vinh danh.',
     behaviorGoalVi: 'Biết ứng xử văn minh, giữ gìn cảnh quan non nước và trân trọng làng đá mỹ nghệ Non Nước.',
-    coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Marble%20Mountains%2C%20Vietnam.jpg',
     isFullyVerified: true,
   },
   {
@@ -397,7 +397,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết đặc điểm, giá trị quý hiếm và vùng phân bố tự nhiên của Sâm Ngọc Linh (Quốc bảo Việt Nam).',
     understandGoalVi: 'Hiểu giá trị kinh tế, dược liệu cao cấp và sự gắn bó với đời sống đồng bào vùng núi cao.',
     behaviorGoalVi: 'Có ý thức bảo vệ nguồn gen quý, bảo vệ môi trường sinh thái rừng già nguyên sinh.',
-    coverImage: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Cay%20Sam%20Ngoc%20Linh%20Panax%20vietnamensis%20tai%20Mang%20Ri.jpg',
     isFullyVerified: true,
   },
 ];

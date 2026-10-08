@@ -20,6 +20,7 @@ import {
   Info,
 } from 'lucide-react';
 import { RewardClaimModal } from '../common/RewardClaimModal';
+import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 
 
 // Shuffle a copy so option IDs and correctness stay unchanged.
@@ -228,7 +229,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
             style={{
-              backgroundImage: `url(${station.vr360PreviewImage || station.coverImage || 'https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?auto=format&fit=crop&w=1200&q=80'})`,
+              backgroundImage: `url(${station.vr360PreviewImage || station.coverImage || DEFAULT_APP_BACKGROUND_DATA_URL})`,
             }}
           />
 

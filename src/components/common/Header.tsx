@@ -47,11 +47,11 @@ export const Header: React.FC = () => {
       icon: Compass,
       view: 'student-journey',
       active: currentView === 'student-journey' || currentView === 'station-view',
-      iconClass: 'text-sky-600',
+      iconClass: 'text-orange-500',
     },
-    { label: 'Hộ chiếu', icon: Award, view: 'student-passport', active: currentView === 'student-passport', iconClass: 'text-amber-500' },
-    { label: 'Bản đồ', icon: MapIcon, view: 'student-maps', active: currentView === 'student-maps', iconClass: 'text-emerald-600' },
-    { label: 'Bộ sưu tập', icon: Heart, view: 'student-memories', active: currentView === 'student-memories', iconClass: 'text-rose-500' },
+    { label: 'Hộ chiếu', icon: Award, view: 'student-passport', active: currentView === 'student-passport', iconClass: 'text-orange-500' },
+    { label: 'Bản đồ', icon: MapIcon, view: 'student-maps', active: currentView === 'student-maps', iconClass: 'text-orange-500' },
+    { label: 'Bộ sưu tập', icon: Heart, view: 'student-memories', active: currentView === 'student-memories', iconClass: 'text-orange-500' },
   ] as const;
 
   return (
@@ -135,7 +135,7 @@ export const Header: React.FC = () => {
                     className={`group flex shrink-0 items-center gap-2 rounded-xl px-3 py-2.5 text-[12px] font-extrabold transition sm:px-3.5 lg:text-[13px] ${
                       item.active
                         ? 'bg-gradient-to-r from-orange-50 to-amber-50 text-orange-700 shadow-sm ring-1 ring-orange-200'
-                        : 'text-slate-600 hover:bg-sky-50/70 hover:text-slate-900'
+                        : 'text-orange-700/90 hover:bg-orange-50 hover:text-orange-800'
                     }`}
                   >
                     <Icon className={`h-[17px] w-[17px] ${

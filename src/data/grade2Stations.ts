@@ -20,7 +20,7 @@ const G2_STATION_1: Station = {
   titleEn: 'Cam Ne & Ban Thach Traditional Mats',
   subtitleVi: 'Theo dấu sợi cói để khám phá đôi bàn tay khéo léo và nét đẹp của làng nghề truyền thống',
   subtitleEn: 'Discover traditional mat weaving through materials, craft, artisans and local heritage',
-  coverImage: 'https://hoavang.danang.gov.vn/UserFiles/image/Chieu%20CN.jpg',
+  coverImage: 'https://danang.gov.vn/documents/37638/981989/cam-ne-1.png/440d3b04-1bc6-de6f-0d1f-09d6ae1f7c22?t=1743578855127',
   openingMessageVi: 'Nhà phiêu lưu ơi, hãy theo những sợi cói mềm dẻo để khám phá cách một tấm chiếu quê hương được tạo nên nhé!',
   totalPeriods: 6,
   officialCurriculumReference: 'Tài liệu GDĐP TP Đà Nẵng - Khối 2 - Bài 1',
@@ -35,7 +35,7 @@ const G2_STATION_1: Station = {
       stationId: 'g2-station-1',
       titleVi: '1. Cẩm Nê – từ sợi lác đến tấm chiếu',
       subtitleVi: 'Làng chiếu nổi tiếng ở Hòa Tiến, Hòa Vang',
-      image: 'https://hoavang.danang.gov.vn/UserFiles/image/Chieu%20CN.jpg',
+      image: 'https://danang.gov.vn/documents/37638/981989/cam-ne-1.png/440d3b04-1bc6-de6f-0d1f-09d6ae1f7c22?t=1743578855127',
       narrationVi: 'Làng chiếu Cẩm Nê thuộc vùng Hòa Tiến, Hòa Vang và nổi tiếng với nghề dệt chiếu truyền thống. Người thợ chọn những sợi lác phù hợp, phơi và xử lí cẩn thận; sợi đay được dùng để tạo độ bền cho tấm chiếu.',
       keyFactVi: 'Nguồn tư liệu địa phương ghi nhận Cẩm Nê là làng dệt chiếu lâu đời, nổi tiếng với chiếu trơn và chiếu hoa.',
       interaction: {
@@ -55,7 +55,7 @@ const G2_STATION_1: Station = {
       stationId: 'g2-station-1',
       titleVi: '2. Chiếu hoa Cẩm Nê',
       subtitleVi: 'Màu được nhuộm vào sợi trước khi dệt',
-      image: 'https://hoavang.danang.gov.vn/UserFiles/image/Chieu%20CN.jpg',
+      image: 'https://file3.qdnd.vn/data/images/0/2025/02/26/upload_2271/1%201.jpg',
       narrationVi: 'Với chiếu hoa Cẩm Nê, người thợ chọn sợi lác rồi nhuộm màu trước khi đưa lên khung dệt. Hoa văn được tạo nên trong quá trình dệt chứ không phải dệt chiếu trắng xong rồi mới in màu lên mặt chiếu.',
       keyFactVi: 'Đây là một nét đáng nhớ của chiếu hoa Cẩm Nê: sợi lác được nhuộm màu trước khi dệt thành hoa văn.',
       interaction: {
@@ -75,7 +75,7 @@ const G2_STATION_1: Station = {
       stationId: 'g2-station-1',
       titleVi: '3. Bàn Thạch – tiếng danh của chiếu bông',
       subtitleVi: 'Một làng chiếu nổi tiếng của xứ Quảng',
-      image: 'https://hoavang.danang.gov.vn/UserFiles/image/Chieu%20CN.jpg',
+      image: 'https://bqn.1cdn.vn/2025/05/06/chieu-ban-thach-3.jpg',
       narrationVi: 'Bàn Thạch cũng là một vùng dệt chiếu nổi tiếng của xứ Quảng. Tư liệu về làng nghề cho biết chiếu Bàn Thạch hình thành từ sớm và nổi tiếng với chiếu bông – loại chiếu đẹp, từng được dùng trong những dịp quan trọng như hiếu hỷ.',
       keyFactVi: 'Tư liệu di sản Hội An ghi nhận làng chiếu Bàn Thạch đã hình thành khoảng thế kỉ XVI và nổi tiếng với mặt hàng chiếu bông.',
       interaction: {
@@ -95,7 +95,7 @@ const G2_STATION_1: Station = {
       stationId: 'g2-station-1',
       titleVi: '4. Hai làng nghề – một nét đẹp quê hương',
       subtitleVi: 'Trân trọng sản phẩm và đôi tay người thợ',
-      image: 'https://hoavang.danang.gov.vn/UserFiles/image/Chieu%20CN.jpg',
+      image: 'https://culaochamtourist.vn/wp-content/uploads/2023/07/lang-chieu-ban-thach-2.jpg',
       narrationVi: 'Cẩm Nê và Bàn Thạch đều cho thấy sự khéo léo của người thợ dệt chiếu xứ Quảng. Mỗi nơi có nét riêng, nhưng đều nhắc chúng ta biết quý trọng lao động thủ công và gìn giữ nghề truyền thống.',
       keyFactVi: 'Gìn giữ làng nghề là gìn giữ cả kĩ năng lao động, ký ức cộng đồng và nét đẹp văn hóa địa phương.',
       interaction: {
@@ -212,7 +212,7 @@ const G2_STATION_1: Station = {
     grade: 2,
     titleVi: 'Bản đồ hành trình Chiếu Cẩm Nê – Bàn Thạch',
     subtitleVi: 'Từ sợi cói đến tấm chiếu quê hương',
-    image: 'https://hoavang.danang.gov.vn/UserFiles/image/Chieu%20CN.jpg',
+    image: 'https://danang.gov.vn/documents/37638/981989/cam-ne-1.png/440d3b04-1bc6-de6f-0d1f-09d6ae1f7c22?t=1743578855127',
     summaryNodes: [
       { id: 'n1', titleVi: 'Nguyên liệu', textVi: 'Chuẩn bị những sợi phù hợp trước khi dệt.', icon: '🌾' },
       { id: 'n2', titleVi: 'Khung dệt', textVi: 'Luồn và ép sợi thật đều, thật chắc.', icon: '🧵' },

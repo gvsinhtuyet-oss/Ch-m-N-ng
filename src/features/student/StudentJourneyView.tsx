@@ -3,6 +3,7 @@ import { useApp } from '../../contexts/AppContext';
 import { Station } from '../../types';
 import { progressService } from '../../services/ProgressService';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
+import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import {
   CheckCircle2,
   KeyRound,
@@ -75,6 +76,10 @@ export const StudentJourneyView: React.FC = () => {
             alt=""
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.12]"
+            onError={event => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.src = DEFAULT_APP_BACKGROUND_DATA_URL;
+            }}
           />
         )}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/98 via-orange-50/94 to-amber-50/88" />
@@ -224,6 +229,10 @@ export const StudentJourneyView: React.FC = () => {
                       className={`h-full w-full object-cover transition duration-700 ${
                         isDemoReady ? 'group-hover:scale-105' : 'scale-105 grayscale-[15%]'
                       }`}
+                      onError={event => {
+                        event.currentTarget.onerror = null;
+                        event.currentTarget.src = DEFAULT_APP_BACKGROUND_DATA_URL;
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/38 via-transparent to-slate-950/10" />
                     <div className={`absolute left-3 top-3 rounded-full px-4 py-1.5 text-xs font-black text-white shadow ${stationBadge}`}>

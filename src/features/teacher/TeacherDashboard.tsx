@@ -6,6 +6,7 @@ import { DEMO_STUDENTS, DEMO_CLASSROOMS } from '../../data/mockUsers';
 import { implementationService } from '../../services/ImplementationService';
 import { progressService } from '../../services/ProgressService';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
+import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import { ImplementationModal } from './ImplementationModal';
 import {
   Presentation,
@@ -180,6 +181,10 @@ export const TeacherDashboard: React.FC = () => {
                       src={station.coverImage}
                       alt={station.titleVi}
                       className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover shrink-0 shadow-xs"
+                      onError={event => {
+                        event.currentTarget.onerror = null;
+                        event.currentTarget.src = DEFAULT_APP_BACKGROUND_DATA_URL;
+                      }}
                     />
                     <div className="space-y-1.5 flex-1">
                       <div className="flex flex-wrap items-center gap-2">

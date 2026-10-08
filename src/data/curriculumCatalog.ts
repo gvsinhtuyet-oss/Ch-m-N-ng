@@ -136,7 +136,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     knowGoalVi: 'Nhận biết được những nét chính về cuộc đời, sự nghiệp và di tích của 2 danh tướng Nguyễn Tri Phương và Hoàng Diệu.',
     understandGoalVi: 'Bước đầu mô tả sơ lược về những đóng góp to lớn vào sự nghiệp giữ nước, tinh thần trung quân ái quốc.',
     behaviorGoalVi: 'Hình thành niềm tự hào, lòng biết ơn, kính trọng đối với những anh hùng có công với đất nước.',
-    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Vietnam%20Military%20History%20Museum%20in%202014%20A%2007.jpg',
+    coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Portrait%20of%20Nguy%E1%BB%85n%20Tri%20Ph%C6%B0%C6%A1ng.webp',
     isFullyVerified: true,
   },
   {

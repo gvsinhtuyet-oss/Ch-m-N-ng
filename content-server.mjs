@@ -144,6 +144,8 @@ const server = createServer(async (req,res) => {
     if (pathname === '/api/health' && req.method === 'GET') {
       let firestoreStatus = 'unknown';
       let firestoreWriteStatus = 'unknown';
+      let firestoreError = null;
+      let firestoreWriteError = null;
       let adminAccountExists = false;
       const adminEmail = typeof process.env.AUTH_ADMIN_EMAIL === 'string'
         ? process.env.AUTH_ADMIN_EMAIL.trim().toLowerCase()
@@ -166,10 +168,20 @@ const server = createServer(async (req,res) => {
             firestoreWriteStatus = 'connected';
           } catch (err) {
             firestoreWriteStatus = `error: ${err.message}`;
+            firestoreWriteError = {
+              status: err.storageStatus || null,
+              code: err.storageCode || null,
+              detail: err.storageDetail || null,
+            };
           }
         } catch (err) {
           firestoreStatus = `error: ${err.message}`;
           firestoreWriteStatus = 'not-tested';
+          firestoreError = {
+            status: err.storageStatus || null,
+            code: err.storageCode || null,
+            detail: err.storageDetail || null,
+          };
         }
       } else {
         firestoreStatus = 'unconfigured';
@@ -181,10 +193,14 @@ const server = createServer(async (req,res) => {
         process.env.AUTH_ADMIN_PASSWORD.length <= 128;
       return json(res, 200, {
         status: 'ok',
+        revision: process.env.K_REVISION || null,
+        service: process.env.K_SERVICE || null,
         project: process.env.AUTH_FIRESTORE_PROJECT || null,
         database: firestoreDatabase,
         firestore: firestoreStatus,
         firestoreWrite: firestoreWriteStatus,
+        firestoreError,
+        firestoreWriteError,
         auth: {
           adminEmailConfigured: !!adminEmail,
           adminAccountExists,

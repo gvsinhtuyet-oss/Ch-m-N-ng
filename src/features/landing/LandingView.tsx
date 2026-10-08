@@ -71,14 +71,17 @@ export const LandingView: React.FC = () => {
     };
   }, []);
 
-  const sharedBackground = (
+  const coverBackground = (
     mobileBackground
-      ? theme.journeyMobile || theme.journeyDesktop || theme.coverMobile || theme.coverDesktop || theme.roleMobile || theme.roleDesktop
-      : theme.journeyDesktop || theme.journeyMobile || theme.coverDesktop || theme.coverMobile || theme.roleDesktop || theme.roleMobile
+      ? theme.coverMobile || theme.coverDesktop
+      : theme.coverDesktop || theme.coverMobile
   ) || DEFAULT_APP_BACKGROUND_DATA_URL;
 
-  const coverBackground = sharedBackground;
-  const roleBackground = sharedBackground;
+  const roleBackground = (
+    mobileBackground
+      ? theme.roleMobile || theme.roleDesktop
+      : theme.roleDesktop || theme.roleMobile
+  ) || coverBackground || DEFAULT_APP_BACKGROUND_DATA_URL;
 
   useEffect(() => {
     try {

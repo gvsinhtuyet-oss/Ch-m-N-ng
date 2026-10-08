@@ -19,6 +19,7 @@ import { useApp } from '../../contexts/AppContext';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { progressService } from '../../services/ProgressService';
 import { audioService } from '../../services/AudioService';
+import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 
 const GRADE_TREASURES: Record<number, { name: string; icon: string }> = {
   1: { name: 'Ngôi sao Người giữ quê hương', icon: '⭐' },
@@ -208,7 +209,14 @@ export const StudentJourneyMapsView: React.FC = () => {
                     className={`w-full h-full ${unlocked ? 'object-contain bg-white' : 'object-cover grayscale blur-[1px]'}`}
                     onError={event => {
                       const img = event.currentTarget;
-                      if (img.src !== station.coverImage) img.src = station.coverImage;
+                      if (img.dataset.fallback === 'default') return;
+                      if (img.dataset.fallback !== 'cover' && img.src !== station.coverImage) {
+                        img.dataset.fallback = 'cover';
+                        img.src = station.coverImage;
+                        return;
+                      }
+                      img.dataset.fallback = 'default';
+                      img.src = DEFAULT_APP_BACKGROUND_DATA_URL;
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />

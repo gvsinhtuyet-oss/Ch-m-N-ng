@@ -36,8 +36,9 @@ const AppContent: React.FC = () => {
     };
   }, []);
   useEffect(() => {
-    backgroundMusic.setScene(currentView !== 'presentation-view', soundEnabled);
-  }, [currentView, soundEnabled]);
+    // Nhạc nền là một lớp độc lập: tiếp tục xuyên suốt mọi màn hình.
+    backgroundMusic.setScene(true);
+  }, [currentView]);
 
   const [storageWarning, setStorageWarning] = useState(false);
   useEffect(() => {

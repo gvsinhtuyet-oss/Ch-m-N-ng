@@ -13,7 +13,6 @@ import {
   Globe,
   LockKeyhole,
   MapPin,
-  Maximize2,
   Pause,
   Play,
   RotateCcw,
@@ -42,6 +41,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
   const [index, setIndex] = useState(0);
   const [narrationState, setNarrationState] = useState<NarrationState>('idle');
+  const [narrationCompleted, setNarrationCompleted] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [correct, setCorrect] = useState(false);
@@ -87,6 +87,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
     setSubmitted(false);
     setCorrect(false);
     setLockMessage('');
+    setNarrationCompleted(false);
     audioService.stopNarration();
   }, [index]);
 
@@ -95,7 +96,12 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
       language === 'en' && hotspot.narrationEn
         ? hotspot.narrationEn
         : hotspot.narrationVi;
-    audioService.speakNarration(text, language === 'en' ? 'en-US' : 'vi-VN');
+    setNarrationCompleted(false);
+    audioService.speakNarration(
+      text,
+      language === 'en' ? 'en-US' : 'vi-VN',
+      () => setNarrationCompleted(true)
+    );
   };
 
   const choose = (id: string) => {
@@ -181,17 +187,22 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 <span className="absolute inset-0 bg-gradient-to-t from-slate-950/62 via-transparent to-slate-950/10" />
               </button>
 
-              <div className="pointer-events-none absolute left-4 top-4 z-10 max-w-[58%] rounded-2xl border border-white/70 bg-white/92 px-4 py-3 shadow-xl backdrop-blur-md">
+              <button
+                type="button"
+                onClick={() => setShowImage(true)}
+                className="absolute left-4 top-4 z-20 max-w-[62%] rounded-2xl border border-white/80 bg-white/95 px-4 py-3 text-left shadow-xl backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-orange-50"
+                aria-label="Khám phá bức tranh Hội An ở chế độ ảnh lớn"
+              >
                 <div className="flex items-center gap-2 text-orange-600">
                   <MapPin className="h-4 w-4 shrink-0" />
                   <span className="truncate text-sm font-black">Khám phá bức tranh Hội An</span>
                 </div>
                 <p className="mt-0.5 text-[11px] font-semibold text-slate-600">
-                  Chạm vào ảnh hoặc chọn một điểm nổi bật bên dưới.
+                  Chạm để xem ảnh lớn và quan sát kĩ từng chi tiết.
                 </p>
-              </div>
+              </button>
 
-              <div className="absolute right-4 top-4 z-20 flex flex-wrap justify-end gap-2">
+              <div className="absolute right-4 top-4 z-20">
                 {station.vr360Experience?.verified && station.vr360Experience.url && (
                   <button
                     type="button"
@@ -199,20 +210,12 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       audioService.playSfx('click');
                       setShowVr(true);
                     }}
-                    className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2 text-xs font-black text-white shadow-xl transition hover:-translate-y-0.5"
+                    className="inline-flex items-center gap-2 rounded-full border-2 border-white/90 bg-gradient-to-r from-orange-600 via-orange-500 to-amber-400 px-5 py-2.5 text-xs font-black text-white shadow-[0_10px_28px_rgba(249,115,22,0.35)] ring-2 ring-orange-200/70 transition hover:-translate-y-0.5 hover:scale-[1.02]"
                   >
                     <Globe className="h-4 w-4" />
                     KHÁM PHÁ 360°
                   </button>
                 )}
-                <button
-                  type="button"
-                  onClick={() => setShowImage(true)}
-                  className="inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-orange-700 shadow-xl transition hover:bg-orange-50"
-                >
-                  <Maximize2 className="h-4 w-4" />
-                  XEM ẢNH LỚN
-                </button>
               </div>
 
               <div className="absolute bottom-4 left-4 right-4 z-20 flex items-end justify-between gap-3">
@@ -224,7 +227,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2.5 text-xs font-black text-white"
                     >
                       <Volume2 className="h-4 w-4" />
-                      NGHE THUYẾT MINH
+                      {narrationCompleted ? 'ĐÃ NGHE THUYẾT MINH' : 'NGHE THUYẾT MINH'}
+                      {narrationCompleted && <CheckCircle2 className="h-4 w-4" />}
                     </button>
                   )}
 
@@ -285,12 +289,12 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                     aria-disabled={!unlocked}
                     className={`group relative flex min-w-0 items-center gap-2 overflow-hidden rounded-2xl border p-2 text-left transition ${
                       active
-                        ? 'border-orange-400 bg-orange-50 shadow-md ring-2 ring-orange-200'
+                        ? 'border-orange-500 bg-orange-50 shadow-lg ring-2 ring-orange-300'
                         : done
-                          ? 'border-emerald-200 bg-emerald-50 hover:bg-emerald-100'
+                          ? 'border-emerald-300 bg-emerald-50 shadow-sm hover:bg-emerald-100'
                           : isCurrentOpen
-                            ? 'border-sky-300 bg-sky-50 hover:bg-sky-100'
-                            : 'border-slate-200 bg-slate-100/90 text-slate-400'
+                            ? 'border-sky-400 bg-sky-50 shadow-sm hover:bg-sky-100'
+                            : 'border-slate-300 bg-slate-100/95 text-slate-400 opacity-75'
                     }`}
                   >
                     <img
@@ -440,7 +444,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       type="button"
                       disabled={!selected}
                       onClick={check}
-                      className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 py-3.5 text-sm font-black text-white shadow-md shadow-orange-200/70 transition hover:from-orange-600 hover:to-amber-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
+                      className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 py-3.5 text-sm font-black !text-white shadow-md shadow-orange-200/70 transition hover:from-orange-600 hover:to-amber-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
                     >
                       KIỂM TRA
                     </button>
@@ -464,19 +468,19 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               <div />
             )}
 
-            <div className="shrink-0 rounded-[1.5rem] border border-emerald-200 bg-gradient-to-r from-emerald-50 via-teal-50 to-white p-3 shadow-sm shadow-emerald-100/50">
+            <div className="sticky bottom-0 z-20 shrink-0 rounded-[1.5rem] border border-emerald-200 bg-gradient-to-r from-emerald-50 via-teal-50 to-white p-3 shadow-[0_-8px_24px_rgba(15,118,110,0.10)] backdrop-blur-md">
               <p className="text-[10px] font-black text-emerald-700">NHÀ PHIÊU LƯU ƠI!</p>
               <p className="mt-1 text-[11px] font-semibold leading-4 text-slate-600">
                 {freeReview
                   ? 'Em đã hoàn thành Chặng 1. Bây giờ có thể chọn xem lại bất kỳ điểm nào.'
-                  : 'Lần đầu khám phá: trả lời đúng câu hỏi ở từng điểm để mở điểm tiếp theo nhé.'}
+                  : 'Trả lời đúng từng điểm để mở điểm tiếp theo.'}
               </p>
 
               {submitted && correct ? (
                 <>
                   {remainingHotspotCount > 0 && (
                     <p className="mt-2 rounded-xl bg-sky-50 px-3 py-2 text-[11px] font-bold leading-4 text-sky-800 ring-1 ring-sky-200">
-                      Đã hoàn thành Điểm {index + 1}. Em còn {remainingHotspotCount} điểm cần khám phá trước khi qua Chặng 2.
+                      Tốt lắm! Em còn {remainingHotspotCount} điểm trước khi hoàn thành Chặng 1.
                     </p>
                   )}
                   <button
@@ -585,10 +589,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
               <button
                 type="button"
-                onClick={() => {
-                  setShowImage(false);
-                  speak();
-                }}
+                onClick={speak}
                 className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-400 px-5 py-3.5 text-sm font-black text-white"
               >
                 <Volume2 className="h-4 w-4" />

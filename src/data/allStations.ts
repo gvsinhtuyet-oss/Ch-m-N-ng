@@ -173,12 +173,31 @@ function withCanonicalDemo(stations: Station[]): Station[] {
   return stations.map(station => CANONICAL_DEMO_STATIONS[station.id] ?? station);
 }
 
+const FEATURED_STATION_BY_GRADE: Record<number, string> = {
+  1: 'g1-station-4',
+  2: 'g2-station-4',
+  3: 'g3-station-2',
+  4: 'g4-station-2',
+  5: 'g5-station-4',
+};
+
+function featuredFirst(grade: number, stations: Station[]): Station[] {
+  const featuredId = FEATURED_STATION_BY_GRADE[grade];
+  return [...stations]
+    .sort((a, b) => {
+      if (a.id === featuredId) return -1;
+      if (b.id === featuredId) return 1;
+      return a.number - b.number;
+    })
+    .map((station, index) => ({ ...station, number: index + 1 }));
+}
+
 const STATIONS_BY_GRADE: Record<number, Station[]> = {
-  1: withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 1).map(catalogItemToStation)),
-  2: withCanonicalDemo(GRADE_2_STATIONS),
-  3: withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 3).map(catalogItemToStation)),
-  4: withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 4).map(catalogItemToStation)),
-  5: withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 5).map(catalogItemToStation)),
+  1: featuredFirst(1, withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 1).map(catalogItemToStation))),
+  2: featuredFirst(2, withCanonicalDemo(GRADE_2_STATIONS)),
+  3: featuredFirst(3, withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 3).map(catalogItemToStation))),
+  4: featuredFirst(4, withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 4).map(catalogItemToStation))),
+  5: featuredFirst(5, withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 5).map(catalogItemToStation))),
 };
 
 export function getStationsForGrade(grade: number): Station[] {

@@ -140,22 +140,34 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   };
 
   const next = () => {
-    const completedAfterCurrent = new Set([
-      ...progressService.getStationProgress(studentId, station.id).exploredHotspotIds,
-      ...sessionCompletedHotspotIds,
-      hotspot.id,
-    ]);
+    // Giữ đúng luồng tuần tự: Điểm 1 -> 2 -> 3 -> 4.
+    // Không tự bỏ qua một điểm chỉ vì điểm đó đã có dữ liệu hoàn thành từ lần thử trước.
+    if (index < station.hotspots.length - 1) {
+      setLockMessage('');
+      audioService.playSfx('transition');
+      setIndex(index + 1);
+      return;
+    }
 
-    const searchOrder = [
-      ...station.hotspots.slice(index + 1),
-      ...station.hotspots.slice(0, index + 1),
-    ];
-    const nextIncomplete = searchOrder.find(item => !completedAfterCurrent.has(item.id));
+    const allCompleted = station.hotspots.every(item =>
+      new Set([
+        ...progressService.getStationProgress(studentId, station.id).exploredHotspotIds,
+        ...sessionCompletedHotspotIds,
+        hotspot.id,
+      ]).has(item.id)
+    );
 
-    if (nextIncomplete) {
-      const nextIncompleteIndex = station.hotspots.findIndex(item => item.id === nextIncomplete.id);
-      if (nextIncompleteIndex >= 0) {
-        go(nextIncompleteIndex);
+    if (!allCompleted) {
+      const firstMissingIndex = station.hotspots.findIndex(item =>
+        !new Set([
+          ...progressService.getStationProgress(studentId, station.id).exploredHotspotIds,
+          ...sessionCompletedHotspotIds,
+          hotspot.id,
+        ]).has(item.id)
+      );
+      if (firstMissingIndex >= 0) {
+        setLockMessage(`Em còn Điểm ${firstMissingIndex + 1} chưa hoàn thành.`);
+        setIndex(firstMissingIndex);
       }
       return;
     }
@@ -488,7 +500,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                     onClick={next}
                     className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 py-3.5 text-sm font-black text-white shadow-lg shadow-orange-500/20"
                   >
-                    {remainingHotspotCount === 0
+                    {index === station.hotspots.length - 1 && remainingHotspotCount === 0
                       ? 'HOÀN THÀNH CHẶNG 1'
                       : `KHÁM PHÁ ĐIỂM ${Math.min(index + 2, station.hotspots.length)}`}
                     <ChevronRight className="h-4 w-4" />
@@ -515,8 +527,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
       {showImage && (
         <div className="fixed inset-0 z-[90] flex items-center justify-center bg-slate-950/85 p-3 backdrop-blur-md sm:p-6">
-          <div className="grid max-h-[92vh] w-full max-w-6xl overflow-hidden rounded-[2rem] border border-orange-200 bg-[#fffaf2] shadow-2xl lg:grid-cols-[1.55fr_.75fr]">
-            <div className="relative min-h-[360px] bg-slate-950 lg:min-h-[620px]">
+          <div className="grid h-[92dvh] max-h-[92dvh] min-h-0 w-full max-w-6xl overflow-hidden rounded-[2rem] border border-orange-200 bg-[#fffaf2] shadow-2xl lg:grid-cols-[1.55fr_.75fr]">
+            <div className="relative min-h-0 bg-slate-950">
               <img
                 src={hotspot.image}
                 alt={hotspot.titleVi}
@@ -545,7 +557,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               </div>
             </div>
 
-            <div className="relative overflow-y-auto p-5 sm:p-7">
+            <div className="relative h-full min-h-0 overflow-y-auto overscroll-contain p-5 pb-8 sm:p-7 sm:pb-9">
               <button
                 type="button"
                 onClick={() => setShowImage(false)}
@@ -560,7 +572,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   <MapPin className="h-3.5 w-3.5" />
                   Điểm nổi bật Hội An
                 </span>
-                <h3 className="mt-4 text-3xl font-black text-slate-950">
+                <h3 className="mt-4 text-2xl font-black leading-tight text-slate-950 sm:text-[28px]">
                   {hotspot.titleVi}
                 </h3>
                 {hotspot.subtitleVi && (
@@ -587,14 +599,16 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 </div>
               )}
 
-              <button
-                type="button"
-                onClick={speak}
-                className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-400 px-5 py-3.5 text-sm font-black text-white"
-              >
-                <Volume2 className="h-4 w-4" />
-                NGHE THUYẾT MINH
-              </button>
+              <div className="sticky bottom-0 mt-5 bg-gradient-to-t from-[#fffaf2] via-[#fffaf2]/95 to-transparent pt-3">
+                <button
+                  type="button"
+                  onClick={speak}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-400 px-5 py-3.5 text-sm font-black !text-white shadow-lg shadow-orange-200/60"
+                >
+                  <Volume2 className="h-4 w-4" />
+                  NGHE THUYẾT MINH
+                </button>
+              </div>
             </div>
           </div>
         </div>

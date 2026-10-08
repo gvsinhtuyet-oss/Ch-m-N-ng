@@ -487,16 +487,14 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 </p>
                 {wrongQuestions.map(q => {
                   const chosen = q.options.find(option => option.id === selectedAnswers[q.id]);
-                  const correct = q.options.find(option => option.isCorrect);
                   return (
                     <div key={q.id} className="rounded-2xl border border-rose-100 bg-rose-50 p-4 space-y-2">
                       <h4 className="font-bold text-sm text-slate-900">
                         Câu {questions.findIndex(question => question.id === q.id) + 1}: {q.questionVi}
                       </h4>
                       <p className="text-sm text-rose-800">Em đã chọn: {chosen?.textVi || 'Chưa trả lời'}</p>
-                      <p className="text-sm font-semibold text-emerald-800">Đáp án đúng: {correct?.textVi}</p>
                       <p className="text-sm text-sky-900">
-                        {q.hintVi || 'Em hãy đọc lại câu chuyện ở Chặng 1 và đối chiếu với đáp án đúng nhé.'}
+                        <strong>Gợi ý:</strong> {q.hintVi || 'Em hãy xem lại nội dung khám phá ở Chặng 1 rồi thử lại nhé.'}
                       </p>
                     </div>
                   );

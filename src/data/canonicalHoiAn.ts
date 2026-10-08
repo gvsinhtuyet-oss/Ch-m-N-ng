@@ -166,7 +166,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       platform: 'wordwall',
       titleVi: 'GIẢI MÃ THƯƠNG CẢNG HỘI AN',
       url: 'https://wordwall.net/resource/120605543?wwmethod=link',
-      noteVi: 'Khi có mạng, Wordwall là thử thách chính của Chặng 2; khi ngoại tuyến, hệ thống tự chuyển sang thử thách nội bộ.',
+      noteVi: 'Wordwall là thử thách mở rộng tự chọn sau phần câu hỏi nội bộ; không bắt buộc để vượt qua chặng.',
     },
     completionMode: 'AUTO',
     passingScore: 5,

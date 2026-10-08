@@ -5,6 +5,7 @@ import { audioService, NarrationState } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
 import { RewardClaimModal } from '../common/RewardClaimModal';
+import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import {
   CheckCircle2,
   ChevronLeft,
@@ -234,6 +235,17 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   src={hotspot.image}
                   alt={hotspot.titleVi}
                   className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                  onError={event => {
+                    const img = event.currentTarget;
+                    if (img.dataset.fallback === 'default') return;
+                    if (img.dataset.fallback !== 'cover' && hotspot.image !== station.coverImage) {
+                      img.dataset.fallback = 'cover';
+                      img.src = station.coverImage;
+                      return;
+                    }
+                    img.dataset.fallback = 'default';
+                    img.src = DEFAULT_APP_BACKGROUND_DATA_URL;
+                  }}
                 />
                 <span className="absolute inset-0 bg-gradient-to-t from-slate-950/62 via-transparent to-slate-950/10" />
               </button>
@@ -359,6 +371,11 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       src={item.image}
                       alt=""
                       className={`h-12 w-14 shrink-0 rounded-xl object-cover ${!unlocked && !freeReview ? 'opacity-70' : ''}`}
+                      onError={event => {
+                        const img = event.currentTarget;
+                        img.onerror = null;
+                        img.src = station.coverImage || DEFAULT_APP_BACKGROUND_DATA_URL;
+                      }}
                     />
                     <span className="min-w-0">
                       <span className={`flex items-center gap-1 text-[9px] font-black uppercase ${
@@ -579,6 +596,17 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 src={previewHotspot.image}
                 alt={previewHotspot.titleVi}
                 className="h-full w-full object-cover"
+                onError={event => {
+                  const img = event.currentTarget;
+                  if (img.dataset.fallback === 'default') return;
+                  if (img.dataset.fallback !== 'cover' && previewHotspot.image !== station.coverImage) {
+                    img.dataset.fallback = 'cover';
+                    img.src = station.coverImage;
+                    return;
+                  }
+                  img.dataset.fallback = 'default';
+                  img.src = DEFAULT_APP_BACKGROUND_DATA_URL;
+                }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent" />
               {freeReview && (

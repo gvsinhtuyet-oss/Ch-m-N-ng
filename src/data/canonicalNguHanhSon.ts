@@ -11,7 +11,7 @@ export const CANONICAL_NGU_HANH_SON_STATION: Station = {
   titleEn: 'Marble Mountains Scenic Spot',
   subtitleVi: 'Giải mã miền di sản',
   subtitleEn: 'Decode the Heritage Landscape',
-  coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Thuy%20Son%20Mtn%20with%20Pagoda.JPG',
+  coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Marble%20Mountains%2C%20Vietnam.jpg',
   openingMessageVi: 'Một danh thắng có thể chứa bao nhiêu lớp câu chuyện? Ở Ngũ Hành Sơn, em sẽ gặp cảnh quan núi đá, hang động, chùa, dấu tích trên đá, lễ hội và làng nghề. Hãy cùng khám phá vì sao nơi đây có giá trị đối với lịch sử, văn hóa và sự phát triển của Đà Nẵng hôm nay!',
   openingMessageEn: 'How many stories can a mountain hold? At Marble Mountains, you will encounter caves, pagodas, inscriptions on stone, and a famous traditional craft village. Let us decode this heritage landscape together!',
   totalPeriods: 7,

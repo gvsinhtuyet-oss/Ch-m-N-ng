@@ -52,7 +52,6 @@ export const Header: React.FC = () => {
     { label: 'Hộ chiếu', icon: Award, view: 'student-passport', active: currentView === 'student-passport', iconClass: 'text-amber-500' },
     { label: 'Bản đồ', icon: MapIcon, view: 'student-maps', active: currentView === 'student-maps', iconClass: 'text-emerald-600' },
     { label: 'Bộ sưu tập', icon: Heart, view: 'student-memories', active: currentView === 'student-memories', iconClass: 'text-rose-500' },
-    { label: 'Nhà phiêu lưu', icon: User, view: 'student-profile', active: currentView === 'student-profile', iconClass: 'text-indigo-500' },
   ] as const;
 
   return (
@@ -169,7 +168,7 @@ export const Header: React.FC = () => {
                     {studentName.trim().charAt(0).toUpperCase() || 'N'}
                   </div>
                 )}
-                <span className="hidden max-w-[120px] truncate text-[12px] font-black text-slate-800 lg:block">{studentName}</span>
+                <span className="hidden max-w-[150px] truncate text-[12px] font-black text-slate-800 lg:block">{studentName}</span>
                 <ChevronDown className="hidden h-4 w-4 text-slate-400 lg:block" />
               </button>
             </div>

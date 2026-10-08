@@ -46,6 +46,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const [submitted, setSubmitted] = useState(false);
   const [correct, setCorrect] = useState(false);
   const [showImage, setShowImage] = useState(false);
+  const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const [showVr, setShowVr] = useState(false);
   const [showReward, setShowReward] = useState(false);
   const [lockMessage, setLockMessage] = useState('');
@@ -54,6 +55,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   );
 
   const hotspot: ExplorationHotspot = station.hotspots[index] || station.hotspots[0];
+  const previewHotspot: ExplorationHotspot =
+    station.hotspots[previewIndex ?? index] || hotspot;
   const progress = progressService.getStationProgress(studentId, station.id);
   const options = useMemo(() => shuffle(hotspot.interaction?.options || []), [hotspot]);
   const completedHotspotIds = new Set([
@@ -91,6 +94,11 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
     audioService.stopNarration();
   }, [index]);
 
+  const openImagePreview = (itemIndex: number) => {
+    setPreviewIndex(itemIndex);
+    setShowImage(true);
+  };
+
   const speak = () => {
     const text =
       language === 'en' && hotspot.narrationEn
@@ -102,6 +110,14 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
       language === 'en' ? 'en-US' : 'vi-VN',
       () => setNarrationCompleted(true)
     );
+  };
+
+  const speakPreview = () => {
+    const text =
+      language === 'en' && previewHotspot.narrationEn
+        ? previewHotspot.narrationEn
+        : previewHotspot.narrationVi;
+    audioService.speakNarration(text, language === 'en' ? 'en-US' : 'vi-VN');
   };
 
   const choose = (id: string) => {
@@ -122,6 +138,19 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
       );
       if (!readOnly) {
         progressService.completeHotspot(studentId, station.id, hotspot.id);
+      }
+
+      if (!freeReview) {
+        window.setTimeout(() => {
+          if (index < station.hotspots.length - 1) {
+            setIndex(index + 1);
+          } else {
+            if (!readOnly) {
+              progressService.completeStage1(studentId, station.id);
+            }
+            setShowReward(true);
+          }
+        }, 900);
       }
     }
   };
@@ -197,7 +226,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             <div className="relative min-h-[350px] flex-1 overflow-hidden rounded-[1.65rem] border-2 border-orange-200 bg-slate-950 shadow-xl">
               <button
                 type="button"
-                onClick={() => setShowImage(true)}
+                onClick={() => openImagePreview(index)}
                 className="group absolute inset-0 z-0 h-full w-full cursor-zoom-in"
                 aria-label="Xem ảnh lớn"
               >
@@ -211,7 +240,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
               <button
                 type="button"
-                onClick={() => setShowImage(true)}
+                onClick={() => openImagePreview(index)}
                 className="absolute left-4 top-4 z-20 max-w-[62%] rounded-2xl border border-white/80 bg-white/95 px-4 py-3 text-left shadow-xl backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-orange-50"
                 aria-label="Khám phá bức tranh Hội An ở chế độ ảnh lớn"
               >
@@ -307,8 +336,15 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => go(itemIndex)}
-                    aria-disabled={!unlocked}
+                    onClick={() => {
+                      if (freeReview) {
+                        go(itemIndex);
+                      } else {
+                        audioService.playSfx('click');
+                        openImagePreview(itemIndex);
+                      }
+                    }}
+                    aria-disabled={false}
                     className={`group relative flex min-w-0 items-center gap-2 overflow-hidden rounded-2xl border p-2 text-left transition ${
                       active
                         ? 'border-orange-500 bg-orange-50 shadow-lg ring-2 ring-orange-300'
@@ -316,13 +352,13 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                           ? 'border-emerald-300 bg-emerald-50 shadow-sm hover:bg-emerald-100'
                           : isCurrentOpen
                             ? 'border-sky-400 bg-sky-50 shadow-sm hover:bg-sky-100'
-                            : 'border-slate-300 bg-slate-100/95 text-slate-400 opacity-75'
+                            : 'border-slate-300 bg-slate-100/95 text-slate-500 hover:border-orange-300 hover:bg-orange-50/70'
                     }`}
                   >
                     <img
                       src={item.image}
                       alt=""
-                      className={`h-12 w-14 shrink-0 rounded-xl object-cover ${!unlocked ? 'grayscale opacity-45' : ''}`}
+                      className={`h-12 w-14 shrink-0 rounded-xl object-cover ${!unlocked && !freeReview ? 'opacity-70' : ''}`}
                     />
                     <span className="min-w-0">
                       <span className={`flex items-center gap-1 text-[9px] font-black uppercase ${
@@ -345,10 +381,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       <span className={`mt-0.5 block text-[9px] font-bold ${
                         done ? 'text-emerald-600' : isCurrentOpen ? 'text-sky-600' : 'text-slate-400'
                       }`}>
-                        {done ? 'Hoàn thành' : isCurrentOpen ? 'Đang khám phá' : 'Chưa mở'}
+                        {done ? 'Hoàn thành' : isCurrentOpen ? 'Đang khám phá' : freeReview ? 'Sẵn sàng' : 'Xem ảnh trước'}
                       </span>
                     </span>
-                    {!unlocked && <span className="absolute inset-0 bg-white/15" />}
+                    {!unlocked && freeReview && <span className="absolute inset-0 bg-white/15" />}
                   </button>
                 );
               })}
@@ -495,10 +531,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               <p className="mt-1 text-[11px] font-semibold leading-4 text-slate-600">
                 {freeReview
                   ? 'Em đã hoàn thành Chặng 1. Bây giờ có thể chọn xem lại bất kỳ điểm nào.'
-                  : 'Trả lời đúng từng điểm để mở điểm tiếp theo.'}
+                  : 'Em có thể xem trước các ảnh. Muốn đi tiếp hành trình, hãy đóng ảnh và trả lời đúng câu hỏi của điểm hiện tại.'}
               </p>
 
-              {submitted && correct ? (
+              {submitted && correct && freeReview ? (
                 <>
                   {remainingHotspotCount > 0 && (
                     <p className="mt-2 rounded-xl bg-sky-50 px-3 py-2 text-[11px] font-bold leading-4 text-sky-800 ring-1 ring-sky-200">
@@ -540,48 +576,49 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
           <div className="grid h-[92dvh] max-h-[92dvh] min-h-0 w-full max-w-6xl overflow-hidden rounded-[2rem] border border-orange-200 bg-[#fffaf2] shadow-2xl lg:grid-cols-[1.55fr_.75fr]">
             <div className="relative min-h-0 bg-slate-950">
               <img
-                src={hotspot.image}
-                alt={hotspot.titleVi}
+                src={previewHotspot.image}
+                alt={previewHotspot.titleVi}
                 className="h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent" />
-              <div className="absolute bottom-5 left-5 right-5 flex justify-between">
-                <button
-                  type="button"
-                  disabled={index === 0 || !canAccessHotspot(index - 1)}
-                  onClick={() => go(index - 1)}
-                  className="inline-flex items-center gap-1 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-slate-700 shadow disabled:opacity-40"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                  Trước
-                </button>
-                <div className="flex flex-col items-end gap-1">
+              {freeReview && (
+                <div className="absolute bottom-5 left-5 right-5 flex justify-between">
                   <button
                     type="button"
-                    disabled={
-                      index === station.hotspots.length - 1 ||
-                      (!freeReview && !explored) ||
-                      !canAccessHotspot(index + 1)
-                    }
-                    onClick={() => go(index + 1)}
-                    className="inline-flex items-center gap-1 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-orange-700 shadow disabled:cursor-not-allowed disabled:opacity-40"
+                    disabled={(previewIndex ?? index) === 0}
+                    onClick={() => {
+                      const nextPreview = Math.max(0, (previewIndex ?? index) - 1);
+                      setPreviewIndex(nextPreview);
+                    }}
+                    className="inline-flex items-center gap-1 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-slate-700 shadow disabled:opacity-40"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    Trước
+                  </button>
+                  <button
+                    type="button"
+                    disabled={(previewIndex ?? index) === station.hotspots.length - 1}
+                    onClick={() => {
+                      const nextPreview = Math.min(station.hotspots.length - 1, (previewIndex ?? index) + 1);
+                      setPreviewIndex(nextPreview);
+                    }}
+                    className="inline-flex items-center gap-1 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-orange-700 shadow disabled:opacity-40"
                   >
                     Tiếp
                     <ChevronRight className="h-4 w-4" />
                   </button>
-                  {!freeReview && !explored && index < station.hotspots.length - 1 && (
-                    <span className="rounded-full bg-slate-950/70 px-2.5 py-1 text-[9px] font-bold text-white/90">
-                      Trả lời đúng câu hỏi để mở Điểm {index + 2}
-                    </span>
-                  )}
                 </div>
-              </div>
+              )}
             </div>
 
             <div className="relative h-full min-h-0 overflow-y-auto overscroll-contain p-5 pb-8 sm:p-7 sm:pb-9">
               <button
                 type="button"
-                onClick={() => setShowImage(false)}
+                onClick={() => {
+                  audioService.stopNarration();
+                  setShowImage(false);
+                  setPreviewIndex(null);
+                }}
                 className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-700"
                 aria-label="Đóng ảnh lớn"
               >
@@ -594,28 +631,28 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   Điểm nổi bật Hội An
                 </span>
                 <h3 className="mt-4 text-2xl font-black leading-tight text-slate-950 sm:text-[28px]">
-                  {hotspot.titleVi}
+                  {previewHotspot.titleVi}
                 </h3>
-                {hotspot.subtitleVi && (
+                {previewHotspot.subtitleVi && (
                   <p className="mt-1 text-sm font-bold text-orange-700">
-                    {hotspot.subtitleVi}
+                    {previewHotspot.subtitleVi}
                   </p>
                 )}
               </div>
 
               <div className="mt-5 rounded-2xl border border-orange-100 bg-white p-4">
                 <p className="text-sm font-semibold leading-6 text-slate-700">
-                  {hotspot.narrationVi}
+                  {previewHotspot.narrationVi}
                 </p>
               </div>
 
-              {hotspot.keyFactVi && (
+              {previewHotspot.keyFactVi && (
                 <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4">
                   <p className="text-[10px] font-black uppercase text-orange-700">
                     Điều thú vị cần nhớ
                   </p>
                   <p className="mt-1 text-sm font-black text-slate-800">
-                    {hotspot.keyFactVi}
+                    {previewHotspot.keyFactVi}
                   </p>
                 </div>
               )}
@@ -623,7 +660,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               <div className="sticky bottom-0 mt-5 bg-gradient-to-t from-[#fffaf2] via-[#fffaf2]/95 to-transparent pt-3">
                 <button
                   type="button"
-                  onClick={speak}
+                  onClick={speakPreview}
                   className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-400 px-5 py-3.5 text-sm font-black !text-white shadow-lg shadow-orange-200/60"
                 >
                   <Volume2 className="h-4 w-4" />

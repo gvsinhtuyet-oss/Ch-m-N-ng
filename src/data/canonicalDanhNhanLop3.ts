@@ -11,7 +11,7 @@ export const CANONICAL_DANH_NHAN_LOP3_STATION: Station = {
   titleEn: 'Huynh Thuc Khang – Phan Chau Trinh',
   subtitleVi: 'Dấu chân người khai sáng',
   subtitleEn: 'Footprints of the Enlighteners',
-  coverImage: 'https://upload.wikimedia.org/wikipedia/commons/2/2d/Phan_Chau_Trinh.jpg',
+  coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mr%20Hu%E1%BB%B3nh%20Th%C3%BAc%20Kh%C3%A1ng.jpg',
   openingMessageVi: 'Hai con người, hai hành trình nhưng cùng chung một khát vọng: làm cho đất nước mạnh hơn bằng tri thức, lòng yêu nước và tinh thần đổi mới. Em hãy theo dấu chân của Huỳnh Thúc Kháng và Phan Châu Trinh nhé!',
   openingMessageEn: 'Two noble individuals, two paths, but sharing one great aspiration: strengthening the country through knowledge, patriotism, and reform. Follow the footprints of Huynh Thuc Khang and Phan Chau Trinh!',
   totalPeriods: 7,

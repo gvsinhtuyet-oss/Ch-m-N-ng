@@ -2,6 +2,7 @@
 import { createServer } from 'node:http';
 import { createAuth, firestoreStoreWithFallback } from './auth-server.mjs';
 import { contentStorage } from './content-storage.mjs';
+import { GDDP_COLLECTION, GDDP_DOCUMENT, GDDP_YEAR, cleanGddpCatalog } from './gddp-catalog.mjs';
 import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
 import { randomBytes, createHash } from 'node:crypto';
 import path from 'node:path';
@@ -238,6 +239,42 @@ const server = createServer(async (req,res) => {
       };
       healthCacheAt = Date.now();
       return json(res, 200, healthCache);
+    }
+    // GDĐP is a separate read-only teacher catalog; only Admin may update it.
+    // Keep all existing auth, students, stations, and content endpoints unchanged.
+    if (pathname === '/api/gddp/catalog' && req.method === 'GET') {
+      if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
+      const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
+      if (!saved?.published) return json(res,200,{year:GDDP_YEAR,records:[],published:false});
+      return json(res,200,{...saved.catalog,published:true,updatedAt:saved.updatedAt});
+    }
+    if (pathname === '/api/admin/gddp/catalog' && req.method === 'GET') {
+      await auth.requireAdmin(req);
+      if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
+      const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
+      return json(res,200,saved || {published:false,catalog:{year:GDDP_YEAR,records:[]}});
+    }
+    if (pathname === '/api/admin/gddp/catalog' && req.method === 'PUT') {
+      auth.sameOrigin(req);
+      await auth.requireAdmin(req);
+      if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
+      const input = await body(req);
+      const catalog = cleanGddpCatalog(input);
+      const old = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
+      await cloudStore.put(GDDP_COLLECTION,GDDP_DOCUMENT,{
+        catalog, published:false, updatedAt:new Date().toISOString(),
+        previousPublishedCatalog:old?.published ? old.catalog : old?.previousPublishedCatalog || null,
+      });
+      return json(res,200,{saved:true,records:catalog.records.length,published:false});
+    }
+    if (pathname === '/api/admin/gddp/publish' && req.method === 'POST') {
+      auth.sameOrigin(req);
+      await auth.requireAdmin(req);
+      if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
+      const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
+      if (!saved?.catalog?.records?.length) return json(res,400,{error:'Chưa có dữ liệu GDĐP để xuất bản.'});
+      await cloudStore.put(GDDP_COLLECTION,GDDP_DOCUMENT,{...saved,published:true,updatedAt:new Date().toISOString()});
+      return json(res,200,{published:true,records:saved.catalog.records.length});
     }
     if (pathname === '/api/content' && req.method === 'GET') {
       const current = await loadSharedContent();

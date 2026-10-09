@@ -35,13 +35,12 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const { currentUser, role, isOnline } = useApp();
   const isReadOnly = role !== 'student';
   const challenge = station.challenge;
-  const [shuffleRound, setShuffleRound] = useState(0);
   const questions = useMemo(
     () => (challenge.questions || []).map(question => ({
       ...question,
       options: shuffleOptions(question.options),
     })),
-    [challenge, shuffleRound],
+    [challenge],
   );
 
   const [currentQIndex, setCurrentQIndex] = useState(0);

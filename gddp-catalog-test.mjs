@@ -7,7 +7,7 @@ const row={id:'gddp-2026-3-01',grade:3,subject:'Tiếng Việt',week:'3',
 test('GDĐP 2026–2027 catalog accepts an approved row without modifying it',()=>{
  const data={year:GDDP_YEAR,records:[row]};
  assert.equal(validateGddpCatalog(data),true);
- assert.deepEqual(cleanGddpCatalog(data).records[0],{...row,outcomes:'',teachingSuggestion:''});
+ assert.deepEqual(cleanGddpCatalog(data).records[0],{...row,outcomes:'',teachingSuggestion:'',resourceLinks:[]});
 });
 test('rejects duplicate ID, other academic year and invalid grades',()=>{
  assert.equal(validateGddpCatalog({year:GDDP_YEAR,records:[row,row]}),false);

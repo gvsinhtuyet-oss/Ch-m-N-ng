@@ -359,6 +359,52 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       await store.put('cham_users',user.id,{...user,passwordHash:await passwordHash(data.password),version:user.version+1});
       cookie(res,'',0); json(res,200,{ok:true}); return true;
     }
+    if(pathname === '/api/teacher/progress') {
+      const staff=await userFor(req);
+      if(!staff) throw fail(401,'Vui lòng đăng nhập lại.');
+      if(!['teacher','admin'].includes(staff.role)) throw fail(403,'Không có quyền xem kết quả học sinh.');
+      const url=new URL(req.url,'http://localhost');
+      const classId=req.method==='GET'?url.searchParams.get('classId'):undefined;
+      const data=req.method==='POST'?(sameOrigin(req),await body(req)):null;
+      const id=classId || data?.classId;
+      if(typeof id!=='string' || !/^[a-f0-9]{64}$/.test(id)) throw fail(400,'Vui lòng chọn lớp hợp lệ.');
+      const classroom=await store.get('cham_classes',id);
+      if(!classroom) throw fail(404,'Không tìm thấy lớp.');
+      if(staff.role!=='admin' && classroom.teacherId!==staff.id) throw fail(403,'Bạn chỉ được xem lớp mình phụ trách.');
+      if(req.method==='POST') {
+        const code=String(data.syncCode||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+        if(!/^[A-Z0-9]{12}$/.test(code)) throw fail(400,'Mã đồng bộ chưa hợp lệ.');
+        const key=hash(code);
+        const saved=await store.get('cham_student_sync',key);
+        if(!saved?.profile) throw fail(404,'Không tìm thấy mã học sinh.');
+        const student=saved.profile;
+        const norm=s=>String(s||'').trim().replace(/\\s+/g,' ').normalize('NFC').toLocaleLowerCase('vi');
+        if(student.grade!==classroom.grade || norm(student.className)!==norm(classroom.name) ||
+          !classroom.students.some(name=>norm(name)===norm(student.name)))
+          throw fail(400,'Tên, khối và lớp của mã học sinh chưa khớp danh sách đã duyệt.');
+        await store.put('cham_teacher_progress_links',hash(id+':'+key),
+          {classId:id,syncKey:key,name:student.name,linkedAt:Date.now()});
+        json(res,200,{ok:true,name:student.name});return true;
+      }
+      if(req.method!=='GET') throw fail(405,'Phương thức không hỗ trợ.');
+      const links=(await store.list('cham_teacher_progress_links')).filter(link=>link.classId===id);
+      const results=[];
+      for(const link of links.slice(0,100)){
+        if(!classroom.students.some(n=>String(n).trim()===String(link.name).trim())) continue;
+        const saved=await store.get('cham_student_sync',link.syncKey);
+        if(!saved?.profile || saved.profile.grade!==classroom.grade ||
+          String(saved.profile.className).trim()!==classroom.name) continue;
+        const stations=Object.entries(saved.progress||{}).slice(0,30).map(([stationId,p])=>({
+          stationId,completed:!!p.stationCompleted,stamp:!!p.stampReceived,
+          completedStages:[p.stage1Completed,p.stage2Completed,p.stage3Completed,p.stage4Completed].filter(Boolean).length,
+          lastVisitedAt:typeof p.lastVisitedAt==='string'?p.lastVisitedAt:null
+        }));
+        results.push({name:saved.profile.name,stations,completedStations:stations.filter(x=>x.completed).length,
+          totalStamps:stations.filter(x=>x.stamp).length});
+      }
+      return json(res,200,{className:classroom.name,academicYear:classroom.academicYear,
+        rosterCount:classroom.students.length,linkedCount:results.length,students:results});
+    }
     if(pathname === '/api/teacher/classes') {
       const staff=await userFor(req);
       if(!staff) throw fail(401,'Vui lòng đăng nhập lại.');

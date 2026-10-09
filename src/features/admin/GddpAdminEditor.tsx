@@ -70,6 +70,12 @@ export const GddpAdminEditor: React.FC = () => {
         <strong>Lớp {row.grade} · {row.subject} · {row.week} · {row.lesson}</strong>
         <p className="mt-1 text-slate-700">Địa chỉ: {row.activity}</p>
         <p className="mt-1 whitespace-pre-wrap text-slate-700">{row.content}</p>
+        <label className="mt-2 block font-semibold">Yêu cầu cần đạt bổ sung (Admin duyệt)
+          <textarea rows={2} value={row.outcomes || ''} onChange={e=>{const value=e.target.value;setCatalog(prev=>({...prev,records:prev.records.map(x=>x.id===row.id?{...x,outcomes:value}:x)}));setSaved(false);setPublished(false)}} className="mt-1 w-full rounded-lg border border-slate-300 p-2 font-normal" placeholder="Chỉ ghi yêu cầu GDĐP bổ sung, không thay mục tiêu bài học chính"/>
+        </label>
+        <label className="mt-2 block font-semibold">Gợi ý tổ chức tích hợp (Admin duyệt)
+          <textarea rows={3} value={row.teachingSuggestion || ''} onChange={e=>{const value=e.target.value;setCatalog(prev=>({...prev,records:prev.records.map(x=>x.id===row.id?{...x,teachingSuggestion:value}:x)}));setSaved(false);setPublished(false)}} className="mt-1 w-full rounded-lg border border-slate-300 p-2 font-normal" placeholder="Câu hỏi GV – dự kiến trả lời HS – lời chốt ngắn gọn"/>
+        </label>
       </div>)}
       {!catalog.records.length && <p className="text-sm text-slate-500">Chưa có dữ liệu. Nhập tệp JSON để xem trước.</p>}
     </div>

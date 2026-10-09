@@ -1,4 +1,5 @@
 
+import { fileURLToPath } from 'node:url';
 import { createServer } from 'node:http';
 import { createAuth, firestoreStoreWithFallback } from './auth-server.mjs';
 import { contentStorage } from './content-storage.mjs';
@@ -431,4 +432,7 @@ const server = createServer(async (req,res) => {
     json(res,error.status || 500,{ error:error.status ? error.message : 'Could not process request' });
   }
 });
-server.listen(Number(process.env.PORT || 3000),'0.0.0.0',() => console.log('CHAM DA NANG content server started port='+server.address().port));
+export { server as apiServer };
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  server.listen(Number(process.env.PORT || 3000),'0.0.0.0',() => console.log('CHAM DA NANG content server started port='+server.address().port));
+}

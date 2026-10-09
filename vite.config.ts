@@ -1,12 +1,30 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
-export default defineConfig(() => {
+export default defineConfig(({mode}) => {
+  // Server-only environment values are never injected into browser bundles.
+  const serverEnv=loadEnv(mode,process.cwd(),'');
+  for(const name of ['AUTH_FIRESTORE_PROJECT','AUTH_FIRESTORE_DATABASE','AUTH_ADMIN_EMAIL','AUTH_ADMIN_PASSWORD','CONTENT_DATA_DIR','CHAM_ENV','GEMINI_API_KEY']) {
+    if(process.env[name]===undefined && serverEnv[name])process.env[name]=serverEnv[name];
+  }
+  const connectApi=(server:any)=>{
+    let api:Promise<any>|undefined;
+    server.middlewares.use((req:any,res:any,next:any)=>{
+      if(!req.url?.startsWith('/api/'))return next();
+      api ||= import('./content-server.mjs');
+      api.then(({apiServer})=>apiServer.emit('request',req,res)).catch((error)=>{
+        console.error('Preview API startup:',error.message);
+        res.writeHead(503,{'Content-Type':'application/json'});
+        res.end(JSON.stringify({error:'Máy chủ Preview chưa khởi động được. Kiểm tra cấu hình máy chủ.'}));
+      });
+    });
+  };
   return {
     plugins: [
+      {name:'cham-preview-api',configureServer:connectApi,configurePreviewServer:connectApi},
       react(),
       tailwindcss(),
       VitePWA({

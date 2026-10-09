@@ -145,10 +145,10 @@ export const LandingView: React.FC = () => {
         setStaffHealth('error');
         setStaffHealthMessage(`Kho tài khoản chưa sẵn sàng${code}. Vui lòng xuất bản lại bản mới hoặc kiểm tra Firestore.`);
       })
-      .catch(() => {
+      .catch((error) => {
         if (cancelled) return;
         setStaffHealth('error');
-        setStaffHealthMessage('Chưa kiểm tra được máy chủ đăng nhập. Vui lòng thử lại.');
+        setStaffHealthMessage(error instanceof Error ? error.message : 'Chưa kiểm tra được máy chủ đăng nhập. Vui lòng thử lại.');
       });
     return () => { cancelled = true; };
   }, [showTeacherLogin]);

@@ -33,9 +33,9 @@ test('Docker runtime includes every local module imported by the production serv
 test('Cloud Run runtime packages the self-contained five-grade GDĐP module',async()=>{
   const docker=await readFile(new URL('./Dockerfile',import.meta.url),'utf8');
   const server=await readFile(new URL('./content-server.mjs',import.meta.url),'utf8');
-  assert.match(docker,/gddp-bundled-data\\.mjs/);
-  assert.match(server,/import \\{ bundledGddpData \\} from '\\.\\/gddp-bundled-data\\.mjs'/);
-  assert.doesNotMatch(server,/readFile\\(new URL\\('\App\/content-data/);
+  assert.ok(docker.includes('gddp-bundled-data.mjs'));
+  assert.ok(server.includes("import { bundledGddpData } from './gddp-bundled-data.mjs'"));
+  assert.ok(!server.includes("readFile(new URL('./content-data/gddp-2026-2027.json'"));
   const {bundledGddpData}=await import('./gddp-bundled-data.mjs');
   assert.equal(bundledGddpData.records.length,42);
   assert.deepEqual([1,2,3,4,5].map(g=>bundledGddpData.records.filter(x=>x.grade===g).length),[7,8,10,9,8]);

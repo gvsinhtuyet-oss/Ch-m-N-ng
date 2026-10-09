@@ -102,7 +102,7 @@ export function firestoreStore(project, database = '(default)', fetchRequest = f
           const code = detail.error?.status || 'HTTP_' + response.status;
           console.error('Auth storage HTTP', response.status, code, message);
 
-          if ([429,500,502,503,504].includes(response.status) && attempt < 2) {
+          if ([429,500,502,503,504].includes(response.status) && code !== 'RESOURCE_EXHAUSTED' && attempt < 2) {
             lastError = fail(503, 'Kho tài khoản đang bận. Vui lòng thử lại.', {
               storageStatus: response.status,
               storageCode: code,
@@ -219,8 +219,8 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
     return raw ? hash(raw) : '';
   };
   async function userFor(req) {
-    await ready();
     const id=sessionId(req); if(!id) return null;
+    await ready();
     const session=await store.get('cham_sessions',id);
     if (!session || session.expiresAt <= Date.now()) return null;
     const user=await store.get('cham_users',session.userId);

@@ -1,4 +1,5 @@
 import { ClassRoster } from './ClassRoster';
+import { GddpTeacherLookup } from './GddpTeacherLookup';
 import React, { useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { Station } from '../../types';
@@ -30,7 +31,7 @@ export const TeacherDashboard: React.FC = () => {
     setCurrentView,
   } = useApp();
 
-  const [activeTab, setActiveTab] = useState<'teaching' | 'classrooms' | 'results' | 'resources'>('teaching');
+  const [activeTab, setActiveTab] = useState<'teaching' | 'classrooms' | 'results' | 'resources' | 'gddp'>('teaching');
   const [selectedStationForImp, setSelectedStationForImp] = useState<Station | null>(null);
   const [selectedClassId, setSelectedClassId] = useState<string>('class-2-24');
   const [proposalStation, setProposalStation] = useState<Station | null>(null);
@@ -103,6 +104,10 @@ export const TeacherDashboard: React.FC = () => {
             <Presentation className="w-3.5 h-3.5" />
             <span>DẠY HỌC</span>
           </button>
+          <button type="button" onClick={() => setActiveTab('gddp')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${activeTab === 'gddp' ? 'bg-white text-slate-950 shadow-md' : 'text-white hover:bg-white/10'}`}>
+            <BookOpen className="w-3.5 h-3.5" /><span>TÍCH HỢP GDĐP</span>
+          </button>
           <button
             onClick={() => setActiveTab('classrooms')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
@@ -132,6 +137,8 @@ export const TeacherDashboard: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {activeTab === 'gddp' && <GddpTeacherLookup />}
 
       {/* TAB 1: DẠY HỌC */}
       {activeTab === 'teaching' && (

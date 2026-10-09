@@ -9,6 +9,7 @@ import { HoiAnStage1Exploration } from '../../components/station/HoiAnStage1Expl
 import { Stage2Challenge } from '../../components/station/Stage2Challenge';
 import { Stage3CheckIn } from '../../components/station/Stage3CheckIn';
 import { Stage4Stamp } from '../../components/station/Stage4Stamp';
+import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles } from 'lucide-react';
 
 interface Props {
@@ -20,7 +21,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const { currentUser, currentStage, setCurrentStage } = useApp();
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
-  const isGrade2Journey = station.grade === 2;
+  const isPolishedJourney = DEMO_STATION_IDS.has(station.id);
 
   const [downloading, setDownloading] = useState(false);
   const [offlinePkg, setOfflinePkg] = useState(offlineService.getPackage(station.id));
@@ -45,9 +46,9 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   ];
 
   return (
-    <div className={isGrade2Journey ? "mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}>
+    <div className={isPolishedJourney ? "mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}>
             {/* Top Station Header bar */}
-      <div className={isGrade2Journey ? "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/94 backdrop-blur-xl px-4 py-3 rounded-[1.5rem] border border-orange-200 shadow-lg shadow-orange-950/5" : "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/96 backdrop-blur-md px-4 py-3.5 sm:px-5 sm:py-4 rounded-[1.6rem] border border-white/80 shadow-[0_10px_32px_rgba(15,23,42,0.08)]"}>
+      <div className={isPolishedJourney ? "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/94 backdrop-blur-xl px-4 py-3 rounded-[1.5rem] border border-orange-200 shadow-lg shadow-orange-950/5" : "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/96 backdrop-blur-md px-4 py-3.5 sm:px-5 sm:py-4 rounded-[1.6rem] border border-white/80 shadow-[0_10px_32px_rgba(15,23,42,0.08)]"}>
         <div className="flex items-center gap-3.5">
           <button
             onClick={() => {
@@ -61,14 +62,14 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
           </button>
           <div>
             <div className="flex items-center gap-2">
-              <span className={`px-2.5 py-0.5 rounded-md text-[11px] font-black text-white shadow-2xs ${isGrade2Journey ? "bg-gradient-to-r from-orange-500 to-amber-400" : "bg-gradient-to-r from-sky-600 to-sky-700"}`}>
+              <span className={`px-2.5 py-0.5 rounded-md text-[11px] font-black text-white shadow-2xs ${isPolishedJourney ? "bg-gradient-to-r from-orange-500 to-amber-400" : "bg-gradient-to-r from-sky-600 to-sky-700"}`}>
                 Trạm {station.number}
               </span>
               <span className="text-xs text-slate-400 font-bold">Khối {station.grade}</span>
               <span className="text-slate-300">•</span>
               <span className="text-xs text-amber-700 font-semibold">{station.themeNameVi}</span>
             </div>
-            <h1 className={isGrade2Journey ? "text-xl sm:text-2xl lg:text-[1.7rem] font-black text-slate-950 leading-tight mt-0.5" : "text-[22px] sm:text-[24px] font-black text-slate-950 leading-tight mt-0.5 tracking-tight"}>
+            <h1 className={isPolishedJourney ? "text-xl sm:text-2xl lg:text-[1.7rem] font-black text-slate-950 leading-tight mt-0.5" : "text-[22px] sm:text-[24px] font-black text-slate-950 leading-tight mt-0.5 tracking-tight"}>
               {station.titleVi}
             </h1>
           </div>
@@ -77,9 +78,9 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         {/* Offline Download button */}
         <div className="flex flex-col items-start sm:items-end gap-1 shrink-0">
           {offlinePkg ? (
-            <div className={isGrade2Journey ? "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 text-[10px] font-black border border-emerald-200" : "inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200 shadow-2xs"}>
+            <div className={isPolishedJourney ? "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 text-[10px] font-black border border-emerald-200" : "inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200 shadow-2xs"}>
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>{isGrade2Journey ? 'OFFLINE ĐÃ SẴN SÀNG' : `Demo offline đã lưu cục bộ (${offlinePkg.sizeMb}MB)`}</span>
+              <span>{isPolishedJourney ? 'OFFLINE ĐÃ SẴN SÀNG' : `Demo offline đã lưu cục bộ (${offlinePkg.sizeMb}MB)`}</span>
             </div>
           ) : (
             <button
@@ -91,7 +92,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
               <span>{downloading ? 'Đang lưu demo...' : 'DEMO TẢI OFFLINE'}</span>
             </button>
           )}
-          {!isGrade2Journey && <span className="text-[10px] text-slate-400 font-medium">
+          {!isPolishedJourney && <span className="text-[10px] text-slate-400 font-medium">
             Phiên bản demo – dữ liệu được lưu cục bộ trên thiết bị, chưa phải gói offline hoàn chỉnh.
           </span>}
         </div>
@@ -99,7 +100,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
 
       {/* Verification notice if draft */}
       {!station.isFullyVerified && (
-        <div className={isGrade2Journey ? "px-3 py-2 rounded-xl bg-amber-50/95 border border-amber-200 text-amber-950 text-[10px] font-semibold flex items-center gap-2" : "px-3 py-2 rounded-xl bg-amber-50/95 border border-amber-200 text-amber-950 text-[10px] sm:text-[11px] font-medium flex items-center gap-2"}>
+        <div className={isPolishedJourney ? "px-3 py-2 rounded-xl bg-amber-50/95 border border-amber-200 text-amber-950 text-[10px] font-semibold flex items-center gap-2" : "px-3 py-2 rounded-xl bg-amber-50/95 border border-amber-200 text-amber-950 text-[10px] sm:text-[11px] font-medium flex items-center gap-2"}>
           <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping shrink-0" />
           <span>
             <strong>Lưu ý:</strong> Nội dung đang được hoàn thiện từ nguồn đã kiểm chứng của Sở Giáo dục và Đào tạo TP Đà Nẵng.
@@ -108,7 +109,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
       )}
 
       {/* 4 Stages Navigation */}
-      {isGrade2Journey ? (
+      {isPolishedJourney ? (
         <div className="rounded-[1.6rem] border border-orange-200 bg-white/92 p-2.5 shadow-lg shadow-orange-950/5 backdrop-blur-xl">
           <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
             {stages.map((st) => {
@@ -208,7 +209,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
       {/* Stage Views with subtle container transition */}
       <div className="transition-all duration-300">
         {currentStage === 1 && (
-          station.grade === 2 ? (
+          isPolishedJourney ? (
             <HoiAnStage1Exploration station={station} onCompleteStage={() => setCurrentStage(2)} />
           ) : (
             <Stage1Exploration station={station} onCompleteStage={() => setCurrentStage(2)} />

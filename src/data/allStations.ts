@@ -115,6 +115,8 @@ function catalogItemToStation(cat: CatalogItem): Station {
     quoteVi: `${cat.titleVi} – Niềm tự hào xứ Quảng`,
   };
 
+  const usesCurrentGrade1Book = cat.grade === 1;
+
   return {
     id: cat.id,
     number: cat.lessonNumber,
@@ -127,8 +129,10 @@ function catalogItemToStation(cat: CatalogItem): Station {
     coverImage: cat.coverImage,
     openingMessageVi: `Chào mừng em đến với bài học "${cat.titleVi}" – Khối ${cat.grade}!`,
     totalPeriods: cat.periods,
-    officialCurriculumReference: `Tài liệu GDĐP TP Đà Nẵng - Khối ${cat.grade} - Bài ${cat.lessonNumber}`,
-    isFullyVerified: false,
+    officialCurriculumReference: usesCurrentGrade1Book
+      ? `Tài liệu Giáo dục địa phương thành phố Đà Nẵng lớp 1 – tái bản lần thứ hai – Chủ đề ${cat.lessonNumber}: ${cat.titleVi}`
+      : `Đề cương chi tiết Tài liệu GDĐP TP Đà Nẵng 2026 – Khối ${cat.grade} – Bài ${cat.lessonNumber}`,
+    isFullyVerified: usesCurrentGrade1Book,
     pedagogyGoals: {
       knowGoalVi: cat.knowGoalVi,
       understandGoalVi: cat.understandGoalVi,
@@ -141,16 +145,20 @@ function catalogItemToStation(cat: CatalogItem): Station {
     stamp,
     version: {
       stationId: cat.id,
-      version: '1.0.0-draft',
+      version: usesCurrentGrade1Book ? '1.1.0-current-book' : '1.0.0-draft',
       status: 'IN_REVIEW',
       createdBy: 'Nhóm biên soạn CHẠM ĐÀ NẴNG',
       createdAt: '2026-09-01',
-      changelog: 'Đang hoàn thiện nội dung chi tiết theo đề cương chính thức',
+      changelog: usesCurrentGrade1Book
+        ? 'Chuẩn hóa theo Tài liệu Giáo dục địa phương thành phố Đà Nẵng lớp 1 đang sử dụng; nội dung số chỉ mở rộng cách học, không thay thế kiến thức cốt lõi của tài liệu.'
+        : 'Đang hoàn thiện nội dung chi tiết theo đề cương dự thảo năm 2026',
     },
     sources: [
       {
         id: `src-${cat.id}-1`,
-        title: 'Đề cương chi tiết Tài liệu Giáo dục địa phương TP Đà Nẵng từ Lớp 1 đến Lớp 12',
+        title: usesCurrentGrade1Book
+          ? 'Tài liệu Giáo dục địa phương thành phố Đà Nẵng lớp 1 – tái bản lần thứ hai'
+          : 'Đề cương chi tiết Tài liệu Giáo dục địa phương TP Đà Nẵng năm 2026',
         organization: 'Sở Giáo dục và Đào tạo TP Đà Nẵng',
         sourceType: 'department_document',
         verified: true,

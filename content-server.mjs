@@ -280,6 +280,7 @@ const server = createServer(async (req,res) => {
       const saved=await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
       const row=saved?.catalog?.records?.find(item=>item.id===input.id);
       if (!row) return json(res,404,{error:'Cần lưu bản nháp trước khi tạo gợi ý AI.'});
+      if (!row.content?.trim()) return json(res,400,{error:'Địa chỉ chưa có nội dung nguồn. Admin cần bổ sung từ tài liệu đã xác minh trước khi dùng AI.'});
       const {GoogleGenAI}=await import('@google/genai');
       const ai=new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY});
       const response=await ai.models.generateContent({
@@ -299,6 +300,8 @@ const server = createServer(async (req,res) => {
       if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
       const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
       if (!saved?.catalog?.records?.length) return json(res,400,{error:'Chưa có dữ liệu GDĐP để xuất bản.'});
+      const missing=saved.catalog.records.filter(row=>!row.content?.trim());
+      if (missing.length) return json(res,400,{error:'Có '+missing.length+' địa chỉ chưa có nội dung nguồn. Admin cần bổ sung trước khi xuất bản.'});
       await cloudStore.put(GDDP_COLLECTION,GDDP_DOCUMENT,{...saved,published:true,updatedAt:new Date().toISOString()});
       return json(res,200,{published:true,records:saved.catalog.records.length});
     }

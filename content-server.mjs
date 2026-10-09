@@ -3,6 +3,7 @@ import { createServer } from 'node:http';
 import { createAuth, firestoreStoreWithFallback } from './auth-server.mjs';
 import { contentStorage } from './content-storage.mjs';
 import { GDDP_COLLECTION, GDDP_DOCUMENT, GDDP_YEAR, cleanGddpCatalog } from './gddp-catalog.mjs';
+import { gddpPrompt, cleanGddpAiSuggestion } from './gddp-ai.mjs';
 import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
 import { randomBytes, createHash } from 'node:crypto';
 import path from 'node:path';
@@ -267,6 +268,30 @@ const server = createServer(async (req,res) => {
         previousPublishedCatalog:old?.published ? old.catalog : old?.previousPublishedCatalog || null,
       });
       return json(res,200,{saved:true,records:catalog.records.length,published:false});
+    }
+    if (pathname === '/api/admin/gddp/suggest' && req.method === 'POST') {
+      auth.sameOrigin(req);
+      await auth.requireAdmin(req);
+      if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
+      if (!process.env.GEMINI_API_KEY) return json(res,503,{error:'Chưa cấu hình khóa Gemini ở máy chủ. Admin có thể nhập gợi ý thủ công.'});
+      const input=await body(req);
+      if (typeof input.id !== 'string' || !/^[a-zA-Z0-9_-]{1,90}$/.test(input.id))
+        return json(res,400,{error:'Mã địa chỉ tích hợp không hợp lệ.'});
+      const saved=await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
+      const row=saved?.catalog?.records?.find(item=>item.id===input.id);
+      if (!row) return json(res,404,{error:'Cần lưu bản nháp trước khi tạo gợi ý AI.'});
+      const {GoogleGenAI}=await import('@google/genai');
+      const ai=new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY});
+      const response=await ai.models.generateContent({
+        model:'gemini-2.5-flash-lite',
+        contents:gddpPrompt(row),
+        config:{responseMimeType:'application/json',temperature:0.2,maxOutputTokens:600}
+      });
+      let parsed;
+      try {parsed=JSON.parse(response.text || '');}
+      catch {return json(res,502,{error:'AI chưa trả về JSON hợp lệ. Vui lòng thử lại.'});}
+      const suggestion=cleanGddpAiSuggestion(parsed);
+      return json(res,200,{...suggestion,reviewRequired:true});
     }
     if (pathname === '/api/admin/gddp/publish' && req.method === 'POST') {
       auth.sameOrigin(req);

@@ -13,6 +13,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const [week, setWeek] = useState('');
   const [selectedId, setSelectedId] = useState('');
   const [loading, setLoading] = useState(true);
+  const [published,setPublished]=useState(false);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
   const [projected,setProjected] = useState<MatchedLessonResource|null>(null);
@@ -22,6 +23,8 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
     gddpService.publicCatalog().then(data => {
       if (!active) return;
       setRecords(data.records || []);
+      setPublished(!!data.published);
+      setError('');
       setLoading(false);
     }).catch(err => { if (active) {setError(err.message); setLoading(false);} });
     return () => {active = false;};
@@ -40,8 +43,9 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   return <section className="space-y-5 rounded-3xl border border-emerald-100 bg-white p-4 sm:p-6 shadow-sm">
     <div>
       <h2 className="text-xl font-black text-slate-900">Tích hợp Giáo dục địa phương</h2>
-      <p className="text-sm text-slate-600">Năm học 2026–2027 · Tra cứu địa chỉ đã được nhà trường duyệt. Chọn bài để xem học liệu và soạn kế hoạch bài dạy.</p>
+      <p className="text-sm text-slate-600">Năm học 2026–2027 · Tra cứu địa chỉ tích hợp lớp 1–5. Chọn bài để xem nội dung nguồn và thực hành soạn KHBD, kể cả khi dùng chế độ Demo.</p>
     </div>
+    {!loading && !error && records.length>0 && <p className="rounded-xl bg-sky-50 p-3 text-sm text-sky-900">Đã tải {records.length} địa chỉ GDĐP của 5 khối. {published?'Dữ liệu do Admin xuất bản.':'Dữ liệu nguồn cài sẵn để tra cứu và dùng Demo KHBD; chưa xác nhận Admin đã xuất bản.'}</p>}
     {loading && <p role="status">Đang tải dữ liệu GDĐP…</p>}
     {error && <p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm text-rose-800">{error}</p>}
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -61,14 +65,14 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
         </select>
       </label>
     </div>
-    {!loading && !filtered.length && <p className="rounded-xl bg-amber-50 p-4 text-sm text-amber-900">Chưa có địa chỉ tích hợp phù hợp trong dữ liệu đã xuất bản. Vui lòng liên hệ Admin nếu cần bổ sung.</p>}
+    {!loading && !filtered.length && <p className="rounded-xl bg-amber-50 p-4 text-sm text-amber-900">Chưa có địa chỉ tích hợp phù hợp với bộ lọc đang chọn. Vui lòng liên hệ Admin nếu cần bổ sung.</p>}
     {!!filtered.length && <div className="grid gap-2">
       {filtered.map(x=><button key={x.id} type="button" onClick={()=>{setSelectedId(x.id);setProjected(null);setCopied(false)}} className={`w-full rounded-xl border p-3 text-left text-sm transition ${selectedId===x.id?'border-emerald-600 bg-emerald-50':'border-slate-200 hover:bg-slate-50'}`}>
         <span className="font-bold">{x.lesson}</span><span className="mt-1 block text-xs text-slate-500">{x.subject} · {x.week ? 'Tuần '+x.week : 'Chưa ghi tuần'}</span>
       </button>)}
     </div>}
     {selected && <article className="space-y-4 rounded-2xl border border-sky-200 bg-sky-50/40 p-4">
-      <div><p className="text-xs font-bold uppercase text-sky-800">Địa chỉ tích hợp đã duyệt</p><h3 className="font-black text-slate-900">{selected.lesson}</h3></div>
+      <div><p className="text-xs font-bold uppercase text-sky-800">Địa chỉ tích hợp từ tài liệu nguồn</p><h3 className="font-black text-slate-900">{selected.lesson}</h3></div>
       <p className="text-sm"><strong>Hình thức:</strong> {selected.integrationType || 'Theo tài liệu gốc'}</p>
       <p className="text-sm"><strong>Vị trí:</strong> {selected.activity || 'Chưa ghi vị trí cụ thể'}</p>
       <div className="whitespace-pre-wrap rounded-xl bg-white p-3 text-sm text-slate-800"><strong>Nội dung GDĐP:</strong>{'\n'}{selected.content}</div>
@@ -85,7 +89,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
           <button type="button" className="rounded-lg bg-sky-700 px-4 py-2 text-sm font-bold text-white" onClick={()=>setProjected({station,hotspot,reason})}>Trình chiếu riêng nội dung này</button>
         </div>)}
       </div>
-      <p className="text-xs text-slate-500">Chỉ hiển thị nội dung nguồn do Admin duyệt; phần gợi ý AI sẽ được bổ sung sau và kiểm duyệt trước khi công bố.</p>
+      <p className="text-xs text-slate-500">Nội dung nguồn cần được giáo viên đối chiếu với bài dạy và tài liệu chính thức trước khi sử dụng. KHBD Demo là bản nháp để chỉnh sửa, không thay đổi dữ liệu trường.</p>
     </article>}
     {selected && projected && <GddpLessonPresentation record={selected} resource={projected} onExit={()=>setProjected(null)} />}
   </section>;

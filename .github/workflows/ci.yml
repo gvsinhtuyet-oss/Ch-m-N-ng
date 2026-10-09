@@ -43,6 +43,9 @@ jobs:
       - name: Firestore authentication storage tests
         run: node --test auth-storage-test.mjs
 
+      - name: GDĐP catalog validation tests
+        run: node --test gddp-catalog-test.mjs
+
       - name: Content storage tests
         run: node --test content-storage-test.mjs
 

@@ -282,51 +282,58 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
         typeof data.password === 'string' &&
         timingSafeEqual(Buffer.from(hash(data.password)), Buffer.from(hash(adminPassword)));
 
-      if (ownerCredentialsMatch) {
-        cookie(res, ownerToken());
-        json(res,200,{user:safeUser(ownerUser())});
-        return true;
-      }
+      const quotaBlocked = error =>
+        error?.storageCode === 'RESOURCE_EXHAUSTED' ||
+        error?.storageStatus === 429 ||
+        /RESOURCE_EXHAUSTED/i.test(String(error?.storageDetail || error?.message || ''));
 
-      await ready();
-      if(!validEmail(email) || typeof data.password !== 'string' || data.password.length > 128) throw fail(401,'Email hoặc mật khẩu chưa đúng.');
-      // Persistent per-account throttle also survives container restarts.
-      const id=hash(email); let rate=await store.get('cham_auth_limits',id);
-      if(rate?.until > Date.now()) throw fail(429,'Bạn đã thử nhiều lần. Vui lòng chờ 1 phút.');
-      // Claim a short lease to prevent parallel attempts bypassing the throttle.
-      try { await store.put('cham_auth_locks',id,{until:Date.now()+30000},true); }
-      catch(error) {
-        if(error.status !== 409) throw error;
-        const lock=await store.get('cham_auth_locks',id);
-        if(lock?.until > Date.now()) throw fail(429,'Vui lòng chờ rồi thử lại.');
-        // Expired locks are cleared; retry the request rather than racing a login.
-        await store.remove('cham_auth_locks',id); throw fail(429,'Vui lòng thử lại.');
-      }
       try {
-        // The throttle was checked immediately before the lease; avoid a duplicate Firestore read.
-        let user=await store.get('cham_users',id);
-        // The server-only owner secret can recover the owner account after a secret rotation.
-        // Never grant this path to a teacher, inactive account, or another email.
-        if (user?.active && user.role === 'admin' && email === owner &&
-            typeof adminPassword === 'string' && adminPassword.length >= 12 && adminPassword.length <= 128 &&
-            typeof data.password === 'string' &&
-            timingSafeEqual(Buffer.from(hash(data.password)), Buffer.from(hash(adminPassword))) &&
-            !(await matches(data.password,user.passwordHash))) {
-          user={...user,passwordHash:await passwordHash(adminPassword),version:user.version+1};
-          await store.put('cham_users',id,user);
-        }
-        if(!user?.active || !(await matches(data.password,user.passwordHash))) {
-          const count=(rate?.updatedAt > Date.now()-600000 ? rate.count : 0)+1;
-          await store.put('cham_auth_limits',id,{count,updatedAt:Date.now(),until:count>=5 ? Date.now()+60000 : 0});
+        await ready();
+        if(!validEmail(email) || typeof data.password !== 'string' || data.password.length > 128)
           throw fail(401,'Email hoặc mật khẩu chưa đúng.');
+
+        const id=hash(email); let rate=await store.get('cham_auth_limits',id);
+        if(rate?.until > Date.now()) throw fail(429,'Bạn đã thử nhiều lần. Vui lòng chờ 1 phút.');
+
+        try { await store.put('cham_auth_locks',id,{until:Date.now()+30000},true); }
+        catch(error) {
+          if(error.status !== 409) throw error;
+          const lock=await store.get('cham_auth_locks',id);
+          if(lock?.until > Date.now()) throw fail(429,'Vui lòng chờ rồi thử lại.');
+          await store.remove('cham_auth_locks',id);
+          throw fail(429,'Vui lòng thử lại.');
         }
-        if (rate) await store.remove('cham_auth_limits',id);
-        const token=randomBytes(32).toString('hex');
-        await store.put('cham_sessions',hash(token),{userId:id,version:user.version,expiresAt:Date.now()+28800000});
-        cookie(res,token); json(res,200,{user:safeUser(user)}); return true;
-      } finally {
-        try { await store.remove('cham_auth_locks',id); }
-        catch (cleanupError) { console.error('Auth lock cleanup failed', cleanupError.message); }
+
+        try {
+          let user=await store.get('cham_users',id);
+          if (user?.active && user.role === 'admin' && email === owner &&
+              ownerCredentialsMatch &&
+              !(await matches(data.password,user.passwordHash))) {
+            user={...user,passwordHash:await passwordHash(adminPassword),version:user.version+1};
+            await store.put('cham_users',id,user);
+          }
+          if(!user?.active || !(await matches(data.password,user.passwordHash))) {
+            const count=(rate?.updatedAt > Date.now()-600000 ? rate.count : 0)+1;
+            await store.put('cham_auth_limits',id,{count,updatedAt:Date.now(),until:count>=5 ? Date.now()+60000 : 0});
+            throw fail(401,'Email hoặc mật khẩu chưa đúng.');
+          }
+          if (rate) await store.remove('cham_auth_limits',id);
+          const token=randomBytes(32).toString('hex');
+          await store.put('cham_sessions',hash(token),{userId:id,version:user.version,expiresAt:Date.now()+28800000});
+          cookie(res,token);
+          json(res,200,{user:safeUser(user)});
+          return true;
+        } finally {
+          try { await store.remove('cham_auth_locks',id); }
+          catch (cleanupError) { console.error('Auth lock cleanup failed', cleanupError.message); }
+        }
+      } catch (error) {
+        if (ownerCredentialsMatch && quotaBlocked(error)) {
+          cookie(res,ownerToken());
+          json(res,200,{user:safeUser(ownerUser())});
+          return true;
+        }
+        throw error;
       }
     }
     if(pathname === '/api/auth/session' && req.method === 'GET') {

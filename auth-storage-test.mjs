@@ -52,3 +52,21 @@ test('fallback tries the next database when configured database is missing', asy
   assert.ok(seen.some(url=>url.includes('/databases/missing-db/')));
   assert.ok(seen.some(url=>url.includes('/databases/(default)/')));
 });
+
+
+test('quota exhaustion is not retried and pauses subsequent requests without accepting writes', async t => {
+  let now=Date.now();t.mock.method(Date,'now',()=>now);
+  let calls=0;
+  const store=firestoreStore('test-project','test-db',async url=> {
+    if(url.startsWith('http://metadata.'))return Response.json({access_token:'test-token',expires_in:3600});
+    calls++;
+    if(calls>1)return Response.json({fields:{payload:{stringValue:JSON.stringify({role:'admin'})}}});
+    return Response.json({error:{status:'RESOURCE_EXHAUSTED',message:'Quota exceeded'}},{status:429});
+  });
+  await assert.rejects(store.get('cham_users','owner'),{status:503,storageCode:'RESOURCE_EXHAUSTED',retryAfterSeconds:60});
+  await assert.rejects(store.put('cham_sessions','session',{}),{status:503,storageCode:'RESOURCE_EXHAUSTED'});
+  assert.equal(calls,1);
+  now+=60001;
+  assert.deepEqual(await store.get('cham_users','owner'),{role:'admin'});
+  assert.equal(calls,2);
+});

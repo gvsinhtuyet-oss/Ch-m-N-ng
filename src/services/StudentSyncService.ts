@@ -20,7 +20,9 @@ async function request(path: string, method: 'POST' | 'PUT', data: unknown) {
     throw new Error('Máy chủ đồng bộ chưa sẵn sàng.');
   }
   const result = await response.json();
-  if (!response.ok) throw new Error(result.error || 'Chưa đồng bộ được tiến độ.');
+  if (!response.ok) throw Object.assign(new Error(result.error || 'Chưa đồng bộ được tiến độ.'), {
+    storageCode: result.storageCode,
+  });
   return result;
 }
 

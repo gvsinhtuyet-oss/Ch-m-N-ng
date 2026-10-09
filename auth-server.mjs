@@ -26,7 +26,11 @@ async function matches(password, encoded) {
 export function firestoreStore(project, database = '(default)', fetchRequest = fetch) {
   const root = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/${encodeURIComponent(database)}/documents`;
   let cachedToken, expires = 0;
+  let blockedUntil = 0;
   async function request(route, method='GET', data, query='') {
+    if (Date.now() < blockedUntil) throw fail(503, 'Firestore đã chạm hạn mức. Vui lòng thử lại sau; tiến độ trên máy vẫn được giữ.', {
+      storageCode: 'RESOURCE_EXHAUSTED', retryAfterSeconds: Math.ceil((blockedUntil - Date.now()) / 1000),
+    });
     let lastError;
     for (let attempt = 0; attempt < 3; attempt++) {
       try {
@@ -101,6 +105,12 @@ export function firestoreStore(project, database = '(default)', fetchRequest = f
           const message = detail.error?.message || response.statusText || 'Firestore request failed';
           const code = detail.error?.status || 'HTTP_' + response.status;
           console.error('Auth storage HTTP', response.status, code, message);
+          if (code === 'RESOURCE_EXHAUSTED') {
+            blockedUntil = Date.now() + 60000;
+            throw fail(503, 'Firestore đã chạm hạn mức. Vui lòng thử lại sau; tiến độ trên máy vẫn được giữ.', {
+              storageStatus: response.status, storageCode: code, retryAfterSeconds: 60,
+            });
+          }
 
           if ([429,500,502,503,504].includes(response.status) && code !== 'RESOURCE_EXHAUSTED' && attempt < 2) {
             lastError = fail(503, 'Kho tài khoản đang bận. Vui lòng thử lại.', {

@@ -1,4 +1,5 @@
 
+import { isDeepStrictEqual } from 'node:util';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'node:http';
 import { createAuth, firestoreStoreWithFallback } from './auth-server.mjs';
@@ -36,7 +37,7 @@ let sharedContentCacheAt = 0;
 let healthCache = null;
 let healthCacheAt = 0;
 const CONTENT_CACHE_MS = 5 * 60 * 1000;
-const HEALTH_OK_CACHE_MS = 5 * 60 * 1000;
+const HEALTH_OK_CACHE_MS = 30 * 60 * 1000;
 const HEALTH_ERROR_CACHE_MS = 30 * 1000;
 const invalidateSharedContentCache = () => {
   sharedContentCache = null;
@@ -69,7 +70,7 @@ const validStudentProfile = profile => !!profile &&
   typeof profile.className === 'string' && /^[1-5]\/[1-9][0-9]{0,2}$/.test(profile.className) &&
   Number.isInteger(profile.grade) && profile.grade >= 1 && profile.grade <= 5 &&
   Number(profile.className.split('/')[0]) === profile.grade;
-const cleanProgressRecord = (record, studentId, stationId) => {
+const cleanProgressRecord = (record, studentId, stationId, previous) => {
   if (!record || typeof record !== 'object') return null;
   const arr = value => Array.isArray(value) ? [...new Set(value.filter(v => typeof v === 'string').slice(0,100))] : [];
   const iso = value => typeof value === 'string' && !Number.isNaN(Date.parse(value)) ? value : undefined;
@@ -93,7 +94,7 @@ const cleanProgressRecord = (record, studentId, stationId) => {
     stampReceived: finalCompleted && !!record.stampReceived,
     journeyMapReceived,
     keyFragmentReceived,
-    lastVisitedAt: iso(record.lastVisitedAt) || new Date().toISOString(),
+    lastVisitedAt: iso(record.lastVisitedAt) || iso(previous?.lastVisitedAt) || new Date().toISOString(),
     syncStatus: 'synced',
   };
   for (const key of ['journeyMapReceivedAt','keyFragmentReceivedAt','startedAt','completedAt']) {
@@ -345,10 +346,14 @@ const server = createServer(async (req,res) => {
       const merged={...(saved.progress || {})};
       for(const [stationId,record] of incomingEntries){
         if(!/^[a-zA-Z0-9_-]{1,100}$/.test(stationId)) return json(res,400,{error:'Mã trạm chưa hợp lệ.'});
-        const clean=cleanProgressRecord(record,saved.profile.id,stationId);
+        const clean=cleanProgressRecord(record,saved.profile.id,stationId,merged[stationId]);
         if(!clean) return json(res,400,{error:'Bản ghi tiến độ chưa hợp lệ.'});
         merged[stationId]=mergeProgressRecord(merged[stationId],clean);
       }
+      // Firestore payload JSON omits undefined optional fields. Compare that same form.
+      const normalizedProgress = JSON.parse(JSON.stringify(merged));
+      if (isDeepStrictEqual(saved.progress || {}, normalizedProgress))
+        return json(res,200,{saved:true,unchanged:true,progress:merged});
       await cloudStore.put('cham_student_sync',key,{...saved,progress:merged,updatedAt:Date.now()});
       return json(res,200,{saved:true,progress:merged});
     }
@@ -429,7 +434,11 @@ const server = createServer(async (req,res) => {
     res.end(req.method === 'HEAD' ? undefined : data);
   } catch (error) {
     console.error('Content server error:',error.message);
-    json(res,error.status || 500,{ error:error.status ? error.message : 'Could not process request' });
+    if (error.retryAfterSeconds) res.setHeader('Retry-After', String(error.retryAfterSeconds));
+    json(res,error.status || 500,{ error:error.status ? error.message : 'Could not process request',
+      ...(error.storageCode ? {storageCode:error.storageCode} : {}),
+      ...(error.retryAfterSeconds ? {retryAfterSeconds:error.retryAfterSeconds} : {}),
+    });
   }
 });
 export { server as apiServer };

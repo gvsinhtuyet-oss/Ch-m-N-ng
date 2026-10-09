@@ -5,7 +5,7 @@ import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {spawn} from 'node:child_process';
 
-for (const runtime of ['production','vite']) test(runtime+' HTTP server: Admin, Teacher, GDĐP, one learner sync and class report', {timeout:20000},async()=>{
+for (const runtime of ['production','vite']) test(runtime+' HTTP server: Admin, Teacher, GDĐP, one learner sync and class report', {timeout:40000},async()=>{
  const dir=await mkdtemp(join(tmpdir(),'cham-api-test-'));
  const preload=join(dir,'mock-firestore.mjs');
  // No credentials or live Firestore are used. Exercise the production REST adapter with a deterministic store.
@@ -21,11 +21,11 @@ for (const runtime of ['production','vite']) test(runtime+' HTTP server: Admin, 
  const id=method==='POST'?key+'/'+u.searchParams.get('documentId'):key;
  if(method==='POST'&&docs.has(id))return response({error:{message:'Already exists'}},409);
  const data=JSON.parse(options.body);if(JSON.parse(data.fields.payload.stringValue).stationId==='simulate-storage-failure')return response({error:{message:'Permission denied',status:'PERMISSION_DENIED'}},403);docs.set(id,data);return response(data);};`);
- const child=spawn(process.execPath,['--import',preload,...(runtime==='vite'?['node_modules/vite/bin/vite.js','--host','127.0.0.1','--port','3198','--strictPort']:['content-server.mjs'])],{cwd:new URL('.',import.meta.url),env:{...process.env,PORT:'0',CHAM_ENV:'test',AUTH_FIRESTORE_PROJECT:'test-project',AUTH_FIRESTORE_DATABASE:'test-db',AUTH_ADMIN_EMAIL:'owner@example.com',AUTH_ADMIN_PASSWORD:'Synthetic-owner-password-42',AUTH_LOCAL_HTTP:'true',K_SERVICE:'',CONTENT_DATA_DIR:join(dir,'data')},stdio:['ignore','pipe','pipe']});
+ const child=spawn(process.execPath,['--import',preload,...(runtime==='vite'?['node_modules/vite/bin/vite.js','--host','127.0.0.1','--port','3198','--strictPort']:['content-server.mjs'])],{cwd:new URL('.',import.meta.url),env:{...process.env,NO_COLOR:'1',FORCE_COLOR:'0',PORT:'0',CHAM_ENV:'test',AUTH_FIRESTORE_PROJECT:'test-project',AUTH_FIRESTORE_DATABASE:'test-db',AUTH_ADMIN_EMAIL:'owner@example.com',AUTH_ADMIN_PASSWORD:'Synthetic-owner-password-42',AUTH_LOCAL_HTTP:'true',K_SERVICE:'',CONTENT_DATA_DIR:join(dir,'data')},stdio:['ignore','pipe','pipe']});
  let logs='';child.stderr.on('data',x=>{logs+=x;});
  try{
- const port=await new Promise((resolve,reject)=>{let output='';const timer=setTimeout(()=>reject(new Error('Server startup timeout '+logs)),7000);
- child.stdout.on('data',x=>{output+=x;const match=output.match(runtime==='vite'?/127\.0\.0\.1:(\d+)/:/started port=(\d+)/);if(match){clearTimeout(timer);resolve(match[1]);}});
+ const port=await new Promise((resolve,reject)=>{let output='';const timer=setTimeout(()=>reject(new Error('Server startup timeout '+logs)),15000);
+ child.stdout.on('data',x=>{output+=x.toString().replace(/\x1b\[[0-9;]*m/g,'');const match=output.match(runtime==='vite'?/127\.0\.0\.1:(\d+)/:/started port=(\d+)/);if(match){clearTimeout(timer);resolve(match[1]);}});
  child.once('exit',code=>{clearTimeout(timer);reject(new Error('Server exited '+code+' '+logs));});child.once('error',reject);});
  const base='http://127.0.0.1:'+port;
  const call=async(path,method='GET',data,cookie='')=>{const r=await fetch(base+path,{method,headers:{Origin:base,...(data?{'Content-Type':'application/json'}:{}),...(cookie?{Cookie:cookie}:{})},...(data?{body:JSON.stringify(data)}:{})});return {status:r.status,data:await r.json(),cookie:r.headers.get('set-cookie')?.split(';')[0]};};
@@ -43,8 +43,18 @@ for (const runtime of ['production','vite']) test(runtime+' HTTP server: Admin, 
  const roster={name:'2/24',grade:2,academicYear:'2026-2027',students:['Học sinh giả lập']};
  const classroom=await call('/api/teacher/classes','POST',roster,teacher.cookie);assert.equal(classroom.status,200);const id=classroom.data.classroom.id;
  const registered=await call('/api/student/sync/register','POST',{profile:{id:'synthetic-student',name:'Học sinh giả lập',grade:2,className:'2/24'}});assert.equal(registered.status,200);const syncCode=registered.data.syncCode;
- const progress={'hoi-an':{stage1Completed:true,stage2Completed:true,stage3Completed:true,stage4Completed:true,journeyMapReceived:true,keyFragmentReceived:true,stampReceived:true,stationCompleted:true}};
- assert.equal((await call('/api/student/sync/progress','PUT',{syncCode,progress})).status,200);
+ const progress={'hoi-an':{stage1Completed:true,stage2Completed:true,stage3Completed:true,stage4Completed:true,journeyMapReceived:true,keyFragmentReceived:true,stampReceived:true,stationCompleted:true,lastVisitedAt:'2026-10-09T08:00:00.000Z'}};
+ const firstSync=await call('/api/student/sync/progress','PUT',{syncCode,progress});
+ assert.equal(firstSync.status,200);
+ const duplicate=await call('/api/student/sync/progress','PUT',{syncCode,progress});
+ assert.equal(duplicate.data.unchanged,true);
+ const withoutVisit=structuredClone(progress);delete withoutVisit['hoi-an'].lastVisitedAt;
+ assert.equal((await call('/api/student/sync/progress','PUT',{syncCode,progress:withoutVisit})).data.unchanged,true);
+ const reordered={'hoi-an':Object.fromEntries(Object.entries(progress['hoi-an']).reverse())};
+ assert.equal((await call('/api/student/sync/progress','PUT',{syncCode,progress:reordered})).data.unchanged,true);
+ const advanced=structuredClone(progress);advanced['hoi-an'].lastVisitedAt='2026-10-09T09:00:00.000Z';
+ assert.equal((await call('/api/student/sync/progress','PUT',{syncCode,progress:advanced})).data.unchanged,undefined);
+ assert.equal((await call('/api/student/sync/restore','POST',{syncCode})).data.progress['hoi-an'].lastVisitedAt,'2026-10-09T09:00:00.000Z');
  assert.equal((await call('/api/student/sync/restore','POST',{syncCode})).data.progress['hoi-an'].stationCompleted,true);
  assert.equal((await call('/api/teacher/progress','POST',{classId:id,syncCode},teacher.cookie)).status,200);
  const report=await call('/api/teacher/progress?classId='+id,'GET',undefined,teacher.cookie);assert.equal(report.data.linkedCount,1);assert.equal(report.data.students[0].completedStations,1);

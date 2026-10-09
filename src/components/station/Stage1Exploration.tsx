@@ -281,7 +281,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Đã khám phá
               </span>
             )}
-            <span className="text-xs text-slate-400 font-semibold hidden sm:inline">• Chặng 1: Giải mã điểm đến</span>
+            <span className="text-xs text-slate-400 font-semibold hidden sm:inline">• Chặng 1: Đánh thức điểm đến</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
             {hotspot.titleVi}

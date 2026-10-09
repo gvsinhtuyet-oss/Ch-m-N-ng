@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {createServer} from 'node:http';
+import {createHash} from 'node:crypto';
 import {createAuth} from './auth-server.mjs';
 const records=new Map();
 const store={ async get(c,id){return structuredClone(records.get(c+'/'+id)||null);},async put(c,id,data,create=false){if(create&&records.has(c+'/'+id))throw Object.assign(new Error('exists'),{status:409});records.set(c+'/'+id,structuredClone(data));},async remove(c,id){records.delete(c+'/'+id);},async list(c){return [...records].filter(([key])=>key.startsWith(c+'/')).map(([,value])=>structuredClone(value));}};
@@ -45,6 +46,36 @@ try {
  assert.equal((await call('/api/teacher/classes','PUT',{...roster,grade:3},teacher.cookie)).status,400);
  assert.equal((await call('/api/teacher/classes','PUT',{...roster,students:Array(101).fill('An')},teacher.cookie)).status,400);
  assert.equal((await call('/api/teacher/classes','GET',undefined,admin.cookie)).body.classes[0].totalStudents,3);
+ // A single synthetic learner mimics a real Firestore sync document; never use personal pupil data.
+ const classId=createHash('sha256').update('2026-2027:2/24').digest('hex');
+ const studentCode='ABCDEF234567';
+ const syncKey=createHash('sha256').update(studentCode).digest('hex');
+ const syntheticProfile={id:'student-test-1',name:'Nguyễn An',className:'2/24',grade:2};
+ await store.put('cham_student_sync',syncKey,{profile:syntheticProfile,progress:{
+  'hoi-an':{stationCompleted:true,stampReceived:true,stage1Completed:true,stage2Completed:true,stage3Completed:true,stage4Completed:true,lastVisitedAt:'2026-10-09T08:00:00.000Z'}
+ }});
+ assert.equal((await call('/api/teacher/progress?classId='+classId,'GET')).status,401);
+ assert.equal((await call('/api/teacher/progress?classId='+classId,'GET',undefined,second.cookie)).status,403);
+ assert.equal((await call('/api/teacher/progress','POST',{classId,syncCode:studentCode},second.cookie)).status,403);
+ assert.equal((await call('/api/teacher/progress','POST',{classId,syncCode:studentCode},teacher.cookie,'https://attacker.example')).status,403);
+ const initial=await call('/api/teacher/progress?classId='+classId,'GET',undefined,teacher.cookie);
+ assert.equal(initial.status,200);assert.equal(initial.body.rosterCount,3);assert.equal(initial.body.linkedCount,0);
+ assert.equal((await call('/api/teacher/progress','POST',{classId,syncCode:'XXXXXXXXXXXX'},teacher.cookie)).status,404);
+ assert.equal((await call('/api/teacher/progress','POST',{classId,syncCode:studentCode},teacher.cookie)).status,200);
+ const real=await call('/api/teacher/progress?classId='+classId,'GET',undefined,teacher.cookie);
+ assert.equal(real.status,200);assert.equal(real.body.linkedCount,1);
+ assert.equal(real.body.students[0].name,'Nguyễn An');
+ assert.equal(real.body.students[0].completedStations,1);
+ assert.equal(real.body.students[0].totalStamps,1);
+ assert.equal(real.body.students[0].stations[0].completedStages,4);
+ assert.equal((await call('/api/teacher/progress?classId='+classId,'GET',undefined,second.cookie)).status,403);
+ await store.put('cham_student_sync',syncKey,{profile:syntheticProfile,progress:{
+  'hoi-an':{stationCompleted:true,stampReceived:true,stage1Completed:true,stage2Completed:true,stage3Completed:true,stage4Completed:true,lastVisitedAt:'2026-10-09T08:00:00.000Z'},
+  'da-nang':{stationCompleted:true,stampReceived:true,stage1Completed:true,stage2Completed:true,stage3Completed:true,stage4Completed:true,lastVisitedAt:'2026-10-09T08:30:00.000Z'}
+ }});
+ const refreshed=await call('/api/teacher/progress?classId='+classId,'GET',undefined,teacher.cookie);
+ assert.equal(refreshed.body.students[0].completedStations,2);
+ assert.equal(refreshed.body.students[0].totalStamps,2);
  const restart=createAuth({store,adminEmail:'owner@example.com',adminPassword:'Strong-test-owner-42',secureCookie:false});
  const beforeRestart=auth;auth=restart;
  assert.equal((await call('/api/teacher/classes','GET',undefined,teacher.cookie)).body.classes[0].totalStudents,3);
@@ -73,5 +104,5 @@ try {
  assert.equal(recovered.status,200);assert.equal(recovered.body.user.role,'admin');
  assert.equal((await call('/api/auth/session','GET',undefined,admin.cookie)).body.user,null);
  assert.equal((await call('/api/auth/login','POST',{email:'owner@example.com',password:'Strong-test-owner-42'})).status,401);
- console.log('PASS: login, roles, duplicate, lock, reset, password change, logout, origin, throttle, persistent sessions.');
+ console.log('PASS: login, roles, duplicate, lock, reset, password change, logout, origin, throttle, persistent sessions; one student progress linked, refreshed and access-isolated.');
 }finally{await new Promise(resolve=>server.close(resolve));}

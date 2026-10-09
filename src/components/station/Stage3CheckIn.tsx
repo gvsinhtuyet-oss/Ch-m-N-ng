@@ -69,7 +69,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
       <div className="bg-white rounded-3xl p-6 shadow-sm border border-rose-100 flex items-center justify-between gap-4">
         <div>
           <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-rose-100 text-rose-800 mb-2 inline-block">
-            Chặng 3: Check-in Cảm xúc
+            Chặng 3: Check-in cảm xúc
           </span>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900">Chia sẻ cảm nhận & Lời hứa hành động</h2>
           <p className="text-xs sm:text-sm text-slate-500 mt-1">
@@ -216,7 +216,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
               onClick={onCompleteStage}
               className="px-8 py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-sm shadow-lg shadow-sky-600/30 transition active:scale-95 inline-flex items-center gap-2"
             >
-              <span>Tiến vào Chặng 4: Đóng Dấu Hoàn Thành</span>
+              <span>Tiến vào Chặng 4: Hộ chiếu hành trình</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>

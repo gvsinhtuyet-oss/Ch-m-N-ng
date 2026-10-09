@@ -2,10 +2,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { gddpService, GddpRecord } from '../../services/GddpService';
 import { Station } from '../../types';
 
-interface Props {stations: Station[]; onPresent: (station: Station) => void;}
-export const GddpTeacherLookup: React.FC<Props> = ({stations,onPresent}) => {
+interface Props {stations: Station[]; currentGrade: number; onGradeChange: (grade: number) => void; onPresent: (station: Station) => void;}
+export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGradeChange,onPresent}) => {
   const [records, setRecords] = useState<GddpRecord[]>([]);
-  const [grade, setGrade] = useState(2);
+  const [grade, setGrade] = useState(currentGrade);
   const [subject, setSubject] = useState('');
   const [week, setWeek] = useState('');
   const [selectedId, setSelectedId] = useState('');
@@ -43,7 +43,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,onPresent}) => {
     {error && <p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm text-rose-800">{error}</p>}
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
       <label className="space-y-1 text-sm font-semibold text-slate-700">Khối lớp
-        <select className="w-full rounded-xl border border-slate-300 bg-white p-3" value={grade} onChange={e=>{setGrade(Number(e.target.value));setSubject('');setWeek('');setSelectedId('');}}>
+        <select className="w-full rounded-xl border border-slate-300 bg-white p-3" value={grade} onChange={e=>{setGrade(Number(e.target.value));onGradeChange(Number(e.target.value));setPresentationStationId('');setSubject('');setWeek('');setSelectedId('');}}>
           {[1,2,3,4,5].map(x=><option key={x} value={x}>Lớp {x}</option>)}
         </select>
       </label>

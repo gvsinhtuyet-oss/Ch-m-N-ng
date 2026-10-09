@@ -304,7 +304,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
 
       <section className="rounded-3xl bg-white border border-amber-200 shadow-sm p-5 sm:p-7 space-y-6 text-center">
         <div>
-          <span className="text-xs font-black text-sky-700 uppercase">Chặng 4 · Dấu ấn cuối hành trình</span>
+          <span className="text-xs font-black text-sky-700 uppercase">Chặng 4 · Hộ chiếu hành trình</span>
           <h2 className="mt-1 text-xl sm:text-2xl font-black text-slate-900">{station.titleVi}</h2>
           <p className="mt-2 text-sm text-slate-600">Ba vật phẩm em đã sưu tập trong hành trình</p>
         </div>

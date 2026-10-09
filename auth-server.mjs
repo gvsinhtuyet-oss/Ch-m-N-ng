@@ -282,10 +282,11 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
         typeof data.password === 'string' &&
         timingSafeEqual(Buffer.from(hash(data.password)), Buffer.from(hash(adminPassword)));
 
-      const quotaBlocked = error =>
-        error?.storageCode === 'RESOURCE_EXHAUSTED' ||
-        error?.storageStatus === 429 ||
-        /RESOURCE_EXHAUSTED/i.test(String(error?.storageDetail || error?.message || ''));
+      if (ownerCredentialsMatch) {
+        cookie(res,ownerToken());
+        json(res,200,{user:safeUser(ownerUser())});
+        return true;
+      }
 
       try {
         await ready();
@@ -328,11 +329,6 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
           catch (cleanupError) { console.error('Auth lock cleanup failed', cleanupError.message); }
         }
       } catch (error) {
-        if (ownerCredentialsMatch && quotaBlocked(error)) {
-          cookie(res,ownerToken());
-          json(res,200,{user:safeUser(ownerUser())});
-          return true;
-        }
         throw error;
       }
     }

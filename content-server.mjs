@@ -7,11 +7,12 @@ import { contentStorage } from './content-storage.mjs';
 import { firestoreConfiguration } from './deployment-config.mjs';
 import { GDDP_COLLECTION, GDDP_DOCUMENT, GDDP_YEAR, cleanGddpCatalog } from './gddp-catalog.mjs';
 import { gddpPrompt, cleanGddpAiSuggestion } from './gddp-ai.mjs';
+import { bundledGddpData } from './gddp-bundled-data.mjs';
 import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
 import { randomBytes, createHash } from 'node:crypto';
 import path from 'node:path';
 
-const bundledGddpCatalog=cleanGddpCatalog(JSON.parse(await readFile(new URL('./content-data/gddp-2026-2027.json',import.meta.url),'utf8')));
+const bundledGddpCatalog=cleanGddpCatalog(bundledGddpData);
 const dataDir = path.resolve(process.env.CONTENT_DATA_DIR || './content-data');
 const dataFile = path.join(dataDir, 'stations.json');
 const {project: firestoreProject, database: firestoreDatabase, candidates: firestoreCandidates} = firestoreConfiguration();

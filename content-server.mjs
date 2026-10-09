@@ -38,6 +38,25 @@ let theme = { coverDesktop:'',coverMobile:'',roleDesktop:'',roleMobile:'',journe
 try { theme = JSON.parse(await readFile(themeFile,'utf8')); }
 catch (error) { if (error.code !== 'ENOENT') throw error; }
 let writes = Promise.resolve();
+let sharedContentCache = null;
+let sharedContentCacheAt = 0;
+let healthCache = null;
+let healthCacheAt = 0;
+const CONTENT_CACHE_MS = 5 * 60 * 1000;
+const HEALTH_OK_CACHE_MS = 5 * 60 * 1000;
+const HEALTH_ERROR_CACHE_MS = 30 * 1000;
+const invalidateSharedContentCache = () => {
+  sharedContentCache = null;
+  sharedContentCacheAt = 0;
+};
+const loadSharedContent = async () => {
+  if (!durableContent) return { stations, theme };
+  if (sharedContentCache && Date.now() - sharedContentCacheAt < CONTENT_CACHE_MS) return sharedContentCache;
+  const current = await durableContent.load();
+  sharedContentCache = current;
+  sharedContentCacheAt = Date.now();
+  return current;
+};
 const validUrl = value => typeof value === 'string' && (
   value === '' || /^https:\/\//i.test(value) ||
   /^data:(image\/(png|jpeg|webp|gif)|application\/pdf|audio\/(mpeg|mp3|wav|ogg|mp4|x-wav)|video\/(mp4|webm|ogg));base64,/i.test(value)
@@ -148,6 +167,10 @@ const server = createServer(async (req,res) => {
   try {
     const pathname = new URL(req.url, 'http://localhost').pathname;
     if (pathname === '/api/health' && req.method === 'GET') {
+      const cachedHealthTtl = healthCache?.auth?.ready ? HEALTH_OK_CACHE_MS : HEALTH_ERROR_CACHE_MS;
+      if (healthCache && Date.now() - healthCacheAt < cachedHealthTtl) {
+        return json(res, 200, healthCache);
+      }
       let firestoreStatus = 'unknown';
       let firestoreWriteStatus = 'unknown';
       let firestoreError = null;
@@ -197,7 +220,7 @@ const server = createServer(async (req,res) => {
         typeof process.env.AUTH_ADMIN_PASSWORD === 'string' &&
         process.env.AUTH_ADMIN_PASSWORD.length >= 12 &&
         process.env.AUTH_ADMIN_PASSWORD.length <= 128;
-      return json(res, 200, {
+      healthCache = {
         status: 'ok',
         revision: process.env.K_REVISION || null,
         service: process.env.K_SERVICE || null,
@@ -219,10 +242,12 @@ const server = createServer(async (req,res) => {
             (adminAccountExists || bootstrapSecretConfigured),
         },
         contentStorage: durableContent ? 'firestore' : 'local',
-      });
+      };
+      healthCacheAt = Date.now();
+      return json(res, 200, healthCache);
     }
     if (pathname === '/api/content' && req.method === 'GET') {
-      const current = durableContent ? await durableContent.load() : {stations,theme};
+      const current = await loadSharedContent();
       return json(res,200,{ schemaVersion:1,...current });
     }
     if (pathname === '/api/student/sync/register' && req.method === 'POST') {
@@ -299,7 +324,7 @@ const server = createServer(async (req,res) => {
         !Number.isFinite(clean.blur) || clean.blur < 0 || clean.blur > 6
       ) return json(res,400,{ error:'Invalid theme settings' });
       const operation = writes.then(async () => {
-        if (durableContent) { await durableContent.saveTheme(clean); return; }
+        if (durableContent) { await durableContent.saveTheme(clean); invalidateSharedContentCache(); return; }
         if (process.env.K_SERVICE) throw Object.assign(new Error('Chưa cấu hình kho học liệu lâu dài.'),{status:503});
         await writeFile(themeFile + '.tmp',JSON.stringify(clean),{ mode:0o600 });
         await rename(themeFile + '.tmp',themeFile); theme = clean;
@@ -321,7 +346,7 @@ const server = createServer(async (req,res) => {
         return json(res,400,{ error:'Invalid station content' });
       const clean = { coverImage:content.coverImage,mapImage:content.mapImage,hotspots:content.hotspots,resources:content.resources };
       const operation = writes.then(async () => {
-        if (durableContent) { await durableContent.saveStation(id,clean); return; }
+        if (durableContent) { await durableContent.saveStation(id,clean); invalidateSharedContentCache(); return; }
         if (process.env.K_SERVICE) throw Object.assign(new Error('Chưa cấu hình kho học liệu lâu dài.'),{status:503});
         const next = { ...stations,[id]:clean };
         await writeFile(dataFile + '.tmp',JSON.stringify(next),{ mode:0o600 });

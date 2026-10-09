@@ -2,6 +2,10 @@ import { Admin, Teacher, Classroom } from '../types';
 import { fetchWithTimeout } from './NetworkService';
 export type StaffUser = (Admin | Teacher) & { email: string };
 export type ManagedClass = Classroom & { students: string[] };
+export interface RealClassProgress {
+  className:string; academicYear:string; rosterCount:number; linkedCount:number;
+  students:Array<{name:string;completedStations:number;totalStamps:number;stations:Array<{stationId:string;completed:boolean;stamp:boolean;completedStages:number;lastVisitedAt:string|null}>}>;
+}
 export interface AuthHealth {
   status: string;
   revision?: string | null;
@@ -28,6 +32,8 @@ async function request(path: string, method='GET', data?: unknown) {
 export const authService = {
   current: () => user,
   async health(): Promise<AuthHealth> { return await request('/api/health'); },
+  async classProgress(classId: string): Promise<RealClassProgress> { return await request('/api/teacher/progress?classId='+encodeURIComponent(classId)); },
+  async linkStudentProgress(classId: string,syncCode: string): Promise<void> { await request('/api/teacher/progress','POST',{classId,syncCode}); },
   async classes(): Promise<ManagedClass[]> { return (await request('/api/teacher/classes')).classes; },
   async saveClass(data: Pick<ManagedClass, 'name' | 'grade' | 'academicYear' | 'students'>, create: boolean) { await request('/api/teacher/classes', create ? 'POST' : 'PUT', data); },
   async restore() { user=(await request('/api/auth/session')).user; return user; },

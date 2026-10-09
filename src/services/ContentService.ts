@@ -17,6 +17,8 @@ export interface StationContent {
   resources: LearningResource[];
 }
 const STORAGE_KEY = 'cham_danang_content_v1';
+const PREVIEW_KEY = 'cham_danang_content_preview_v1';
+let previewRecords: Record<string, StationContent> = {};
 let records: Record<string, StationContent> = {};
 function validContent(value: unknown): value is StationContent {
   if (!value || typeof value !== 'object') return false;
@@ -35,6 +37,7 @@ function validRecords(value: unknown): Record<string, StationContent> {
   return Object.fromEntries(Object.entries(value).filter(([key,content]) => /^[a-zA-Z0-9_-]{1,100}$/.test(key) && validContent(content)));
 }
 try { records = validRecords(JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')); } catch {}
+try { previewRecords = validRecords(JSON.parse(localStorage.getItem(PREVIEW_KEY) || '{}')); records = {...records,...previewRecords}; } catch {}
 
 const isLegacyPlaceholderCover = (url: string) =>
   /^https:\/\/images\.unsplash\.com\//i.test(url.trim());
@@ -69,6 +72,9 @@ export const contentService = {
   saveLocal(station: Station, content: StationContent) {
     if (!validContent(content)) throw new Error('Nội dung trạm chưa hợp lệ.');
     const next = { ...records, [station.id]: structuredClone(content) };
+    const nextPreview = {...previewRecords,[station.id]:structuredClone(content)};
+    localStorage.setItem(PREVIEW_KEY, JSON.stringify(nextPreview));
+    previewRecords = nextPreview;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
     records = next;
     this.apply(station);
@@ -79,7 +85,7 @@ export const contentService = {
       if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) return false;
       const remote = await response.json();
       if (remote.schemaVersion !== 1 || !remote.stations || typeof remote.stations !== 'object') return false;
-      records = { ...records, ...validRecords(remote.stations) };
+      records = { ...records, ...validRecords(remote.stations), ...previewRecords };
       if (remote.theme) { try { saveTheme(remote.theme); } catch {} }
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); } catch {}
       stations.forEach(station => this.apply(station));

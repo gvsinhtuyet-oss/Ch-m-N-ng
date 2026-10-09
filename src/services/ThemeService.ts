@@ -21,6 +21,7 @@ export const DEFAULT_THEME: ThemeSettings = {
 };
 
 const KEY = 'cham_danang_theme_v1';
+const PREVIEW_KEY = 'cham_danang_theme_preview_v1';
 let sessionTheme: ThemeSettings | null = null;
 
 const validImage = (item: unknown) =>
@@ -49,13 +50,19 @@ export function validateTheme(input: Partial<ThemeSettings> & { desktop?: string
 
 export function readTheme(fromStorage = false): ThemeSettings {
   if (sessionTheme && !fromStorage) return { ...sessionTheme };
-  try { sessionTheme = validateTheme(JSON.parse(localStorage.getItem(KEY) || '{}')); }
+  try { sessionTheme = validateTheme(JSON.parse(localStorage.getItem(PREVIEW_KEY) || localStorage.getItem(KEY) || '{}')); }
   catch { sessionTheme = { ...DEFAULT_THEME }; }
   return { ...sessionTheme };
 }
 
-export function saveTheme(theme: ThemeSettings) {
+export function saveTheme(theme: ThemeSettings, preview = false) {
   sessionTheme = validateTheme(theme);
-  try { localStorage.setItem(KEY, JSON.stringify(sessionTheme)); }
+  try {
+    localStorage.setItem(preview ? PREVIEW_KEY : KEY, JSON.stringify(sessionTheme));
+    if (!preview) {
+      const savedPreview = localStorage.getItem(PREVIEW_KEY);
+      if (savedPreview) sessionTheme = validateTheme(JSON.parse(savedPreview));
+    }
+  }
   finally { window.dispatchEvent(new Event('cham-theme-changed')); }
 }

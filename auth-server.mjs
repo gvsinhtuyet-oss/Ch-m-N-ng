@@ -371,6 +371,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       const classroom=await store.get('cham_classes',id);
       if(!classroom) throw fail(404,'Không tìm thấy lớp.');
       if(staff.role!=='admin' && classroom.teacherId!==staff.id) throw fail(403,'Bạn chỉ được xem lớp mình phụ trách.');
+      const norm=s=>String(s||'').trim().replace(/\s+/g,' ').normalize('NFC').toLocaleLowerCase('vi');
       if(req.method==='POST') {
         const code=String(data.syncCode||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
         if(!/^[A-Z0-9]{12}$/.test(code)) throw fail(400,'Mã đồng bộ chưa hợp lệ.');
@@ -378,7 +379,6 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
         const saved=await store.get('cham_student_sync',key);
         if(!saved?.profile) throw fail(404,'Không tìm thấy mã học sinh.');
         const student=saved.profile;
-        const norm=s=>String(s||'').trim().replace(/\\s+/g,' ').normalize('NFC').toLocaleLowerCase('vi');
         if(student.grade!==classroom.grade || norm(student.className)!==norm(classroom.name) ||
           !classroom.students.some(name=>norm(name)===norm(student.name)))
           throw fail(400,'Tên, khối và lớp của mã học sinh chưa khớp danh sách đã duyệt.');
@@ -390,16 +390,16 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       const links=(await store.list('cham_teacher_progress_links')).filter(link=>link.classId===id);
       const results=[];
       for(const link of links.slice(0,100)){
-        if(!classroom.students.some(n=>String(n).trim()===String(link.name).trim())) continue;
+        if(!classroom.students.some(n=>norm(n)===norm(link.name))) continue;
         const saved=await store.get('cham_student_sync',link.syncKey);
         if(!saved?.profile || saved.profile.grade!==classroom.grade ||
-          String(saved.profile.className).trim()!==classroom.name) continue;
+          norm(saved.profile.className)!==norm(classroom.name) || norm(saved.profile.name)!==norm(link.name)) continue;
         const stations=Object.entries(saved.progress||{}).slice(0,30).map(([stationId,p])=>({
           stationId,completed:!!p.stationCompleted,stamp:!!p.stampReceived,
           completedStages:[p.stage1Completed,p.stage2Completed,p.stage3Completed,p.stage4Completed].filter(Boolean).length,
           lastVisitedAt:typeof p.lastVisitedAt==='string'?p.lastVisitedAt:null
         }));
-        results.push({name:saved.profile.name,stations,completedStations:stations.filter(x=>x.completed).length,
+        results.push({name:classroom.students.find(n=>norm(n)===norm(link.name)),stations,completedStations:stations.filter(x=>x.completed).length,
           totalStamps:stations.filter(x=>x.stamp).length});
       }
       return json(res,200,{className:classroom.name,academicYear:classroom.academicYear,

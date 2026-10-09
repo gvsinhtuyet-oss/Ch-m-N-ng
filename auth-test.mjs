@@ -76,6 +76,15 @@ try {
  const refreshed=await call('/api/teacher/progress?classId='+classId,'GET',undefined,teacher.cookie);
  assert.equal(refreshed.body.students[0].completedStations,2);
  assert.equal(refreshed.body.students[0].totalStamps,2);
+ // Name casing, repeated whitespace and Unicode decomposition must match on link AND report reads.
+ await store.put('cham_student_sync',syncKey,{profile:{...syntheticProfile,name:'  nguyễn   an  '.normalize('NFD')},progress:{}});
+ assert.equal((await call('/api/teacher/progress','POST',{classId,syncCode:studentCode},teacher.cookie)).status,200);
+ const normalized=await call('/api/teacher/progress?classId='+classId,'GET',undefined,teacher.cookie);
+ assert.equal(normalized.body.linkedCount,1);
+ assert.equal(normalized.body.students[0].name,'Nguyễn An');
+ await store.put('cham_student_sync',syncKey,{profile:{...syntheticProfile,name:'Trần Bình'},progress:{}});
+ assert.equal((await call('/api/teacher/progress?classId='+classId,'GET',undefined,teacher.cookie)).body.linkedCount,0);
+ await store.put('cham_student_sync',syncKey,{profile:syntheticProfile,progress:{}});
  const restart=createAuth({store,adminEmail:'owner@example.com',adminPassword:'Strong-test-owner-42',secureCookie:false});
  const beforeRestart=auth;auth=restart;
  assert.equal((await call('/api/teacher/classes','GET',undefined,teacher.cookie)).body.classes[0].totalStudents,3);

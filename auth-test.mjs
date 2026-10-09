@@ -66,7 +66,7 @@ try {
  for(let i=0;i<5;i++)await call('/api/auth/login','POST',{email:'missing@example.com',password:'wrong'});
  assert.equal((await call('/api/auth/login','POST',{email:'missing@example.com',password:'wrong'})).status,429);
  const restored=createAuth({store,adminEmail:'owner@example.com',adminPassword:undefined,secureCookie:false});
- assert.equal((await restored.requireAdmin({headers:{cookie:admin.cookie}})).role,'admin');
+ await assert.rejects(restored.requireAdmin({headers:{cookie:admin.cookie}}),{status:401});
  auth=createAuth({store,adminEmail:'owner@example.com',adminPassword:'Rotated-owner-secret-42',secureCookie:false});
  assert.equal((await call('/api/auth/login','POST',{email:'teacher@example.com',password:'Rotated-owner-secret-42'})).status,401);
  const recovered=await call('/api/auth/login','POST',{email:'owner@example.com',password:'Rotated-owner-secret-42'});

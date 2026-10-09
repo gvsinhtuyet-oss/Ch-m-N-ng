@@ -34,3 +34,16 @@ test('all five grade 2 stations are unlocked for competition demo', async () => 
     assert.equal(DEMO_STATION_IDS.has(station.id), true, station.titleVi);
   }
 });
+
+
+test('Cu Lao Cham station follows current-book checkpoints', () => {
+  const station = GRADE_2_STATIONS.find(s => s.id === 'g2-station-2');
+  assert.ok(station);
+  assert.equal(station.hotspots.length, 5);
+  assert.match(station.hotspots[0].titleVi, /Hòn Lao/i);
+  assert.match(station.hotspots[1].keyFactVi || '', /2009/i);
+  assert.match(station.hotspots[2].narrationVi, /lặn ngắm san hô/i);
+  assert.match(station.hotspots[3].narrationVi, /Voọc chà vá chân nâu/i);
+  assert.match(station.hotspots[4].narrationVi, /bỏ rác đúng nơi/i);
+  assert.equal(new Set(station.hotspots.map(h => h.image)).size, 5);
+});

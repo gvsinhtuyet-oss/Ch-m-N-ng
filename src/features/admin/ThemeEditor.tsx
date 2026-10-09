@@ -1,3 +1,4 @@
+import { optimizeImage, describeOptimization } from '../../services/ImageOptimizationService';
 import React, { useState } from 'react';
 import { ThemeSettings, DEFAULT_THEME, readTheme, saveTheme } from '../../services/ThemeService';
 import { contentService } from '../../services/ContentService';
@@ -49,20 +50,11 @@ export const ThemeEditor: React.FC = () => {
       setMessage('Chọn ảnh PNG, JPG, WebP hoặc GIF.');
       return;
     }
-    if (file.size > 4 * 1024 * 1024) {
-      setMessage('Ảnh tối đa 4 MB. Hãy giảm dung lượng hoặc dùng đường dẫn HTTPS.');
-      return;
-    }
     setBusy(true);
     try {
-      const url = await new Promise<string>((resolve,reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(String(reader.result));
-        reader.onerror = () => reject(new Error('Không đọc được ảnh.'));
-        reader.readAsDataURL(file);
-      });
-      set({ [target]: url });
-      setMessage('Ảnh đã sẵn sàng. Bấm Xem trước để thử nền.');
+      const image = await optimizeImage(file, target.endsWith('Mobile') ? 1080 : 1920, target.endsWith('Mobile') ? 1920 : 1080);
+      set({ [target]: image.dataUrl });
+      setMessage(describeOptimization(image) + ' Bấm Xem trước để thử nền.');
     } catch (error) {
       setMessage((error as Error).message);
     } finally {

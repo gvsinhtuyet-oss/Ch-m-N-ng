@@ -18,9 +18,8 @@ COPY package.json ./
 RUN npm install --omit=dev --no-audit --no-fund
 
 COPY --from=build /app/dist ./dist
-COPY content-server.mjs auth-server.mjs content-storage.mjs gddp-catalog.mjs gddp-ai.mjs deployment-config.mjs ./
+COPY content-server.mjs auth-server.mjs content-storage.mjs gddp-catalog.mjs gddp-ai.mjs gddp-bundled-data.mjs deployment-config.mjs ./
 
-COPY --from=build /app/content-data/gddp-2026-2027.json ./content-data/gddp-2026-2027.json
 
 RUN mkdir -p /app/content-data
 

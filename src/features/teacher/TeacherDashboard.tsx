@@ -1,4 +1,5 @@
 import { ClassRoster } from './ClassRoster';
+import { RealClassResults } from './RealClassResults';
 import { GddpTeacherLookup } from './GddpTeacherLookup';
 import React, { useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
@@ -356,11 +357,8 @@ export const TeacherDashboard: React.FC = () => {
       )}
 
       {/* TAB 3: KẾT QUẢ */}
-      {activeTab === 'results' && currentUser?.id !== 'teacher-demo' && <div className="rounded-3xl bg-white border p-6 space-y-3">
-        <h2 className="text-xl font-black">Tiến độ học sinh</h2>
-        <p>Danh sách lớp được lưu trên máy chủ. Tiến độ, vật phẩm và con dấu hiện lưu trên trình duyệt học sinh, chưa tự tổng hợp về tài khoản giáo viên.</p>
-        <p className="text-sm text-slate-600">Xem danh sách đã tạo ở mục Lớp học. Báo cáo tổng hợp từ thiết bị học sinh chưa được hỗ trợ.</p>
-      </div>}
+      {activeTab === 'results' && currentUser?.id !== 'teacher-demo' && <RealClassResults />}
+
       {activeTab === 'results' && currentUser?.id === 'teacher-demo' && (
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">

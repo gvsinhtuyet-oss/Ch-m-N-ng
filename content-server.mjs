@@ -9,6 +9,7 @@ import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
 import { randomBytes, createHash } from 'node:crypto';
 import path from 'node:path';
 
+const bundledGddpCatalog=cleanGddpCatalog(JSON.parse(await readFile(new URL('./content-data/gddp-2026-2027.json',import.meta.url),'utf8')));
 const dataDir = path.resolve(process.env.CONTENT_DATA_DIR || './content-data');
 const dataFile = path.join(dataDir, 'stations.json');
 const {project: firestoreProject, database: firestoreDatabase, candidates: firestoreCandidates} = firestoreConfiguration();
@@ -241,17 +242,19 @@ const server = createServer(async (req,res) => {
     // GDĐP is a separate read-only teacher catalog; only Admin may update it.
     // Keep all existing auth, students, stations, and content endpoints unchanged.
     if (pathname === '/api/gddp/catalog' && req.method === 'GET') {
-      if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
+      // The school's supplied 42-entry catalog is available to demos even before
+      // Firestore publishing. Published Admin data always takes precedence.
+      if (!cloudStore) return json(res,200,{...bundledGddpCatalog,published:false,source:'bundled-reference'});
       const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
       if (saved?.published) return json(res,200,{...saved.catalog,published:true,updatedAt:saved.updatedAt});
       if (saved?.previousPublishedCatalog) return json(res,200,{...saved.previousPublishedCatalog,published:true});
-      return json(res,200,{year:GDDP_YEAR,records:[],published:false});
+      return json(res,200,{...bundledGddpCatalog,published:false,source:'bundled-reference'});
     }
     if (pathname === '/api/admin/gddp/catalog' && req.method === 'GET') {
       await auth.requireAdmin(req);
       if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
       const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
-      return json(res,200,saved || {published:false,catalog:{year:GDDP_YEAR,records:[]}});
+      return json(res,200,saved || {published:false,catalog:bundledGddpCatalog,source:'bundled-reference'});
     }
     if (pathname === '/api/admin/gddp/catalog' && req.method === 'PUT') {
       auth.sameOrigin(req);

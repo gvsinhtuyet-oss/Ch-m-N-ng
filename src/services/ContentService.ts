@@ -59,7 +59,7 @@ export const contentService = {
     else if (content.mapImage) station.journeyMap = {
       id: 'map-' + station.id, stationId: station.id, grade: station.grade,
       titleVi: 'Bản đồ hành trình ' + station.titleVi, image: content.mapImage,
-      summaryNodes: content.hotspots.slice(0, 4).map(h => ({ id: h.id, titleVi: h.titleVi, textVi: h.keyFactVi })),
+      summaryNodes: content.hotspots.map(h => ({ id: h.id, titleVi: h.titleVi, textVi: h.keyFactVi })),
       knowVi: station.pedagogyGoals.knowGoalVi,
       understandVi: station.pedagogyGoals.understandGoalVi,
       actVi: station.pedagogyGoals.behaviorGoalVi,

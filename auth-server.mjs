@@ -264,8 +264,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
         await store.remove('cham_auth_locks',id); throw fail(429,'Vui lòng thử lại.');
       }
       try {
-        rate=await store.get('cham_auth_limits',id);
-        if(rate?.until > Date.now()) throw fail(429,'Bạn đã thử nhiều lần. Vui lòng chờ 1 phút.');
+        // The throttle was checked immediately before the lease; avoid a duplicate Firestore read.
         let user=await store.get('cham_users',id);
         // The server-only owner secret can recover the owner account after a secret rotation.
         // Never grant this path to a teacher, inactive account, or another email.
@@ -282,7 +281,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
           await store.put('cham_auth_limits',id,{count,updatedAt:Date.now(),until:count>=5 ? Date.now()+60000 : 0});
           throw fail(401,'Email hoặc mật khẩu chưa đúng.');
         }
-        await store.remove('cham_auth_limits',id);
+        if (rate) await store.remove('cham_auth_limits',id);
         const token=randomBytes(32).toString('hex');
         await store.put('cham_sessions',hash(token),{userId:id,version:user.version,expiresAt:Date.now()+28800000});
         cookie(res,token); json(res,200,{user:safeUser(user)}); return true;

@@ -61,7 +61,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
     </div>
     {!loading && !filtered.length && <p className="rounded-xl bg-amber-50 p-4 text-sm text-amber-900">Chưa có địa chỉ tích hợp phù hợp trong dữ liệu đã xuất bản. Vui lòng liên hệ Admin nếu cần bổ sung.</p>}
     {!!filtered.length && <div className="grid gap-2">
-      {filtered.map(x=><button key={x.id} type="button" onClick={()=>{setSelectedId(x.id);setPresentationStationId('');setCopied(false)}} className={`w-full rounded-xl border p-3 text-left text-sm transition ${selectedId===x.id?'border-emerald-600 bg-emerald-50':'border-slate-200 hover:bg-slate-50'}`}>
+      {filtered.map(x=><button key={x.id} type="button" onClick={()=>{setSelectedId(x.id);setProjected(null);setCopied(false)}} className={`w-full rounded-xl border p-3 text-left text-sm transition ${selectedId===x.id?'border-emerald-600 bg-emerald-50':'border-slate-200 hover:bg-slate-50'}`}>
         <span className="font-bold">{x.lesson}</span><span className="mt-1 block text-xs text-slate-500">{x.subject} · {x.week ? 'Tuần '+x.week : 'Chưa ghi tuần'}</span>
       </button>)}
     </div>}

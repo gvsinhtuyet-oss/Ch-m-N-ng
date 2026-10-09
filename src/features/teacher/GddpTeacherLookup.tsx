@@ -1,7 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { gddpService, GddpRecord } from '../../services/GddpService';
+import { Station } from '../../types';
 
-export const GddpTeacherLookup: React.FC = () => {
+interface Props {stations: Station[]; onPresent: (station: Station) => void;}
+export const GddpTeacherLookup: React.FC<Props> = ({stations,onPresent}) => {
   const [records, setRecords] = useState<GddpRecord[]>([]);
   const [grade, setGrade] = useState(2);
   const [subject, setSubject] = useState('');
@@ -10,6 +12,7 @@ export const GddpTeacherLookup: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
+  const [presentationStationId, setPresentationStationId] = useState('');
   useEffect(() => {
     let active = true;
     gddpService.publicCatalog().then(data => {
@@ -25,6 +28,8 @@ export const GddpTeacherLookup: React.FC = () => {
   const weeks = useMemo(() => [...new Set(bySubject.map(x=>x.week).filter(Boolean))].sort((a,b)=>(parseInt(a.match(/\d+/)?.[0]||'0'))-(parseInt(b.match(/\d+/)?.[0]||'0'))), [bySubject]);
   const filtered = useMemo(() => bySubject.filter(x=>!week || x.week===week), [bySubject,week]);
   const selected = filtered.find(x => x.id === selectedId) || null;
+  const availableStations = useMemo(() => stations.filter(x => x.isFullyVerified && x.grade === grade), [stations,grade]);
+  const presentationStation = availableStations.find(x => x.id === presentationStationId);
   const copy = async (text:string) => {
     try { await navigator.clipboard.writeText(text); setCopied(true); }
     catch { setError('Trình duyệt không cho phép sao chép. Hãy chọn nội dung và sao chép thủ công.'); }
@@ -65,6 +70,16 @@ export const GddpTeacherLookup: React.FC = () => {
       <p className="text-sm"><strong>Vị trí:</strong> {selected.activity || 'Chưa ghi vị trí cụ thể'}</p>
       <div className="whitespace-pre-wrap rounded-xl bg-white p-3 text-sm text-slate-800"><strong>Nội dung GDĐP:</strong>\n{selected.content}</div>
       <button type="button" onClick={()=>void copy(`LỚP ${selected.grade} · ${selected.subject} · ${selected.week}\nBài: ${selected.lesson}\nĐịa chỉ tích hợp: ${selected.activity}\nHình thức: ${selected.integrationType}\nNội dung GDĐP: ${selected.content}`)} className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700">{copied?'Đã sao chép':'Sao chép vào KHBD'}</button>
+      <div className="space-y-2 rounded-xl border border-emerald-200 bg-white p-3">
+        <h4 className="font-bold text-slate-900">Trình chiếu học liệu liên quan (nếu phù hợp)</h4>
+        <p className="text-xs text-slate-500">Giáo viên chủ động chọn trạm có nội dung phù hợp. Không tự gán trạm theo tên bài; không làm thay đổi tiến trình của học sinh.</p>
+        <select aria-label="Chọn học liệu trình chiếu" className="w-full rounded-xl border border-slate-300 p-3 text-sm" value={presentationStationId} onChange={e=>setPresentationStationId(e.target.value)}>
+          <option value="">Chọn trạm để trình chiếu</option>
+          {availableStations.map(x=><option key={x.id} value={x.id}>{x.titleVi}</option>)}
+        </select>
+        <button type="button" disabled={!presentationStation} onClick={()=>{if(presentationStation)onPresent(presentationStation)}} className="rounded-xl bg-sky-600 px-5 py-3 text-sm font-bold text-white disabled:bg-slate-200 disabled:text-slate-500">Mở trình chiếu nhanh</button>
+        {!availableStations.length && <p className="text-xs text-amber-800">Chưa có trạm hoàn thiện cho khối này.</p>}
+      </div>
       <p className="text-xs text-slate-500">Chỉ hiển thị nội dung nguồn do Admin duyệt; phần gợi ý AI sẽ được bổ sung sau và kiểm duyệt trước khi công bố.</p>
     </article>}
   </section>;

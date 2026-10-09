@@ -17,15 +17,19 @@ export function validateGddpCatalog(data) {
         !str(row.subject, 120) || !row.subject.trim() ||
         !str(row.week, 80) || !str(row.lesson, 450) || !row.lesson.trim() ||
         !str(row.integrationType, 100) || !str(row.activity, 800) ||
-        !str(row.content, 9000) || !row.content.trim()) return false;
+        !str(row.content, 9000) || !row.content.trim() ||
+        (row.outcomes !== undefined && !str(row.outcomes,1200)) ||
+        (row.teachingSuggestion !== undefined && !str(row.teachingSuggestion,2500))) return false;
     ids.add(row.id);
   }
   return true;
 }
 export function cleanGddpCatalog(data) {
   if (!validateGddpCatalog(data)) throw Object.assign(new Error('Dữ liệu địa chỉ GDĐP không hợp lệ.'), {status:400});
-  return {year:GDDP_YEAR,records:data.records.map(({id,grade,subject,week,lesson,integrationType,activity,content})=>({
+  return {year:GDDP_YEAR,records:data.records.map(({id,grade,subject,week,lesson,integrationType,activity,content,outcomes,teachingSuggestion})=>({
     id,grade,subject:subject.trim(),week:week.trim(),lesson:lesson.trim(),
-    integrationType:integrationType.trim(),activity:activity.trim(),content:content.trim()
+    integrationType:integrationType.trim(),activity:activity.trim(),content:content.trim(),
+    outcomes:typeof outcomes==='string'?outcomes.trim():'',
+    teachingSuggestion:typeof teachingSuggestion==='string'?teachingSuggestion.trim():''
   }))};
 }

@@ -214,6 +214,11 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 </div>
               </div>
 
+              {!currentQ && (
+                <div role="alert" className="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm font-semibold text-amber-950">
+                  Trạm này chưa có câu hỏi thử thách. Em hãy báo giáo viên bổ sung câu hỏi trong phần Quản trị.
+                </div>
+              )}
               {currentQ && (
                 <div className="space-y-4">
                   <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">

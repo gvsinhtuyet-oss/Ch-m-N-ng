@@ -287,6 +287,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
         json(res,200,{user:safeUser(ownerUser())});
         return true;
       }
+      if (email === owner) throw fail(401,'Email hoặc mật khẩu chưa đúng.');
 
       try {
         await ready();

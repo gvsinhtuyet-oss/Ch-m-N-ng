@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { gddpService, GddpCatalog } from '../../services/GddpService';
+import { ALL_25_STATIONS } from '../../data/allStations';
 
 export const GddpAdminEditor: React.FC = () => {
   const [catalog,setCatalog] = useState<GddpCatalog>({year:'2026-2027',records:[]});
@@ -85,6 +86,20 @@ export const GddpAdminEditor: React.FC = () => {
         <p className="mt-1 text-slate-700">Địa chỉ: {row.activity}</p>
         <label className="mt-2 block font-semibold">Nội dung GDĐP theo nguồn {row.content.trim()?'':'— CHƯA CÓ'}
           <textarea rows={3} value={row.content} onChange={e=>{const value=e.target.value;setCatalog(prev=>({...prev,records:prev.records.map(x=>x.id===row.id?{...x,content:value}:x)}));setSaved(false);setPublished(false)}} className="mt-1 w-full rounded-lg border border-slate-300 p-2 font-normal" placeholder="Chỉ bổ sung nội dung đã được tổ chuyên môn xác minh"/>
+        </label>
+        <label className="mt-2 block font-semibold">Liên kết chính xác học liệu tích hợp (tùy chọn)
+          <select className="mt-1 w-full rounded-lg border border-slate-300 p-2 font-normal" value={row.resourceLinks?.[0] ? row.resourceLinks[0].stationId+'|'+row.resourceLinks[0].hotspotId : ''}
+            onChange={e=>{
+              const [stationId,hotspotId]=e.target.value.split('|');
+              setCatalog(prev=>({...prev,records:prev.records.map(x=>x.id===row.id?{...x,resourceLinks:stationId&&hotspotId?[{stationId,hotspotId}]:[]}:x)}));
+              setSaved(false);setPublished(false);
+            }}>
+            <option value="">Tự lọc theo chủ đề; nếu chưa khớp sẽ không hiện học liệu</option>
+            {ALL_25_STATIONS.filter(st=>st.grade===row.grade&&st.isFullyVerified).flatMap(st=>st.hotspots
+              .filter(h=>h.image&&h.narrationVi&&!/đang được hoàn thiện|đang cập nhật/i.test(h.narrationVi))
+              .map(h=><option key={st.id+'|'+h.id} value={st.id+'|'+h.id}>{st.titleVi} → {h.titleVi}</option>))}
+          </select>
+          <span className="block text-xs font-normal text-slate-500">Admin duyệt điểm học liệu đúng bài; không gán cả trạm.</span>
         </label>
         <button type="button" disabled={!saved || busy} onClick={()=>void generate(row.id)} className="mt-2 rounded-lg border border-violet-300 bg-violet-50 px-3 py-2 text-xs font-bold text-violet-800 disabled:opacity-40">AI gợi ý (Admin duyệt trước khi công bố)</button>
         <label className="mt-2 block font-semibold">Yêu cầu cần đạt bổ sung (Admin duyệt)

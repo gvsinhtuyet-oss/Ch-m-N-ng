@@ -60,7 +60,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
     </div>
     {!loading && !filtered.length && <p className="rounded-xl bg-amber-50 p-4 text-sm text-amber-900">Chưa có địa chỉ tích hợp phù hợp trong dữ liệu đã xuất bản. Vui lòng liên hệ Admin nếu cần bổ sung.</p>}
     {!!filtered.length && <div className="grid gap-2">
-      {filtered.map(x=><button key={x.id} type="button" onClick={()=>{setSelectedId(x.id);setCopied(false)}} className={`w-full rounded-xl border p-3 text-left text-sm transition ${selectedId===x.id?'border-emerald-600 bg-emerald-50':'border-slate-200 hover:bg-slate-50'}`}>
+      {filtered.map(x=><button key={x.id} type="button" onClick={()=>{setSelectedId(x.id);setPresentationStationId('');setCopied(false)}} className={`w-full rounded-xl border p-3 text-left text-sm transition ${selectedId===x.id?'border-emerald-600 bg-emerald-50':'border-slate-200 hover:bg-slate-50'}`}>
         <span className="font-bold">{x.lesson}</span><span className="mt-1 block text-xs text-slate-500">{x.subject} · {x.week ? 'Tuần '+x.week : 'Chưa ghi tuần'}</span>
       </button>)}
     </div>}
@@ -68,10 +68,10 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       <div><p className="text-xs font-bold uppercase text-sky-800">Địa chỉ tích hợp đã duyệt</p><h3 className="font-black text-slate-900">{selected.lesson}</h3></div>
       <p className="text-sm"><strong>Hình thức:</strong> {selected.integrationType || 'Theo tài liệu gốc'}</p>
       <p className="text-sm"><strong>Vị trí:</strong> {selected.activity || 'Chưa ghi vị trí cụ thể'}</p>
-      <div className="whitespace-pre-wrap rounded-xl bg-white p-3 text-sm text-slate-800"><strong>Nội dung GDĐP:</strong>\n{selected.content}</div>
-      {selected.outcomes && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Yêu cầu cần đạt bổ sung:</strong>\n{selected.outcomes}</div>}
-      {selected.teachingSuggestion && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Gợi ý tổ chức tích hợp:</strong>\n{selected.teachingSuggestion}</div>}
-      <button type="button" onClick={()=>void copy(`LỚP ${selected.grade} · ${selected.subject} · ${selected.week}\nBài: ${selected.lesson}\nĐịa chỉ tích hợp: ${selected.activity}\nHình thức: ${selected.integrationType}\nNội dung GDĐP: ${selected.content}`)} className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700">{copied?'Đã sao chép':'Sao chép vào KHBD'}</button>
+      <div className="whitespace-pre-wrap rounded-xl bg-white p-3 text-sm text-slate-800"><strong>Nội dung GDĐP:</strong>{'\n'}{selected.content}</div>
+      {selected.outcomes && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Yêu cầu cần đạt bổ sung:</strong>{'\n'}{selected.outcomes}</div>}
+      {selected.teachingSuggestion && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Gợi ý tổ chức tích hợp:</strong>{'\n'}{selected.teachingSuggestion}</div>}
+      <button type="button" onClick={()=>void copy(`LỚP ${selected.grade} · ${selected.subject} · ${selected.week}\nBài: ${selected.lesson}\nĐịa chỉ tích hợp: ${selected.activity}\nHình thức: ${selected.integrationType}\nNội dung GDĐP: ${selected.content}\nYêu cầu cần đạt bổ sung: ${selected.outcomes || ''}\nGợi ý tổ chức tích hợp: ${selected.teachingSuggestion || ''}`)} className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700">{copied?'Đã sao chép':'Sao chép vào KHBD'}</button>
       <div className="space-y-2 rounded-xl border border-emerald-200 bg-white p-3">
         <h4 className="font-bold text-slate-900">Trình chiếu học liệu liên quan (nếu phù hợp)</h4>
         <p className="text-xs text-slate-500">Giáo viên chủ động chọn trạm có nội dung phù hợp. Không tự gán trạm theo tên bài; không làm thay đổi tiến trình của học sinh.</p>

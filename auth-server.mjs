@@ -153,6 +153,41 @@ export function firestoreStore(project, database = '(default)', fetchRequest = f
     },
   };
 }
+
+export function firestoreStoreWithFallback(project, databases, fetchRequest = fetch) {
+  const candidates=[...new Set((databases || []).filter(Boolean))];
+  if (!candidates.length) throw fail(503,'Chưa cấu hình cơ sở dữ liệu Firestore.');
+  const stores=candidates.map(database=>({database,store:firestoreStore(project,database,fetchRequest)}));
+  let activeIndex=0;
+  const retryable = error =>
+    error?.status === 503 &&
+    ([404,403].includes(error?.storageStatus) ||
+      ['NOT_FOUND','PERMISSION_DENIED','FAILED_PRECONDITION'].includes(error?.storageCode));
+  async function run(method,args) {
+    let firstError;
+    const order=[activeIndex,...stores.map((_,i)=>i).filter(i=>i!==activeIndex)];
+    for (const i of order) {
+      try {
+        const value=await stores[i].store[method](...args);
+        activeIndex=i;
+        return value;
+      } catch (error) {
+        if (!firstError) firstError=error;
+        if (!retryable(error)) throw error;
+      }
+    }
+    throw firstError || fail(503,'Chưa kết nối được kho tài khoản.');
+  }
+  return {
+    get:(...args)=>run('get',args),
+    put:(...args)=>run('put',args),
+    remove:(...args)=>run('remove',args),
+    list:(...args)=>run('list',args),
+    activeDatabase:()=>stores[activeIndex]?.database || candidates[0],
+    candidateDatabases:()=>[...candidates],
+  };
+}
+
 export function createAuth({ store, adminEmail, adminPassword, secureCookie=true }) {
   const owner = emailOf(adminEmail);
   let bootstrap;

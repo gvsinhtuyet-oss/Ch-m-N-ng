@@ -180,7 +180,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   };
 
   const next = () => {
-    // Giữ đúng luồng tuần tự: Điểm 1 -> 2 -> 3 -> 4.
+    // Giữ đúng luồng tuần tự theo số điểm chạm thực tế của từng bài.
     // Không tự bỏ qua một điểm chỉ vì điểm đó đã có dữ liệu hoàn thành từ lần thử trước.
     if (index < station.hotspots.length - 1) {
       setLockMessage('');

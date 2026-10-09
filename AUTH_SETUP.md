@@ -66,3 +66,6 @@ Chỉ triển khai nhánh `feature/gddp-teacher-2026-2027` vào dịch vụ Clou
 
 
 Nhật ký triển khai và đề xuất học liệu của Giáo viên được lưu trong các collection `cham_implementations` và `cham_learning_proposals`. Máy chủ lấy tên và ID Giáo viên từ phiên đăng nhập, kiểm tra lớp thuộc đúng Giáo viên và không dùng tác giả do trình duyệt gửi lên. Mỗi Giáo viên chỉ đọc bản ghi của mình; Admin đọc toàn trường. Nhật ký dùng lớp thực và ghi năm học của lớp. Chỉ báo thành công sau khi máy chủ ghi xong. Admin có mục Đề xuất học liệu và tổng quan lấy số liệu từ máy chủ, không dùng số liệu minh họa.
+
+## Kế hoạch bài dạy của Giáo viên
+Trong tab GDĐP, chọn bài rồi bấm Tạo hoặc mở KHBD của bài này. Bản dự thảo 35 phút gồm yêu cầu cần đạt, năng lực, phẩm chất, đồ dùng, tích hợp GDĐP, bốn hoạt động, điều chỉnh và nguồn. Giáo viên bổ sung mục tiêu/nhiệm vụ môn học theo SGK, chỉnh sửa và duyệt trước khi xuất .docx. Lưu/mở bản nháp dùng localStorage của trình duyệt, không đồng bộ máy chủ; nên tải Word để giữ bản sao. Không gọi API AI hoặc dịch vụ tính phí.

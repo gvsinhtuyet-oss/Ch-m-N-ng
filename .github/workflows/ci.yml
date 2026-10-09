@@ -64,5 +64,8 @@ jobs:
       - name: Grade 2 current-book content and image tests
         run: npx tsx --test grade2-content-image-test.ts
 
+      - name: Editable lesson plan and Word export tests
+        run: node --import tsx --test lesson-plan-test.ts
+
       - name: Production build
         run: npm run build

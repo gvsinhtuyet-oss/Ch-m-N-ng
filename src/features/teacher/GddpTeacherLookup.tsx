@@ -69,6 +69,8 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       <p className="text-sm"><strong>Hình thức:</strong> {selected.integrationType || 'Theo tài liệu gốc'}</p>
       <p className="text-sm"><strong>Vị trí:</strong> {selected.activity || 'Chưa ghi vị trí cụ thể'}</p>
       <div className="whitespace-pre-wrap rounded-xl bg-white p-3 text-sm text-slate-800"><strong>Nội dung GDĐP:</strong>\n{selected.content}</div>
+      {selected.outcomes && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Yêu cầu cần đạt bổ sung:</strong>\n{selected.outcomes}</div>}
+      {selected.teachingSuggestion && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Gợi ý tổ chức tích hợp:</strong>\n{selected.teachingSuggestion}</div>}
       <button type="button" onClick={()=>void copy(`LỚP ${selected.grade} · ${selected.subject} · ${selected.week}\nBài: ${selected.lesson}\nĐịa chỉ tích hợp: ${selected.activity}\nHình thức: ${selected.integrationType}\nNội dung GDĐP: ${selected.content}`)} className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700">{copied?'Đã sao chép':'Sao chép vào KHBD'}</button>
       <div className="space-y-2 rounded-xl border border-emerald-200 bg-white p-3">
         <h4 className="font-bold text-slate-900">Trình chiếu học liệu liên quan (nếu phù hợp)</h4>

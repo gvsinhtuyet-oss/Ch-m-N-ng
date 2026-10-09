@@ -47,6 +47,18 @@ export const GddpAdminEditor: React.FC = () => {
     catch(e){setError(e instanceof Error?e.message:'Lưu dữ liệu thất bại.');}
     finally{setBusy(false);}
   };
+  const generate = async (id:string) => {
+    if(!saved || busy)return;
+    setBusy(true);setError('');setMessage('');
+    try {
+      const suggestion=await gddpService.suggest(id);
+      setCatalog(prev=>({...prev,records:prev.records.map(x=>x.id===id?{...x,
+        outcomes:suggestion.outcomes,teachingSuggestion:suggestion.teachingSuggestion}:x)}));
+      setSaved(false);setPublished(false);
+      setMessage('AI đã tạo bản nháp. Admin cần đọc, chỉnh sửa, lưu và xuất bản trước khi giáo viên nhìn thấy.');
+    }catch(e){setError(e instanceof Error?e.message:'Không tạo được gợi ý AI.');}
+    finally{setBusy(false);}
+  };
   const publish = async () => {
     if(!saved || !catalog.records.length)return;
     if(!window.confirm('Xuất bản '+catalog.records.length+' địa chỉ GDĐP cho giáo viên năm học 2026–2027?'))return;
@@ -70,6 +82,7 @@ export const GddpAdminEditor: React.FC = () => {
         <strong>Lớp {row.grade} · {row.subject} · {row.week} · {row.lesson}</strong>
         <p className="mt-1 text-slate-700">Địa chỉ: {row.activity}</p>
         <p className="mt-1 whitespace-pre-wrap text-slate-700">{row.content}</p>
+        <button type="button" disabled={!saved || busy} onClick={()=>void generate(row.id)} className="mt-2 rounded-lg border border-violet-300 bg-violet-50 px-3 py-2 text-xs font-bold text-violet-800 disabled:opacity-40">AI gợi ý (Admin duyệt trước khi công bố)</button>
         <label className="mt-2 block font-semibold">Yêu cầu cần đạt bổ sung (Admin duyệt)
           <textarea rows={2} value={row.outcomes || ''} onChange={e=>{const value=e.target.value;setCatalog(prev=>({...prev,records:prev.records.map(x=>x.id===row.id?{...x,outcomes:value}:x)}));setSaved(false);setPublished(false)}} className="mt-1 w-full rounded-lg border border-slate-300 p-2 font-normal" placeholder="Chỉ ghi yêu cầu GDĐP bổ sung, không thay mục tiêu bài học chính"/>
         </label>
@@ -83,6 +96,7 @@ export const GddpAdminEditor: React.FC = () => {
       <button type="button" disabled={busy||!catalog.records.length} onClick={()=>void save()} className="rounded-xl bg-indigo-600 px-5 py-3 font-bold text-white disabled:opacity-40">Lưu bản nháp</button>
       <button type="button" disabled={busy||!saved||!catalog.records.length||published} onClick={()=>void publish()} className="rounded-xl bg-emerald-600 px-5 py-3 font-bold text-white disabled:opacity-40">{published?'Đã xuất bản':'Xuất bản cho giáo viên'}</button>
     </div>
+    <p className="text-xs text-amber-800">Chỉ nút AI gợi ý mới sử dụng Gemini và có thể phát sinh phí token. Không gọi AI khi giáo viên tra cứu. Admin phải duyệt trước khi xuất bản.</p>
     <p className="text-xs text-slate-500">An toàn: không thay đổi tài khoản đăng nhập hoặc nội dung học sinh. Dữ liệu bản nháp chưa thay thế dữ liệu đã công bố.</p>
   </section>;
 };

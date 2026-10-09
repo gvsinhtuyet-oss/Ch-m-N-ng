@@ -230,8 +230,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     let lastPayload = '';
     let inFlight = false;
     let failedAttempts = 0;
+    let quotaBlockedUntil = 0;
     const push = async () => {
       if (stopped || !navigator.onLine) return;
+      if (Date.now() < quotaBlockedUntil) { schedulePush(); return; }
       if (inFlight) { schedulePush(); return; }
       inFlight = true;
       try {
@@ -249,9 +251,19 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         lastPayload = payload;
         failedAttempts = 0;
         if (!stopped && result?.progress) {
+          const unchangedWhileSending = JSON.stringify(progressService.getStudentProgressRecords(currentUser.id)) === payload;
           progressService.mergeStudentProgressRecords(currentUser.id, result.progress);
+          if (unchangedWhileSending) {
+            lastPayload = JSON.stringify(progressService.getStudentProgressRecords(currentUser.id));
+          } else schedulePush();
         }
-      } catch {
+      } catch (error) {
+        // Quota failures need a longer pause, even while the learner keeps playing.
+        if ((error as {storageCode?: string})?.storageCode === 'RESOURCE_EXHAUSTED') {
+          quotaBlockedUntil = Date.now() + 5 * 60 * 1000;
+          if (!stopped) schedulePush();
+          return;
+        }
         // Keep local records and retry a temporary failure without requiring another lesson.
         failedAttempts++;
         if (!stopped && failedAttempts <= 3) schedulePush();
@@ -259,7 +271,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     const schedulePush = () => {
       if (timer) window.clearTimeout(timer);
-      timer = window.setTimeout(() => void push(), 10_000);
+      timer = window.setTimeout(() => { timer = undefined; void push(); }, Math.max(10_000, quotaBlockedUntil - Date.now()));
     };
     const handleOnline = () => { failedAttempts = 0; schedulePush(); };
     const handleProgress = () => { failedAttempts = 0; schedulePush(); };

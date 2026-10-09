@@ -1,3 +1,4 @@
+import { optimizeImage, describeOptimization } from '../../services/ImageOptimizationService';
 
 import React, { useState } from 'react';
 import { ALL_25_STATIONS } from '../../data/allStations';
@@ -32,7 +33,9 @@ export const ContentEditor: React.FC = () => {
     setBusy(true); setMessage('');
     try {
       if (!file.type.startsWith('image/')) throw new Error('Mục này chỉ nhận tệp ảnh.');
-      const url = await readFile(file);
+      const image = await optimizeImage(file, target === 'cover' ? 1920 : 1280, target === 'cover' ? 1080 : 1280);
+      const url = image.dataUrl;
+      setMessage(describeOptimization(image));
       setDraft(prev => {
         const next = structuredClone(prev);
         if (target === 'cover') next.coverImage = url;

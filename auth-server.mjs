@@ -221,7 +221,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
     })().catch(error=>{ bootstrap=undefined; throw error; });
     await bootstrap;
   }
-  const cookie = (res,value,maxAge=28800) => res.setHeader('Set-Cookie',`cham_session=${value}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${maxAge}${secureCookie ? '; Secure' : ''}`);
+ const cookie = (res,value,maxAge=28800) => res.setHeader('Set-Cookie','cham_session='+value+'; Path=/; HttpOnly; Max-Age='+maxAge+(secureCookie ? '; SameSite=None; Secure; Partitioned' : '; SameSite=Lax'));
   const rawSessionToken = req =>
     /(?:^|;\s*)cham_session=([a-f0-9]{64})(?:;|$)/.exec(req.headers.cookie || '')?.[1] || '';
   const sessionId = req => {
@@ -254,6 +254,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
     const protocols=secureCookie ? ['https'] : ['https','http'];
     if (forwardedProto && !protocols.includes(forwardedProto)) protocols.push(forwardedProto);
     const allowed=new Set(hosts.flatMap(host=>protocols.map(proto=>proto+'://'+host)));
+    (process.env.AUTH_ALLOWED_ORIGINS||'').split(',').map(o=>o.trim().replace(/\/$/,'')).filter(o=>/^https:\/\/[A-Za-z0-9.-]+(:\d+)?$/.test(o)).forEach(o=>allowed.add(o));
     if(!origin || !allowed.has(origin))
       throw fail(403,'Nguồn yêu cầu không hợp lệ.');
     if(!String(req.headers['content-type'] || '').startsWith('application/json'))
@@ -308,8 +309,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       const user=await userFor(req); json(res,200,{user:user ? safeUser(user) : null}); return true;
     }
     if(pathname === '/api/auth/logout' && req.method === 'POST') {
-      await ready();
-      const id=sessionId(req); if(id) await store.remove('cham_sessions',id);
+try { await ready(); const id=sessionId(req); if(id) await store.remove('cham_sessions',id); } catch(error) { console.error('Logout cleanup failed', error?.message); }
       cookie(res,'',0); json(res,200,{ok:true}); return true;
     }
     await ready();

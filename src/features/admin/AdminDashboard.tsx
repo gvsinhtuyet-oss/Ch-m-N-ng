@@ -1,11 +1,15 @@
 import { StaffAccounts } from './StaffAccounts';
+import { GddpAdminEditor } from './GddpAdminEditor';
 import { ThemeEditor } from './ThemeEditor';
 import { ContentEditor } from './ContentEditor';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { DEMO_CLASSROOMS, DEMO_STUDENTS } from '../../data/mockUsers';
 import { OFFICIAL_25_CATALOG } from '../../data/curriculumCatalog';
-import { implementationService } from '../../services/ImplementationService';
+import { authService } from '../../services/AuthService';
+import { ImplementationRecord } from '../../types';
+import { ProposalInbox } from './ProposalInbox';
+import { RealClassResults } from '../teacher/RealClassResults';
 import {
   BarChart3,
   BookOpen,
@@ -24,11 +28,21 @@ import {
 
 export const AdminDashboard: React.FC = () => {
   const { allStationsInCurrentGrade, currentGrade } = useApp();
-  const [activeTab, setActiveTab] = useState<'overview' | 'tracking' | 'stations' | 'users' | 'reports' | 'theme'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'tracking' | 'stations' | 'users' | 'reports' | 'theme' | 'gddp' | 'proposals'>('overview');
   const [gradeFilter, setGradeFilter] = useState<number>(0); // 0 = all
   const [selectedStationTab, setSelectedStationTab] = useState<string>('g2-station-4');
 
-  const implementations = implementationService.getAll();
+  const [implementations,setImplementations]=useState<ImplementationRecord[]>([]);
+  const [counts,setCounts]=useState({teachers:0,active:0,classes:0,students:0,proposals:0});
+  const [workflowError,setWorkflowError]=useState('');
+  const [loading,setLoading]=useState(false);
+  const load=async()=>{setLoading(true);setWorkflowError('');
+    try{const [records,classes,users,proposals]=await Promise.all([authService.implementations(),authService.classes(),authService.users(),authService.proposals()]);
+      setImplementations(records);const teachers=users.filter(u=>u.role==='teacher');
+      setCounts({teachers:teachers.length,active:teachers.filter(u=>u.active).length,classes:classes.length,students:classes.reduce((n,c)=>n+c.totalStudents,0),proposals:proposals.length});
+    }catch(e){setWorkflowError((e as Error).message);}finally{setLoading(false);}
+  };
+  useEffect(()=>{void load();},[activeTab]);
 
   const filteredImplementations = gradeFilter === 0
     ? implementations
@@ -61,6 +75,8 @@ export const AdminDashboard: React.FC = () => {
             { id: 'tracking', label: 'THEO DÕI TRIỂN KHAI', icon: Calendar },
             { id: 'stations', label: 'NỘI DUNG TRẠM', icon: BookOpen },
             { id: 'theme', label: 'GIAO DIỆN', icon: Layers },
+            { id: 'gddp', label: 'ĐỊA CHỈ GDĐP', icon: BookOpen },
+            { id: 'proposals', label: 'ĐỀ XUẤT HỌC LIỆU', icon: BookOpen },
             { id: 'users', label: 'NGƯỜI DÙNG', icon: Users },
             { id: 'reports', label: 'BÁO CÁO', icon: FileText },
           ].map(tab => {
@@ -82,7 +98,11 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
+      {workflowError&&<p role="alert" className="bg-rose-50 text-rose-700 rounded-xl p-3">{workflowError}</p>}
+      <button disabled={loading} onClick={()=>void load()} className="border rounded-xl bg-white px-4 py-2 text-sm">{loading?'Đang tải dữ liệu…':'Làm mới dữ liệu máy chủ'}</button>
+      {activeTab === 'proposals' && <ProposalInbox />}
       {activeTab === 'theme' && <ThemeEditor />}
+      {activeTab === 'gddp' && <GddpAdminEditor />}
 
       {/* TAB 1: TỔNG QUAN */}
       {activeTab === 'overview' && (
@@ -90,7 +110,7 @@ export const AdminDashboard: React.FC = () => {
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-black text-slate-900">Tổng Quan Toàn Trường (Năm học 2026–2027)</h2>
             <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold">
-              Dữ liệu minh họa
+              Dữ liệu máy chủ
             </span>
           </div>
 
@@ -98,18 +118,18 @@ export const AdminDashboard: React.FC = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
               <span className="text-[11px] font-bold text-slate-500 uppercase">Giáo viên</span>
-              <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">42</div>
-              <span className="text-[10px] text-emerald-600 font-semibold">100% tài khoản active</span>
+              <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">{loading?'…':counts.teachers}</div>
+              <span className="text-[10px] text-emerald-600 font-semibold">{counts.active} tài khoản đang hoạt động</span>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
               <span className="text-[11px] font-bold text-slate-500 uppercase">Lớp học</span>
-              <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">30</div>
+              <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">{loading?'…':counts.classes}</div>
               <span className="text-[10px] text-slate-500">Khối 1 đến Khối 5</span>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
               <span className="text-[11px] font-bold text-slate-500 uppercase">Học sinh</span>
-              <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">1,050</div>
-              <span className="text-[10px] text-sky-600 font-semibold">Đăng nhập PIN an toàn</span>
+              <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">{loading?'…':counts.students}</div>
+              <span className="text-[10px] text-sky-600 font-semibold">Theo danh sách lớp đã lưu</span>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
               <span className="text-[11px] font-bold text-slate-500 uppercase">Trạm GDĐP</span>
@@ -118,13 +138,13 @@ export const AdminDashboard: React.FC = () => {
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
               <span className="text-[11px] font-bold text-slate-500 uppercase">Lượt triển khai</span>
-              <div className="text-2xl sm:text-3xl font-black text-emerald-600 mt-1">{implementations.length * 6}</div>
-              <span className="text-[10px] text-slate-500">Theo kế hoạch năm</span>
+              <div className="text-2xl sm:text-3xl font-black text-emerald-600 mt-1">{loading?'…':implementations.length}</div>
+              <span className="text-[10px] text-slate-500">Nhật ký đã được máy chủ lưu</span>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
-              <span className="text-[11px] font-bold text-slate-500 uppercase">Tỷ lệ hoàn thành</span>
-              <div className="text-2xl sm:text-3xl font-black text-sky-600 mt-1">88.5%</div>
-              <span className="text-[10px] text-emerald-600 font-semibold">+6.2% so với tháng trước</span>
+              <span className="text-[11px] font-bold text-slate-500 uppercase">Đề xuất học liệu</span>
+              <div className="text-2xl sm:text-3xl font-black text-sky-600 mt-1">{loading?'…':counts.proposals}</div>
+              <span className="text-[10px] text-emerald-600 font-semibold">Chờ quản trị rà soát</span>
             </div>
           </div>
 
@@ -136,13 +156,7 @@ export const AdminDashboard: React.FC = () => {
                 <span className="text-xs text-slate-400 font-medium">Học kỳ 1</span>
               </h3>
               <div className="space-y-3">
-                {[
-                  { grade: 1, percent: 90, label: 'Khối 1: 4/5 bài đã tổ chức' },
-                  { grade: 2, percent: 95, label: 'Khối 2: 5/5 bài đã tổ chức (Hội An đạt 100%)' },
-                  { grade: 3, percent: 80, label: 'Khối 3: 4/5 bài đã tổ chức' },
-                  { grade: 4, percent: 85, label: 'Khối 4: 4/5 bài đã tổ chức' },
-                  { grade: 5, percent: 82, label: 'Khối 5: 4/5 bài đã tổ chức' },
-                ].map((item) => (
+                {[1,2,3,4,5].map(grade=>{const taught=new Set(implementations.filter(r=>r.grade===grade).map(r=>r.stationId)).size;return {grade,percent:Math.min(100,taught/5*100),label:`Khối ${grade}: ${taught} bài có nhật ký triển khai`};}).map((item) => (
                   <div key={item.grade} className="space-y-1">
                     <div className="flex justify-between text-xs font-semibold">
                       <span className="text-slate-700">{item.label}</span>
@@ -301,26 +315,8 @@ export const AdminDashboard: React.FC = () => {
       {activeTab === 'users' && <StaffAccounts />}
 
       {/* TAB 5: BÁO CÁO */}
-      {activeTab === 'reports' && (
-        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
-          <div>
-            <h2 className="text-xl font-black text-slate-900">Báo Cáo Thống Kê & Đánh Giá Chất Lượng</h2>
-            <p className="text-xs text-slate-500">
-              Tổng hợp phục vụ hội nghị giao ban chuyên môn giáo dục tiểu học thành phố Đà Nẵng
-            </p>
-          </div>
+      {activeTab === 'reports' && <RealClassResults />}
 
-          <div className="p-6 rounded-2xl bg-indigo-50/60 border border-indigo-200 space-y-3">
-            <h3 className="font-bold text-sm text-indigo-950">Đánh giá chung sau triển khai thử nghiệm:</h3>
-            <ul className="text-xs text-indigo-900 space-y-1.5 list-disc pl-5 leading-relaxed">
-              <li>100% học sinh hào hứng khi được tương tác điểm chạm trực quan và ngắm nhìn hình ảnh thực tế quê hương.</li>
-              <li>Chế độ trình chiếu lớp học trên TV màn hình rộng giúp tiết dạy sôi động, không phụ thuộc vào thiết bị cá nhân của học sinh.</li>
-              <li>Hộ chiếu số và con dấu hoàn thành tạo động lực học tập tích cực, rèn luyện tình yêu quê hương, đất nước.</li>
-              <li>Mô hình tích hợp số và trải nghiệm đáp ứng đầy đủ yêu cầu cần đạt của Thông tư 32/2018/TT-BGDĐT.</li>
-            </ul>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

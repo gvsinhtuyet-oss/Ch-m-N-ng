@@ -4,6 +4,7 @@ import { DEMO_STUDENTS, DEMO_CLASSROOMS } from '../../data/mockUsers';
 import { authService } from '../../services/AuthService';
 import { audioService } from '../../services/AudioService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
+import { progressService } from '../../services/ProgressService';
 import { studentSyncService } from '../../services/StudentSyncService';
 import { readTheme } from '../../services/ThemeService';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
@@ -50,6 +51,8 @@ export const LandingView: React.FC = () => {
   const [savedStudentClass, setSavedStudentClass] = useState<string>('');
   const [savedStudentGrade, setSavedStudentGrade] = useState<number | null>(null);
   const [savedSyncCode, setSavedSyncCode] = useState<string>('');
+  const [restoreCode,setRestoreCode] = useState('');
+  const [restoreBusy,setRestoreBusy] = useState(false);
   const [loginError, setLoginError] = useState<string>('');
   const [introActive, setIntroActive] = useState(true);
   const [theme, setTheme] = useState(readTheme);
@@ -250,7 +253,7 @@ export const LandingView: React.FC = () => {
     audioService.playSfx('click');
     setLoginError('');
 
-    const normalizedName = guestMode ? 'Nhà phiêu lưu tự do' : studentName.trim();
+    const normalizedName = guestMode ? 'Nhà phiêu lưu tự do' : studentName.trim().replace(/\s+/g,' ').normalize('NFC');
     if (!normalizedName || !chosenGrade) {
       setLoginError('Vui lòng chọn khối và nhập họ tên.');
       return;
@@ -265,7 +268,7 @@ export const LandingView: React.FC = () => {
     const isSameSavedStudent =
       !guestMode &&
       !!savedStudentId &&
-      savedStudentName.trim().toLocaleLowerCase('vi-VN') === normalizedName.toLocaleLowerCase('vi-VN') &&
+      savedStudentName.trim().replace(/\s+/g,' ').normalize('NFC').toLocaleLowerCase('vi-VN') === normalizedName.toLocaleLowerCase('vi-VN') &&
       savedStudentClass === selectedClass &&
       (savedStudentGrade === null || savedStudentGrade === chosenGrade);
 
@@ -533,7 +536,7 @@ export const LandingView: React.FC = () => {
 
                 <button
                   onClick={async () => {
-                    try { await enterTeacherDemo(); setShowRolePicker(false); }
+                    try { setAdminLogin(false); setStaffPassword(''); setLoginError(''); setShowTeacherLogin(true); }
                     catch (error) { setLoginError((error as Error).message); }
                   }}
                   className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-emerald-500 shadow-sm hover:shadow-md transition text-left space-y-1.5 group cursor-pointer"
@@ -542,7 +545,7 @@ export const LandingView: React.FC = () => {
                     <Presentation className="w-5 h-5" />
                   </div>
                   <h4 className="font-black text-sm text-slate-900">GIÁO VIÊN</h4>
-                  <p className="text-[11px] text-slate-500">Trải nghiệm dành cho giám khảo — không cần đăng nhập</p>
+                  <p className="text-[11px] text-slate-500">Đăng nhập để quản lý lớp và xem kết quả học sinh</p>
                 </button>
 
                 <button
@@ -560,6 +563,7 @@ export const LandingView: React.FC = () => {
                   <p className="text-[11px] text-slate-500">Quản lý giao diện, hình ảnh và học liệu</p>
                 </button>
 
+                <button type="button" onClick={async()=>{try{await enterTeacherDemo();setShowRolePicker(false);}catch(error){setLoginError((error as Error).message);}}} className="rounded-xl border border-slate-200 p-3 text-xs font-bold text-slate-600">Giáo viên trải nghiệm dành cho giám khảo</button>
               </div>
             ) : showStudentLogin ? (
               /* Student Login Form: chọn khối và nhập thông tin ngay trên cùng một màn hình */
@@ -599,7 +603,6 @@ export const LandingView: React.FC = () => {
                             if (Number(selectedClass.split('/')[0]) !== grade) {
                               const classroom = DEMO_CLASSROOMS.find(item => item.grade === grade);
                               setSelectedClass(classroom?.name.replace('Lớp ', '') || `${grade}/1`);
-                              setSavedStudentId('');
                             }
                           }}
                           className={`min-w-0 rounded-2xl bg-gradient-to-br ${color} px-2 py-4 sm:px-4 sm:py-5 text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-sky-300 ${
@@ -623,6 +626,26 @@ export const LandingView: React.FC = () => {
                   </div>
                 </div>
 
+                {!guestMode && <details className="rounded-xl border border-sky-100 bg-sky-50 p-3 text-slate-800">
+                  <summary className="cursor-pointer font-bold">Em đã có mã đồng bộ? Tiếp tục trên thiết bị khác</summary>
+                  <label className="block mt-3">Mã đồng bộ của em<input type="password" autoComplete="off" value={restoreCode} onChange={e=>setRestoreCode(e.target.value)} maxLength={20} className="block w-full mt-1 border rounded-xl p-3 bg-white" /></label>
+                  <p className="text-xs my-2">Giữ mã riêng, nhờ cô giáo hoặc phụ huynh hỗ trợ khi cần.</p>
+                  <button type="button" disabled={restoreBusy || !restoreCode.trim()} onClick={async()=>{
+                    if(restoreBusy)return;setRestoreBusy(true);setLoginError('');
+                    try{
+                      const restored=await studentSyncService.restore(restoreCode);
+                      if(authService.current())await authService.logout();
+                      const profile=restored.profile;
+                      const syncCode=restoreCode.toUpperCase().replace(/[^A-Z0-9]/g,'');
+                      localStorage.setItem(STUDENT_PROFILE_KEY,JSON.stringify({...profile,syncCode}));
+                      progressService.mergeStudentProgressRecords(profile.id,restored.progress);
+                      loginAsStudent({...DEMO_STUDENTS[0],...profile,studentCode:profile.id,displayName:profile.name,classId:`class-${profile.className.replace('/','-')}`,isGuest:false});
+                      setRestoreCode('');setShowRolePicker(false);
+                    }catch(error){setLoginError((error as Error).message);}finally{setRestoreBusy(false);}
+                  }} className="rounded-xl bg-sky-700 text-white px-4 py-2 font-bold disabled:opacity-50">{restoreBusy?'Đang khôi phục…':'Khôi phục hành trình'}</button>
+                  {loginError && <p role="alert" className="mt-2 text-rose-700">{loginError}</p>}
+                </details>}
+
                 {chosenGrade && !guestMode && (
                   <div className="animate-in fade-in slide-in-from-top-2 duration-200 space-y-4 rounded-2xl border border-sky-100 bg-sky-50/60 p-4 sm:p-5">
                     <>
@@ -638,7 +661,6 @@ export const LandingView: React.FC = () => {
                                   key={item.id}
                                   type="button"
                                   onClick={() => {
-                                    if (selectedClass !== name) setSavedStudentId('');
                                     setSelectedClass(name);
                                     setLoginError('');
                                   }}
@@ -657,7 +679,6 @@ export const LandingView: React.FC = () => {
                             value={selectedClass}
                             onChange={event => {
                               setSelectedClass(event.target.value);
-                              setSavedStudentId('');
                               setLoginError('');
                             }}
                             required
@@ -679,7 +700,6 @@ export const LandingView: React.FC = () => {
                             value={studentName}
                             onChange={event => {
                               setStudentName(event.target.value);
-                              setSavedStudentId('');
                               setLoginError('');
                             }}
                             placeholder="Ví dụ: Nguyễn Minh Khang"

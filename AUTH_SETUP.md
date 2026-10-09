@@ -50,6 +50,22 @@ Tài khoản quản trị ban đầu được giữ nguyên sau mỗi triển kh
 
 Đăng nhập nhân sự thật đã được triển khai trong mã; phải hoàn thành cấu hình và kiểm thử thực tế trên URL Cloud Run trước khi sử dụng. Kiểm tra: đăng nhập quản trị/giáo viên, cấp/khóa/đặt lại mật khẩu, đổi mật khẩu, đăng xuất và từ chối giáo viên gọi API quản trị.
 
-Danh sách lớp/học sinh, số liệu báo cáo và một số minh chứng hiện vẫn là dữ liệu minh họa; tài khoản giáo viên mới chưa được gán lớp. Tiến trình học sinh vẫn lưu tại thiết bị. Kho ảnh/học liệu đã chuyển sang Firestore khi cấu hình `AUTH_FIRESTORE_PROJECT` và đúng Database ID. `CONTENT_DATA_DIR` chỉ dùng cho chạy cục bộ. Cần kiểm thử tải tệp và xuất bản lại trên Cloud Run thật. Chưa có gửi email đặt lại mật khẩu tự động, Google OAuth, MFA hoặc đăng nhập học sinh bằng mã lớp.
+Giáo viên có thể tạo và sửa danh sách lớp trên máy chủ, liên kết mã đồng bộ của học sinh, xem kết quả thật và xuất Excel. Tiến trình học sinh lưu tại thiết bị và đồng bộ khi được cấu hình Firestore. Báo cáo chỉ gồm học sinh đã liên kết; không suy diễn chưa liên kết là 0 điểm. Chưa có gửi email đặt lại mật khẩu tự động, Google OAuth, MFA hoặc đăng nhập học sinh bằng mã lớp.
 
 Kiểm tra tự động: `node --test auth-test.mjs` kiểm tra API với kho dữ liệu bộ nhớ (không thay thế kiểm thử Firestore/Cloud Run thật). Cấu hình thiếu không được làm máy chủ dừng.
+
+
+## Dịch vụ thử nghiệm tách biệt
+
+Chỉ triển khai nhánh `feature/gddp-teacher-2026-2027` vào dịch vụ Cloud Run mới. Đặt `CHAM_ENV=test`, `AUTH_FIRESTORE_PROJECT` và `AUTH_FIRESTORE_DATABASE` trỏ tới database thử nghiệm riêng; không dùng database chính ở bảng trên. Máy chủ từ chối khởi động trong chế độ test nếu thiếu cấu hình hoặc dùng database chính. Không tự chuyển về database chính khi kho thử nghiệm bị lỗi. Cấu hình Admin và quyền IAM riêng trên dịch vụ thử nghiệm, rồi kiểm tra `/api/health`, đăng nhập hai vai trò, lưu/đọc lại GDĐP, tiến trình một học sinh giả lập, báo cáo lớp và tải Excel.
+
+`node --test deployment-test.mjs production-api-test.mjs` kiểm tra đóng gói runtime, lựa chọn database và toàn bộ API với Firestore REST giả lập; vẫn cần kiểm chứng quyền IAM, cookie và lưu bền vững trên Cloud Run thật.
+
+
+Đăng nhập Admin và Giáo viên đều xác minh mật khẩu đã băm trong Firestore và cấp phiên có thể thu hồi. Mật khẩu khởi tạo chỉ dùng cho tài khoản Admin đầu tiên. Đổi mật khẩu Admin vô hiệu hóa phiên cũ; đổi biến mật khẩu khởi tạo không thay mật khẩu tài khoản đã tồn tại. Nút Giáo viên mở đăng nhập thật; nút trải nghiệm riêng chỉ dùng dữ liệu minh họa. Học sinh có thể khôi phục hành trình trên thiết bị khác bằng mã đồng bộ; mã này cần giữ riêng. Tiến trình cục bộ chờ đồng bộ được gửi khi vào lại hoặc khi có mạng; lỗi tạm thời được thử lại tối đa ba lần, rồi chờ lần thay đổi tiến trình hoặc kết nối lại tiếp theo.
+
+
+Nhật ký triển khai và đề xuất học liệu của Giáo viên được lưu trong các collection `cham_implementations` và `cham_learning_proposals`. Máy chủ lấy tên và ID Giáo viên từ phiên đăng nhập, kiểm tra lớp thuộc đúng Giáo viên và không dùng tác giả do trình duyệt gửi lên. Mỗi Giáo viên chỉ đọc bản ghi của mình; Admin đọc toàn trường. Nhật ký dùng lớp thực và ghi năm học của lớp. Chỉ báo thành công sau khi máy chủ ghi xong. Admin có mục Đề xuất học liệu và tổng quan lấy số liệu từ máy chủ, không dùng số liệu minh họa.
+
+## Kế hoạch bài dạy của Giáo viên
+Trong tab GDĐP, chọn bài rồi bấm Tạo hoặc mở KHBD của bài này. Bản dự thảo 35 phút gồm yêu cầu cần đạt, năng lực, phẩm chất, đồ dùng, tích hợp GDĐP, bốn hoạt động, điều chỉnh và nguồn. Giáo viên bổ sung mục tiêu/nhiệm vụ môn học theo SGK, chỉnh sửa và duyệt trước khi xuất .docx. Lưu/mở bản nháp dùng localStorage của trình duyệt, không đồng bộ máy chủ; nên tải Word để giữ bản sao. Không gọi API AI hoặc dịch vụ tính phí.

@@ -1,7 +1,10 @@
 import { ClassRoster } from './ClassRoster';
-import React, { useState } from 'react';
+import { RealClassResults } from './RealClassResults';
+import { GddpTeacherLookup } from './GddpTeacherLookup';
+import React, { useEffect, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
-import { Station } from '../../types';
+import { authService } from '../../services/AuthService';
+import { Station, ImplementationRecord } from '../../types';
 import { DEMO_STUDENTS, DEMO_CLASSROOMS } from '../../data/mockUsers';
 import { implementationService } from '../../services/ImplementationService';
 import { progressService } from '../../services/ProgressService';
@@ -30,7 +33,7 @@ export const TeacherDashboard: React.FC = () => {
     setCurrentView,
   } = useApp();
 
-  const [activeTab, setActiveTab] = useState<'teaching' | 'classrooms' | 'results' | 'resources'>('teaching');
+  const [activeTab, setActiveTab] = useState<'teaching' | 'classrooms' | 'results' | 'resources' | 'gddp'>('teaching');
   const [selectedStationForImp, setSelectedStationForImp] = useState<Station | null>(null);
   const [selectedClassId, setSelectedClassId] = useState<string>('class-2-24');
   const [proposalStation, setProposalStation] = useState<Station | null>(null);
@@ -47,7 +50,12 @@ export const TeacherDashboard: React.FC = () => {
     return aDemo ? -1 : 1;
   });
   const currentDemoStation = demoStations[0] || null;
-  const implementations = implementationService.getAll();
+  const isDemo=currentUser?.id==='teacher-demo';
+  const [implementations,setImplementations]=useState<ImplementationRecord[]>([]);
+  const [workflowError,setWorkflowError]=useState('');
+  const [proposalBusy,setProposalBusy]=useState(false);
+  const loadImplementations=async()=>{try{setWorkflowError('');setImplementations(isDemo?implementationService.getAll():await authService.implementations());}catch(e){setWorkflowError((e as Error).message);}};
+  useEffect(()=>{void loadImplementations();},[currentUser?.id]);
   const teacherClasses = DEMO_CLASSROOMS.filter(classroom =>
     teacher?.assignedClasses?.includes(classroom.id)
   );
@@ -64,6 +72,7 @@ export const TeacherDashboard: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8 space-y-8">
       {currentUser?.id === 'teacher-demo' && <p className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">Chế độ giáo viên trải nghiệm dành cho giám khảo. Bạn có thể xem học liệu và trình chiếu bài học; đăng ảnh, tài liệu chung cần đăng nhập quản trị.</p>}
+      {workflowError&&<p role="alert" className="rounded-xl bg-rose-50 p-3 text-rose-700">{workflowError}</p>}
       {/* Teacher Profile Banner */}
       <div className="bg-gradient-to-r from-emerald-600 via-teal-700 to-sky-800 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
@@ -103,6 +112,10 @@ export const TeacherDashboard: React.FC = () => {
             <Presentation className="w-3.5 h-3.5" />
             <span>DẠY HỌC</span>
           </button>
+          <button type="button" onClick={() => setActiveTab('gddp')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${activeTab === 'gddp' ? 'bg-white text-slate-950 shadow-md' : 'text-white hover:bg-white/10'}`}>
+            <BookOpen className="w-3.5 h-3.5" /><span>TÍCH HỢP GDĐP</span>
+          </button>
           <button
             onClick={() => setActiveTab('classrooms')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
@@ -132,6 +145,8 @@ export const TeacherDashboard: React.FC = () => {
           </button>
         </div>
       </div>
+
+      {activeTab === 'gddp' && <GddpTeacherLookup stations={allStationsInCurrentGrade} currentGrade={currentGrade} onGradeChange={setCurrentGrade} />}
 
       {/* TAB 1: DẠY HỌC */}
       {activeTab === 'teaching' && (
@@ -349,11 +364,8 @@ export const TeacherDashboard: React.FC = () => {
       )}
 
       {/* TAB 3: KẾT QUẢ */}
-      {activeTab === 'results' && currentUser?.id !== 'teacher-demo' && <div className="rounded-3xl bg-white border p-6 space-y-3">
-        <h2 className="text-xl font-black">Tiến độ học sinh</h2>
-        <p>Danh sách lớp được lưu trên máy chủ. Tiến độ, vật phẩm và con dấu hiện lưu trên trình duyệt học sinh, chưa tự tổng hợp về tài khoản giáo viên.</p>
-        <p className="text-sm text-slate-600">Xem danh sách đã tạo ở mục Lớp học. Báo cáo tổng hợp từ thiết bị học sinh chưa được hỗ trợ.</p>
-      </div>}
+      {activeTab === 'results' && currentUser?.id !== 'teacher-demo' && <RealClassResults />}
+
       {activeTab === 'results' && currentUser?.id === 'teacher-demo' && (
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -483,7 +495,7 @@ export const TeacherDashboard: React.FC = () => {
         <ImplementationModal
           station={selectedStationForImp}
           onClose={() => setSelectedStationForImp(null)}
-          onSuccess={() => setSelectedStationForImp(null)}
+          onSuccess={() => {setSelectedStationForImp(null);void loadImplementations();}}
         />
       )}
 
@@ -495,40 +507,43 @@ export const TeacherDashboard: React.FC = () => {
               Đề Xuất Chỉnh Sửa Học Liệu: {proposalStation.titleVi}
             </h3>
             <p className="text-xs text-slate-500">
-              Ý kiến chuyên môn được ghi nhận trong phiên bản demo để phục vụ rà soát và hoàn thiện học liệu.
+              {isDemo?'Đề xuất trong bản trải nghiệm chỉ là minh họa.':'Đề xuất được lưu trên máy chủ để quản trị đọc và rà soát.'}
             </p>
 
+            {workflowError&&<p role="alert" className="text-rose-700 text-sm">{workflowError}</p>}
             {!proposalSent ? (
               <div className="space-y-3">
                 <textarea
                   value={proposalText}
                   onChange={(e) => setProposalText(e.target.value)}
-                  rows={4}
+                  rows={4} maxLength={3000}
                   placeholder="Góp ý về từ ngữ, hình ảnh, câu hỏi tương tác hoặc tư liệu cập nhật..."
                   className="w-full p-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                 />
                 <div className="flex gap-2">
                   <button
-                    onClick={() => setProposalStation(null)}
+                    disabled={proposalBusy} onClick={() => setProposalStation(null)}
                     className="flex-1 py-2.5 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold"
                   >
                     Hủy
                   </button>
                   <button
-                    onClick={() => {
-                      setProposalSent(true);
-                      setTimeout(() => setProposalStation(null), 1500);
+                    onClick={async () => {
+                      if(proposalBusy)return;setProposalBusy(true);setWorkflowError('');
+                      try{if(!isDemo)await authService.submitProposal({stationId:proposalStation.id,stationName:proposalStation.titleVi,grade:proposalStation.grade,text:proposalText});setProposalSent(true);}
+                      catch(e){setWorkflowError((e as Error).message);}finally{setProposalBusy(false);}
                     }}
-                    disabled={!proposalText.trim()}
+                    disabled={proposalBusy || !proposalText.trim()}
                     className="flex-1 py-2.5 rounded-xl bg-emerald-600 disabled:opacity-40 text-white text-xs font-bold"
                   >
-                    Gửi đề xuất
+                    {proposalBusy?'Đang gửi…':'Gửi đề xuất'}
                   </button>
                 </div>
               </div>
             ) : (
               <div className="text-center py-4 text-emerald-700 font-bold text-sm">
-                ✓ Đã ghi nhận góp ý học liệu!
+                {isDemo?'✓ Đã xem thử thao tác gửi đề xuất.':'✓ Máy chủ đã lưu đề xuất học liệu.'}
+                <button type="button" onClick={()=>setProposalStation(null)} className="block mx-auto mt-3 underline">Đóng</button>
               </div>
             )}
           </div>

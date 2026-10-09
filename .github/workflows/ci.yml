@@ -37,11 +37,23 @@ jobs:
       - name: Server syntax check
         run: node --check auth-server.mjs && node --check content-server.mjs && node --check content-storage.mjs
 
+      - name: Production packaging and database isolation tests
+        run: node --test deployment-test.mjs production-api-test.mjs
+
+      - name: Student reconnect and pending-sync tests
+        run: node --test student-sync-test.cjs
+
       - name: Authentication tests
         run: node --test auth-test.mjs
 
       - name: Firestore authentication storage tests
         run: node --test auth-storage-test.mjs
+
+      - name: GDĐP catalog validation tests
+        run: node --test gddp-catalog-test.mjs gddp-ai-test.mjs
+
+      - name: Five-grade teacher lesson isolation tests
+        run: npx tsx --test gddp-teacher-five-grades-test.ts
 
       - name: Content storage tests
         run: node --test content-storage-test.mjs
@@ -51,6 +63,9 @@ jobs:
 
       - name: Grade 2 current-book content and image tests
         run: npx tsx --test grade2-content-image-test.ts
+
+      - name: Editable lesson plan and Word export tests
+        run: node --import tsx --test lesson-plan-test.ts
 
       - name: Production build
         run: npm run build

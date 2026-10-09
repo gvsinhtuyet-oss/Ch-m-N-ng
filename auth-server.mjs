@@ -1,4 +1,4 @@
-import { randomBytes, createHash, createHmac, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto';
+import { randomBytes, createHash, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
 const scrypt = promisify(scryptCallback);
 const hash = value => createHash('sha256').update(value).digest('hex');
@@ -218,30 +218,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
     const raw = rawSessionToken(req);
     return raw ? hash(raw) : '';
   };
-  const ownerUser = () => ({
-    id: hash(owner), email: owner, name: 'Quản trị nhà trường',
-    role: 'admin', active: true, version: 1
-  });
-  const ownerToken = () => {
-    const expiresAt = Date.now() + 8 * 60 * 60 * 1000;
-    const exp = expiresAt.toString(16).padStart(16,'0');
-    const mac = createHmac('sha256', adminPassword).update(owner + ':' + exp).digest('hex').slice(0,48);
-    return exp + mac;
-  };
-  const validOwnerToken = token => {
-    if (typeof token !== 'string' || !/^[a-f0-9]{64}$/.test(token) ||
-        typeof adminPassword !== 'string' || adminPassword.length < 12 || !validEmail(owner)) return false;
-    const exp = token.slice(0,16);
-    const expiresAt = Number.parseInt(exp,16);
-    if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) return false;
-    const expected = createHmac('sha256', adminPassword).update(owner + ':' + exp).digest('hex').slice(0,48);
-    const actual = token.slice(16);
-    return expected.length === actual.length &&
-      timingSafeEqual(Buffer.from(expected,'hex'), Buffer.from(actual,'hex'));
-  };
   async function userFor(req) {
-    const raw = rawSessionToken(req);
-    if (validOwnerToken(raw)) return ownerUser();
     await ready();
     const id=sessionId(req); if(!id) return null;
     const session=await store.get('cham_sessions',id);
@@ -273,28 +250,12 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       throw fail(415,'Yêu cầu phải dùng JSON.');
   }
   async function handle(req,res,pathname,body,json) {
-    if(!pathname.startsWith('/api/auth/') && pathname !== '/api/admin/users' && pathname !== '/api/teacher/classes') return false;
+    if(!pathname.startsWith('/api/auth/') && pathname !== '/api/admin/users' && pathname !== '/api/teacher/classes' && pathname !== '/api/teacher/progress' && pathname !== '/api/teacher/implementations' && pathname !== '/api/teacher/proposals') return false;
     if(!['GET','POST','PUT'].includes(req.method)) { json(res,405,{error:'Method not allowed'}); return true; }
     if(req.method !== 'GET') sameOrigin(req);
 
-    // Emergency owner path: the school administrator can still sign in when
-    // Firestore's free AI quota is temporarily exhausted. The session is
-    // signed server-side and never stores the password in the browser.
     if(pathname === '/api/auth/login' && req.method === 'POST') {
       const data=await body(req), email=emailOf(data.email);
-      const ownerCredentialsMatch =
-        email === owner &&
-        typeof adminPassword === 'string' && adminPassword.length >= 12 && adminPassword.length <= 128 &&
-        typeof data.password === 'string' &&
-        timingSafeEqual(Buffer.from(hash(data.password)), Buffer.from(hash(adminPassword)));
-
-      if (ownerCredentialsMatch) {
-        cookie(res,ownerToken());
-        json(res,200,{user:safeUser(ownerUser())});
-        return true;
-      }
-      if (email === owner) throw fail(401,'Email hoặc mật khẩu chưa đúng.');
-
       try {
         await ready();
         if(!validEmail(email) || typeof data.password !== 'string' || data.password.length > 128)
@@ -314,12 +275,6 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
 
         try {
           let user=await store.get('cham_users',id);
-          if (user?.active && user.role === 'admin' && email === owner &&
-              ownerCredentialsMatch &&
-              !(await matches(data.password,user.passwordHash))) {
-            user={...user,passwordHash:await passwordHash(adminPassword),version:user.version+1};
-            await store.put('cham_users',id,user);
-          }
           if(!user?.active || !(await matches(data.password,user.passwordHash))) {
             const count=(rate?.updatedAt > Date.now()-600000 ? rate.count : 0)+1;
             await store.put('cham_auth_limits',id,{count,updatedAt:Date.now(),until:count>=5 ? Date.now()+60000 : 0});
@@ -343,10 +298,6 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       const user=await userFor(req); json(res,200,{user:user ? safeUser(user) : null}); return true;
     }
     if(pathname === '/api/auth/logout' && req.method === 'POST') {
-      const raw = rawSessionToken(req);
-      if (validOwnerToken(raw)) {
-        cookie(res,'',0); json(res,200,{ok:true}); return true;
-      }
       await ready();
       const id=sessionId(req); if(id) await store.remove('cham_sessions',id);
       cookie(res,'',0); json(res,200,{ok:true}); return true;
@@ -358,6 +309,88 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       if(typeof data.currentPassword !== 'string' || data.currentPassword.length>128 || !(await matches(data.currentPassword,user.passwordHash))) throw fail(401,'Mật khẩu hiện tại chưa đúng.');
       await store.put('cham_users',user.id,{...user,passwordHash:await passwordHash(data.password),version:user.version+1});
       cookie(res,'',0); json(res,200,{ok:true}); return true;
+    }
+    if(pathname === '/api/teacher/implementations' || pathname === '/api/teacher/proposals') {
+      const staff=await userFor(req);
+      if(!staff)throw fail(401,'Vui lòng đăng nhập lại.');
+      if(!['teacher','admin'].includes(staff.role))throw fail(403,'Không có quyền truy cập.');
+      const isImplementation=pathname.endsWith('/implementations');
+      const collection=isImplementation?'cham_implementations':'cham_learning_proposals';
+      if(req.method==='GET') {
+        const records=(await store.list(collection)).filter(r=>staff.role==='admin'||r.teacherId===staff.id)
+          .sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt)));
+        json(res,200,{records});return true;
+      }
+      if(req.method!=='POST')throw fail(405,'Phương thức không hỗ trợ.');
+      const data=await body(req);
+      const text=(value,max,required=true)=>typeof value==='string'&&value.trim().length<=max&&(!required||value.trim().length>0);
+      if(!text(data.stationId,100)||!/^[a-zA-Z0-9_-]+$/.test(data.stationId)||!text(data.stationName,200))
+        throw fail(400,'Thông tin bài học chưa hợp lệ.');
+      const id=randomBytes(16).toString('hex');
+      let record={id,teacherId:staff.id,teacherName:staff.name,stationId:data.stationId,stationName:data.stationName.trim(),createdAt:new Date().toISOString()};
+      if(isImplementation){
+        if(typeof data.classId!=='string'||!/^[a-f0-9]{64}$/.test(data.classId))throw fail(400,'Vui lòng chọn lớp đã tạo.');
+        const classroom=await store.get('cham_classes',data.classId);
+        if(!classroom)throw fail(404,'Không tìm thấy lớp.');
+        if(staff.role!=='admin'&&classroom.teacherId!==staff.id)throw fail(403,'Chỉ được ghi nhận lớp mình phụ trách.');
+        const methods=['Dạy trực tiếp trên lớp','Tích hợp vào môn học','Hoạt động trải nghiệm','Giao học sinh tự học'];
+        const date=typeof data.implementationDate==='string'?new Date(data.implementationDate+'T00:00:00Z'):null;
+        if(data.grade!==classroom.grade||!date||!/^\d{4}-\d{2}-\d{2}$/.test(data.implementationDate)||!Number.isFinite(date.getTime())||date.toISOString().slice(0,10)!==data.implementationDate||!methods.includes(data.method)||!text(data.session,200)||!text(data.note??'',3000,false))
+          throw fail(400,'Kiểm tra khối, ngày dạy, buổi/tiết và ghi chú.');
+        record={...record,classId:classroom.id,className:classroom.name,grade:classroom.grade,academicYear:classroom.academicYear,implementationDate:data.implementationDate,session:data.session.trim(),method:data.method,note:(data.note||'').trim()};
+      }else{
+        if(!Number.isInteger(data.grade)||data.grade<1||data.grade>5||!text(data.text,3000))throw fail(400,'Đề xuất cần nội dung từ 1 đến 3000 ký tự và khối hợp lệ.');
+        record={...record,grade:data.grade,text:data.text.trim(),status:'pending'};
+      }
+      await store.put(collection,id,record,true);
+      json(res,200,{record});return true;
+    }
+    if(pathname === '/api/teacher/progress') {
+      const staff=await userFor(req);
+      if(!staff) throw fail(401,'Vui lòng đăng nhập lại.');
+      if(!['teacher','admin'].includes(staff.role)) throw fail(403,'Không có quyền xem kết quả học sinh.');
+      const url=new URL(req.url,'http://localhost');
+      const classId=req.method==='GET'?url.searchParams.get('classId'):undefined;
+      const data=req.method==='POST'?(sameOrigin(req),await body(req)):null;
+      const id=classId || data?.classId;
+      if(typeof id!=='string' || !/^[a-f0-9]{64}$/.test(id)) throw fail(400,'Vui lòng chọn lớp hợp lệ.');
+      const classroom=await store.get('cham_classes',id);
+      if(!classroom) throw fail(404,'Không tìm thấy lớp.');
+      if(staff.role!=='admin' && classroom.teacherId!==staff.id) throw fail(403,'Bạn chỉ được xem lớp mình phụ trách.');
+      const norm=s=>String(s||'').trim().replace(/\s+/g,' ').normalize('NFC').toLocaleLowerCase('vi');
+      if(req.method==='POST') {
+        const code=String(data.syncCode||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+        if(!/^[A-Z0-9]{12}$/.test(code)) throw fail(400,'Mã đồng bộ chưa hợp lệ.');
+        const key=hash(code);
+        const saved=await store.get('cham_student_sync',key);
+        if(!saved?.profile) throw fail(404,'Không tìm thấy mã học sinh.');
+        const student=saved.profile;
+        if(student.grade!==classroom.grade || norm(student.className)!==norm(classroom.name) ||
+          !classroom.students.some(name=>norm(name)===norm(student.name)))
+          throw fail(400,'Tên, khối và lớp của mã học sinh chưa khớp danh sách đã duyệt.');
+        await store.put('cham_teacher_progress_links',hash(id+':'+key),
+          {classId:id,syncKey:key,name:student.name,linkedAt:Date.now()});
+        json(res,200,{ok:true,name:student.name});return true;
+      }
+      if(req.method!=='GET') throw fail(405,'Phương thức không hỗ trợ.');
+      const links=(await store.list('cham_teacher_progress_links')).filter(link=>link.classId===id);
+      const results=[];
+      for(const link of links.slice(0,100)){
+        if(!classroom.students.some(n=>norm(n)===norm(link.name))) continue;
+        const saved=await store.get('cham_student_sync',link.syncKey);
+        if(!saved?.profile || saved.profile.grade!==classroom.grade ||
+          norm(saved.profile.className)!==norm(classroom.name) || norm(saved.profile.name)!==norm(link.name)) continue;
+        const stations=Object.entries(saved.progress||{}).slice(0,30).map(([stationId,p])=>({
+          stationId,completed:!!p.stationCompleted,stamp:!!p.stampReceived,
+          completedStages:[p.stage1Completed,p.stage2Completed,p.stage3Completed,p.stage4Completed].filter(Boolean).length,
+          lastVisitedAt:typeof p.lastVisitedAt==='string'?p.lastVisitedAt:null
+        }));
+        results.push({name:classroom.students.find(n=>norm(n)===norm(link.name)),stations,completedStations:stations.filter(x=>x.completed).length,
+          totalStamps:stations.filter(x=>x.stamp).length});
+      }
+      json(res,200,{className:classroom.name,academicYear:classroom.academicYear,
+        rosterCount:classroom.students.length,linkedCount:results.length,students:results});
+      return true;
     }
     if(pathname === '/api/teacher/classes') {
       const staff=await userFor(req);

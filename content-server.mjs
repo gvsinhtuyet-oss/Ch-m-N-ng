@@ -2,19 +2,18 @@
 import { createServer } from 'node:http';
 import { createAuth, firestoreStoreWithFallback } from './auth-server.mjs';
 import { contentStorage } from './content-storage.mjs';
+import { firestoreConfiguration } from './deployment-config.mjs';
+import { GDDP_COLLECTION, GDDP_DOCUMENT, GDDP_YEAR, cleanGddpCatalog } from './gddp-catalog.mjs';
+import { gddpPrompt, cleanGddpAiSuggestion } from './gddp-ai.mjs';
 import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
 import { randomBytes, createHash } from 'node:crypto';
 import path from 'node:path';
 
 const dataDir = path.resolve(process.env.CONTENT_DATA_DIR || './content-data');
 const dataFile = path.join(dataDir, 'stations.json');
-const DEFAULT_FIRESTORE_DATABASE = 'ai-studio-71b45c71-26f3-4479-9372-306c6b35245a';
-// Firebase Console confirms this is the real database used by CHẠM ĐÀ NẴNG.
-// Do not fall back to (default) or the legacy AI Studio database name.
-const firestoreDatabase = DEFAULT_FIRESTORE_DATABASE;
-const firestoreCandidates = [DEFAULT_FIRESTORE_DATABASE];
-const cloudStore = process.env.AUTH_FIRESTORE_PROJECT
-  ? firestoreStoreWithFallback(process.env.AUTH_FIRESTORE_PROJECT, firestoreCandidates)
+const {project: firestoreProject, database: firestoreDatabase, candidates: firestoreCandidates} = firestoreConfiguration();
+const cloudStore = firestoreProject
+  ? firestoreStoreWithFallback(firestoreProject, firestoreCandidates)
   : null;
 const durableContent = cloudStore ? contentStorage(cloudStore) : null;
 const auth = createAuth({
@@ -54,7 +53,7 @@ const validUrl = value => typeof value === 'string' && (
   value === '' || /^https:\/\//i.test(value) ||
   /^data:(image\/(png|jpeg|webp|gif)|application\/pdf|audio\/(mpeg|mp3|wav|ogg|mp4|x-wav)|video\/(mp4|webm|ogg));base64,/i.test(value)
 );
-const studentSyncKey = code => createHash('sha256').update(String(code || '').trim().toUpperCase()).digest('hex');
+const studentSyncKey = code => createHash('sha256').update(String(code || '').toUpperCase().replace(/[^A-Z0-9]/g,'')).digest('hex');
 const cleanSyncCode = value => String(value || '').toUpperCase().replace(/[^A-Z0-9]/g,'');
 const newSyncCode = () => {
   const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -239,6 +238,70 @@ const server = createServer(async (req,res) => {
       healthCacheAt = Date.now();
       return json(res, 200, healthCache);
     }
+    // GDĐP is a separate read-only teacher catalog; only Admin may update it.
+    // Keep all existing auth, students, stations, and content endpoints unchanged.
+    if (pathname === '/api/gddp/catalog' && req.method === 'GET') {
+      if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
+      const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
+      if (saved?.published) return json(res,200,{...saved.catalog,published:true,updatedAt:saved.updatedAt});
+      if (saved?.previousPublishedCatalog) return json(res,200,{...saved.previousPublishedCatalog,published:true});
+      return json(res,200,{year:GDDP_YEAR,records:[],published:false});
+    }
+    if (pathname === '/api/admin/gddp/catalog' && req.method === 'GET') {
+      await auth.requireAdmin(req);
+      if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
+      const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
+      return json(res,200,saved || {published:false,catalog:{year:GDDP_YEAR,records:[]}});
+    }
+    if (pathname === '/api/admin/gddp/catalog' && req.method === 'PUT') {
+      auth.sameOrigin(req);
+      await auth.requireAdmin(req);
+      if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
+      const input = await body(req);
+      const catalog = cleanGddpCatalog(input);
+      const old = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
+      await cloudStore.put(GDDP_COLLECTION,GDDP_DOCUMENT,{
+        catalog, published:false, updatedAt:new Date().toISOString(),
+        previousPublishedCatalog:old?.published ? old.catalog : old?.previousPublishedCatalog || null,
+      });
+      return json(res,200,{saved:true,records:catalog.records.length,published:false});
+    }
+    if (pathname === '/api/admin/gddp/suggest' && req.method === 'POST') {
+      auth.sameOrigin(req);
+      await auth.requireAdmin(req);
+      if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
+      if (!process.env.GEMINI_API_KEY) return json(res,503,{error:'Chưa cấu hình khóa Gemini ở máy chủ. Admin có thể nhập gợi ý thủ công.'});
+      const input=await body(req);
+      if (typeof input.id !== 'string' || !/^[a-zA-Z0-9_-]{1,90}$/.test(input.id))
+        return json(res,400,{error:'Mã địa chỉ tích hợp không hợp lệ.'});
+      const saved=await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
+      const row=saved?.catalog?.records?.find(item=>item.id===input.id);
+      if (!row) return json(res,404,{error:'Cần lưu bản nháp trước khi tạo gợi ý AI.'});
+      if (!row.content?.trim()) return json(res,400,{error:'Địa chỉ chưa có nội dung nguồn. Admin cần bổ sung từ tài liệu đã xác minh trước khi dùng AI.'});
+      const {GoogleGenAI}=await import('@google/genai');
+      const ai=new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY});
+      const response=await ai.models.generateContent({
+        model:'gemini-2.5-flash-lite',
+        contents:gddpPrompt(row),
+        config:{responseMimeType:'application/json',temperature:0.2,maxOutputTokens:600}
+      });
+      let parsed;
+      try {parsed=JSON.parse(response.text || '');}
+      catch {return json(res,502,{error:'AI chưa trả về JSON hợp lệ. Vui lòng thử lại.'});}
+      const suggestion=cleanGddpAiSuggestion(parsed);
+      return json(res,200,{...suggestion,reviewRequired:true});
+    }
+    if (pathname === '/api/admin/gddp/publish' && req.method === 'POST') {
+      auth.sameOrigin(req);
+      await auth.requireAdmin(req);
+      if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
+      const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
+      if (!saved?.catalog?.records?.length) return json(res,400,{error:'Chưa có dữ liệu GDĐP để xuất bản.'});
+      const missing=saved.catalog.records.filter(row=>!row.content?.trim());
+      if (missing.length) return json(res,400,{error:'Có '+missing.length+' địa chỉ chưa có nội dung nguồn. Admin cần bổ sung trước khi xuất bản.'});
+      await cloudStore.put(GDDP_COLLECTION,GDDP_DOCUMENT,{...saved,published:true,updatedAt:new Date().toISOString()});
+      return json(res,200,{published:true,records:saved.catalog.records.length});
+    }
     if (pathname === '/api/content' && req.method === 'GET') {
       const current = await loadSharedContent();
       return json(res,200,{ schemaVersion:1,...current });
@@ -368,4 +431,4 @@ const server = createServer(async (req,res) => {
     json(res,error.status || 500,{ error:error.status ? error.message : 'Could not process request' });
   }
 });
-server.listen(Number(process.env.PORT || 3000),'0.0.0.0',() => console.log('CHAM DA NANG content server started'));
+server.listen(Number(process.env.PORT || 3000),'0.0.0.0',() => console.log('CHAM DA NANG content server started port='+server.address().port));

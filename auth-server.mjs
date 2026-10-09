@@ -72,7 +72,13 @@ export function firestoreStore(project, database = '(default)', fetchRequest = f
         if (response.status === 404) {
           const detail = await response.json().catch(() => ({}));
           const message = detail.error?.message || 'Not found';
-          const missingDatabase = /database.+(does not exist|not found)|NOT_FOUND:.*database/i.test(message);
+          // Firestore's document paths contain "/databases/"; that path is not evidence
+          // that the database itself is missing. A missing document is normal
+          // before the first admin account has been created.
+          const missingDocument = /^Document\s+["'`]?projects\/.*\/documents\//i.test(message) ||
+            /^Document\s+(?:not found|does not exist)/i.test(message);
+          const missingDatabase = !missingDocument &&
+            /^(?:NOT_FOUND:\s*)?(?:The\s+)?database\b[^\n]*(?:does not exist|not found)/i.test(message);
           if (!missingDatabase && ((method === 'GET' && route.includes('/')) || method === 'DELETE')) return null;
           console.error('Firestore 404', message);
           throw fail(503, missingDatabase

@@ -546,15 +546,9 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                         setSelectedOptionId(null);
                         setIsCorrect(false);
                       }}
-                      className="flex-1 py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs transition"
+                      className="w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs transition"
                     >
                       THỬ LẠI
-                    </button>
-                    <button
-                      onClick={handleNextHotspot}
-                      className="flex-1 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition"
-                    >
-                      TIẾP TỤC KHÁM PHÁ
                     </button>
                   </div>
                 ) : (

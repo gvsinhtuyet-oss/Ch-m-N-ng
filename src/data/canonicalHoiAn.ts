@@ -99,18 +99,32 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       mediaCredit:'Wikimedia Commons – đèn lồng Hội An',
     },
     {
-      id:'hoi-an-lang-nghe', stationId:'g2-station-4',
-      titleVi:'5. Làng nghề quanh Hội An',
-      subtitleVi:'Gốm Thanh Hà và rau Trà Quế',
+      id:'hoi-an-thanh-ha', stationId:'g2-station-4',
+      titleVi:'5. Làng gốm Thanh Hà',
+      subtitleVi:'Quan sát sản phẩm và trải nghiệm làm gốm',
       image:'https://commons.wikimedia.org/wiki/Special:FilePath/Thanh%20Ha%20pottery%20village%20Hoi%20An.jpg',
-      narrationVi:'Tài liệu còn giới thiệu làng gốm Thanh Hà và làng rau Trà Quế. Đến các làng nghề, du khách có thể quan sát sản phẩm, tìm hiểu cách làm và tham gia một số hoạt động trải nghiệm phù hợp.',
-      keyFactVi:'Hội An không chỉ có phố cổ mà còn có những làng nghề truyền thống gắn với đời sống địa phương.',
-      interaction:{id:'ha-i5',type:'single-choice',questionVi:'Làng nghề nào được giới thiệu trong bài?',options:[
-        {id:'a',textVi:'Làng gốm Thanh Hà',isCorrect:true},{id:'b',textVi:'Làng làm băng tuyết',isCorrect:false},{id:'c',textVi:'Làng đóng tên lửa',isCorrect:false}
-      ],explanationVi:'Chính xác! Làng gốm Thanh Hà là một trong những làng nghề được giới thiệu.'},
-      sources:['Tài liệu GDĐP lớp 2 hiện hành'],
+      narrationVi:'Làng gốm Thanh Hà là một làng nghề truyền thống được giới thiệu trong tài liệu lớp 2. Ở đây, em có thể quan sát cổng làng, các sản phẩm gốm và tìm hiểu cách người thợ tạo nên đồ gốm từ đất.',
+      keyFactVi:'Điều cần nhớ: Thanh Hà nổi tiếng với nghề làm gốm và các sản phẩm gốm truyền thống.',
+      interaction:{id:'ha-i5',type:'single-choice',questionVi:'Làng Thanh Hà nổi tiếng với nghề nào?',options:[
+        {id:'a',textVi:'Làm gốm',isCorrect:true},{id:'b',textVi:'Dệt chiếu',isCorrect:false},{id:'c',textVi:'Đóng tàu',isCorrect:false}
+      ],explanationVi:'Chính xác! Thanh Hà là làng gốm truyền thống.'},
+      sources:['Tài liệu GDĐP lớp 2 hiện hành – hình cổng làng và sản phẩm gốm Thanh Hà'],
       mediaRights:'LINK_ONLY',
-      mediaCredit:'Wikimedia Commons – làng gốm Thanh Hà',
+      mediaCredit:'Ảnh đối chiếu theo hình minh họa trong tài liệu GDĐP lớp 2 hiện hành',
+    },
+    {
+      id:'hoi-an-tra-que', stationId:'g2-station-4',
+      titleVi:'6. Làng rau Trà Quế',
+      subtitleVi:'Cánh đồng rau xanh và những trải nghiệm làng nghề',
+      image:'https://commons.wikimedia.org/wiki/Special:FilePath/Tra%20Que%20Vegetable%20Village.jpg',
+      narrationVi:'Làng rau Trà Quế có những cánh đồng rau xanh rộng lớn. Du khách đến đây có thể ngắm cảnh, tìm hiểu cách trồng rau, trải nghiệm làm đất và thưởng thức các món ăn được chế biến từ rau sạch của làng.',
+      keyFactVi:'Tài liệu lớp 2 nhấn mạnh Trà Quế là điểm du lịch làng nghề, nơi du khách có thể trải nghiệm các hoạt động gắn với việc trồng rau.',
+      interaction:{id:'ha-i6',type:'single-choice',questionVi:'Du khách có thể trải nghiệm hoạt động nào ở làng rau Trà Quế?',options:[
+        {id:'a',textVi:'Làm đất và tìm hiểu cách trồng rau',isCorrect:true},{id:'b',textVi:'Khai thác than',isCorrect:false},{id:'c',textVi:'Luyện thép',isCorrect:false}
+      ],explanationVi:'Đúng rồi! Trà Quế có các trải nghiệm gắn với việc làm đất, trồng rau và ẩm thực từ rau sạch.'},
+      sources:['Tài liệu GDĐP lớp 2 hiện hành – hình làng rau Trà Quế và hoạt động trải nghiệm'],
+      mediaRights:'LINK_ONLY',
+      mediaCredit:'Ảnh đối chiếu theo hình minh họa trong tài liệu GDĐP lớp 2 hiện hành',
     },
   ],
   challenge: {
@@ -131,7 +145,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       {id:'q1',questionVi:'Hội An được UNESCO công nhận là Di sản văn hóa thế giới năm nào?',options:[{id:'a',textVi:'1999',isCorrect:true},{id:'b',textVi:'2009',isCorrect:false},{id:'c',textVi:'2018',isCorrect:false}],hintVi:'Hãy nhớ mốc ở điểm đầu.'},
       {id:'q2',questionVi:'Công trình nào thuộc phố cổ Hội An?',options:[{id:'a',textVi:'Chùa Cầu',isCorrect:true},{id:'b',textVi:'Tháp nghiêng Pisa',isCorrect:false},{id:'c',textVi:'Tượng Nữ thần Tự do',isCorrect:false}],hintVi:'Công trình xuất hiện ngay ở phần khám phá.'},
       {id:'q3',questionVi:'Hoạt động văn hóa nào được nhắc trong bài?',options:[{id:'a',textVi:'Hô hát Bài Chòi',isCorrect:true},{id:'b',textVi:'Trượt băng',isCorrect:false},{id:'c',textVi:'Đua xe',isCorrect:false}],hintVi:'Hãy nhớ các hoạt động văn hóa nghệ thuật.'},
-      {id:'q4',questionVi:'Làng nghề nào gắn với Hội An?',options:[{id:'a',textVi:'Làng gốm Thanh Hà',isCorrect:true},{id:'b',textVi:'Làng khai thác than',isCorrect:false},{id:'c',textVi:'Làng làm máy bay',isCorrect:false}],hintVi:'Đây là làng nghề làm sản phẩm bằng đất.'},
+      {id:'q4',questionVi:'Hai làng nghề nào được giới thiệu trong bài Hội An?',options:[{id:'a',textVi:'Làng gốm Thanh Hà và làng rau Trà Quế',isCorrect:true},{id:'b',textVi:'Làng khai thác than và làng thép',isCorrect:false},{id:'c',textVi:'Làng làm máy bay và làng đóng tàu',isCorrect:false}],hintVi:'Một làng làm gốm, một làng trồng rau.'},
       {id:'q5',questionVi:'Em nên làm gì để bảo vệ cảnh quan phố cổ?',options:[{id:'a',textVi:'Giữ vệ sinh và không làm hư hại công trình',isCorrect:true},{id:'b',textVi:'Viết tên lên tường cổ',isCorrect:false},{id:'c',textVi:'Xả rác xuống sông',isCorrect:false}],hintVi:'Chọn hành vi văn minh.'},
     ],
   },
@@ -146,7 +160,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       {id:'r1',textVi:'Hội An là Di sản văn hóa thế giới'},
       {id:'r2',textVi:'Phố cổ có nhiều công trình cổ kính'},
       {id:'r3',textVi:'Có nhiều hoạt động văn hóa nghệ thuật'},
-      {id:'r4',textVi:'Có làng gốm Thanh Hà và làng rau Trà Quế'},
+      {id:'r4',textVi:'Thanh Hà nổi tiếng với nghề gốm; Trà Quế nổi tiếng với làng rau và trải nghiệm trồng rau'},
     ],
     actionPromptVi:'Em sẽ làm gì để góp phần bảo vệ Hội An?',
     actionOptions:[
@@ -174,7 +188,8 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       {id:'n1',titleVi:'Phố cổ',textVi:'Không gian cổ kính bên sông Hoài.',icon:'🏘️'},
       {id:'n2',titleVi:'Công trình',textVi:'Chùa Cầu, nhà cổ, hội quán, bảo tàng.',icon:'🌉'},
       {id:'n3',titleVi:'Văn hóa',textVi:'Lồng đèn, Bài Chòi, Thiên Cẩu, hoa đăng.',icon:'🏮'},
-      {id:'n4',titleVi:'Làng nghề',textVi:'Thanh Hà và Trà Quế.',icon:'🏺'},
+      {id:'n4',titleVi:'Thanh Hà',textVi:'Làng gốm truyền thống.',icon:'🏺'},
+      {id:'n5',titleVi:'Trà Quế',textVi:'Làng rau và trải nghiệm trồng rau.',icon:'🥬'},
     ],
     knowVi:'Nhận biết một số nét tiêu biểu của phố cổ Hội An.',
     understandVi:'Biết Hội An là Di sản văn hóa thế giới và có nhiều giá trị văn hóa đặc sắc.',
@@ -188,7 +203,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
     status:'IN_REVIEW',
     createdBy:'Nhóm biên soạn CHẠM ĐÀ NẴNG',
     createdAt:'2026-10-09',
-    changelog:'Chuẩn hóa theo tài liệu lớp 2 hiện hành: đường phố, công trình, hoạt động văn hóa và làng nghề; giảm nội dung thương cảng vượt quá trọng tâm sách.'
+    changelog:'Chuẩn hóa theo tài liệu lớp 2 hiện hành: đường phố, công trình, hoạt động văn hóa; tách riêng Làng gốm Thanh Hà và Làng rau Trà Quế thành hai điểm khám phá có nội dung riêng.'
   },
   sources:[CURRENT_G2_SOURCE],
 };

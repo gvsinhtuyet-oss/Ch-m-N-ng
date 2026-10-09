@@ -17,7 +17,7 @@ export function validateGddpCatalog(data) {
         !str(row.subject, 120) || !row.subject.trim() ||
         !str(row.week, 80) || !str(row.lesson, 450) || !row.lesson.trim() ||
         !str(row.integrationType, 100) || !str(row.activity, 800) ||
-        !str(row.content, 9000) || !row.content.trim() ||
+        !str(row.content, 9000) ||
         (row.outcomes !== undefined && !str(row.outcomes,1200)) ||
         (row.teachingSuggestion !== undefined && !str(row.teachingSuggestion,2500))) return false;
     ids.add(row.id);

@@ -245,8 +245,9 @@ const server = createServer(async (req,res) => {
     if (pathname === '/api/gddp/catalog' && req.method === 'GET') {
       if (!cloudStore) return json(res,503,{error:'Kho dữ liệu GDĐP chưa sẵn sàng.'});
       const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
-      if (!saved?.published) return json(res,200,{year:GDDP_YEAR,records:[],published:false});
-      return json(res,200,{...saved.catalog,published:true,updatedAt:saved.updatedAt});
+      if (saved?.published) return json(res,200,{...saved.catalog,published:true,updatedAt:saved.updatedAt});
+      if (saved?.previousPublishedCatalog) return json(res,200,{...saved.previousPublishedCatalog,published:true});
+      return json(res,200,{year:GDDP_YEAR,records:[],published:false});
     }
     if (pathname === '/api/admin/gddp/catalog' && req.method === 'GET') {
       await auth.requireAdmin(req);

@@ -26,3 +26,11 @@ test('all grade 2 stations cite the current teaching material', () => {
     assert.match(station.officialCurriculumReference || '', /lop 2 dang su dung|lớp 2 đang sử dụng/i);
   }
 });
+
+
+test('all five grade 2 stations are unlocked for competition demo', async () => {
+  const { DEMO_STATION_IDS } = await import('./src/data/demoStations');
+  for (const station of GRADE_2_STATIONS) {
+    assert.equal(DEMO_STATION_IDS.has(station.id), true, station.titleVi);
+  }
+});

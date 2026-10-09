@@ -4,8 +4,8 @@ import { Station } from '../../types';
 import {matchGddpResources,MatchedLessonResource} from '../../services/GddpResourceMatcher';
 import {GddpLessonPresentation} from './GddpLessonPresentation';
 
-interface Props {stations: Station[]; currentGrade: number; onGradeChange: (grade: number) => void; onPresent: (station: Station) => void;}
-export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGradeChange,onPresent}) => {
+interface Props {stations: Station[]; currentGrade: number; onGradeChange: (grade: number) => void;}
+export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGradeChange}) => {
   const [records, setRecords] = useState<GddpRecord[]>([]);
   const [grade, setGrade] = useState(currentGrade);
   const [subject, setSubject] = useState('');
@@ -15,6 +15,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
   const [projected,setProjected] = useState<MatchedLessonResource|null>(null);
+  useEffect(()=>{setGrade(currentGrade);setSubject('');setWeek('');setSelectedId('');setProjected(null);},[currentGrade]);
   useEffect(() => {
     let active = true;
     gddpService.publicCatalog().then(data => {

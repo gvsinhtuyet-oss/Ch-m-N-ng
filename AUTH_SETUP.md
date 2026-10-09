@@ -63,3 +63,6 @@ Chỉ triển khai nhánh `feature/gddp-teacher-2026-2027` vào dịch vụ Clou
 
 
 Đăng nhập Admin và Giáo viên đều xác minh mật khẩu đã băm trong Firestore và cấp phiên có thể thu hồi. Mật khẩu khởi tạo chỉ dùng cho tài khoản Admin đầu tiên. Đổi mật khẩu Admin vô hiệu hóa phiên cũ; đổi biến mật khẩu khởi tạo không thay mật khẩu tài khoản đã tồn tại. Nút Giáo viên mở đăng nhập thật; nút trải nghiệm riêng chỉ dùng dữ liệu minh họa. Học sinh có thể khôi phục hành trình trên thiết bị khác bằng mã đồng bộ; mã này cần giữ riêng. Tiến trình cục bộ chờ đồng bộ được gửi khi vào lại hoặc khi có mạng; lỗi tạm thời được thử lại tối đa ba lần, rồi chờ lần thay đổi tiến trình hoặc kết nối lại tiếp theo.
+
+
+Nhật ký triển khai và đề xuất học liệu của Giáo viên được lưu trong các collection `cham_implementations` và `cham_learning_proposals`. Máy chủ lấy tên và ID Giáo viên từ phiên đăng nhập, kiểm tra lớp thuộc đúng Giáo viên và không dùng tác giả do trình duyệt gửi lên. Mỗi Giáo viên chỉ đọc bản ghi của mình; Admin đọc toàn trường. Nhật ký dùng lớp thực và ghi năm học của lớp. Chỉ báo thành công sau khi máy chủ ghi xong. Admin có mục Đề xuất học liệu và tổng quan lấy số liệu từ máy chủ, không dùng số liệu minh họa.

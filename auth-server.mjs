@@ -250,7 +250,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       throw fail(415,'Yêu cầu phải dùng JSON.');
   }
   async function handle(req,res,pathname,body,json) {
-    if(!pathname.startsWith('/api/auth/') && pathname !== '/api/admin/users' && pathname !== '/api/teacher/classes' && pathname !== '/api/teacher/progress') return false;
+    if(!pathname.startsWith('/api/auth/') && pathname !== '/api/admin/users' && pathname !== '/api/teacher/classes' && pathname !== '/api/teacher/progress' && pathname !== '/api/teacher/implementations' && pathname !== '/api/teacher/proposals') return false;
     if(!['GET','POST','PUT'].includes(req.method)) { json(res,405,{error:'Method not allowed'}); return true; }
     if(req.method !== 'GET') sameOrigin(req);
 
@@ -309,6 +309,41 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       if(typeof data.currentPassword !== 'string' || data.currentPassword.length>128 || !(await matches(data.currentPassword,user.passwordHash))) throw fail(401,'Mật khẩu hiện tại chưa đúng.');
       await store.put('cham_users',user.id,{...user,passwordHash:await passwordHash(data.password),version:user.version+1});
       cookie(res,'',0); json(res,200,{ok:true}); return true;
+    }
+    if(pathname === '/api/teacher/implementations' || pathname === '/api/teacher/proposals') {
+      const staff=await userFor(req);
+      if(!staff)throw fail(401,'Vui lòng đăng nhập lại.');
+      if(!['teacher','admin'].includes(staff.role))throw fail(403,'Không có quyền truy cập.');
+      const isImplementation=pathname.endsWith('/implementations');
+      const collection=isImplementation?'cham_implementations':'cham_learning_proposals';
+      if(req.method==='GET') {
+        const records=(await store.list(collection)).filter(r=>staff.role==='admin'||r.teacherId===staff.id)
+          .sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt)));
+        json(res,200,{records});return true;
+      }
+      if(req.method!=='POST')throw fail(405,'Phương thức không hỗ trợ.');
+      const data=await body(req);
+      const text=(value,max,required=true)=>typeof value==='string'&&value.trim().length<=max&&(!required||value.trim().length>0);
+      if(!text(data.stationId,100)||!/^[a-zA-Z0-9_-]+$/.test(data.stationId)||!text(data.stationName,200))
+        throw fail(400,'Thông tin bài học chưa hợp lệ.');
+      const id=randomBytes(16).toString('hex');
+      let record={id,teacherId:staff.id,teacherName:staff.name,stationId:data.stationId,stationName:data.stationName.trim(),createdAt:new Date().toISOString()};
+      if(isImplementation){
+        if(typeof data.classId!=='string'||!/^[a-f0-9]{64}$/.test(data.classId))throw fail(400,'Vui lòng chọn lớp đã tạo.');
+        const classroom=await store.get('cham_classes',data.classId);
+        if(!classroom)throw fail(404,'Không tìm thấy lớp.');
+        if(staff.role!=='admin'&&classroom.teacherId!==staff.id)throw fail(403,'Chỉ được ghi nhận lớp mình phụ trách.');
+        const methods=['Dạy trực tiếp trên lớp','Tích hợp vào môn học','Hoạt động trải nghiệm','Giao học sinh tự học'];
+        const date=typeof data.implementationDate==='string'?new Date(data.implementationDate+'T00:00:00Z'):null;
+        if(data.grade!==classroom.grade||!date||!/^\d{4}-\d{2}-\d{2}$/.test(data.implementationDate)||!Number.isFinite(date.getTime())||date.toISOString().slice(0,10)!==data.implementationDate||!methods.includes(data.method)||!text(data.session,200)||!text(data.note??'',3000,false))
+          throw fail(400,'Kiểm tra khối, ngày dạy, buổi/tiết và ghi chú.');
+        record={...record,classId:classroom.id,className:classroom.name,grade:classroom.grade,academicYear:classroom.academicYear,implementationDate:data.implementationDate,session:data.session.trim(),method:data.method,note:(data.note||'').trim()};
+      }else{
+        if(!Number.isInteger(data.grade)||data.grade<1||data.grade>5||!text(data.text,3000))throw fail(400,'Đề xuất cần nội dung từ 1 đến 3000 ký tự và khối hợp lệ.');
+        record={...record,grade:data.grade,text:data.text.trim(),status:'pending'};
+      }
+      await store.put(collection,id,record,true);
+      json(res,200,{record});return true;
     }
     if(pathname === '/api/teacher/progress') {
       const staff=await userFor(req);

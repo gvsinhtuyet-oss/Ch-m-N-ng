@@ -1,7 +1,8 @@
-import { Admin, Teacher, Classroom } from '../types';
+import { Admin, Teacher, Classroom, ImplementationRecord } from '../types';
 import { fetchWithTimeout } from './NetworkService';
 export type StaffUser = (Admin | Teacher) & { email: string };
 export type ManagedClass = Classroom & { students: string[] };
+export interface LearningProposal { id:string;teacherId:string;teacherName:string;stationId:string;stationName:string;grade:number;text:string;status:string;createdAt:string; }
 export interface RealClassProgress {
   className:string; academicYear:string; rosterCount:number; linkedCount:number;
   students:Array<{name:string;completedStations:number;totalStamps:number;stations:Array<{stationId:string;completed:boolean;stamp:boolean;completedStages:number;lastVisitedAt:string|null}>}>;
@@ -31,6 +32,10 @@ async function request(path: string, method='GET', data?: unknown) {
 }
 export const authService = {
   current: () => user,
+  async implementations(): Promise<ImplementationRecord[]> { return (await request('/api/teacher/implementations')).records; },
+  async saveImplementation(data: Pick<ImplementationRecord,'classId'|'grade'|'stationId'|'stationName'|'implementationDate'|'session'|'method'|'note'>): Promise<ImplementationRecord> {return (await request('/api/teacher/implementations','POST',data)).record;},
+  async proposals(): Promise<LearningProposal[]> {return (await request('/api/teacher/proposals')).records;},
+  async submitProposal(data: Pick<LearningProposal,'stationId'|'stationName'|'grade'|'text'>): Promise<LearningProposal> {return (await request('/api/teacher/proposals','POST',data)).record;},
   async health(): Promise<AuthHealth> { return await request('/api/health'); },
   async classProgress(classId: string): Promise<RealClassProgress> { return await request('/api/teacher/progress?classId='+encodeURIComponent(classId)); },
   async linkStudentProgress(classId: string,syncCode: string): Promise<void> { await request('/api/teacher/progress','POST',{classId,syncCode}); },

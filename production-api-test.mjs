@@ -20,7 +20,7 @@ test('production HTTP server: Admin, Teacher, GDĐP, one learner sync and class 
  if(method==='DELETE'){docs.delete(key);return response({});}
  const id=method==='POST'?key+'/'+u.searchParams.get('documentId'):key;
  if(method==='POST'&&docs.has(id))return response({error:{message:'Already exists'}},409);
- const data=JSON.parse(options.body);docs.set(id,data);return response(data);};`);
+ const data=JSON.parse(options.body);if(JSON.parse(data.fields.payload.stringValue).stationId==='simulate-storage-failure')return response({error:{message:'Permission denied',status:'PERMISSION_DENIED'}},403);docs.set(id,data);return response(data);};`);
  const child=spawn(process.execPath,['--import',preload,'content-server.mjs'],{cwd:new URL('.',import.meta.url),env:{...process.env,PORT:'0',CHAM_ENV:'test',AUTH_FIRESTORE_PROJECT:'test-project',AUTH_FIRESTORE_DATABASE:'test-db',AUTH_ADMIN_EMAIL:'owner@example.com',AUTH_ADMIN_PASSWORD:'Synthetic-owner-password-42',AUTH_LOCAL_HTTP:'true',K_SERVICE:'',CONTENT_DATA_DIR:join(dir,'data')},stdio:['ignore','pipe','pipe']});
  let logs='';child.stderr.on('data',x=>{logs+=x;});
  try{
@@ -50,7 +50,29 @@ test('production HTTP server: Admin, Teacher, GDĐP, one learner sync and class 
  const report=await call('/api/teacher/progress?classId='+id,'GET',undefined,teacher.cookie);assert.equal(report.data.linkedCount,1);assert.equal(report.data.students[0].completedStations,1);
  assert.equal((await call('/api/teacher/classes','PUT',{...roster,students:[...roster.students,'Bạn giả lập thứ hai']},teacher.cookie)).status,200);
  assert.equal((await call('/api/teacher/classes','GET',undefined,teacher.cookie)).data.classes[0].totalStudents,2);
+ // Server-side teaching logs and proposals, including author and class isolation.
+ const implementation={classId:id,grade:2,stationId:'hoi-an',stationName:'Hội An',implementationDate:'2026-10-09',session:'Tiết 1',method:'Dạy trực tiếp trên lớp',note:'Lớp học thử',teacherId:'spoofed-id',teacherName:'Giả mạo'};
+ assert.equal((await call('/api/teacher/implementations','POST',implementation)).status,401);
+ assert.equal((await call('/api/teacher/implementations','POST',{...implementation,implementationDate:'2026-02-30'},teacher.cookie)).status,400);
+ assert.equal((await call('/api/teacher/implementations','POST',{...implementation,grade:3},teacher.cookie)).status,400);
+ const recorded=await call('/api/teacher/implementations','POST',implementation,teacher.cookie);assert.equal(recorded.status,200);
+ assert.equal(recorded.data.record.teacherId,teacher.data.user.id);assert.equal(recorded.data.record.className,'2/24');
+ assert.equal((await call('/api/teacher/implementations','GET',undefined,admin.cookie)).data.records.length,1);
+ const proposal={stationId:'hoi-an',stationName:'Hội An',grade:2,text:'Đề nghị bổ sung hình ảnh',teacherId:'spoofed-id'};
+ assert.equal((await call('/api/teacher/proposals','POST',{...proposal,text:' '},teacher.cookie)).status,400);
+ assert.equal((await call('/api/teacher/proposals','POST',proposal,teacher.cookie)).status,200);
+ assert.equal((await call('/api/teacher/proposals','POST',{...proposal,stationId:'simulate-storage-failure'},teacher.cookie)).status,503);
+ const received=await call('/api/teacher/proposals','GET',undefined,admin.cookie);
+ assert.equal(received.data.records[0].text,proposal.text);assert.equal(received.data.records[0].teacherId,teacher.data.user.id);
+ assert.equal((await call('/api/admin/users','POST',{email:'second@example.com',name:'GV thứ hai',password:'Synthetic-second-password-42'},admin.cookie)).status,200);
+ const second=await call('/api/auth/login','POST',{email:'second@example.com',password:'Synthetic-second-password-42'});
+ assert.equal((await call('/api/teacher/implementations','POST',implementation,second.cookie)).status,403);
+ assert.equal((await call('/api/teacher/implementations','GET',undefined,second.cookie)).data.records.length,0);
+ assert.equal((await call('/api/teacher/proposals','GET',undefined,second.cookie)).data.records.length,0);
  assert.equal((await call('/api/auth/logout','POST',{},teacher.cookie)).status,200);
  assert.equal((await call('/api/teacher/classes','GET',undefined,teacher.cookie)).status,401);
+ const again=await call('/api/auth/login','POST',{email:'teacher@example.com',password:'Synthetic-teacher-password-42'});
+ assert.equal((await call('/api/teacher/implementations','GET',undefined,again.cookie)).data.records.length,1);
+ assert.equal((await call('/api/teacher/proposals','GET',undefined,again.cookie)).data.records.length,1);
  }catch(error){error.message+='\nServer stderr: '+logs;throw error;}finally{child.kill();await new Promise(resolve=>child.exitCode!==null?resolve():child.once('exit',resolve));await rm(dir,{recursive:true,force:true});}
 });

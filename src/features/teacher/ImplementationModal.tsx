@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Station, ImplementationMethod } from '../../types';
+import React, { useEffect, useState } from 'react';
+import { Station, ImplementationMethod, Classroom } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { DEMO_CLASSROOMS } from '../../data/mockUsers';
 import { implementationService } from '../../services/ImplementationService';
+import { authService } from '../../services/AuthService';
 import { audioService } from '../../services/AudioService';
 import { CheckCircle2, Calendar, BookOpen, Clock, FileText, X } from 'lucide-react';
 
@@ -23,39 +24,33 @@ export const ImplementationModal: React.FC<Props> = ({ station, onClose, onSucce
   const [note, setNote] = useState<string>('');
   const [isSaved, setIsSaved] = useState<boolean>(false);
 
-  const availableClasses = DEMO_CLASSROOMS.filter(c => c.grade === currentGrade);
+  const isDemo=currentUser?.id==='teacher-demo';
+  const [availableClasses,setAvailableClasses]=useState<Classroom[]>([]);
+  const [busy,setBusy]=useState(false),[error,setError]=useState('');
+  useEffect(()=>{let active=true;
+    const load=isDemo?Promise.resolve(DEMO_CLASSROOMS):authService.classes();
+    void load.then(list=>{if(!active)return;const matching=list.filter(c=>c.grade===station.grade);setAvailableClasses(matching);setClassId(matching[0]?.id||'');}).catch(e=>{if(active)setError(e.message);});
+    return()=>{active=false;};
+  },[currentUser?.id,station.grade]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    audioService.playSfx('correct');
-
-    const selectedClass = availableClasses.find(c => c.id === classId) || availableClasses[0];
-
-    implementationService.addRecord({
-      teacherId: teacher?.id || 'teacher-tuyet',
-      teacherName: teacher?.name || 'Cô Trương Sinh Tuyết',
-      stationId: station.id,
-      stationName: station.titleVi,
-      classId: selectedClass.id,
-      className: selectedClass.name,
-      grade: currentGrade,
-      implementationDate: date,
-      session,
-      method,
-      note,
-    });
-
-    setIsSaved(true);
-    setTimeout(() => {
-      onSuccess();
-    }, 1200);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();if(busy)return;setError('');
+    const selectedClass=availableClasses.find(c=>c.id===classId);
+    if(!selectedClass){setError('Tạo lớp đúng khối tại mục Lớp học trước khi ghi nhận.');return;}
+    setBusy(true);
+    try{
+      const data={stationId:station.id,stationName:station.titleVi,classId:selectedClass.id,className:selectedClass.name,grade:station.grade,implementationDate:date,session,method,note};
+      if(isDemo)implementationService.addRecord({...data,teacherId:teacher.id,teacherName:teacher.name});
+      else await authService.saveImplementation(data);
+      audioService.playSfx('correct');setIsSaved(true);onSuccess();
+    }catch(e){setError((e as Error).message);}finally{setBusy(false);}
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
       <div className="w-full max-w-lg bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-100 relative">
         <button
-          onClick={onClose}
+          disabled={busy} onClick={onClose}
           className="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center justify-center text-sm font-bold transition"
         >
           <X className="w-4 h-4" />
@@ -69,7 +64,7 @@ export const ImplementationModal: React.FC<Props> = ({ station, onClose, onSucce
               </span>
               <h3 className="text-xl font-black text-slate-900 mt-2">{station.titleVi}</h3>
               <p className="text-xs text-slate-500 mt-0.5">
-                Ghi nhận nhật ký triển khai bài học trong phiên bản demo của giáo viên.
+                {isDemo?'Bản trải nghiệm: nhật ký chỉ lưu trên thiết bị.':'Nhật ký được lưu trên máy chủ và quản trị có thể xem.'}
               </p>
             </div>
 
@@ -91,14 +86,15 @@ export const ImplementationModal: React.FC<Props> = ({ station, onClose, onSucce
               {/* Class Selection */}
               <div>
                 <label className="font-bold text-slate-700 block mb-1">Lớp học thực hiện:</label>
-                <select
+                <select required disabled={busy || !availableClasses.length}
                   value={classId}
                   onChange={(e) => setClassId(e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-800 font-medium bg-white"
                 >
+                  {!availableClasses.length&&<option value="">Chưa có lớp đúng khối</option>}
                   {availableClasses.map((cls) => (
                     <option key={cls.id} value={cls.id}>
-                      {cls.name} ({cls.totalStudents} học sinh)
+                      {cls.name} · {cls.academicYear} ({cls.totalStudents} học sinh)
                     </option>
                   ))}
                 </select>
@@ -138,26 +134,27 @@ export const ImplementationModal: React.FC<Props> = ({ station, onClose, onSucce
                 <textarea
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
-                  rows={2}
+                  rows={2} maxLength={3000}
                   placeholder="Ghi nhận sự hào hứng, sản phẩm học tập hoặc tình huống thực tế của học sinh..."
                   className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-slate-800 font-medium"
                 />
               </div>
             </div>
 
+            {error&&<p role="alert" className="text-sm text-rose-700">{error}</p>}
             <div className="pt-2 flex gap-3">
               <button
                 type="button"
-                onClick={onClose}
+                disabled={busy} onClick={onClose}
                 className="flex-1 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition"
               >
                 Hủy
               </button>
               <button
-                type="submit"
+                type="submit" disabled={busy || !availableClasses.length}
                 className="flex-2 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-md shadow-emerald-600/30 transition active:scale-95"
               >
-                XÁC NHẬN ĐÃ TRIỂN KHAI
+                {busy?'ĐANG LƯU…':'XÁC NHẬN ĐÃ TRIỂN KHAI'}
               </button>
             </div>
           </form>

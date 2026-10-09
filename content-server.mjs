@@ -248,10 +248,19 @@ const server = createServer(async (req,res) => {
       // The school's supplied 42-entry catalog is available to demos even before
       // Firestore publishing. Published Admin data always takes precedence.
       if (!cloudStore) return json(res,200,{...bundledGddpCatalog,published:false,source:'bundled-reference'});
-      const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
-      if (saved?.published) return json(res,200,{...saved.catalog,published:true,updatedAt:saved.updatedAt});
-      if (saved?.previousPublishedCatalog) return json(res,200,{...saved.previousPublishedCatalog,published:true});
-      return json(res,200,{...bundledGddpCatalog,published:false,source:'bundled-reference'});
+      try {
+        const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
+        if (saved?.published) return json(res,200,{...saved.catalog,published:true,updatedAt:saved.updatedAt});
+        if (saved?.previousPublishedCatalog) return json(res,200,{...saved.previousPublishedCatalog,published:true});
+        return json(res,200,{...bundledGddpCatalog,published:false,source:'bundled-reference'});
+      } catch (error) {
+        // Public read-only demo must remain usable during Firestore quota outages.
+        // Never cache this fallback as a published Admin catalog or write to Firestore.
+        if (error?.storageCode === 'RESOURCE_EXHAUSTED' || (error?.status === 503 && /Firestore.*hạn mức/i.test(error?.message || ''))) {
+          return json(res,200,{...bundledGddpCatalog,published:false,source:'bundled-quota-fallback',temporaryFallback:true});
+        }
+        throw error;
+      }
     }
     if (pathname === '/api/admin/gddp/catalog' && req.method === 'GET') {
       await auth.requireAdmin(req);

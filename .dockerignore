@@ -2,7 +2,8 @@ node_modules
 dist
 .git
 .github
-content-data
+content-data/*
+!content-data/gddp-2026-2027.json
 *.log
 .env
 .env.*

@@ -8,18 +8,11 @@ import path from 'node:path';
 
 const dataDir = path.resolve(process.env.CONTENT_DATA_DIR || './content-data');
 const dataFile = path.join(dataDir, 'stations.json');
-const LEGACY_FIRESTORE_DATABASE = 'ai-studio-chmnnghnhtrnhskh-71b45c71-26f3-4479-9372-306c6b35245a';
 const DEFAULT_FIRESTORE_DATABASE = 'ai-studio-71b45c71-26f3-4479-9372-306c6b35245a';
-const configuredFirestoreDatabase = process.env.AUTH_FIRESTORE_DATABASE || DEFAULT_FIRESTORE_DATABASE;
-const firestoreDatabase = configuredFirestoreDatabase === LEGACY_FIRESTORE_DATABASE
-  ? DEFAULT_FIRESTORE_DATABASE
-  : configuredFirestoreDatabase;
-const firestoreCandidates = [
-  firestoreDatabase,
-  DEFAULT_FIRESTORE_DATABASE,
-  '(default)',
-  LEGACY_FIRESTORE_DATABASE,
-];
+// Firebase Console confirms this is the real database used by CHẠM ĐÀ NẴNG.
+// Do not fall back to (default) or the legacy AI Studio database name.
+const firestoreDatabase = DEFAULT_FIRESTORE_DATABASE;
+const firestoreCandidates = [DEFAULT_FIRESTORE_DATABASE];
 const cloudStore = process.env.AUTH_FIRESTORE_PROJECT
   ? firestoreStoreWithFallback(process.env.AUTH_FIRESTORE_PROJECT, firestoreCandidates)
   : null;

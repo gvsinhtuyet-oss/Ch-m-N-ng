@@ -33,4 +33,5 @@ export const gddpService = {
   adminCatalog: () => call<{published:boolean;catalog:GddpCatalog}>('/api/admin/gddp/catalog'),
   saveDraft: (data: GddpCatalog) => call<{saved:boolean;records:number}>('/api/admin/gddp/catalog','PUT',data),
   publish: () => call<{published:boolean;records:number}>('/api/admin/gddp/publish','POST',{}),
+  suggest: (id: string) => call<{outcomes:string;teachingSuggestion:string;reviewRequired:boolean}>('/api/admin/gddp/suggest','POST',{id}),
 };

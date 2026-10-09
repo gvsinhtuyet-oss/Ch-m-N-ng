@@ -46,6 +46,9 @@ jobs:
       - name: GDĐP catalog validation tests
         run: node --test gddp-catalog-test.mjs gddp-ai-test.mjs
 
+      - name: Five-grade teacher lesson isolation tests
+        run: npx tsx --test gddp-teacher-five-grades-test.ts
+
       - name: Content storage tests
         run: node --test content-storage-test.mjs
 

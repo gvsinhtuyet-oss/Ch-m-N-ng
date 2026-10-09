@@ -273,7 +273,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       throw fail(415,'Yêu cầu phải dùng JSON.');
   }
   async function handle(req,res,pathname,body,json) {
-    if(!pathname.startsWith('/api/auth/') && pathname !== '/api/admin/users' && pathname !== '/api/teacher/classes') return false;
+    if(!pathname.startsWith('/api/auth/') && pathname !== '/api/admin/users' && pathname !== '/api/teacher/classes' && pathname !== '/api/teacher/progress') return false;
     if(!['GET','POST','PUT'].includes(req.method)) { json(res,405,{error:'Method not allowed'}); return true; }
     if(req.method !== 'GET') sameOrigin(req);
 

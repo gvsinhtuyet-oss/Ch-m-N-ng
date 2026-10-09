@@ -140,7 +140,9 @@ export const TeacherDashboard: React.FC = () => {
             <div>
               <h2 className="text-xl font-black text-slate-900">Danh Mục Bài Dạy Khối {currentGrade}</h2>
               <p className="text-xs text-slate-500">
-                Mỗi khối hiện có 01 bài demo mở; 04 bài còn lại đang tiếp tục hoàn thiện.
+                {currentGrade === 2
+                  ? 'Khối 2 đã mở đủ 05 bài để trình diễn hành trình dự thi.'
+                  : 'Khối này hiện mở 01 bài demo; các bài còn lại đang tiếp tục hoàn thiện.'}
               </p>
             </div>
 
@@ -386,8 +388,12 @@ export const TeacherDashboard: React.FC = () => {
 
             <div className="p-5 rounded-2xl bg-amber-50 border border-amber-100">
               <span className="text-xs font-bold text-amber-800 uppercase">Bài demo đang mở</span>
-              <div className="text-xl font-black text-amber-900 mt-1">{currentDemoStation?.titleVi || 'Đang cập nhật'}</div>
-              <p className="text-[11px] text-amber-700 mt-1">01 bài demo/khối để kiểm thử luồng dạy – học</p>
+              <div className="text-xl font-black text-amber-900 mt-1">
+                {currentGrade === 2 ? '05 bài đã sẵn sàng' : (currentDemoStation?.titleVi || 'Đang cập nhật')}
+              </div>
+              <p className="text-[11px] text-amber-700 mt-1">
+                {currentGrade === 2 ? 'Đủ 5 trạm Khối 2 để trình diễn luồng dạy – học' : '01 bài demo/khối để kiểm thử luồng dạy – học'}
+              </p>
             </div>
           </div>
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Bot, Compass, MapPin, MessageCircle, Send, Sparkles, X } from 'lucide-react';
+import { ALL_25_STATIONS } from '../../data/allStations';
 import { ExplorationHotspot, Station } from '../../types';
 import {
   getDanangAssistantQuickPrompts,
@@ -53,7 +54,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     if (open) endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [messages, open]);
 
-  const context = useMemo(() => ({ station, hotspot }), [station, hotspot]);
+  const context = useMemo(() => ({ station, hotspot, stations: ALL_25_STATIONS }), [station, hotspot]);
   const quickPrompts = useMemo(() => getDanangAssistantQuickPrompts(context), [station?.id, hotspot?.id]);
 
   const append = (message: ChatMessage) => {
@@ -65,15 +66,17 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     if (!question) return;
 
     append({ id: `q-${Date.now()}`, role: 'student', text: question });
-    const result = retrieveDanangAssistantAnswer(question, context);
-    window.setTimeout(() => {
+    try {
+      const result = retrieveDanangAssistantAnswer(question, context);
       append({
         id: `a-${Date.now()}`,
         role: 'assistant',
         text: result.answer,
         relatedStationTitle: result.relatedStationTitle,
       });
-    }, 80);
+    } catch {
+      append({ id: `error-${Date.now()}`, role: 'assistant', text: 'Mình chưa đọc được nội dung này. Bạn thử hỏi lại hoặc chọn một câu hỏi gợi ý nhé!' });
+    }
     setInput('');
   };
 
@@ -200,7 +203,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                 value={input}
                 onChange={event => setInput(event.target.value.slice(0, 220))}
                 onKeyDown={event => {
-                  if (event.key === 'Enter' && !event.shiftKey) {
+                  if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
                     event.preventDefault();
                     ask(input);
                   }

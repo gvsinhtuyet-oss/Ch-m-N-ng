@@ -201,12 +201,18 @@ export const DANANG_DIALECT_NORMALIZATION: Record<string, string> = {
 export const DANANG_ASSISTANT_HELP_RESPONSE =
   'Mình có thể giúp bạn khám phá Đà Nẵng đó! 😊\nBạn có thể hỏi mình về:\n\n- nghĩa của từ khó hoặc từ địa phương,\n- một địa danh ở đâu,\n- chuyện lịch sử liên quan đến bài học,\n- nhân vật, di tích, danh thắng,\n- văn hóa, làng nghề, sông núi,\n- hoặc hỏi “điều này liên quan gì đến bài đang học?”.\n\nNếu bạn đang ở một trạm cụ thể, mình sẽ ưu tiên trả lời theo đúng trạm đó trước nhé. 🌟';
 
+// Compile phrase boundaries once; keep Vietnamese words such as “chiếu” intact.
+const DIALECT_RULES = Object.entries(DANANG_DIALECT_NORMALIZATION)
+  .sort(([a], [b]) => b.length - a.length)
+  .map(([local, standard]) => {
+    const escaped = local.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return { pattern: new RegExp(`(?<![\\p{L}\\p{N}])${escaped}(?![\\p{L}\\p{N}])`, 'gu'), standard };
+  });
+
 export function normalizeDanangDialect(input: string): string {
   let normalized = input.trim().toLowerCase();
-  Object.entries(DANANG_DIALECT_NORMALIZATION)
-    .sort(([a], [b]) => b.length - a.length)
-    .forEach(([local, standard]) => {
-      normalized = normalized.replaceAll(local, standard);
-    });
+  for (const { pattern, standard } of DIALECT_RULES) {
+    normalized = normalized.replace(pattern, standard);
+  }
   return normalized;
 }

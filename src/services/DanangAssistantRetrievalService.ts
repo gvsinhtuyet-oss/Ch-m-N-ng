@@ -18,6 +18,7 @@ export type AssistantRetrievalLayer =
 export interface AssistantRetrievalContext {
   station?: Station | null;
   hotspot?: ExplorationHotspot | null;
+  stations?: Station[];
 }
 
 export interface AssistantRetrievalResult {
@@ -101,11 +102,19 @@ const UNKNOWN_RESPONSE =
 const removeDiacritics = (value: string) =>
   value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
 
-const normalizeForSearch = (value: string) =>
-  removeDiacritics(normalizeDanangDialect(value))
+// Cache normalized text only, never answers: teacher edits are still read on every question.
+const searchTextCache = new Map<string, string>();
+const normalizeForSearch = (value: string) => {
+  const cached = searchTextCache.get(value);
+  if (cached !== undefined) return cached;
+  const normalized = removeDiacritics(normalizeDanangDialect(value))
     .replace(/[^a-z0-9\s]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+  if (searchTextCache.size >= 2000) searchTextCache.clear();
+  searchTextCache.set(value, normalized);
+  return normalized;
+};
 
 const words = (value: string) =>
   normalizeForSearch(value)
@@ -118,6 +127,7 @@ const QUESTION_STOPWORDS = new Set([
   'la', 'gi', 'o', 'dau', 'tai', 'sao', 'vi', 'co', 'khong', 'ai',
   'cai', 'nay', 'do', 'ay', 'dung', 'de', 'lam', 'nhu', 'the', 'nao',
   'cho', 'minh', 'em', 'ban', 'noi', 'ke', 've',
+  'hay', 'toi', 'biet', 'tim', 'hieu', 'duoc', 'nhung', 'cac', 'mot', 'nhe', 'nha', 'voi', 'xin', 'hoi', 'dac', 'biet',
 ]);
 
 const meaningfulWords = (value: string) =>
@@ -248,10 +258,12 @@ const makeResult = (
 /**
  * Bộ máy tra cứu cục bộ của “Trợ lý khám phá Đà Nẵng”.
  *
- * Thứ tự bắt buộc:
+ * Nguồn: thuyết minh đang dùng trong app và từ điển nền.
+ * Truy vấn nêu địa danh cụ thể được ưu tiên trước ngữ cảnh màn hình.
+ * Thứ tự tra cứu:
  * 1. hotspot đang xem;
  * 2. trạm hiện tại;
- * 3. 5 trạm demo;
+ * 3. nội dung các trạm được truyền từ app;
  * 4. kho kiến thức chung;
  * 5. không có dữ liệu -> không đoán.
  *
@@ -276,9 +288,15 @@ export function retrieveDanangAssistantAnswer(
   const currentHotspot = context.hotspot || undefined;
   const currentScope = stationScopeFromId(currentStation?.id);
 
+  const availableStations = unique([...(context.stations || []), ...(currentStation ? [currentStation] : [])]);
+  const explicitEntry = searchLexicon(query, entry => entry.stations.some(scope => scope !== 'common'));
+  const namedStation = DEMO_STATIONS.find(meta => meta.aliases.some(alias => tokenScore(query, alias) >= 105));
+  const namesOtherScope = (namedStation && namedStation.stationId !== currentStation?.id) || explicitEntry && explicitEntry.score >= 105 && currentScope && !explicitEntry.entry.stations.includes(currentScope);
+  const namedOtherHotspot = currentStation?.hotspots.some(h => h.id !== currentHotspot?.id && tokenScore(query, h.titleVi.replace(/^\d+\.\s*/, '')) >= 105);
+
   // 1) HOTSPOT đang xem: hiểu cả “cái này/nơi này/điều này”.
-  if (currentHotspot) {
-    if (usesDeicticReference(query)) {
+  if (currentHotspot && !namesOtherScope && !namedOtherHotspot) {
+    if (usesDeicticReference(query) && (!explicitEntry || explicitEntry.score < 105)) {
       return makeResult(
         'hotspot',
         normalizedQuery,
@@ -319,11 +337,34 @@ export function retrieveDanangAssistantAnswer(
     }
   }
 
+  // Read current teacher-edited station content, including stations outside the five demo scopes.
+  const candidates = availableStations.flatMap(station => station.hotspots.map(hotspot => {
+    const title = hotspot.titleVi.replace(/^\d+\.\s*/, '');
+    const titleScore = Math.max(tokenScore(query, title), hotspot.subtitleVi ? tokenScore(query, hotspot.subtitleVi) : 0);
+    const score = Math.max(hotspotCorpusScore(query, hotspot), titleScore);
+    return { station, hotspot, score, titleScore };
+  })).sort((a, b) => b.score - a.score || Number(b.station.id === currentStation?.id) - Number(a.station.id === currentStation?.id));
+  const best = candidates[0];
+  const queryTerms = meaningfulWords(query);
+  // Require a strong match before returning a passage from the lesson.
+  if (best && queryTerms.length && best.score >= 88 && (!explicitEntry || explicitEntry.score < 105 || best.titleScore >= 105)) {
+    const sentences = [best.hotspot.narrationVi, best.hotspot.keyFactVi]
+      .filter(Boolean).flatMap(text => text.split(/(?<=[.!?])\s+/));
+    const ranked = sentences.map((text, index) => ({text, index, score: longTextScore(query, text)}))
+      .sort((a, b) => b.score - a.score);
+    const selected = ranked.filter(item => item.score >= 72).slice(0, 3).sort((a, b) => a.index - b.index);
+    const text = (selected.length ? selected.map(item => item.text) : sentences.slice(0, 3)).join(' ');
+    if (text.trim()) return makeResult(best.station.id === currentStation?.id ? 'station' : 'five-stations', normalizedQuery,
+      `**${best.hotspot.titleVi.replace(/^\d+\.\s*/, '')}**: ${text}`, 'high', {
+        relatedStationId: best.station.id, relatedStationTitle: best.station.titleVi,
+      });
+  }
+
   // 2) TRẠM hiện tại: chỉ tìm trong từ vựng của đúng trạm trước.
-  if (currentStation && currentScope) {
+  if (currentStation && !namesOtherScope) {
     const local = searchLexicon(
       query,
-      entry => entry.stations.includes(currentScope),
+      entry => Boolean(currentScope) && entry.stations.includes(currentScope!),
     );
 
     if (local && local.score >= 68) {
@@ -427,6 +468,10 @@ export function getDanangAssistantQuickPrompts(context: AssistantRetrievalContex
     'ngu-hanh-son': ['Ngũ Hành Sơn có gì đặc biệt?', 'Ma nhai là gì?', 'Làng đá Non Nước là gì?'],
     'hoi-an': ['Hội An được UNESCO công nhận năm nào?', 'Chùa Cầu là gì?', 'Làng gốm Thanh Hà là gì?'],
   };
+
+  if (!scope && context.station) {
+    return context.station.hotspots.slice(0, 3).map(h => `${h.titleVi.replace(/^\d+\.\s*/, '')} có gì đặc biệt?`);
+  }
 
   return (scope && promptsByScope[scope]) || [
     'Từ này nghĩa là gì?',

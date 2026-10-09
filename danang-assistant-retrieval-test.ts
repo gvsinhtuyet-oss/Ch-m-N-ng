@@ -143,3 +143,54 @@ test('15 - mô phỏng 1000 lượt hỏi liên tiếp không có bộ đếm ha
     assert.equal(result.found, true);
   }
 });
+
+test('16 - mọi trạm khối 2 đều tra cứu được thuyết minh hiện có', async () => {
+  const { GRADE_2_STATIONS } = await import('./src/data/grade2Stations');
+  for (const station of GRADE_2_STATIONS) {
+    for (const hotspot of station.hotspots) {
+      const question = `${hotspot.titleVi.replace(/^\d+\.\s*/, '')} có gì đặc biệt?`;
+      const result = retrieveDanangAssistantAnswer(question, { station, stations: GRADE_2_STATIONS });
+      assert.equal(result.found, true, question);
+      assert.ok(result.answer.length > 30, question);
+    }
+  }
+});
+
+test('17 - dữ liệu giáo viên mới cập nhật được dùng ngay ở trạm ngoài demo', () => {
+  const station = structuredClone(hoiAn);
+  station.id = 'g2-custom';
+  station.hotspots = [{ ...hoiAn.hotspots[0], id: 'updated', titleVi: 'Vườn học tập',
+    narrationVi: 'Vườn học tập có khu gieo hạt cho học sinh.', keyFactVi: 'Học sinh chăm sóc cây mỗi tuần.' }];
+  const result = retrieveDanangAssistantAnswer('Vườn học tập có gì?', { station });
+  assert.equal(result.found, true);
+  assert.match(result.answer, /gieo hạt/);
+});
+
+test('18 - hỏi địa danh khác không bị hotspot đang xem lấn át', () => {
+  const hotspot = hoiAn.hotspots[0];
+  const result = retrieveDanangAssistantAnswer('Ở đây Thành Điện Hải là gì?', { station: hoiAn, hotspot, stations: [thanhDienHai] });
+  assert.match(result.answer, /Điện Hải/);
+});
+
+test('19 - hỏi chéo trạm ngoài demo đọc được nội dung học liệu', () => {
+  const station = structuredClone(hoiAn);
+  station.id = 'g2-new';
+  station.hotspots = [{ ...hoiAn.hotspots[0], titleVi: 'Giàn dệt chiếu',
+    narrationVi: 'Giàn dệt dùng để dệt các sợi cói thành tấm chiếu.', keyFactVi: 'Người thợ sử dụng giàn dệt.' }];
+  const result = retrieveDanangAssistantAnswer('Giàn dệt chiếu là gì?', { stations: [station] });
+  assert.equal(result.found, true);
+  assert.match(result.answer, /sợi cói/);
+});
+
+
+test('20 - chuẩn hóa phương ngữ không làm hỏng từ chiếu', async () => {
+  const { normalizeDanangDialect } = await import('./src/data/danangAssistantLexicon');
+  assert.equal(normalizeDanangDialect('Chiếu Cẩm Nê'), 'chiếu cẩm nê');
+});
+
+ test('21 - câu hỏi không dấu tìm được nội dung làng chiếu', async () => {
+  const { GRADE_2_STATIONS } = await import('./src/data/grade2Stations');
+  const result = retrieveDanangAssistantAnswer('nguyen lieu lam chieu la gi', { stations: GRADE_2_STATIONS });
+  assert.equal(result.found, true);
+  assert.match(result.answer, /cói/i);
+});

@@ -31,10 +31,10 @@ const GRADE_TREASURES: Record<number, { name: string; icon: string }> = {
 
 function buildMapNodes(station: Station) {
   if (station.journeyMap?.summaryNodes?.length) {
-    return station.journeyMap.summaryNodes.slice(0, 4);
+    return station.journeyMap.summaryNodes;
   }
 
-  return station.hotspots.slice(0, 4).map((hotspot, index) => ({
+  return station.hotspots.map((hotspot, index) => ({
     id: hotspot.id,
     titleVi: hotspot.titleVi.replace(/^\d+\.\s*/, ''),
     textVi: hotspot.keyFactVi,

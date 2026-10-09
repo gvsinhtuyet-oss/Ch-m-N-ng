@@ -749,6 +749,27 @@ export const LandingView: React.FC = () => {
               }}>
                 <h4 className="font-black text-lg">{adminLogin ? 'Đăng nhập quản trị' : 'Đăng nhập giáo viên'}</h4>
                 <p className="text-slate-500">Dùng email và mật khẩu được nhà trường cấp. Quyền truy cập được xác định theo tài khoản.</p>
+                <button
+                  type="button"
+                  disabled={staffBusy}
+                  onClick={async () => {
+                    setStaffBusy(true);
+                    setLoginError('');
+                    try {
+                      await enterTeacherDemo();
+                      setStaffPassword('');
+                      setShowRolePicker(false);
+                    } catch (error) {
+                      setLoginError((error as Error).message);
+                    } finally {
+                      setStaffBusy(false);
+                    }
+                  }}
+                  className="w-full rounded-xl bg-sky-700 p-3 font-bold text-white hover:bg-sky-800 disabled:opacity-50"
+                >
+                  Vào trải nghiệm miễn phí — không cần tài khoản
+                </button>
+                <p className="text-xs text-slate-500">Mở không gian giáo viên với dữ liệu minh họa để xem học liệu và trình chiếu. Không lưu thay đổi vào kho chung.</p>
                 <div className={`rounded-xl border px-3 py-2 text-xs font-bold ${
                   staffHealth === 'ready'
                     ? 'border-emerald-200 bg-emerald-50 text-emerald-700'

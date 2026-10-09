@@ -105,13 +105,17 @@ try {
  assert.equal((await call('/api/protected','POST',{},admin.cookie,'https://attacker.example')).status,403);
  for(let i=0;i<5;i++)await call('/api/auth/login','POST',{email:'missing@example.com',password:'wrong'});
  assert.equal((await call('/api/auth/login','POST',{email:'missing@example.com',password:'wrong'})).status,429);
- const restored=createAuth({store,adminEmail:'owner@example.com',adminPassword:undefined,secureCookie:false});
- await assert.rejects(restored.requireAdmin({headers:{cookie:admin.cookie}}),{status:401});
- auth=createAuth({store,adminEmail:'owner@example.com',adminPassword:'Rotated-owner-secret-42',secureCookie:false});
- assert.equal((await call('/api/auth/login','POST',{email:'teacher@example.com',password:'Rotated-owner-secret-42'})).status,401);
- const recovered=await call('/api/auth/login','POST',{email:'owner@example.com',password:'Rotated-owner-secret-42'});
- assert.equal(recovered.status,200);assert.equal(recovered.body.user.role,'admin');
+ // Bootstrap secret is used only to create the first account, never to replace its stored password.
+ auth=createAuth({store,adminEmail:'owner@example.com',adminPassword:undefined,secureCookie:false});
+ assert.equal((await call('/api/auth/session','GET',undefined,admin.cookie)).body.user.role,'admin');
+ assert.equal((await call('/api/auth/login','POST',{email:'owner@example.com',password:'Strong-test-owner-42'})).status,200);
+ assert.equal((await call('/api/auth/password','POST',{currentPassword:'Strong-test-owner-42',password:'New-owner-password-42'},admin.cookie)).status,200);
  assert.equal((await call('/api/auth/session','GET',undefined,admin.cookie)).body.user,null);
+ auth=createAuth({store,adminEmail:'owner@example.com',adminPassword:'Strong-test-owner-42',secureCookie:false});
  assert.equal((await call('/api/auth/login','POST',{email:'owner@example.com',password:'Strong-test-owner-42'})).status,401);
+ const ownerChanged=await call('/api/auth/login','POST',{email:'owner@example.com',password:'New-owner-password-42'});
+ assert.equal(ownerChanged.status,200);
+ assert.equal((await call('/api/auth/logout','POST',{},ownerChanged.cookie)).status,200);
+ assert.equal((await call('/api/auth/session','GET',undefined,ownerChanged.cookie)).body.user,null);
  console.log('PASS: login, roles, duplicate, lock, reset, password change, logout, origin, throttle, persistent sessions; one student progress linked, refreshed and access-isolated.');
 }finally{await new Promise(resolve=>server.close(resolve));}

@@ -211,39 +211,54 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         syncCode = saved.syncCode.trim();
       }
     } catch {}
-    if (!syncCode) return;
 
     let timer: number | undefined;
     let stopped = false;
     let lastPayload = '';
+    let inFlight = false;
+    let failedAttempts = 0;
     const push = async () => {
       if (stopped || !navigator.onLine) return;
+      if (inFlight) { schedulePush(); return; }
+      inFlight = true;
       try {
+        if (!syncCode) {
+          const student = currentUser as Student;
+          const registered = await studentSyncService.register({id:student.id,name:student.name,className:student.className,grade:student.grade});
+          syncCode = registered.syncCode;
+          if (stopped) return;
+          try { localStorage.setItem('cham_danang_student_profile_v1', JSON.stringify({...registered.profile,syncCode})); } catch {}
+        }
         const records = progressService.getStudentProgressRecords(currentUser.id);
         const payload = JSON.stringify(records);
         if (payload === lastPayload) return;
         const result = await studentSyncService.push(syncCode, records);
         lastPayload = payload;
+        failedAttempts = 0;
         if (!stopped && result?.progress) {
           progressService.mergeStudentProgressRecords(currentUser.id, result.progress);
         }
       } catch {
-        // Giữ dữ liệu cục bộ; lần thay đổi hoặc lần online tiếp theo sẽ thử lại.
-      }
+        // Keep local records and retry a temporary failure without requiring another lesson.
+        failedAttempts++;
+        if (!stopped && failedAttempts <= 3) schedulePush();
+      } finally { inFlight = false; }
     };
     const schedulePush = () => {
       if (timer) window.clearTimeout(timer);
       timer = window.setTimeout(() => void push(), 10_000);
     };
-    const handleOnline = () => schedulePush();
+    const handleOnline = () => { failedAttempts = 0; schedulePush(); };
+    const handleProgress = () => { failedAttempts = 0; schedulePush(); };
 
-    window.addEventListener('cham-progress-changed', schedulePush);
+    window.addEventListener('cham-progress-changed', handleProgress);
     window.addEventListener('online', handleOnline);
+    schedulePush();
 
     return () => {
       stopped = true;
       if (timer) window.clearTimeout(timer);
-      window.removeEventListener('cham-progress-changed', schedulePush);
+      window.removeEventListener('cham-progress-changed', handleProgress);
       window.removeEventListener('online', handleOnline);
     };
   }, [currentUser?.id, role]);

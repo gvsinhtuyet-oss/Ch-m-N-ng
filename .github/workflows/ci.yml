@@ -40,6 +40,9 @@ jobs:
       - name: Production packaging and database isolation tests
         run: node --test deployment-test.mjs production-api-test.mjs
 
+      - name: Student reconnect and pending-sync tests
+        run: node --test student-sync-test.cjs
+
       - name: Authentication tests
         run: node --test auth-test.mjs
 

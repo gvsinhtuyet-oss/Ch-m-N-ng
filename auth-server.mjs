@@ -1,4 +1,4 @@
-import { randomBytes, createHash, createHmac, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto';
+import { randomBytes, createHash, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
 const scrypt = promisify(scryptCallback);
 const hash = value => createHash('sha256').update(value).digest('hex');
@@ -218,30 +218,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
     const raw = rawSessionToken(req);
     return raw ? hash(raw) : '';
   };
-  const ownerUser = () => ({
-    id: hash(owner), email: owner, name: 'Quản trị nhà trường',
-    role: 'admin', active: true, version: 1
-  });
-  const ownerToken = () => {
-    const expiresAt = Date.now() + 8 * 60 * 60 * 1000;
-    const exp = expiresAt.toString(16).padStart(16,'0');
-    const mac = createHmac('sha256', adminPassword).update(owner + ':' + exp).digest('hex').slice(0,48);
-    return exp + mac;
-  };
-  const validOwnerToken = token => {
-    if (typeof token !== 'string' || !/^[a-f0-9]{64}$/.test(token) ||
-        typeof adminPassword !== 'string' || adminPassword.length < 12 || !validEmail(owner)) return false;
-    const exp = token.slice(0,16);
-    const expiresAt = Number.parseInt(exp,16);
-    if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) return false;
-    const expected = createHmac('sha256', adminPassword).update(owner + ':' + exp).digest('hex').slice(0,48);
-    const actual = token.slice(16);
-    return expected.length === actual.length &&
-      timingSafeEqual(Buffer.from(expected,'hex'), Buffer.from(actual,'hex'));
-  };
   async function userFor(req) {
-    const raw = rawSessionToken(req);
-    if (validOwnerToken(raw)) return ownerUser();
     await ready();
     const id=sessionId(req); if(!id) return null;
     const session=await store.get('cham_sessions',id);
@@ -277,24 +254,8 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
     if(!['GET','POST','PUT'].includes(req.method)) { json(res,405,{error:'Method not allowed'}); return true; }
     if(req.method !== 'GET') sameOrigin(req);
 
-    // Emergency owner path: the school administrator can still sign in when
-    // Firestore's free AI quota is temporarily exhausted. The session is
-    // signed server-side and never stores the password in the browser.
     if(pathname === '/api/auth/login' && req.method === 'POST') {
       const data=await body(req), email=emailOf(data.email);
-      const ownerCredentialsMatch =
-        email === owner &&
-        typeof adminPassword === 'string' && adminPassword.length >= 12 && adminPassword.length <= 128 &&
-        typeof data.password === 'string' &&
-        timingSafeEqual(Buffer.from(hash(data.password)), Buffer.from(hash(adminPassword)));
-
-      if (ownerCredentialsMatch) {
-        cookie(res,ownerToken());
-        json(res,200,{user:safeUser(ownerUser())});
-        return true;
-      }
-      if (email === owner) throw fail(401,'Email hoặc mật khẩu chưa đúng.');
-
       try {
         await ready();
         if(!validEmail(email) || typeof data.password !== 'string' || data.password.length > 128)
@@ -314,12 +275,6 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
 
         try {
           let user=await store.get('cham_users',id);
-          if (user?.active && user.role === 'admin' && email === owner &&
-              ownerCredentialsMatch &&
-              !(await matches(data.password,user.passwordHash))) {
-            user={...user,passwordHash:await passwordHash(adminPassword),version:user.version+1};
-            await store.put('cham_users',id,user);
-          }
           if(!user?.active || !(await matches(data.password,user.passwordHash))) {
             const count=(rate?.updatedAt > Date.now()-600000 ? rate.count : 0)+1;
             await store.put('cham_auth_limits',id,{count,updatedAt:Date.now(),until:count>=5 ? Date.now()+60000 : 0});
@@ -343,10 +298,6 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       const user=await userFor(req); json(res,200,{user:user ? safeUser(user) : null}); return true;
     }
     if(pathname === '/api/auth/logout' && req.method === 'POST') {
-      const raw = rawSessionToken(req);
-      if (validOwnerToken(raw)) {
-        cookie(res,'',0); json(res,200,{ok:true}); return true;
-      }
       await ready();
       const id=sessionId(req); if(id) await store.remove('cham_sessions',id);
       cookie(res,'',0); json(res,200,{ok:true}); return true;

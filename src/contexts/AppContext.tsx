@@ -241,15 +241,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   useEffect(() => {
     if (!currentUser || role === 'student' || currentUser.id === 'teacher-demo') return;
     let active = true;
-    const check = async () => {
+    let lastCheckedAt = 0;
+    const check = async (force = false) => {
+      const now = Date.now();
+      if (!force && now - lastCheckedAt < 5 * 60 * 1000) return;
+      lastCheckedAt = now;
       try {
         const user = await authService.restore();
         if (active && !user) { setCurrentUser(null); setCurrentStation(null); setCurrentView('landing'); }
       } catch { /* A connection failure is shown by the next protected action. */ }
     };
-    const timer = window.setInterval(() => void check(), 60000);
-    window.addEventListener('focus', check);
-    return () => { active = false; window.clearInterval(timer); window.removeEventListener('focus', check); };
+    const timer = window.setInterval(() => void check(true), 10 * 60 * 1000);
+    const handleFocus = () => void check(false);
+    window.addEventListener('focus', handleFocus);
+    return () => { active = false; window.clearInterval(timer); window.removeEventListener('focus', handleFocus); };
   }, [currentUser?.id, role]);
 
   useEffect(() => {
@@ -267,11 +272,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
     let timer: number | undefined;
     let stopped = false;
+    let lastPayload = '';
     const push = async () => {
       if (stopped || !navigator.onLine) return;
       try {
         const records = progressService.getStudentProgressRecords(currentUser.id);
+        const payload = JSON.stringify(records);
+        if (payload === lastPayload) return;
         const result = await studentSyncService.push(syncCode, records);
+        lastPayload = payload;
         if (!stopped && result?.progress) {
           progressService.mergeStudentProgressRecords(currentUser.id, result.progress);
         }
@@ -281,13 +290,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     const schedulePush = () => {
       if (timer) window.clearTimeout(timer);
-      timer = window.setTimeout(() => void push(), 700);
+      timer = window.setTimeout(() => void push(), 10_000);
     };
     const handleOnline = () => schedulePush();
 
     window.addEventListener('cham-progress-changed', schedulePush);
     window.addEventListener('online', handleOnline);
-    schedulePush();
 
     return () => {
       stopped = true;

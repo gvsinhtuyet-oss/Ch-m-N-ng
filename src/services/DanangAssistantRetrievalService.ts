@@ -127,7 +127,7 @@ const QUESTION_STOPWORDS = new Set([
   'la', 'gi', 'o', 'dau', 'tai', 'sao', 'vi', 'co', 'khong', 'ai',
   'cai', 'nay', 'do', 'ay', 'dung', 'de', 'lam', 'nhu', 'the', 'nao',
   'cho', 'minh', 'em', 'ban', 'noi', 'ke', 've',
-  'hay', 'toi', 'biet', 'tim', 'hieu', 'duoc', 'nhung', 'cac', 'mot', 'nhe', 'nha', 'voi', 'xin', 'hoi', 'dac', 'biet',
+  'no', 'hay', 'toi', 'biet', 'tim', 'hieu', 'duoc', 'nhung', 'cac', 'mot', 'nhe', 'nha', 'voi', 'xin', 'hoi', 'dac', 'biet',
 ]);
 
 const meaningfulWords = (value: string) =>
@@ -201,11 +201,6 @@ const friendlyDefinition = (entry: AssistantLexiconEntry) => {
   return `${entry.shortDefinition}${suffix}`;
 };
 
-const currentHotspotAnswer = (hotspot: ExplorationHotspot): string => {
-  const title = hotspot.titleVi.replace(/^\d+\.\s*/, '');
-  return `Bạn đang khám phá **${title}** đó 😊 ${hotspot.narrationVi} ${hotspot.keyFactVi}`;
-};
-
 const searchLexicon = (
   query: string,
   predicate: (entry: AssistantLexiconEntry) => boolean,
@@ -219,19 +214,6 @@ const searchLexicon = (
   });
 
   return best;
-};
-
-const stationCorpusScore = (query: string, station: Station): number => {
-  const corpus = [
-    station.titleVi,
-    station.subtitleVi,
-    station.openingMessageVi,
-    station.pedagogyGoals.knowGoalVi,
-    station.pedagogyGoals.understandGoalVi,
-    station.pedagogyGoals.behaviorGoalVi,
-    ...station.hotspots.flatMap(h => [h.titleVi, h.subtitleVi || '', h.narrationVi, h.keyFactVi]),
-  ].join(' ');
-  return longTextScore(query, corpus);
 };
 
 const hotspotCorpusScore = (query: string, hotspot: ExplorationHotspot): number =>
@@ -255,198 +237,117 @@ const makeResult = (
   ...extra,
 });
 
-/**
- * Bộ máy tra cứu cục bộ của “Trợ lý khám phá Đà Nẵng”.
- *
- * Nguồn: thuyết minh đang dùng trong app và từ điển nền.
- * Truy vấn nêu địa danh cụ thể được ưu tiên trước ngữ cảnh màn hình.
- * Thứ tự tra cứu:
- * 1. hotspot đang xem;
- * 2. trạm hiện tại;
- * 3. nội dung các trạm được truyền từ app;
- * 4. kho kiến thức chung;
- * 5. không có dữ liệu -> không đoán.
- *
- * Không gọi Gemini/API, không giới hạn số lượt hỏi.
- */
+// Determine the requested fact before choosing a lesson passage.
+type QuestionIntent = 'definition' | 'location' | 'material' | 'history' | 'purpose' | 'action' | 'feature';
+const questionIntent = (query: string): QuestionIntent => {
+  const q = normalizeForSearch(query);
+  if (/nguyen lieu|vat lieu|lam bang|lam tu/.test(q)) return 'material';
+  if (/o dau|nam o|dia chi|vi tri/.test(q)) return 'location';
+  if (/nam nao|bao gio|khi nao|lich su|ra doi/.test(q)) return 'history';
+  if (/em .*lam gi|nen lam gi|giu gin|bao ve|ung xu/.test(q)) return 'action';
+  if (/tai sao|de lam gi|y nghia|cong dung/.test(q)) return 'purpose';
+  if (/nghia la|la gi|la ai/.test(q)) return 'definition';
+  return 'feature';
+};
+const intentEvidence: Record<QuestionIntent, RegExp> = {
+  definition: /./,
+  location: /nam o|toa lac|dia chi|phuong|xa|huyen|pho|ben|tai |thuoc/,
+  material: /coi|lac|tre|go|dat set|da|soi|nguyen lieu|vat lieu/,
+  history: /[12][0-9]{3}|the ky|xay dung|ra doi|lich su/,
+  purpose: /de|giup|nham|vi|tuong nho|cau mong|y nghia|bao ve/,
+  action: /em|nen|can|khong|giu|bao ve|chap hanh|bo rac/,
+  feature: /./,
+};
+const dialectDefinitionRequested = (query: string, entry: AssistantLexiconEntry) => {
+  // Inspect the original words: dialect normalization erases the word being defined.
+  const q = query.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim();
+  const term = entry.term.toLowerCase();
+  return q === term || new RegExp(`^(?:từ |chữ )?${term} (?:nghĩa là gì|là gì|có nghĩa gì)$`).test(q);
+};
+const concisePassage = (query: string, text: string, intent: QuestionIntent): string => {
+  const sentences = unique(text.split(/(?<=[.!?])\s+/).map(s => s.trim()).filter(Boolean));
+  return sentences.map((text, index) => ({ text, index, score: longTextScore(query, text) }))
+    .filter(item => intentEvidence[intent].test(normalizeForSearch(item.text)))
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, intent === 'feature' ? 3 : 2)
+    .sort((a, b) => a.index - b.index).map(item => item.text).join(' ');
+};
+
 export function retrieveDanangAssistantAnswer(
   rawQuery: string,
   context: AssistantRetrievalContext = {},
 ): AssistantRetrievalResult {
   const query = rawQuery.trim();
   const normalizedQuery = normalizeDanangDialect(query);
-
-  if (!query) {
+  if (!query || looksLikeHelpQuestion(query)) {
     return makeResult('help', normalizedQuery, DANANG_ASSISTANT_HELP_RESPONSE, 'high');
   }
-
-  if (looksLikeHelpQuestion(query)) {
-    return makeResult('help', normalizedQuery, DANANG_ASSISTANT_HELP_RESPONSE, 'high');
+  const dialect = DANANG_ASSISTANT_LEXICON.find(entry =>
+    entry.category === 'phuong-ngu' && dialectDefinitionRequested(query, entry));
+  if (dialect) return makeResult('common', normalizedQuery, friendlyDefinition(dialect), 'high', {
+    matchedTerm: dialect.term, matchedEntryId: dialect.id,
+  });
+  const intent = questionIntent(query);
+  const station = context.station || undefined;
+  const scope = stationScopeFromId(station?.id);
+  const stations = [...new Map([...(context.stations || []), ...(station ? [station] : [])]
+    .map(item => [item.id, item])).values()];
+  // Vocabulary answers are appropriate for definitions only, never for location/material questions.
+  const lexicon = usesDeicticReference(query) && meaningfulWords(query).length === 0 ? null
+    : searchLexicon(query, entry => entry.category !== 'phuong-ngu');
+  if (intent === 'definition' && lexicon && lexicon.score >= 90
+    && [lexicon.entry.term, ...lexicon.entry.aliases].some(term =>
+      normalizeForSearch(query) === normalizeForSearch(term) || words(term).length >= 2 && tokenScore(query, term) >= 105)) {
+    const related = stationMetaFromScope(lexicon.entry.stations.find(s => s !== 'common'));
+    const layer = lexicon.entry.stations.includes('common') ? 'common'
+      : scope && lexicon.entry.stations.includes(scope) ? 'station' : 'five-stations';
+    return makeResult(layer, normalizedQuery, friendlyDefinition(lexicon.entry) + (related && layer === 'five-stations' ? ` Nội dung liên quan đến trạm **${related.title}**.` : ''), 'high', {
+      matchedTerm: lexicon.entry.term, matchedEntryId: lexicon.entry.id,
+      relatedStationId: related?.stationId, relatedStationTitle: related?.title,
+    });
   }
-
-  const currentStation = context.station || undefined;
-  const currentHotspot = context.hotspot || undefined;
-  const currentScope = stationScopeFromId(currentStation?.id);
-
-  const availableStations = unique([...(context.stations || []), ...(currentStation ? [currentStation] : [])]);
-  const explicitEntry = searchLexicon(query, entry => entry.stations.some(scope => scope !== 'common'));
-  const namedStation = DEMO_STATIONS.find(meta => meta.aliases.some(alias => tokenScore(query, alias) >= 105));
-  const namesOtherScope = (namedStation && namedStation.stationId !== currentStation?.id) || explicitEntry && explicitEntry.score >= 105 && currentScope && !explicitEntry.entry.stations.includes(currentScope);
-  const namedOtherHotspot = currentStation?.hotspots.some(h => h.id !== currentHotspot?.id && tokenScore(query, h.titleVi.replace(/^\d+\.\s*/, '')) >= 105);
-
-  // 1) HOTSPOT đang xem: hiểu cả “cái này/nơi này/điều này”.
-  if (currentHotspot && !namesOtherScope && !namedOtherHotspot) {
-    if (usesDeicticReference(query) && (!explicitEntry || explicitEntry.score < 105)) {
-      return makeResult(
-        'hotspot',
-        normalizedQuery,
-        currentHotspotAnswer(currentHotspot),
-        'high',
-      );
-    }
-
-    const hotspotScore = hotspotCorpusScore(query, currentHotspot);
-    const hotspotLexicon = searchLexicon(
-      query,
-      entry =>
-        Boolean(currentScope) &&
-        entry.stations.includes(currentScope as AssistantStationScope) &&
-        scoreEntry(currentHotspot.titleVi + ' ' + query, entry) >= 60,
-    );
-
-    if (hotspotLexicon && hotspotLexicon.score >= 72) {
-      return makeResult(
-        'hotspot',
-        normalizedQuery,
-        friendlyDefinition(hotspotLexicon.entry),
-        hotspotLexicon.score >= 90 ? 'high' : 'medium',
-        {
-          matchedTerm: hotspotLexicon.entry.term,
-          matchedEntryId: hotspotLexicon.entry.id,
-        },
-      );
-    }
-
-    if (hotspotScore >= 72) {
-      return makeResult(
-        'hotspot',
-        normalizedQuery,
-        currentHotspotAnswer(currentHotspot),
-        hotspotScore >= 90 ? 'high' : 'medium',
-      );
-    }
-  }
-
-  // Read current teacher-edited station content, including stations outside the five demo scopes.
-  const candidates = availableStations.flatMap(station => station.hotspots.map(hotspot => {
-    const title = hotspot.titleVi.replace(/^\d+\.\s*/, '');
-    const titleScore = Math.max(tokenScore(query, title), hotspot.subtitleVi ? tokenScore(query, hotspot.subtitleVi) : 0);
-    const score = Math.max(hotspotCorpusScore(query, hotspot), titleScore);
-    return { station, hotspot, score, titleScore };
-  })).sort((a, b) => b.score - a.score || Number(b.station.id === currentStation?.id) - Number(a.station.id === currentStation?.id));
-  const best = candidates[0];
-  const queryTerms = meaningfulWords(query);
-  // Require a strong match before returning a passage from the lesson.
-  if (best && queryTerms.length && best.score >= 88 && (!explicitEntry || explicitEntry.score < 105 || best.titleScore >= 105)) {
-    const sentences = [best.hotspot.narrationVi, best.hotspot.keyFactVi]
-      .filter(Boolean).flatMap(text => text.split(/(?<=[.!?])\s+/));
-    const ranked = sentences.map((text, index) => ({text, index, score: longTextScore(query, text)}))
-      .sort((a, b) => b.score - a.score);
-    const selected = ranked.filter(item => item.score >= 72).slice(0, 3).sort((a, b) => a.index - b.index);
-    const text = (selected.length ? selected.map(item => item.text) : sentences.slice(0, 3)).join(' ');
-    if (text.trim()) return makeResult(best.station.id === currentStation?.id ? 'station' : 'five-stations', normalizedQuery,
-      `**${best.hotspot.titleVi.replace(/^\d+\.\s*/, '')}**: ${text}`, 'high', {
-        relatedStationId: best.station.id, relatedStationTitle: best.station.titleVi,
+  const candidates = stations.flatMap(s => s.hotspots.map(h => {
+    const title = h.titleVi.replace(/^\d+\.\s*/, '');
+    // Titles often group several points; use subtitle and lesson text as well.
+    const explicitTerms = meaningfulWords(query).filter(t => !['nguyen', 'lieu', 'vat', 'nam', 'giu', 'gin', 'tai', 'sao', 'nguoi', 'goi'].includes(t));
+    const corpusWords = new Set(words([title, h.subtitleVi, h.narrationVi, h.keyFactVi].join(' ')));
+    const subjectScore = explicitTerms.length && explicitTerms.every(t => corpusWords.has(t)) ? 90 : 0;
+    const score = Math.max(subjectScore, tokenScore(query, title), h.subtitleVi ? tokenScore(query, h.subtitleVi) : 0,
+      hotspotCorpusScore(query, h));
+    const text = [h.narrationVi, h.keyFactVi].filter(Boolean).join(' ');
+    return { station: s, hotspot: h, score, text };
+  }));
+  const named = candidates.filter(c => c.score >= 88).sort((a, b) => b.score - a.score);
+  const target = named[0] || (usesDeicticReference(query) && context.hotspot
+    ? candidates.find(c => c.hotspot.id === context.hotspot?.id && c.station.id === station?.id) : undefined);
+  if (target) {
+    // Do not answer a specific question with a definition just because the place matches.
+    const answer = concisePassage(query, target.text, intent);
+    if (answer) return makeResult(context.hotspot?.id === target.hotspot.id && station?.id === target.station.id
+      ? 'hotspot' : station?.id === target.station.id ? 'station' : 'five-stations', normalizedQuery,
+      `**${target.hotspot.titleVi.replace(/^\d+\.\s*/, '')}**: ${answer}`, 'medium', {
+        relatedStationId: target.station.id, relatedStationTitle: target.station.titleVi,
       });
+    return makeResult('unknown', normalizedQuery,
+      `Mình đã tìm thấy học liệu về **${target.hotspot.titleVi.replace(/^\d+\.\s*/, '')}**, nhưng chưa có thông tin đủ rõ để trả lời ý này. Bạn có thể hỏi cô giáo hoặc chọn câu hỏi về đặc điểm của điểm đến nhé!`, 'low');
   }
-
-  // 2) TRẠM hiện tại: chỉ tìm trong từ vựng của đúng trạm trước.
-  if (currentStation && !namesOtherScope) {
-    const local = searchLexicon(
-      query,
-      entry => Boolean(currentScope) && entry.stations.includes(currentScope!),
-    );
-
-    if (local && local.score >= 68) {
-      return makeResult(
-        'station',
-        normalizedQuery,
-        friendlyDefinition(local.entry),
-        local.score >= 90 ? 'high' : 'medium',
-        {
-          matchedTerm: local.entry.term,
-          matchedEntryId: local.entry.id,
-        },
-      );
-    }
-
-    // Nếu câu hỏi nhắc trực tiếp nội dung trong bài nhưng chưa có mục từ riêng,
-    // dùng chính nội dung đã được giáo viên duyệt của trạm.
-    const stationScore = stationCorpusScore(query, currentStation);
-    const bestHotspot = currentStation.hotspots
-      .map(hotspot => ({ hotspot, score: hotspotCorpusScore(query, hotspot) }))
-      .sort((a, b) => b.score - a.score)[0];
-
-    if (stationScore >= 72 && bestHotspot?.score >= 64) {
-      const title = bestHotspot.hotspot.titleVi.replace(/^\d+\.\s*/, '');
-      return makeResult(
-        'station',
-        normalizedQuery,
-        `Có nè 😊 **${title}**: ${bestHotspot.hotspot.narrationVi} ${bestHotspot.hotspot.keyFactVi}`,
-        bestHotspot.score >= 85 ? 'high' : 'medium',
-      );
-    }
+  // Reuse authored question/answer pairs; never treat incorrect quiz options as facts.
+  const qa = stations.flatMap(s => [
+    ...s.hotspots.map(h => h.interaction), ...(s.challenge?.questions || []),
+  ].filter(Boolean).map(item => ({ station: s, item: item!, score: longTextScore(query, item!.questionVi) })))
+    .filter(c => c.score >= 88 && questionIntent(c.item.questionVi) === intent)
+    .sort((a, b) => b.score - a.score)[0];
+  if (qa) {
+    const answer = qa.item.options.filter(o => o.isCorrect).map(o => o.textVi).join('; ');
+    if (answer) return makeResult(station?.id === qa.station.id ? 'station' : 'five-stations',
+      normalizedQuery, answer, 'medium', { relatedStationId: qa.station.id, relatedStationTitle: qa.station.titleVi });
   }
-
-  // 3) TOÀN BỘ 5 TRẠM DEMO.
-  const crossStation = searchLexicon(
-    query,
-    entry => entry.stations.some(scope => scope !== 'common'),
-  );
-
-  if (crossStation && crossStation.score >= 72) {
-    const relatedScope = crossStation.entry.stations.find(scope => scope !== 'common');
-    const related = stationMetaFromScope(relatedScope);
-    const relationText =
-      related && related.stationId !== currentStation?.id
-        ? ` Nội dung này còn liên quan đến trạm **${related.title}** đó 🌟`
-        : '';
-
-    return makeResult(
-      'five-stations',
-      normalizedQuery,
-      friendlyDefinition(crossStation.entry) + relationText,
-      crossStation.score >= 90 ? 'high' : 'medium',
-      {
-        matchedTerm: crossStation.entry.term,
-        matchedEntryId: crossStation.entry.id,
-        relatedStationId: related?.stationId,
-        relatedStationTitle: related?.title,
-      },
-    );
+  if (intent === 'action' && /que huong|di san|di tich/.test(normalizeForSearch(query))) {
+    return makeResult('common', normalizedQuery,
+      'Em có thể bỏ rác đúng nơi, giữ vệ sinh, không viết vẽ lên di tích và thực hiện nội quy khi tham quan. Em cũng có thể giới thiệu những điều đã học về quê hương với bạn bè, người thân.', 'high');
   }
-
-  // 4) KHO CHUNG: phương ngữ + từ nền dùng cho mọi trạm.
-  const common = searchLexicon(
-    query,
-    entry => entry.stations.includes('common'),
-  );
-
-  if (common && common.score >= 70) {
-    return makeResult(
-      'common',
-      normalizedQuery,
-      friendlyDefinition(common.entry),
-      common.score >= 90 ? 'high' : 'medium',
-      {
-        matchedTerm: common.entry.term,
-        matchedEntryId: common.entry.id,
-      },
-    );
-  }
-
-  // 5) KHÔNG ĐOÁN.
-  return makeResult('unknown', normalizedQuery, UNKNOWN_RESPONSE, 'low');
+  return makeResult('unknown', normalizedQuery, UNKNOWN_RESPONSE +
+    (usesDeicticReference(query) && !context.hotspot ? ' Bạn đang muốn hỏi về điểm đến nào?' : ''), 'low');
 }
 
 export function getDanangAssistantQuickPrompts(context: AssistantRetrievalContext = {}): string[] {
@@ -474,10 +375,11 @@ export function getDanangAssistantQuickPrompts(context: AssistantRetrievalContex
   }
 
   return (scope && promptsByScope[scope]) || [
-    'Từ này nghĩa là gì?',
-    'Nơi này ở đâu?',
-    'Kể mình nghe một chuyện lịch sử nhé!',
+    'Chùa Cầu có gì đặc biệt?',
+    'Nguyên liệu làm chiếu là gì?',
+    'Em nên làm gì để giữ gìn quê hương?',
   ];
 }
 
 export const DANANG_ASSISTANT_DEMO_STATIONS = DEMO_STATIONS;
+

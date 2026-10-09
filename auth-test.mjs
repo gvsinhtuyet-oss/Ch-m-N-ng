@@ -13,13 +13,18 @@ const server=createServer(async(req,res)=>{try{
 }catch(error){res.writeHead(error.status||500,{'Content-Type':'application/json'});res.end(JSON.stringify({error:error.message}));}});
 await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
 const base='http://127.0.0.1:'+server.address().port;
-async function call(path,method='GET',data,cookie='',origin=base){const response=await fetch(base+path,{method,headers:{...(data?{'Content-Type':'application/json',Origin:origin}:{}),...(cookie?{Cookie:cookie}:{})},...(data?{body:JSON.stringify(data)}:{})});return {status:response.status,body:await response.json(),cookie:response.headers.get('set-cookie')?.split(';')[0]};}
+async function call(path,method='GET',data,cookie='',origin=base,extraHeaders={}){const response=await fetch(base+path,{method,headers:{...(data?{'Content-Type':'application/json',Origin:origin}:{}),...(cookie?{Cookie:cookie}:{}),...extraHeaders},...(data?{body:JSON.stringify(data)}:{})});return {status:response.status,body:await response.json(),cookie:response.headers.get('set-cookie')?.split(';')[0]};}
 try {
  assert.equal((await call('/api/auth/session')).body.user,null);
  assert.equal((await call('/api/protected','POST',{})).status,401);
  assert.equal((await call('/api/auth/login','POST',{email:'owner@example.com',password:'incorrect'})).status,401);
  const admin=await call('/api/auth/login','POST',{email:'OWNER@example.com',password:'Strong-test-owner-42'});
  assert.equal(admin.status,200);assert.equal(admin.body.user.role,'admin');assert.ok(admin.cookie);assert.ok(!('passwordHash' in admin.body.user));
+ const proxied=await call('/api/auth/login','POST',{email:'owner@example.com',password:'Strong-test-owner-42'},'','https://chamdanang-gddp.ai.studio',{
+   'x-forwarded-host':'chamdanang-gddp.ai.studio',
+   'x-forwarded-proto':'https'
+ });
+ assert.equal(proxied.status,200);assert.equal(proxied.body.user.role,'admin');
  assert.equal((await call('/api/admin/users','POST',{email:'teacher@example.com',name:'Cô giáo',password:'Teacher-test-password-42'},admin.cookie)).status,200);
  assert.equal((await call('/api/admin/users','POST',{email:'teacher@example.com',name:'Duplicate',password:'Teacher-test-password-42'},admin.cookie)).status,409);
  const teacher=await call('/api/auth/login','POST',{email:'teacher@example.com',password:'Teacher-test-password-42'});assert.equal(teacher.status,200);

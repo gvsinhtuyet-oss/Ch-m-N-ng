@@ -5,7 +5,7 @@ export const StaffPassword: React.FC = () => {
   const {currentUser,logout}=useApp();
   const [open,setOpen]=useState(false), [busy,setBusy]=useState(false);
   const [current,setCurrent]=useState(''), [next,setNext]=useState(''), [confirm,setConfirm]=useState(''), [message,setMessage]=useState('');
-  if(!currentUser || currentUser.role==='student') return null;
+  if(!currentUser || currentUser.role==='student' || ['teacher-demo','admin-demo'].includes(currentUser.id)) return null;
   return <div className="mx-auto max-w-7xl px-4 py-2">
     <button className="text-sm font-bold underline" onClick={()=>setOpen(!open)}>Đổi mật khẩu của tôi</button>
     {open && <form className="mt-3 rounded-2xl bg-white border p-4 space-y-3 max-w-lg" onSubmit={async e=>{

@@ -16,7 +16,7 @@ async function readFile(file: File): Promise<string> {
   });
 }
 
-export const ContentEditor: React.FC = () => {
+export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = false}) => {
   const [stationId, setStationId] = useState(ALL_25_STATIONS[0].id);
   const station = ALL_25_STATIONS.find(s => s.id === stationId)!;
   const [draft, setDraft] = useState<StationContent>(() => structuredClone(contentService.get(station)));
@@ -51,6 +51,7 @@ export const ContentEditor: React.FC = () => {
     if (draft.resources.some(r => !r.title.trim() || !r.url)) throw new Error('Học liệu cần có tên và đường dẫn.');
   };
   const save = async (publish: boolean) => {
+    if (localOnly && publish) return;
     setBusy(true); setMessage('');
     try {
       validate();
@@ -144,9 +145,9 @@ export const ContentEditor: React.FC = () => {
       </div>
       <div className="flex flex-wrap items-center gap-3">
         <button disabled={busy} type="button" className="rounded-xl bg-slate-700 text-white px-4 py-3 font-bold disabled:opacity-50" onClick={() => void save(false)}>Lưu xem thử trên máy này</button>
-        <button disabled={busy} type="button" className="rounded-xl bg-indigo-700 text-white px-4 py-3 font-bold disabled:opacity-50" onClick={() => void save(true)}>{busy ? 'Đang xử lý...' : 'Xuất bản cho học sinh'}</button>
+        {!localOnly && <button disabled={busy} type="button" className="rounded-xl bg-indigo-700 text-white px-4 py-3 font-bold disabled:opacity-50" onClick={() => void save(true)}>{busy ? 'Đang xử lý...' : 'Xuất bản cho học sinh'}</button>}
       </div>
-      <p className="text-xs text-slate-600">Xuất bản cần kho học liệu trực tuyến đã được cấu hình. Lưu xem thử chỉ áp dụng trên thiết bị này.</p>
+      <p className="text-xs text-slate-600">{localOnly ? 'Quản trị trải nghiệm: ảnh và học liệu chỉ lưu trên thiết bị này.' : 'Xuất bản cần kho học liệu trực tuyến đã được cấu hình. Lưu xem thử chỉ áp dụng trên thiết bị này.'}</p>
       {message && <p role="status" className="rounded-xl bg-white border p-3 text-sm font-semibold">{message}</p>}
     </section>
   );

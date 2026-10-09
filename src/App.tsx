@@ -14,6 +14,7 @@ import { StudentProfileView } from './features/student/StudentProfileView';
 import { StationView } from './features/stations/StationView';
 import { TeacherDashboard } from './features/teacher/TeacherDashboard';
 import { AdminDashboard } from './features/admin/AdminDashboard';
+import { AdminDemoDashboard } from './features/admin/AdminDemoDashboard';
 import { ClassroomPresentationMode } from './features/teacher/ClassroomPresentationMode';
 import { WifiOff } from 'lucide-react';
 import { DanangAssistantChat } from './components/common/DanangAssistantChat';
@@ -74,7 +75,7 @@ const AppContent: React.FC = () => {
           <StationView key={currentStation.id} station={currentStation} onBack={closeStation} />
         )}
         {currentView === 'teacher-view' && role === 'teacher' && <TeacherDashboard />}
-        {currentView === 'admin-view' && role === 'admin' && <AdminDashboard />}
+        {currentView === 'admin-view' && role === 'admin' && (currentUser?.id === 'admin-demo' ? <AdminDemoDashboard /> : <AdminDashboard />)}
       </main>
 
       {currentView !== 'student-journey' && <Footer />}

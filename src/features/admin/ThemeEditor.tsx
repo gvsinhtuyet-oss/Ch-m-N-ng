@@ -38,7 +38,7 @@ const groups: Array<{
   },
 ];
 
-export const ThemeEditor: React.FC = () => {
+export const ThemeEditor: React.FC<{localOnly?: boolean}> = ({localOnly = false}) => {
   const [draft, setDraft] = useState<ThemeSettings>(readTheme);
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
@@ -64,14 +64,15 @@ export const ThemeEditor: React.FC = () => {
 
   const preview = () => {
     try {
-      saveTheme(draft);
-      setMessage('Đã áp dụng trên máy này. Xuất bản để mọi thiết bị nhận đủ 3 nhóm nền.');
+      saveTheme(draft, localOnly);
+      setMessage(localOnly ? 'Đã lưu giao diện trải nghiệm trên thiết bị này.' : 'Đã áp dụng trên máy này. Xuất bản để mọi thiết bị nhận đủ 3 nhóm nền.');
     } catch {
       setMessage('Bộ nhớ máy đầy. Hãy giảm dung lượng ảnh hoặc xuất bản trực tuyến.');
     }
   };
 
   const publish = async () => {
+    if (localOnly) return;
     setBusy(true);
     setMessage('');
     try {
@@ -209,7 +210,7 @@ export const ThemeEditor: React.FC = () => {
           onClick={() => {
             setDraft({ ...DEFAULT_THEME });
             try {
-              saveTheme(DEFAULT_THEME);
+              saveTheme(DEFAULT_THEME, localOnly);
               setMessage('Đã trở về toàn bộ nền cơ bản trên máy này.');
             } catch {}
           }}
@@ -218,14 +219,14 @@ export const ThemeEditor: React.FC = () => {
           Khôi phục nền cơ bản
         </button>
 
-        <button
+        {!localOnly && <button
           type="button"
           disabled={busy}
           onClick={() => void publish()}
           className="rounded-xl bg-indigo-700 text-white font-bold px-5 py-3 disabled:opacity-50"
         >
           Xuất bản giao diện
-        </button>
+        </button>}
       </div>
 
       <p className="text-xs text-slate-600">

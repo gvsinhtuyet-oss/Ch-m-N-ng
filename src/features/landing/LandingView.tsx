@@ -27,6 +27,7 @@ export const LandingView: React.FC = () => {
     loginAsStudent,
     loginAsTeacher,
     enterTeacherDemo,
+    enterAdminDemo,
     loginAsAdmin,
     soundEnabled,
     toggleSound,
@@ -756,7 +757,7 @@ export const LandingView: React.FC = () => {
                     setStaffBusy(true);
                     setLoginError('');
                     try {
-                      await enterTeacherDemo();
+                      if (adminLogin) await enterAdminDemo(); else await enterTeacherDemo();
                       setStaffPassword('');
                       setShowRolePicker(false);
                     } catch (error) {
@@ -767,9 +768,9 @@ export const LandingView: React.FC = () => {
                   }}
                   className="w-full rounded-xl bg-sky-700 p-3 font-bold text-white hover:bg-sky-800 disabled:opacity-50"
                 >
-                  Vào trải nghiệm miễn phí — không cần tài khoản
+                  {adminLogin ? 'Vào Quản trị trải nghiệm — không cần tài khoản' : 'Vào Giáo viên trải nghiệm — không cần tài khoản'}
                 </button>
-                <p className="text-xs text-slate-500">Mở không gian giáo viên với dữ liệu minh họa để xem học liệu và trình chiếu. Không lưu thay đổi vào kho chung.</p>
+                <p className="text-xs text-slate-500">{adminLogin ? 'Thử chỉnh nền, ảnh, học liệu và xem tiến độ lưu trên máy này. Không lưu vào kho chung.' : 'Mở không gian giáo viên với dữ liệu minh họa để xem học liệu và trình chiếu.'}</p>
                 <div className={`rounded-xl border px-3 py-2 text-xs font-bold ${
                   staffHealth === 'ready'
                     ? 'border-emerald-200 bg-emerald-50 text-emerald-700'

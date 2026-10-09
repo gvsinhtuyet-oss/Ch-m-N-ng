@@ -224,7 +224,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                   id: h.id,
                   titleVi: h.titleVi,
                   textVi: h.keyFactVi,
-                }))).slice(0, 4).map((node, i) => (
+                }))).map((node, i) => (
                   <div key={node.id} className="rounded-xl bg-white/80 p-2 text-xs text-amber-950">
                     <strong>{i + 1}. {node.titleVi}</strong>
                     <p className="mt-1">{node.textVi}</p>

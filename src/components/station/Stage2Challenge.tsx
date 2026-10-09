@@ -45,6 +45,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   );
 
   const [currentQIndex, setCurrentQIndex] = useState(0);
+  const [retryQuestionIds, setRetryQuestionIds] = useState<string[] | null>(null);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [passed, setPassed] = useState<boolean | null>(null);
@@ -111,7 +112,10 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const mainReward = station.rewards.find(r => r.stage === 2) || station.rewards[1];
   const bonusRewardId = `${station.id}-wordwall-star`;
   const wordwallBonusAlreadyClaimed = progress.rewardsCollected.includes(bonusRewardId) || bonusClaimed;
-  const currentQ = questions[currentQIndex];
+  const activeQuestions = retryQuestionIds === null
+    ? questions
+    : retryQuestionIds.map(id => questions.find(q => q.id === id)).filter((q): q is typeof questions[number] => !!q);
+  const currentQ = activeQuestions[currentQIndex];
 
   const handleSelect = (questionId: string, optionId: string) => {
     if (isSubmitted) return;
@@ -120,7 +124,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   };
 
   const handleNextOrFinish = () => {
-    if (currentQIndex < questions.length - 1) {
+    if (currentQIndex < activeQuestions.length - 1) {
       audioService.playSfx('click');
       setCurrentQIndex(prev => prev + 1);
     } else {
@@ -165,8 +169,14 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
 
   const handleRetry = () => {
     audioService.playSfx('click');
-    setShuffleRound(round => round + 1);
-    setSelectedAnswers({});
+    // Keep all correct answers. Repeat only the questions answered incorrectly.
+    const wrongIds = wrongQuestions.map(q => q.id);
+    setRetryQuestionIds(wrongIds);
+    setSelectedAnswers(previous => {
+      const remaining = { ...previous };
+      wrongIds.forEach(id => delete remaining[id]);
+      return remaining;
+    });
     setCurrentQIndex(0);
     setIsSubmitted(false);
     setPassed(null);
@@ -196,16 +206,16 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
             <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
               <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                 <span className="font-extrabold text-sm text-sky-700">
-                  Câu hỏi {currentQIndex + 1} / {questions.length}
+                  {retryQuestionIds !== null ? 'Làm lại câu sai' : 'Câu hỏi'} {currentQIndex + 1} / {activeQuestions.length}
                 </span>
                 <div className="flex gap-1.5">
-                  {questions.map((_, i) => (
+                  {activeQuestions.map((_, i) => (
                     <div
                       key={i}
                       className={`w-6 h-2 rounded-full transition ${
                         i === currentQIndex
                           ? 'bg-sky-600'
-                          : selectedAnswers[questions[i]?.id]
+                          : selectedAnswers[activeQuestions[i]?.id]
                           ? 'bg-emerald-400'
                           : 'bg-slate-200'
                       }`}
@@ -266,7 +276,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                   disabled={!currentQ || !selectedAnswers[currentQ.id]}
                   className="px-6 py-3 rounded-2xl bg-sky-600 hover:bg-sky-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-extrabold text-sm shadow-md transition flex items-center gap-2 active:scale-98"
                 >
-                  <span>{currentQIndex === questions.length - 1 ? 'Nộp bài thử thách' : 'Câu tiếp theo'}</span>
+                  <span>{currentQIndex === activeQuestions.length - 1 ? 'Nộp bài thử thách' : 'Câu tiếp theo'}</span>
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
@@ -372,13 +382,13 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               <div>
                 <h3 className="text-xl font-bold text-slate-900">Em chưa vượt qua thử thách lần này. Hãy thử lại nhé!</h3>
                 <p className="text-xs text-slate-500 max-w-md mx-auto mt-1">
-                  Em có thể thử lại ngay hoặc xem lại phần khám phá ở Chặng 1.
+                  Những câu đã đúng được giữ nguyên. Em chỉ cần trả lời lại các câu chưa đúng.
                 </p>
               </div>
               <div className="space-y-3 text-left" role="status" aria-live="polite">
                 <p className="text-sm font-bold text-slate-700">
                   Em đã trả lời đúng {questions.length - wrongQuestions.length}/{questions.length} câu.
-                  Cùng xem lại những câu sau nhé:
+                  Em chỉ cần làm lại {wrongQuestions.length} câu dưới đây:
                 </p>
                 {wrongQuestions.map(q => {
                   const chosen = q.options.find(option => option.id === selectedAnswers[q.id]);
@@ -400,7 +410,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 className="px-8 py-3.5 rounded-2xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-sm shadow-md transition active:scale-95 inline-flex items-center gap-2"
               >
                 <RotateCcw className="w-4 h-4" />
-                <span>THỬ LẠI THỬ THÁCH</span>
+                <span>CHỈ LÀM LẠI {wrongQuestions.length} CÂU SAI</span>
               </button>
             </div>
           )}

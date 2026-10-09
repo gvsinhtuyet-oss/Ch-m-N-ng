@@ -31,7 +31,7 @@ export const GddpAdminEditor: React.FC = () => {
       for(const row of data.records){
         if(!row || typeof row.id!=='string' || ids.has(row.id) ||
           ![1,2,3,4,5].includes(row.grade) || typeof row.lesson!=='string' ||
-          !row.lesson.trim() || typeof row.content!=='string' || !row.content.trim())
+          !row.lesson.trim() || typeof row.content!=='string')
           throw Error('Tài liệu có địa chỉ thiếu thông tin hoặc bị trùng.');
         ids.add(row.id);
       }
@@ -67,10 +67,12 @@ export const GddpAdminEditor: React.FC = () => {
     catch(e){setError(e instanceof Error?e.message:'Xuất bản thất bại.');}
     finally{setBusy(false);}
   };
+  const missingContent = catalog.records.filter(x=>!x.content?.trim()).length;
   const counts=[1,2,3,4,5].map(grade=>({grade,count:catalog.records.filter(x=>x.grade===grade).length}));
   return <section className="rounded-3xl border border-indigo-100 bg-white p-5 shadow-sm space-y-4">
     <div><h2 className="text-xl font-black text-slate-900">Thư viện địa chỉ tích hợp GDĐP</h2><p className="text-sm text-slate-600">Năm học 2026–2027. Chỉ Admin được cập nhật; giáo viên xem nguồn đã xuất bản.</p></div>
     <div className="flex flex-wrap gap-2">{counts.map(x=><span key={x.grade} className="rounded-xl bg-indigo-50 px-3 py-2 text-sm font-bold">Lớp {x.grade}: {x.count}</span>)}</div>
+    {missingContent>0 && <p role="alert" className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm font-bold text-amber-900">Có {missingContent} địa chỉ thiếu nội dung nguồn. Vẫn có thể lưu nháp, nhưng chưa thể xuất bản hoặc tạo gợi ý AI cho các địa chỉ này. Cần đối chiếu tài liệu gốc trước khi bổ sung.</p>}
     <label className="block space-y-2 text-sm font-bold">Nhập danh mục từ tệp JSON đã chuẩn hóa
       <input type="file" accept=".json,application/json" onChange={e=>void importFile(e)} className="block w-full rounded-xl border border-slate-300 p-3 text-sm font-normal" />
     </label>
@@ -81,7 +83,9 @@ export const GddpAdminEditor: React.FC = () => {
       {catalog.records.map(row=><div key={row.id} className="border-b border-slate-100 py-2 text-xs">
         <strong>Lớp {row.grade} · {row.subject} · {row.week} · {row.lesson}</strong>
         <p className="mt-1 text-slate-700">Địa chỉ: {row.activity}</p>
-        <p className="mt-1 whitespace-pre-wrap text-slate-700">{row.content}</p>
+        <label className="mt-2 block font-semibold">Nội dung GDĐP theo nguồn {row.content.trim()?'':'— CHƯA CÓ'}
+          <textarea rows={3} value={row.content} onChange={e=>{const value=e.target.value;setCatalog(prev=>({...prev,records:prev.records.map(x=>x.id===row.id?{...x,content:value}:x)}));setSaved(false);setPublished(false)}} className="mt-1 w-full rounded-lg border border-slate-300 p-2 font-normal" placeholder="Chỉ bổ sung nội dung đã được tổ chuyên môn xác minh"/>
+        </label>
         <button type="button" disabled={!saved || busy} onClick={()=>void generate(row.id)} className="mt-2 rounded-lg border border-violet-300 bg-violet-50 px-3 py-2 text-xs font-bold text-violet-800 disabled:opacity-40">AI gợi ý (Admin duyệt trước khi công bố)</button>
         <label className="mt-2 block font-semibold">Yêu cầu cần đạt bổ sung (Admin duyệt)
           <textarea rows={2} value={row.outcomes || ''} onChange={e=>{const value=e.target.value;setCatalog(prev=>({...prev,records:prev.records.map(x=>x.id===row.id?{...x,outcomes:value}:x)}));setSaved(false);setPublished(false)}} className="mt-1 w-full rounded-lg border border-slate-300 p-2 font-normal" placeholder="Chỉ ghi yêu cầu GDĐP bổ sung, không thay mục tiêu bài học chính"/>
@@ -94,7 +98,7 @@ export const GddpAdminEditor: React.FC = () => {
     </div>
     <div className="flex flex-wrap gap-3">
       <button type="button" disabled={busy||!catalog.records.length} onClick={()=>void save()} className="rounded-xl bg-indigo-600 px-5 py-3 font-bold text-white disabled:opacity-40">Lưu bản nháp</button>
-      <button type="button" disabled={busy||!saved||!catalog.records.length||published} onClick={()=>void publish()} className="rounded-xl bg-emerald-600 px-5 py-3 font-bold text-white disabled:opacity-40">{published?'Đã xuất bản':'Xuất bản cho giáo viên'}</button>
+      <button type="button" disabled={busy||!saved||!catalog.records.length||published||missingContent>0} onClick={()=>void publish()} className="rounded-xl bg-emerald-600 px-5 py-3 font-bold text-white disabled:opacity-40">{published?'Đã xuất bản':'Xuất bản cho giáo viên'}</button>
     </div>
     <p className="text-xs text-amber-800">Chỉ nút AI gợi ý mới sử dụng Gemini và có thể phát sinh phí token. Không gọi AI khi giáo viên tra cứu. Admin phải duyệt trước khi xuất bản.</p>
     <p className="text-xs text-slate-500">An toàn: không thay đổi tài khoản đăng nhập hoặc nội dung học sinh. Dữ liệu bản nháp chưa thay thế dữ liệu đã công bố.</p>

@@ -1,6 +1,6 @@
 
 import { createServer } from 'node:http';
-import { createAuth, firestoreStore } from './auth-server.mjs';
+import { createAuth, firestoreStoreWithFallback } from './auth-server.mjs';
 import { contentStorage } from './content-storage.mjs';
 import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
 import { randomBytes, createHash } from 'node:crypto';
@@ -14,8 +14,14 @@ const configuredFirestoreDatabase = process.env.AUTH_FIRESTORE_DATABASE || DEFAU
 const firestoreDatabase = configuredFirestoreDatabase === LEGACY_FIRESTORE_DATABASE
   ? DEFAULT_FIRESTORE_DATABASE
   : configuredFirestoreDatabase;
+const firestoreCandidates = [
+  firestoreDatabase,
+  DEFAULT_FIRESTORE_DATABASE,
+  '(default)',
+  LEGACY_FIRESTORE_DATABASE,
+];
 const cloudStore = process.env.AUTH_FIRESTORE_PROJECT
-  ? firestoreStore(process.env.AUTH_FIRESTORE_PROJECT, firestoreDatabase)
+  ? firestoreStoreWithFallback(process.env.AUTH_FIRESTORE_PROJECT, firestoreCandidates)
   : null;
 const durableContent = cloudStore ? contentStorage(cloudStore) : null;
 const auth = createAuth({
@@ -196,7 +202,8 @@ const server = createServer(async (req,res) => {
         revision: process.env.K_REVISION || null,
         service: process.env.K_SERVICE || null,
         project: process.env.AUTH_FIRESTORE_PROJECT || null,
-        database: firestoreDatabase,
+        database: cloudStore?.activeDatabase?.() || firestoreDatabase,
+        databaseCandidates: cloudStore?.candidateDatabases?.() || [firestoreDatabase],
         firestore: firestoreStatus,
         firestoreWrite: firestoreWriteStatus,
         firestoreError,

@@ -11,6 +11,7 @@ export interface GddpRecord {
   content: string;
   outcomes?: string;
   teachingSuggestion?: string;
+  resourceLinks?: {stationId:string;hotspotId:string}[];
 }
 export interface GddpCatalog {
   year: string;

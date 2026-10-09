@@ -49,5 +49,8 @@ jobs:
       - name: Da Nang assistant retrieval tests
         run: npm run test:assistant
 
+      - name: Grade 2 current-book content and image tests
+        run: npx tsx --test grade2-content-image-test.ts
+
       - name: Production build
         run: npm run build

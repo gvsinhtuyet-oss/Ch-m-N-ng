@@ -9,6 +9,8 @@ export interface GddpRecord {
   integrationType: string;
   activity: string;
   content: string;
+  outcomes?: string;
+  teachingSuggestion?: string;
 }
 export interface GddpCatalog {
   year: string;

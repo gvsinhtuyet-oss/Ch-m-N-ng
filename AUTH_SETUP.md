@@ -50,6 +50,13 @@ Tài khoản quản trị ban đầu được giữ nguyên sau mỗi triển kh
 
 Đăng nhập nhân sự thật đã được triển khai trong mã; phải hoàn thành cấu hình và kiểm thử thực tế trên URL Cloud Run trước khi sử dụng. Kiểm tra: đăng nhập quản trị/giáo viên, cấp/khóa/đặt lại mật khẩu, đổi mật khẩu, đăng xuất và từ chối giáo viên gọi API quản trị.
 
-Danh sách lớp/học sinh, số liệu báo cáo và một số minh chứng hiện vẫn là dữ liệu minh họa; tài khoản giáo viên mới chưa được gán lớp. Tiến trình học sinh vẫn lưu tại thiết bị. Kho ảnh/học liệu đã chuyển sang Firestore khi cấu hình `AUTH_FIRESTORE_PROJECT` và đúng Database ID. `CONTENT_DATA_DIR` chỉ dùng cho chạy cục bộ. Cần kiểm thử tải tệp và xuất bản lại trên Cloud Run thật. Chưa có gửi email đặt lại mật khẩu tự động, Google OAuth, MFA hoặc đăng nhập học sinh bằng mã lớp.
+Giáo viên có thể tạo và sửa danh sách lớp trên máy chủ, liên kết mã đồng bộ của học sinh, xem kết quả thật và xuất Excel. Tiến trình học sinh lưu tại thiết bị và đồng bộ khi được cấu hình Firestore. Báo cáo chỉ gồm học sinh đã liên kết; không suy diễn chưa liên kết là 0 điểm. Chưa có gửi email đặt lại mật khẩu tự động, Google OAuth, MFA hoặc đăng nhập học sinh bằng mã lớp.
 
 Kiểm tra tự động: `node --test auth-test.mjs` kiểm tra API với kho dữ liệu bộ nhớ (không thay thế kiểm thử Firestore/Cloud Run thật). Cấu hình thiếu không được làm máy chủ dừng.
+
+
+## Dịch vụ thử nghiệm tách biệt
+
+Chỉ triển khai nhánh `feature/gddp-teacher-2026-2027` vào dịch vụ Cloud Run mới. Đặt `CHAM_ENV=test`, `AUTH_FIRESTORE_PROJECT` và `AUTH_FIRESTORE_DATABASE` trỏ tới database thử nghiệm riêng; không dùng database chính ở bảng trên. Máy chủ từ chối khởi động trong chế độ test nếu thiếu cấu hình hoặc dùng database chính. Không tự chuyển về database chính khi kho thử nghiệm bị lỗi. Cấu hình Admin và quyền IAM riêng trên dịch vụ thử nghiệm, rồi kiểm tra `/api/health`, đăng nhập hai vai trò, lưu/đọc lại GDĐP, tiến trình một học sinh giả lập, báo cáo lớp và tải Excel.
+
+`node --test deployment-test.mjs production-api-test.mjs` kiểm tra đóng gói runtime, lựa chọn database và toàn bộ API với Firestore REST giả lập; vẫn cần kiểm chứng quyền IAM, cookie và lưu bền vững trên Cloud Run thật.

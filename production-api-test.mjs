@@ -1,0 +1,56 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtemp,writeFile,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {spawn} from 'node:child_process';
+
+test('production HTTP server: Admin, Teacher, GDĐP, one learner sync and class report', {timeout:20000},async()=>{
+ const dir=await mkdtemp(join(tmpdir(),'cham-api-test-'));
+ const preload=join(dir,'mock-firestore.mjs');
+ // No credentials or live Firestore are used. Exercise the production REST adapter with a deterministic store.
+ await writeFile(preload,`const nativeFetch=globalThis.fetch;const docs=new Map();
+ globalThis.fetch=async(input,options={})=>{const u=new URL(String(input));
+ const response=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json'}});
+ if(u.hostname==='metadata.google.internal')return response({access_token:'synthetic-token',expires_in:3600});
+ if(u.hostname!=='firestore.googleapis.com')return nativeFetch(input,options);
+ if(!u.pathname.includes('/databases/test-db/documents/'))throw new Error('Attempted wrong database');
+ const key=u.pathname.split('/documents/')[1],method=options.method||'GET';
+ if(method==='GET')return key.includes('/')?(docs.has(key)?response(docs.get(key)):response({error:{message:'Document not found'}},404)):response({documents:[...docs].filter(([k])=>k.startsWith(key+'/')).map(([,v])=>v)});
+ if(method==='DELETE'){docs.delete(key);return response({});}
+ const id=method==='POST'?key+'/'+u.searchParams.get('documentId'):key;
+ if(method==='POST'&&docs.has(id))return response({error:{message:'Already exists'}},409);
+ const data=JSON.parse(options.body);docs.set(id,data);return response(data);};`);
+ const child=spawn(process.execPath,['--import',preload,'content-server.mjs'],{cwd:new URL('.',import.meta.url),env:{...process.env,PORT:'0',CHAM_ENV:'test',AUTH_FIRESTORE_PROJECT:'test-project',AUTH_FIRESTORE_DATABASE:'test-db',AUTH_ADMIN_EMAIL:'owner@example.com',AUTH_ADMIN_PASSWORD:'Synthetic-owner-password-42',AUTH_LOCAL_HTTP:'true',K_SERVICE:'',CONTENT_DATA_DIR:join(dir,'data')},stdio:['ignore','pipe','pipe']});
+ let logs='';child.stderr.on('data',x=>{logs+=x;});
+ try{
+ const port=await new Promise((resolve,reject)=>{let output='';const timer=setTimeout(()=>reject(new Error('Server startup timeout '+logs)),7000);
+ child.stdout.on('data',x=>{output+=x;const match=output.match(/started port=(\d+)/);if(match){clearTimeout(timer);resolve(match[1]);}});
+ child.once('exit',code=>{clearTimeout(timer);reject(new Error('Server exited '+code+' '+logs));});child.once('error',reject);});
+ const base='http://127.0.0.1:'+port;
+ const call=async(path,method='GET',data,cookie='')=>{const r=await fetch(base+path,{method,headers:{Origin:base,...(data?{'Content-Type':'application/json'}:{}),...(cookie?{Cookie:cookie}:{})},...(data?{body:JSON.stringify(data)}:{})});return {status:r.status,data:await r.json(),cookie:r.headers.get('set-cookie')?.split(';')[0]};};
+ assert.equal((await call('/api/health')).data.auth.ready,true);
+ const admin=await call('/api/auth/login','POST',{email:'owner@example.com',password:'Synthetic-owner-password-42'});assert.equal(admin.status,200);
+ assert.equal((await call('/api/admin/users','POST',{email:'teacher@example.com',name:'GV thử nghiệm',password:'Synthetic-teacher-password-42'},admin.cookie)).status,200);
+ const teacher=await call('/api/auth/login','POST',{email:'teacher@example.com',password:'Synthetic-teacher-password-42'});assert.equal(teacher.data.user.role,'teacher');
+ assert.equal((await call('/api/admin/gddp/catalog','GET',undefined,teacher.cookie)).status,403);
+ const catalog={year:'2026-2027',records:[{id:'test-lesson',grade:2,subject:'Tiếng Việt',week:'1',lesson:'Bài thử',integrationType:'Bộ phận',activity:'Khởi động',content:'Nội dung kiểm thử'}]};
+ assert.equal((await call('/api/admin/gddp/catalog','PUT',catalog,admin.cookie)).status,200);
+ assert.equal((await call('/api/admin/gddp/catalog','GET',undefined,admin.cookie)).data.catalog.records[0].content,'Nội dung kiểm thử');
+ assert.equal((await call('/api/admin/gddp/publish','POST',{},teacher.cookie)).status,403);
+ assert.equal((await call('/api/admin/gddp/publish','POST',{},admin.cookie)).status,200);
+ assert.equal((await call('/api/gddp/catalog','GET',undefined,teacher.cookie)).data.records[0].content,'Nội dung kiểm thử');
+ const roster={name:'2/24',grade:2,academicYear:'2026-2027',students:['Học sinh giả lập']};
+ const classroom=await call('/api/teacher/classes','POST',roster,teacher.cookie);assert.equal(classroom.status,200);const id=classroom.data.classroom.id;
+ const registered=await call('/api/student/sync/register','POST',{profile:{id:'synthetic-student',name:'Học sinh giả lập',grade:2,className:'2/24'}});assert.equal(registered.status,200);const syncCode=registered.data.syncCode;
+ const progress={'hoi-an':{stage1Completed:true,stage2Completed:true,stage3Completed:true,stage4Completed:true,journeyMapReceived:true,keyFragmentReceived:true,stampReceived:true,stationCompleted:true}};
+ assert.equal((await call('/api/student/sync/progress','PUT',{syncCode,progress})).status,200);
+ assert.equal((await call('/api/student/sync/restore','POST',{syncCode})).data.progress['hoi-an'].stationCompleted,true);
+ assert.equal((await call('/api/teacher/progress','POST',{classId:id,syncCode},teacher.cookie)).status,200);
+ const report=await call('/api/teacher/progress?classId='+id,'GET',undefined,teacher.cookie);assert.equal(report.data.linkedCount,1);assert.equal(report.data.students[0].completedStations,1);
+ assert.equal((await call('/api/teacher/classes','PUT',{...roster,students:[...roster.students,'Bạn giả lập thứ hai']},teacher.cookie)).status,200);
+ assert.equal((await call('/api/teacher/classes','GET',undefined,teacher.cookie)).data.classes[0].totalStudents,2);
+ assert.equal((await call('/api/auth/logout','POST',{},teacher.cookie)).status,200);
+ assert.equal((await call('/api/teacher/classes','GET',undefined,teacher.cookie)).status,401);
+ }catch(error){error.message+='\nServer stderr: '+logs;throw error;}finally{child.kill();await new Promise(resolve=>child.exitCode!==null?resolve():child.once('exit',resolve));await rm(dir,{recursive:true,force:true});}
+});

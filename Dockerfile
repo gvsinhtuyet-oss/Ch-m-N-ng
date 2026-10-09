@@ -18,7 +18,7 @@ COPY package.json ./
 RUN npm install --omit=dev --no-audit --no-fund
 
 COPY --from=build /app/dist ./dist
-COPY content-server.mjs auth-server.mjs content-storage.mjs ./
+COPY content-server.mjs auth-server.mjs content-storage.mjs gddp-catalog.mjs gddp-ai.mjs deployment-config.mjs ./
 
 RUN mkdir -p /app/content-data
 

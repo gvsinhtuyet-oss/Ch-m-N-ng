@@ -402,8 +402,9 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
         results.push({name:classroom.students.find(n=>norm(n)===norm(link.name)),stations,completedStations:stations.filter(x=>x.completed).length,
           totalStamps:stations.filter(x=>x.stamp).length});
       }
-      return json(res,200,{className:classroom.name,academicYear:classroom.academicYear,
+      json(res,200,{className:classroom.name,academicYear:classroom.academicYear,
         rosterCount:classroom.students.length,linkedCount:results.length,students:results});
+      return true;
     }
     if(pathname === '/api/teacher/classes') {
       const staff=await userFor(req);

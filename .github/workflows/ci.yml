@@ -37,6 +37,9 @@ jobs:
       - name: Server syntax check
         run: node --check auth-server.mjs && node --check content-server.mjs && node --check content-storage.mjs
 
+      - name: Production packaging and database isolation tests
+        run: node --test deployment-test.mjs production-api-test.mjs
+
       - name: Authentication tests
         run: node --test auth-test.mjs
 

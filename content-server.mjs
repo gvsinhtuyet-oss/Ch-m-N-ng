@@ -2,6 +2,7 @@
 import { createServer } from 'node:http';
 import { createAuth, firestoreStoreWithFallback } from './auth-server.mjs';
 import { contentStorage } from './content-storage.mjs';
+import { firestoreConfiguration } from './deployment-config.mjs';
 import { GDDP_COLLECTION, GDDP_DOCUMENT, GDDP_YEAR, cleanGddpCatalog } from './gddp-catalog.mjs';
 import { gddpPrompt, cleanGddpAiSuggestion } from './gddp-ai.mjs';
 import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
@@ -10,13 +11,9 @@ import path from 'node:path';
 
 const dataDir = path.resolve(process.env.CONTENT_DATA_DIR || './content-data');
 const dataFile = path.join(dataDir, 'stations.json');
-const DEFAULT_FIRESTORE_DATABASE = 'ai-studio-71b45c71-26f3-4479-9372-306c6b35245a';
-// Firebase Console confirms this is the real database used by CHẠM ĐÀ NẴNG.
-// Do not fall back to (default) or the legacy AI Studio database name.
-const firestoreDatabase = DEFAULT_FIRESTORE_DATABASE;
-const firestoreCandidates = [DEFAULT_FIRESTORE_DATABASE];
-const cloudStore = process.env.AUTH_FIRESTORE_PROJECT
-  ? firestoreStoreWithFallback(process.env.AUTH_FIRESTORE_PROJECT, firestoreCandidates)
+const {project: firestoreProject, database: firestoreDatabase, candidates: firestoreCandidates} = firestoreConfiguration();
+const cloudStore = firestoreProject
+  ? firestoreStoreWithFallback(firestoreProject, firestoreCandidates)
   : null;
 const durableContent = cloudStore ? contentStorage(cloudStore) : null;
 const auth = createAuth({
@@ -56,7 +53,7 @@ const validUrl = value => typeof value === 'string' && (
   value === '' || /^https:\/\//i.test(value) ||
   /^data:(image\/(png|jpeg|webp|gif)|application\/pdf|audio\/(mpeg|mp3|wav|ogg|mp4|x-wav)|video\/(mp4|webm|ogg));base64,/i.test(value)
 );
-const studentSyncKey = code => createHash('sha256').update(String(code || '').trim().toUpperCase()).digest('hex');
+const studentSyncKey = code => createHash('sha256').update(String(code || '').toUpperCase().replace(/[^A-Z0-9]/g,'')).digest('hex');
 const cleanSyncCode = value => String(value || '').toUpperCase().replace(/[^A-Z0-9]/g,'');
 const newSyncCode = () => {
   const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -434,4 +431,4 @@ const server = createServer(async (req,res) => {
     json(res,error.status || 500,{ error:error.status ? error.message : 'Could not process request' });
   }
 });
-server.listen(Number(process.env.PORT || 3000),'0.0.0.0',() => console.log('CHAM DA NANG content server started'));
+server.listen(Number(process.env.PORT || 3000),'0.0.0.0',() => console.log('CHAM DA NANG content server started port='+server.address().port));

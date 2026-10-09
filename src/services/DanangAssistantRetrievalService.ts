@@ -425,7 +425,7 @@ export function getDanangAssistantQuickPrompts(context: AssistantRetrievalContex
     'danh-nhan-xu-quang': ['Danh nhân là gì?', 'Duy Tân nghĩa là gì?', 'Phan Châu Trinh là ai?'],
     'thanh-dien-hai': ['Thành Điện Hải là gì?', 'Hào thành dùng để làm gì?', 'Nguyễn Tri Phương là ai?'],
     'ngu-hanh-son': ['Ngũ Hành Sơn có gì đặc biệt?', 'Ma nhai là gì?', 'Làng đá Non Nước là gì?'],
-    'hoi-an': ['Thương cảng là gì?', 'Hội quán là gì?', 'Sông Hoài ở đâu?'],
+    'hoi-an': ['Hội An được UNESCO công nhận năm nào?', 'Chùa Cầu là gì?', 'Làng gốm Thanh Hà là gì?'],
   };
 
   return (scope && promptsByScope[scope]) || [

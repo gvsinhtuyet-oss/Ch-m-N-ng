@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { firestoreStore } from './auth-server.mjs';
+import { firestoreStore, firestoreStoreWithFallback } from './auth-server.mjs';
 
 function storeWith(status, message) {
   return firestoreStore('test-project', 'test-db', async url =>
@@ -23,4 +23,21 @@ test('failed account creation and collection reads cannot silently succeed', asy
 test('permission failures remain unavailable and conflicts remain conflicts', async () => {
   await assert.rejects(storeWith(403, 'Permission denied').get('cham_users', 'owner'), { status: 503 });
   await assert.rejects(storeWith(409, 'Already exists').put('cham_users', 'owner', {}, true), { status: 409 });
+});
+
+
+test('fallback tries the next database when configured database is missing', async () => {
+  const seen=[];
+  const store=firestoreStoreWithFallback('test-project',['missing-db','(default)'],async url => {
+    if (url.startsWith('http://metadata.')) return Response.json({access_token:'test-token',expires_in:3600});
+    seen.push(url);
+    if (url.includes('/databases/missing-db/')) {
+      return Response.json({error:{message:'The database missing-db does not exist',status:'NOT_FOUND'}},{status:404});
+    }
+    return Response.json({fields:{payload:{stringValue:JSON.stringify({role:'admin'})}}});
+  });
+  assert.deepEqual(await store.get('cham_users','owner'),{role:'admin'});
+  assert.equal(store.activeDatabase(),'(default)');
+  assert.ok(seen.some(url=>url.includes('/databases/missing-db/')));
+  assert.ok(seen.some(url=>url.includes('/databases/(default)/')));
 });

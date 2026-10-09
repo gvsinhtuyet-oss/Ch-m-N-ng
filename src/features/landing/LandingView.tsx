@@ -42,8 +42,6 @@ export const LandingView: React.FC = () => {
   const [staffEmail, setStaffEmail] = useState('');
   const [staffPassword, setStaffPassword] = useState('');
   const [staffBusy, setStaffBusy] = useState(false);
-  const [staffHealth, setStaffHealth] = useState<'idle' | 'checking' | 'ready' | 'error'>('idle');
-  const [staffHealthMessage, setStaffHealthMessage] = useState('');
   const [showTeacherLogin, setShowTeacherLogin] = useState<boolean>(false);
   const [selectedClass, setSelectedClass] = useState<string>('2/24');
   const [studentName, setStudentName] = useState<string>('');
@@ -123,36 +121,6 @@ export const LandingView: React.FC = () => {
     backgroundMusic.setForegroundSource('intro-video', introActive);
     return () => backgroundMusic.setForegroundSource('intro-video', false);
   }, [introActive]);
-
-  useEffect(() => {
-    if (!showTeacherLogin) {
-      setStaffHealth('idle');
-      setStaffHealthMessage('');
-      return;
-    }
-    let cancelled = false;
-    setStaffHealth('checking');
-    setStaffHealthMessage('Đang kiểm tra máy chủ đăng nhập…');
-    authService.health()
-      .then(health => {
-        if (cancelled) return;
-        if (health.auth?.ready) {
-          setStaffHealth('ready');
-          setStaffHealthMessage('Máy chủ đăng nhập đã sẵn sàng.');
-          return;
-        }
-        const issue = health.firestoreWriteError || health.firestoreError;
-        const code = issue?.code ? ` (${issue.code})` : '';
-        setStaffHealth('error');
-        setStaffHealthMessage(`Kho tài khoản chưa sẵn sàng${code}. Vui lòng xuất bản lại bản mới hoặc kiểm tra Firestore.`);
-      })
-      .catch((error) => {
-        if (cancelled) return;
-        setStaffHealth('error');
-        setStaffHealthMessage(error instanceof Error ? error.message : 'Chưa kiểm tra được máy chủ đăng nhập. Vui lòng thử lại.');
-      });
-    return () => { cancelled = true; };
-  }, [showTeacherLogin]);
 
   useEffect(() => {
     if (!introActive) return;
@@ -488,13 +456,13 @@ export const LandingView: React.FC = () => {
           />
           <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
           <div className="absolute inset-0 bg-slate-950/38 backdrop-blur-[2px] pointer-events-none" />
-          <div className="relative z-10 bg-white/95 backdrop-blur-xl text-slate-800 rounded-3xl p-6 sm:p-8 max-w-4xl w-full max-h-[90dvh] overflow-y-auto shadow-2xl border border-white/80 space-y-5 animate-in fade-in zoom-in-95 duration-200">
+          <div className="relative z-10 bg-white/95 backdrop-blur-xl text-slate-800 rounded-3xl p-6 sm:p-8 max-w-5xl w-full max-h-[90dvh] overflow-y-auto shadow-2xl border border-white/80 space-y-5 animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between">
               <div>
                 <span className="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 text-[11px] font-bold">
-                  Phân quyền ứng dụng
+                  CHẠM ĐÀ NẴNG
                 </span>
-                <h3 className="text-xl font-black text-slate-900 mt-1">Chọn Vai Trò Trải Nghiệm</h3>
+                <h3 className="text-xl font-black text-slate-900 mt-1">Chọn vai trò</h3>
               </div>
               <button
                 onClick={() => {
@@ -510,61 +478,31 @@ export const LandingView: React.FC = () => {
             </div>
 
             {!showStudentLogin && !showTeacherLogin ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                <button
-                  onClick={() => {
-                    audioService.playSfx('click');
-                    setGuestMode(false);
-                    setChosenGrade(null);
-                    setShowStudentLogin(true);
-                  }}
-                  className="p-4 rounded-2xl bg-white border-2 border-sky-400 hover:border-sky-600 shadow-sm hover:shadow-md transition text-left space-y-1.5 group cursor-pointer"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center font-bold group-hover:scale-110 transition">
-                    <GraduationCap className="w-5 h-5" />
-                  </div>
-                  <h4 className="font-black text-sm text-slate-900">HỌC SINH</h4>
-                  <p className="text-[11px] text-slate-500">Chọn khối, chọn lớp và nhập tên để bắt đầu</p>
-                </button>
-
-                <button
-                  onClick={() => { setGuestMode(true); setChosenGrade(null); setLoginError(''); setShowStudentLogin(true); }}
-                  className="p-4 rounded-2xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-md text-left flex items-center gap-4 hover:brightness-110 transition"
-                >
-                  <Compass className="w-9 h-9 shrink-0" />
-                  <div><h4 className="font-black">NHÀ PHIÊU LƯU TỰ DO</h4><p className="text-xs text-violet-100 mt-1">Dành cho khách — đủ nhiệm vụ, vật phẩm, quà và dấu hành trình. Không cần tên hay lớp.</p></div>
-                </button>
-
-                <button
-                  onClick={async () => {
-                    try { setAdminLogin(false); setStaffPassword(''); setLoginError(''); setShowTeacherLogin(true); }
-                    catch (error) { setLoginError((error as Error).message); }
-                  }}
-                  className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-emerald-500 shadow-sm hover:shadow-md transition text-left space-y-1.5 group cursor-pointer"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold group-hover:scale-110 transition">
-                    <Presentation className="w-5 h-5" />
-                  </div>
-                  <h4 className="font-black text-sm text-slate-900">GIÁO VIÊN</h4>
-                  <p className="text-[11px] text-slate-500">Đăng nhập để quản lý lớp và xem kết quả học sinh</p>
-                </button>
-
-                <button
-                  onClick={() => {
-                    audioService.playSfx('click');
-                    setAdminLogin(true);
-                    setShowTeacherLogin(true);
-                  }}
-                  className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-amber-500 shadow-sm hover:shadow-md transition text-left space-y-1.5 group cursor-pointer"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold group-hover:scale-110 transition">
-                    <Globe className="w-5 h-5" />
-                  </div>
-                  <h4 className="font-black text-sm text-slate-900">QUẢN TRỊ</h4>
-                  <p className="text-[11px] text-slate-500">Quản lý giao diện, hình ảnh và học liệu</p>
-                </button>
-
-                <button type="button" onClick={async()=>{try{await enterTeacherDemo();setShowRolePicker(false);}catch(error){setLoginError((error as Error).message);}}} className="rounded-xl border border-slate-200 p-3 text-xs font-bold text-slate-600">Giáo viên trải nghiệm dành cho giám khảo</button>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+                {[
+                  {id:'student',name:'HỌC SINH',demo:'Học sinh trải nghiệm',Icon:GraduationCap,color:'bg-sky-700',description:'Khám phá điểm đến, chinh phục thử thách và nhận hộ chiếu hành trình.'},
+                  {id:'teacher',name:'GIÁO VIÊN',demo:'Giáo viên trải nghiệm',Icon:Presentation,color:'bg-emerald-700',description:'Xem học liệu, tổ chức bài học và theo dõi tiến độ.'},
+                  {id:'admin',name:'QUẢN TRỊ',demo:'Quản trị trải nghiệm',Icon:Globe,color:'bg-amber-700',description:'Chỉnh giao diện, hình ảnh, học liệu và xem báo cáo.'},
+                ].map(({id,name,demo,Icon,color,description})=><section key={id} className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${color} text-white`}><Icon className="h-7 w-7" /></div>
+                  <h4 className="text-lg font-black text-slate-900">{name}</h4>
+                  <p className="flex-1 text-sm text-slate-600">{description}</p>
+                  <button type="button" onClick={()=>{
+                    audioService.playSfx('click');setLoginError('');setStaffPassword('');
+                    if(id==='student'){setGuestMode(false);setChosenGrade(null);setShowStudentLogin(true);}
+                    else{setAdminLogin(id==='admin');setShowTeacherLogin(true);}
+                  }} className="rounded-xl border-2 border-slate-200 px-4 py-3 font-bold hover:bg-slate-50">Đăng nhập</button>
+                  <button type="button" disabled={staffBusy} onClick={async()=>{
+                    setLoginError('');
+                    if(id==='student'){setGuestMode(true);setChosenGrade(null);setShowStudentLogin(true);return;}
+                    setStaffBusy(true);
+                    try{if(id==='admin')await enterAdminDemo();else await enterTeacherDemo();setShowRolePicker(false);}
+                    catch(error){setLoginError((error as Error).message);}finally{setStaffBusy(false);}
+                  }} className={`min-h-24 rounded-2xl ${color} px-4 py-5 text-lg font-black text-white shadow-md transition hover:brightness-110 disabled:opacity-50`}>
+                    {demo}<span className="mt-1 block text-xs font-medium text-white/90">Không cần tài khoản</span>
+                  </button>
+                </section>)}
+                {loginError && <p role="alert" className="md:col-span-3 rounded-xl bg-rose-50 p-3 text-rose-700">{loginError}</p>}
               </div>
             ) : showStudentLogin ? (
               /* Student Login Form: chọn khối và nhập thông tin ngay trên cùng một màn hình */
@@ -572,7 +510,7 @@ export const LandingView: React.FC = () => {
                 <div>
                   <div className="mb-3 flex items-center justify-between gap-3">
                     <h4 className="text-lg font-black text-slate-900">
-                      {guestMode ? 'Chọn khối để khám phá' : 'Em học khối nào?'}
+                      {guestMode ? 'Học sinh trải nghiệm — chọn khối' : 'Đăng nhập học sinh — chọn khối'}
                     </h4>
                     <button
                       type="button"
@@ -733,14 +671,6 @@ export const LandingView: React.FC = () => {
               <form className="space-y-4 text-sm" onSubmit={async e => {
                 e.preventDefault(); if(staffBusy) return; setStaffBusy(true); setLoginError('');
                 try {
-                  if (!adminLogin) {
-                    const health = await authService.health();
-                    if (!health.auth?.ready) {
-                      const issue = health.firestoreWriteError || health.firestoreError;
-                      const code = issue?.code ? ` (${issue.code})` : '';
-                      throw new Error(`Máy chủ đăng nhập chưa sẵn sàng${code}. Vui lòng thử lại sau.`);
-                    }
-                  }
                   const user = await authService.login(staffEmail,staffPassword);
                   setStaffPassword('');
                   if(user.role === 'admin') loginAsAdmin(user); else loginAsTeacher(user);
@@ -766,20 +696,11 @@ export const LandingView: React.FC = () => {
                       setStaffBusy(false);
                     }
                   }}
-                  className="w-full rounded-xl bg-sky-700 p-3 font-bold text-white hover:bg-sky-800 disabled:opacity-50"
+                  className="w-full min-h-24 rounded-2xl bg-sky-700 p-5 text-xl font-black text-white hover:bg-sky-800 disabled:opacity-50"
                 >
-                  {adminLogin ? 'Vào Quản trị trải nghiệm — không cần tài khoản' : 'Vào Giáo viên trải nghiệm — không cần tài khoản'}
+                  {adminLogin ? 'Quản trị trải nghiệm' : 'Giáo viên trải nghiệm'}
                 </button>
                 <p className="text-xs text-slate-500">{adminLogin ? 'Thử chỉnh nền, ảnh, học liệu và xem tiến độ lưu trên máy này. Không lưu vào kho chung.' : 'Mở không gian giáo viên với dữ liệu minh họa để xem học liệu và trình chiếu.'}</p>
-                <div className={`rounded-xl border px-3 py-2 text-xs font-bold ${
-                  staffHealth === 'ready'
-                    ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-                    : staffHealth === 'error'
-                      ? 'border-rose-200 bg-rose-50 text-rose-700'
-                      : 'border-sky-200 bg-sky-50 text-sky-700'
-                }`}>
-                  {staffHealthMessage || 'Đang kiểm tra máy chủ đăng nhập…'}
-                </div>
                 <label className="block font-bold">Email
                   <input type="email" autoComplete="username" required maxLength={254} value={staffEmail} onChange={e=>setStaffEmail(e.target.value)} className="mt-1 w-full p-3 border rounded-xl" />
                 </label>

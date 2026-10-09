@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { gddpService, GddpRecord } from '../../services/GddpService';
+import { bundledGddpCatalog } from '../../services/GddpBundledCatalog';
 import { Station } from '../../types';
 import {matchGddpResources,MatchedLessonResource} from '../../services/GddpResourceMatcher';
 import {LessonPlanEditor} from './LessonPlanEditor';
@@ -14,6 +15,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const [selectedId, setSelectedId] = useState('');
   const [loading, setLoading] = useState(true);
   const [published,setPublished]=useState(false);
+  const [offlineSource,setOfflineSource]=useState(false);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
   const [projected,setProjected] = useState<MatchedLessonResource|null>(null);
@@ -22,11 +24,20 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
     let active = true;
     gddpService.publicCatalog().then(data => {
       if (!active) return;
-      setRecords(data.records || []);
+      setRecords(data.records?.length ? data.records : (data.published ? [] : bundledGddpCatalog.records));
       setPublished(!!data.published);
+      setOfflineSource(!data.published && !data.records?.length);
       setError('');
       setLoading(false);
-    }).catch(err => { if (active) {setError(err.message); setLoading(false);} });
+    }).catch(() => { if (active) {
+      // Preview may return HTML for /api; public source data remains available locally.
+      // Never treat local records as an Admin-published catalog.
+      setRecords(bundledGddpCatalog.records);
+      setPublished(false);
+      setOfflineSource(true);
+      setError('');
+      setLoading(false);
+    } });
     return () => {active = false;};
   }, []);
   const byGrade = useMemo(() => records.filter(x => x.grade === grade), [records,grade]);
@@ -45,7 +56,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       <h2 className="text-xl font-black text-slate-900">Tích hợp Giáo dục địa phương</h2>
       <p className="text-sm text-slate-600">Năm học 2026–2027 · Tra cứu địa chỉ tích hợp lớp 1–5. Chọn bài để xem nội dung nguồn và thực hành soạn KHBD, kể cả khi dùng chế độ Demo.</p>
     </div>
-    {!loading && !error && records.length>0 && <p className="rounded-xl bg-sky-50 p-3 text-sm text-sky-900">Đã tải {records.length} địa chỉ GDĐP của 5 khối. {published?'Dữ liệu do Admin xuất bản.':'Dữ liệu nguồn cài sẵn để tra cứu và dùng Demo KHBD; chưa xác nhận Admin đã xuất bản.'}</p>}
+    {!loading && !error && records.length>0 && <p className="rounded-xl bg-sky-50 p-3 text-sm text-sky-900">Đã tải {records.length} địa chỉ GDĐP của 5 khối. {published?'Dữ liệu do Admin xuất bản.':offlineSource?'Chế độ dữ liệu nguồn dự phòng (không kết nối máy chủ); vẫn có thể chọn bài, soạn và xuất KHBD. Dữ liệu này chưa được xác nhận là bản mới nhất do Admin xuất bản.':'Dữ liệu nguồn cài sẵn để tra cứu và dùng Demo KHBD; chưa xác nhận Admin đã xuất bản.'}</p>}
     {loading && <p role="status">Đang tải dữ liệu GDĐP…</p>}
     {error && <p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm text-rose-800">{error}</p>}
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">

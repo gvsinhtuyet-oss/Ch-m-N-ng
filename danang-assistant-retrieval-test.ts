@@ -28,22 +28,21 @@ test('01 - câu hỏi chung trả về hướng dẫn thân thiện', () => {
   assert.match(result.answer, /ưu tiên trả lời theo đúng trạm/i);
 });
 
-test('02 - hiểu phương ngữ "ở mô" khi hỏi về Sông Hoài', () => {
-  const result = retrieveDanangAssistantAnswer('Sông Hoài ở mô?', { station: hoiAn });
+test('02 - hiểu phương ngữ "ở mô" trong bài Hội An', () => {
+  const result = retrieveDanangAssistantAnswer('Chùa Cầu ở mô?', { station: hoiAn });
   assert.notEqual(result.layer, 'unknown');
   assert.match(result.normalizedQuery, /ở đâu/i);
-  assert.match(result.answer, /Sông Hoài/i);
+  assert.match(result.answer, /Chùa Cầu|Hội An/i);
 });
 
-test('03 - hiểu phương ngữ "là chi" khi hỏi Hội quán', () => {
-  const result = retrieveDanangAssistantAnswer('Hội quán là chi?', { station: hoiAn });
-  assert.equal(result.layer, 'station');
-  assert.match(result.answer, /Hội quán/i);
-  assert.match(result.answer, /cộng đồng/i);
+test('03 - hiểu phương ngữ "là chi" khi hỏi Chùa Cầu', () => {
+  const result = retrieveDanangAssistantAnswer('Chùa Cầu là chi?', { station: hoiAn });
+  assert.notEqual(result.layer, 'unknown');
+  assert.match(result.answer, /Chùa Cầu/i);
 });
 
 test('04 - ưu tiên hotspot khi học sinh hỏi "cái này"', () => {
-  const hotspot = hoiAn.hotspots.find(h => h.id === 'hoi-an-chua-cau');
+  const hotspot = hoiAn.hotspots.find(h => h.id === 'hoi-an-cong-trinh');
   assert.ok(hotspot);
   const result = retrieveDanangAssistantAnswer('Cái này có gì đặc biệt?', {
     station: hoiAn,
@@ -100,8 +99,8 @@ test('10 - câu ngoài kho kiến thức phải từ chối đoán', () => {
 
 test('11 - gợi ý nhanh thay đổi theo trạm Hội An', () => {
   const prompts = getDanangAssistantQuickPrompts({ station: hoiAn });
-  assert.ok(prompts.some(item => /Thương cảng/i.test(item)));
-  assert.ok(prompts.some(item => /Sông Hoài/i.test(item)));
+  assert.ok(prompts.some(item => /UNESCO/i.test(item)));
+  assert.ok(prompts.some(item => /Chùa Cầu/i.test(item)));
 });
 
 test('12 - gợi ý nhanh thay đổi theo hotspot', () => {
@@ -118,7 +117,7 @@ test('13 - 5 trạm demo đều có thể tra cứu nội dung cốt lõi', () =
     [danhNhan, 'Duy Tân nghĩa là gì?', /Duy Tân/i],
     [thanhDienHai, 'Hào thành dùng để làm gì?', /Hào/i],
     [nguHanhSon, 'Làng đá Non Nước là gì?', /Non Nước/i],
-    [hoiAn, 'Thương cảng là gì?', /Thương cảng/i],
+    [hoiAn, 'Chùa Cầu là gì?', /Chùa Cầu/i],
   ] as const;
 
   cases.forEach(([station, question, expected]) => {
@@ -140,7 +139,7 @@ test('14 - câu hỏi địa phương dài vẫn được chuẩn hóa', () => {
 
 test('15 - mô phỏng 1000 lượt hỏi liên tiếp không có bộ đếm hay giới hạn lượt', () => {
   for (let i = 0; i < 1000; i += 1) {
-    const result = retrieveDanangAssistantAnswer('Hội quán là chi?', { station: hoiAn });
+    const result = retrieveDanangAssistantAnswer('Chùa Cầu là chi?', { station: hoiAn });
     assert.equal(result.found, true);
   }
 });

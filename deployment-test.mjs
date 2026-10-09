@@ -29,3 +29,13 @@ test('Docker runtime includes every local module imported by the production serv
   assert.ok(checked.has('gddp-ai.mjs'));
   assert.ok(checked.has('deployment-config.mjs'));
 });
+
+test('Docker build ships the five-grade GDĐP catalog in the runtime image',async()=>{
+  const docker=await readFile(new URL('./Dockerfile',import.meta.url),'utf8');
+  const ignore=await readFile(new URL('./.dockerignore',import.meta.url),'utf8');
+  assert.match(docker,/COPY --from=build \/app\/content-data\/gddp-2026-2027\.json \.\/content-data\/gddp-2026-2027\.json/);
+  assert.match(ignore,/!content-data\/gddp-2026-2027\.json/);
+  const data=JSON.parse(await readFile(new URL('./content-data/gddp-2026-2027.json',import.meta.url),'utf8'));
+  assert.equal(data.records.length,42);
+  assert.deepEqual([1,2,3,4,5].map(g=>data.records.filter(x=>x.grade===g).length),[7,8,10,9,8]);
+});

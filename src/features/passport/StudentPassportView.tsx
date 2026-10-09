@@ -64,7 +64,11 @@ export const StudentPassportView: React.FC = () => {
               <Bookmark className="w-5 h-5 text-red-700" />
               <span>Trang Thu Thập Dấu Ấn – Khối {currentGrade}</span>
             </h2>
-            <p className="text-xs text-slate-500">Phiên bản demo hiện mở 01 dấu hành trình cho mỗi khối; các bài còn lại đang phát triển.</p>
+            <p className="text-xs text-slate-500">
+              {currentGrade === 2
+                ? 'Khối 2 đã mở đủ 05 dấu hành trình để phục vụ demo dự thi.'
+                : 'Phiên bản demo hiện mở 01 dấu hành trình cho khối này; các bài còn lại đang phát triển.'}
+            </p>
           </div>
         </div>
 

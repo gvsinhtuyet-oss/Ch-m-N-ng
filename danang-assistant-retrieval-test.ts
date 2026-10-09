@@ -134,7 +134,8 @@ test('14 - câu hỏi địa phương dài vẫn được chuẩn hóa', () => {
   );
   assert.match(result.normalizedQuery, /tại sao/i);
   assert.match(result.normalizedQuery, /cái này/i);
-  assert.notEqual(result.layer, 'unknown');
+  // The lesson does not explain the name origin; do not substitute a definition.
+  assert.equal(result.layer, 'unknown');
 });
 
 test('15 - mô phỏng 1000 lượt hỏi liên tiếp không có bộ đếm hay giới hạn lượt', () => {
@@ -193,4 +194,29 @@ test('20 - chuẩn hóa phương ngữ không làm hỏng từ chiếu', async (
   const result = retrieveDanangAssistantAnswer('nguyen lieu lam chieu la gi', { stations: GRADE_2_STATIONS });
   assert.equal(result.found, true);
   assert.match(result.answer, /cói/i);
+});
+
+
+
+test('22 - dialect in a location question is not a vocabulary answer', () => {
+  const result = retrieveDanangAssistantAnswer('Chùa Cầu ở mô?', {station: hoiAn});
+  assert.doesNotMatch(result.answer, /“Mô” nghĩa/);
+  assert.match(result.answer, /phố|Hội An|nằm|bên/i);
+});
+test('23 - material question selects material evidence rather than an introduction', async () => {
+  const {GRADE_2_STATIONS} = await import('./src/data/grade2Stations');
+  const result = retrieveDanangAssistantAnswer('Nguyên liệu làm chiếu là gì?', {stations:GRADE_2_STATIONS});
+  assert.match(result.answer, /cói/i);
+  assert.doesNotMatch(result.answer, /“Chi” nghĩa/);
+});
+test('24 - unsupported date must not return a generic description', () => {
+  const s = structuredClone(hoiAn);
+  s.hotspots = [{...s.hotspots[0],titleVi:'Vườn học tập',narrationVi:'Vườn học tập có cây xanh.',keyFactVi:'Các bạn yêu cây xanh.'}];
+  const result = retrieveDanangAssistantAnswer('Vườn học tập xây dựng năm nào?', {stations:[s]});
+  assert.equal(result.found,false);
+});
+test('25 - preserving hometown question provides actions', () => {
+  const result = retrieveDanangAssistantAnswer('Em có thể làm gì để giữ gìn vẻ đẹp quê hương?');
+  assert.equal(result.found,true);
+  assert.match(result.answer,/bỏ rác|vệ sinh/);
 });

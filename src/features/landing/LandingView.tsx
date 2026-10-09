@@ -712,16 +712,12 @@ export const LandingView: React.FC = () => {
               <form className="space-y-4 text-sm" onSubmit={async e => {
                 e.preventDefault(); if(staffBusy) return; setStaffBusy(true); setLoginError('');
                 try {
-                  const health = await authService.health();
-                  if (!health.auth?.ready) {
-                    const issue = health.firestoreWriteError || health.firestoreError;
-                    const quotaBlocked =
-                      issue?.code === 'RESOURCE_EXHAUSTED' ||
-                      issue?.status === 429 ||
-                      /RESOURCE_EXHAUSTED/i.test(String(issue?.detail || ''));
-                    if (!(adminLogin && quotaBlocked)) {
+                  if (!adminLogin) {
+                    const health = await authService.health();
+                    if (!health.auth?.ready) {
+                      const issue = health.firestoreWriteError || health.firestoreError;
                       const code = issue?.code ? ` (${issue.code})` : '';
-                      throw new Error(`Máy chủ quản trị chưa sẵn sàng${code}. Hãy kiểm tra /api/health sau khi xuất bản.`);
+                      throw new Error(`Máy chủ đăng nhập chưa sẵn sàng${code}. Vui lòng thử lại sau.`);
                     }
                   }
                   const user = await authService.login(staffEmail,staffPassword);

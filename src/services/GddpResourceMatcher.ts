@@ -7,7 +7,6 @@ const COMMON = new Set('đà nẵng địa phương quê hương học sinh giá
 const norm = (s: string) => s.normalize('NFC').toLocaleLowerCase('vi-VN')
   .replace(/[.,;:!?()\[\]{}\-–—“”"'/\\\d]+/g,' ').replace(/\s+/g,' ').trim();
 const meaningful = (value:string) => norm(value).split(' ').filter(w => w.length > 2 && !COMMON.has(w));
-const phrase = (value:string) => meaningful(value).join(' ');
 const eligible = (hotspot:ExplorationHotspot) => Boolean(hotspot.titleVi?.trim() && hotspot.image?.trim() &&
   hotspot.narrationVi?.trim() && !/đang được hoàn thiện|đang cập nhật|giới thiệu bài học/i.test(hotspot.narrationVi));
 export interface MatchedLessonResource { station:Station; hotspot:ExplorationHotspot; reason:string; }
@@ -28,7 +27,7 @@ export function matchGddpResources(row:GddpRecord, stations:Station[]):MatchedLe
       const overlap=titleTokens.filter(token=>sourceTokens.has(token));
       // Require a named hotspot title (2+ meaningful terms) appearing
       // almost wholly in the lesson, not merely shared city/generic words.
-      const automatic=titleTokens.length>=2 && overlap.length>=2 &&
+      const automatic=links.length===0 && titleTokens.length>=2 && overlap.length>=2 &&
         overlap.length >= Math.ceil(titleTokens.length*0.8) &&
         (topic.includes(norm(cleanTitle)) || overlap.length>=3);
       if(explicitlyLinked || automatic)

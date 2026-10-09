@@ -1,4 +1,5 @@
 import { StaffAccounts } from './StaffAccounts';
+import { GddpAdminEditor } from './GddpAdminEditor';
 import { ThemeEditor } from './ThemeEditor';
 import { ContentEditor } from './ContentEditor';
 import React, { useState } from 'react';
@@ -24,7 +25,7 @@ import {
 
 export const AdminDashboard: React.FC = () => {
   const { allStationsInCurrentGrade, currentGrade } = useApp();
-  const [activeTab, setActiveTab] = useState<'overview' | 'tracking' | 'stations' | 'users' | 'reports' | 'theme'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'tracking' | 'stations' | 'users' | 'reports' | 'theme' | 'gddp'>('overview');
   const [gradeFilter, setGradeFilter] = useState<number>(0); // 0 = all
   const [selectedStationTab, setSelectedStationTab] = useState<string>('g2-station-4');
 
@@ -61,6 +62,7 @@ export const AdminDashboard: React.FC = () => {
             { id: 'tracking', label: 'THEO DÕI TRIỂN KHAI', icon: Calendar },
             { id: 'stations', label: 'NỘI DUNG TRẠM', icon: BookOpen },
             { id: 'theme', label: 'GIAO DIỆN', icon: Layers },
+            { id: 'gddp', label: 'ĐỊA CHỈ GDĐP', icon: BookOpen },
             { id: 'users', label: 'NGƯỜI DÙNG', icon: Users },
             { id: 'reports', label: 'BÁO CÁO', icon: FileText },
           ].map(tab => {
@@ -83,6 +85,7 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {activeTab === 'theme' && <ThemeEditor />}
+      {activeTab === 'gddp' && <GddpAdminEditor />}
 
       {/* TAB 1: TỔNG QUAN */}
       {activeTab === 'overview' && (

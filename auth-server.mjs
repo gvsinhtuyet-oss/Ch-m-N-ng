@@ -276,15 +276,25 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
     // signed server-side and never stores the password in the browser.
     if(pathname === '/api/auth/login' && req.method === 'POST') {
       const data=await body(req), email=emailOf(data.email);
-      if (email === owner &&
-          typeof adminPassword === 'string' && adminPassword.length >= 12 && adminPassword.length <= 128 &&
-          typeof data.password === 'string' &&
-          timingSafeEqual(Buffer.from(hash(data.password)), Buffer.from(hash(adminPassword)))) {
-        cookie(res, ownerToken());
-        json(res,200,{user:safeUser(ownerUser())});
-        return true;
+      const ownerCredentialsMatch =
+        email === owner &&
+        typeof adminPassword === 'string' && adminPassword.length >= 12 && adminPassword.length <= 128 &&
+        typeof data.password === 'string' &&
+        timingSafeEqual(Buffer.from(hash(data.password)), Buffer.from(hash(adminPassword)));
+      try {
+        await ready();
+      } catch (error) {
+        const quotaBlocked =
+          error?.storageCode === 'RESOURCE_EXHAUSTED' ||
+          error?.storageStatus === 429 ||
+          /RESOURCE_EXHAUSTED/i.test(String(error?.message || ''));
+        if (ownerCredentialsMatch && quotaBlocked) {
+          cookie(res, ownerToken());
+          json(res,200,{user:safeUser(ownerUser())});
+          return true;
+        }
+        throw error;
       }
-      await ready();
       if(!validEmail(email) || typeof data.password !== 'string' || data.password.length > 128) throw fail(401,'Email hoặc mật khẩu chưa đúng.');
       // Persistent per-account throttle also survives container restarts.
       const id=hash(email); let rate=await store.get('cham_auth_limits',id);

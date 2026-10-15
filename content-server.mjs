@@ -152,7 +152,7 @@ async function body(req) {
   const chunks = [];
   for await (const chunk of req) {
     size += chunk.length;
-    if (size > (req.url.startsWith('/api/auth/') || req.url === '/api/admin/users' || req.url === '/api/teacher/classes' ? 32768 : 32 * 1024 * 1024)) throw Object.assign(new Error('Too large'), { status: 413 });
+    if (size > (req.url === '/api/teacher/workspace' ? 300000 : req.url.startsWith('/api/auth/') || req.url === '/api/admin/users' || req.url === '/api/teacher/classes' ? 32768 : 32 * 1024 * 1024)) throw Object.assign(new Error('Too large'), { status: 413 });
     chunks.push(chunk);
   }
   try { return JSON.parse(Buffer.concat(chunks).toString('utf8')); }

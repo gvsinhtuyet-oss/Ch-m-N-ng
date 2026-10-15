@@ -8,8 +8,8 @@ import {GddpLessonPresentation} from './GddpLessonPresentation';
 import {getGddpLessonDeck} from '../../services/GddpLessonDeckService';
 import {GddpPreparedPresentation} from './GddpPreparedPresentation';
 
-interface Props {stations: Station[]; currentGrade: number; onGradeChange: (grade: number) => void;}
-export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGradeChange}) => {
+interface Props {stations: Station[]; currentGrade: number; onGradeChange: (grade: number) => void; privateRecords?:GddpRecord[]; privateYear?:string; privateSource?:string;}
+export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGradeChange,privateRecords,privateYear,privateSource}) => {
   const [records, setRecords] = useState<GddpRecord[]>([]);
   const [grade, setGrade] = useState(currentGrade);
   const [subject, setSubject] = useState('');
@@ -25,6 +25,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   useEffect(()=>{setGrade(currentGrade);setSubject('');setWeek('');setSelectedId('');setProjected(null);},[currentGrade]);
   useEffect(() => {
     let active = true;
+    if(privateRecords){setRecords(privateRecords);setLoading(false);setPublished(false);setOfflineSource(false);return;}
     gddpService.publicCatalog().then(data => {
       if (!active) return;
       setRecords(data.records?.length ? data.records : (data.published ? [] : bundledGddpCatalog.records));
@@ -42,7 +43,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       setLoading(false);
     } });
     return () => {active = false;};
-  }, []);
+  }, [privateRecords]);
   const byGrade = useMemo(() => records.filter(x => x.grade === grade), [records,grade]);
   const subjects = useMemo(() => [...new Set(byGrade.map(x=>x.subject))].sort(), [byGrade]);
   const bySubject = useMemo(() => byGrade.filter(x=>!subject || x.subject===subject), [byGrade,subject]);
@@ -51,7 +52,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const selected = filtered.find(x => x.id === selectedId) || null;
   const preparedDeck = useMemo(()=>selected?getGddpLessonDeck(selected):null,[selected]);
   useEffect(()=>{setPreparedOpen(false);},[selected]);
-  const matchedResources = useMemo(()=>selected?matchGddpResources(selected,stations):[],[selected,stations]);
+  const matchedResources = useMemo(()=>selected?matchGddpResources(selected,stations).filter(m=>!privateRecords||selected.resourceLinks?.some(l=>l.stationId===m.station.id&&l.hotspotId===m.hotspot.id)):[],[selected,stations,privateRecords]);
   const copy = async (text:string) => {
     try { await navigator.clipboard.writeText(text); setCopied(true); }
     catch { setError('Trình duyệt không cho phép sao chép. Hãy chọn nội dung và sao chép thủ công.'); }
@@ -59,15 +60,15 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   return <section className="space-y-5 rounded-3xl border border-emerald-100 bg-white p-4 sm:p-6 shadow-sm">
     <div>
       <h2 className="text-xl font-black text-slate-900">Tích hợp Giáo dục địa phương</h2>
-      <p className="text-sm text-slate-600">Năm học 2026–2027 · Tra cứu địa chỉ tích hợp lớp 1–5. Chọn bài để xem nội dung nguồn và thực hành soạn KHBD, kể cả khi dùng chế độ Demo.</p>
+      <p className="text-sm text-slate-600">Năm học {privateYear||'2026–2027'} · Tra cứu địa chỉ tích hợp lớp 1–5. Chọn bài để xem nội dung nguồn và thực hành soạn KHBD, kể cả khi dùng chế độ Demo.</p>
     </div>
-    {!loading && !error && records.length>0 && <p className="rounded-xl bg-sky-50 p-3 text-sm text-sky-900">Đã tải {records.length} địa chỉ GDĐP của 5 khối. {published?'Dữ liệu do Admin xuất bản.':offlineSource?'Chế độ dữ liệu nguồn dự phòng (không kết nối máy chủ); vẫn có thể chọn bài, soạn và xuất KHBD. Dữ liệu này chưa được xác nhận là bản mới nhất do Admin xuất bản.':'Dữ liệu nguồn cài sẵn để tra cứu và dùng Demo KHBD; chưa xác nhận Admin đã xuất bản.'}</p>}
+    {!loading && !error && records.length>0 && <p className="rounded-xl bg-sky-50 p-3 text-sm text-sky-900">Đã tải {records.length} địa chỉ GDĐP {privateRecords?'trong kế hoạch riêng':'của 5 khối' }. {privateRecords?'Do giáo viên nhập và xác nhận; liên kết là học liệu bổ sung.':published?'Dữ liệu do Admin xuất bản.':offlineSource?'Chế độ dữ liệu nguồn dự phòng (không kết nối máy chủ); vẫn có thể chọn bài, soạn và xuất KHBD. Dữ liệu này chưa được xác nhận là bản mới nhất do Admin xuất bản.':'Dữ liệu nguồn cài sẵn để tra cứu và dùng Demo KHBD; chưa xác nhận Admin đã xuất bản.'}</p>}
     {loading && <p role="status">Đang tải dữ liệu GDĐP…</p>}
     {error && <p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm text-rose-800">{error}</p>}
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
       <label className="space-y-1 text-sm font-semibold text-slate-700">Khối lớp
         <select className="w-full rounded-xl border border-slate-300 bg-white p-3" value={grade} onChange={e=>{setGrade(Number(e.target.value));onGradeChange(Number(e.target.value));setProjected(null);setSubject('');setWeek('');setSelectedId('');}}>
-          {[1,2,3,4,5].map(x=><option key={x} value={x}>Lớp {x}</option>)}
+          {(privateRecords?[currentGrade]:[1,2,3,4,5]).map(x=><option key={x} value={x}>Lớp {x}</option>)}
         </select>
       </label>
       <label className="space-y-1 text-sm font-semibold text-slate-700">Môn học
@@ -95,7 +96,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       {selected.outcomes && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Yêu cầu cần đạt bổ sung:</strong>{'\n'}{selected.outcomes}</div>}
       {selected.teachingSuggestion && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Gợi ý tổ chức tích hợp:</strong>{'\n'}{selected.teachingSuggestion}</div>}
       <button type="button" onClick={()=>void copy(`LỚP ${selected.grade} · ${selected.subject} · ${selected.week}\nBài: ${selected.lesson}\nĐịa chỉ tích hợp: ${selected.activity}\nHình thức: ${selected.integrationType}\nNội dung GDĐP: ${selected.content}\nYêu cầu cần đạt bổ sung: ${selected.outcomes || ''}\nGợi ý tổ chức tích hợp: ${selected.teachingSuggestion || ''}`)} className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700">{copied?'Đã sao chép':'Sao chép vào KHBD'}</button>
-      <LessonPlanEditor key={selected.id} record={selected} />
+      <LessonPlanEditor key={selected.id} record={selected} sourceLabel={privateRecords?privateSource:undefined} />
       {preparedDeck && <section className="space-y-3 rounded-2xl border border-emerald-200 bg-white p-4">
         <div><h4 className="font-black text-emerald-900">Bộ trình chiếu riêng cho bài này</h4><p className="mt-1 text-sm text-slate-600">{preparedDeck.title} · {preparedDeck.slides.length} trang · Nội dung, câu hỏi, gợi ý trả lời và ghi chú giáo viên.</p></div>
         <p className="text-xs text-slate-500">Bản biên soạn đối chiếu tài liệu nguồn. Giáo viên đọc và duyệt trước khi sử dụng chính thức; không thay thế toàn bộ bài học trong sách.</p>
@@ -108,7 +109,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
         <p className="text-xs text-slate-600">Chỉ hiện từng điểm học liệu trùng khớp với bài; không mở trọn trạm hoặc 4 chặng học sinh.</p>
         {!matchedResources.length && !preparedDeck && <p role="status" className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900">Chưa tìm được học liệu có độ khớp đủ tin cậy. Không tự hiển thị nội dung trạm không liên quan; Admin có thể liên kết chính xác từng điểm học liệu.</p>}
         {matchedResources.map(({station,hotspot,reason})=><div key={station.id+':'+hotspot.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 p-3">
-          <div><p className="font-bold text-slate-900">{hotspot.titleVi}</p><p className="text-xs text-slate-500">{reason} · {station.titleVi}</p></div>
+          <div><p className="font-bold text-slate-900">{hotspot.titleVi}</p><p className="text-xs text-slate-500">{privateRecords?'Giáo viên đã xác nhận liên kết':reason} · {station.titleVi}</p></div>
           <button type="button" className="rounded-lg bg-sky-700 px-4 py-2 text-sm font-bold text-white" onClick={()=>setProjected({station,hotspot,reason})}>Trình chiếu riêng nội dung này</button>
         </div>)}
       </div>

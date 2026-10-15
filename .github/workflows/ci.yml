@@ -70,5 +70,8 @@ jobs:
       - name: Editable lesson plan and Word export tests
         run: node --import tsx --test lesson-plan-test.ts
 
+      - name: Teacher Google access and private plans
+        run: node teacher-workspace-test.mjs && node --test google-identity-test.mjs && node --import tsx --test teacher-plan-import-test.ts
+
       - name: Production build
         run: npm run build

@@ -1,0 +1,7 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {generateKeyPairSync,sign} from 'node:crypto';import {verifyGoogleCredential,googleClientId} from './google-identity.mjs';
+test('Google JWT validates signature, audience, issuer, expiry, verified email and nonce',async()=>{
+ const {publicKey,privateKey}=generateKeyPairSync('rsa',{modulusLength:2048});const original=globalThis.fetch;globalThis.fetch=async()=>({ok:true,json:async()=>({test:publicKey.export({type:'spki',format:'pem'})})});
+ const payload={iss:'https://accounts.google.com',aud:googleClientId,exp:Date.now()/1000+60,iat:Date.now()/1000,sub:'test',email:'a@example.com',email_verified:true,nonce:'challenge'};
+ function jwt(p){const header=Buffer.from(JSON.stringify({alg:'RS256',kid:'test'})).toString('base64url');const data=header+'.'+Buffer.from(JSON.stringify(p)).toString('base64url');return data+'.'+sign('RSA-SHA256',Buffer.from(data),privateKey).toString('base64url')}
+ try{assert.equal((await verifyGoogleCredential(jwt(payload),'challenge')).sub,'test');for(const patch of [{aud:'other'},{iss:'attacker'},{exp:1},{iat:Date.now()/1000+1000},{email_verified:false},{nonce:'wrong'}])await assert.rejects(()=>verifyGoogleCredential(jwt({...payload,...patch}),'challenge'));const valid=jwt(payload);await assert.rejects(()=>verifyGoogleCredential(valid.slice(0,-10)+'aaaaaaaaaa','challenge'));await assert.rejects(()=>verifyGoogleCredential('invalid','challenge'));}finally{globalThis.fetch=original}
+});

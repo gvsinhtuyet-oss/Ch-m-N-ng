@@ -1,3 +1,5 @@
+import {googleClientId,verifyGoogleCredential,newGoogleChallenge} from './google-identity.mjs';
+import {cleanGddpCatalog} from './gddp-catalog.mjs';
 import { randomBytes, createHash, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
 const scrypt = promisify(scryptCallback);
@@ -7,7 +9,7 @@ const validEmail = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.le
 const fail = (status, message, extra = {}) => Object.assign(new Error(message), { status, ...extra });
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const safeUser = user => ({ id:user.id, email:user.email, name:user.name, role:user.role,
-  ...(user.role === 'teacher' ? { assignedClasses:[], schoolName:'Trường Tiểu học Trần Đại Nghĩa' } : { permissions:['manage-content','manage-users'] }) });
+  ...(user.role === 'teacher' ? { assignedClasses:[], schoolName:user.schoolName || '', authProvider:user.authProvider || 'password' } : { permissions:['manage-content','manage-users'] }) });
 export async function passwordHash(password) {
   if (typeof password !== 'string' || password.length < 12 || password.length > 128)
     throw fail(400, 'Mật khẩu cần từ 12 đến 128 ký tự.');
@@ -204,9 +206,10 @@ export function firestoreStoreWithFallback(project, databases, fetchRequest = fe
   };
 }
 
-export function createAuth({ store, adminEmail, adminPassword, secureCookie=true }) {
+export function createAuth({ store, adminEmail, adminPassword, secureCookie=true, verifyGoogle=verifyGoogleCredential }) {
   const owner = emailOf(adminEmail);
   let bootstrap;
+  const googleRates=new Map();
   async function ready() {
     if (!store || !validEmail(owner))
       throw fail(503,'Đăng nhập nhân sự chưa được cấu hình đầy đủ trên máy chủ.');
@@ -260,10 +263,57 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       throw fail(415,'Yêu cầu phải dùng JSON.');
   }
   async function handle(req,res,pathname,body,json) {
-    if(!pathname.startsWith('/api/auth/') && pathname !== '/api/admin/users' && pathname !== '/api/teacher/classes' && pathname !== '/api/teacher/progress' && pathname !== '/api/teacher/implementations' && pathname !== '/api/teacher/proposals') return false;
+    if(!pathname.startsWith('/api/auth/') && pathname !== '/api/admin/users' && pathname !== '/api/teacher/workspace' && pathname !== '/api/teacher/classes' && pathname !== '/api/teacher/progress' && pathname !== '/api/teacher/implementations' && pathname !== '/api/teacher/proposals') return false;
     if(!['GET','POST','PUT'].includes(req.method)) { json(res,405,{error:'Method not allowed'}); return true; }
     if(req.method !== 'GET') sameOrigin(req);
 
+    if(pathname === '/api/auth/google/config' && req.method==='GET') {
+      json(res,200,{clientId:googleClientId});return true;
+    }
+    if(pathname === '/api/auth/google/challenge' && req.method==='POST') {
+      if(!store)throw fail(503,'Chưa cấu hình kho tài khoản.');
+      const key=req.socket.remoteAddress||'unknown';const now=Date.now();
+      for(const [k,v] of googleRates)if(v.until<now)googleRates.delete(k);
+      const rate=googleRates.get(key)||{count:0,until:now+60000};if(rate.count>=20||googleRates.size>10000)throw fail(429,'Vui lòng chờ một phút rồi thử lại.');rate.count++;googleRates.set(key,rate);
+      const {nonce,id}=newGoogleChallenge();
+      await store.put('cham_google_challenges',id,{expiresAt:Date.now()+300000},true);
+      cookie(res,nonce,300);json(res,200,{nonce});return true;
+    }
+    if(pathname === '/api/auth/google' && req.method==='POST') {
+      await ready();const data=await body(req);
+      const challenge=/(?:^|;\s*)cham_session=([a-f0-9]{48})(?:;|$)/.exec(req.headers.cookie||'')?.[1];
+      if(!challenge)throw fail(401,'Hãy mở lại đăng nhập Google.');
+      const saved=await store.get('cham_google_challenges',hash(challenge));
+      if(!saved||saved.expiresAt<Date.now())throw fail(401,'Phiên đăng nhập Google đã hết hạn.');
+      const identity=await verifyGoogle(data.credential,challenge);
+      await store.remove('cham_google_challenges',hash(challenge));
+      const email=emailOf(identity.email);if(!validEmail(email))throw fail(401,'Email Google chưa hợp lệ.');
+      const id=hash(email);let user=await store.get('cham_users',id);
+      // Existing privileged/password accounts cannot be claimed by self-registration.
+      if(user && user.authProvider!=='google')throw fail(409,'Email này đã có tài khoản được cấp. Hãy đăng nhập bằng mật khẩu.');
+      if(!user){user={id,email,name:String(identity.name||email).slice(0,100),role:'teacher',active:true,version:1,authProvider:'google',googleSubject:identity.sub};
+        try{await store.put('cham_users',id,user,true);}catch(e){if(e.status!==409)throw e;user=await store.get('cham_users',id);}}
+      if(!user?.active||user.role!=='teacher'||user.authProvider!=='google'||user.googleSubject!==identity.sub)throw fail(403,'Tài khoản không được phép truy cập.');
+      const token=randomBytes(32).toString('hex');await store.put('cham_sessions',hash(token),{userId:id,version:user.version,expiresAt:Date.now()+28800000});
+      cookie(res,token);json(res,200,{user:safeUser(user)});return true;
+    }
+    if(pathname === '/api/teacher/workspace') {
+      const user=await userFor(req);if(!user)throw fail(401,'Vui lòng đăng nhập.');
+      if(!['teacher','admin'].includes(user.role))throw fail(403,'Không có quyền.');
+      if(req.method==='GET'){json(res,200,{workspace:await store.get('cham_teacher_workspaces',user.id)});return true;}
+      if(req.method!=='PUT')throw fail(405,'Phương thức không hỗ trợ.');
+      const data=await body(req);
+      const text=(v,max)=>typeof v==='string'&&v.trim().length>0&&v.length<=max;
+      if(!text(data.school,200)||!text(data.book,200)||!/^20\d{2}-20\d{2}$/.test(data.year)||Number(data.year.slice(5))!==Number(data.year.slice(0,4))+1||!Number.isInteger(data.grade)||data.grade<1||data.grade>5)throw fail(400,'Kiểm tra trường, bộ sách, khối và năm học.');
+      if(!Array.isArray(data.records)||data.records.length>100||data.records.some(r=>r.grade!==data.grade))throw fail(400,'Tối đa 100 bài cùng khối.');
+      const records=cleanGddpCatalog({year:'2026-2027',records:data.records}).records;
+      const workspace={school:data.school.trim(),book:data.book.trim(),year:data.year,grade:data.grade,records,updatedAt:new Date().toISOString()};
+      if(Buffer.byteLength(JSON.stringify(workspace))>250000)throw fail(400,'Kế hoạch quá lớn; hãy giảm số bài.');
+      const existing=await store.get('cham_teacher_workspaces',user.id);
+      if(JSON.stringify({...existing,updatedAt:''})!==JSON.stringify({...workspace,updatedAt:''}))await store.put('cham_teacher_workspaces',user.id,workspace);
+      if(user.schoolName!==workspace.school)await store.put('cham_users',user.id,{...user,schoolName:workspace.school});
+      json(res,200,{workspace});return true;
+    }
     if(pathname === '/api/auth/login' && req.method === 'POST') {
       const data=await body(req), email=emailOf(data.email);
       try {
@@ -331,8 +381,14 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
           .sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt)));
         json(res,200,{records});return true;
       }
-      if(req.method!=='POST')throw fail(405,'Phương thức không hỗ trợ.');
+      if(req.method!=='POST' && !(req.method==='PUT'&&!isImplementation))throw fail(405,'Phương thức không hỗ trợ.');
       const data=await body(req);
+      if(!isImplementation && req.method==='PUT') {
+        await requireAdmin(req);
+        if(typeof data.id!=='string'||!/^[a-f0-9]{32}$/.test(data.id)||!['accepted','rejected'].includes(data.status))throw fail(400,'Quyết định không hợp lệ.');
+        const old=await store.get(collection,data.id);if(!old)throw fail(404,'Không tìm thấy đề xuất.');
+        await store.put(collection,data.id,{...old,status:data.status,reviewedAt:new Date().toISOString()});json(res,200,{ok:true});return true;
+      }
       const text=(value,max,required=true)=>typeof value==='string'&&value.trim().length<=max&&(!required||value.trim().length>0);
       if(!text(data.stationId,100)||!/^[a-zA-Z0-9_-]+$/.test(data.stationId)||!text(data.stationName,200))
         throw fail(400,'Thông tin bài học chưa hợp lệ.');
@@ -351,6 +407,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       }else{
         if(!Number.isInteger(data.grade)||data.grade<1||data.grade>5||!text(data.text,3000))throw fail(400,'Đề xuất cần nội dung từ 1 đến 3000 ký tự và khối hợp lệ.');
         record={...record,grade:data.grade,text:data.text.trim(),status:'pending'};
+        if(data.stationId==='teacher-plan'){const workspace=await store.get('cham_teacher_workspaces',staff.id);if(!workspace?.records?.length)throw fail(400,'Lưu kế hoạch trước khi đề xuất.');record={...record,workspace};}
       }
       await store.put(collection,id,record,true);
       json(res,200,{record});return true;
@@ -419,7 +476,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       if(endYear !== startYear+1) throw fail(400,'Năm học phải gồm hai năm liên tiếp.');
       if(!Array.isArray(data.students) || data.students.length>100 || data.students.some(n=>typeof n !== 'string' || !n.trim() || n.length>100))
         throw fail(400,'Danh sách tối đa 100 học sinh; mỗi họ tên từ 1 đến 100 ký tự.');
-      const id=hash(data.academicYear+':'+data.name);
+      const id=hash((staff.authProvider==='google'?staff.id+':':'')+data.academicYear+':'+data.name);
       const existing=await store.get('cham_classes',id);
       if(existing && existing.teacherId !== staff.id && staff.role !== 'admin') throw fail(403,'Lớp này thuộc giáo viên khác.');
       if(req.method === 'POST' && existing) throw fail(409,'Lớp đã tồn tại. Chọn lớp để cập nhật danh sách.');

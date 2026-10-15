@@ -7,7 +7,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 export default defineConfig(({mode}) => {
   // Server-only environment values are never injected into browser bundles.
   const serverEnv=loadEnv(mode,process.cwd(),'');
-  for(const name of ['AUTH_FIRESTORE_PROJECT','AUTH_FIRESTORE_DATABASE','AUTH_ADMIN_EMAIL','AUTH_ADMIN_PASSWORD','CONTENT_DATA_DIR','CHAM_ENV','GEMINI_API_KEY']) {
+  for(const name of ['GOOGLE_CLIENT_ID','AUTH_FIRESTORE_PROJECT','AUTH_FIRESTORE_DATABASE','AUTH_ADMIN_EMAIL','AUTH_ADMIN_PASSWORD','CONTENT_DATA_DIR','CHAM_ENV','GEMINI_API_KEY']) {
     if(process.env[name]===undefined && serverEnv[name])process.env[name]=serverEnv[name];
   }
   const connectApi=(server:any)=>{

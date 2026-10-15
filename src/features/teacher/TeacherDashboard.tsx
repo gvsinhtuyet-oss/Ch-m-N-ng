@@ -1,3 +1,4 @@
+import {TeacherWorkspace} from './TeacherWorkspace';
 import { ClassRoster } from './ClassRoster';
 import { RealClassResults } from './RealClassResults';
 import { GddpTeacherLookup } from './GddpTeacherLookup';
@@ -33,7 +34,7 @@ export const TeacherDashboard: React.FC = () => {
     setCurrentView,
   } = useApp();
 
-  const [activeTab, setActiveTab] = useState<'teaching' | 'classrooms' | 'results' | 'resources' | 'gddp'>('teaching');
+  const [activeTab, setActiveTab] = useState<'teaching' | 'classrooms' | 'results' | 'resources' | 'gddp' | 'workspace'>('teaching');
   const [selectedStationForImp, setSelectedStationForImp] = useState<Station | null>(null);
   const [selectedClassId, setSelectedClassId] = useState<string>('class-2-24');
   const [proposalStation, setProposalStation] = useState<Station | null>(null);
@@ -83,7 +84,7 @@ export const TeacherDashboard: React.FC = () => {
             <span className="px-3 py-1 rounded-full bg-amber-300 text-slate-950 font-black text-[10px] uppercase tracking-wide">
               {currentUser?.id === 'teacher-demo' ? 'Tài khoản demo • Dữ liệu minh họa' : 'Tài khoản giáo viên'}
             </span>
-            <span className="text-xs text-emerald-200">Trường TH Trần Đại Nghĩa</span>
+            <span className="text-xs text-emerald-200">{teacher?.schoolName || 'Chọn trường trong kế hoạch của tôi'}</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black">
             Chào mừng {teacher?.name || 'Cô Trương Sinh Tuyết'}!
@@ -112,6 +113,7 @@ export const TeacherDashboard: React.FC = () => {
             <Presentation className="w-3.5 h-3.5" />
             <span>DẠY HỌC</span>
           </button>
+          <button type="button" onClick={()=>setActiveTab('workspace')} className="rounded-xl bg-white/15 px-4 py-2 text-xs font-bold">KẾ HOẠCH CỦA TÔI</button>
           <button type="button" onClick={() => setActiveTab('gddp')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${activeTab === 'gddp' ? 'bg-white text-slate-950 shadow-md' : 'text-white hover:bg-white/10'}`}>
             <BookOpen className="w-3.5 h-3.5" /><span>TÍCH HỢP GDĐP</span>
@@ -146,6 +148,7 @@ export const TeacherDashboard: React.FC = () => {
         </div>
       </div>
 
+      {activeTab === 'workspace' && <TeacherWorkspace />}
       {activeTab === 'gddp' && <GddpTeacherLookup stations={allStationsInCurrentGrade} currentGrade={currentGrade} onGradeChange={setCurrentGrade} />}
 
       {/* TAB 1: DẠY HỌC */}

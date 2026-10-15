@@ -5,6 +5,8 @@ import { Station } from '../../types';
 import {matchGddpResources,MatchedLessonResource} from '../../services/GddpResourceMatcher';
 import {LessonPlanEditor} from './LessonPlanEditor';
 import {GddpLessonPresentation} from './GddpLessonPresentation';
+import {getGddpLessonDeck} from '../../services/GddpLessonDeckService';
+import {GddpPreparedPresentation} from './GddpPreparedPresentation';
 
 interface Props {stations: Station[]; currentGrade: number; onGradeChange: (grade: number) => void;}
 export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGradeChange}) => {
@@ -18,6 +20,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const [offlineSource,setOfflineSource]=useState(false);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
+  const [preparedOpen,setPreparedOpen] = useState(false);
   const [projected,setProjected] = useState<MatchedLessonResource|null>(null);
   useEffect(()=>{setGrade(currentGrade);setSubject('');setWeek('');setSelectedId('');setProjected(null);},[currentGrade]);
   useEffect(() => {
@@ -46,6 +49,8 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const weeks = useMemo(() => [...new Set(bySubject.map(x=>x.week).filter(Boolean))].sort((a,b)=>(parseInt(a.match(/\d+/)?.[0]||'0'))-(parseInt(b.match(/\d+/)?.[0]||'0'))), [bySubject]);
   const filtered = useMemo(() => bySubject.filter(x=>!week || x.week===week), [bySubject,week]);
   const selected = filtered.find(x => x.id === selectedId) || null;
+  const preparedDeck = useMemo(()=>selected?getGddpLessonDeck(selected):null,[selected]);
+  useEffect(()=>{setPreparedOpen(false);},[selected]);
   const matchedResources = useMemo(()=>selected?matchGddpResources(selected,stations):[],[selected,stations]);
   const copy = async (text:string) => {
     try { await navigator.clipboard.writeText(text); setCopied(true); }
@@ -91,10 +96,17 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       {selected.teachingSuggestion && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Gợi ý tổ chức tích hợp:</strong>{'\n'}{selected.teachingSuggestion}</div>}
       <button type="button" onClick={()=>void copy(`LỚP ${selected.grade} · ${selected.subject} · ${selected.week}\nBài: ${selected.lesson}\nĐịa chỉ tích hợp: ${selected.activity}\nHình thức: ${selected.integrationType}\nNội dung GDĐP: ${selected.content}\nYêu cầu cần đạt bổ sung: ${selected.outcomes || ''}\nGợi ý tổ chức tích hợp: ${selected.teachingSuggestion || ''}`)} className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700">{copied?'Đã sao chép':'Sao chép vào KHBD'}</button>
       <LessonPlanEditor key={selected.id} record={selected} />
+      {preparedDeck && <section className="space-y-3 rounded-2xl border border-emerald-200 bg-white p-4">
+        <div><h4 className="font-black text-emerald-900">Bộ trình chiếu riêng cho bài này</h4><p className="mt-1 text-sm text-slate-600">{preparedDeck.title} · {preparedDeck.slides.length} trang · Nội dung, câu hỏi, gợi ý trả lời và ghi chú giáo viên.</p></div>
+        <p className="text-xs text-slate-500">Bản biên soạn đối chiếu tài liệu nguồn. Giáo viên đọc và duyệt trước khi sử dụng chính thức; không thay thế toàn bộ bài học trong sách.</p>
+        {preparedDeck.reviewNotes.length>0 && <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900"><p className="font-bold">Lưu ý cần duyệt</p><ul className="mt-1 list-disc space-y-1 pl-4">{preparedDeck.reviewNotes.map(note=><li key={note}>{note}</li>)}</ul></div>}
+        <button type="button" onClick={()=>setPreparedOpen(true)} className="rounded-xl bg-emerald-700 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-800">Trình chiếu bài này</button>
+        <details className="text-xs text-slate-600"><summary className="cursor-pointer font-bold">Nguồn và mục tiêu của bộ trình chiếu</summary><ul className="mt-2 list-disc space-y-1 pl-4">{preparedDeck.sources.map(source=><li key={source}>{source}</li>)}</ul><p className="mt-2">Sơ đồ minh hoạ được biên soạn cho bài; không phải ảnh tư liệu. Không gọi AI hoặc ghi dữ liệu khi mở trình chiếu.</p></details>
+      </section>}
       <div className="space-y-3 rounded-xl border border-emerald-200 bg-white p-3">
-        <h4 className="font-bold">Học liệu tự lọc theo đúng nội dung tích hợp</h4>
+        <h4 className="font-bold">Học liệu bổ sung từ các trạm</h4>
         <p className="text-xs text-slate-600">Chỉ hiện từng điểm học liệu trùng khớp với bài; không mở trọn trạm hoặc 4 chặng học sinh.</p>
-        {!matchedResources.length && <p role="status" className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900">Chưa tìm được học liệu có độ khớp đủ tin cậy. Không tự hiển thị nội dung trạm không liên quan; Admin có thể liên kết chính xác từng điểm học liệu.</p>}
+        {!matchedResources.length && !preparedDeck && <p role="status" className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900">Chưa tìm được học liệu có độ khớp đủ tin cậy. Không tự hiển thị nội dung trạm không liên quan; Admin có thể liên kết chính xác từng điểm học liệu.</p>}
         {matchedResources.map(({station,hotspot,reason})=><div key={station.id+':'+hotspot.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 p-3">
           <div><p className="font-bold text-slate-900">{hotspot.titleVi}</p><p className="text-xs text-slate-500">{reason} · {station.titleVi}</p></div>
           <button type="button" className="rounded-lg bg-sky-700 px-4 py-2 text-sm font-bold text-white" onClick={()=>setProjected({station,hotspot,reason})}>Trình chiếu riêng nội dung này</button>
@@ -102,6 +114,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       </div>
       <p className="text-xs text-slate-500">Nội dung nguồn cần được giáo viên đối chiếu với bài dạy và tài liệu chính thức trước khi sử dụng. KHBD Demo là bản nháp để chỉnh sửa, không thay đổi dữ liệu trường.</p>
     </article>}
+    {selected && preparedDeck && preparedOpen && <GddpPreparedPresentation key={selected.id} record={selected} deck={preparedDeck} onExit={()=>setPreparedOpen(false)} />}
     {selected && projected && <GddpLessonPresentation record={selected} resource={projected} onExit={()=>setProjected(null)} />}
   </section>;
 };

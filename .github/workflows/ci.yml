@@ -55,6 +55,9 @@ jobs:
       - name: Five-grade teacher lesson isolation tests
         run: npx tsx --test gddp-teacher-five-grades-test.ts
 
+      - name: Grade 2 prepared lesson decks and exact bindings
+        run: node --import tsx --test grade2-lesson-decks-test.ts
+
       - name: Content storage tests
         run: node --test content-storage-test.mjs
 

@@ -1,5 +1,4 @@
 import { backgroundMusic } from './services/BackgroundMusic';
-import { StaffPassword } from './components/common/StaffPassword';
 import { AppBackground } from './components/common/AppBackground';
 import React, { useState, useEffect } from 'react';
 import { AppProvider, useApp } from './contexts/AppContext';
@@ -63,7 +62,6 @@ const AppContent: React.FC = () => {
   return (
     <div className="game-shell min-h-screen flex flex-col text-slate-800">
       <Header />
-      <StaffPassword />
 
       <main className="game-content flex-1">
         {currentView === 'student-journey' && <StudentJourneyView />}

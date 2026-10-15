@@ -10,6 +10,7 @@ import { readTheme } from '../../services/ThemeService';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import {
   Compass,
+  Settings,
   GraduationCap,
   Presentation,
   Globe,
@@ -456,13 +457,14 @@ export const LandingView: React.FC = () => {
           />
           <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
           <div className="absolute inset-0 bg-slate-950/38 backdrop-blur-[2px] pointer-events-none" />
-          <div className="relative z-10 bg-white/95 backdrop-blur-xl text-slate-800 rounded-3xl p-6 sm:p-8 max-w-5xl w-full max-h-[90dvh] overflow-y-auto shadow-2xl border border-white/80 space-y-5 animate-in fade-in zoom-in-95 duration-200">
+          <div role="dialog" aria-modal="true" aria-label="Chọn vai trò và đăng nhập" className={`relative z-10 w-full max-h-[90dvh] overflow-y-auto rounded-3xl border border-white/80 bg-[#fffdf9]/95 p-5 text-slate-800 shadow-2xl backdrop-blur-xl sm:p-6 space-y-4 ${showTeacherLogin ? 'max-w-[420px]' : showStudentLogin ? 'max-w-[460px]' : 'max-w-[860px]'}`}>
             <div className="flex items-center justify-between">
               <div>
                 <span className="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 text-[11px] font-bold">
                   CHẠM ĐÀ NẴNG
                 </span>
-                <h3 className="text-xl font-black text-slate-900 mt-1">Chọn vai trò</h3>
+                <h3 className="mt-2 text-xl font-black tracking-tight text-slate-900">{showTeacherLogin ? (adminLogin ? 'Không gian quản trị' : 'Không gian giáo viên') : showStudentLogin ? 'Chào Nhà phiêu lưu!' : 'Bạn sẽ khám phá với vai trò nào?'}</h3>
+                {!showStudentLogin && !showTeacherLogin && <p className="mt-1 text-xs text-slate-500">Chọn không gian dành cho bạn</p>}
               </div>
               <button
                 onClick={() => {
@@ -471,7 +473,7 @@ export const LandingView: React.FC = () => {
                   setShowTeacherLogin(false);
                   setLoginError('');
                 }}
-                className="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition"
+                aria-label="Đóng khung đăng nhập" className="w-9 h-9 shrink-0 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -480,37 +482,37 @@ export const LandingView: React.FC = () => {
             {!showStudentLogin && !showTeacherLogin ? (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
                 {[
-                  {id:'student',name:'HỌC SINH',demo:'Học sinh trải nghiệm',Icon:GraduationCap,color:'bg-sky-700',description:'Khám phá điểm đến, chinh phục thử thách và nhận hộ chiếu hành trình.'},
-                  {id:'teacher',name:'GIÁO VIÊN',demo:'Giáo viên trải nghiệm',Icon:Presentation,color:'bg-emerald-700',description:'Xem học liệu, tổ chức bài học và theo dõi tiến độ.'},
-                  {id:'admin',name:'QUẢN TRỊ',demo:'Quản trị trải nghiệm',Icon:Globe,color:'bg-amber-700',description:'Chỉnh giao diện, hình ảnh, học liệu và xem báo cáo.'},
-                ].map(({id,name,demo,Icon,color,description})=><section key={id} className="flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-                  <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${color} text-white`}><Icon className="h-7 w-7" /></div>
-                  <h4 className="text-lg font-black text-slate-900">{name}</h4>
-                  <p className="flex-1 text-sm text-slate-600">{description}</p>
+                  {id:'student',name:'HỌC SINH',demo:'Học sinh trải nghiệm',Icon:Compass,color:'bg-orange-600',description:'Khám phá quê hương, sưu tập dấu ấn.'},
+                  {id:'teacher',name:'GIÁO VIÊN',demo:'Giáo viên trải nghiệm',Icon:Presentation,color:'bg-emerald-700',description:'Tổ chức bài học, theo dõi học sinh.'},
+                  {id:'admin',name:'QUẢN TRỊ',demo:'Quản trị trải nghiệm',Icon:Settings,color:'bg-sky-700',description:'Quản lý học liệu, kết nối nhà trường.'},
+                ].map(({id,name,demo,Icon,color,description})=><section key={id} className={`group relative flex flex-col gap-3 overflow-hidden rounded-3xl border bg-white p-4 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg motion-reduce:transform-none sm:p-5 ${id==='student' ? 'border-orange-100 hover:border-orange-300' : id==='teacher' ? 'border-emerald-100 hover:border-emerald-300' : 'border-sky-100 hover:border-sky-300'}`}>
+                  <div className={`flex h-14 w-14 items-center justify-center rounded-full ring-8 ring-slate-50 ${color} text-white shadow-sm`}><Icon className="h-7 w-7" /></div>
+                  <h4 className="text-sm font-bold text-slate-900">{name}</h4>
+                  <p className="flex-1 text-xs leading-relaxed text-slate-500">{description}</p>
                   <button type="button" onClick={()=>{
                     audioService.playSfx('click');setLoginError('');setStaffPassword('');
                     if(id==='student'){setGuestMode(false);setChosenGrade(null);setShowStudentLogin(true);}
                     else{setAdminLogin(id==='admin');setShowTeacherLogin(true);}
-                  }} className="rounded-xl border-2 border-slate-200 px-4 py-3 font-bold hover:bg-slate-50">Đăng nhập</button>
+                  }} className={`h-10 rounded-xl ${color} px-4 text-sm font-bold text-white transition hover:brightness-110`}>Đăng nhập</button>
                   <button type="button" disabled={staffBusy} onClick={async()=>{
                     setLoginError('');
                     if(id==='student'){setGuestMode(true);setChosenGrade(null);setShowStudentLogin(true);return;}
                     setStaffBusy(true);
                     try{if(id==='admin')await enterAdminDemo();else await enterTeacherDemo();setShowRolePicker(false);}
                     catch(error){setLoginError((error as Error).message);}finally{setStaffBusy(false);}
-                  }} className={`min-h-24 rounded-2xl ${color} px-4 py-5 text-lg font-black text-white shadow-md transition hover:brightness-110 disabled:opacity-50`}>
-                    {demo}<span className="mt-1 block text-xs font-medium text-white/90">Không cần tài khoản</span>
+                  }} aria-label={demo} className="h-9 rounded-xl border border-slate-200 px-4 text-xs font-bold text-slate-600 transition hover:bg-slate-50 disabled:opacity-50">
+                    Trải nghiệm
                   </button>
                 </section>)}
                 {loginError && <p role="alert" className="md:col-span-3 rounded-xl bg-rose-50 p-3 text-rose-700">{loginError}</p>}
               </div>
             ) : showStudentLogin ? (
               /* Student Login Form: chọn khối và nhập thông tin ngay trên cùng một màn hình */
-              <form onSubmit={handleStudentSubmit} className="space-y-5 text-xs">
+              <form onSubmit={handleStudentSubmit} className="space-y-4 text-xs">
                 <div>
-                  <div className="mb-3 flex items-center justify-between gap-3">
-                    <h4 className="text-lg font-black text-slate-900">
-                      {guestMode ? 'Học sinh trải nghiệm — chọn khối' : 'Đăng nhập học sinh — chọn khối'}
+                  <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                    <h4 className="text-sm font-bold text-slate-900">
+                      {guestMode ? 'Trải nghiệm · Chọn khối lớp' : 'Chọn khối lớp của em'}
                     </h4>
                     <button
                       type="button"
@@ -544,17 +546,17 @@ export const LandingView: React.FC = () => {
                               setSelectedClass(classroom?.name.replace('Lớp ', '') || `${grade}/1`);
                             }
                           }}
-                          className={`min-w-0 rounded-2xl bg-gradient-to-br ${color} px-2 py-4 sm:px-4 sm:py-5 text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-sky-300 ${
+                          className={`min-w-0 rounded-2xl bg-gradient-to-br ${color} px-1 py-3 sm:px-2 sm:py-3 text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-sky-300 ${
                             active
-                              ? 'ring-4 ring-white/90 scale-[1.12] sm:scale-[1.14] shadow-2xl z-10'
+                              ? 'ring-2 ring-orange-300 ring-offset-2 shadow-md z-10'
                               : guestMode && chosenGrade
                                 ? 'scale-[0.86] opacity-45'
                                 : ''
                           }`}
                         >
-                          <GraduationCap className="mx-auto mb-2 h-5 w-5 sm:h-6 sm:w-6" />
+                          <GraduationCap className="mx-auto mb-1 h-4 w-4" />
                           <span className="block whitespace-nowrap text-sm sm:text-lg font-black">Khối {grade}</span>
-                          <span className="mt-1 block text-[9px] sm:text-[10px] text-white/90">
+                          <span className="hidden text-[9px] text-white/90 sm:block">
                             {active
                               ? (guestMode ? 'Đang vào hành trình…' : 'Đã chọn ✓')
                               : (guestMode ? 'Chạm để vào học' : 'Chạm để chọn')}
@@ -666,6 +668,7 @@ export const LandingView: React.FC = () => {
                     </button>
                   </div>
                 )}
+                {!guestMode && <button type="button" onClick={()=>{setGuestMode(true);setChosenGrade(null);setLoginError('');}} className="h-9 w-full rounded-xl border border-orange-200 text-xs font-bold text-orange-700 hover:bg-orange-50">Trải nghiệm học sinh</button>}
               </form>
             ) : (
               <form className="space-y-4 text-sm" onSubmit={async e => {
@@ -678,8 +681,16 @@ export const LandingView: React.FC = () => {
                 } catch(error) { setLoginError((error as Error).message); }
                 finally { setStaffBusy(false); }
               }}>
-                <h4 className="font-black text-lg">{adminLogin ? 'Đăng nhập quản trị' : 'Đăng nhập giáo viên'}</h4>
-                <p className="text-slate-500">Dùng email và mật khẩu được nhà trường cấp. Quyền truy cập được xác định theo tài khoản.</p>
+                <p className="text-slate-500">Đăng nhập bằng tài khoản được nhà trường cấp.</p>
+                <label className="block font-bold">Email
+                  <input type="email" autoComplete="username" required maxLength={254} value={staffEmail} onChange={e=>setStaffEmail(e.target.value)} className="mt-1 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100" />
+                </label>
+                <label className="block font-bold">Mật khẩu
+                  <input type="password" autoComplete="current-password" required maxLength={128} value={staffPassword} onChange={e=>setStaffPassword(e.target.value)} className="mt-1 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100" />
+                </label>
+                {loginError && <p role="alert" className="p-3 rounded-xl bg-rose-50 text-rose-700">{loginError}</p>}
+                <p className="text-xs text-slate-500">Quên mật khẩu? Liên hệ quản trị nhà trường để được đặt lại.</p>
+                <button disabled={staffBusy} className={`h-11 w-full rounded-xl text-sm font-bold text-white shadow-sm disabled:opacity-50 ${adminLogin ? 'bg-sky-700 hover:bg-sky-800' : 'bg-emerald-700 hover:bg-emerald-800'}`}>{staffBusy ? 'Đang đăng nhập…' : 'Đăng nhập'}</button>
                 <button
                   type="button"
                   disabled={staffBusy}
@@ -696,23 +707,12 @@ export const LandingView: React.FC = () => {
                       setStaffBusy(false);
                     }
                   }}
-                  className="w-full min-h-24 rounded-2xl bg-sky-700 p-5 text-xl font-black text-white hover:bg-sky-800 disabled:opacity-50"
+                  className="h-9 w-full rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50"
                 >
                   {adminLogin ? 'Quản trị trải nghiệm' : 'Giáo viên trải nghiệm'}
                 </button>
-                <p className="text-xs text-slate-500">{adminLogin ? 'Thử chỉnh nền, ảnh, học liệu và xem tiến độ lưu trên máy này. Không lưu vào kho chung.' : 'Mở không gian giáo viên với dữ liệu minh họa để xem học liệu và trình chiếu.'}</p>
-                <label className="block font-bold">Email
-                  <input type="email" autoComplete="username" required maxLength={254} value={staffEmail} onChange={e=>setStaffEmail(e.target.value)} className="mt-1 w-full p-3 border rounded-xl" />
-                </label>
-                <label className="block font-bold">Mật khẩu
-                  <input type="password" autoComplete="current-password" required maxLength={128} value={staffPassword} onChange={e=>setStaffPassword(e.target.value)} className="mt-1 w-full p-3 border rounded-xl" />
-                </label>
-                {loginError && <p role="alert" className="p-3 rounded-xl bg-rose-50 text-rose-700">{loginError}</p>}
-                <p className="text-xs text-slate-500">Quên mật khẩu? Liên hệ quản trị nhà trường để được đặt lại.</p>
-                <div className="flex gap-2">
-                  <button type="button" disabled={staffBusy} onClick={()=>{setShowTeacherLogin(false);setStaffPassword('');setLoginError('');}} className="flex-1 p-3 rounded-xl bg-slate-100">Quay lại</button>
-                  <button disabled={staffBusy} className="flex-1 p-3 rounded-xl bg-emerald-600 text-white font-bold disabled:opacity-50">{staffBusy ? 'Đang đăng nhập…' : 'Đăng nhập'}</button>
-                </div>
+                <p className="text-center text-[10px] text-slate-400">Dữ liệu trải nghiệm chỉ lưu trên thiết bị này.</p>
+                <button type="button" disabled={staffBusy} onClick={()=>{setShowTeacherLogin(false);setStaffPassword('');setLoginError('');}} className="block w-full text-center text-xs font-semibold text-slate-500 hover:text-slate-800">← Chọn vai trò khác</button>
               </form>
             )}
           </div>

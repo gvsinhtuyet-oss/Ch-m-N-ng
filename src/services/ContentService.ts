@@ -1,3 +1,4 @@
+import {currentGrade3Content} from './Grade3ContentPolicy';
 import {currentGrade1Content} from './Grade1ContentPolicy';
 import { authService } from './AuthService';
 import { fetchWithTimeout } from './NetworkService';
@@ -46,8 +47,8 @@ const isLegacyPlaceholderCover = (url: string) =>
 
 export const contentService = {
   get(station: Station): StationContent {
-    return records[station.id] ? currentGrade1Content(station,records[station.id]) : {
-      ...(station.grade===1?{contentRevision:station.version.version}:{}),
+    return records[station.id] ? currentGrade3Content(station,currentGrade1Content(station,records[station.id])) : {
+      ...((station.grade===1||station.grade===3)?{contentRevision:station.version.version}:{}),
       coverImage: station.coverImage, mapImage: station.journeyMap?.image || '',
       hotspots: station.hotspots, resources: [],
     };
@@ -55,7 +56,7 @@ export const contentService = {
   apply(station: Station) {
     const saved = records[station.id];
     if (!saved) return;
-    const content=currentGrade1Content(station,saved);
+    const content=currentGrade3Content(station,currentGrade1Content(station,saved));
     // Dữ liệu đã xuất bản từ các bản cũ có thể còn ảnh stock Unsplash.
     // Không cho ảnh placeholder cũ ghi đè bộ cover đã được biên tập đúng theo 25 trạm.
     if (content.coverImage && !isLegacyPlaceholderCover(content.coverImage)) {
@@ -74,7 +75,7 @@ export const contentService = {
   },
   resources(stationId: string) { return records[stationId]?.resources || []; },
   saveLocal(station: Station, content: StationContent) {
-    if(station.grade===1)content={...content,contentRevision:station.version.version};
+    if((station.grade===1||station.grade===3))content={...content,contentRevision:station.version.version};
     if (!validContent(content)) throw new Error('Nội dung trạm chưa hợp lệ.');
     const next = { ...records, [station.id]: structuredClone(content) };
     const nextPreview = {...previewRecords,[station.id]:structuredClone(content)};
@@ -116,7 +117,7 @@ export const contentService = {
     }
   },
   async publish(station: Station, content: StationContent) {
-    if(station.grade===1)content={...content,contentRevision:station.version.version};
+    if((station.grade===1||station.grade===3))content={...content,contentRevision:station.version.version};
     const response = await fetchWithTimeout('/api/content/' + encodeURIComponent(station.id), {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json',  },

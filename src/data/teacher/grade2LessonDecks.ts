@@ -8,6 +8,7 @@ export interface LessonSlide {
   visual: string[];
 }
 export interface LessonDeckDefinition {
+  presentationKind?: 'topic';
   teachingContent?: string;
   resourceLinks?: {stationId:string;hotspotId:string}[];
   mappingReview?: {sourceYear:string;currentYearConfirmed:boolean;note:string};

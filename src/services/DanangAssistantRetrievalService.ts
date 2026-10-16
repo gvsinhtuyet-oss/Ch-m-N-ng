@@ -317,8 +317,14 @@ export function retrieveDanangAssistantAnswer(
     const text = [h.narrationVi, h.keyFactVi].filter(Boolean).join(' ');
     return { station: s, hotspot: h, score, text };
   }));
-  const named = candidates.filter(c => c.score >= 88).sort((a, b) => b.score - a.score);
-  const target = named[0] || (usesDeicticReference(query) && context.hotspot
+  // A named destination overrides an incidental "ở đây" reference, even when
+  // the edited learning-point title contains more words than the destination.
+  const explicitStation = stations.map(s => ({station:s,terms:[s.titleVi,...(DEMO_STATIONS.find(m=>m.stationId===s.id)?.aliases||[])]
+    .map(normalizeForSearch).filter(term=>words(term).length>=2 && normalizeForSearch(query).includes(term))}))
+    .filter(x=>x.terms.length).sort((a,b)=>Math.max(...b.terms.map(t=>t.length))-Math.max(...a.terms.map(t=>t.length)))[0]?.station;
+  const relevantCandidates=explicitStation?candidates.filter(c=>c.station.id===explicitStation.id):candidates;
+  const named = relevantCandidates.filter(c => c.score >= 88).sort((a, b) => b.score - a.score);
+  const target = named[0] || (explicitStation ? [...relevantCandidates].sort((a,b)=>b.score-a.score)[0] : undefined) || (usesDeicticReference(query) && context.hotspot
     ? candidates.find(c => c.hotspot.id === context.hotspot?.id && c.station.id === station?.id) : undefined);
   if (target) {
     // Do not answer a specific question with a definition just because the place matches.

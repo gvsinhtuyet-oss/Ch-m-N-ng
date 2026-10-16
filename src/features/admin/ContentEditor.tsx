@@ -26,7 +26,7 @@ export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = fals
   const [resourceUrl, setResourceUrl] = useState('');
   const [resourceKind, setResourceKind] = useState<LearningResource['kind']>('document');
   const fieldClass = 'w-full rounded-xl border border-slate-300 bg-white p-3 text-sm text-slate-900';
-  const validLink = (value: string) => !value || /^https:\/\//i.test(value) || /^data:(image\/|application\/pdf|audio\/|video\/)/i.test(value);
+  const validLink = (value: string) => !value || /^\/learning\/grade1\/[a-z0-9-]+\.svg$/.test(value) || /^https:\/\//i.test(value) || /^data:(image\/|application\/pdf|audio\/|video\/)/i.test(value);
 
   const upload = async (file: File | undefined, target: 'cover' | 'map' | number) => {
     if (!file) return;
@@ -47,7 +47,7 @@ export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = fals
   };
   const validate = () => {
     if (![draft.coverImage, draft.mapImage, ...draft.hotspots.map(h => h.image), ...draft.resources.map(r => r.url)].every(validLink))
-      throw new Error('Đường dẫn phải bắt đầu bằng HTTPS.');
+      throw new Error('Dùng đường dẫn HTTPS hoặc hình minh họa khối 1 đi kèm app.');
     if (draft.resources.some(r => !r.title.trim() || !r.url)) throw new Error('Học liệu cần có tên và đường dẫn.');
   };
   const save = async (publish: boolean) => {

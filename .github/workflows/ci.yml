@@ -64,6 +64,9 @@ jobs:
       - name: Da Nang assistant retrieval tests
         run: npm run test:assistant
 
+      - name: Grade 1 authored content and no-network regression
+        run: node --import tsx --test grade1-content-test.ts
+
       - name: Grade 2 current-book content and image tests
         run: npx tsx --test grade2-content-image-test.ts
 

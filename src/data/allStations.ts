@@ -1,3 +1,4 @@
+import {GRADE_1_STATIONS} from './grade1Stations';
 import { contentService } from '../services/ContentService';
 import { Station, Reward, Stamp, PedagogyGoals, ExplorationHotspot, Challenge, CheckIn } from '../types';
 import { GRADE_2_STATIONS } from './grade2Stations';
@@ -201,7 +202,7 @@ function featuredFirst(grade: number, stations: Station[]): Station[] {
 }
 
 const STATIONS_BY_GRADE: Record<number, Station[]> = {
-  1: featuredFirst(1, withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 1).map(catalogItemToStation))),
+  1: GRADE_1_STATIONS,
   2: featuredFirst(2, withCanonicalDemo(GRADE_2_STATIONS)),
   3: featuredFirst(3, withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 3).map(catalogItemToStation))),
   4: featuredFirst(4, withCanonicalDemo(OFFICIAL_25_CATALOG.filter(c => c.grade === 4).map(catalogItemToStation))),

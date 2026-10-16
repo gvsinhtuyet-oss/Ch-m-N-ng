@@ -1,3 +1,4 @@
+import {currentGrade1Content} from './Grade1ContentPolicy';
 import { authService } from './AuthService';
 import { fetchWithTimeout } from './NetworkService';
 import { ThemeSettings, saveTheme } from './ThemeService';
@@ -11,6 +12,7 @@ export interface LearningResource {
   kind: 'document' | 'video' | 'audio' | 'image';
 }
 export interface StationContent {
+  contentRevision?: string;
   coverImage: string;
   mapImage: string;
   hotspots: Station['hotspots'];
@@ -44,14 +46,16 @@ const isLegacyPlaceholderCover = (url: string) =>
 
 export const contentService = {
   get(station: Station): StationContent {
-    return records[station.id] || {
+    return records[station.id] ? currentGrade1Content(station,records[station.id]) : {
+      ...(station.grade===1?{contentRevision:station.version.version}:{}),
       coverImage: station.coverImage, mapImage: station.journeyMap?.image || '',
       hotspots: station.hotspots, resources: [],
     };
   },
   apply(station: Station) {
-    const content = records[station.id];
-    if (!content) return;
+    const saved = records[station.id];
+    if (!saved) return;
+    const content=currentGrade1Content(station,saved);
     // Dữ liệu đã xuất bản từ các bản cũ có thể còn ảnh stock Unsplash.
     // Không cho ảnh placeholder cũ ghi đè bộ cover đã được biên tập đúng theo 25 trạm.
     if (content.coverImage && !isLegacyPlaceholderCover(content.coverImage)) {
@@ -70,6 +74,7 @@ export const contentService = {
   },
   resources(stationId: string) { return records[stationId]?.resources || []; },
   saveLocal(station: Station, content: StationContent) {
+    if(station.grade===1)content={...content,contentRevision:station.version.version};
     if (!validContent(content)) throw new Error('Nội dung trạm chưa hợp lệ.');
     const next = { ...records, [station.id]: structuredClone(content) };
     const nextPreview = {...previewRecords,[station.id]:structuredClone(content)};
@@ -111,6 +116,7 @@ export const contentService = {
     }
   },
   async publish(station: Station, content: StationContent) {
+    if(station.grade===1)content={...content,contentRevision:station.version.version};
     const response = await fetchWithTimeout('/api/content/' + encodeURIComponent(station.id), {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json',  },

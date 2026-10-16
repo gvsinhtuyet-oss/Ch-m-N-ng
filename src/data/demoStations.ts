@@ -1,5 +1,9 @@
 export const DEMO_STATION_IDS = new Set([
+  'g1-station-1', // Quê hương em
   'g1-station-4', // Thành Điện Hải
+  'g1-station-2', // Trò chơi dân gian
+  'g1-station-3', // Những dòng suối
+  'g1-station-5', // Món ăn truyền thống
 
   // Khối 2: mở toàn bộ 5 trạm để demo dự thi
   'g2-station-1', // Chiếu Cẩm Nê – Chiếu Bàn Thạch

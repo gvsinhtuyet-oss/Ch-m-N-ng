@@ -54,7 +54,7 @@ const loadSharedContent = async () => {
   return current;
 };
 const validUrl = value => typeof value === 'string' && (
-  value === '' || /^https:\/\//i.test(value) ||
+  value === '' || /^https:\/\//i.test(value) || /^\/learning\/grade1\/[a-z0-9-]+\.svg$/.test(value) ||
   /^data:(image\/(png|jpeg|webp|gif)|application\/pdf|audio\/(mpeg|mp3|wav|ogg|mp4|x-wav)|video\/(mp4|webm|ogg));base64,/i.test(value)
 );
 const studentSyncKey = code => createHash('sha256').update(String(code || '').toUpperCase().replace(/[^A-Z0-9]/g,'')).digest('hex');
@@ -419,7 +419,7 @@ const server = createServer(async (req,res) => {
           !Array.isArray(content.resources) || content.resources.length > 50 ||
           !content.resources.every(r => typeof r.id === 'string' && typeof r.title === 'string' && r.title.trim() && validUrl(r.url) && r.url && ['document','video','audio','image'].includes(r.kind)))
         return json(res,400,{ error:'Invalid station content' });
-      const clean = { coverImage:content.coverImage,mapImage:content.mapImage,hotspots:content.hotspots,resources:content.resources };
+      const clean = { coverImage:content.coverImage,mapImage:content.mapImage,hotspots:content.hotspots,resources:content.resources, ...(typeof content.contentRevision==='string' && /^[a-zA-Z0-9.-]{1,80}$/.test(content.contentRevision)?{contentRevision:content.contentRevision}:{}) };
       const operation = writes.then(async () => {
         if (durableContent) { await durableContent.saveStation(id,clean); invalidateSharedContentCache(); return; }
         if (process.env.K_SERVICE) throw Object.assign(new Error('Chưa cấu hình kho học liệu lâu dài.'),{status:503});

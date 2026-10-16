@@ -1,4 +1,5 @@
 export interface LessonSlide {
+  images?: {src:string;alt:string;caption:string}[];
   title: string;
   points: string[];
   question: string;
@@ -7,6 +8,9 @@ export interface LessonSlide {
   visual: string[];
 }
 export interface LessonDeckDefinition {
+  teachingContent?: string;
+  resourceLinks?: {stationId:string;hotspotId:string}[];
+  mappingReview?: {sourceYear:string;currentYearConfirmed:boolean;note:string};
   recordId: string;
   sourceRecord: { id: string; grade: number; subject: string; week: string; lesson: string; integrationType: string; activity: string; content: string };
   title: string;

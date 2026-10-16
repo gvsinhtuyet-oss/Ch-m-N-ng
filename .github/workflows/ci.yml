@@ -64,6 +64,9 @@ jobs:
       - name: Da Nang assistant retrieval tests
         run: npm run test:assistant
 
+      - name: Grade 1 integrated presentations and exact mappings
+        run: node --import tsx --test grade1-lesson-decks-test.ts
+
       - name: Grade 1 authored content and no-network regression
         run: node --import tsx --test grade1-content-test.ts
 

@@ -2,12 +2,12 @@ import {useApp} from '../../contexts/AppContext';
 import React,{useState} from 'react';
 import type {GddpRecord} from '../../services/GddpService';
 import {createLessonPlan,restoreLessonPlan,lessonPlanBlob,totalMinutes,LessonPlan} from '../../services/LessonPlanService';
-export function LessonPlanEditor({record,sourceLabel}:{record:GddpRecord;sourceLabel?:string}){
+export function LessonPlanEditor({record,sourceLabel,storageVariant}:{record:GddpRecord;sourceLabel?:string;storageVariant?:string}){
   const {currentUser}=useApp();
   const [plan,setPlan]=useState<LessonPlan>(()=>({...createLessonPlan(record),school:(currentUser as any)?.schoolName||'',teacher:currentUser?.name||'',...(sourceLabel?{source:sourceLabel}:{})}));
   const [opened,setOpened]=useState(false);
   const [error,setError]=useState('');const [busy,setBusy]=useState(false);const [reviewed,setReviewed]=useState(false);const [saved,setSaved]=useState('');
-  const key=`cham-khbd-v2:${currentUser?.id||'guest'}:${record.id}`;
+  const key=`cham-khbd-v2:${currentUser?.id||'guest'}:${record.id}${storageVariant?':'+storageVariant:''}`;
   const update=(field:keyof LessonPlan,value:string)=>{setPlan(p=>({...p,[field]:value}));setReviewed(false);setSaved('');};
   const field=(name:keyof LessonPlan,label:string,multiline=true)=><label className="block text-sm font-semibold">{label}{multiline?<textarea rows={4} maxLength={20000} className="mt-1 w-full rounded-lg border p-3 font-normal" value={String(plan[name])} onChange={e=>update(name,e.target.value)}/>:<input maxLength={500} className="mt-1 w-full rounded-lg border p-3 font-normal" value={String(plan[name])} onChange={e=>update(name,e.target.value)}/>}</label>;
   const download=async()=>{setBusy(true);setError('');try{if(!reviewed)throw new Error('Hãy duyệt nội dung trước khi xuất Word.');const blob=await lessonPlanBlob(plan);const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`KHBD_lop_${plan.grade}_${plan.lesson.replace(/[^\p{L}\p{N}]+/gu,'_').slice(0,80)}.docx`;a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);}catch(e){setError(e instanceof Error?e.message:'Không xuất được Word.');}finally{setBusy(false);}};

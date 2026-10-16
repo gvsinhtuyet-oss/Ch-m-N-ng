@@ -5,7 +5,7 @@ import { Station } from '../../types';
 import {matchGddpResources,MatchedLessonResource} from '../../services/GddpResourceMatcher';
 import {LessonPlanEditor} from './LessonPlanEditor';
 import {GddpLessonPresentation} from './GddpLessonPresentation';
-import {getGddpLessonDeck} from '../../services/GddpLessonDeckService';
+import {getGddpLessonDeck,getGddpTeachingRecord} from '../../services/GddpLessonDeckService';
 import {GddpPreparedPresentation} from './GddpPreparedPresentation';
 
 interface Props {stations: Station[]; currentGrade: number; onGradeChange: (grade: number) => void; privateRecords?:GddpRecord[]; privateYear?:string; privateSource?:string;}
@@ -51,8 +51,15 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const filtered = useMemo(() => bySubject.filter(x=>!week || x.week===week), [bySubject,week]);
   const selected = filtered.find(x => x.id === selectedId) || null;
   const preparedDeck = useMemo(()=>selected?getGddpLessonDeck(selected):null,[selected]);
+  const teachingRecord=selected?getGddpTeachingRecord(selected):null;
   useEffect(()=>{setPreparedOpen(false);},[selected]);
-  const matchedResources = useMemo(()=>selected?matchGddpResources(selected,stations).filter(m=>!privateRecords||selected.resourceLinks?.some(l=>l.stationId===m.station.id&&l.hotspotId===m.hotspot.id)):[],[selected,stations,privateRecords]);
+  const matchedResources = useMemo(()=>{
+    if(!selected)return [];
+    const links=selected.resourceLinks?.length?selected.resourceLinks:preparedDeck?.resourceLinks;
+    const record=links?.length?{...selected,resourceLinks:links}:selected;
+    return matchGddpResources(record,stations).filter(m=>!privateRecords||selected.resourceLinks?.some(l=>l.stationId===m.station.id&&l.hotspotId===m.hotspot.id))
+      .map(m=>preparedDeck?.resourceLinks?.some(l=>l.stationId===m.station.id&&l.hotspotId===m.hotspot.id)?{...m,reason:'Liên kết theo bản đối chiếu học liệu'}:m);
+  },[selected,stations,privateRecords,preparedDeck]);
   const copy = async (text:string) => {
     try { await navigator.clipboard.writeText(text); setCopied(true); }
     catch { setError('Trình duyệt không cho phép sao chép. Hãy chọn nội dung và sao chép thủ công.'); }
@@ -63,6 +70,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       <p className="text-sm text-slate-600">Năm học {privateYear||'2026–2027'} · Tra cứu địa chỉ tích hợp lớp 1–5. Chọn bài để xem nội dung nguồn và thực hành soạn KHBD, kể cả khi dùng chế độ Demo.</p>
     </div>
     {!loading && !error && records.length>0 && <p className="rounded-xl bg-sky-50 p-3 text-sm text-sky-900">Đã tải {records.length} địa chỉ GDĐP {privateRecords?'trong kế hoạch riêng':'của 5 khối' }. {privateRecords?'Do giáo viên nhập và xác nhận; liên kết là học liệu bổ sung.':published?'Dữ liệu do Admin xuất bản.':offlineSource?'Chế độ dữ liệu nguồn dự phòng (không kết nối máy chủ); vẫn có thể chọn bài, soạn và xuất KHBD. Dữ liệu này chưa được xác nhận là bản mới nhất do Admin xuất bản.':'Dữ liệu nguồn cài sẵn để tra cứu và dùng Demo KHBD; chưa xác nhận Admin đã xuất bản.'}</p>}
+    {grade===1&&!privateRecords&&!published&&<p className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">Lưu ý khối 1: bảng nguồn tìm được ghi năm học 2025–2026. Trong 13 dòng, 6 dòng thiếu nội dung nên chưa nhập; 7 dòng có nội dung đã có bản trình chiếu tham khảo; hai bài địa danh có nguồn đối chiếu riêng. Chưa có bảng 2026–2027 để xác nhận tên bài, tuần và vị trí tích hợp.</p>}
     {loading && <p role="status">Đang tải dữ liệu GDĐP…</p>}
     {error && <p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm text-rose-800">{error}</p>}
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -92,17 +100,19 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       <div><p className="text-xs font-bold uppercase text-sky-800">Địa chỉ tích hợp từ tài liệu nguồn</p><h3 className="font-black text-slate-900">{selected.lesson}</h3></div>
       <p className="text-sm"><strong>Hình thức:</strong> {selected.integrationType || 'Theo tài liệu gốc'}</p>
       <p className="text-sm"><strong>Vị trí:</strong> {selected.activity || 'Chưa ghi vị trí cụ thể'}</p>
-      <div className="whitespace-pre-wrap rounded-xl bg-white p-3 text-sm text-slate-800"><strong>Nội dung GDĐP:</strong>{'\n'}{selected.content}</div>
+      <div className="whitespace-pre-wrap rounded-xl bg-white p-3 text-sm text-slate-800"><strong>{preparedDeck?.teachingContent?'Nguyên văn nguồn cũ — xem bản hiệu đính phía dưới:':'Nội dung GDĐP:'}</strong>{'\n'}{selected.content}</div>
+      {preparedDeck?.teachingContent&&<div className="whitespace-pre-wrap rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm"><strong>Nội dung đã đối chiếu để sử dụng trong bản nháp:</strong>{'\n'}{preparedDeck.teachingContent}</div>}
       {selected.outcomes && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Yêu cầu cần đạt bổ sung:</strong>{'\n'}{selected.outcomes}</div>}
       {selected.teachingSuggestion && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Gợi ý tổ chức tích hợp:</strong>{'\n'}{selected.teachingSuggestion}</div>}
-      <button type="button" onClick={()=>void copy(`LỚP ${selected.grade} · ${selected.subject} · ${selected.week}\nBài: ${selected.lesson}\nĐịa chỉ tích hợp: ${selected.activity}\nHình thức: ${selected.integrationType}\nNội dung GDĐP: ${selected.content}\nYêu cầu cần đạt bổ sung: ${selected.outcomes || ''}\nGợi ý tổ chức tích hợp: ${selected.teachingSuggestion || ''}`)} className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700">{copied?'Đã sao chép':'Sao chép vào KHBD'}</button>
-      <LessonPlanEditor key={selected.id} record={selected} sourceLabel={privateRecords?privateSource:undefined} />
+      <button type="button" onClick={()=>void copy(`LỚP ${selected.grade} · ${selected.subject} · ${selected.week}\nBài: ${selected.lesson}\nĐịa chỉ tích hợp: ${selected.activity}\nHình thức: ${selected.integrationType}\nNội dung GDĐP: ${teachingRecord?.content || selected.content}\nYêu cầu cần đạt bổ sung: ${selected.outcomes || ''}\nGợi ý tổ chức tích hợp: ${selected.teachingSuggestion || ''}`)} className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700">{copied?'Đã sao chép':'Sao chép vào KHBD'}</button>
+      <LessonPlanEditor key={selected.id+(preparedDeck?.teachingContent?'-edited':'')} record={teachingRecord || selected} storageVariant={preparedDeck?.teachingContent?'source-corrected-2025-v1':undefined} sourceLabel={privateRecords?privateSource:preparedDeck?.mappingReview?`Bản tham khảo từ bảng ${preparedDeck.mappingReview.sourceYear}; chưa xác nhận địa chỉ năm học hiện hành.\n${preparedDeck.sources.join('\n')}`:undefined} />
       {preparedDeck && <section className="space-y-3 rounded-2xl border border-emerald-200 bg-white p-4">
         <div><h4 className="font-black text-emerald-900">Bộ trình chiếu riêng cho bài này</h4><p className="mt-1 text-sm text-slate-600">{preparedDeck.title} · {preparedDeck.slides.length} trang · Nội dung, câu hỏi, gợi ý trả lời và ghi chú giáo viên.</p></div>
+        {preparedDeck.mappingReview&&!preparedDeck.mappingReview.currentYearConfirmed&&<p className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-bold text-amber-900">Nguồn địa chỉ tích hợp: {preparedDeck.mappingReview.sourceYear}. {preparedDeck.mappingReview.note}</p>}
         <p className="text-xs text-slate-500">Bản biên soạn đối chiếu tài liệu nguồn. Giáo viên đọc và duyệt trước khi sử dụng chính thức; không thay thế toàn bộ bài học trong sách.</p>
         {preparedDeck.reviewNotes.length>0 && <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900"><p className="font-bold">Lưu ý cần duyệt</p><ul className="mt-1 list-disc space-y-1 pl-4">{preparedDeck.reviewNotes.map(note=><li key={note}>{note}</li>)}</ul></div>}
-        <button type="button" onClick={()=>setPreparedOpen(true)} className="rounded-xl bg-emerald-700 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-800">Trình chiếu bài này</button>
-        <details className="text-xs text-slate-600"><summary className="cursor-pointer font-bold">Nguồn và mục tiêu của bộ trình chiếu</summary><ul className="mt-2 list-disc space-y-1 pl-4">{preparedDeck.sources.map(source=><li key={source}>{source}</li>)}</ul><p className="mt-2">Sơ đồ minh hoạ được biên soạn cho bài; không phải ảnh tư liệu. Không gọi AI hoặc ghi dữ liệu khi mở trình chiếu.</p></details>
+        <button type="button" onClick={()=>setPreparedOpen(true)} className="rounded-xl bg-emerald-700 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-800">{preparedDeck.mappingReview&&!preparedDeck.mappingReview.currentYearConfirmed?'Xem trình chiếu tham khảo':'Trình chiếu bài này'}</button>
+        <details className="text-xs text-slate-600"><summary className="cursor-pointer font-bold">Nguồn và mục tiêu của bộ trình chiếu</summary><ul className="mt-2 list-disc space-y-1 pl-4">{preparedDeck.sources.map(source=><li key={source} className="break-words [overflow-wrap:anywhere]">{source}</li>)}</ul><p className="mt-2">Hình và sơ đồ minh hoạ được biên soạn cho bài; không phải ảnh tư liệu. Không gọi AI hoặc ghi dữ liệu khi mở trình chiếu.</p></details>
       </section>}
       <div className="space-y-3 rounded-xl border border-emerald-200 bg-white p-3">
         <h4 className="font-bold">Học liệu bổ sung từ các trạm</h4>

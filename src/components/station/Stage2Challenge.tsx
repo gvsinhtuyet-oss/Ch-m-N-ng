@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import confetti from 'canvas-confetti';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
@@ -51,6 +51,9 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const [retryQuestionIds, setRetryQuestionIds] = useState<string[] | null>(null);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [openedChests, setOpenedChests] = useState<string[]>([]);
+  const [answerFeedback, setAnswerFeedback] = useState<boolean | null>(null);
+  const [isAnswerLocked, setIsAnswerLocked] = useState(false);
+  const answerTimerRef = useRef<number | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [passed, setPassed] = useState<boolean | null>(null);
   const [bonusClaimed, setBonusClaimed] = useState(false);
@@ -83,6 +86,10 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   useEffect(() => {
     if (!isOnline && challenge.externalGame) setUseInternalChallenge(true);
   }, [isOnline, challenge]);
+
+  useEffect(() => () => {
+    if (answerTimerRef.current !== null) window.clearTimeout(answerTimerRef.current);
+  }, []);
 
   useEffect(() => {
     if (passed) {
@@ -127,32 +134,43 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
     };
   }, [externalGameOpened, useInternalChallenge, isOnline, embedUrl, embedRound]);
 
-  const handleSelect = (questionId: string, optionId: string) => {
-    if (isSubmitted) return;
-    audioService.playSfx('click');
-    if (missionIndex === 1 && !openedChests.includes(optionId)) {
-      setOpenedChests(previous => [...previous, optionId]);
-      return;
-    }
-    setSelectedAnswers(previous => ({ ...previous, [questionId]: optionId }));
-  };
-
-  const handleNextOrFinish = () => {
-    if (currentQIndex < activeQuestions.length - 1) {
-      audioService.playSfx('click');
-      setCurrentQIndex(index => index + 1);
-      return;
-    }
+  const finishChallenge = (answers: Record<string, string>) => {
     const passedAll = questions.every(question =>
-      question.options.some(option => option.isCorrect && option.id === selectedAnswers[question.id]),
+      question.options.some(option => option.isCorrect && option.id === answers[question.id]),
     );
     setPassed(passedAll);
     setIsSubmitted(true);
-    audioService.playSfx(passedAll ? 'correct' : 'wrong');
+    setIsAnswerLocked(false);
+    setAnswerFeedback(null);
     if (passedAll) {
       if (!isReadOnly) progressService.completeStage2(studentId, station.id, mainReward?.id);
       audioService.playSfx('reward');
     }
+  };
+
+  const handleSelect = (questionId: string, optionId: string) => {
+    if (isSubmitted || isAnswerLocked || !currentQ || currentQ.id !== questionId || selectedAnswers[questionId]) return;
+    const option = currentQ.options.find(item => item.id === optionId);
+    if (!option) return;
+    const nextAnswers = { ...selectedAnswers, [questionId]: optionId };
+    setSelectedAnswers(nextAnswers);
+    if (missionIndex === 1 && !openedChests.includes(optionId)) {
+      setOpenedChests(previous => [...previous, optionId]);
+    }
+    const isCorrect = option.isCorrect;
+    setAnswerFeedback(isCorrect);
+    setIsAnswerLocked(true);
+    audioService.playSfx(isCorrect ? 'correct' : 'wrong');
+    if (isCorrect) {
+      const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      if (!reduceMotion) confetti({ particleCount: 22, spread: 48, startVelocity: 22, origin: { y: 0.78 }, colors: ['#f59e0b', '#34d399', '#38bdf8'] });
+    }
+    answerTimerRef.current = window.setTimeout(() => {
+      setAnswerFeedback(null);
+      setIsAnswerLocked(false);
+      if (currentQIndex < activeQuestions.length - 1) setCurrentQIndex(index => index + 1);
+      else finishChallenge(nextAnswers);
+    }, 850);
   };
 
   const handleRetry = () => {
@@ -166,6 +184,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
     });
     setOpenedChests(previous => previous.filter(id => !wrongIds.some(questionId => id.startsWith(questionId))));
     setCurrentQIndex(0);
+    setIsAnswerLocked(false);
+    setAnswerFeedback(null);
     setIsSubmitted(false);
     setPassed(null);
   };
@@ -238,6 +258,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                 const answered = Boolean(selectedAnswers[question.id]);
                 return <span key={question.id} className={`h-2.5 rounded-full transition-all ${index === currentQIndex ? 'w-8 bg-amber-300' : answered ? 'w-3 bg-emerald-300' : 'w-3 bg-white/35'}`} />;
               })}
+              <span className="ml-2 text-[11px] font-bold text-cyan-50">Chọn một đáp án · tự sang câu</span>
             </div>
           </div>
 
@@ -259,7 +280,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                       const isSelected = selectedAnswers[currentQ.id] === option.id;
                       const chestIsOpen = openedChests.includes(option.id);
                       const isChest = missionIndex === 1;
-                      const isHidden = isChest && !chestIsOpen;
+                      const isHidden = isChest && !chestIsOpen && !isSelected;
                       const pathStyle = missionIndex === 2;
                       return (
                         <button
@@ -267,7 +288,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                           type="button"
                           onClick={() => handleSelect(currentQ.id, option.id)}
                           aria-pressed={isSelected}
-                          className={`group flex min-h-[68px] w-full items-center gap-3 border-2 px-4 py-3 text-left font-semibold transition active:scale-[0.98] ${pathStyle ? 'rounded-full' : 'rounded-2xl'} ${isSelected ? 'border-amber-400 bg-amber-50 text-amber-950 ring-4 ring-amber-100 shadow-md' : 'border-slate-200 bg-white text-slate-700 hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50'}`}
+                          className={`group flex min-h-[68px] w-full items-center gap-3 border-2 px-4 py-3 text-left font-semibold transition active:scale-[0.98] ${pathStyle ? 'rounded-full' : 'rounded-2xl'} ${isSelected && isAnswerLocked && answerFeedback === true ? 'border-emerald-400 bg-emerald-50 text-emerald-950 ring-4 ring-emerald-100 shadow-md' : isSelected && isAnswerLocked && answerFeedback === false ? 'border-rose-400 bg-rose-50 text-rose-950 ring-4 ring-rose-100 shadow-md' : isSelected ? 'border-amber-400 bg-amber-50 text-amber-950 ring-4 ring-amber-100 shadow-md' : 'border-slate-200 bg-white text-slate-700 hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50'}`}
                         >
                           <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xl ${isSelected ? 'bg-amber-200' : isChest && !chestIsOpen ? 'bg-amber-100' : 'bg-slate-100 group-hover:bg-sky-100'}`}>
                             {isChest && !chestIsOpen ? '🎁' : pathStyle ? '👣' : OPTION_ICONS[optionIndex % OPTION_ICONS.length]}
@@ -283,7 +304,13 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                     })}
                   </div>
 
-                  {currentQ.hintVi && (
+                  {answerFeedback !== null && (
+                    <div role="status" aria-live="polite" className={`flex items-center gap-3 rounded-2xl p-3 text-sm font-extrabold animate-in fade-in zoom-in duration-200 ${answerFeedback ? 'border border-emerald-200 bg-emerald-50 text-emerald-800' : 'border border-rose-200 bg-rose-50 text-rose-800'}`}>
+                      <span className="text-2xl" aria-hidden="true">{answerFeedback ? '✨' : '💡'}</span>
+                      <span>{answerFeedback ? 'Chính xác! Một mảnh bản đồ đã mở khóa.' : `Chưa đúng, mình sẽ thử lại câu này sau. ${currentQ.hintVi || 'Hãy nhớ manh mối vừa khám phá nhé.'}`}</span>
+                    </div>
+                  )}
+                  {currentQ.hintVi && answerFeedback === null && (
                     <div className="flex items-start gap-2 rounded-2xl border border-sky-100 bg-sky-50 p-3 text-xs leading-relaxed text-sky-900">
                       <HelpCircle className="mt-0.5 h-4 w-4 shrink-0 text-sky-600" />
                       <span><strong>Gợi ý nhà thám hiểm:</strong> {currentQ.hintVi}</span>
@@ -305,16 +332,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
             </aside>
           </div>
 
-          <div className="flex justify-end border-t border-slate-100 bg-slate-50/70 px-5 py-4 sm:px-7">
-            <button
-              type="button"
-              onClick={handleNextOrFinish}
-              disabled={!currentQ || !selectedAnswers[currentQ.id]}
-              className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-sky-700 to-cyan-600 px-6 py-3 text-sm font-black text-white shadow-lg shadow-sky-700/20 transition hover:brightness-110 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
-            >
-              {currentQIndex === activeQuestions.length - 1 ? 'Hoàn thành nhiệm vụ' : 'Đi tiếp'}
-              <ChevronRight className="h-4 w-4" />
-            </button>
+          <div className="border-t border-slate-100 bg-slate-50/70 px-5 py-3 text-center text-xs font-bold text-slate-500 sm:px-7">
+            Chạm chọn đáp án một lần · hiệu ứng và âm thanh sẽ báo kết quả
           </div>
         </section>
       ) : passed ? (

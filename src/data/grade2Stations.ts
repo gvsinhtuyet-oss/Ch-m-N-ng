@@ -87,117 +87,57 @@ const G2_STATION_1: Station = {
     id:'ch-g2s1', titleVi:'EM HIỂU NGHỀ LÀM CHIẾU', platform:'internal_interactive',
     instructionsVi:'Chọn đúng cả 5 câu để hoàn thành phần thực hành.', completionMode:'AUTO', passingScore:5,
     questions:[
-  {
-    "id": "q1",
-    "questionVi": "Nhóm thiết kế chiếu bằng giấy, mỗi bạn làm một việc. Cách phân công nào hợp lí?",
-    "options": [
       {
-        "id": "opt-1",
-        "textVi": "Chia việc vẽ, phối màu, giới thiệu rồi cùng kiểm tra",
-        "isCorrect": true
+        id: 'q1',
+        questionVi: 'Cẩm Nê và Bàn Thạch nổi tiếng với nghề gì?',
+        options: [
+          { id: 'q1-a', textVi: 'Làm chiếu truyền thống', isCorrect: true },
+          { id: 'q1-b', textVi: 'Đan lưới đánh cá', isCorrect: false },
+          { id: 'q1-c', textVi: 'Làm gốm', isCorrect: false },
+        ],
+        hintVi: 'Hãy nhớ tên nghề được giới thiệu trong bài học.',
       },
       {
-        "id": "opt-2",
-        "textVi": "Một bạn làm hết, các bạn khác không cần tham gia",
-        "isCorrect": false
+        id: 'q2',
+        questionVi: 'Nguyên liệu chính để dệt chiếu là gì?',
+        options: [
+          { id: 'q2-a', textVi: 'Sợi cói', isCorrect: true },
+          { id: 'q2-b', textVi: 'Sợi len', isCorrect: false },
+          { id: 'q2-c', textVi: 'Dây nhựa', isCorrect: false },
+        ],
+        hintVi: 'Người thợ phơi khô, có thể nhuộm màu nguyên liệu này.',
       },
       {
-        "id": "opt-3",
-        "textVi": "Ai xong trước được bỏ phần việc của nhóm",
-        "isCorrect": false
-      }
-    ],
-    "hintVi": "Hoạt động mô phỏng nghề cần hợp tác và trách nhiệm với sản phẩm chung."
-  },
-  {
-    "id": "q2",
-    "questionVi": "Bạn nói mọi tấm chiếu đều có màu giống hệt nhau. Em giải thích thế nào?",
-    "options": [
-      {
-        "id": "opt-2",
-        "textVi": "Mọi tấm chiếu chỉ có một màu",
-        "isCorrect": false
+        id: 'q3',
+        questionVi: 'Trước khi dệt chiếu, người thợ cần chuẩn bị gì?',
+        options: [
+          { id: 'q3-a', textVi: 'Sợi cói và giàn dệt', isCorrect: true },
+          { id: 'q3-b', textVi: 'Chỉ cần một chiếc kéo', isCorrect: false },
+          { id: 'q3-c', textVi: 'Màu vẽ và giấy', isCorrect: false },
+        ],
+        hintVi: 'Người thợ chuẩn bị nguyên liệu và dụng cụ trước khi dệt.',
       },
       {
-        "id": "opt-3",
-        "textVi": "Màu chiếu không liên quan đến sợi dùng để dệt",
-        "isCorrect": false
+        id: 'q4',
+        questionVi: 'Dụng cụ nào giúp người thợ dệt nên tấm chiếu?',
+        options: [
+          { id: 'q4-a', textVi: 'Giàn dệt', isCorrect: true },
+          { id: 'q4-b', textVi: 'Lưới đánh cá', isCorrect: false },
+          { id: 'q4-c', textVi: 'Thuyền thúng', isCorrect: false },
+        ],
+        hintVi: 'Dụng cụ này giúp căng sợi và dệt chiếu.',
       },
       {
-        "id": "opt-1",
-        "textVi": "Cói có thể được nhuộm, phối màu nên chiếu có nhiều màu sắc",
-        "isCorrect": true
-      }
-    ],
-    "hintVi": "Tài liệu giới thiệu cả cói thường và cói nhuộm nhiều màu dùng khi làm chiếu."
-  },
-  {
-    "id": "q3",
-    "questionVi": "Hai người thợ cùng dệt. Điều gì giúp công việc nhịp nhàng?",
-    "options": [
-      {
-        "id": "opt-3",
-        "textVi": "Liên tục kéo giật sợi của nhau",
-        "isCorrect": false
+        id: 'q5',
+        questionVi: 'Khi tham quan làng nghề, em nên làm gì?',
+        options: [
+          { id: 'q5-a', textVi: 'Lắng nghe và xin phép trước khi chạm vào đồ vật', isCorrect: true },
+          { id: 'q5-b', textVi: 'Tự ý nghịch dụng cụ của người thợ', isCorrect: false },
+          { id: 'q5-c', textVi: 'Chạy tách khỏi đoàn', isCorrect: false },
+        ],
+        hintVi: 'Hãy tham quan lễ phép, trật tự và tôn trọng người làm nghề.',
       },
-      {
-        "id": "opt-1",
-        "textVi": "Phối hợp thao tác và cùng chú ý việc đang làm",
-        "isCorrect": true
-      },
-      {
-        "id": "opt-2",
-        "textVi": "Mỗi người làm theo một nhịp tùy ý",
-        "isCorrect": false
-      }
-    ],
-    "hintVi": "Dệt chiếu cần sự phối hợp, khéo léo và kinh nghiệm của người làm nghề."
-  },
-  {
-    "id": "q4",
-    "questionVi": "Nhóm có ảnh chiếu nhưng không rõ làng làm. Nên ghi thế nào?",
-    "options": [
-      {
-        "id": "opt-1",
-        "textVi": "Ảnh tham khảo về chiếu, chưa xác định nơi sản xuất",
-        "isCorrect": true
-      },
-      {
-        "id": "opt-2",
-        "textVi": "Chắc chắn là chiếu Cẩm Nê vì em thích tên này",
-        "isCorrect": false
-      },
-      {
-        "id": "opt-3",
-        "textVi": "Chắc chắn là chiếu Bàn Thạch vì có nhiều màu",
-        "isCorrect": false
-      }
-    ],
-    "hintVi": "Hình dáng, màu sắc không đủ xác nhận nơi sản xuất; cần nguồn hoặc thông tin xuất xứ."
-  },
-  {
-    "id": "q5",
-    "questionVi": "Muốn chia sẻ điều học được mà không động vào giàn dệt, em làm gì?",
-    "options": [
-      {
-        "id": "opt-2",
-        "textVi": "Tự tháo giàn dệt để xem",
-        "isCorrect": false
-      },
-      {
-        "id": "opt-3",
-        "textVi": "Kéo mạnh các sợi khi thợ đang làm",
-        "isCorrect": false
-      },
-      {
-        "id": "opt-1",
-        "textVi": "Vẽ tấm chiếu và kể công sức người thợ",
-        "isCorrect": true
-      }
-    ],
-    "hintVi": "Học sinh có thể quan sát, vẽ và giới thiệu nghề bằng hoạt động an toàn, vừa sức."
-  }
-]
+    ]
   },
   checkIn:{
     emotions:[{id:'e1',emoji:'😊',labelVi:'Thích thú',labelEn:'Interested'},{id:'e2',emoji:'🌾',labelVi:'Trân trọng',labelEn:'Respectful'},{id:'e3',emoji:'⭐',labelVi:'Tự hào',labelEn:'Proud'}],

@@ -50,7 +50,6 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const [currentQIndex, setCurrentQIndex] = useState(0);
   const [retryQuestionIds, setRetryQuestionIds] = useState<string[] | null>(null);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
-  const [openedChests, setOpenedChests] = useState<string[]>([]);
   const [answerFeedback, setAnswerFeedback] = useState<boolean | null>(null);
   const [isAnswerLocked, setIsAnswerLocked] = useState(false);
   const answerTimerRef = useRef<number | null>(null);
@@ -154,9 +153,6 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
     if (!option) return;
     const nextAnswers = { ...selectedAnswers, [questionId]: optionId };
     setSelectedAnswers(nextAnswers);
-    if (missionIndex === 1 && !openedChests.includes(optionId)) {
-      setOpenedChests(previous => [...previous, optionId]);
-    }
     const isCorrect = option.isCorrect;
     setAnswerFeedback(isCorrect);
     setIsAnswerLocked(true);
@@ -182,7 +178,6 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
       wrongIds.forEach(id => delete retained[id]);
       return retained;
     });
-    setOpenedChests(previous => previous.filter(id => !wrongIds.some(questionId => id.startsWith(questionId))));
     setCurrentQIndex(0);
     setIsAnswerLocked(false);
     setAnswerFeedback(null);
@@ -278,9 +273,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                   <div className={missionIndex === 2 ? 'grid gap-3 sm:grid-cols-3' : 'grid gap-3'}>
                     {currentQ.options.map((option, optionIndex) => {
                       const isSelected = selectedAnswers[currentQ.id] === option.id;
-                      const chestIsOpen = openedChests.includes(option.id);
                       const isChest = missionIndex === 1;
-                      const isHidden = isChest && !chestIsOpen && !isSelected;
                       const pathStyle = missionIndex === 2;
                       return (
                         <button
@@ -291,10 +284,10 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                           className={`group flex min-h-[68px] w-full items-center gap-3 border-2 px-4 py-3 text-left font-semibold transition active:scale-[0.98] ${pathStyle ? 'rounded-full' : 'rounded-2xl'} ${isSelected && isAnswerLocked && answerFeedback === true ? 'border-emerald-400 bg-emerald-50 text-emerald-950 ring-4 ring-emerald-100 shadow-md' : isSelected && isAnswerLocked && answerFeedback === false ? 'border-rose-400 bg-rose-50 text-rose-950 ring-4 ring-rose-100 shadow-md' : isSelected ? 'border-amber-400 bg-amber-50 text-amber-950 ring-4 ring-amber-100 shadow-md' : 'border-slate-200 bg-white text-slate-700 hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50'}`}
                         >
                           <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xl ${isSelected ? 'bg-amber-200' : isChest && !chestIsOpen ? 'bg-amber-100' : 'bg-slate-100 group-hover:bg-sky-100'}`}>
-                            {isChest && !chestIsOpen ? '🎁' : pathStyle ? '👣' : OPTION_ICONS[optionIndex % OPTION_ICONS.length]}
+                            {isChest ? '🎁' : pathStyle ? '👣' : OPTION_ICONS[optionIndex % OPTION_ICONS.length]}
                           </span>
                           <span className="flex-1 text-sm leading-relaxed">
-                            {isHidden ? 'Rương bí mật' : option.textVi}
+                            {option.textVi}
                           </span>
                           {isSelected && <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-[11px] font-black text-white" aria-label="Đã chọn">✓</span>}
                         </button>

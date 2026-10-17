@@ -170,7 +170,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
       setIsAnswerLocked(false);
       if (currentQIndex < activeQuestions.length - 1) setCurrentQIndex(index => index + 1);
       else finishChallenge(nextAnswers);
-    }, 850);
+    }, 1250);
   };
 
   const handleRetry = () => {
@@ -305,7 +305,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                   </div>
 
                   {answerFeedback !== null && (
-                    <div role="status" aria-live="polite" className={`flex items-center gap-3 rounded-2xl p-3 text-sm font-extrabold animate-in fade-in zoom-in duration-200 ${answerFeedback ? 'border border-emerald-200 bg-emerald-50 text-emerald-800' : 'border border-rose-200 bg-rose-50 text-rose-800'}`}>
+                    <div role="status" aria-live="polite" className={`flex items-center gap-3 rounded-2xl p-3 text-sm font-extrabold animate-pulse ${answerFeedback ? 'border border-emerald-200 bg-emerald-50 text-emerald-800' : 'border border-rose-200 bg-rose-50 text-rose-800'}`}>
                       <span className="text-2xl" aria-hidden="true">{answerFeedback ? '✨' : '💡'}</span>
                       <span>{answerFeedback ? 'Chính xác! Một mảnh bản đồ đã mở khóa.' : `Chưa đúng, mình sẽ thử lại câu này sau. ${currentQ.hintVi || 'Hãy nhớ manh mối vừa khám phá nhé.'}`}</span>
                     </div>

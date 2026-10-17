@@ -5,7 +5,7 @@ import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
 import { progressService } from '../../services/ProgressService';
-import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle, Gamepad2, Sparkles } from 'lucide-react';
+import { RotateCcw, HelpCircle, Gamepad2, Sparkles } from 'lucide-react';
 
 const MISSIONS = [
   { icon: '🧭', title: 'Quét la bàn', prompt: 'Tìm manh mối chính xác để la bàn sáng lên.' },

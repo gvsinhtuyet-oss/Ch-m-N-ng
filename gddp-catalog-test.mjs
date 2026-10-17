@@ -1,4 +1,4 @@
-import {readFile} from 'node:fs/promises';
+import {bundledGddpData} from './gddp-bundled-data.mjs';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import { GDDP_YEAR, validateGddpCatalog, cleanGddpCatalog } from './gddp-catalog.mjs';
@@ -22,7 +22,7 @@ test('rejects missing integration content and oversized payloads',()=>{
 });
 
 test('bundled 2026–2027 integration addresses cover all five grades with no blank content',async()=>{
- const data=JSON.parse(await readFile(new URL('./content-data/gddp-2026-2027.json',import.meta.url),'utf8'));
+ const data=bundledGddpData;
  assert.equal(validateGddpCatalog(data),true);
  assert.equal(data.records.length,42);
  assert.deepEqual([1,2,3,4,5].map(grade=>data.records.filter(row=>row.grade===grade).length),[7,8,10,9,8]);

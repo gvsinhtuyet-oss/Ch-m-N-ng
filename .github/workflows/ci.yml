@@ -74,7 +74,7 @@ jobs:
         run: node --import tsx --test grade3-content-test.ts
 
       - name: Grade 1 authored content and no-network regression
-        run: node --import tsx --test grade1-content-test.ts
+        run: node --import tsx --test grade1-content-test.ts stage-access-test.ts stage2-distinct-test.ts
 
       - name: Grade 2 current-book content and image tests
         run: npx tsx --test grade2-content-image-test.ts

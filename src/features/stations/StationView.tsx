@@ -10,6 +10,7 @@ import { Stage2Challenge } from '../../components/station/Stage2Challenge';
 import { Stage3CheckIn } from '../../components/station/Stage3CheckIn';
 import { Stage4Stamp } from '../../components/station/Stage4Stamp';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
+import { unlockedStage } from './stageAccess';
 import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles } from 'lucide-react';
 
 interface Props {
@@ -28,6 +29,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
 
   // If completed once or stamp received, student can freely navigate stages
   const isUnlockedAllStages = progress.stationCompleted || progress.stampReceived;
+  const highestAccessibleStage = Math.max(currentStage, unlockedStage(progress));
 
   const handleDownload = async () => {
     audioService.playSfx('click');
@@ -115,8 +117,8 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
             {stages.map((st) => {
               const Icon = st.icon;
               const active = currentStage === st.num;
-              const done = currentStage > st.num || isUnlockedAllStages;
-              const clickable = isUnlockedAllStages || st.num <= currentStage;
+              const done = st.num < highestAccessibleStage || isUnlockedAllStages;
+              const clickable = st.num <= highestAccessibleStage;
               return (
                 <button
                   key={st.num}

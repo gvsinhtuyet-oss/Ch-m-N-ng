@@ -261,7 +261,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     understandGoalVi: 'Nhận biết mối quan hệ giữa điều kiện tự nhiên với đời sống và tính cách con người Đất Quảng nghĩa tình.',
     behaviorGoalVi: 'Hình thành tình yêu, niềm tự hào và trách nhiệm xây dựng quê hương đáng sống.',
     coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Han%20River%20in%20Da%20Nang%20at%20sunrise.jpg',
-    isFullyVerified: true,
+    isFullyVerified: false,
   },
   {
     id: 'g4-station-2',
@@ -276,7 +276,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     understandGoalVi: 'Biết quan sát, khai thác thông tin từ hiện vật và không gian bảo tàng.',
     behaviorGoalVi: 'Có ý thức bảo tồn, phát huy di sản và giữ gìn trật tự, văn minh khi tham quan bảo tàng.',
     coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/B%E1%BA%A3o%20t%C3%A0ng%20%C4%90%C3%A0%20N%E1%BA%B5ng.jpeg',
-    isFullyVerified: true,
+    isFullyVerified: false,
   },
   {
     id: 'g4-station-3',
@@ -291,7 +291,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     understandGoalVi: 'Nhận biết được vai trò của người điều hành và người lao động sáng tạo trong phát triển kinh tế.',
     behaviorGoalVi: 'Hình thành ý thức chăm chỉ học tập, rèn luyện kỹ năng và tinh thần trách nhiệm.',
     coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/DN%20Port%20HQ.jpg',
-    isFullyVerified: true,
+    isFullyVerified: false,
   },
   {
     id: 'g4-station-4',
@@ -306,7 +306,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     understandGoalVi: 'Hiểu được giá trị kinh tế, văn hóa và kỹ nghệ thẩm âm tài tình của các nghệ nhân đúc đồng.',
     behaviorGoalVi: 'Có ý thức bảo tồn nghề truyền thống và trân trọng giá trị giọt mồ hôi của người thợ.',
     coverImage: 'https://dienban.danang.gov.vn/Portals/0/3_%20Nhng%20sn%20phm%20tieu%20biu%20ca%20lang%20ngh%20duc%20dng%20Phuc%20Kiu.jpg',
-    isFullyVerified: true,
+    isFullyVerified: false,
   },
   {
     id: 'g4-station-5',
@@ -321,7 +321,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     understandGoalVi: 'Nhận biết được giá trị mịn màng, thoáng mát của sản phẩm tơ tằm thiên nhiên quê hương.',
     behaviorGoalVi: 'Có ý thức bảo tồn giá trị nghề thủ công và yêu quý các sản phẩm dệt may truyền thống.',
     coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Rio%20m%C3%A3%20ch%C3%A2u%20%C3%A1o%20t%E1%BA%A5c.jpg',
-    isFullyVerified: true,
+    isFullyVerified: false,
   },
 
   // LỚP 5
@@ -338,7 +338,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     understandGoalVi: 'Nêu được các giá trị tự nhiên, văn hóa, giao thương và nguồn phù sa bồi đắp đôi bờ.',
     behaviorGoalVi: 'Có ý thức bảo vệ nguồn nước sạch, giữ gìn cảnh quan thiên nhiên và trân trọng dòng sông quê hương.',
     coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Honkemdadung.jpg',
-    isFullyVerified: true,
+    isFullyVerified: false,
   },
   {
     id: 'g5-station-2',
@@ -353,7 +353,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     understandGoalVi: 'Hiểu được đức hy sinh vô bờ bến, lòng yêu nước nồng nàn của những người mẹ Đất Quảng kiên trung.',
     behaviorGoalVi: 'Thể hiện lòng biết ơn, tri ân bằng việc học tập tốt và tham gia hoạt động đền ơn đáp nghĩa.',
     coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Tuong%20BMVN%20anh%20hung%20Nguyen%20Thi%20Thu.jpg',
-    isFullyVerified: true,
+    isFullyVerified: false,
   },
   {
     id: 'g5-station-3',
@@ -368,7 +368,7 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     understandGoalVi: 'Hiểu được giá trị lịch sử quân sự, văn hóa và tiềm năng du lịch sinh thái đỉnh cao.',
     behaviorGoalVi: 'Biết sử dụng thông tin để giới thiệu thắng cảnh và có ý thức giữ gìn vệ sinh môi trường vùng cao.',
     coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/The%20Hai%20Van%20Gate%2C%20H%E1%BA%A3i%20V%C3%A2n%20Pass%20%28%22ocean%20cloud%20pass%22%29%2C%20Vietnam%20%287090613449%29.jpg',
-    isFullyVerified: true,
+    isFullyVerified: false,
   },
   {
     id: 'g5-station-4',
@@ -379,11 +379,11 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     themeId: 'II',
     themeNameVi: 'Lịch sử, truyền thống và di sản văn hóa',
     periods: 7,
-    knowGoalVi: 'Trình bày được cảnh quan 5 ngọn núi (Kim, Mộc, Thủy, Hỏa, Thổ), hang động Huyền Không, chùa Tam Thai và bia Ma nhai.',
+    knowGoalVi: 'Trình bày một số nét cảnh quan núi đá, hang động và dấu tích văn hóa ở Ngũ Hành Sơn; nhận biết giá trị của ma nhai.',
     understandGoalVi: 'Nhận biết giá trị cảnh quan, văn hóa và ma nhai được ghi danh trong Chương trình Ký ức Thế giới khu vực châu Á – Thái Bình Dương.',
     behaviorGoalVi: 'Biết ứng xử văn minh, giữ gìn cảnh quan non nước và trân trọng làng đá mỹ nghệ Non Nước.',
     coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Marble%20Mountains%2C%20Vietnam.jpg',
-    isFullyVerified: true,
+    isFullyVerified: false,
   },
   {
     id: 'g5-station-5',
@@ -394,10 +394,10 @@ export const OFFICIAL_25_CATALOG: CatalogItem[] = [
     themeId: 'IV',
     themeNameVi: 'Hoạt động kinh tế - xã hội và nghề nghiệp',
     periods: 6,
-    knowGoalVi: 'Nhận biết đặc điểm, giá trị quý hiếm và vùng phân bố tự nhiên của Sâm Ngọc Linh (Quốc bảo Việt Nam).',
-    understandGoalVi: 'Hiểu giá trị kinh tế, dược liệu cao cấp và sự gắn bó với đời sống đồng bào vùng núi cao.',
+    knowGoalVi: 'Nhận biết sơ lược cây sâm Ngọc Linh qua tư liệu có nguồn, môi trường sống và giá trị bảo tồn.',
+    understandGoalVi: 'Hiểu mối liên hệ giữa nguồn gen, môi trường rừng, nghiên cứu và sinh kế của người dân.',
     behaviorGoalVi: 'Có ý thức bảo vệ nguồn gen quý, bảo vệ môi trường sinh thái rừng già nguyên sinh.',
     coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Cay%20Sam%20Ngoc%20Linh%20Panax%20vietnamensis%20tai%20Mang%20Ri.jpg',
-    isFullyVerified: true,
+    isFullyVerified: false,
   },
 ];

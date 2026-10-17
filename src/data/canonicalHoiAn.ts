@@ -142,12 +142,117 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       noteVi:'Wordwall là hoạt động luyện tập bổ sung khi có mạng; không bắt buộc để hoàn thành chặng.'
     },
     questions:[
-      {id:'q1',questionVi:'Hội An được UNESCO công nhận là Di sản văn hóa thế giới năm nào?',options:[{id:'a',textVi:'1999',isCorrect:true},{id:'b',textVi:'2009',isCorrect:false},{id:'c',textVi:'2018',isCorrect:false}],hintVi:'Hãy nhớ mốc ở điểm đầu.'},
-      {id:'q2',questionVi:'Công trình nào thuộc phố cổ Hội An?',options:[{id:'a',textVi:'Chùa Cầu',isCorrect:true},{id:'b',textVi:'Tháp nghiêng Pisa',isCorrect:false},{id:'c',textVi:'Tượng Nữ thần Tự do',isCorrect:false}],hintVi:'Công trình xuất hiện ngay ở phần khám phá.'},
-      {id:'q3',questionVi:'Hoạt động văn hóa nào được nhắc trong bài?',options:[{id:'a',textVi:'Hô hát Bài Chòi',isCorrect:true},{id:'b',textVi:'Trượt băng',isCorrect:false},{id:'c',textVi:'Đua xe',isCorrect:false}],hintVi:'Hãy nhớ các hoạt động văn hóa nghệ thuật.'},
-      {id:'q4',questionVi:'Hai làng nghề nào được giới thiệu trong bài Hội An?',options:[{id:'a',textVi:'Làng gốm Thanh Hà và làng rau Trà Quế',isCorrect:true},{id:'b',textVi:'Làng khai thác than và làng thép',isCorrect:false},{id:'c',textVi:'Làng làm máy bay và làng đóng tàu',isCorrect:false}],hintVi:'Một làng làm gốm, một làng trồng rau.'},
-      {id:'q5',questionVi:'Em nên làm gì để bảo vệ cảnh quan phố cổ?',options:[{id:'a',textVi:'Giữ vệ sinh và không làm hư hại công trình',isCorrect:true},{id:'b',textVi:'Viết tên lên tường cổ',isCorrect:false},{id:'c',textVi:'Xả rác xuống sông',isCorrect:false}],hintVi:'Chọn hành vi văn minh.'},
+  {
+    "id": "q1",
+    "questionVi": "Thấy người dân sinh hoạt trong phố cổ, nhóm muốn quay sát vào nhà. Nên làm gì?",
+    "options": [
+      {
+        "id": "opt-1",
+        "textVi": "Tôn trọng không gian riêng, hỏi phép khi cần quay người khác",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Quay mọi nơi vì đây là điểm du lịch",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Tự vào nhà để có hình đẹp",
+        "isCorrect": false
+      }
     ],
+    "hintVi": "Phố cổ còn là không gian sống của người dân; tham quan cần tôn trọng đời sống riêng tư."
+  },
+  {
+    "id": "q2",
+    "questionVi": "Em muốn kể về đường phố Hội An. Cách nào có căn cứ?",
+    "options": [
+      {
+        "id": "opt-2",
+        "textVi": "Khẳng định mọi đường đều thẳng và rộng",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Lấy ảnh thành phố khác rồi đổi tên",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Quan sát ảnh có nguồn rồi mô tả nét đường phố nhìn thấy",
+        "isCorrect": true
+      }
+    ],
+    "hintVi": "Tài liệu giới thiệu những đường dọc ngang và cả đoạn hẹp, uốn lượn; cần mô tả đúng ảnh."
+  },
+  {
+    "id": "q3",
+    "questionVi": "Bạn làm vỡ món đồ khi trải nghiệm gốm. Cách ứng xử nào đúng?",
+    "options": [
+      {
+        "id": "opt-3",
+        "textVi": "Đổ lỗi cho bạn khác",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Báo ngay người hướng dẫn và làm theo cách xử lí",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Giấu mảnh vỡ dưới bàn",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Khi làm hỏng đồ, cần trung thực báo người phụ trách và tránh tự xử lí mảnh sắc."
+  },
+  {
+    "id": "q4",
+    "questionVi": "Nhóm định mua nhiều đồ lưu niệm hơn số tiền đã thống nhất. Nên làm gì?",
+    "options": [
+      {
+        "id": "opt-1",
+        "textVi": "Chọn món cần thiết trong khoản tiền được người lớn cho phép",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Tự vay tiền người lạ",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Lấy đồ rồi nghĩ cách trả sau",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Mua sắm khi tham quan cần có kế hoạch và theo hướng dẫn của người lớn."
+  },
+  {
+    "id": "q5",
+    "questionVi": "Nhóm muốn lưu kỉ niệm ở một nhà cổ. Nên chọn cách nào?",
+    "options": [
+      {
+        "id": "opt-2",
+        "textVi": "Khắc tên lên cửa gỗ",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Bóc một mảnh tường mang về",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Chụp ảnh tại chỗ được phép, giữ nguyên công trình",
+        "isCorrect": true
+      }
+    ],
+    "hintVi": "Lưu kỉ niệm cần tuân thủ hướng dẫn và bảo vệ công trình di sản."
+  }
+],
   },
   checkIn:{
     emotions:[

@@ -55,13 +55,13 @@ export const GRADE3_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Nhóm em làm hai thẻ cảnh quan. Cách ghi nào phân biệt đúng hai nơi?",
+        "text": "Nhóm ghi chép tiếng sóng và điều quan sát được ở biển. Cách nào giúp bài ghi rõ hơn?",
         "answers": [
-          "Mỹ Khê: bờ cát; Bàn Than: ghềnh đá",
-          "Mỹ Khê: núi tuyết; Bàn Than: ruộng lúa",
-          "Cả hai chỉ có nhà cao tầng"
+          "Tách điều đã nghe, đã thấy với cảm nghĩ của mình",
+          "Ghi cảm nghĩ thành sự thật của mọi người",
+          "Chỉ chép lời khen mà bỏ hết quan sát"
         ],
-        "hint": "Dùng nét cảnh quan đã quan sát, không dùng lời khen chung chung."
+        "hint": "Phân biệt quan sát với cảm nghĩ giúp giới thiệu cảnh biển trung thực, rõ ràng."
       },
       {
         "text": "Bạn muốn đứng trên tảng đá ướt sát sóng để có ảnh đẹp. Em chọn cách nào?",
@@ -76,19 +76,19 @@ export const GRADE3_CONTENT = [
         "text": "Sau buổi dã ngoại, còn túi bánh và chai rỗng. Nhóm em sẽ làm gì?",
         "answers": [
           "Thu gom và mang đến nơi bỏ rác phù hợp",
-          "Chôn xuống cát cho gọn",
-          "Thả ra biển để sóng cuốn đi"
+          "Thả ra biển để sóng cuốn đi",
+          "Chôn xuống cát cho gọn"
         ],
         "hint": "Sóng và cát không phải thùng rác."
       },
       {
-        "text": "Làm hướng dẫn viên nhí, em chọn lời giới thiệu nào có thông tin cụ thể?",
+        "text": "Em muốn dùng ảnh một người bán hàng ven biển trong bài giới thiệu. Cần làm gì?",
         "answers": [
-          "Mỹ Khê có bãi cát; em thích nghe tiếng sóng",
-          "Nơi nào cũng đẹp nhất thế giới",
-          "Em chưa xem nhưng khẳng định nước luôn an toàn"
+          "Hỏi phép người trong ảnh và kiểm tra quyền dùng ảnh",
+          "Đăng ngay vì người đó ở nơi công cộng",
+          "Tự thêm tên và địa chỉ của người đó"
         ],
-        "hint": "Nói điều quan sát được; tránh khẳng định quá mức."
+        "hint": "Tìm hiểu cảnh biển cũng cần tôn trọng người dân và quyền sử dụng hình ảnh."
       },
       {
         "text": "Thấy một người gặp nạn dưới nước, học sinh nên chọn việc nào?",
@@ -196,19 +196,19 @@ export const GRADE3_CONTENT = [
         "text": "Em thấy một câu hay trên mạng nhưng không rõ ai nói. Trước khi ghi là lời cụ Phan, em làm gì?",
         "answers": [
           "Nhờ cô kiểm tra nguồn; chưa gán tên khi chưa rõ",
-          "Gán tên vì nghe giống tư tưởng cụ",
-          "Chọn tên người nổi tiếng nhất"
+          "Chọn tên người nổi tiếng nhất",
+          "Gán tên vì nghe giống tư tưởng cụ"
         ],
         "hint": "Tôn trọng lịch sử bằng thông tin có nguồn."
       },
       {
-        "text": "Sau khi học về tinh thần canh tân của cụ Phan, em muốn cải thiện góc đọc của lớp. Cách nào phù hợp?",
+        "text": "Nhóm viết bài giới thiệu hai danh nhân nhưng chỉ một bạn được quyết định. Em đề xuất gì?",
         "answers": [
-          "Hỏi nhu cầu của bạn, thử sắp xếp sách dễ tìm rồi cùng nhận xét",
-          "Giấu sách để không bạn nào làm hỏng",
-          "Thay đổi mọi thứ mà không nghe ý kiến ai"
+          "Chia phần tìm tư liệu, lắng nghe rồi thống nhất nội dung",
+          "Để bạn nói to nhất quyết định tất cả",
+          "Bỏ tên những bạn có ý kiến khác"
         ],
-        "hint": "Vận dụng tinh thần học hỏi và cải tiến vào việc nhỏ, có ích cho tập thể."
+        "hint": "Hợp tác khi tìm hiểu lịch sử đòi hỏi các thành viên có cơ hội đóng góp và cùng chịu trách nhiệm."
       },
       {
         "text": "Kết thúc chuyến xem tư liệu, sản phẩm nào cho thấy em đã biết tìm hiểu?",
@@ -304,31 +304,31 @@ export const GRADE3_CONTENT = [
         "hint": "Khác biệt giọng nói không làm giảm giá trị ý kiến."
       },
       {
-        "text": "Một nhãn hiện vật ghi “Cơ Tu”. Em nên viết chú thích nào?",
+        "text": "Thấy một người mặc trang phục khác với ảnh trong sách, bạn nói người đó sai truyền thống. Em góp ý gì?",
         "answers": [
-          "Hiện vật của cộng đồng Cơ Tu theo nhãn trưng bày",
-          "Đồ dùng của tất cả các dân tộc",
-          "Đồ của một dân tộc do em tự đoán"
+          "Không kết luận từ một ảnh; trang phục có thể khác theo dịp và hoàn cảnh",
+          "Mọi người phải mặc giống một ảnh duy nhất",
+          "Chỉ trang phục trong sách mới được dùng"
         ],
-        "hint": "Giữ thông tin đúng với phạm vi của nguồn."
+        "hint": "Một ảnh không đại diện cho mọi hoàn cảnh sinh hoạt của một cộng đồng."
       },
       {
-        "text": "Em muốn dùng ảnh sinh hoạt gia đình bạn cho bài giới thiệu. Cần làm gì trước?",
+        "text": "Bạn muốn chia sẻ một lời chào bằng tiếng của gia đình mình. Nhóm nên làm gì?",
         "answers": [
-          "Hỏi bạn và người có ảnh để được đồng ý",
-          "Đăng ngay vì chỉ để học",
-          "Tự thêm tên và địa chỉ nhà bạn"
+          "Lắng nghe, nhờ bạn hướng dẫn rồi thử đọc một cách tôn trọng",
+          "Tự sửa lời chào thành tiếng mình cho dễ",
+          "Biến lời chào thành câu trêu đùa"
         ],
-        "hint": "Tôn trọng người có ảnh và đời sống riêng tư."
+        "hint": "Học một lời chào với sự hướng dẫn của bạn là cách giao lưu và tôn trọng ngôn ngữ."
       },
       {
-        "text": "Nhóm làm bảng “Quê hương đa dạng”. Cách trình bày nào phù hợp?",
+        "text": "Lớp làm ngày hội giao lưu nhưng có bạn không thể dùng món ăn đã chọn. Nên làm gì?",
         "answers": [
-          "Ghi một số cộng đồng kèm nguồn, không coi là danh sách đầy đủ",
-          "Xếp cộng đồng nào tốt hơn cộng đồng nào",
-          "Nói mọi phong tục đều giống nhau"
+          "Hỏi nhu cầu và chuẩn bị lựa chọn phù hợp cho bạn",
+          "Bắt bạn ăn để giống mọi người",
+          "Không cho bạn tham gia ngày hội"
         ],
-        "hint": "Tìm hiểu sự đa dạng mà không xếp hạng con người."
+        "hint": "Tổ chức giao lưu cần quan tâm nhu cầu của từng người để mọi bạn cùng tham gia."
       },
       {
         "text": "Hai bạn có thói quen sinh hoạt khác nhau cùng vào nhóm. Em đề xuất gì?",
@@ -414,13 +414,13 @@ export const GRADE3_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Nhóm xếp thẻ quy trình. Thứ tự khái quát nào hợp lí?",
+        "text": "Nhóm muốn phỏng vấn người làm nước mắm về công việc hằng ngày. Nên hỏi câu nào?",
         "answers": [
-          "Chuẩn bị nguyên liệu → ủ chượp → lọc, hoàn thiện",
-          "Đóng chai → chọn cá → ủ chượp",
-          "Lọc nước biển → vẽ nhãn → thành nước mắm"
+          "Khâu nào cần bác kiên nhẫn nhất và vì sao ạ?",
+          "Bác có thể bỏ qua mọi khâu cho nhanh không ạ?",
+          "Có phải nghề nào cũng làm xong trong một phút không ạ?"
         ],
-        "hint": "Nguyên liệu cần được xử lí và ủ trước khi có thành phẩm."
+        "hint": "Câu hỏi mở giúp tìm hiểu kinh nghiệm và công sức người làm nghề."
       },
       {
         "text": "Bạn muốn mở nắp chum để tự nếm. Em chọn cách nào?",
@@ -435,28 +435,28 @@ export const GRADE3_CONTENT = [
         "text": "Một chai không có nhãn và không rõ nơi làm được mời cho lớp nếm. Nên làm gì?",
         "answers": [
           "Nhờ cô, người lớn kiểm tra; chưa tự nếm",
-          "Nếm thử để đoán chất lượng",
-          "Khẳng định an toàn vì màu đẹp"
+          "Khẳng định an toàn vì màu đẹp",
+          "Nếm thử để đoán chất lượng"
         ],
         "hint": "Màu sắc không đủ để xác định sản phẩm an toàn."
       },
       {
-        "text": "Làm tờ giới thiệu Nam Ô, câu nào có căn cứ trong bài?",
+        "text": "Một chai quà giới thiệu nghề có nhãn bị bong mất. Nhóm nên làm gì?",
         "answers": [
-          "Sản phẩm gắn với cá cơm than, muối và công sức người làm nghề",
-          "Mọi loại nước mắm đều do Nam Ô làm ra",
-          "Nước mắm chữa được mọi bệnh"
+          "Nhờ người phụ trách xác định thông tin, không tự bịa nhãn",
+          "Tự ghi tên cơ sở bất kì lên chai",
+          "Dùng nhãn của một sản phẩm khác"
         ],
-        "hint": "Giới thiệu đúng phạm vi, tránh quảng cáo không có chứng cứ."
+        "hint": "Nhãn sản phẩm cần đúng thông tin; không tự gán nguồn gốc cho vật chưa xác định."
       },
       {
-        "text": "Trong bữa ăn, em đã rót nhiều nhưng dùng ít. Lần sau nên làm gì?",
+        "text": "Sau buổi trưng bày nghề Nam Ô, nhóm còn nhiều giấy và vỏ hộp sạch. Nên làm gì?",
         "answers": [
-          "Lấy lượng nhỏ trước, cần thì thêm theo hướng dẫn",
-          "Rót đầy để nhìn cho đẹp",
-          "Đổ phần thừa trở lại chai dùng chung"
+          "Thu gom, phân loại và tận dụng phần còn dùng được",
+          "Ném tất cả xuống mương",
+          "Đốt ngay trong lớp cho gọn"
         ],
-        "hint": "Dùng hợp lí để giảm lãng phí và giữ vệ sinh."
+        "hint": "Giới thiệu nghề truyền thống cần đi cùng trách nhiệm với vật liệu và môi trường."
       }
     ],
     "feel": [
@@ -534,13 +534,13 @@ export const GRADE3_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Ghép thẻ vật liệu với sản phẩm, cặp nào phù hợp?",
+        "text": "Một bạn gọi chiếc thúng đang đan là đồ xấu vì chưa hoàn thành. Em góp ý gì?",
         "answers": [
-          "Tre – thân thuyền thúng",
-          "Cá cơm – thân thuyền thúng",
-          "Cói – nước mắm Nam Ô"
+          "Cần hiểu sản phẩm đang ở công đoạn nào trước khi nhận xét",
+          "Cứ chưa hoàn thành là không có giá trị",
+          "Nên bỏ ngay để làm cái khác"
         ],
-        "hint": "Mỗi nghề có nguyên liệu và sản phẩm riêng."
+        "hint": "Sản phẩm dở dang phản ánh một bước lao động; nhận xét cần tôn trọng quá trình làm nghề."
       },
       {
         "text": "Bạn đề nghị bỏ khâu chống thấm để làm nhanh. Em giải thích thế nào?",
@@ -555,8 +555,8 @@ export const GRADE3_CONTENT = [
         "text": "Đến nơi làm nghề, bạn lấy dao chẻ tre để thử. Em làm gì?",
         "answers": [
           "Nhắc bạn đặt xuống và báo người lớn",
-          "Cầm thêm một con dao làm cùng",
-          "Mang dao ra mép nước để thử"
+          "Mang dao ra mép nước để thử",
+          "Cầm thêm một con dao làm cùng"
         ],
         "hint": "Học sinh quan sát, không tự dùng dụng cụ nguy hiểm."
       },
@@ -570,13 +570,13 @@ export const GRADE3_CONTENT = [
         "hint": "Phân biệt tư liệu địa phương với kiến thức chung về cùng một nghề."
       },
       {
-        "text": "Lớp muốn giới thiệu công sức người đan thúng bằng hoạt động an toàn. Em chọn gì?",
+        "text": "Nhóm muốn biết vì sao người thợ giữ nghề đan thúng. Cách tìm hiểu nào tốt?",
         "answers": [
-          "Làm mô hình giấy, kể các bước và ghi nguồn tham khảo",
-          "Tự trét vật liệu chống thấm trong lớp",
-          "Tự chèo thúng ra xa để quay phim"
+          "Chuẩn bị câu hỏi và phỏng vấn khi người thợ đồng ý",
+          "Tự viết lời người thợ dù chưa hỏi",
+          "Chỉ đếm số người xem video để kết luận"
         ],
-        "hint": "Có thể học và giới thiệu nghề mà không tự thực hiện thao tác nguy hiểm."
+        "hint": "Phỏng vấn có sự đồng ý giúp hiểu trải nghiệm và tình cảm của người làm nghề."
       }
     ],
     "feel": [

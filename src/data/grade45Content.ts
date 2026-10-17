@@ -56,13 +56,13 @@ export const GRADE45_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Bạn dùng một ảnh bãi biển để nói Đà Nẵng không có miền núi. Em sẽ làm gì?",
+        "text": "Nhóm chỉ hỏi một người rồi kết luận mọi gia đình đều có cùng sinh hoạt. Cần sửa cách tìm hiểu thế nào?",
         "answers": [
-          "Bổ sung tư liệu về các dạng địa hình khác",
-          "Đồng ý vì ảnh rất đẹp",
-          "Sửa tên thành phố trong ảnh"
+          "Bổ sung nhiều trường hợp phù hợp và ghi rõ phạm vi khảo sát",
+          "Đổi tên người được hỏi rồi giữ kết luận",
+          "Cho rằng một người đại diện được tất cả"
         ],
-        "hint": "Một ảnh không đại diện cho toàn thành phố."
+        "hint": "Tìm hiểu con người và đời sống cần tránh suy rộng một trường hợp thành toàn cộng đồng."
       },
       {
         "text": "Nhóm em muốn tìm hiểu nghề quanh trường. Cách nào có căn cứ?",
@@ -77,8 +77,8 @@ export const GRADE45_CONTENT = [
         "text": "Sau khi làm mô hình dòng sông, nhóm còn giấy vụn. Em chọn gì?",
         "answers": [
           "Thu gom, phân loại phù hợp và giữ sạch khu vực",
-          "Thả xuống mương cho trôi đi",
-          "Giấu vào bồn cây"
+          "Giấu vào bồn cây",
+          "Thả xuống mương cho trôi đi"
         ],
         "hint": "Giữ nguồn nước bắt đầu từ việc nhỏ."
       },
@@ -184,20 +184,20 @@ export const GRADE45_CONTENT = [
         "hint": "Thiếu thông tin thì cần tìm thêm căn cứ."
       },
       {
-        "text": "Bạn gọi mọi vật trong phòng trưng bày là đồ cổ nguyên gốc. Em góp ý thế nào?",
+        "text": "Nhóm có 20 phút tham quan và muốn xem thật kĩ một chủ đề. Nên chọn kế hoạch nào?",
         "answers": [
-          "Cần đọc nhãn vì có thể có bản sao, mô hình",
-          "Vật ở bảo tàng chắc chắn luôn là đồ gốc",
-          "Vật càng to càng cổ"
+          "Chọn vài hiện vật liên quan, phân công ghi chép rồi trao đổi",
+          "Chạy qua mọi phòng mà không dừng lại",
+          "Chỉ đếm số đồ vật rồi kết thúc"
         ],
-        "hint": "Kiểm tra phạm vi của nhận định."
+        "hint": "Chọn trọng tâm và phân công giúp chuyến tham quan ngắn vẫn có kết quả học tập cụ thể."
       },
       {
         "text": "Bạn muốn nhấc hiện vật lên xem mặt dưới. Em làm gì?",
         "answers": [
           "Nhắc bạn dừng và hỏi hướng dẫn viên",
-          "Cùng nâng cho chắc tay",
-          "Đợi không có người rồi xem"
+          "Đợi không có người rồi xem",
+          "Cùng nâng cho chắc tay"
         ],
         "hint": "Không tự di chuyển hiện vật."
       },
@@ -305,31 +305,31 @@ export const GRADE45_CONTENT = [
         "hint": "Dựa vào mối liên hệ giữa các khâu trong ví dụ."
       },
       {
-        "text": "Một cửa hàng có áo nhưng chưa đưa được tới người mua ở xa. Hoạt động nào hỗ trợ trực tiếp?",
+        "text": "Hai nhóm làm cùng sản phẩm giấy nhưng một nhóm dùng nhiều giấy hơn mà chất lượng tương đương. Nên so sánh thêm điều gì?",
         "answers": [
-          "Dịch vụ vận chuyển phù hợp",
-          "Trồng thêm cây để thay áo",
-          "Đổi tên nghề dệt thành nghề vận chuyển"
+          "Lượng vật liệu đã dùng và phần bị bỏ đi",
+          "Tên nhóm nào nghe hay hơn",
+          "Bạn nào nói lớn hơn khi giới thiệu"
         ],
-        "hint": "Chọn dịch vụ giải quyết đúng nhu cầu."
+        "hint": "So sánh hiệu quả cần xem cả sản phẩm và nguồn lực đã sử dụng, tránh chỉ nhìn số lượng làm ra."
       },
       {
         "text": "Nhóm nói chỉ nghề có máy móc lớn mới đáng quý. Em góp ý gì?",
         "answers": [
           "Mỗi nghề hợp pháp, có ích đều có đóng góp cần trân trọng",
-          "Đồng ý vì nghề thủ công không tạo giá trị",
-          "Chỉ tôn trọng nghề của người quen"
+          "Chỉ tôn trọng nghề của người quen",
+          "Đồng ý vì nghề thủ công không tạo giá trị"
         ],
         "hint": "Nhìn đóng góp thay vì xếp hạng con người."
       },
       {
-        "text": "Lớp làm đồ dùng từ giấy. Cách tổ chức nào thể hiện sáng tạo có trách nhiệm?",
+        "text": "Một cửa hàng quảng cáo hàng thủ công do học sinh làm nhưng thực tế mua sẵn. Em nhận xét gì?",
         "answers": [
-          "Phân công, tận dụng giấy phù hợp và kiểm tra sản phẩm",
-          "Ai làm gì cũng được, không cần kiểm tra",
-          "Cắt nhiều vật liệu rồi bỏ phần thừa"
+          "Cần nói đúng người làm và nguồn gốc sản phẩm",
+          "Có thể ghi tùy ý nếu bán được nhiều",
+          "Giấu nguồn gốc luôn giúp sản phẩm có giá trị hơn"
         ],
-        "hint": "Cải tiến cần đi cùng hợp tác và chất lượng."
+        "hint": "Giới thiệu trung thực nguồn gốc là trách nhiệm trong hoạt động mua bán."
       },
       {
         "text": "Nhóm đưa tỉ lệ tăng trưởng trên một bài báo cũ vào phần “hiện nay”. Nên sửa thế nào?",
@@ -426,40 +426,40 @@ export const GRADE45_CONTENT = [
         "hint": "Phân biệt vật liệu và công đoạn của hai nghề."
       },
       {
-        "text": "Một chiếc chiêng đẹp nhưng âm chưa phù hợp. Người thợ cần chú ý khâu nào?",
+        "text": "Lớp muốn làm phim ngắn về người thợ đúc đồng đang bận. Cách nào phù hợp?",
         "answers": [
-          "Kiểm tra và điều chỉnh âm thanh",
-          "Chỉ thay hộp đóng gói",
-          "Tăng lời quảng cáo"
+          "Hẹn thời gian được đồng ý và không cản công việc",
+          "Tự đứng sát lò để quay bất cứ lúc nào",
+          "Yêu cầu người thợ dừng việc ngay để diễn lại"
         ],
-        "hint": "Liên hệ thẩm âm với chất lượng nhạc khí."
+        "hint": "Tìm hiểu làng nghề cần tôn trọng thời gian, sự đồng ý và điều kiện lao động của người thợ."
       },
       {
         "text": "Bạn muốn sờ sản phẩm mới ra khỏi khuôn. Em làm gì?",
         "answers": [
           "Nhắc bạn tránh xa và hỏi người hướng dẫn",
-          "Thử chạm nhanh bằng đầu ngón tay",
-          "Lấy nước tự đổ vào để làm nguội"
+          "Lấy nước tự đổ vào để làm nguội",
+          "Thử chạm nhanh bằng đầu ngón tay"
         ],
         "hint": "Học sinh không tự xử lí vật nóng."
       },
       {
-        "text": "Hai nguồn ghi hai cách kể về người truyền nghề. Nhóm nên viết gì?",
+        "text": "Nhóm đặt một nhạc khí vào bài giới thiệu nhưng không ghi cách sử dụng. Nên bổ sung gì?",
         "answers": [
-          "Có cách kể khác nhau; chưa khẳng định một tên duy nhất",
-          "Cả hai chắc chắn cùng một người",
-          "Một tên tự đặt cho dễ nhớ"
+          "Công dụng có nguồn và lưu ý chỉ trải nghiệm khi được hướng dẫn",
+          "Giá trị do nhóm tự đoán",
+          "Khẳng định ai cũng được gõ mọi nhạc khí ở xưởng"
         ],
-        "hint": "Không biến điểm chưa thống nhất thành sự thật chắc chắn."
+        "hint": "Giới thiệu sản phẩm cần giúp người xem hiểu công dụng và cách tiếp cận phù hợp, không tự ý sử dụng."
       },
       {
-        "text": "Em muốn giới thiệu chiêng trong bài. Sản phẩm nào phù hợp nhất?",
+        "text": "Một bạn chê nghề thủ công vì có công đoạn làm chậm. Em góp ý thế nào?",
         "answers": [
-          "Thẻ ghi vật liệu, công dụng và nguồn đã đọc",
-          "Âm điện tử không ghi nguồn rồi gọi là chiêng làng nghề",
-          "Ảnh chiếu cói đổi tên thành chiêng"
+          "Tìm hiểu yêu cầu tỉ mỉ của từng công đoạn trước khi đánh giá",
+          "Công việc chậm chắc chắn không có ích",
+          "Có thể bỏ các khâu mất thời gian mà không cần hỏi"
         ],
-        "hint": "Giới thiệu đúng vật, đúng phạm vi và nguồn."
+        "hint": "Thời gian lao động có thể gắn với yêu cầu kĩ thuật; cần tìm hiểu trước khi phán xét người làm nghề."
       }
     ],
     "feel": [
@@ -548,22 +548,22 @@ export const GRADE45_CONTENT = [
         "hint": "Theo hành trình từ nguyên liệu tới sản phẩm."
       },
       {
-        "text": "Bạn lấy ảnh vải bất kì và ghi “lụa Mã Châu”. Em đề xuất gì?",
+        "text": "Nhóm chuẩn bị câu hỏi gặp người thợ lụa. Câu nào giúp hiểu công sức làm nghề?",
         "answers": [
-          "Kiểm tra xuất xứ, chưa rõ thì không gắn tên làng nghề",
-          "Giữ vì vải đều giống nhau",
-          "Đổi màu ảnh để thành lụa địa phương"
+          "Khâu nào cần nhiều kinh nghiệm và vì sao ạ?",
+          "Có phải chỉ cần thích là dệt đẹp ngay không ạ?",
+          "Có thể gọi mọi người bán vải là người dệt không ạ?"
         ],
-        "hint": "Màu sắc không xác nhận được xuất xứ."
+        "hint": "Câu hỏi mở về kinh nghiệm giúp tìm hiểu lao động và kĩ năng, thay vì chỉ nhìn sản phẩm hoàn thành."
       },
       {
-        "text": "Thợ dùng máy cải tiến để làm hoa văn. Nhận xét nào hợp lí?",
+        "text": "Hai bạn cùng thiết kế hoa văn nhưng chưa thống nhất. Nên giải quyết thế nào?",
         "answers": [
-          "Cải tiến phù hợp có thể góp phần tiếp nối nghề",
-          "Dùng máy là chắc chắn không còn giữ nghề",
-          "Không cần người thợ nữa"
+          "Nêu ý tưởng, lắng nghe và thử phối hợp trên bản nháp",
+          "Xóa bài của bạn mà không hỏi",
+          "Chọn theo người có nhiều đồ dùng hơn"
         ],
-        "hint": "Xem vai trò của kĩ năng và đổi mới."
+        "hint": "Thảo luận và thử trên bản nháp giúp giải quyết bất đồng trong hoạt động sáng tạo gắn với nghề dệt."
       },
       {
         "text": "Lớp muốn trải nghiệm sáng tạo nghề dệt an toàn. Nên chọn gì?",
@@ -658,13 +658,13 @@ export const GRADE45_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Nhóm dùng sơ đồ trang trí của app để đo chiều dài sông. Em góp ý gì?",
+        "text": "Hai nhóm tìm hiểu dòng sông: một nhóm ghi lời kể, nhóm kia ghi quan sát. Cách trình bày nào rõ nhất?",
         "answers": [
-          "Cần bản đồ, số liệu phù hợp; sơ đồ này không dùng để đo",
-          "Đo chiều dài hình vẽ rồi coi là chiều dài thật",
-          "Đổi đơn vị tùy ý cho giống số trên mạng"
+          "Ghi riêng loại tư liệu và nêu điểm chúng bổ sung cho nhau",
+          "Gộp mọi lời kể thành điều cả lớp trực tiếp thấy",
+          "Bỏ hết thông tin khác ý kiến ban đầu"
         ],
-        "hint": "Phân biệt công cụ tổng kết với bản đồ địa lí."
+        "hint": "Phân biệt lời kể với quan sát giúp người đọc hiểu căn cứ của thông tin về dòng sông."
       },
       {
         "text": "Bạn giới thiệu một truyền thuyết như kết luận khoa học về vách đá. Nên sửa thế nào?",
@@ -679,8 +679,8 @@ export const GRADE45_CONTENT = [
         "text": "Đi thuyền, bạn tháo áo phao để chụp ảnh. Em chọn gì?",
         "answers": [
           "Nhắc bạn làm theo hướng dẫn an toàn của người phụ trách",
-          "Giữ áo giúp bạn để chụp đẹp",
-          "Đợi tới giữa dòng rồi tháo cùng"
+          "Đợi tới giữa dòng rồi tháo cùng",
+          "Giữ áo giúp bạn để chụp đẹp"
         ],
         "hint": "Không đánh đổi an toàn lấy một bức ảnh."
       },
@@ -694,13 +694,13 @@ export const GRADE45_CONTENT = [
         "hint": "Việc có ích phải vừa sức và an toàn."
       },
       {
-        "text": "Thẻ giới thiệu cảnh quan cần một câu có căn cứ. Em chọn câu nào?",
+        "text": "Nhóm làm thông điệp giữ sông sạch nhưng chỉ viết khẩu hiệu. Bổ sung nào khiến kế hoạch thực hiện được?",
         "answers": [
-          "Ảnh có nguồn cho thấy vách núi đá bên dòng sông",
-          "Nước ở đây luôn an toàn trong mọi mùa",
-          "Mọi đoạn Thu Bồn đều giống hệt ảnh"
+          "Việc cụ thể, người phụ trách và cách theo dõi kết quả",
+          "Thêm nhiều lời hứa nhưng không chia việc",
+          "Chỉ tăng cỡ chữ của khẩu hiệu"
         ],
-        "hint": "Nói điều tư liệu chứng minh được."
+        "hint": "Một kế hoạch cần hành động, trách nhiệm và cách xem kết quả; khẩu hiệu riêng lẻ chưa đủ."
       }
     ],
     "feel": [
@@ -777,40 +777,40 @@ export const GRADE45_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Slide ghi “Mẹ Nhu và 7 dũng sĩ Thanh Khê, năm 1945”. Em sửa thế nào?",
+        "text": "Hai tư liệu về một hoạt động tri ân ghi ngày khác nhau. Nhóm nên làm gì trước khi đưa lên bài?",
         "answers": [
-          "Sửa thành sự kiện ngày 26/12/1968 và tách khỏi mốc 1945",
-          "Giữ vì đều là lịch sử",
-          "Đổi tên Mẹ Thứ thành Mẹ Nhu"
+          "Đối chiếu bản gốc và hỏi người phụ trách để xác định đúng",
+          "Chọn ngày nào nhìn đẹp hơn",
+          "Đổi cả hai thành ngày hôm nay"
         ],
-        "hint": "Đối chiếu mốc sự kiện, không ghép thời kì."
+        "hint": "Khi nguồn chưa thống nhất, cần xác minh thay vì tự chọn một mốc cho thuận tiện."
       },
       {
-        "text": "Nhóm đặt ảnh tượng Mẹ Thứ cạnh chú thích “Mẹ Nhu”. Cần làm gì?",
+        "text": "Nhóm chọn nhạc vui nhộn và hiệu ứng gây cười cho phần tri ân các mẹ. Em đề xuất gì?",
         "answers": [
-          "Kiểm tra, sửa đúng nhân vật và loại ảnh",
-          "Giữ nguyên vì hai mẹ đều có công",
-          "Đổi cả hai thành một tên chung"
+          "Chọn cách thể hiện trang trọng, phù hợp mục đích tưởng nhớ",
+          "Càng gây cười càng thể hiện lòng biết ơn",
+          "Chỉ cần nhiều hiệu ứng, không cần xét nội dung"
         ],
-        "hint": "Không đánh đồng hai nhân vật."
+        "hint": "Hình thức trình bày phải phù hợp nội dung lịch sử và sự tôn trọng người được tưởng nhớ."
       },
       {
         "text": "Bạn tự viết một câu cảm động rồi đặt trong ngoặc kép như lời mẹ từng nói. Em đề nghị gì?",
         "answers": [
           "Đổi thành lời cảm nghĩ của học sinh, không gán cho nhân vật",
-          "Giữ vì câu nghe rất hay",
-          "Thêm một năm bất kì để giống tư liệu"
+          "Thêm một năm bất kì để giống tư liệu",
+          "Giữ vì câu nghe rất hay"
         ],
         "hint": "Không sáng tác trích dẫn lịch sử."
       },
       {
-        "text": "Ảnh một tượng bán thân chụp ở bảo tàng Hà Nội được dùng trong bài. Chú thích nào trung thực?",
+        "text": "Bạn chép nguyên một bài viết về các mẹ rồi ghi tên mình là tác giả. Cần sửa thế nào?",
         "answers": [
-          "Tượng bán thân Mẹ Nguyễn Thị Thứ tại bảo tàng ở Hà Nội theo nguồn ảnh",
-          "Nhà lưu niệm Mẹ Thứ ở Đà Nẵng",
-          "Mẹ Thứ đang đứng trước nhà mình"
+          "Viết lại bằng lời của mình, dẫn nguồn và chỉ trích ngắn khi cần",
+          "Chỉ đổi vài dấu câu rồi giữ tên mình",
+          "Xóa tên tác giả gốc để bài ngắn hơn"
         ],
-        "hint": "Ảnh tham khảo ngoài địa phương phải ghi đúng nơi chụp."
+        "hint": "Tôn trọng tư liệu lịch sử bao gồm ghi nhận tác giả và phân biệt lời mình với phần trích dẫn."
       },
       {
         "text": "Lớp xây hoạt động tri ân. Cách nào vừa phù hợp vừa tôn trọng?",
@@ -908,40 +908,40 @@ export const GRADE45_CONTENT = [
         "hint": "Địa điểm tự nhiên có thể chứa công trình do con người tạo dựng."
       },
       {
-        "text": "Bạn gọi Hải Vân Quan là tên của toàn bộ con đèo. Em giải thích thế nào?",
+        "text": "Nhóm chuẩn bị chuyến tìm hiểu có bạn khó di chuyển. Cách chọn lịch trình nào phù hợp?",
         "answers": [
-          "Đó là cửa ải lịch sử nằm trên đèo Hải Vân",
-          "Hai khái niệm luôn thay thế được nhau",
-          "Đèo là tên của mọi cửa sổ trên tường"
+          "Hỏi nhu cầu, kiểm tra khả năng tiếp cận và điều chỉnh cùng người phụ trách",
+          "Mặc định bạn ở lại để nhóm đi nhanh",
+          "Chỉ chọn nơi xa nhất vì khó mới thú vị"
         ],
-        "hint": "Phân biệt công trình và địa hình."
+        "hint": "Hoạt động khám phá cần tạo điều kiện cho các thành viên tham gia phù hợp khả năng và nhu cầu."
       },
       {
         "text": "Ảnh cửa ải trước tu bổ được dùng để mô tả “hôm nay”. Nhóm nên làm gì?",
         "answers": [
           "Ghi rõ ảnh tư liệu và thời điểm; kiểm tra nguồn hiện hành nếu cần",
-          "Đổi ngày ảnh thành hôm nay",
-          "Xóa chú thích cho khó phát hiện"
+          "Xóa chú thích cho khó phát hiện",
+          "Đổi ngày ảnh thành hôm nay"
         ],
         "hint": "Giữ bối cảnh thời gian của ảnh."
       },
       {
-        "text": "Thuyết minh nói Bà Nà trải qua bốn mùa khí hậu trong 24 giờ. Em đề nghị gì?",
+        "text": "Lớp chỉ còn ít thời gian trình bày về hai điểm đến. Nên chọn cách nào?",
         "answers": [
-          "Giải thích đó là lời gợi tả cảm nhận thời tiết",
-          "Cho rằng mọi lời quảng bá đều là định nghĩa khoa học",
-          "Đổi số giờ để câu nghe lạ hơn"
+          "Chọn một câu hỏi trọng tâm cho mỗi nơi và phân công phần trả lời",
+          "Đọc hết mọi dòng tìm được dù không đủ giờ",
+          "Chỉ đọc tên địa điểm nhiều lần"
         ],
-        "hint": "Phân biệt lời gợi tả với kiến thức khí hậu."
+        "hint": "Chọn trọng tâm giúp soạn bài giới thiệu rõ ràng trong thời gian có hạn."
       },
       {
-        "text": "Có sương mù, nhóm muốn ra ngoài lối cho phép để chụp cảnh. Nên chọn gì?",
+        "text": "Bạn muốn dùng một đoạn nhạc tải trên mạng cho video chuyến khám phá. Cần kiểm tra gì?",
         "answers": [
-          "Dừng lại, theo người lớn và hướng dẫn tại điểm đến",
-          "Tiếp tục vì có điện thoại định vị",
-          "Tách nhóm để tìm đường đẹp"
+          "Điều kiện sử dụng và yêu cầu ghi nguồn của bản nhạc",
+          "Chỉ số lượt thích của bài nhạc",
+          "Tên tệp có ngắn hay không"
         ],
-        "hint": "Cảnh đẹp không thay thế hướng dẫn an toàn."
+        "hint": "Video học tập vẫn cần dùng âm nhạc theo điều kiện cho phép và ghi nguồn khi được yêu cầu."
       }
     ],
     "feel": [
@@ -1019,29 +1019,29 @@ export const GRADE45_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Slide ghi “toàn bộ Ngũ Hành Sơn là Di sản thế giới UNESCO”. Em sửa thế nào?",
+        "text": "Nhóm muốn dùng bản dịch văn khắc nhưng bỏ mất tên người dịch. Nên làm gì?",
         "answers": [
-          "Nêu đúng ma nhai được ghi danh di sản tư liệu ở cấp khu vực châu Á – Thái Bình Dương",
-          "Giữ nguyên vì mọi danh hiệu đều giống nhau",
-          "Đổi thành mọi hòn đá đều là bảo vật"
+          "Bổ sung thông tin bản dịch và nguồn có thể đối chiếu",
+          "Ghi rằng mọi bản dịch đều do nhóm tự làm",
+          "Tự thêm nghĩa mới cho câu chưa hiểu"
         ],
-        "hint": "Phân biệt đối tượng và phạm vi ghi danh."
+        "hint": "Bản dịch là một lớp tư liệu có người thực hiện và căn cứ; cần ghi rõ để người đọc đối chiếu."
       },
       {
-        "text": "Bạn muốn khắc tên lớp bên cạnh văn khắc xưa. Em chọn gì?",
+        "text": "Khi nghe một câu chuyện dân gian ở danh thắng, bạn ghi đó là sự kiện đã được chứng minh. Em sửa ra sao?",
         "answers": [
-          "Nhắc bạn dừng, giữ nguyên bề mặt và báo người hướng dẫn",
-          "Khắc nhỏ để ít ảnh hưởng",
-          "Dùng bút thay dao là được"
+          "Ghi rõ là chuyện kể dân gian, phân biệt với thông tin lịch sử có chứng cứ",
+          "Chuyện được kể hay thì chắc chắn là lịch sử",
+          "Xóa mọi nguồn để người xem tự hiểu"
         ],
-        "hint": "Không thêm dấu vết lên di sản."
+        "hint": "Có thể trân trọng câu chuyện dân gian đồng thời nêu đúng tính chất của nguồn."
       },
       {
         "text": "Một bản số hóa có nguồn được đưa vào bài. Lợi ích phù hợp là gì?",
         "answers": [
           "Giúp quan sát chi tiết mà không phải chạm di sản",
-          "Cho phép bỏ việc giữ hiện vật thật",
-          "Làm mọi bản sao trở thành hiện vật gốc"
+          "Làm mọi bản sao trở thành hiện vật gốc",
+          "Cho phép bỏ việc giữ hiện vật thật"
         ],
         "hint": "Tư liệu số hỗ trợ tiếp cận, không thay trách nhiệm bảo tồn."
       },
@@ -1141,49 +1141,49 @@ export const GRADE45_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Nhóm đề xuất chặt cây rừng để có nhiều chỗ trồng sâm. Em góp ý gì?",
+        "text": "Lớp làm hoạt động tìm hiểu cây quý nhưng định công khai vị trí cây ngoài tự nhiên. Nên làm gì?",
         "answers": [
-          "Cần giữ môi trường rừng và theo hướng dẫn chuyên môn",
-          "Càng trống nắng càng bảo tồn tốt",
-          "Chỉ cần giữ mỗi cây sâm, bỏ mọi cây khác"
+          "Hỏi người phụ trách và dùng thông tin được phép chia sẻ",
+          "Đăng tọa độ thật chi tiết để ai cũng đến hái",
+          "Tổ chức tự tìm cây mà không có người chuyên môn"
         ],
-        "hint": "Liên hệ bảo tồn cây với hệ sinh thái."
+        "hint": "Thông tin về cây quý cần được chia sẻ có trách nhiệm, tránh tạo điều kiện khai thác trái phép."
       },
       {
-        "text": "Ảnh cây sâm chụp ở Măng Ri được ghi thành vườn sâm Đà Nẵng. Cần sửa gì?",
+        "text": "Nhóm muốn phỏng vấn người trồng sâm nhưng định hỏi giá bán trước mọi vấn đề. Câu hỏi nào phù hợp mục tiêu học tập hơn?",
         "answers": [
-          "Ghi đúng nơi chụp theo nguồn; chỉ dùng tham khảo về cây",
-          "Đổi nơi chụp cho hợp tên app",
-          "Xóa chú thích là giải quyết được"
+          "Công việc chăm sóc và gìn giữ cây đòi hỏi những trách nhiệm nào ạ?",
+          "Làm sao mua thật nhiều để tự dùng ngay ạ?",
+          "Chỉ cần biết giá là hiểu hết nghề trồng sâm phải không ạ?"
         ],
-        "hint": "Không chuyển địa điểm ảnh để khớp câu chuyện."
+        "hint": "Bài học hướng tới hiểu lao động, trách nhiệm và bảo tồn; không biến hoạt động học thành quảng cáo mua dùng."
       },
       {
         "text": "Bạn muốn nhổ cây trong vườn tham quan để xem rễ. Em chọn gì?",
         "answers": [
           "Nhắc bạn dừng và xem tư liệu được người hướng dẫn cho phép",
-          "Nhổ một cây nhỏ sẽ không sao",
-          "Đào xong trồng lại là được"
+          "Đào xong trồng lại là được",
+          "Nhổ một cây nhỏ sẽ không sao"
         ],
         "hint": "Không làm hại cây để đáp ứng tò mò."
       },
       {
-        "text": "Một trang bán hàng dùng ảnh giống bài học và nói sản phẩm chắc chắn thật. Em nhận xét thế nào?",
+        "text": "Nhóm làm trò chơi nhận biết cây rồi dự định cho người chơi dùng kết quả để chọn cây ăn thử. Cần sửa gì?",
         "answers": [
-          "Ảnh giống không xác nhận nguồn gốc hay chất lượng",
-          "Có cùng ảnh là chắc chắn cùng sản phẩm",
-          "Nhiều lượt xem là đủ căn cứ"
+          "Ghi rõ trò chơi phục vụ học tập, không dùng để quyết định ăn hay dùng cây",
+          "Chỉ cần đạt điểm cao là có thể ăn thử",
+          "Đổi tên trò chơi thành chuyên gia để kết quả đáng tin hơn"
         ],
-        "hint": "Phân biệt hình ảnh với chứng cứ xác thực sản phẩm."
+        "hint": "Kết quả trò chơi không thay việc xác định cây và hướng dẫn sử dụng của người có chuyên môn."
       },
       {
-        "text": "Lớp làm thông điệp về cây quý. Câu nào phù hợp?",
+        "text": "Kết thúc bài về sâm, nhóm muốn đánh giá hoạt động tuyên truyền. Nên xem điều gì?",
         "answers": [
-          "Giữ rừng, không tự khai thác và tìm hiểu từ nguồn chuyên môn",
-          "Ai cũng nên dùng thử sâm ngay",
-          "Cứ cây giống hình là có thể hái mang về"
+          "Người xem có hiểu việc cần làm để bảo tồn và biết tìm nguồn tin phù hợp không",
+          "Có bao nhiêu bạn muốn tự mua dùng ngay",
+          "Bài có nhiều lời quảng cáo hơn nhóm khác không"
         ],
-        "hint": "Chọn thông điệp về bảo tồn, không quảng cáo sử dụng."
+        "hint": "Đánh giá sản phẩm học tập nên bám mục tiêu hiểu và hành động có trách nhiệm, không đo bằng ý định mua dùng."
       }
     ],
     "feel": [

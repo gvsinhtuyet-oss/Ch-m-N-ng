@@ -87,12 +87,117 @@ const G2_STATION_1: Station = {
     id:'ch-g2s1', titleVi:'EM HIỂU NGHỀ LÀM CHIẾU', platform:'internal_interactive',
     instructionsVi:'Chọn đúng cả 5 câu để hoàn thành phần thực hành.', completionMode:'AUTO', passingScore:5,
     questions:[
-      {id:'q1',questionVi:'Nguyên liệu chính để dệt chiếu là gì?',options:[{id:'a',textVi:'Sợi cói',isCorrect:true},{id:'b',textVi:'Dây thép',isCorrect:false},{id:'c',textVi:'Nhựa',isCorrect:false}],hintVi:'Hãy nhớ phần nguyên liệu.'},
-      {id:'q2',questionVi:'Sợi cói sau khi phơi khô có thể được làm gì?',options:[{id:'a',textVi:'Nhuộm nhiều màu',isCorrect:true},{id:'b',textVi:'Nấu thành canh',isCorrect:false},{id:'c',textVi:'Đúc thành kim loại',isCorrect:false}],hintVi:'Sách minh họa các bó cói đỏ, xanh, vàng, tím.'},
-      {id:'q3',questionVi:'Dụng cụ nào dùng để dệt chiếu?',options:[{id:'a',textVi:'Giàn dệt',isCorrect:true},{id:'b',textVi:'Máy bay',isCorrect:false},{id:'c',textVi:'Nồi cơm',isCorrect:false}],hintVi:'Đây là nơi căng sợi để dệt.'},
-      {id:'q4',questionVi:'Khi tham quan làng nghề, em không nên làm gì?',options:[{id:'a',textVi:'Tự ý sờ vào dụng cụ khi chưa xin phép',isCorrect:true},{id:'b',textVi:'Chào hỏi lễ phép',isCorrect:false},{id:'c',textVi:'Lắng nghe người làm nghề',isCorrect:false}],hintVi:'Chọn hành vi chưa văn minh.'},
-      {id:'q5',questionVi:'Em có thể vận dụng bài học bằng cách nào?',options:[{id:'a',textVi:'Làm hướng dẫn viên giới thiệu nghề làm chiếu',isCorrect:true},{id:'b',textVi:'Làm hỏng sản phẩm',isCorrect:false},{id:'c',textVi:'Không quan tâm làng nghề',isCorrect:false}],hintVi:'Tài liệu gợi ý học sinh giới thiệu sản phẩm truyền thống.'},
-    ]
+  {
+    "id": "q1",
+    "questionVi": "Nhóm thiết kế chiếu bằng giấy, mỗi bạn làm một việc. Cách phân công nào hợp lí?",
+    "options": [
+      {
+        "id": "opt-1",
+        "textVi": "Chia việc vẽ, phối màu, giới thiệu rồi cùng kiểm tra",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Một bạn làm hết, các bạn khác không cần tham gia",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Ai xong trước được bỏ phần việc của nhóm",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Hoạt động mô phỏng nghề cần hợp tác và trách nhiệm với sản phẩm chung."
+  },
+  {
+    "id": "q2",
+    "questionVi": "Bạn nói mọi tấm chiếu đều có màu giống hệt nhau. Em giải thích thế nào?",
+    "options": [
+      {
+        "id": "opt-2",
+        "textVi": "Mọi tấm chiếu chỉ có một màu",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Màu chiếu không liên quan đến sợi dùng để dệt",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Cói có thể được nhuộm, phối màu nên chiếu có nhiều màu sắc",
+        "isCorrect": true
+      }
+    ],
+    "hintVi": "Tài liệu giới thiệu cả cói thường và cói nhuộm nhiều màu dùng khi làm chiếu."
+  },
+  {
+    "id": "q3",
+    "questionVi": "Hai người thợ cùng dệt. Điều gì giúp công việc nhịp nhàng?",
+    "options": [
+      {
+        "id": "opt-3",
+        "textVi": "Liên tục kéo giật sợi của nhau",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Phối hợp thao tác và cùng chú ý việc đang làm",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Mỗi người làm theo một nhịp tùy ý",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Dệt chiếu cần sự phối hợp, khéo léo và kinh nghiệm của người làm nghề."
+  },
+  {
+    "id": "q4",
+    "questionVi": "Nhóm có ảnh chiếu nhưng không rõ làng làm. Nên ghi thế nào?",
+    "options": [
+      {
+        "id": "opt-1",
+        "textVi": "Ảnh tham khảo về chiếu, chưa xác định nơi sản xuất",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Chắc chắn là chiếu Cẩm Nê vì em thích tên này",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Chắc chắn là chiếu Bàn Thạch vì có nhiều màu",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Hình dáng, màu sắc không đủ xác nhận nơi sản xuất; cần nguồn hoặc thông tin xuất xứ."
+  },
+  {
+    "id": "q5",
+    "questionVi": "Muốn chia sẻ điều học được mà không động vào giàn dệt, em làm gì?",
+    "options": [
+      {
+        "id": "opt-2",
+        "textVi": "Tự tháo giàn dệt để xem",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Kéo mạnh các sợi khi thợ đang làm",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Vẽ tấm chiếu và kể công sức người thợ",
+        "isCorrect": true
+      }
+    ],
+    "hintVi": "Học sinh có thể quan sát, vẽ và giới thiệu nghề bằng hoạt động an toàn, vừa sức."
+  }
+]
   },
   checkIn:{
     emotions:[{id:'e1',emoji:'😊',labelVi:'Thích thú',labelEn:'Interested'},{id:'e2',emoji:'🌾',labelVi:'Trân trọng',labelEn:'Respectful'},{id:'e3',emoji:'⭐',labelVi:'Tự hào',labelEn:'Proud'}],
@@ -242,57 +347,117 @@ const G2_STATION_2: Station = {
     completionMode:'AUTO',
     passingScore:5,
     questions:[
+  {
+    "id": "q1",
+    "questionVi": "Lớp làm bảng so sánh Cù Lao Chàm và Sơn Trà. Cách làm nào tốt?",
+    "options": [
       {
-        id:'q1',
-        questionVi:'Hòn nào là đảo chính của Cù Lao Chàm?',
-        options:[
-          {id:'a',textVi:'Hòn Lao',isCorrect:true},
-          {id:'b',textVi:'Hòn Gai',isCorrect:false},
-          {id:'c',textVi:'Hòn Khoai',isCorrect:false},
-        ],
-        hintVi:'Hòn đảo này có diện tích lớn nhất trong Cù Lao Chàm.',
+        "id": "opt-1",
+        "textVi": "Dùng cùng các mục: cảnh quan, sinh vật, điều em muốn tìm hiểu",
+        "isCorrect": true
       },
       {
-        id:'q2',
-        questionVi:'Cù Lao Chàm được UNESCO công nhận là Khu dự trữ sinh quyển thế giới vào năm nào?',
-        options:[
-          {id:'a',textVi:'2009',isCorrect:true},
-          {id:'b',textVi:'1992',isCorrect:false},
-          {id:'c',textVi:'2020',isCorrect:false},
-        ],
-        hintVi:'Hãy nhớ mốc ngày 29 tháng 5.',
+        "id": "opt-2",
+        "textVi": "Chép một đoạn giống nhau cho cả hai nơi",
+        "isCorrect": false
       },
       {
-        id:'q3',
-        questionVi:'Hoạt động nào được giới thiệu khi tham quan Cù Lao Chàm?',
-        options:[
-          {id:'a',textVi:'Lặn ngắm san hô',isCorrect:true},
-          {id:'b',textVi:'Trượt tuyết',isCorrect:false},
-          {id:'c',textVi:'Đua xe trên băng',isCorrect:false},
-        ],
-        hintVi:'Hoạt động này giúp quan sát thế giới dưới biển.',
-      },
-      {
-        id:'q4',
-        questionVi:'Loài quý hiếm nào được nhắc đến ở Khu bảo tồn thiên nhiên Sơn Trà?',
-        options:[
-          {id:'a',textVi:'Voọc chà vá chân nâu',isCorrect:true},
-          {id:'b',textVi:'Lạc đà',isCorrect:false},
-          {id:'c',textVi:'Gấu trắng',isCorrect:false},
-        ],
-        hintVi:'Đây là loài linh trưởng nổi bật ở Sơn Trà.',
-      },
-      {
-        id:'q5',
-        questionVi:'Em cần làm gì để góp phần bảo vệ Cù Lao Chàm và Sơn Trà?',
-        options:[
-          {id:'a',textVi:'Giữ gìn cảnh quan và vận động mọi người cùng bảo vệ',isCorrect:true},
-          {id:'b',textVi:'Phá hoại tài nguyên',isCorrect:false},
-          {id:'c',textVi:'Vứt rác và bẻ cây',isCorrect:false},
-        ],
-        hintVi:'Chọn việc làm có ích cho thiên nhiên.',
-      },
+        "id": "opt-3",
+        "textVi": "Chỉ so nơi nào được nhiều bạn thích hơn",
+        "isCorrect": false
+      }
     ],
+    "hintVi": "Cùng tiêu chí so sánh giúp tổ chức thông tin rõ ràng mà không biến hai nơi thành giống nhau."
+  },
+  {
+    "id": "q2",
+    "questionVi": "Em muốn làm biển nhắc du khách không lấy sinh vật làm quà. Nên viết gì?",
+    "options": [
+      {
+        "id": "opt-2",
+        "textVi": "Mỗi người được lấy một ít san hô",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Chỉ bắt con vật nhỏ để mang về",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Ngắm nhìn và để sinh vật ở nơi sống của chúng",
+        "isCorrect": true
+      }
+    ],
+    "hintVi": "Không lấy sinh vật khỏi nơi sống là cách cụ thể hạn chế tác động của du khách."
+  },
+  {
+    "id": "q3",
+    "questionVi": "Bạn định tự xuống biển ngắm san hô vì thấy nước trong. Em nhắc gì?",
+    "options": [
+      {
+        "id": "opt-3",
+        "textVi": "Có thể đi một mình để khỏi làm phiền ai",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Chỉ tham gia khi có người phụ trách và đủ điều kiện an toàn",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Nước trong thì luôn an toàn",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Nước trong không chứng minh an toàn; học sinh cần theo người lớn và hướng dẫn chuyên môn."
+  },
+  {
+    "id": "q4",
+    "questionVi": "Thấy voọc ở xa, bạn muốn dùng bánh dụ lại gần. Em nên làm gì?",
+    "options": [
+      {
+        "id": "opt-1",
+        "textVi": "Nhắc bạn không tự cho ăn, quan sát theo hướng dẫn",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Đưa thêm bánh cho bạn",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Đuổi theo để chụp ảnh",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Không tự cho động vật hoang dã ăn hay đuổi bắt; cần giữ khoảng cách và làm theo hướng dẫn."
+  },
+  {
+    "id": "q5",
+    "questionVi": "Nhóm muốn tặng lớp một món quà sau chuyến đi. Nên chọn gì?",
+    "options": [
+      {
+        "id": "opt-2",
+        "textVi": "Một nhánh san hô bẻ từ biển",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Một cây nhổ trong khu bảo tồn",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Một bức vẽ có chú thích về cảnh quan đã tìm hiểu",
+        "isCorrect": true
+      }
+    ],
+    "hintVi": "Vẽ và kể lại điều đã học giúp chia sẻ trải nghiệm mà không lấy tài nguyên khỏi thiên nhiên."
+  }
+],
   },
   checkIn:{
     emotions:[
@@ -381,12 +546,117 @@ const G2_STATION_3: Station = {
     {id:'g2s3-luu-niem',stationId:'g2-station-3',titleVi:'4. Nhà lưu niệm Huỳnh Thúc Kháng',subtitleVi:'Ngôi nhà cổ lưu giữ không gian và vật dụng xưa',image:'https://commons.wikimedia.org/wiki/Special:FilePath/Huynh%20Thuc%20Khang%20memorial%20house.jpg',narrationVi:'Nhà lưu niệm Huỳnh Thúc Kháng là ngôi nhà cổ, được xây dựng từ năm 1869 và nằm trong khu vườn rộng. Trong nhà còn giữ không gian làm việc xưa và những vật dụng mà cụ thường dùng.',keyFactVi:'Nhà lưu niệm giúp chúng ta hiểu thêm về cuộc sống và dấu ấn của cụ Huỳnh Thúc Kháng.',interaction:{id:'i4',type:'single-choice',questionVi:'Trong Nhà lưu niệm Huỳnh Thúc Kháng còn lưu giữ gì?',options:[{id:'a',textVi:'Không gian làm việc xưa và một số vật dụng của cụ',isCorrect:true},{id:'b',textVi:'Tàu vũ trụ',isCorrect:false},{id:'c',textVi:'Động vật hoang dã',isCorrect:false}],explanationVi:'Chính xác! Nhà lưu niệm còn giữ không gian và vật dụng gắn với cụ.'}},
   ],
   challenge:{id:'ch-g2s3',titleVi:'DẤU ẤN NGƯỜI XƯA',platform:'internal_interactive',instructionsVi:'Hoàn thành 5 câu để ghi nhớ hai nhân vật và hai địa điểm.',completionMode:'AUTO',passingScore:5,questions:[
-    {id:'q1',questionVi:'Nguyễn Văn Thoại có tước hiệu nào?',options:[{id:'a',textVi:'Thoại Ngọc Hầu',isCorrect:true},{id:'b',textVi:'Hưng Đạo Vương',isCorrect:false},{id:'c',textVi:'Bình Tây Đại nguyên soái',isCorrect:false}],hintVi:'Tên tước hiệu xuất hiện ngay ở điểm đầu.'},
-    {id:'q2',questionVi:'Nguyễn Văn Thoại đã hỗ trợ quê hương An Hải việc gì?',options:[{id:'a',textVi:'Lập chợ, xây đình và chùa',isCorrect:true},{id:'b',textVi:'Xây sân bay quốc tế',isCorrect:false},{id:'c',textVi:'Xây tàu điện ngầm',isCorrect:false}],hintVi:'Tài liệu nhắc đến các công trình gần gũi với làng.'},
-    {id:'q3',questionVi:'Nhà thờ Tiền hiền làng An Hải và Thoại Ngọc Hầu được xếp hạng quốc gia năm nào?',options:[{id:'a',textVi:'2007',isCorrect:true},{id:'b',textVi:'1990',isCorrect:false},{id:'c',textVi:'2025',isCorrect:false}],hintVi:'Hãy nhớ mốc thời gian ở điểm 2.'},
-    {id:'q4',questionVi:'Cụ Huỳnh Thúc Kháng được giới thiệu là người như thế nào?',options:[{id:'a',textVi:'Học rộng, tài cao, yêu nước, thương dân',isCorrect:true},{id:'b',textVi:'Không quan tâm cộng đồng',isCorrect:false},{id:'c',textVi:'Không thích học',isCorrect:false}],hintVi:'Đây là câu mô tả ngay dưới chân dung cụ.'},
-    {id:'q5',questionVi:'Em có thể vận dụng bài học bằng cách nào?',options:[{id:'a',textVi:'Đóng vai hướng dẫn viên giới thiệu di tích',isCorrect:true},{id:'b',textVi:'Viết vẽ lên di tích',isCorrect:false},{id:'c',textVi:'Làm hỏng hiện vật',isCorrect:false}],hintVi:'Tài liệu gợi ý hoạt động hướng dẫn viên.'}
-  ]},
+  {
+    "id": "q1",
+    "questionVi": "Lớp có hai điểm tham quan nhưng chỉ đủ thời gian đi một nơi. Nên làm gì?",
+    "options": [
+      {
+        "id": "opt-1",
+        "textVi": "Cùng cô chọn mục tiêu và sắp lịch phù hợp",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Chia nhóm tự đi mà không báo cô",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Vội đi cả hai rồi bỏ qua giờ về",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Một chuyến tìm hiểu di tích cần mục tiêu và lịch trình phù hợp với thời gian."
+  },
+  {
+    "id": "q2",
+    "questionVi": "Làm thẻ giới thiệu Nguyễn Văn Thoại, nhóm nên chọn thông tin nào?",
+    "options": [
+      {
+        "id": "opt-2",
+        "textVi": "Ông xây mọi ngôi nhà ở Đà Nẵng",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Ông sáng tạo tất cả lễ hội của địa phương",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Ông góp sức lập chợ, xây đình và chùa ở quê hương An Hải",
+        "isCorrect": true
+      }
+    ],
+    "hintVi": "Tài liệu nêu những đóng góp cụ thể của ông cho quê hương An Hải; không mở rộng thành mọi công trình."
+  },
+  {
+    "id": "q3",
+    "questionVi": "Nhóm có ảnh nhà thờ và nhà lưu niệm nhưng mất chú thích. Nên làm gì?",
+    "options": [
+      {
+        "id": "opt-3",
+        "textVi": "Ghi hai ảnh cùng một tên cho nhanh",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Đối chiếu tài liệu, nhờ cô kiểm tra rồi ghi đúng tên",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Đặt tên theo ảnh mình thích",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Hai di tích gắn với hai nhân vật khác nhau; cần xác định đúng ảnh trước khi giới thiệu."
+  },
+  {
+    "id": "q4",
+    "questionVi": "Tìm hiểu cụ Huỳnh, việc nào giúp em học theo tinh thần ham học?",
+    "options": [
+      {
+        "id": "opt-1",
+        "textVi": "Đọc thêm điều chưa hiểu và hỏi thầy cô",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Chỉ chép đáp án mà không tìm hiểu",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Bỏ qua mọi câu hỏi khó",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Học hỏi chủ động là việc vừa sức để noi gương tinh thần ham học của cụ."
+  },
+  {
+    "id": "q5",
+    "questionVi": "Nhóm có nhiều điều muốn hỏi về di tích nhưng thời gian ít. Cách nào hiệu quả?",
+    "options": [
+      {
+        "id": "opt-2",
+        "textVi": "Tất cả cùng hỏi to một lúc",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Chỉ hỏi những câu không liên quan bài học",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Chọn câu hỏi rõ nhất, cử bạn hỏi rồi cùng ghi ý chính",
+        "isCorrect": true
+      }
+    ],
+    "hintVi": "Chuẩn bị câu hỏi và phân công giúp cả nhóm thu được thông tin cần thiết."
+  }
+]},
   checkIn:{emotions:[{id:'e1',emoji:'🙏',labelVi:'Kính trọng',labelEn:'Respect'},{id:'e2',emoji:'📚',labelVi:'Muốn học hỏi',labelEn:'Learn'},{id:'e3',emoji:'😊',labelVi:'Tự hào',labelEn:'Proud'}],rememberPromptVi:'Điều em nhớ nhất là gì?',rememberOptions:[{id:'r1',textVi:'Nguyễn Văn Thoại là Thoại Ngọc Hầu'},{id:'r2',textVi:'Nhà thờ An Hải là di tích cấp quốc gia'},{id:'r3',textVi:'Huỳnh Thúc Kháng yêu nước, thương dân'},{id:'r4',textVi:'Nhà lưu niệm giữ không gian và vật dụng xưa'}],actionPromptVi:'Em sẽ làm gì khi đến di tích?',actionOptions:[{id:'a1',textVi:'Giữ trật tự và vệ sinh'},{id:'a2',textVi:'Không chạm hiện vật khi chưa được phép'},{id:'a3',textVi:'Lắng nghe hướng dẫn'},{id:'a4',textVi:'Giới thiệu điều em biết cho người thân'}]},
   rewards:[{id:'rw-g2s3-1',stationId:'g2-station-3',stage:1,nameVi:'CUỐN SÁCH DẤU XƯA',nameEn:'Heritage Book',template:'enlightenment_book',descriptionVi:'Ghi nhận em đã khám phá hai nhân vật và hai địa điểm.'},{id:'rw-g2s3-2',stationId:'g2-station-3',stage:2,nameVi:'HUY HIỆU TRI ÂN',nameEn:'Gratitude Badge',template:'guardian_star',descriptionVi:'Ghi nhận em hiểu bài học lịch sử địa phương.'},{id:'rw-g2s3-3',stationId:'g2-station-3',stage:3,nameVi:'TRÁI TIM KÍNH TRỌNG',nameEn:'Respect Heart',template:'scholar_scroll',descriptionVi:'Ghi nhận thái độ trân trọng người có công.'}],
   stamp:{id:'stamp-g2s3',stationId:'g2-station-3',nameVi:'HƯỚNG DẪN VIÊN NHÍ',nameEn:'Young Guide',iconName:'landmark',colorTheme:'#92400e',quoteVi:'Biết người xưa – yêu quê hương – giữ gìn di tích'},
@@ -418,12 +688,117 @@ const G2_STATION_5: Station = {
     {id:'g2s5-ung-xu',stationId:'g2-station-5',titleVi:'5. Em đi hội văn minh',subtitleVi:'Xếp hàng – bỏ rác đúng nơi – chấp hành nội quy',image:'https://danangfantasticity.com/wp-content/uploads/2023/09/dinh-lang-tuy-loan-hoa-phong-hoa-vang-da-nang-02.jpg',narrationVi:'Khi tham gia lễ hội, em cần xếp hàng trật tự, bỏ rác đúng nơi quy định, mặc trang phục phù hợp và chấp hành nội quy. Em cũng có thể tập làm hướng dẫn viên giới thiệu một lễ hội mà mình biết.',keyFactVi:'An toàn, vệ sinh và tôn trọng nội quy làm cho lễ hội đẹp hơn.',interaction:{id:'i5',type:'single-choice',questionVi:'Việc nào đúng khi tham gia lễ hội?',options:[{id:'a',textVi:'Xếp hàng trật tự và bỏ rác đúng nơi',isCorrect:true},{id:'b',textVi:'Chen lấn và xả rác',isCorrect:false},{id:'c',textVi:'Không chấp hành nội quy',isCorrect:false}],explanationVi:'Rất tốt! Đó là cách tham gia lễ hội văn minh.'}},
   ],
   challenge:{id:'ch-g2s5',titleVi:'SẮC HỘI QUÊ HƯƠNG',platform:'internal_interactive',instructionsVi:'Hoàn thành 5 câu để trở thành hướng dẫn viên lễ hội nhí.',completionMode:'AUTO',passingScore:5,questions:[
-    {id:'q1',questionVi:'Lễ hội truyền thống thường có mấy phần chính?',options:[{id:'a',textVi:'Phần lễ và phần hội',isCorrect:true},{id:'b',textVi:'Chỉ phần hội',isCorrect:false},{id:'c',textVi:'Chỉ phần lễ',isCorrect:false}],hintVi:'Tài liệu nêu hai phần chính.'},
-    {id:'q2',questionVi:'Hoạt động nào thuộc phần lễ?',options:[{id:'a',textVi:'Rước kiệu',isCorrect:true},{id:'b',textVi:'Đập niêu',isCorrect:false},{id:'c',textVi:'Kéo co',isCorrect:false}],hintVi:'Đây là nghi thức trang nghiêm.'},
-    {id:'q3',questionVi:'Hoạt động nào thuộc phần hội?',options:[{id:'a',textVi:'Lắc thúng trên biển',isCorrect:true},{id:'b',textVi:'Lễ tế',isCorrect:false},{id:'c',textVi:'Dâng hương',isCorrect:false}],hintVi:'Đây là hoạt động vui chơi.'},
-    {id:'q4',questionVi:'Một ý nghĩa của lễ hội là gì?',options:[{id:'a',textVi:'Cầu mong bình an và mùa vụ tốt',isCorrect:true},{id:'b',textVi:'Khuyến khích xả rác',isCorrect:false},{id:'c',textVi:'Làm mất truyền thống',isCorrect:false}],hintVi:'Hãy nghĩ đến những điều cộng đồng mong ước.'},
-    {id:'q5',questionVi:'Khi tham gia lễ hội, em nên làm gì?',options:[{id:'a',textVi:'Chấp hành nội quy và giữ vệ sinh',isCorrect:true},{id:'b',textVi:'Chen lấn',isCorrect:false},{id:'c',textVi:'Vứt rác bừa bãi',isCorrect:false}],hintVi:'Chọn hành vi văn minh.'}
-  ]},
+  {
+    "id": "q1",
+    "questionVi": "Một bạn không muốn tham gia trò chơi ở hội làng. Nhóm nên làm gì?",
+    "options": [
+      {
+        "id": "opt-1",
+        "textVi": "Cho bạn chọn quan sát hoặc nhiệm vụ khác phù hợp",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Ép bạn chơi cho đủ người",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Trêu bạn trước đám đông",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Tôn trọng sự tự nguyện giúp mọi bạn tham gia sinh hoạt cộng đồng thoải mái."
+  },
+  {
+    "id": "q2",
+    "questionVi": "Em chỉ có ảnh ghi tên Lễ hội Mừng lúa mới. Muốn kể nghi thức cụ thể, nên làm gì?",
+    "options": [
+      {
+        "id": "opt-2",
+        "textVi": "Tự đặt một nghi thức rồi kể như thật",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Lấy nghi thức bất kì gán vào lễ hội",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Tìm thêm nguồn hoặc hỏi người am hiểu cùng cô",
+        "isCorrect": true
+      }
+    ],
+    "hintVi": "Tên và ảnh chưa đủ để xác định nghi thức cụ thể của một cộng đồng; cần tìm hiểu thêm."
+  },
+  {
+    "id": "q3",
+    "questionVi": "Bạn nói mọi lễ hội đều có cùng trò chơi và nghi thức. Em nhận xét thế nào?",
+    "options": [
+      {
+        "id": "opt-3",
+        "textVi": "Có thể đổi tên mọi lễ hội cho nhau",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Mỗi lễ hội có thể có hoạt động riêng, cần xem đúng tài liệu",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Chỉ cần biết một lễ hội là biết hết",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Các hoạt động được giới thiệu là ví dụ; không mặc định lễ hội nào cũng có tất cả hoạt động đó."
+  },
+  {
+    "id": "q4",
+    "questionVi": "Đi hội, em không nhìn thấy người lớn đi cùng. Việc nên làm là gì?",
+    "options": [
+      {
+        "id": "opt-1",
+        "textVi": "Nhờ người phụ trách tại điểm hỗ trợ giúp liên hệ người lớn",
+        "isCorrect": true
+      },
+      {
+        "id": "opt-2",
+        "textVi": "Đi theo người lạ rủ đi tìm",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Tự chạy thật xa để tìm nhanh",
+        "isCorrect": false
+      }
+    ],
+    "hintVi": "Khi lạc người đi cùng, tìm sự hỗ trợ của người có trách nhiệm tại địa điểm tổ chức."
+  },
+  {
+    "id": "q5",
+    "questionVi": "Em muốn hỏi người lớn về một lễ hội ở địa phương. Câu hỏi nào giúp hiểu sâu hơn?",
+    "options": [
+      {
+        "id": "opt-2",
+        "textVi": "Lễ hội nào cũng giống nhau phải không ạ?",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-3",
+        "textVi": "Con có thể tự đặt tên mới cho lễ hội không?",
+        "isCorrect": false
+      },
+      {
+        "id": "opt-1",
+        "textVi": "Gia đình mình thường chuẩn bị gì trước ngày hội ạ?",
+        "isCorrect": true
+      }
+    ],
+    "hintVi": "Câu hỏi về trải nghiệm cụ thể giúp tìm hiểu đời sống cộng đồng, thay vì chỉ gọi tên lễ hội."
+  }
+]},
   checkIn:{emotions:[{id:'e1',emoji:'🥁',labelVi:'Rộn ràng',labelEn:'Festive'},{id:'e2',emoji:'😊',labelVi:'Vui thích',labelEn:'Happy'},{id:'e3',emoji:'🙏',labelVi:'Trân trọng',labelEn:'Respect'}],rememberPromptVi:'Điều em nhớ nhất về lễ hội là gì?',rememberOptions:[{id:'r1',textVi:'Lễ hội có phần lễ và phần hội'},{id:'r2',textVi:'Phần lễ có nhiều nghi thức trang nghiêm'},{id:'r3',textVi:'Phần hội có trò chơi và văn nghệ'},{id:'r4',textVi:'Lễ hội gửi gắm nhiều ước mong tốt đẹp'}],actionPromptVi:'Khi đi hội, em sẽ làm gì?',actionOptions:[{id:'a1',textVi:'Xếp hàng trật tự'},{id:'a2',textVi:'Bỏ rác đúng nơi'},{id:'a3',textVi:'Mặc trang phục phù hợp'},{id:'a4',textVi:'Chấp hành nội quy'}]},
   rewards:[{id:'rw-g2s5-1',stationId:'g2-station-5',stage:1,nameVi:'TIẾNG TRỐNG NGÀY HỘI',nameEn:'Festival Drumbeat',template:'heritage_lantern',descriptionVi:'Ghi nhận em đã khám phá phần lễ, phần hội và ý nghĩa lễ hội.'},{id:'rw-g2s5-2',stationId:'g2-station-5',stage:2,nameVi:'CỜ HỘI QUÊ HƯƠNG',nameEn:'Festival Flag',template:'silk_ribbon',descriptionVi:'Ghi nhận em hiểu nội dung lễ hội truyền thống.'},{id:'rw-g2s5-3',stationId:'g2-station-5',stage:3,nameVi:'TRÁI TIM VĂN HÓA',nameEn:'Culture Heart',template:'culture_lotus',descriptionVi:'Ghi nhận cách ứng xử văn minh khi đi hội.'}],
   stamp:{id:'stamp-g2s5',stationId:'g2-station-5',nameVi:'HƯỚNG DẪN VIÊN LỄ HỘI NHÍ',nameEn:'Young Festival Guide',iconName:'sparkles',colorTheme:'#c026d3',quoteVi:'Hiểu lễ hội – vui văn minh – trân trọng truyền thống'},

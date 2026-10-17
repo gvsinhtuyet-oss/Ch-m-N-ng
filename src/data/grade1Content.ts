@@ -73,13 +73,13 @@ export const GRADE1_CONTENT = [
         "hint": "Quan sát từ nơi an toàn cùng người lớn; không đứng giữa đường để vẽ."
       },
       {
-        "text": "Thấy một vỏ hộp ở sân trường, em nên làm gì?",
+        "text": "Hai bạn cùng muốn giới thiệu quê hương trước. Nhóm nên làm gì?",
         "answers": [
-          "Bỏ vào thùng rác nếu an toàn",
-          "Đá sang chỗ bạn đứng",
-          "Giấu dưới gốc cây"
+          "Thống nhất lần lượt, ai cũng được nói",
+          "Chỉ cho bạn nói to nhất kể",
+          "Để một bạn kể hết phần của nhóm"
         ],
-        "hint": "Giữ sân trường sạch bằng việc vừa sức và an toàn."
+        "hint": "Chia lượt giúp các bạn đều có cơ hội chia sẻ về quê hương."
       },
       {
         "text": "Bạn mới hỏi về nơi em ở. Cách giới thiệu nào rõ hơn?",
@@ -186,13 +186,13 @@ export const GRADE1_CONTENT = [
         "hint": "Chuẩn bị chuyến đi cùng thầy cô và người lớn."
       },
       {
-        "text": "Một bạn gọi di tích là công viên nước. Em sẽ giúp bạn hiểu thế nào?",
+        "text": "Em muốn biết thêm về một khẩu súng trưng bày ở thành. Nên hỏi câu nào?",
         "answers": [
-          "Đây là nơi tìm hiểu lịch sử bảo vệ quê hương",
-          "Đây là nơi để bơi trong hào",
-          "Đây là nơi chỉ để mua đồ ăn"
+          "Khẩu súng này từng được dùng để làm gì ạ?",
+          "Em có thể giấu súng vào cặp không?",
+          "Có thể dùng súng làm đồ chơi không?"
         ],
-        "hint": "Dùng ý nghĩa của di tích để giải thích nhẹ nhàng."
+        "hint": "Đặt câu hỏi về công dụng giúp tìm hiểu hiện vật sâu hơn việc chỉ gọi tên."
       },
       {
         "text": "Muốn nhắc bạn nhớ di tích, em chọn lời nào?",
@@ -302,8 +302,8 @@ export const GRADE1_CONTENT = [
         "text": "Một bạn không muốn bị bịt mắt. Nhóm nên làm gì?",
         "answers": [
           "Lắng nghe, cho bạn chọn vai phù hợp",
-          "Ép bạn chơi vì cả nhóm đã chọn",
-          "Trêu bạn nhút nhát"
+          "Trêu bạn nhút nhát",
+          "Ép bạn chơi vì cả nhóm đã chọn"
         ],
         "hint": "Tôn trọng cảm xúc và sự tự nguyện của bạn."
       },
@@ -317,13 +317,13 @@ export const GRADE1_CONTENT = [
         "hint": "Sự an toàn của bạn quan trọng hơn thắng thua."
       },
       {
-        "text": "Nhóm muốn mời gia đình cùng chơi. Cách nào dễ hiểu?",
+        "text": "Chơi xong, hai bạn đều nhận mình thắng. Cả nhóm nên làm gì?",
         "answers": [
-          "Nói tên trò, cách chơi và cùng thống nhất luật",
-          "Bắt mọi người chơi ngay không giải thích",
-          "Chỉ nói trò này vui lắm rồi bỏ đi"
+          "Cùng xem lại luật đã thống nhất và nhờ cô hỗ trợ",
+          "Cãi nhau đến khi một bạn khóc",
+          "Tự đổi luật để mình thắng"
         ],
-        "hint": "Giới thiệu đủ để mọi người có thể cùng tham gia."
+        "hint": "Khi bất đồng kết quả, cần bình tĩnh đối chiếu luật đã thống nhất."
       }
     ],
     "feel": [
@@ -412,31 +412,31 @@ export const GRADE1_CONTENT = [
         "hint": "Giữ cảnh quan sạch để mọi người cùng thưởng thức."
       },
       {
-        "text": "Hai ảnh đều ghi Suối Mơ. Muốn biết có phải cùng nơi, em làm gì?",
+        "text": "Đến giờ về, một bạn vẫn muốn ở lại bên suối. Em làm gì?",
         "answers": [
-          "Cùng thầy cô kiểm tra tên nơi đi kèm",
-          "Cho rằng chắc chắn cùng một nơi",
-          "Tự đổi tên một ảnh"
+          "Nhắc bạn trở về cùng đoàn theo người lớn",
+          "Ở lại với bạn mà không báo ai",
+          "Tự đi đường khác về trước"
         ],
-        "hint": "Cần xem tên địa điểm đi kèm, không chỉ xem tên suối."
+        "hint": "Đi và về cùng đoàn giúp người phụ trách bảo đảm an toàn cho mọi người."
       },
       {
-        "text": "Nhóm có ba ảnh: rừng cây, dòng nước, sân bóng. Ảnh nào giúp kể về Suối Tiên theo tài liệu?",
+        "text": "Trời mưa to trước buổi đi suối. Nhóm nên chọn cách nào?",
         "answers": [
-          "Ảnh rừng cây và dòng nước",
-          "Chỉ ảnh sân bóng",
-          "Gộp cả ba rồi nói đều chụp ở Suối Tiên"
+          "Nhờ người lớn đổi kế hoạch, xem tư liệu ở lớp",
+          "Vẫn đi vì đã chuẩn bị đồ ăn",
+          "Tự ra suối xem nước rồi mới hỏi cô"
         ],
-        "hint": "Chọn điều tài liệu có giới thiệu; không gán ảnh minh họa thành ảnh chụp thật."
+        "hint": "Có thể tìm hiểu cảnh đẹp bằng tư liệu khi điều kiện tham quan không bảo đảm."
       },
       {
-        "text": "Muốn tặng người thân một lời nhắn về cảnh đẹp, em chọn gì?",
+        "text": "Đoàn đang nghe giới thiệu bên suối nhưng bạn nói chuyện rất to. Em nhắc gì?",
         "answers": [
-          "Cùng ngắm suối và giữ thiên nhiên sạch đẹp",
-          "Đến suối thì hái cây mang về",
-          "Cứ đi một mình để xem được nhiều hơn"
+          "Nói nhỏ để cùng nghe và không làm phiền mọi người",
+          "Hét to hơn bạn",
+          "Mở nhạc thật lớn để vui hơn"
         ],
-        "hint": "Lời nhắn thể hiện sự yêu quý và gìn giữ thiên nhiên."
+        "hint": "Giữ âm lượng phù hợp giúp mọi người lắng nghe và thưởng thức không gian thiên nhiên."
       }
     ],
     "feel": [
@@ -525,13 +525,13 @@ export const GRADE1_CONTENT = [
         "hint": "Cùng người lớn thực hiện trình tự; tránh tự cầm nước nóng."
       },
       {
-        "text": "Nhóm vẽ món cơm gà nhưng giới thiệu là mì Quảng. Em góp ý thế nào?",
+        "text": "Bạn thích một món khác em trong buổi giới thiệu ẩm thực. Em nên nói gì?",
         "answers": [
-          "Cùng sửa để tên món khớp với tranh",
-          "Giữ nguyên vì món nào cũng như nhau",
-          "Chê tranh của bạn rồi bỏ nhóm"
+          "Mỗi bạn có món yêu thích riêng, mình cùng lắng nghe nhé",
+          "Món của bạn không đáng được giới thiệu",
+          "Chỉ món mình thích mới ngon"
         ],
-        "hint": "Tên món và tranh cần phù hợp với nhau."
+        "hint": "Tôn trọng sở thích khác nhau giúp cùng tìm hiểu sự phong phú của ẩm thực."
       },
       {
         "text": "Ở nhà có nồi nước dùng nóng. Việc nào vừa sức với em?",

@@ -1,3 +1,4 @@
+import {LearningMediaCredit} from '../../components/LearningMediaCredit';
 import React, {useEffect, useState} from 'react';
 import {MatchedLessonResource} from '../../services/GddpResourceMatcher';
 import {GddpRecord} from '../../services/GddpService';
@@ -25,7 +26,7 @@ export const GddpLessonPresentation:React.FC<{record:GddpRecord;resource:Matched
     <div className="grid gap-5 lg:grid-cols-2">
       <div className="overflow-hidden rounded-2xl border border-slate-700 bg-slate-900">
         <img className="max-h-[60vh] w-full object-contain" src={hotspot.image} alt={hotspot.titleVi} onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=DEFAULT_APP_BACKGROUND_DATA_URL}}/>
-        <div className="p-4"><h3 className="text-2xl font-bold">{hotspot.titleVi}</h3><p className="text-sm text-slate-300">{station.titleVi}</p></div>
+        <div className="p-4"><h3 className="text-2xl font-bold">{hotspot.titleVi}</h3><p className="text-sm text-slate-300">{station.titleVi}</p><div className="mt-2 text-xs text-slate-300"><LearningMediaCredit src={hotspot.image} credit={hotspot.mediaCredit}/></div></div>
       </div>
       <div className="space-y-4">
         <section className="rounded-2xl bg-slate-900 p-5"><h3 className="mb-2 font-black text-amber-300">Nội dung tương ứng với bài học</h3><p className="whitespace-pre-wrap">{hotspot.narrationVi}</p>

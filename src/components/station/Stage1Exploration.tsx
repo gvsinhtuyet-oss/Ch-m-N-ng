@@ -1,3 +1,4 @@
+import {LearningMediaCredit} from '../LearningMediaCredit';
 import { contentService } from '../../services/ContentService';
 import React, { useState, useEffect, useMemo } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
@@ -403,7 +404,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
           {/* Media source and copyright credit */}
           <div className="px-5 py-2.5 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between text-[11px] text-slate-500">
-            <span>Nguồn ảnh: {hotspot.mediaCredit || 'Hình ảnh minh họa đang cập nhật'}</span>
+            <LearningMediaCredit src={hotspot.image} credit={hotspot.mediaCredit}/>
             <span className="text-slate-600 font-medium">Tư liệu đang chuẩn hóa</span>
           </div>
         </div>

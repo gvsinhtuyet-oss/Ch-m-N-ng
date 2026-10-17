@@ -63,7 +63,7 @@ export default defineConfig(({mode}) => {
         },
         workbox: {
           navigateFallbackDenylist: [/^\/api\//],
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff,woff2}'],
           runtimeCaching: [
             {
               urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,

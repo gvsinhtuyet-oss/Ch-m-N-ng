@@ -1,3 +1,4 @@
+import {LearningMediaCredit} from '../../components/LearningMediaCredit';
 import React, { useState } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
 import { useApp } from '../../contexts/AppContext';
@@ -146,6 +147,7 @@ export const ClassroomPresentationMode: React.FC<Props> = ({ station, onExit }) 
 
         {/* Narrative & Teacher Facilitation Column */}
         <div className="lg:col-span-5 flex flex-col justify-between space-y-4 overflow-y-auto">
+          <div className="rounded-xl bg-slate-900 p-3 text-xs text-slate-300"><LearningMediaCredit src={hotspot.image} credit={hotspot.mediaCredit}/></div>
           {/* Big Text Narration */}
           <div className="bg-slate-900/90 rounded-3xl p-6 border border-slate-800 space-y-4 shadow-xl">
             <div className="flex items-center gap-2 text-amber-400 text-xs font-black uppercase tracking-wider">

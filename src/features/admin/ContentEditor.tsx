@@ -26,7 +26,7 @@ export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = fals
   const [resourceUrl, setResourceUrl] = useState('');
   const [resourceKind, setResourceKind] = useState<LearningResource['kind']>('document');
   const fieldClass = 'w-full rounded-xl border border-slate-300 bg-white p-3 text-sm text-slate-900';
-  const validLink = (value: string) => !value || /^\/learning\/grade[13]\/[a-z0-9-]+\.svg$/.test(value) || /^https:\/\//i.test(value) || /^data:(image\/|application\/pdf|audio\/|video\/)/i.test(value);
+  const validLink = (value: string) => !value || /^\/learning\/(?:grade[13]|grade45)\/[a-z0-9-]+\.svg$/.test(value) || /^\/learning\/grade45\/photos\/[a-z0-9-]+\.webp$/.test(value) || /^https:\/\//i.test(value) || /^data:(image\/|application\/pdf|audio\/|video\/)/i.test(value);
 
   const upload = async (file: File | undefined, target: 'cover' | 'map' | number) => {
     if (!file) return;

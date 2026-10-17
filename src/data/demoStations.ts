@@ -17,7 +17,15 @@ export const DEMO_STATION_IDS = new Set([
   'g3-station-4',
   'g3-station-5',
   'g3-station-2', // Huỳnh Thúc Kháng – Phan Châu Trinh
+  'g4-station-1',
+  'g4-station-3',
+  'g4-station-4',
+  'g4-station-5',
   'g4-station-2', // Những bảo tàng ở thành phố Đà Nẵng
+  'g5-station-1',
+  'g5-station-2',
+  'g5-station-3',
+  'g5-station-5',
   'g5-station-4', // Danh thắng Ngũ Hành Sơn
 ]);
 

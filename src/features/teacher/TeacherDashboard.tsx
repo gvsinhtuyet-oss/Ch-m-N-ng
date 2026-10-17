@@ -1,3 +1,4 @@
+import {GRADE45_TOPIC_DECKS} from '../../data/teacher/grade45TopicDecks';
 import {GRADE3_TOPIC_DECKS} from '../../data/teacher/grade3TopicDecks';
 import {GddpPreparedPresentation} from './GddpPreparedPresentation';
 import {TeacherWorkspace} from './TeacherWorkspace';
@@ -37,7 +38,7 @@ export const TeacherDashboard: React.FC = () => {
   } = useApp();
 
   const [topicDeckId,setTopicDeckId]=useState<string|null>(null);
-  const topicDeck=GRADE3_TOPIC_DECKS.find(d=>d.recordId===topicDeckId);
+  const topicDeck=[...GRADE3_TOPIC_DECKS,...GRADE45_TOPIC_DECKS].find(d=>d.recordId===topicDeckId);
   const [activeTab, setActiveTab] = useState<'teaching' | 'classrooms' | 'results' | 'resources' | 'gddp' | 'workspace'>('teaching');
   const [selectedStationForImp, setSelectedStationForImp] = useState<Station | null>(null);
   const [selectedClassId, setSelectedClassId] = useState<string>('class-2-24');
@@ -78,6 +79,7 @@ export const TeacherDashboard: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8 space-y-8">
+      {currentGrade>=4 && <aside className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Học liệu lớp {currentGrade} theo chủ đề – chờ kế hoạch tích hợp mới.</strong> Đã rà lời thuyết minh, câu hỏi, đáp án theo nguồn; chưa có xác nhận phê duyệt của tổ chuyên môn. Chưa gắn tuần/bài SGK. Ảnh tư liệu có chú thích nơi chụp, thời điểm và giấy phép. Ảnh Phước Kiều chưa rõ quyền tái sử dụng chỉ được dẫn tại nguồn, chưa nhúng vào app. <a className="underline" href="https://danang.gov.vn/vi/w/ghe-tham-lang-nghe-duc-dong-phuoc-kieu" target="_blank" rel="noopener noreferrer">Xem tư liệu Phước Kiều tại nguồn</a></aside>}
       {currentGrade === 3 && <aside className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Học liệu lớp 3 theo chủ đề – chờ duyệt tích hợp.</strong> Đủ 5 trạm tham khảo theo đề cương; chưa xác nhận tuần, bài và bộ sách của kế hoạch mới. Bảng tích hợp cũ ghi Hoàng Diệu – Phan Châu Trinh, khác đề cương Huỳnh Thúc Kháng – Phan Châu Trinh. Tư liệu nghề thúng chai Hội An chỉ dùng tham khảo chung, chưa thay cho quy trình riêng của Sơn Trà.</aside>}
       {currentUser?.id === 'teacher-demo' && <p className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">Chế độ giáo viên trải nghiệm dành cho giám khảo. Bạn có thể xem học liệu và trình chiếu bài học; đăng ảnh, tài liệu chung cần đăng nhập quản trị.</p>}
       {workflowError&&<p role="alert" className="rounded-xl bg-rose-50 p-3 text-rose-700">{workflowError}</p>}
@@ -165,7 +167,7 @@ export const TeacherDashboard: React.FC = () => {
             <div>
               <h2 className="text-xl font-black text-slate-900">Danh Mục Bài Dạy Khối {currentGrade}</h2>
               <p className="text-xs text-slate-500">
-                {(currentGrade === 1 || currentGrade === 2 || currentGrade === 3)
+                {(currentGrade >= 1 && currentGrade <= 5)
                   ? `Khối ${currentGrade} đã mở đủ 05 bài để tổ chức dạy học.`
                   : 'Khối này hiện mở 01 bài demo; các bài còn lại đang tiếp tục hoàn thiện.'}
               </p>
@@ -259,7 +261,7 @@ export const TeacherDashboard: React.FC = () => {
                           MỞ BÀI
                         </button>
 
-                        {station.grade===3 && <button onClick={()=>setTopicDeckId('topic-'+station.id)} className="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-extrabold text-xs">SLIDE CHỦ ĐỀ</button>}
+                        {station.grade>=3 && <button onClick={()=>setTopicDeckId('topic-'+station.id)} className="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-extrabold text-xs">SLIDE CHỦ ĐỀ</button>}
                         <button
                           onClick={() => enterPresentationMode(station)}
                           className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-sm transition flex items-center gap-1.5 active:scale-95"
@@ -412,10 +414,10 @@ export const TeacherDashboard: React.FC = () => {
             <div className="p-5 rounded-2xl bg-amber-50 border border-amber-100">
               <span className="text-xs font-bold text-amber-800 uppercase">Bài demo đang mở</span>
               <div className="text-xl font-black text-amber-900 mt-1">
-                {(currentGrade === 1 || currentGrade === 2 || currentGrade === 3) ? '05 bài đã sẵn sàng' : (currentDemoStation?.titleVi || 'Đang cập nhật')}
+                {(currentGrade >= 1 && currentGrade <= 5) ? '05 bài đã sẵn sàng' : (currentDemoStation?.titleVi || 'Đang cập nhật')}
               </div>
               <p className="text-[11px] text-amber-700 mt-1">
-                {(currentGrade === 1 || currentGrade === 2 || currentGrade === 3) ? `Đủ 5 trạm Khối ${currentGrade} để tổ chức dạy – học` : '01 bài demo/khối để kiểm thử luồng dạy – học'}
+                {(currentGrade >= 1 && currentGrade <= 5) ? `Đủ 5 trạm Khối ${currentGrade} để tổ chức dạy – học` : '01 bài demo/khối để kiểm thử luồng dạy – học'}
               </p>
             </div>
           </div>

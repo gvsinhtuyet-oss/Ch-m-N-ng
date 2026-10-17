@@ -54,7 +54,7 @@ const loadSharedContent = async () => {
   return current;
 };
 const validUrl = value => typeof value === 'string' && (
-  value === '' || /^https:\/\//i.test(value) || /^\/learning\/grade[13]\/[a-z0-9-]+\.svg$/.test(value) ||
+  value === '' || /^\/learning\/grade45\/photos\/[a-z0-9-]+\.webp$/.test(value) || /^https:\/\//i.test(value) || /^\/learning\/(?:grade[13]|grade45)\/[a-z0-9-]+\.svg$/.test(value) ||
   /^data:(image\/(png|jpeg|webp|gif)|application\/pdf|audio\/(mpeg|mp3|wav|ogg|mp4|x-wav)|video\/(mp4|webm|ogg));base64,/i.test(value)
 );
 const studentSyncKey = code => createHash('sha256').update(String(code || '').toUpperCase().replace(/[^A-Z0-9]/g,'')).digest('hex');

@@ -6,6 +6,7 @@ import { progressService } from '../../services/ProgressService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
 import { RewardClaimModal } from '../common/RewardClaimModal';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
+import { LearningMediaCredit } from '../LearningMediaCredit';
 import {
   CheckCircle2,
   ChevronLeft,
@@ -234,7 +235,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 <img
                   src={hotspot.image}
                   alt={hotspot.titleVi}
-                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                  className={`h-full w-full ${station.grade === 1 ? 'object-contain' : 'object-cover'} transition duration-700 group-hover:scale-105`}
                   onError={event => {
                     const img = event.currentTarget;
                     if (img.dataset.fallback === 'default') return;
@@ -258,7 +259,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               >
                 <div className="flex items-center gap-2 text-orange-600">
                   <MapPin className="h-4 w-4 shrink-0" />
-                  <span className="truncate text-sm font-black">Khám phá bức tranh</span>
+                  <span className="truncate text-sm font-black">Khám phá hình ảnh</span>
                 </div>
                 <p className="mt-0.5 text-[11px] font-semibold text-slate-600">
                   Chạm để xem ảnh lớn và quan sát kĩ từng chi tiết.
@@ -337,6 +338,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               </div>
             </div>
 
+            {station.grade === 1 && <div className="shrink-0 rounded-xl bg-orange-50 px-3 py-2 text-[11px] leading-relaxed text-slate-600"><LearningMediaCredit src={hotspot.image} credit={hotspot.mediaCredit}/></div>}
             {/* hotspot shortcut cards */}
             <div className="grid shrink-0 grid-cols-2 gap-2 sm:grid-cols-4">
               {station.hotspots.map((item, itemIndex) => {
@@ -595,7 +597,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               <img
                 src={previewHotspot.image}
                 alt={previewHotspot.titleVi}
-                className="h-full w-full object-cover"
+                className={`h-full w-full ${station.grade === 1 ? 'object-contain' : 'object-cover'}`}
                 onError={event => {
                   const img = event.currentTarget;
                   if (img.dataset.fallback === 'default') return;
@@ -640,6 +642,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             </div>
 
             <div className="relative h-full min-h-0 overflow-y-auto overscroll-contain p-5 pb-8 sm:p-7 sm:pb-9">
+              {station.grade === 1 && <div className="mb-3 pr-10 text-xs leading-relaxed text-slate-600"><LearningMediaCredit src={previewHotspot.image} credit={previewHotspot.mediaCredit}/></div>}
               <button
                 type="button"
                 onClick={() => {

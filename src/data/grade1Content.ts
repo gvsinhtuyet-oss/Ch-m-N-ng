@@ -7,7 +7,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-1",
         "title": "Nơi em ở",
-        "narration": "Quê hương là nơi gần gũi, gắn bó với em. Nơi em ở có nhà cửa, đường đi và những người em quen biết. Em hãy cùng thầy cô nói tên xã hoặc phường nơi mình ở. Mỗi bạn có thể sống ở một nơi khác nhau trong thành phố Đà Nẵng.",
+        "narration": "Quê hương là nơi gần gũi, gắn bó với em. Nơi em ở có nhà cửa, đường đi và những người em quen biết. Em hãy cùng thầy cô nói tên xã hoặc phường nơi mình ở. Mỗi bạn có thể sống ở một nơi khác nhau trong thành phố Đà Nẵng. Ảnh cầu Sông Hàn là cảnh quê hương để tham khảo; em hãy liên hệ với khu vực mình thật sự sinh sống.",
         "fact": "Em biết tên khu vực nơi mình ở.",
         "q": "Em đang tìm hiểu điều gì ở điểm này?",
         "answers": [
@@ -19,7 +19,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-2",
         "title": "Ngôi trường của em",
-        "narration": "Trường học là nơi em học tập và vui chơi cùng thầy cô, bạn bè. Mỗi trường có tên gọi riêng. Em hãy quan sát tên trường trên cổng trường hoặc nhờ thầy cô đọc cùng. Sau đó, em nói tên trường và xã hoặc phường của trường mình.",
+        "narration": "Trường học là nơi em học tập và vui chơi cùng thầy cô, bạn bè. Mỗi trường có tên gọi riêng. Em hãy quan sát tên trường trên cổng trường hoặc nhờ thầy cô đọc cùng. Sau đó, em nói tên trường và xã hoặc phường của trường mình. Tranh chỉ minh họa một ngôi trường, không ghi tên trường cụ thể; em tìm tên trường thật của mình trên cổng trường.",
         "fact": "Em biết tên trường và khu vực có trường mình.",
         "q": "Đâu là điều giúp em gọi đúng tên trường?",
         "answers": [
@@ -31,7 +31,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-3",
         "title": "Từ nhà đến trường",
-        "narration": "Trên đường từ nhà đến trường, em có thể đi qua hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn có đường đi khác nhau. Em hãy chọn một địa điểm mình thật sự nhìn thấy và kể với thầy cô. Em cũng có thể vẽ lại một đoạn đường quen thuộc.",
+        "narration": "Trên đường từ nhà đến trường, em có thể đi qua hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn có đường đi khác nhau. Em hãy chọn một địa điểm mình thật sự nhìn thấy và kể với thầy cô. Em cũng có thể vẽ lại một đoạn đường quen thuộc. Ảnh cầu Sông Hàn gợi một cảnh để kể, không có nghĩa mọi bạn đều đi qua cây cầu này.",
         "fact": "Mỗi bạn có những địa điểm quen thuộc trên đường đến trường.",
         "q": "Tranh về đường đến trường nên có gì?",
         "answers": [
@@ -132,7 +132,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "tdh-tuong-thanh-hao",
         "title": "Cửa thành, tường thành và hào",
-        "narration": "Theo tài liệu, Thành Điện Hải có cửa phía nam và cửa phía đông. Thành được xây bằng gạch; xung quanh có hào. Cửa thành, tường thành và hào là những dấu tích giúp em hình dung ngôi thành xưa. Hình trên app là sơ đồ học tập, không phải bản vẽ đo đạc di tích.",
+        "narration": "Theo tài liệu, Thành Điện Hải có cửa phía nam và cửa phía đông. Thành được xây bằng gạch; xung quanh có hào. Cửa thành, tường thành và hào là những dấu tích giúp em hình dung ngôi thành xưa. Ảnh tư liệu cho thấy tường và hào của thành; ảnh không phải bản vẽ đo đạc di tích.",
         "fact": "Cửa thành, tường thành và hào là những dấu tích của ngôi thành.",
         "q": "Hào được giới thiệu ở đâu?",
         "answers": [
@@ -346,7 +346,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-1",
         "title": "Gọi tên suối, thác",
-        "narration": "Tài liệu giới thiệu Suối Tiên, Suối Lương, thác Ồ Ồ, thác ở Hố Giang Thơm, thác Grăng và Hòa Phú Thành. Tài liệu cũng có hai địa điểm cùng tên Suối Mơ: một ở Hà Nha, một ở Bà Nà. Không nên ghép hai nơi này thành một.",
+        "narration": "Tài liệu giới thiệu Suối Tiên, Suối Lương, thác Ồ Ồ, thác ở Hố Giang Thơm, thác Grăng và Hòa Phú Thành. Tài liệu cũng có hai địa điểm cùng tên Suối Mơ: một ở Hà Nha, một ở Bà Nà. Không nên ghép hai nơi này thành một. Tranh minh họa gợi hoạt động quan sát suối, không phải ảnh chụp một trong các địa điểm vừa kể.",
         "fact": "Có nhiều dòng suối, thác nước; hai địa điểm có thể cùng tên.",
         "q": "Hai địa điểm cùng tên được nhắc đến là gì?",
         "answers": [
@@ -358,7 +358,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-2",
         "title": "Rừng cây bên Suối Tiên",
-        "narration": "Theo tài liệu, Suối Tiên ở Quế Sơn Trung có rừng cây xanh. Cây cối và dòng nước tạo nên cảnh quan gần gũi với thiên nhiên. Hình trên app là tranh sơ đồ minh họa. Em có thể kể màu sắc hoặc cảnh vật mình yêu thích trong tranh.",
+        "narration": "Theo tài liệu, Suối Tiên ở Quế Sơn Trung có rừng cây xanh. Cây cối và dòng nước tạo nên cảnh quan gần gũi với thiên nhiên. Hình trên app là tranh minh họa rừng và dòng suối, không phải ảnh chụp hay hình tái hiện chính xác Suối Tiên. Em có thể kể màu sắc hoặc cảnh vật mình yêu thích trong tranh.",
         "fact": "Rừng cây xanh là một nét đẹp được giới thiệu ở Suối Tiên.",
         "q": "Cảnh vật nào được giới thiệu bên Suối Tiên?",
         "answers": [
@@ -370,7 +370,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-3",
         "title": "Dòng nước và thác ở Suối Tiên",
-        "narration": "Tài liệu miêu tả Suối Tiên có nước trong và mát. Nước từ thác trên cao chảy xuống tạo thành hồ. Đây là nét đẹp để quan sát, không có nghĩa là nơi nào cũng an toàn để xuống nước. Khi tham quan, em luôn đi cùng người lớn và làm theo hướng dẫn.",
+        "narration": "Tài liệu miêu tả Suối Tiên có nước trong và mát. Nước từ thác trên cao chảy xuống tạo thành hồ. Đây là nét đẹp để quan sát, không có nghĩa là nơi nào cũng an toàn để xuống nước. Khi tham quan, em luôn đi cùng người lớn và làm theo hướng dẫn. Tranh minh họa giúp hình dung dòng thác và hồ nước, không phải ảnh tư liệu của Suối Tiên.",
         "fact": "Suối Tiên có dòng nước và thác tạo nên cảnh đẹp.",
         "q": "Theo lời giới thiệu, nước ở Suối Tiên thế nào?",
         "answers": [
@@ -483,7 +483,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-3",
         "title": "Bày tô mì và thưởng thức",
-        "narration": "Trong cách trình bày ở tài liệu, cho mì vào tô, thêm tôm, thịt, trứng rồi chan nước dùng, rắc đậu phụng và rau thơm. Rau sống có thể để riêng để ăn kèm. Khi ăn có thể thêm chanh và bánh tráng nướng tùy sở thích, không phải ai cũng ăn cay.",
+        "narration": "Trong cách trình bày ở tài liệu, cho mì vào tô, thêm tôm, thịt, trứng rồi chan nước dùng, rắc đậu phụng và rau thơm. Rau sống có thể để riêng để ăn kèm. Khi ăn có thể thêm chanh và bánh tráng nướng tùy sở thích, không phải ai cũng ăn cay. Ảnh tô mì là một cách bày để tham khảo; thành phần có thể khác với ví dụ trong tài liệu.",
         "fact": "Có thể thưởng thức mì Quảng cùng rau và bánh tráng nướng.",
         "q": "Đồ ăn kèm nào vừa được giới thiệu?",
         "answers": [

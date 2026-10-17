@@ -326,7 +326,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
             <img
               src={hotspot.image}
               alt={hotspot.titleVi}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103"
+              className={`w-full h-full ${station.grade === 1 ? 'object-contain' : 'object-cover'} transition-transform duration-700 group-hover:scale-103`}
               onError={(e) => {
                 const image = e.currentTarget;
                 if (image.src.endsWith('/adventure-background.svg')) return;
@@ -340,8 +340,8 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between pointer-events-none">
               <span className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-black shadow-md border border-white/20">
                 {hotspot.mediaRights === 'ALLOWED' && !hotspot.mediaCredit?.includes('minh họa')
-                  ? 'Ảnh thực tế di sản'
-                  : 'Ảnh minh họa đang cập nhật'}
+                  ? 'Ảnh chụp thực tế'
+                  : 'Tranh minh họa học tập'}
               </span>
             </div>
 

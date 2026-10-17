@@ -1,15 +1,16 @@
 import type {Station,ExplorationHotspot,ChallengeQuestion} from '../types';
 import {OFFICIAL_25_CATALOG} from './curriculumCatalog';
 import {GRADE1_CONTENT} from './grade1Content';
-export const GRADE1_CONTENT_REVISION='3.0.0-grade1-source';
+import {grade1PointMedia} from './grade1Media';
+export const GRADE1_CONTENT_REVISION='4.0.0-grade1-media';
 const source='Tài liệu Giáo dục địa phương thành phố Đà Nẵng lớp 1 – tái bản lần thứ hai; bản cô cung cấp: TLĐP 1. 08-8-2025 (Nhóm 1).docx';
 function choices(answers:string[],offset:number){const options=answers.map((textVi,i)=>({id:'opt-'+(i+1),textVi,isCorrect:i===0}));return [...options.slice(offset),...options.slice(0,offset)];}
 export const GRADE_1_STATIONS:Station[]=GRADE1_CONTENT.map(lesson=>{
  const cat=OFFICIAL_25_CATALOG.find(c=>c.id===lesson.id)!;
  const asset=(name:string)=>`/learning/grade1/${lesson.id}-${name}.svg`;
- const hotspots:ExplorationHotspot[]=lesson.points.map((p,i)=>({id:p.id,stationId:lesson.id,titleVi:`${i+1}. ${p.title}`,subtitleVi:'Quan sát, nghe và chia sẻ',image:asset(`point-${i+1}`),narrationVi:p.narration,keyFactVi:p.fact,interaction:{id:p.id+'-interaction',type:'single-choice',questionVi:p.q,options:choices(p.answers,i%3),explanationVi:p.fact},sources:[source+` – Chủ đề ${cat.lessonNumber}: ${cat.titleVi}`],mediaRights:'OWNED_BY_SCHOOL',mediaCredit:'Sơ đồ minh họa được biên soạn trong app; không phải ảnh chụp tư liệu hoặc bản đồ địa lí.'}));
+ const hotspots:ExplorationHotspot[]=lesson.points.map((p,i)=>{const media=grade1PointMedia(lesson.id,i)!;return {id:p.id,stationId:lesson.id,titleVi:`${i+1}. ${p.title}`,subtitleVi:'Quan sát, nghe và chia sẻ',image:media.src,narrationVi:p.narration,keyFactVi:p.fact,interaction:{id:p.id+'-interaction',type:'single-choice',questionVi:p.q,options:choices(p.answers,i%3),explanationVi:p.fact},sources:[source+` – Chủ đề ${cat.lessonNumber}: ${cat.titleVi}`,...('sourceUrl' in media?[media.sourceUrl]:[]),...(lesson.id==='g1-station-3'?['https://vietnamtourism.vn/index.php/tourism/items/1056/5']:[])],mediaRights:'ALLOWED',mediaCredit:media.caption+' '+media.author+' · '+media.changes};});
  const questions:ChallengeQuestion[]=lesson.questions.map((q,i)=>({id:`${lesson.id}-challenge-${i+1}`,questionVi:q.text,options:choices(q.answers,i%3),hintVi:q.hint}));
- return {id:cat.id,number:cat.lessonNumber,grade:1,themeId:cat.themeId,themeNameVi:cat.themeNameVi,titleVi:cat.titleVi,titleEn:cat.titleEn,subtitleVi:lesson.subtitle,coverImage:asset('cover'),openingMessageVi:lesson.opening,totalPeriods:cat.periods,officialCurriculumReference:source+` – Chủ đề ${cat.lessonNumber}: ${cat.titleVi}`,isFullyVerified:true,
+ return {id:cat.id,number:cat.lessonNumber,grade:1,themeId:cat.themeId,themeNameVi:cat.themeNameVi,titleVi:cat.titleVi,titleEn:cat.titleEn,subtitleVi:lesson.subtitle,coverImage:grade1PointMedia(lesson.id,0)!.src,openingMessageVi:lesson.opening,totalPeriods:cat.periods,officialCurriculumReference:source+` – Chủ đề ${cat.lessonNumber}: ${cat.titleVi}`,isFullyVerified:true,
  pedagogyGoals:{knowGoalVi:cat.knowGoalVi,understandGoalVi:cat.understandGoalVi,behaviorGoalVi:cat.behaviorGoalVi},hotspots,
  challenge:{id:'challenge-'+cat.id,titleVi:'Chinh phục thử thách – '+cat.titleVi,platform:'internal_interactive',instructionsVi:'Có 5 tình huống nhỏ. Em chọn cách làm phù hợp. Nếu cần, nhờ thầy cô đọc câu hỏi. Trả lời chưa đúng thì thử lại câu đó nhé!',completionMode:'AUTO',passingScore:5,questions},
  checkIn:{emotions:[{id:'happy',emoji:'😊',labelVi:'Vui thích',labelEn:'Happy'},{id:'proud',emoji:'💛',labelVi:'Yêu quý',labelEn:'Affectionate'},{id:'curious',emoji:'🌱',labelVi:'Muốn khám phá thêm',labelEn:'Curious'}],rememberPromptVi:'Sau hành trình, em thấy thế nào?',rememberOptions:lesson.feel.map((textVi,i)=>({id:'feel-'+(i+1),textVi})),actionPromptVi:'Em muốn làm việc nhỏ nào sau hành trình?',actionOptions:lesson.act.map((textVi,i)=>({id:'action-'+(i+1),textVi}))},

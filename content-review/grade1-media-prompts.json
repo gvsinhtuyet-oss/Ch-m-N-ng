@@ -1,0 +1,54 @@
+{
+  "tool": "Built-in image generation",
+  "style": "Landscape 16:9, detailed Vietnamese primary-school picture-book illustration, warm natural light, no stick figures, no logos or readable text, no photorealism or fabricated real landmarks.",
+  "prompts": [
+    {
+      "id": "school",
+      "prompt": "Generic Vietnamese primary school courtyard, teacher and young children; detailed picture-book illustration; no named school, no readable writing, no photorealistic claim."
+    },
+    {
+      "id": "care-neighborhood",
+      "prompt": "Vietnamese grade-1 children caring for their shared school garden: one child waters a small plant with a small watering can, two children put clean paper litter into a bin together, teacher supervising. Clean safe courtyard, flowering trees, friendship and care for where we live."
+    },
+    {
+      "id": "folk-games",
+      "prompt": "Vietnamese children playing tug of war on a flat dry grassy school play area. Two small teams holding ONE clearly continuous rope, central colored ribbon and visible central ground line, teacher referee standing safely aside. Joyful cooperation, children in casual PE clothes, complete hands and feet, no rope tied around bodies, no unsafe wrapping."
+    },
+    {
+      "id": "blindfold-catcher",
+      "prompt": "Vietnamese blind man's buff game, not catching a real goat. ONE child at center wearing a soft opaque cloth blindfold covering only eyes and reaching gently toward nearby classmates, FOUR other children with uncovered eyes spaced in a wide open flat schoolyard. Children are pretending to be goats, actual human children only, no animals. Teacher supervises from side, all remain inside a softly chalk-marked play boundary. Friendly happy scene, no collision or pushing."
+    },
+    {
+      "id": "game-boundary",
+      "prompt": "Vietnamese blind man's buff as a teaching scene emphasizing a clearly visible oval chalk boundary on flat dry schoolyard. ONE blindfolded child and THREE unblindfolded peers all safely INSIDE the marked area. Two spectators and teacher stay OUTSIDE boundary with calm supportive posture, not pointing or steering catcher. No real goats, no obstacles, no labels, high slightly elevated view shows the whole play area."
+    },
+    {
+      "id": "family-game",
+      "prompt": "Warm Vietnamese family yard, a parent and primary-school children enjoying a gentle cooperative folk game with a short rope on flat open ground, smiling, grandparents watching nearby. Safe natural relaxed movement, focus on intergenerational friendship. No blindfolded adult walking near hazards, no stylized stick figures, no historical costumes."
+    },
+    {
+      "id": "stream-forest",
+      "prompt": "A clearly illustrated GENERIC Vietnamese forest stream as a visual teaching aid: lush tropical green trees, ferns, canopy filtering sunlight, a small winding clear stream over natural rocks. Wide beautiful composition showing forest as primary subject, no people, no buildings, no identifiable real landmark, do NOT claim to depict Suoi Tien or any real location. Detailed natural educational painting."
+    },
+    {
+      "id": "stream-waterfall",
+      "prompt": "A clearly illustrated GENERIC small Vietnamese forest waterfall and clear pool: water visibly flows down rock steps into a pool bordered by green forest; dry safe viewing foreground separated from water, no people swimming, no recognizable real landmark. Beautiful crisp natural textures, tasteful colors, do NOT claim this is a photo or specific Suoi Tien site. Waterfall is principal subject."
+    },
+    {
+      "id": "stream-observation",
+      "prompt": "Vietnamese primary-school class with teacher and parent viewing a GENERIC forest stream from a broad safe dry footpath well back from the water. Two children observe using a small sketchbook, another points toward trees, everyone remains with adults, no one climbs wet rocks or enters water. Lovely green natural environment, illustrated fictional teaching situation, not a depiction of any named stream."
+    },
+    {
+      "id": "stream-presentation",
+      "prompt": "Vietnamese primary-school children in a classroom presenting their own simple paintings of a forest stream: one child holds a clearly drawn landscape picture of water and trees, others listen with teacher smiling. Show picture large enough to recognize as a CHILD'S DRAWING. Friendly diverse classroom, neat desks, indoor plants. No writing, no actual landmark representation, no crowded hands."
+    },
+    {
+      "id": "mi-quang-ingredients",
+      "prompt": "Use case: scientific-educational. A high-quality clearly illustrated overhead food ingredient still life for Vietnamese grade 1. On a clean table, separately arranged and easy to distinguish: ONE bowl of wide flat rice noodles, a small plate of COOKED shrimp, a small plate of cooked pork slices, halved hard-boiled eggs, a small bowl of broth, leafy herbs, peanuts, and sesame rice crackers. All separate vessels, no text labels, no chopsticks hiding ingredients. Warm natural colors, appetizing food illustration, no raw meat, no stove, no other dishes, no extra invented ingredients."
+    },
+    {
+      "id": "young-chef-drawing",
+      "prompt": "Vietnamese grade-1 children collaborating in classroom on a food drawing project: three children sit around table drawing a colorful noodle bowl on a large sheet, teacher helps one child identify ingredients. Colored pencils, crayons, a finished childlike picture of noodles shrimp egg and herbs visible. No stove, no knives, no hot water, no real cooking, no text. Beautiful detailed picture-book art celebrating teamwork."
+    }
+  ]
+}

@@ -7,6 +7,7 @@ import {DEMO_STATION_IDS} from './src/data/demoStations';
 import {currentGrade1Content} from './src/services/Grade1ContentPolicy';
 import {contentService} from './src/services/ContentService';
 import {createLessonPlan} from './src/services/LessonPlanService';
+import {GRADE1_MEDIA,grade1MediaBySrc} from './src/data/grade1Media';
 
 test('grade 1 opens all five source topics in book order, retaining stable station identities',()=>{
  const s=getStationsForGrade(1);assert.deepEqual(s.map(x=>x.id),['g1-station-1','g1-station-4','g1-station-2','g1-station-3','g1-station-5']);assert.deepEqual(s.map(x=>x.number),[1,2,3,4,5]);for(const x of s){assert.ok(DEMO_STATION_IDS.has(x.id));assert.equal(x.grade,1);assert.equal(x.version.status,'IN_REVIEW');assert.equal(x.version.version,GRADE1_CONTENT_REVISION);assert.match(x.officialCurriculumReference,/TLĐP 1/);}
@@ -24,8 +25,15 @@ test('source-specific facts, two Suoi Mo sites, no invented fieldtrip/photo clai
  const citadel=byId('g1-station-4').hotspots.map(h=>h.narrationVi).join(' ');for(const fact of ['2017','cửa phía nam','cửa phía đông','Pháp','Tây Ban Nha','Nguyễn Tri Phương'])assert.ok(citadel.includes(fact));
  const food=byId('g1-station-5').hotspots.map(h=>h.narrationVi).join(' ');for(const fact of ['mì Quảng','cao lầu','bê thui','bánh đập','cơm gà','nem nướng','đậu phụng','bánh tráng'])assert.ok(food.includes(fact));
 });
-test('all local illustrations and maps exist and contain explicit schematic credit; no remote asset dependency',()=>{
- const assets=new Set<string>();for(const s of GRADE_1_STATIONS){for(const path of [s.coverImage,s.journeyMap!.image!,...s.hotspots.map(h=>h.image)]){assert.match(path,/^\/learning\/grade1\/[a-z0-9-]+\.svg$/);assert.ok(existsSync('public'+path),path);const svg=readFileSync('public'+path,'utf8');assert.match(svg,/không phải ảnh tư liệu/);assert.doesNotMatch(svg,/<script|https?:\/\/[^w]/);assert.ok(!assets.has(path));assets.add(path);}}assert.equal(assets.size,30);
+test('all 20 learning points use packaged photo or illustration assets with honest credits',()=>{
+ assert.equal(GRADE1_MEDIA.length,18);assert.equal(GRADE1_MEDIA.filter(m=>m.kind==='photo').length,6);assert.equal(GRADE1_MEDIA.filter(m=>m.kind==='illustration').length,12);
+ for(const s of GRADE_1_STATIONS){assert.ok(grade1MediaBySrc(s.coverImage));for(const h of s.hotspots){assert.match(h.image,/^\/learning\/grade1\/media\/[a-z0-9-]+\.webp$/);assert.ok(existsSync('public'+h.image),h.id);const m=grade1MediaBySrc(h.image)!;assert.ok(m);assert.ok(h.mediaCredit);assert.ok(h.sources?.length);if(m.kind==='photo'){assert.match(m.sourceUrl,/^https:\/\/commons.wikimedia.org\/wiki\/File:/);assert.match(m.licenseUrl,/creativecommons.org/);assert.ok(m.author);}else{assert.match(m.author,/AI/);assert.match(m.changes,/không phải ảnh chụp/);}}const map=readFileSync('public'+s.journeyMap!.image,'utf8');assert.match(map,/không phải ảnh tư liệu/);}
+ const streams=GRADE_1_STATIONS.find(s=>s.id==='g1-station-3')!;for(const h of streams.hotspots)assert.equal(grade1MediaBySrc(h.image)!.kind,'illustration');assert.match(streams.hotspots[2].narrationVi,/không phải ảnh tư liệu/);
+});
+
+test('media revision discards bundled schematic overrides without mutating storage or losing custom photo credit',()=>{
+ const s=structuredClone(GRADE_1_STATIONS[0]);const stored={contentRevision:'3.0.0-grade1-source',coverImage:'/learning/grade1/g1-station-1-cover.svg',mapImage:'',hotspots:s.hotspots.map((h,i)=>({...h,image:`/learning/grade1/g1-station-1-point-${i+1}.svg`})),resources:[]};const before=JSON.stringify(stored);const updated=currentGrade1Content(s,stored);assert.equal(updated.hotspots[0].image,s.hotspots[0].image);assert.equal(updated.coverImage,s.coverImage);assert.equal(JSON.stringify(stored),before);
+ const custom={...stored,hotspots:[{...stored.hotspots[0],image:'https://school.example/photo.jpg',mediaCredit:'Ảnh giáo viên tự chụp'},...stored.hotspots.slice(1)]};const kept=currentGrade1Content(s,custom);assert.equal(kept.hotspots[0].image,'https://school.example/photo.jpg');assert.equal(kept.hotspots[0].mediaCredit,'Ảnh giáo viên tự chụp');
 });
 test('legacy scaffold cannot replace new knowledge; pure policy preserves stored payload and current edits',()=>{
  const s=structuredClone(GRADE_1_STATIONS[0]);const old={coverImage:'https://images.unsplash.com/old',mapImage:'',hotspots:[{...s.hotspots[0],titleVi:'1. Giới thiệu bài học: Quê hương em',narrationVi:'Ban biên soạn cập nhật'}],resources:[]};const before=JSON.stringify(old);const current=currentGrade1Content(s,old);assert.equal(current.hotspots.length,4);assert.equal(current.hotspots[0].narrationVi,s.hotspots[0].narrationVi);assert.equal(JSON.stringify(old),before);const edited={...current,hotspots:[{...current.hotspots[0],narrationVi:'Giáo viên đã chỉnh'},...current.hotspots.slice(1)]};assert.equal(currentGrade1Content(s,edited),edited);

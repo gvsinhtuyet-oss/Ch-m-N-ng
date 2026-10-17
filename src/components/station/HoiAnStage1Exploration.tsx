@@ -1,3 +1,4 @@
+import {LearningImage} from '../LearningImage';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
 import { useApp } from '../../contexts/AppContext';
@@ -232,7 +233,9 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 className="group absolute inset-0 z-0 h-full w-full cursor-zoom-in"
                 aria-label="Xem ảnh lớn"
               >
-                <img
+                <LearningImage
+                  key={hotspot.id + hotspot.image}
+                  honestFallback={station.grade === 2}
                   src={hotspot.image}
                   alt={hotspot.titleVi}
                   className={`h-full w-full ${station.grade === 1 ? 'object-contain' : 'object-cover'} transition duration-700 group-hover:scale-105`}
@@ -338,7 +341,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               </div>
             </div>
 
-            {station.grade === 1 && <div className="shrink-0 rounded-xl bg-orange-50 px-3 py-2 text-[11px] leading-relaxed text-slate-600"><LearningMediaCredit src={hotspot.image} credit={hotspot.mediaCredit}/></div>}
+            {(station.grade === 1 || !!hotspot.mediaCredit) && <div className="shrink-0 rounded-xl bg-orange-50 px-3 py-2 text-[11px] leading-relaxed text-slate-600"><LearningMediaCredit src={hotspot.image} credit={hotspot.mediaCredit}/></div>}
             {/* hotspot shortcut cards */}
             <div className="grid shrink-0 grid-cols-2 gap-2 sm:grid-cols-4">
               {station.hotspots.map((item, itemIndex) => {
@@ -369,7 +372,9 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                             : 'border-slate-300 bg-slate-100/95 text-slate-500 hover:border-orange-300 hover:bg-orange-50/70'
                     }`}
                   >
-                    <img
+                    <LearningImage
+                      key={item.id + item.image}
+                      honestFallback={station.grade === 2}
                       src={item.image}
                       alt=""
                       className={`h-12 w-14 shrink-0 rounded-xl object-cover ${!unlocked && !freeReview ? 'opacity-70' : ''}`}
@@ -594,7 +599,9 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
         <div className="fixed inset-0 z-[90] flex items-center justify-center bg-slate-950/85 p-3 backdrop-blur-md sm:p-6">
           <div className="grid h-[92dvh] max-h-[92dvh] min-h-0 w-full max-w-6xl overflow-hidden rounded-[2rem] border border-orange-200 bg-[#fffaf2] shadow-2xl lg:grid-cols-[1.55fr_.75fr]">
             <div className="relative min-h-0 bg-slate-950">
-              <img
+              <LearningImage
+                key={previewHotspot.id + previewHotspot.image}
+                honestFallback={station.grade === 2}
                 src={previewHotspot.image}
                 alt={previewHotspot.titleVi}
                 className={`h-full w-full ${station.grade === 1 ? 'object-contain' : 'object-cover'}`}
@@ -642,7 +649,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             </div>
 
             <div className="relative h-full min-h-0 overflow-y-auto overscroll-contain p-5 pb-8 sm:p-7 sm:pb-9">
-              {station.grade === 1 && <div className="mb-3 pr-10 text-xs leading-relaxed text-slate-600"><LearningMediaCredit src={previewHotspot.image} credit={previewHotspot.mediaCredit}/></div>}
+              {(station.grade === 1 || !!previewHotspot.mediaCredit) && <div className="mb-3 pr-10 text-xs leading-relaxed text-slate-600"><LearningMediaCredit src={previewHotspot.image} credit={previewHotspot.mediaCredit}/></div>}
               <button
                 type="button"
                 onClick={() => {

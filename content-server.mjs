@@ -254,12 +254,9 @@ const server = createServer(async (req,res) => {
         if (saved?.previousPublishedCatalog) return json(res,200,{...saved.previousPublishedCatalog,published:true});
         return json(res,200,{...bundledGddpCatalog,published:false,source:'bundled-reference'});
       } catch (error) {
-        // Public read-only demo must remain usable during Firestore quota outages.
+        // Public read-only demo must remain usable during Firestore outages or permission errors in preview.
         // Never cache this fallback as a published Admin catalog or write to Firestore.
-        if (error?.storageCode === 'RESOURCE_EXHAUSTED' || (error?.status === 503 && /Firestore.*hạn mức/i.test(error?.message || ''))) {
-          return json(res,200,{...bundledGddpCatalog,published:false,source:'bundled-quota-fallback',temporaryFallback:true});
-        }
-        throw error;
+        return json(res,200,{...bundledGddpCatalog,published:false,source:'bundled-fallback',temporaryFallback:true});
       }
     }
     if (pathname === '/api/admin/gddp/catalog' && req.method === 'GET') {

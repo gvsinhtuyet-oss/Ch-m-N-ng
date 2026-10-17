@@ -9,7 +9,7 @@ import { RotateCcw, HelpCircle, Gamepad2, Sparkles } from 'lucide-react';
 
 const MISSIONS = [
   { icon: '🧭', title: 'Quét la bàn', prompt: 'Tìm manh mối chính xác để la bàn sáng lên.' },
-  { icon: '🗝️', title: 'Mở rương bí mật', prompt: 'Chạm vào rương để lật mở đáp án, rồi chọn báu vật đúng.' },
+  { icon: '🗝️', title: 'Mở rương bí mật', prompt: 'Mỗi rương chứa một lựa chọn. Hãy chọn nội dung đúng.' },
   { icon: '🌉', title: 'Chọn lối vượt qua', prompt: 'Chọn con đường an toàn để tiến đến điểm tiếp theo.' },
   { icon: '🧩', title: 'Khôi phục bản đồ', prompt: 'Tìm mảnh ghép phù hợp để hoàn thiện dấu tích.' },
   { icon: '🏆', title: 'Thử thách cuối', prompt: 'Vượt qua câu hỏi cuối để nhận chìa khóa hành trình.' },
@@ -283,7 +283,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                           aria-pressed={isSelected}
                           className={`group flex min-h-[68px] w-full items-center gap-3 border-2 px-4 py-3 text-left font-semibold transition active:scale-[0.98] ${pathStyle ? 'rounded-full' : 'rounded-2xl'} ${isSelected && isAnswerLocked && answerFeedback === true ? 'border-emerald-400 bg-emerald-50 text-emerald-950 ring-4 ring-emerald-100 shadow-md' : isSelected && isAnswerLocked && answerFeedback === false ? 'border-rose-400 bg-rose-50 text-rose-950 ring-4 ring-rose-100 shadow-md' : isSelected ? 'border-amber-400 bg-amber-50 text-amber-950 ring-4 ring-amber-100 shadow-md' : 'border-slate-200 bg-white text-slate-700 hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50'}`}
                         >
-                          <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xl ${isSelected ? 'bg-amber-200' : isChest && !chestIsOpen ? 'bg-amber-100' : 'bg-slate-100 group-hover:bg-sky-100'}`}>
+                          <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xl ${isSelected ? 'bg-amber-200' : isChest ? 'bg-amber-100' : 'bg-slate-100 group-hover:bg-sky-100'}`}>
                             {isChest ? '🎁' : pathStyle ? '👣' : OPTION_ICONS[optionIndex % OPTION_ICONS.length]}
                           </span>
                           <span className="flex-1 text-sm leading-relaxed">

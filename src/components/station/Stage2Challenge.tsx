@@ -262,7 +262,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
             </div>
           </div>
 
-          <div className="grid gap-5 p-5 sm:p-7 lg:grid-cols-[minmax(0,1fr)_250px]">
+          <div className="grid gap-5 p-5 sm:p-7">
             <div className="space-y-5">
               {!currentQ ? (
                 <div role="alert" className="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm font-semibold text-amber-950">
@@ -294,11 +294,9 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                             {isChest && !chestIsOpen ? '🎁' : pathStyle ? '👣' : OPTION_ICONS[optionIndex % OPTION_ICONS.length]}
                           </span>
                           <span className="flex-1 text-sm leading-relaxed">
-                            {isHidden ? 'Rương bí mật · chạm để mở' : option.textVi}
+                            {isHidden ? 'Rương bí mật' : option.textVi}
                           </span>
-                          <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border text-[11px] font-black ${isSelected ? 'border-amber-500 bg-amber-500 text-white' : 'border-slate-300 text-slate-400'}`}>
-                            {isSelected ? '✓' : String.fromCharCode(65 + optionIndex)}
-                          </span>
+                          {isSelected && <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-[11px] font-black text-white" aria-label="Đã chọn">✓</span>}
                         </button>
                       );
                     })}
@@ -320,21 +318,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               )}
             </div>
 
-            <aside className="flex flex-row items-center gap-3 rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50 to-orange-50 p-4 lg:flex-col lg:items-start">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white text-2xl shadow-sm">{mission.icon}</div>
-              <div className="min-w-0 flex-1">
-                <p className="text-[10px] font-black uppercase tracking-wide text-amber-800">Mục tiêu</p>
-                <p className="mt-1 text-xs font-semibold leading-relaxed text-slate-700">Chọn đúng manh mối để nhận một mảnh bản đồ. Trả lời sai, em chỉ cần làm lại nhiệm vụ đó.</p>
-              </div>
-              <div className="hidden w-full rounded-xl border border-amber-200 bg-white/80 px-3 py-2 text-center text-[11px] font-black text-amber-900 lg:block">
-                🗺️ {correctCount} / {questions.length} mảnh bản đồ
-              </div>
-            </aside>
           </div>
 
-          <div className="border-t border-slate-100 bg-slate-50/70 px-5 py-3 text-center text-xs font-bold text-slate-500 sm:px-7">
-            Chạm chọn đáp án một lần · hiệu ứng và âm thanh sẽ báo kết quả
-          </div>
         </section>
       ) : passed ? (
         <section className="rounded-[2rem] border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-amber-50 p-6 text-center shadow-xl shadow-emerald-950/5 sm:p-9">

@@ -238,7 +238,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   honestFallback={station.grade === 2}
                   src={hotspot.image}
                   alt={hotspot.titleVi}
-                  className={`h-full w-full ${station.grade === 1 ? 'object-contain' : 'object-cover'} transition duration-700 group-hover:scale-105`}
+                  className={`h-full w-full ${station.grade <= 2 ? 'object-contain' : 'object-cover'} transition duration-700 group-hover:scale-105`}
                   onError={event => {
                     const img = event.currentTarget;
                     if (img.dataset.fallback === 'default') return;
@@ -604,7 +604,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 honestFallback={station.grade === 2}
                 src={previewHotspot.image}
                 alt={previewHotspot.titleVi}
-                className={`h-full w-full ${station.grade === 1 ? 'object-contain' : 'object-cover'}`}
+                className={`h-full w-full ${station.grade <= 2 ? 'object-contain' : 'object-cover'}`}
                 onError={event => {
                   const img = event.currentTarget;
                   if (img.dataset.fallback === 'default') return;

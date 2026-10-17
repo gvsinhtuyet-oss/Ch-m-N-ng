@@ -68,8 +68,23 @@ test('recognizable old grade-2 topics cannot override current lessons; matching 
   const snapshot=JSON.stringify(old);const updated=currentGrade2Content(s,old);
   assert.equal(updated.hotspots,s.hotspots);assert.equal(updated.coverImage,s.coverImage);assert.equal(JSON.stringify(old),snapshot);
   const edited={...old,hotspots:s.hotspots.map((h,i)=>i===0?{...h,narrationVi:'Lời thuyết minh giáo viên đã chỉnh',image:'https://school.example/photo.jpg'}:h)};
-  assert.equal(currentGrade2Content(s,edited),edited);
+  assert.equal(currentGrade2Content(s,edited).hotspots[0].narrationVi,edited.hotspots[0].narrationVi);assert.equal(currentGrade2Content(s,edited).hotspots[0].image,edited.hotspots[0].image);
   const custom={...edited,contentRevision:s.version.version,hotspots:[...edited.hotspots,{...edited.hotspots[0],id:"teacher-added-point"}]};assert.equal(currentGrade2Content(s,custom),custom);
   assert.equal(currentGrade2Content({...s,grade:1},old),old);
  }}finally{globalThis.fetch=original;}
+});
+
+test('all grade-2 images and five maps are packaged, traceable to supplied sources and load without external image links',async()=>{
+ const {existsSync,readFileSync}=await import('node:fs');const {createHash}=await import('node:crypto');const {GRADE2_MEDIA,GRADE2_MEDIA_REVISION}=await import('./src/data/grade2Media');const {getStationsForGrade}=await import('./src/data/allStations');
+ assert.equal(GRADE2_MEDIA.length,25);assert.equal(new Set(GRADE2_MEDIA.map(m=>m.src)).size,25);
+ for(const s of getStationsForGrade(2)){
+  assert.equal(s.version.version,GRADE2_MEDIA_REVISION);assert.match(s.coverImage,/^\/learning\/grade2\/media\//);
+  assert.match(s.journeyMap!.image!,/^\/learning\/grade2\/.*-map\.svg$/);assert.ok(existsSync('public'+s.journeyMap!.image));assert.match(readFileSync('public'+s.journeyMap!.image,'utf8'),/Không phải bản đồ địa lý/);
+  for(const h of s.hotspots){const m=GRADE2_MEDIA.find(m=>m.id===h.id)!;assert.ok(m);assert.equal(h.image,m.src);const bytes=readFileSync('public'+h.image);assert.equal(createHash('sha256').update(bytes).digest('hex'),m.assetSha256);assert.ok(m.figure&&m.document&&m.sourceSha256);assert.equal(h.mediaRights,'UNKNOWN');assert.ok(h.mediaCredit);}
+ }
+});
+
+test('previous built-in links upgrade in memory while retaining teacher media and original payload',async()=>{
+ const {currentGrade2Content}=await import('./src/services/Grade2ContentPolicy');const {LEGACY_GRADE2_MEDIA_URLS}=await import('./src/data/grade2Media');
+ const s=GRADE_2_STATIONS[0];const old={contentRevision:'3.0.0-current-book',coverImage:LEGACY_GRADE2_MEDIA_URLS.find(Boolean)!,mapImage:'',resources:[],hotspots:s.hotspots.map(h=>({...h,image:LEGACY_GRADE2_MEDIA_URLS.find(Boolean)!}))};const before=JSON.stringify(old);const upgraded=currentGrade2Content(s,old);assert.equal(upgraded.hotspots[0].image,s.hotspots[0].image);assert.equal(upgraded.mapImage,s.journeyMap?.image);assert.equal(JSON.stringify(old),before);
 });

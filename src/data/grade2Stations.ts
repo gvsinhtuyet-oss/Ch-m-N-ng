@@ -1,3 +1,4 @@
+import {attachGrade2Media} from './grade2Media';
 import { Station } from '../types';
 import { CANONICAL_HOI_AN_STATION } from './canonicalHoiAn';
 
@@ -815,3 +816,6 @@ export const GRADE_2_STATIONS: Station[] = [
   G2_STATION_2,
   G2_STATION_1,
 ];
+
+// Keep canonical imports and the published station list on the same media revision.
+GRADE_2_STATIONS.forEach(attachGrade2Media);

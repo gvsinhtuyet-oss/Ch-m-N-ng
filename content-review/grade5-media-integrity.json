@@ -1,0 +1,20 @@
+[
+  {
+    "id": "thu-bon-2018",
+    "src": "/learning/grade5/photos/thu-bon-2018.webp",
+    "sha256": "b2fd20e013182a08fbf666eea58ec30c9620fd1dbbdbd0fcfdb3001102bbb80c",
+    "bytes": 92872,
+    "width": 1280,
+    "height": 950,
+    "downloadSha256": "6a185530a7dd012bb1cc24d368a8c322dd0f2310be0035bb3bae95eea6568514"
+  },
+  {
+    "id": "hai-van-2024",
+    "src": "/learning/grade5/photos/hai-van-2024.webp",
+    "sha256": "eac6745e84bb6ba1477450f8c9fe423a384a8f9adb207cfa47b26b108a3fcf34",
+    "bytes": 394986,
+    "width": 1280,
+    "height": 960,
+    "downloadSha256": "0051deb057c8a5fb090830863951098f50c482b94896d43f70f6556c3b9d592e"
+  }
+]

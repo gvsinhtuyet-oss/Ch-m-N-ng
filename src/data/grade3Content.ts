@@ -162,8 +162,8 @@ export const GRADE3_CONTENT = [
       },
       {
         "id": "dn3-dau-chan-hom-nay",
-        "title": "Tìm hiểu qua nơi lưu niệm",
-        "narration": "Nhà lưu niệm Huỳnh Thúc Kháng nằm tại xã Thạnh Bình, thành phố Đà Nẵng. Nơi lưu niệm và các tư liệu giúp chúng ta tìm hiểu nhân vật lịch sử. Khi đọc nhãn trưng bày, hãy ghi đúng tên người và thông tin của từng hiện vật. Nếu chưa rõ, em hỏi thầy cô hoặc người hướng dẫn thay vì đoán. Không chạm vào hiện vật khi chưa được phép.",
+        "title": "Tìm hiểu qua nơi lưu niệm và tư liệu",
+        "narration": "Nhà lưu niệm Huỳnh Thúc Kháng nằm tại xã Thạnh Bình, thành phố Đà Nẵng. Ngoài nơi lưu niệm, những tư liệu như tờ báo Tiếng Dân cũng giúp em tìm hiểu nhân vật. Ảnh trong bài là trang nhất số 1085 ngày 20 tháng 3 năm 1937, không phải số báo đầu tiên hay ảnh Nhà lưu niệm. Em đọc nhãn và hỏi người hướng dẫn, không đoán thêm chuyện từ một bức hình.",
         "fact": "Tư liệu, nhãn trưng bày và người hướng dẫn giúp em tìm hiểu lịch sử.",
         "q": "Điều nào giúp em tìm hiểu một hiện vật đúng hơn?",
         "answers": [
@@ -476,7 +476,8 @@ export const GRADE3_CONTENT = [
     "sources": [
       "https://ipvietnam.gov.vn/web/guest/phat-trien-chi-dan-ia-ly/-/asset_publisher/SGA9PgvmYtWI/content/bao-ho-chi-dan-ia-ly-nam-o-cho-san-pham-nuoc-mam",
       "https://cttdt.danangportal.gov.vn/vi/web/dng/w/ve-lang-co-nam-o-nghe-ke-chuyen-nghe-lam-nuoc-mam-truyen-thong-1",
-      "https://dbc.danang.gov.vn/tin-tuc/ke-thua-phat-huy-va-chuan-hoa-cong-nghe-truyen-thong-gan-voi-da-dang-hoa-san-pham-nuoc-mam-nam-o/"
+      "https://dbc.danang.gov.vn/tin-tuc/ke-thua-phat-huy-va-chuan-hoa-cong-nghe-truyen-thong-gan-voi-da-dang-hoa-san-pham-nuoc-mam-nam-o/",
+      "https://vnanet.vn/vi/anh/anh-thoi-su-trong-nuoc-1014/dac-sac-nuoc-mam-huong-lang-co-nam-o-da-nang-6744898.html"
     ],
     "notes": [
       "Chỉ dạy quy trình khái quát; không tổ chức học sinh tự ủ cá, nếm chượp hay đưa ra công dụng chữa bệnh."
@@ -490,7 +491,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-5-point-1",
         "title": "Thuyền thúng – phương tiện sông biển",
-        "narration": "Thuyền thúng còn được gọi là thúng chai, có dạng tròn, lòng lõm, thường được đan bằng tre và xử lí chống thấm. Đây là phương tiện gắn với đời sống sông biển. Bài “Dân chài Thọ Quang sắt son với biển” trên cổng thông tin thành phố ghi nhận người dân Thọ Quang gắn bó với nghề đan thúng bên cạnh đánh bắt hải sản và làm mắm. Đây là ghi nhận trong tư liệu, không phải khảo sát số hộ còn làm nghề hiện nay. Tên địa danh trong tư liệu nghề được dùng để tìm hiểu văn hóa, không thay cho bản đồ hành chính hiện hành.",
+        "narration": "Thuyền thúng còn được gọi là thúng chai, có dạng tròn, lòng lõm, gắn với đời sống sông biển. Nghề đan thúng tại Thọ Quang, Sơn Trà được ghi nhận qua tư liệu về gia đình ông Phan Liêm. Ảnh bờ biển trong bài cho thấy sản phẩm; bộ ảnh tại nguồn cho thấy người làm nghề. Các tư liệu có năm chụp riêng, không dùng để khẳng định số hộ còn làm nghề hôm nay.",
         "fact": "Thuyền thúng là phương tiện dạng tròn gắn với đời sống sông biển.",
         "q": "Đặc điểm nào giúp nhận ra thuyền thúng?",
         "answers": [
@@ -502,7 +503,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-5-point-2",
         "title": "Vật liệu và bàn tay người thợ",
-        "narration": "Tre là vật liệu quan trọng để tạo các nan đan. Người thợ chọn vật liệu, chuẩn bị nan và làm việc cẩn thận để sản phẩm bền, phù hợp công dụng. Bề mặt thúng cần được xử lí chống thấm; dầu rái là vật liệu truyền thống được tư liệu nghề thúng chai xứ Quảng nhắc đến. Chi tiết trong tài liệu Hội An là kiến thức tham khảo chung, không khẳng định mọi thợ Sơn Trà làm hoàn toàn giống nhau.",
+        "narration": "Tre được chẻ và chuốt thành nan để đan thân thúng. Khảo sát tại Thọ Quang và Hòa Minh công bố năm 2018 ghi lại việc chuẩn bị nan, đan và xử lí chống thấm. Dầu rái là một vật liệu truyền thống được nhắc đến. Chi tiết nghề ở Hội An chỉ là tham khảo chung; bài này đã có thêm tư liệu tại Đà Nẵng. Em quan sát ảnh cùng thầy cô, không tự lấy dao chẻ tre.",
         "fact": "Nan tre tạo thân thúng; khâu xử lí chống thấm giúp thúng dùng trên nước.",
         "q": "Nan tre được dùng chủ yếu để làm gì?",
         "answers": [
@@ -514,7 +515,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-5-point-3",
         "title": "Các bước khái quát",
-        "narration": "Có thể tìm hiểu quá trình làm thúng ở mức khái quát: chuẩn bị nan, đan thân và tạo dáng, làm vành, xử lí chống thấm và kiểm tra. Người thợ cần kĩ năng ở từng công đoạn. Sơ đồ học tập chỉ giúp em hiểu trình tự chung, không phải công thức chế tạo hay quy trình riêng đã được khảo sát tại từng hộ ở Sơn Trà. Học sinh không tự dùng dao, lửa hoặc chất trét để làm thử.",
+        "narration": "Tư liệu khảo sát Đà Nẵng mô tả các công đoạn: chuẩn bị nan, đan, tạo hình, làm vành và nối thân, xử lí chống thấm, hoàn thiện khung bên trong. Bộ ảnh gia đình ông Phan Liêm tại Sơn Trà giúp em đối chiếu một số bước. Sơ đồ là bản tóm tắt để học, không phải quy trình riêng của mọi hộ hay hướng dẫn để em tự chế tạo thúng.",
         "fact": "Nghề làm thúng cần nhiều bước, kĩ năng và sự cẩn thận.",
         "q": "Sau khi đan thân và tạo dáng, cần làm gì tiếp theo trong sơ đồ?",
         "answers": [
@@ -599,10 +600,13 @@ export const GRADE3_CONTENT = [
       "https://danang.gov.vn/vi/web/dng/w/dan-chai-tho-quang-sat-son-voi-bien-i",
       "https://camle.danang.gov.vn/vi/web/dng-old/w/d%C3%A2n-ch%C3%A0i-th%E1%BB%8D-quang-s%E1%BA%AFt-son-v%E1%BB%9Bi-bi%E1%BB%83n",
       "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/ve-nguon-goc-ra-doi-cua-thung-chai-1173.html",
-      "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/nghe-thung-chai-o-cam-kim-hoi-an-599.html"
+      "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/nghe-thung-chai-o-cam-kim-hoi-an-599.html",
+      "https://www.vannghedanang.org.vn/nghe-dan-thung-chai-o-da-nang-nguyen-ngoc-giao-2991.html",
+      "https://giadinh.suckhoedoisong.vn/chuyen-anh-thuyen-thung-1722012112911241121.htm",
+      "https://thanhnien.vn/nghe-xua-con-mot-chut-nay-noi-nenh-nghe-dan-thung-chai-185230225014320344.htm"
     ],
     "notes": [
-      "Nguồn Sơn Trà xác nhận địa bàn nghề; chi tiết vật liệu, công đoạn dùng tư liệu thúng chai Hội An làm kiến thức chung, đã ghi rõ phạm vi. Đã bổ sung ảnh thúng ở bờ biển Thọ Quang (2024), ghi đúng địa điểm và thời gian. Chờ tư liệu chuyên đề Sơn Trà để bổ sung quy trình riêng, lịch sử hộ nghề và ảnh xưởng đan có quyền sử dụng. Ảnh bãi biển không chứng minh quy trình tại Thọ Quang."
+      "Đã có khảo sát tại Đà Nẵng cuối năm 2017, công bố năm 2018, và bộ ảnh tại gia đình ông Phan Liêm năm 2012. Đây là tư liệu theo thời điểm, chưa xác nhận hiện trạng hộ nghề năm 2026. Ảnh báo chí được dẫn đến trang nguồn, chưa được đóng gói khi chưa có quyền tái sử dụng rõ ràng. Nguồn Hội An chỉ tham khảo, không thay ảnh Sơn Trà."
     ]
   }
 ];

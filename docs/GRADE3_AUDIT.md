@@ -1,5 +1,12 @@
 # Rà soát học liệu khối 3
 
+Cập nhật mới nhất 18/10/2026: 13 tệp ảnh/chân dung tư liệu cục bộ và 7 bộ ảnh dẫn tới trang nguồn; đủ lựa chọn ảnh theo nội dung cho 20 điểm học. Bảy mục dẫn nguồn chưa có quyền tái bản rõ ràng nên chưa phải bộ ảnh offline hoàn chỉnh. Danh mục hiện hành: [GRADE3_PHOTO_SELECTION.md](./GRADE3_PHOTO_SELECTION.md).
+
+Đã thay chân dung Phan Châu Trinh bằng bản 900 × 1212 px, thêm bản chân dung Trần Quý Cáp và ảnh báo Tiếng Dân số 1085. Đã bổ sung nghiên cứu Nguyễn Ngọc Giao, công bố 15/03/2018, khảo sát cuối năm 2017 tại Thọ Quang và Hòa Minh; cùng bộ ảnh nghề tại Sơn Trà công bố 01/12/2012. Không còn chỉ dựa vào tư liệu Hội An để mô tả các công đoạn khái quát tại Đà Nẵng. Bài lịch sử vẫn IN_REVIEW, chờ kế hoạch tích hợp mới.
+
+Các ghi nhận dưới đây lưu lại đợt rà soát ban đầu trong cùng ngày; số lượng 11 ảnh và nhận định thiếu khảo sát chuyên đề đã được cập nhật bằng danh mục hiện hành ở trên.
+
+
 Ngày rà soát: 18/10/2026. Phạm vi: 5 trạm, 20 điểm học, 25 câu thử thách, 55 trang trình chiếu theo chủ đề, check-in và hộ chiếu. Đây là biên bản rà soát nội dung và kiểm thử phần mềm, không phải quyết định phê duyệt chương trình hay kế hoạch tích hợp năm học mới.
 
 ## Tài liệu đã đối chiếu
@@ -83,3 +90,11 @@ Kiểm tra bổ sung cho bản ảnh: 28 kiểm tra nội dung/trình chiếu li
 Ảnh Mỹ Khê đã loại bản có bể bơi chiếm tiền cảnh và bản có geotag sát Thọ Quang dù tên file ghi Mỹ Khê. Bản chọn cuối của Dragfyre chụp tháng 5/2009 thể hiện bờ cát, sóng và không gian biển; chú thích không khẳng định hiện trạng đô thị năm 2026.
 
 Bản ảnh mới đã chạy đủ 10 hành trình học (5 máy tính, 5 điện thoại), 40 lượt điểm học, trả sai/làm lại, check-in, bản đồ/dấu và tiến độ sau tải lại. Nút trợ lý mở/đóng được ở cả hai kích thước và không còn che nút mở trạm. Không phát sinh ghi API hoặc lỗi JavaScript trong các luồng thử.
+
+
+## Kiểm chứng bản bổ sung nguồn ảnh
+
+- 31 kiểm tra liên quan đạt: tính toàn vẹn 13 tệp, 20 điểm có ảnh cục bộ hoặc bộ ảnh nguồn được chọn cụ thể, 7 liên kết hiển thị đúng tác giả/nguồn, không nhúng ảnh báo chí chưa có quyền, giữ nội dung giáo viên tự sửa và không lặp câu chặng 2.
+- TypeScript và build đạt. Kiểm tra 55 trang trình chiếu ở mỗi kích thước máy tính/điện thoại: 18 lượt hiển thị ảnh cục bộ (bìa và điểm học), 7 bộ ảnh nguồn; không tràn ngang, không lỗi JavaScript và không ghi API. Đây là kiểm tra hiển thị và liên kết, không phải chứng nhận trang báo ngoài sẽ luôn hoạt động hoặc đã có quyền tái bản.
+- Đã kiểm tra trực quan bản chân dung Phan Châu Trinh mới, bản chân dung Trần Quý Cáp và ảnh trang báo Tiếng Dân trước khi gắn vào nội dung.
+- Một số URL ảnh lẻ TTXVN chuyển hướng về trang chủ khi thử mở; vì vậy bộ ảnh Nam Ô dẫn đến bài ảnh VietTimes, không gắn các URL ảnh hỏng. VietTimes công bố yêu cầu đồng ý bằng văn bản khi đăng lại thông tin; các bộ ảnh này chỉ được dẫn tới trang gốc.

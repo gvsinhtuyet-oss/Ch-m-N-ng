@@ -1,4 +1,4 @@
-// Reviewed real photographs; provenance master: content-review/grade3-media-sources.json.
+// Reviewed real photographs and archival reproductions; provenance master: content-review/grade3-media-sources.json.
 export const GRADE3_MEDIA = [
   {
     "id": "my-khe",
@@ -108,17 +108,17 @@ export const GRADE3_MEDIA = [
   {
     "id": "phan-chau-trinh",
     "src": "/learning/grade3/photos/phan-chau-trinh.webp",
-    "filename": "Phan Châu Trinh.jpg",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Phan_Ch%C3%A2u_Trinh.jpg",
-    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Phan_Ch%C3%A2u_Trinh.jpg",
-    "author": "Không rõ người chụp; hồ sơ Commons dẫn Thư viện Lưu trữ Quốc gia Việt Nam",
+    "filename": "Phan Châu Trinh at the age of 37.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Phan_Ch%C3%A2u_Trinh_at_the_age_of_37.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/Phan_Ch%C3%A2u_Trinh_at_the_age_of_37.jpg",
+    "author": "Không rõ người chụp",
     "license": "PUBLIC_DOMAIN",
-    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Phan_Ch%C3%A2u_Trinh.jpg",
-    "date": "Không rõ ngày chụp",
-    "caption": "Chân dung Phan Châu Trinh. Bản tư liệu gốc chỉ 148 × 200 px; không phóng lớn để suy đoán chi tiết.",
-    "changes": "Chuyển WebP; giữ kích thước và bố cục gốc, không phục dựng bằng AI.",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Phan_Ch%C3%A2u_Trinh_at_the_age_of_37.jpg",
+    "date": "Khoảng năm 1910, theo hồ sơ Commons",
+    "caption": "Chân dung tư liệu Phan Châu Trinh, khoảng năm 1910. Giữ nguyên ảnh gốc; không tô màu hoặc phục dựng khuôn mặt bằng AI.",
+    "changes": "Thu nhỏ tối đa 1440 px, chuyển WebP; giữ nguyên bố cục, không tạo hoặc thêm chi tiết.",
     "reviewedOn": "2026-10-18",
-    "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a1/Phan_Ch%C3%A2u_Trinh.jpg"
+    "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/7/72/Phan_Ch%C3%A2u_Trinh_at_the_age_of_37.jpg"
   },
   {
     "id": "tho-quang-2024",
@@ -164,6 +164,36 @@ export const GRADE3_MEDIA = [
     "changes": "Thu nhỏ tối đa 1440 px, chuyển WebP; giữ nguyên bố cục, không tạo hoặc thêm chi tiết.",
     "reviewedOn": "2026-10-18",
     "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Guol_Co_Tu.png"
+  },
+  {
+    "id": "tran-quy-cap",
+    "src": "/learning/grade3/photos/tran-quy-cap.webp",
+    "filename": "Portrait of Trần Quý Cáp (陳季恰).jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_Tr%E1%BA%A7n_Qu%C3%BD_C%C3%A1p_%28%E9%99%B3%E5%AD%A3%E6%81%B0%29.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/2/22/Portrait_of_Tr%E1%BA%A7n_Qu%C3%BD_C%C3%A1p_%28%E9%99%B3%E5%AD%A3%E6%81%B0%29.jpg",
+    "author": "Không rõ tác giả",
+    "license": "PUBLIC_DOMAIN",
+    "licenseUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_Tr%E1%BA%A7n_Qu%C3%BD_C%C3%A1p_%28%E9%99%B3%E5%AD%A3%E6%81%B0%29.jpg",
+    "date": "Không rõ ngày tạo tác",
+    "caption": "Bản chân dung tư liệu Trần Quý Cáp, nguồn Cổng thông tin thành phố Đà Nẵng qua Wikimedia Commons; không phải ảnh chụp sự kiện Duy Tân. Bản gốc 263 × 350 px.",
+    "changes": "Thu nhỏ tối đa 1440 px, chuyển WebP; giữ nguyên bố cục, không tạo hoặc thêm chi tiết.",
+    "reviewedOn": "2026-10-18",
+    "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/2/22/Portrait_of_Tr%E1%BA%A7n_Qu%C3%BD_C%C3%A1p_%28%E9%99%B3%E5%AD%A3%E6%81%B0%29.jpg"
+  },
+  {
+    "id": "tieng-dan-1937",
+    "src": "/learning/grade3/photos/tieng-dan-1937.webp",
+    "filename": "Tiếng Dân front page Mar. 20 1937.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ti%E1%BA%BFng_D%C3%A2n_front_page_Mar._20_1937.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Ti%E1%BA%BFng_D%C3%A2n_front_page_Mar._20_1937.jpg",
+    "author": "Nhà in Tiếng Dân; ảnh chụp tư liệu: Inteyvat / Teyvatism",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "date": "Báo ngày 20/03/1937; ảnh chụp 30/09/2023",
+    "caption": "Ảnh trang nhất báo Tiếng Dân, số 1085, ngày 20/03/1937. Không phải số báo đầu tiên hay ảnh Nhà lưu niệm.",
+    "changes": "Thu nhỏ tối đa 1440 px, chuyển WebP; giữ nguyên bố cục, không tạo hoặc thêm chi tiết.",
+    "reviewedOn": "2026-10-18",
+    "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Ti%E1%BA%BFng_D%C3%A2n_front_page_Mar._20_1937.jpg/960px-Ti%E1%BA%BFng_D%C3%A2n_front_page_Mar._20_1937.jpg"
   }
 ] as const;
 export function grade3MediaBySrc(src:string){return GRADE3_MEDIA.find(m=>m.src===src);}
@@ -171,7 +201,7 @@ export function grade3Photo(id:string){const media=GRADE3_MEDIA.find(m=>m.id===i
 // Blank slots deliberately retain pedagogical diagrams: a context photograph cannot prove a process.
 export const GRADE3_POINT_PHOTOS:Record<string,(string|null)[]>={
  'g3-station-1':['my-khe','ban-than','thung-my-khe',null],
- 'g3-station-2':['huynh-thuc-khang','phan-chau-trinh',null,null],
+ 'g3-station-2':['huynh-thuc-khang','phan-chau-trinh','tran-quy-cap','tieng-dan-1937'],
  'g3-station-3':['co-tu-bracelets','co-tu-costumes','guol-model',null],
  'g3-station-4':['nam-o',null,null,null],
  'g3-station-5':['tho-quang-2024',null,null,'tho-quang-day'],

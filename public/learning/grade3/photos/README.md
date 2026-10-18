@@ -1,6 +1,6 @@
 # Ảnh tư liệu khối 3
 
-Ảnh được giữ bố cục gốc, thu nhỏ và chuyển WebP. Không dùng AI để tái tạo chi tiết. Quyền của từng ảnh áp dụng riêng cho ảnh đó; không chuyển quyền sở hữu sang nhà trường hoặc tác giả ứng dụng.
+Ảnh và bản chân dung giữ bố cục gốc, chuyển WebP. Không phục dựng bằng AI. Quyền áp dụng riêng cho từng tệp.
 
 ## my-khe
 
@@ -88,15 +88,15 @@ Thay đổi: Thu nhỏ tối đa 1440 px, chuyển WebP; giữ nguyên bố cụ
 
 ## phan-chau-trinh
 
-Chân dung Phan Châu Trinh. Bản tư liệu gốc chỉ 148 × 200 px; không phóng lớn để suy đoán chi tiết.
+Chân dung tư liệu Phan Châu Trinh, khoảng năm 1910. Giữ nguyên ảnh gốc; không tô màu hoặc phục dựng khuôn mặt bằng AI.
 
-Không rõ người chụp; hồ sơ Commons dẫn Thư viện Lưu trữ Quốc gia Việt Nam · Không rõ ngày chụp
+Không rõ người chụp · Khoảng năm 1910, theo hồ sơ Commons
 
-Nguồn: https://commons.wikimedia.org/wiki/File:Phan_Ch%C3%A2u_Trinh.jpg
+Nguồn: https://commons.wikimedia.org/wiki/File:Phan_Ch%C3%A2u_Trinh_at_the_age_of_37.jpg
 
-Quyền sử dụng: PUBLIC_DOMAIN — https://commons.wikimedia.org/wiki/File:Phan_Ch%C3%A2u_Trinh.jpg
+Quyền sử dụng: PUBLIC_DOMAIN — https://commons.wikimedia.org/wiki/File:Phan_Ch%C3%A2u_Trinh_at_the_age_of_37.jpg
 
-Thay đổi: Chuyển WebP; giữ kích thước và bố cục gốc, không phục dựng bằng AI.
+Thay đổi: Thu nhỏ tối đa 1440 px, chuyển WebP; giữ nguyên bố cục, không tạo hoặc thêm chi tiết.
 
 ## tho-quang-2024
 
@@ -131,6 +131,30 @@ Binh Giang · 2007-10-28
 Nguồn: https://commons.wikimedia.org/wiki/File:Guol_Co_Tu.png
 
 Quyền sử dụng: PUBLIC_DOMAIN — https://commons.wikimedia.org/wiki/Commons:Licensing#Public_domain
+
+Thay đổi: Thu nhỏ tối đa 1440 px, chuyển WebP; giữ nguyên bố cục, không tạo hoặc thêm chi tiết.
+
+## tran-quy-cap
+
+Bản chân dung tư liệu Trần Quý Cáp, nguồn Cổng thông tin thành phố Đà Nẵng qua Wikimedia Commons; không phải ảnh chụp sự kiện Duy Tân. Bản gốc 263 × 350 px.
+
+Không rõ tác giả · Không rõ ngày tạo tác
+
+Nguồn: https://commons.wikimedia.org/wiki/File:Portrait_of_Tr%E1%BA%A7n_Qu%C3%BD_C%C3%A1p_%28%E9%99%B3%E5%AD%A3%E6%81%B0%29.jpg
+
+Quyền sử dụng: PUBLIC_DOMAIN — https://commons.wikimedia.org/wiki/File:Portrait_of_Tr%E1%BA%A7n_Qu%C3%BD_C%C3%A1p_%28%E9%99%B3%E5%AD%A3%E6%81%B0%29.jpg
+
+Thay đổi: Thu nhỏ tối đa 1440 px, chuyển WebP; giữ nguyên bố cục, không tạo hoặc thêm chi tiết.
+
+## tieng-dan-1937
+
+Ảnh trang nhất báo Tiếng Dân, số 1085, ngày 20/03/1937. Không phải số báo đầu tiên hay ảnh Nhà lưu niệm.
+
+Nhà in Tiếng Dân; ảnh chụp tư liệu: Inteyvat / Teyvatism · Báo ngày 20/03/1937; ảnh chụp 30/09/2023
+
+Nguồn: https://commons.wikimedia.org/wiki/File:Ti%E1%BA%BFng_D%C3%A2n_front_page_Mar._20_1937.jpg
+
+Quyền sử dụng: CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0/
 
 Thay đổi: Thu nhỏ tối đa 1440 px, chuyển WebP; giữ nguyên bố cục, không tạo hoặc thêm chi tiết.
 

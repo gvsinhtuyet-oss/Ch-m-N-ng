@@ -1,8 +1,13 @@
 import {test} from 'node:test';
+import React from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
+import {LearningMediaCredit} from './src/components/LearningMediaCredit';
+import {GRADE3_MEDIA_PREVIOUS_NARRATIONS} from './src/data/grade3MediaPreviousNarrations';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {GRADE3_MEDIA,grade3MediaBySrc} from './src/data/grade3Media';
+import {GRADE3_PHOTO_REFERENCES,grade3PhotoReferenceForSrc} from './src/data/grade3PhotoReferences';
 import {GRADE3_PREVIOUS_NARRATIONS} from './src/data/grade3PreviousNarrations';
 import {GRADE_3_STATIONS,GRADE3_CONTENT_REVISION} from './src/data/grade3Stations';
 import {GRADE3_TOPIC_DECKS} from './src/data/teacher/grade3TopicDecks';
@@ -24,16 +29,16 @@ test('reviewed photos are packaged locally, attributed and integrity checked; di
  const manifest=JSON.parse(readFileSync('content-review/grade3-media-sources.json','utf8'));
  assert.deepEqual(JSON.parse(JSON.stringify(GRADE3_MEDIA)),manifest);
  const integrity=JSON.parse(readFileSync('content-review/grade3-media-integrity.json','utf8'));
- assert.equal(manifest.length,11);assert.equal(integrity.length,11);
+ assert.equal(manifest.length,13);assert.equal(integrity.length,13);
  const paths=GRADE_3_STATIONS.flatMap(s=>[s.coverImage,s.journeyMap!.image!,...s.hotspots.map(h=>h.image)]);
  for(const p of paths){assert.ok(existsSync('public'+p));const photo=grade3MediaBySrc(p);if(photo){assert.ok(photo.caption&&photo.author&&photo.sourceUrl&&photo.licenseUrl);assert.match(p,/^\/learning\/grade3\/photos\/[a-z0-9-]+\.webp$/);}else{const xml=readFileSync('public'+p,'utf8');assert.match(xml,/không phải ảnh tư liệu/);assert.doesNotMatch(xml,/<script|<image|foreignObject|onload|href=/);}}
  for(const media of GRADE3_MEDIA){const data=readFileSync('public'+media.src);const record=integrity.find((i:{id:string})=>i.id===media.id);assert.ok(record);assert.equal(createHash('sha256').update(data).digest('hex'),record.sha256);assert.equal(data.length,record.bytes);assert.equal(data.subarray(8,12).toString(),'WEBP');assert.ok(paths.includes(media.src));}
- assert.equal(GRADE_3_STATIONS.flatMap(s=>s.hotspots).filter(h=>grade3MediaBySrc(h.image)).length,11);
+ assert.equal(GRADE_3_STATIONS.flatMap(s=>s.hotspots).filter(h=>grade3MediaBySrc(h.image)).length,13);
 });
 test('source conflicts and scope limitations remain visible; no invented mapping or portrait',()=>{
  const history=GRADE_3_STATIONS[1].hotspots.map(h=>h.narrationVi).join(' ');assert.match(history,/Tiếng Dân/);assert.match(history,/Trần Quý Cáp/);assert.doesNotMatch(history,/Phan Bội Châu/);
- const craft=GRADE_3_STATIONS[4].hotspots.map(h=>h.narrationVi).join(' ');assert.match(craft,/Hội An.*tham khảo chung/);assert.match(craft,/không phải.*quy trình riêng/);
- assert.match(GRADE3_TOPIC_DECKS[1].reviewNotes.join(' '),/Hoàng Diệu/);assert.match(GRADE3_TOPIC_DECKS[4].reviewNotes.join(' '),/Chờ tư liệu chuyên đề Sơn Trà/);
+ const craft=GRADE_3_STATIONS[4].hotspots.map(h=>h.narrationVi).join(' ');assert.match(craft,/Hội An.*tham khảo chung/);assert.match(craft,/không phải quy trình riêng/);
+ assert.match(GRADE3_TOPIC_DECKS[1].reviewNotes.join(' '),/Hoàng Diệu/);assert.match(GRADE3_TOPIC_DECKS[4].reviewNotes.join(' '),/khảo sát.*2017.*2018/);
  for(const d of GRADE3_TOPIC_DECKS){assert.equal(d.mappingReview?.currentYearConfirmed,false);assert.equal(d.sourceRecord.week,'Chưa gắn kế hoạch');assert.equal(getGddpLessonDeck(d.sourceRecord),null);}
 });
 test('55 reusable slides have independent teacher answers, notes and accurate grade context',()=>{
@@ -71,6 +76,19 @@ test('photo revision upgrades only exact built-in assets and narration; teacher 
 });
 test('local examples and photo scope cannot silently become unrelated places or approved curriculum',()=>{
  const community=GRADE_3_STATIONS[2];assert.match(community.hotspots[1].narrationVi,/bên phải.*Cơ Tu.*Quảng Nam/);assert.match(community.hotspots[1].narrationVi,/bên trái.*Ê Đê.*Đắk Lắk/);assert.match(community.hotspots[2].narrationVi,/Tà Lang – Giàn Bí/);assert.match(grade3MediaBySrc(community.hotspots[2].image)!.caption,/mô hình.*Hà Nội.*Không phải/);
- const craft=GRADE_3_STATIONS[4];assert.match(grade3MediaBySrc(craft.coverImage)!.caption,/Thọ Quang.*2024.*không phải ảnh công đoạn/);assert.match(craft.hotspots[0].narrationVi,/không phải khảo sát số hộ/);assert.match(grade3MediaBySrc(GRADE_3_STATIONS[3].coverImage)!.caption,/không phải ảnh cơ sở sản xuất/);
+ const craft=GRADE_3_STATIONS[4];assert.match(grade3MediaBySrc(craft.coverImage)!.caption,/Thọ Quang.*2024.*không phải ảnh công đoạn/);assert.match(craft.hotspots[0].narrationVi,/không dùng để khẳng định số hộ/);assert.match(grade3MediaBySrc(GRADE_3_STATIONS[3].coverImage)!.caption,/không phải ảnh cơ sở sản xuất/);
  for(const deck of GRADE3_TOPIC_DECKS)for(const slide of deck.slides)for(const image of slide.images||[]){const media=grade3MediaBySrc(image.src);if(media)assert.equal(image.caption,media.caption);}
+});
+
+test('all twenty points have a licensed local visual or a precisely selected source photo set without auto-embedding restricted photos',()=>{
+ assert.equal(GRADE3_PHOTO_REFERENCES.length,7);
+ for(const station of GRADE_3_STATIONS)for(const h of station.hotspots){const media=grade3MediaBySrc(h.image),reference=grade3PhotoReferenceForSrc(h.image);assert.ok(media||reference,h.id);if(reference){assert.equal(reference.hotspotId,h.id);assert.equal(reference.stationId,station.id);assert.equal(reference.rights,'LINK_ONLY_PENDING_PERMISSION');assert.match(reference.sourceUrl,/^https:\/\//);assert.ok(reference.selection&&reference.credit&&reference.date);}}
+ const sources=GRADE_3_STATIONS[4].hotspots.flatMap(h=>h.sources||[]).join(' ');assert.match(sources,/vannghedanang/);assert.match(sources,/suckhoedoisong/);
+});
+
+test('all seven selected photo sets render a source link, attribution and no restricted embedded image',()=>{
+ for(const reference of GRADE3_PHOTO_REFERENCES){const html=renderToStaticMarkup(React.createElement(LearningMediaCredit,{src:reference.localSrc,credit:'Sơ đồ học tập'}));assert.ok(html.includes(reference.sourceUrl));assert.ok(html.includes(reference.credit));assert.ok(html.includes(reference.publisher));assert.match(html,/noopener noreferrer/);assert.doesNotMatch(html,/<img|<iframe/);}
+});
+test('3.1.0 media compatibility preserves teacher edits while upgrading exact old scholarly narration',()=>{
+ const station=GRADE_3_STATIONS[4];const content={contentRevision:'3.1.0-grade3-media',coverImage:station.coverImage,mapImage:station.journeyMap!.image!,resources:[],hotspots:station.hotspots.map(h=>({...h,narrationVi:GRADE3_MEDIA_PREVIOUS_NARRATIONS[h.id]||h.narrationVi}))};const before=JSON.stringify(content);const updated=currentGrade3Content(station,content);assert.equal(updated.hotspots[1].narrationVi,station.hotspots[1].narrationVi);assert.equal(JSON.stringify(content),before);const custom={...content,hotspots:content.hotspots.map(h=>({...h,narrationVi:'Giáo viên đã duyệt riêng',image:'https://school.example/photo.webp'}))};const kept=currentGrade3Content(station,custom);assert.equal(kept.hotspots[1].narrationVi,'Giáo viên đã duyệt riêng');assert.equal(kept.hotspots[1].image,'https://school.example/photo.webp');
 });

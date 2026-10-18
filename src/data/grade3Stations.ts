@@ -1,14 +1,15 @@
 import type {Station,ExplorationHotspot,ChallengeQuestion} from '../types';
 import {OFFICIAL_25_CATALOG} from './curriculumCatalog';
+import {grade3PhotoReferenceForSrc} from './grade3PhotoReferences';
 import {GRADE3_CONTENT} from './grade3Content';
 import {GRADE3_POINT_PHOTOS,GRADE3_COVER_PHOTOS,grade3Photo} from './grade3Media';
-export const GRADE3_CONTENT_REVISION='3.1.0-grade3-media';
+export const GRADE3_CONTENT_REVISION='3.1.1-grade3-photo-sources';
 const source='Đề cương dự thảo GDĐP TP Đà Nẵng – pl 1 de cuong chi tiet.docx, phần lớp 3, trang 16–17; bộ nội dung tham khảo, chờ kế hoạch tích hợp mới';
 function choices(answers:string[],offset:number){const options=answers.map((textVi,i)=>({id:'opt-'+(i+1),textVi,isCorrect:i===0}));return [...options.slice(offset),...options.slice(0,offset)];}
 export const GRADE_3_STATIONS:Station[]=GRADE3_CONTENT.map(lesson=>{
  const cat=OFFICIAL_25_CATALOG.find(c=>c.id===lesson.id)!;
  const asset=(name:string)=>`/learning/grade3/${lesson.id}-${name}.svg`;
- const hotspots:ExplorationHotspot[]=lesson.points.map((p,i)=>{const photoId=GRADE3_POINT_PHOTOS[lesson.id]?.[i];const photo=photoId?grade3Photo(photoId):undefined;return ({id:p.id,stationId:lesson.id,titleVi:`${i+1}. ${p.title}`,subtitleVi:'Quan sát, nghe và chia sẻ',image:photo?.src||asset(`point-${i+1}`),narrationVi:p.narration,keyFactVi:p.fact,interaction:{id:p.id+'-interaction',type:'single-choice',questionVi:p.q,options:choices(p.answers,i%3),explanationVi:p.fact},sources:[source,...lesson.sources],mediaRights:photo?'ALLOWED':'OWNED_BY_SCHOOL',mediaCredit:photo?photo.caption:'Sơ đồ minh họa được biên soạn trong app; không phải ảnh chụp tư liệu hoặc bản đồ địa lí.'});});
+ const hotspots:ExplorationHotspot[]=lesson.points.map((p,i)=>{const photoId=GRADE3_POINT_PHOTOS[lesson.id]?.[i];const photo=photoId?grade3Photo(photoId):undefined;return ({id:p.id,stationId:lesson.id,titleVi:`${i+1}. ${p.title}`,subtitleVi:'Quan sát, nghe và chia sẻ',image:photo?.src||asset(`point-${i+1}`),narrationVi:p.narration,keyFactVi:p.fact,interaction:{id:p.id+'-interaction',type:'single-choice',questionVi:p.q,options:choices(p.answers,i%3),explanationVi:p.fact},sources:[...new Set([source,...lesson.sources,...(grade3PhotoReferenceForSrc(asset(`point-${i+1}`))?[grade3PhotoReferenceForSrc(asset(`point-${i+1}`))!.sourceUrl]:[])])],mediaRights:photo?'ALLOWED':'OWNED_BY_SCHOOL',mediaCredit:photo?photo.caption:'Sơ đồ minh họa được biên soạn trong app; không phải ảnh chụp tư liệu hoặc bản đồ địa lí.'});});
  const questions:ChallengeQuestion[]=lesson.questions.map((q,i)=>({id:`${lesson.id}-challenge-${i+1}`,questionVi:q.text,options:choices(q.answers,i%3),hintVi:q.hint}));
  return {id:cat.id,number:cat.lessonNumber,grade:3,themeId:cat.themeId,themeNameVi:cat.themeNameVi,titleVi:cat.titleVi,titleEn:cat.titleEn,subtitleVi:lesson.subtitle,coverImage:grade3Photo(GRADE3_COVER_PHOTOS[lesson.id]).src,openingMessageVi:lesson.opening,totalPeriods:cat.periods,officialCurriculumReference:source+` – Chủ đề ${cat.lessonNumber}: ${cat.titleVi}`,isFullyVerified:false,
  pedagogyGoals:{knowGoalVi:cat.knowGoalVi,understandGoalVi:cat.understandGoalVi,behaviorGoalVi:cat.behaviorGoalVi},hotspots,

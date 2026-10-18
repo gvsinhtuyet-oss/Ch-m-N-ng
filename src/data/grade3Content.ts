@@ -113,7 +113,7 @@ export const GRADE3_CONTENT = [
     "badge": "Bạn nhỏ yêu biển",
     "sources": [
       "https://danangfantasticity.com/en/bien-my-khe",
-      "https://cttdt.danangportal.gov.vn/vi/web/dng/w/xa-tam-hai-1"
+      "https://danang.gov.vn/vi/web/dng/w/xa-tam-hai-1"
     ],
     "notes": [
       "Bảng tích hợp cũ viết Mỹ Khuê/Bàn Thàn; chuẩn hóa theo đề cương: Mỹ Khê/Bàn Than. Không gán tuần hay bài đọc mới."
@@ -163,7 +163,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "dn3-dau-chan-hom-nay",
         "title": "Tìm hiểu qua nơi lưu niệm",
-        "narration": "Đề cương cô cung cấp giới thiệu Nhà lưu niệm Huỳnh Thúc Kháng tại xã Thạnh Bình, thành phố Đà Nẵng. Nơi lưu niệm và các tư liệu giúp chúng ta tìm hiểu nhân vật lịch sử. Khi đọc nhãn trưng bày, hãy ghi đúng tên người và thông tin của từng hiện vật. Nếu chưa rõ, em hỏi thầy cô hoặc người hướng dẫn thay vì đoán. Không chạm vào hiện vật khi chưa được phép.",
+        "narration": "Nhà lưu niệm Huỳnh Thúc Kháng nằm tại xã Thạnh Bình, thành phố Đà Nẵng. Nơi lưu niệm và các tư liệu giúp chúng ta tìm hiểu nhân vật lịch sử. Khi đọc nhãn trưng bày, hãy ghi đúng tên người và thông tin của từng hiện vật. Nếu chưa rõ, em hỏi thầy cô hoặc người hướng dẫn thay vì đoán. Không chạm vào hiện vật khi chưa được phép.",
         "fact": "Tư liệu, nhãn trưng bày và người hướng dẫn giúp em tìm hiểu lịch sử.",
         "q": "Điều nào giúp em tìm hiểu một hiện vật đúng hơn?",
         "answers": [
@@ -233,7 +233,8 @@ export const GRADE3_CONTENT = [
     "badge": "Người học hỏi nhí",
     "sources": [
       "https://baotangdanang.vn/bao-tang-da-nang-to-chuc-chuoi-cac-hoat-dong-ky-niem-150-nam-ngay-sinh-cu-huynh-thuc-khang-01-10-1876-01-10-2026-1",
-      "https://baotangdanang.vn/chi-si-phan-chau-trinh-qua-cac-tu-lieu-hien-vat-luu-tru-tai-bao-tang-da-nang-1"
+      "https://baotangdanang.vn/chi-si-phan-chau-trinh-qua-cac-tu-lieu-hien-vat-luu-tru-tai-bao-tang-da-nang-1",
+      "https://baotangdanang.vn/cu-huynh-thuc-khang-va-chu-quoc-ngu"
     ],
     "notes": [
       "Bảng GDĐP lớp 3 ghi Hoàng Diệu – Phan Châu Trinh; đề cương ghi Huỳnh Thúc Kháng – Phan Châu Trinh. Chưa coi hai nội dung là thay thế tương đương. Không lặp nhận định thiếu chính xác của đề cương về Phan Bội Châu cùng lãnh đạo Duy Tân."
@@ -352,7 +353,8 @@ export const GRADE3_CONTENT = [
     ],
     "badge": "Người bạn đoàn kết",
     "sources": [
-      "https://danangfantasticity.com/vi/bao-tang-lich-su-va-van-hoa/bao-tang-da-nang-co-so-2"
+      "https://danangfantasticity.com/vi/bao-tang-lich-su-va-van-hoa/bao-tang-da-nang-co-so-2",
+      "https://tratan.danang.gov.vn/gioi-thieu/gioi-thieu-chung"
     ],
     "notes": [
       "Không yêu cầu học thuộc số dân tộc, tỉ lệ dân số hoặc gán một kiểu nhà, trang phục cho mọi cộng đồng."
@@ -472,7 +474,8 @@ export const GRADE3_CONTENT = [
     "badge": "Bạn nhỏ quý làng nghề",
     "sources": [
       "https://ipvietnam.gov.vn/web/guest/phat-trien-chi-dan-ia-ly/-/asset_publisher/SGA9PgvmYtWI/content/bao-ho-chi-dan-ia-ly-nam-o-cho-san-pham-nuoc-mam",
-      "https://cttdt.danangportal.gov.vn/vi/web/dng/w/ve-lang-co-nam-o-nghe-ke-chuyen-nghe-lam-nuoc-mam-truyen-thong-1"
+      "https://cttdt.danangportal.gov.vn/vi/web/dng/w/ve-lang-co-nam-o-nghe-ke-chuyen-nghe-lam-nuoc-mam-truyen-thong-1",
+      "https://dbc.danang.gov.vn/tin-tuc/ke-thua-phat-huy-va-chuan-hoa-cong-nghe-truyen-thong-gan-voi-da-dang-hoa-san-pham-nuoc-mam-nam-o/"
     ],
     "notes": [
       "Chỉ dạy quy trình khái quát; không tổ chức học sinh tự ủ cá, nếm chượp hay đưa ra công dụng chữa bệnh."
@@ -592,7 +595,7 @@ export const GRADE3_CONTENT = [
     "badge": "Người tìm hiểu nghề biển",
     "sources": [
       "https://sontra.danang.gov.vn/chitiettintuc.aspx?ID=503",
-      "https://danang.gov.vn/w/dan-chai-tho-quang-sat-son-voi-bien-i",
+      "https://danang.gov.vn/vi/web/dng/w/dan-chai-tho-quang-sat-son-voi-bien-i",
       "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/ve-nguon-goc-ra-doi-cua-thung-chai-1173.html",
       "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/nghe-thung-chai-o-cam-kim-hoi-an-599.html"
     ],

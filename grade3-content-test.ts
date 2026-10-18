@@ -37,3 +37,16 @@ test('built-in content, revision policy and topic presentations need zero networ
  try{for(const s of GRADE_3_STATIONS){assert.equal(contentService.get(s).hotspots.length,4);contentService.apply(s);}assert.equal(GRADE3_TOPIC_DECKS.flatMap(d=>d.slides).length,55);assert.equal(calls,0);}finally{globalThis.fetch=original;}
 });
 test('past history rewards and progress identifiers preserved',()=>{const s=GRADE_3_STATIONS[1];assert.deepEqual(s.hotspots.map(h=>h.id),['dn3-huynh-thuc-khang','dn3-phan-chau-trinh','dn3-phong-trao-duy-tan','dn3-dau-chan-hom-nay']);assert.deepEqual(s.rewards.map(r=>r.id),['rw-dn3-1','rw-dn3-2','rw-dn3-3']);assert.equal(s.stamp.id,'stamp-danh-nhan-lop3');assert.equal(s.journeyMap?.id,'map-g3-danh-nhan');});
+
+test('grade-3 review uses its own nature badge and retains primary evidence for all five topics',()=>{
+ assert.equal(GRADE_3_STATIONS[0].rewards[2].template,'nature_leaf');
+ assert.equal(GRADE_3_STATIONS[1].rewards[2].template,'guardian_star');
+ assert.ok(GRADE_3_STATIONS[1].hotspots[2].sources?.some(s=>s.includes('chu-quoc-ngu')));
+ assert.ok(GRADE_3_STATIONS[2].hotspots[0].sources?.some(s=>s.includes('tratan.danang.gov.vn')));
+ assert.ok(GRADE_3_STATIONS[3].hotspots[0].sources?.some(s=>s.includes('dbc.danang.gov.vn')));
+ assert.doesNotMatch(GRADE_3_STATIONS[1].hotspots[3].narrationVi,/Đề cương cô cung cấp/);
+});
+
+test('minor source review preserves previous reviewed teacher narration, media and resources without mutating the record',()=>{
+ const s=GRADE_3_STATIONS[1];const edited={contentRevision:'3.0.0-grade3-source',coverImage:'https://school.example/cover.jpg',mapImage:'https://school.example/map.svg',hotspots:s.hotspots.map((h,i)=>i?{...h}:{...h,narrationVi:'Lời thuyết minh giáo viên đã duyệt',image:'https://school.example/photo.jpg'}),resources:[]};const before=JSON.stringify(edited);const updated=currentGrade3Content(s,edited);assert.equal(updated.hotspots[0].narrationVi,edited.hotspots[0].narrationVi);assert.equal(updated.hotspots[0].image,edited.hotspots[0].image);assert.equal(updated.coverImage,edited.coverImage);assert.equal(updated.mapImage,edited.mapImage);assert.equal(JSON.stringify(edited),before);assert.equal(updated.contentRevision,GRADE3_CONTENT_REVISION);
+});

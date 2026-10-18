@@ -45,6 +45,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const [index, setIndex] = useState(0);
   const [narrationState, setNarrationState] = useState<NarrationState>('idle');
   const [narrationCompleted, setNarrationCompleted] = useState(false);
+  const [narrationMessage,setNarrationMessage]=useState('');
+  const narrationError=(reason:string)=>setNarrationMessage(reason==='muted'?'Âm thanh đang tắt. Em có thể bật âm thanh hoặc đọc lời thuyết minh.':reason==='voice-unavailable'?'Thiết bị chưa có giọng đọc phù hợp. Em hãy đọc lời thuyết minh hoặc nhờ thầy cô hỗ trợ.':'Chưa phát được thuyết minh. Em có thể thử lại hoặc đọc nội dung bên dưới.');
   const [selected, setSelected] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [correct, setCorrect] = useState(false);
@@ -82,6 +84,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   }, [hotspot.id, setAssistantHotspot]);
 
   useEffect(() => audioService.subscribeState(setNarrationState), []);
+  useEffect(()=>()=>audioService.stopNarration(),[]);
 
   useEffect(() => {
     backgroundMusic.setForegroundSource('station-vr360', showVr);
@@ -94,6 +97,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
     setCorrect(false);
     setLockMessage('');
     setNarrationCompleted(false);
+    setNarrationMessage('');
     audioService.stopNarration();
   }, [index]);
 
@@ -108,10 +112,12 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
         ? hotspot.narrationEn
         : hotspot.narrationVi;
     setNarrationCompleted(false);
+    setNarrationMessage('');
     audioService.speakNarration(
       text,
       language === 'en' ? 'en-US' : 'vi-VN',
-      () => setNarrationCompleted(true)
+      () => setNarrationCompleted(true),
+      narrationError
     );
   };
 
@@ -120,7 +126,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
       language === 'en' && previewHotspot.narrationEn
         ? previewHotspot.narrationEn
         : previewHotspot.narrationVi;
-    audioService.speakNarration(text, language === 'en' ? 'en-US' : 'vi-VN');
+    setNarrationMessage('');
+    audioService.speakNarration(text, language === 'en' ? 'en-US' : 'vi-VN',undefined,narrationError);
   };
 
   const choose = (id: string) => {
@@ -235,10 +242,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               >
                 <LearningImage
                   key={hotspot.id + hotspot.image}
-                  honestFallback={station.grade === 2}
+                  honestFallback={station.grade === 2 || station.grade === 5}
                   src={hotspot.image}
                   alt={hotspot.titleVi}
-                  className={`h-full w-full ${station.grade <= 4 ? 'object-contain' : 'object-cover'} transition duration-700 group-hover:scale-105`}
+                  className={`h-full w-full ${station.grade <= 5 ? 'object-contain' : 'object-cover'} transition duration-700 group-hover:scale-105`}
                   onError={event => {
                     const img = event.currentTarget;
                     if (img.dataset.fallback === 'default') return;
@@ -342,6 +349,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             </div>
 
             {(station.grade === 1 || !!hotspot.mediaCredit) && <div className="shrink-0 rounded-xl bg-orange-50 px-3 py-2 text-[11px] leading-relaxed text-slate-600"><LearningMediaCredit src={hotspot.image} credit={hotspot.mediaCredit}/></div>}
+            {narrationMessage&&<p role="status" className="rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-950">{narrationMessage}</p>}
             {/* hotspot shortcut cards */}
             <div className="grid shrink-0 grid-cols-2 gap-2 sm:grid-cols-4">
               {station.hotspots.map((item, itemIndex) => {
@@ -374,7 +382,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   >
                     <LearningImage
                       key={item.id + item.image}
-                      honestFallback={station.grade === 2}
+                      honestFallback={station.grade === 2 || station.grade === 5}
                       src={item.image}
                       alt=""
                       className={`h-12 w-14 shrink-0 rounded-xl object-cover ${!unlocked && !freeReview ? 'opacity-70' : ''}`}
@@ -601,10 +609,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             <div className="relative min-h-0 bg-slate-950">
               <LearningImage
                 key={previewHotspot.id + previewHotspot.image}
-                honestFallback={station.grade === 2}
+                honestFallback={station.grade === 2 || station.grade === 5}
                 src={previewHotspot.image}
                 alt={previewHotspot.titleVi}
-                className={`h-full w-full ${station.grade <= 4 ? 'object-contain' : 'object-cover'}`}
+                className={`h-full w-full ${station.grade <= 5 ? 'object-contain' : 'object-cover'}`}
                 onError={event => {
                   const img = event.currentTarget;
                   if (img.dataset.fallback === 'default') return;
@@ -695,6 +703,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 </div>
               )}
 
+              {narrationMessage&&<p role="status" className="mt-3 text-sm text-amber-950">{narrationMessage}</p>}
               <div className="sticky bottom-0 mt-5 bg-gradient-to-t from-[#fffaf2] via-[#fffaf2]/95 to-transparent pt-3">
                 <button
                   type="button"

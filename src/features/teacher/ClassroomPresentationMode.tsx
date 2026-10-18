@@ -41,7 +41,7 @@ export const ClassroomPresentationMode: React.FC<Props> = ({ station, onExit }) 
       setIsSpeaking(true);
       audioService.speakNarration(hotspot.narrationVi, 'vi-VN', () => {
         setIsSpeaking(false);
-      });
+      }, () => setIsSpeaking(false));
     }
   };
 

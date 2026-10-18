@@ -1,3 +1,4 @@
+import {grade5PointMedia} from './grade5Media';
 import {GRADE3_MEDIA} from './grade3Media';
 export const GRADE45_MEDIA = [
   {
@@ -177,12 +178,14 @@ const bindings:Record<string,Record<number,string>>={
 'g4-station-3':{1:'ma-chau'},
 'g4-station-5':{0:'ma-chau',3:'ma-chau'},
 'g5-station-1':{1:'hon-kem'},
-'g5-station-2':{2:'me-thu'},
-'g5-station-3':{0:'bana',1:'hai-van'},
+'g5-station-2':{3:'me-thu'},
+'g5-station-3':{0:'bana',2:'hai-van'},
 'g5-station-4':{0:'ngu-hanh'},
 'g5-station-5':{0:'sam'}
 };
 export const grade45PointMedia=(stationId:string,index:number)=>{
+ const reviewed=grade5PointMedia(stationId,index);
+ if(reviewed)return {...reviewed,credit:`${reviewed.caption} Tác giả: ${reviewed.author} · ${reviewed.license} · ${reviewed.changes}`};
  const sharedId=stationId==='g4-station-1'?({1:'nam-o',3:'my-khe'} as Record<number,string>)[index]:undefined;
  const shared=GRADE3_MEDIA.find(m=>m.id===sharedId);
  return shared?{...shared,credit:`${shared.caption} Tác giả: ${shared.author} · ${shared.license} · ${shared.changes}`} : GRADE45_MEDIA.find(m=>m.id===bindings[stationId]?.[index]);

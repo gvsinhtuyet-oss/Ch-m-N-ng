@@ -2,6 +2,7 @@
 import { backgroundMusic } from './BackgroundMusic';
 
 export type NarrationState = 'idle' | 'playing' | 'paused';
+export type NarrationError = 'muted' | 'unsupported' | 'voice-unavailable' | 'playback-failed';
 
 class AudioService {
   private audioCtx: AudioContext | null = null;
@@ -11,6 +12,8 @@ class AudioService {
   private currentUtterance: SpeechSynthesisUtterance | null = null;
   private stateChangeListeners: Set<(state: NarrationState) => void> = new Set();
   private currentState: NarrationState = 'idle';
+  private narrationGeneration = 0;
+  private clearPendingNarration: (() => void) | null = null;
 
   constructor() {
     const saved = localStorage.getItem('cham_danang_sound_enabled');
@@ -207,93 +210,54 @@ class AudioService {
     }
   }
 
-  // TTS Narration with browser SpeechSynthesis
-  public speakNarration(text: string, lang: 'vi-VN' | 'en-US' = 'vi-VN', onEnd?: () => void) {
-    if (!this.soundEnabled || typeof window === 'undefined' || !('speechSynthesis' in window) || !text.trim()) {
-      this.notifyState('idle');
-      if (onEnd) onEnd();
-      return;
-    }
-
-    const synth = window.speechSynthesis;
+  // Only a matching language voice may read the reviewed text. Failure is not completion.
+  public speakNarration(text: string, lang: 'vi-VN' | 'en-US' = 'vi-VN', onEnd?: () => void, onError?: (reason:NarrationError)=>void) {
     this.stopNarration();
-
-    const speakNow = () => {
-      try {
-        const utterance = new SpeechSynthesisUtterance(text.trim());
-        utterance.lang = lang;
-        utterance.rate = 0.92;
-        utterance.pitch = 1.03;
-        utterance.volume = this.effectsVolume;
-
-        const voices = synth.getVoices();
-        const langPrefix = lang.split('-')[0].toLowerCase();
-        const targetVoice =
-          voices.find(v => v.lang.toLowerCase() === lang.toLowerCase()) ||
-          voices.find(v => v.lang.toLowerCase().startsWith(langPrefix)) ||
-          voices.find(v => /vietnam|tiếng việt|viet/i.test(v.name));
-
-        if (targetVoice) utterance.voice = targetVoice;
-
-        utterance.onstart = () => {
-          backgroundMusic.setForegroundSource('narration', true);
-          this.notifyState('playing');
-        };
-
-        utterance.onpause = () => this.notifyState('paused');
-
-        utterance.onresume = () => {
-          backgroundMusic.setForegroundSource('narration', true);
-          this.notifyState('playing');
-        };
-
-        utterance.onend = () => {
-          this.currentUtterance = null;
-          backgroundMusic.setForegroundSource('narration', false);
-          this.notifyState('idle');
-          if (onEnd) onEnd();
-        };
-
-        utterance.onerror = (event) => {
-          console.warn('Speech synthesis error:', event.error);
-          this.currentUtterance = null;
-          backgroundMusic.setForegroundSource('narration', false);
-          this.notifyState('idle');
-          if (onEnd) onEnd();
-        };
-
-        this.currentUtterance = utterance;
-        // Chromium-based browsers can occasionally remain paused from a previous
-        // utterance. Resume first, then speak after cancel has fully settled.
-        try { synth.resume(); } catch {}
-        backgroundMusic.setForegroundSource('narration', true);
-        synth.speak(utterance);
-      } catch (error) {
-        console.warn('Speech synthesis failed:', error);
-        backgroundMusic.setForegroundSource('narration', false);
-        this.notifyState('idle');
-        if (onEnd) onEnd();
-      }
+    const generation=this.narrationGeneration;
+    const fail=(reason:NarrationError)=>{
+      if(generation!==this.narrationGeneration)return;
+      this.currentUtterance=null;
+      backgroundMusic.setForegroundSource('narration',false);
+      this.notifyState('idle');
+      onError?.(reason);
     };
-
-    // Some Chromium builds populate voices asynchronously. Wait briefly for
-    // voiceschanged, but always fall back so narration never becomes a dead button.
-    if (synth.getVoices().length === 0) {
-      let spoken = false;
-      const begin = () => {
-        if (spoken) return;
-        spoken = true;
-        synth.removeEventListener('voiceschanged', begin);
-        window.clearTimeout(fallbackTimer);
-        speakNow();
-      };
-      const fallbackTimer = window.setTimeout(begin, 180);
-      synth.addEventListener('voiceschanged', begin, { once: true });
-      return;
+    if(!this.soundEnabled){fail('muted');return;}
+    if(typeof window==='undefined'||!('speechSynthesis' in window)||!text.trim()){fail('unsupported');return;}
+    const synth=window.speechSynthesis;
+    const speakNow=()=>{
+      if(generation!==this.narrationGeneration)return;
+      this.clearPendingNarration?.();this.clearPendingNarration=null;
+      try{
+        const prefix=lang.split('-')[0].toLowerCase();
+        const voices=synth.getVoices();
+        const voice=voices.find(v=>v.lang.toLowerCase()===lang.toLowerCase())||voices.find(v=>v.lang.toLowerCase().split(/[-_]/)[0]===prefix);
+        if(!voice){fail('voice-unavailable');return;}
+        const utterance=new SpeechSynthesisUtterance(text.trim());
+        utterance.lang=lang;utterance.voice=voice;utterance.rate=0.92;utterance.pitch=1.03;utterance.volume=this.effectsVolume;
+        const active=()=>generation===this.narrationGeneration&&this.currentUtterance===utterance;
+        utterance.onstart=()=>{if(!active())return;backgroundMusic.setForegroundSource('narration',true);this.notifyState('playing');};
+        utterance.onpause=()=>{if(active())this.notifyState('paused');};
+        utterance.onresume=()=>{if(!active())return;backgroundMusic.setForegroundSource('narration',true);this.notifyState('playing');};
+        utterance.onend=()=>{if(!active())return;this.currentUtterance=null;backgroundMusic.setForegroundSource('narration',false);this.notifyState('idle');onEnd?.();};
+        utterance.onerror=()=>{if(active())fail('playback-failed');};
+        this.currentUtterance=utterance;
+        try{synth.resume();}catch{}
+        backgroundMusic.setForegroundSource('narration',true);
+        synth.speak(utterance);
+      }catch{fail('playback-failed');}
+    };
+    // A generation and cancellable listeners prevent an old request from starting after navigation.
+    const hasMatchingVoice=()=>synth.getVoices().some(v=>v.lang.toLowerCase().split(/[-_]/)[0]===lang.split('-')[0]);
+    if(!hasMatchingVoice()){
+      let timer:number;
+      const begin=()=>{if(hasMatchingVoice())speakNow();};
+      timer=window.setTimeout(speakNow,1000);
+      synth.addEventListener('voiceschanged',begin);
+      this.clearPendingNarration=()=>{window.clearTimeout(timer);synth.removeEventListener('voiceschanged',begin);};
+    }else{
+      const timer=window.setTimeout(speakNow,60);
+      this.clearPendingNarration=()=>window.clearTimeout(timer);
     }
-
-    // A short delay after cancel fixes silent first-play issues in Chrome/Cốc Cốc.
-    window.setTimeout(speakNow, 60);
   }
 
   public pauseNarration() {
@@ -312,13 +276,12 @@ class AudioService {
   }
 
   public stopNarration() {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      const wasActive = this.currentUtterance !== null || window.speechSynthesis.speaking || window.speechSynthesis.paused;
-      window.speechSynthesis.cancel();
-      this.currentUtterance = null;
-      if (wasActive) backgroundMusic.setForegroundSource('narration', false);
-      this.notifyState('idle');
-    }
+    this.narrationGeneration++;
+    this.clearPendingNarration?.();this.clearPendingNarration=null;
+    this.currentUtterance=null;
+    if(typeof window!=='undefined'&&'speechSynthesis' in window)window.speechSynthesis.cancel();
+    backgroundMusic.setForegroundSource('narration',false);
+    this.notifyState('idle');
   }
 
   public getNarrationState(): NarrationState {

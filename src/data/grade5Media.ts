@@ -1,0 +1,36 @@
+// Two openly licensed photographs; integrity recorded in content-review/grade5-media-integrity.json.
+export const GRADE5_MEDIA = [
+  {
+    "id": "thu-bon-2018",
+    "src": "/learning/grade5/photos/thu-bon-2018.webp",
+    "filename": "Thu Bon River in the Duy Xuyên District.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Thu_Bon_River_in_the_Duy_Xuy%C3%AAn_District.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Thu_Bon_River_in_the_Duy_Xuy%C3%AAn_District.jpg",
+    "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Thu_Bon_River_in_the_Duy_Xuy%C3%AAn_District.jpg/1280px-Thu_Bon_River_in_the_Duy_Xuy%C3%AAn_District.jpg",
+    "author": "Christophe95",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "date": "28/07/2018",
+    "caption": "Sông Thu Bồn và các giàn lưới nhìn từ một cây cầu ở vùng Duy Xuyên, ảnh năm 2018. Tên huyện/tỉnh trong hồ sơ gốc thuộc thời điểm chụp; không dùng ảnh xác định độ sâu, chất lượng nước hay an toàn bơi.",
+    "changes": "Thu nhỏ, xoay theo EXIF và nén WebP; giữ bố cục, không tạo hoặc xóa chi tiết.",
+    "reviewedOn": "2026-10-18"
+  },
+  {
+    "id": "hai-van-2024",
+    "src": "/learning/grade5/photos/hai-van-2024.webp",
+    "filename": "Fortress on top of the Hai Van Pass - Hải Vân Quan (2024) - img 22.jpg",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fortress_on_top_of_the_Hai_Van_Pass_-_H%E1%BA%A3i_V%C3%A2n_Quan_%282024%29_-_img_22.jpg",
+    "originalUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Fortress_on_top_of_the_Hai_Van_Pass_-_H%E1%BA%A3i_V%C3%A2n_Quan_%282024%29_-_img_22.jpg",
+    "downloadUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Fortress_on_top_of_the_Hai_Van_Pass_-_H%E1%BA%A3i_V%C3%A2n_Quan_%282024%29_-_img_22.jpg/1280px-Fortress_on_top_of_the_Hai_Van_Pass_-_H%E1%BA%A3i_V%C3%A2n_Quan_%282024%29_-_img_22.jpg",
+    "author": "Chainwit.",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "date": "01/08/2024",
+    "caption": "Một góc công trình trong khu di tích Hải Vân Quan, chụp ngày 01/08/2024 sau đợt tu bổ; không phải ảnh cận cảnh chữ trên cổng. Ảnh tư liệu theo thời điểm, không thay thông báo tham quan hiện hành.",
+    "changes": "Thu nhỏ, xoay theo EXIF và nén WebP; giữ bố cục, không tạo hoặc xóa chi tiết.",
+    "reviewedOn": "2026-10-18"
+  }
+];
+const bindings:Record<string,Record<number,string>>={"g5-station-1":{0:"thu-bon-2018",2:"thu-bon-2018"},"g5-station-3":{1:"hai-van-2024"}};
+export const grade5PointMedia=(id:string,index:number)=>GRADE5_MEDIA.find(m=>m.id===bindings[id]?.[index]);
+export const grade5MediaBySrc=(src:string)=>GRADE5_MEDIA.find(m=>m.src===src);

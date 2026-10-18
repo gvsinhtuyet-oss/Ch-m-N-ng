@@ -115,7 +115,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
     setNarrationMessage('');
     audioService.speakNarration(
       text,
-      language === 'en' ? 'en-US' : 'vi-VN',
+      language === 'en' && hotspot.narrationEn ? 'en-US' : 'vi-VN',
       () => setNarrationCompleted(true),
       narrationError
     );
@@ -127,7 +127,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
         ? previewHotspot.narrationEn
         : previewHotspot.narrationVi;
     setNarrationMessage('');
-    audioService.speakNarration(text, language === 'en' ? 'en-US' : 'vi-VN',undefined,narrationError);
+    audioService.speakNarration(text, language === 'en' && previewHotspot.narrationEn ? 'en-US' : 'vi-VN',undefined,narrationError);
   };
 
   const choose = (id: string) => {

@@ -856,7 +856,7 @@ export const GRADE1_LESSON_DECKS:LessonDeckDefinition[]=[
       {
         "title": "Quan sát những dấu tích",
         "points": [
-          "Theo tài liệu, thành có cửa phía nam và phía đông.",
+          "Thành Điện Hải có cửa phía nam và phía đông.",
           "Tường gạch và hào xung quanh giúp em hình dung ngôi thành xưa."
         ],
         "question": "Em muốn tìm hiểu dấu tích nào trong sơ đồ?",
@@ -957,7 +957,7 @@ export const GRADE1_LESSON_DECKS:LessonDeckDefinition[]=[
     },
     "title": "Món ăn truyền thống trong bữa ăn",
     "outcomes": [
-      "Gọi tên mì Quảng và một số nguyên liệu được giới thiệu trong tài liệu.",
+      "Gọi tên mì Quảng và nhận biết một số nguyên liệu của món ăn.",
       "Giới thiệu món ăn bằng lời hoặc tranh; biết trân trọng người chuẩn bị món ăn."
     ],
     "resourceLinks": [
@@ -996,7 +996,7 @@ export const GRADE1_LESSON_DECKS:LessonDeckDefinition[]=[
         "title": "Món ăn em biết",
         "points": [
           "Quê hương có nhiều món ăn truyền thống.",
-          "Tài liệu giới thiệu mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng."
+          "Quê hương có mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng."
         ],
         "question": "Em biết hoặc từng nghe tên món nào?",
         "answer": "Chấp nhận học sinh nói tên món đã biết, không yêu cầu em phải từng ăn.",
@@ -1017,7 +1017,7 @@ export const GRADE1_LESSON_DECKS:LessonDeckDefinition[]=[
       {
         "title": "Cùng tìm hiểu mì Quảng",
         "points": [
-          "Theo cách giới thiệu trong tài liệu, món có sợi mì, tôm, thịt và trứng.",
+          "Một tô mì Quảng có thể có sợi mì, tôm, thịt và trứng.",
           "Có thêm nước dùng, rau, đậu phụng và bánh tráng nướng."
         ],
         "question": "Em gọi tên được nguyên liệu nào?",
@@ -1039,7 +1039,7 @@ export const GRADE1_LESSON_DECKS:LessonDeckDefinition[]=[
       {
         "title": "Bày tô mì cùng người lớn",
         "points": [
-          "Trong cách trình bày ở tài liệu: cho mì và đồ ăn vào tô rồi chan nước dùng.",
+          "Khi bày món, cho mì và đồ ăn vào tô rồi chan nước dùng.",
           "Rau, bánh tráng và gia vị có thể dùng kèm tùy người ăn."
         ],
         "question": "Với nồi nước dùng nóng, em cần ai giúp?",
@@ -1087,7 +1087,7 @@ export const GRADE1_LESSON_DECKS:LessonDeckDefinition[]=[
           "Nói lời cảm ơn người chuẩn bị món ăn và phụ dọn việc vừa sức."
         ],
         "question": "Em sẽ giới thiệu món ăn bằng câu nào?",
-        "answer": "Ví dụ: Em giới thiệu món mì Quảng. Tài liệu có nhắc sợi mì, tôm, thịt, trứng. Em thích ăn cùng gia đình. Học sinh điều chỉnh theo trải nghiệm thật.",
+        "answer": "Ví dụ: Em giới thiệu món mì Quảng. Món ăn có sợi mì, có thể thêm tôm, thịt, trứng. Em thích ăn cùng gia đình. Học sinh điều chỉnh theo trải nghiệm thật.",
         "teacherNotes": "Sản phẩm một câu nói hoặc bức tranh; nhờ cô viết tên nguyên liệu nếu cần. Trở lại mục tiêu bài TNXH đang dạy sau phần liên hệ.",
         "visual": [
           "Tên món",

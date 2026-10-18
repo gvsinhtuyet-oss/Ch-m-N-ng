@@ -108,7 +108,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   // Audio Playback Controls
   const handlePlayAudio = () => {
     const textToSpeak = language === 'en' && hotspot.narrationEn ? hotspot.narrationEn : hotspot.narrationVi;
-    audioService.speakNarration(textToSpeak, language === 'en' ? 'en-US' : 'vi-VN');
+    audioService.speakNarration(textToSpeak, language === 'en' && hotspot.narrationEn ? 'en-US' : 'vi-VN');
   };
 
   const handlePauseAudio = () => {

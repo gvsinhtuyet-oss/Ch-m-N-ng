@@ -66,7 +66,7 @@ const G2_STATION_1: Station = {
       titleVi: '4. Dụng cụ của người thợ',
       subtitleVi: 'Giàn dệt, thanh go và thanh văng',
       image: 'https://culaochamtourist.vn/wp-content/uploads/2023/07/lang-chieu-ban-thach-2.jpg',
-      narrationVi: 'Giàn dệt chiếu có nhiều bộ phận giúp căng sợi và dệt đều. Trong tài liệu, học sinh được làm quen với thanh go và thanh văng cùng cách người thợ thao tác trên giàn dệt.',
+      narrationVi: "Giàn dệt là dụng cụ giúp người thợ căng sợi và dệt chiếu. Trên giàn có các bộ phận như thanh go, thanh văng. Người thợ phối hợp thao tác để những sợi cói đan vào nhau thành mặt chiếu đều đặn. Nhìn từng hàng cói nối tiếp, em sẽ thấy sự khéo léo và kiên trì trong công việc này.",
       keyFactVi: 'Giàn dệt là dụng cụ quan trọng giúp người thợ tạo nên tấm chiếu.',
       interaction: { id:'g2s1-i4', type:'single-choice', questionVi:'Dụng cụ nào gắn trực tiếp với việc dệt chiếu?', options:[
         {id:'a',textVi:'Giàn dệt',isCorrect:true},{id:'b',textVi:'Bếp ga',isCorrect:false},{id:'c',textVi:'Máy chiếu lớp học',isCorrect:false}
@@ -265,8 +265,8 @@ const G2_STATION_2: Station = {
       titleVi:'2. Những nét đặc sắc của Cù Lao Chàm',
       subtitleVi:'Bãi cát, san hô, rừng xanh và sinh vật phong phú',
       image:'https://commons.wikimedia.org/wiki/Special:FilePath/Cham%20Island%20Vietnam.jpg',
-      narrationVi:'Cù Lao Chàm nổi tiếng với cảnh quan thiên nhiên hoang sơ, rừng núi xanh, bãi cát dài trắng mịn, làn nước trong xanh và hệ động, thực vật phong phú. Nơi đây còn có nhiều di tích lịch sử. Ngày 29 tháng 5 năm 2009, Cù Lao Chàm được UNESCO công nhận là Khu dự trữ sinh quyển thế giới.',
-      keyFactVi:'Ngày 29 tháng 5 năm 2009, Cù Lao Chàm được UNESCO công nhận là Khu dự trữ sinh quyển thế giới.',
+      narrationVi: "Cù Lao Chàm có rừng xanh, những bãi cát và vùng biển với nhiều loài sinh vật. Đảo còn lưu giữ những dấu tích lịch sử gắn với đời sống cư dân. Năm 2009, Khu dự trữ sinh quyển Cù Lao Chàm – Hội An được UNESCO công nhận. Vẻ đẹp ấy cần được gìn giữ bằng việc bảo vệ cả rừng, biển và cuộc sống của cộng đồng.",
+      keyFactVi:'Năm 2009, Khu dự trữ sinh quyển Cù Lao Chàm – Hội An được UNESCO công nhận.',
       interaction:{
         id:'i2',
         type:'single-choice',

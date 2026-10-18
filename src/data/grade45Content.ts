@@ -8,7 +8,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-1-point-1",
         "title": "Quê hương có nhiều cảnh quan",
-        "narration": "Em hãy nhìn cảnh Hòn Kẽm Đá Dừng bên sông Thu Bồn: dòng sông đi giữa những vách núi. Đà Nẵng có miền núi phía tây, vùng gò đồi trung du và đồng bằng ven biển. Mỗi vùng có những cảnh quan khác nhau. Ảnh này giúp em nhận ra núi và sông, nhưng không cho thấy toàn bộ địa hình thành phố. Khi giới thiệu quê hương, em hãy gọi đúng tên nơi chụp và tìm thêm tư liệu về những vùng khác.",
+        "narration": "Từ những dãy núi phía tây đến vùng gò đồi trung du rồi đồng bằng ven biển, thiên nhiên Đà Nẵng có nhiều dáng vẻ. Có nơi núi đá đứng bên dòng sông như Hòn Kẽm Đá Dừng, có nơi mở ra bờ cát và mặt biển. Địa hình khác nhau tạo nên cảnh quan phong phú, đồng thời ảnh hưởng đến đời sống của con người. Khám phá từng vùng, em sẽ hiểu thêm vẻ đẹp của quê hương.",
         "fact": "Địa hình đa dạng tạo nên nhiều không gian sống.",
         "q": "Nhận xét nào phù hợp về cảnh quan Đà Nẵng?",
         "answers": [
@@ -20,13 +20,13 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-1-point-2",
         "title": "Con người sinh sống và lao động",
-        "narration": "Ở làng chài Nam Ô, biển gắn với đời sống và một số nghề của người dân. Đến những nơi khác, em có thể gặp người trồng trọt, người thợ, người bán hàng hoặc người làm dịch vụ. Cùng một khu vực vẫn có nhiều công việc. Vì vậy, không thể nhìn một ảnh làng chài rồi nói rằng mọi gia đình ở đó đều đánh cá. Em hãy quan sát và hỏi thêm để hiểu con người cụ thể.",
-        "fact": "Cảnh quan gợi điều kiện sống, không quyết định duy nhất nghề của mỗi người.",
-        "q": "Nhận định nào tránh khái quát quá mức?",
+        "narration": "Thiên nhiên gắn bó với công việc hằng ngày của con người. Ở Nam Ô, biển góp phần nuôi dưỡng nghề đánh bắt và nghề làm nước mắm. Ở những vùng khác, người dân trồng trọt, làm sản phẩm thủ công, buôn bán hoặc phục vụ du lịch. Một khu vực có thể có nhiều nghề cùng phát triển. Mỗi công việc đáp ứng một nhu cầu và góp phần tạo nên nhịp sống của quê hương.",
+        "fact": "Có nhiều nghề đáp ứng những nhu cầu khác nhau.",
+        "q": "Đặc điểm nào phù hợp với công việc của người dân trong một khu vực?",
         "answers": [
-          "Một vùng có thể có nhiều nghề",
-          "Mọi người sống ven biển đều đánh cá",
-          "Mọi người ở miền núi đều làm một nghề"
+          "Có nhiều nghề đáp ứng những nhu cầu khác nhau",
+          "Mọi gia đình luôn làm duy nhất một nghề",
+          "Chỉ có nghề đánh bắt cá"
         ]
       },
       {
@@ -44,13 +44,13 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-1-point-4",
         "title": "Giới thiệu nơi em sống bằng căn cứ",
-        "narration": "Ảnh Mỹ Khê cho em một góc nhìn về bãi biển Đà Nẵng tại thời điểm chụp. Em hãy tập giới thiệu ba điều: tên nơi, đặc điểm nhìn thấy và nguồn tư liệu. Phân biệt điều mình quan sát được với điều đọc thêm từ nguồn khác. Không cần đưa địa chỉ nhà riêng của bạn vào bài. Một lời giới thiệu ngắn, có căn cứ và lời nhắc giữ cảnh quan sẽ giúp người nghe hiểu quê hương hơn.",
-        "fact": "Giới thiệu quê hương bằng thông tin cụ thể và hành động phù hợp.",
-        "q": "Thông tin nào cần tránh công khai trong bài giới thiệu của lớp?",
+        "narration": "Bãi biển Mỹ Khê là một nét đẹp của quê hương Đà Nẵng. Bờ cát rộng và không gian biển đem đến nơi nghỉ ngơi, vui chơi, đồng thời gắn với hoạt động dịch vụ và du lịch. Cảnh đẹp được gìn giữ nhờ ý thức của mỗi người: bỏ rác đúng chỗ, tôn trọng sinh vật và tuân thủ hướng dẫn. Khi giới thiệu quê hương, em có thể kể cả vẻ đẹp của nơi ấy và việc mình làm để giữ gìn.",
+        "fact": "Giúp gìn giữ cảnh quan và môi trường sống.",
+        "q": "Vì sao giữ bãi biển sạch góp phần chăm sóc quê hương?",
         "answers": [
-          "Địa chỉ nhà riêng của bạn",
-          "Tên cảnh quan công cộng đã kiểm tra",
-          "Nguồn ảnh được phép sử dụng"
+          "Giúp gìn giữ cảnh quan và môi trường sống",
+          "Giúp nước biển biến thành nước ngọt",
+          "Làm cho mọi công việc đều giống nhau"
         ]
       }
     ],
@@ -130,7 +130,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "bt4-luu-giu-ky-uc",
         "title": "Nơi gìn giữ di sản",
-        "narration": "Bảo tàng sưu tầm, bảo quản, nghiên cứu và giới thiệu hiện vật, tài liệu để chúng ta tìm hiểu lịch sử và văn hóa. Bảo tàng Đà Nẵng đã chuyển từ khuôn viên Thành Điện Hải sang cơ sở gồm các địa chỉ 42–44 Bạch Đằng và 31 Trần Phú. Vì thế, ảnh chụp ở nơi cũ cần được ghi rõ thời điểm. Trước chuyến đi, em cùng thầy cô xem thông báo chính thức về cơ sở định tham quan.",
+        "narration": "Một đồ vật xưa có thể mở ra câu chuyện về cách sống và lao động của những thế hệ trước. Bảo tàng sưu tầm, bảo quản, nghiên cứu và giới thiệu hiện vật, tài liệu để chúng ta tìm hiểu lịch sử, văn hóa. Nhờ công việc ấy, những dấu tích quý được gìn giữ và chia sẻ với nhiều người. Tham quan bảo tàng là dịp khám phá quá khứ, hiểu hơn quê hương và trân trọng những giá trị được trao truyền.",
         "fact": "Bảo tàng giúp gìn giữ và tìm hiểu di sản.",
         "q": "Công việc nào thuộc chức năng bảo tàng?",
         "answers": [
@@ -142,13 +142,13 @@ export const GRADE45_CONTENT = [
       {
         "id": "bt4-my-thuat-nghe-thuat",
         "title": "Những không gian khác nhau",
-        "narration": "Ở Đà Nẵng, mỗi bảo tàng mở ra một cách khám phá: Bảo tàng Đà Nẵng giới thiệu lịch sử và văn hóa địa phương; Bảo tàng Mỹ thuật giới thiệu tác phẩm nghệ thuật; Bảo tàng Điêu khắc Chăm giới thiệu di sản điêu khắc Chăm. Ảnh trước mặt là bên ngoài Bảo tàng Điêu khắc Chăm, không phải ảnh một hiện vật. Muốn hiểu tác phẩm cụ thể, em cần xem thêm ảnh và thông tin của chính tác phẩm ấy.",
-        "fact": "Chọn bảo tàng và tư liệu phù hợp với điều muốn tìm hiểu.",
-        "q": "Muốn tìm hiểu một hiện vật điêu khắc Chăm, nguồn nào phù hợp trước tiên?",
+        "narration": "Các bảo tàng mở ra những cánh cửa khám phá khác nhau. Bảo tàng Đà Nẵng giới thiệu lịch sử và văn hóa địa phương. Bảo tàng Mỹ thuật đưa người xem đến với các tác phẩm nghệ thuật. Bảo tàng Điêu khắc Chăm giúp tìm hiểu di sản điêu khắc Chăm. Biết nội dung của từng nơi, em có thể chọn điểm tham quan phù hợp với điều muốn học và chuẩn bị những câu hỏi thú vị cho chuyến đi.",
+        "fact": "Bảo tàng Điêu khắc Chăm.",
+        "q": "Muốn khám phá di sản điêu khắc Chăm, em tìm hiểu nơi nào?",
         "answers": [
-          "Thông tin của Bảo tàng Điêu khắc Chăm",
-          "Một trang bán đồ chơi không rõ nguồn",
-          "Tên tự đoán từ màu đá"
+          "Bảo tàng Điêu khắc Chăm",
+          "Một giàn dệt chiếu",
+          "Một khuôn đúc đồng"
         ]
       },
       {
@@ -166,13 +166,13 @@ export const GRADE45_CONTENT = [
       {
         "id": "bt4-nguoi-ban-di-san",
         "title": "Người bạn của bảo tàng",
-        "narration": "Một chuyến tham quan tốt bắt đầu từ việc tôn trọng hiện vật và người xung quanh. Em đi theo hướng dẫn, không tự ý sờ hay di chuyển đồ trưng bày; chụp ảnh theo nội quy của nơi đến. Khi làm thẻ giới thiệu, ghi tên hiện vật cùng nguồn thông tin. Ảnh trên mạng cần được kiểm tra điều kiện sử dụng; nếu chưa được phép dùng lại, lớp có thể mở trang nguồn để cùng xem.",
-        "fact": "Giữ hiện vật và chia sẻ thông tin, hình ảnh đúng nguồn.",
-        "q": "Khi muốn dùng ảnh hiện vật trong sản phẩm của lớp, em cần kiểm tra gì?",
+        "narration": "Hiện vật được gìn giữ để nhiều thế hệ cùng tìm hiểu. Một cái chạm tay hay việc tự ý di chuyển có thể làm ảnh hưởng đến đồ trưng bày. Vì vậy, em quan sát theo hướng dẫn, giữ khoảng cách và làm theo nội quy chụp ảnh. Nói vừa đủ nghe cũng giúp mọi người cùng tham quan thuận lợi. Tôn trọng hiện vật và người xung quanh, mỗi học sinh đều có thể trở thành một người bạn của di sản.",
+        "fact": "Để bảo vệ đồ trưng bày cho nhiều người cùng tìm hiểu.",
+        "q": "Vì sao cần giữ khoảng cách và không tự ý di chuyển hiện vật?",
         "answers": [
-          "Nguồn và điều kiện sử dụng ảnh",
-          "Chỉ số lượt thích của ảnh",
-          "Ảnh có hợp màu bìa hay không"
+          "Để bảo vệ đồ trưng bày cho nhiều người cùng tìm hiểu",
+          "Để giấu hiện vật khỏi khách tham quan",
+          "Để thay hiện vật bằng đồ chơi"
         ]
       }
     ],
@@ -265,7 +265,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-3-point-2",
         "title": "Tạo ra sản phẩm",
-        "narration": "Em hãy theo dõi ví dụ một chiếc áo: có nguyên liệu, có khâu dệt vải rồi mới may thành áo. Người nông dân, người thợ và công nhân có thể góp sức ở những khâu khác nhau. Tấm lụa Mã Châu trong ảnh là ví dụ về sản phẩm dệt, không phải ảnh xưởng may. Chuỗi chiếc áo là mô hình học tập khái quát; bài học không khẳng định mọi công đoạn đều được thực hiện trong cùng một làng hoặc trong thành phố.",
+        "narration": "Một chiếc áo đến tay người mặc nhờ nhiều công đoạn nối tiếp. Từ nguyên liệu, người làm nghề chuẩn bị sợi, dệt vải rồi cắt và may thành áo. Người nông dân, người thợ và công nhân có thể góp sức ở những khâu khác nhau. Mã Châu là một ví dụ về nghề dệt tạo ra vải lụa. Nhìn một sản phẩm quen thuộc, em có thể nhận ra sự liên kết giữa nhiều công việc và trân trọng công sức lao động.",
         "fact": "Nhiều người và nhiều khâu cùng góp phần tạo ra sản phẩm.",
         "q": "Trong ví dụ chiếc áo, việc nào trực tiếp tạo sản phẩm?",
         "answers": [
@@ -277,7 +277,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-3-point-3",
         "title": "Dịch vụ kết nối cuộc sống",
-        "narration": "Sau khi làm ra sản phẩm, còn cần vận chuyển và đưa sản phẩm đến người dùng. Đó là những hoạt động dịch vụ. Ở Đà Nẵng, cảng Tiên Sa là một ví dụ về nơi có hoạt động phục vụ vận tải biển. Bán hàng và hướng dẫn du lịch cũng là dịch vụ, nhưng có công việc khác nhau. Ảnh trụ sở doanh nghiệp không thể thay cho ảnh cầu cảng hoặc hoạt động bốc dỡ hàng hóa.",
+        "narration": "Sản phẩm làm ra còn cần được vận chuyển, trao đổi và đưa đến người sử dụng. Vận tải và bán hàng là những hoạt động dịch vụ giúp nối người sản xuất với người tiêu dùng. Ở Đà Nẵng, cảng Tiên Sa gắn với hoạt động vận tải biển. Hướng dẫn du lịch cũng là một dịch vụ, phục vụ nhu cầu khác. Các ngành nghề cùng góp sức để hàng hóa lưu thông và đời sống thuận tiện hơn.",
         "fact": "Dịch vụ hỗ trợ nhu cầu và kết nối các hoạt động kinh tế.",
         "q": "Việc nào là dịch vụ trong hành trình chiếc áo?",
         "answers": [
@@ -389,7 +389,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-4-point-2",
         "title": "Từ khuôn đến sản phẩm",
-        "narration": "Để đúc một sản phẩm, người thợ cần chuẩn bị khuôn, nấu kim loại và rót kim loại vào khuôn. Khi sản phẩm đã nguội, còn có công việc hoàn thiện và kiểm tra. Khuôn góp phần tạo hình; tay nghề và kinh nghiệm giúp sản phẩm đạt yêu cầu. Đây là sơ đồ khái quát để em hiểu nghề, không phải công thức cho mọi cơ sở. Học sinh chỉ quan sát theo hướng dẫn, không thao tác với lò, lửa hay kim loại nóng.",
+        "narration": "Khuôn là bộ phận quan trọng giúp tạo hình sản phẩm đúc đồng. Người thợ chuẩn bị khuôn, nấu kim loại và rót vào khuôn; khi sản phẩm nguội, họ tiếp tục hoàn thiện và kiểm tra. Từ hình dáng đến chất lượng đều cần kinh nghiệm và sự cẩn thận. Hiểu vai trò của từng công đoạn, em càng trân trọng tay nghề người thợ. Khi tham quan, học sinh đứng ở vị trí được hướng dẫn, tránh lò và kim loại nóng.",
         "fact": "Khuôn, kim loại và công đoạn hoàn thiện cùng tạo ra sản phẩm.",
         "q": "Khuôn giúp người thợ làm gì trong quá trình đúc?",
         "answers": [
@@ -401,7 +401,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-4-point-3",
         "title": "Đôi tai và bàn tay nghệ nhân",
-        "narration": "Với cồng, chiêng và chuông, người thợ không chỉ quan tâm hình dáng mà còn phải kiểm tra tiếng vang. Nghệ nhân Phước Kiều có kĩ năng nghe và điều chỉnh âm thanh để nhạc khí phù hợp với yêu cầu sử dụng. Đó là kĩ năng thẩm âm, được tích lũy qua thực hành và kinh nghiệm. Em có thể tìm hiểu qua tư liệu đúng nguồn; âm hiệu ứng trong trò chơi không được coi là bản thu tiếng chiêng Phước Kiều thật.",
+        "narration": "Một chiếc chiêng hay chiếc chuông cần có hình dáng phù hợp và âm thanh đạt yêu cầu. Người thợ Phước Kiều lắng nghe tiếng vang, nhận ra chỗ cần điều chỉnh rồi tiếp tục hoàn thiện nhạc khí. Kĩ năng ấy được gọi là thẩm âm. Đằng sau mỗi âm thanh là thời gian luyện tập, kinh nghiệm và đôi tai tinh tế. Đây là một nét đặc sắc của nghề đúc đồng, cho thấy giá trị của tri thức người làm nghề.",
         "fact": "Thẩm âm là kĩ năng nghe, kiểm tra và điều chỉnh âm thanh nhạc khí.",
         "q": "Kĩ năng thẩm âm liên quan chủ yếu tới điều gì?",
         "answers": [
@@ -413,13 +413,13 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-4-point-4",
         "title": "Trân trọng nghề và người thợ",
-        "narration": "Nghề được gìn giữ nhờ người làm nghề trao truyền kinh nghiệm và thế hệ sau tiếp tục học hỏi. Khi tham quan, em hỏi lịch sự, đứng ở nơi được hướng dẫn và không tự lấy dụng cụ. Các nguồn hiện kể khác nhau về người truyền nghề; bài học này chưa chọn một tên tổ nghề làm đáp án bắt buộc. Em vẫn có thể giới thiệu chắc chắn những điều đã đối chiếu: sản phẩm đúc đồng, kĩ năng thẩm âm và công sức người thợ.",
-        "fact": "Giữ nghề bằng tìm hiểu trung thực, trân trọng lao động và tham quan an toàn.",
-        "q": "Khi nguồn kể khác nhau về tổ nghề, cách học nào phù hợp?",
+        "narration": "Nghề đúc đồng được tiếp nối khi người thợ truyền lại kinh nghiệm và thế hệ sau kiên trì học hỏi. Những hiểu biết về khuôn, kim loại và thẩm âm cần được thực hành qua thời gian. Gìn giữ nghề vì thế cũng là trân trọng con người và tạo điều kiện để nghề tiếp tục sống. Khi đến làng nghề, em lắng nghe câu chuyện, hỏi lịch sự và quan sát an toàn để hiểu giá trị của từng sản phẩm.",
+        "fact": "Người thợ truyền dạy và thế hệ sau kiên trì học hỏi.",
+        "q": "Điều gì giúp kinh nghiệm đúc đồng được tiếp nối?",
         "answers": [
-          "Ghi nhận khác biệt và tiếp tục đối chiếu",
-          "Chọn ngẫu nhiên một tên để học thuộc",
-          "Gộp các nhân vật thành một người"
+          "Người thợ truyền dạy và thế hệ sau kiên trì học hỏi",
+          "Không cho ai tìm hiểu nghề",
+          "Chỉ giữ tên nghề mà bỏ mọi kĩ năng"
         ]
       }
     ],
@@ -499,19 +499,19 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-5-point-1",
         "title": "Mã Châu và những tấm lụa",
-        "narration": "Mã Châu ở vùng Duy Xuyên, bên dòng Thu Bồn, là làng nghề nổi tiếng về tơ lụa của đất Quảng. Người làm nghề tạo ra những tấm vải để may trang phục và làm các sản phẩm phù hợp. Ảnh đang xem là sản phẩm lụa Mã Châu theo chú thích tác giả, không phải toàn cảnh làng hay xưởng dệt. Tìm hiểu nghề, em hãy kết hợp nhìn sản phẩm với đọc nguồn và nghe câu chuyện của người thợ.",
-        "fact": "Mã Châu gắn với nghề tơ lụa truyền thống.",
-        "q": "Thông tin nào giúp xác định ảnh sản phẩm thuộc Mã Châu?",
+        "narration": "Mã Châu ở vùng Duy Xuyên, bên dòng Thu Bồn, là làng nghề nổi tiếng về tơ lụa của đất Quảng. Từ sợi tơ, người thợ dệt nên những tấm lụa dùng may trang phục và làm nhiều sản phẩm. Tấm lụa mang theo sự khéo léo, thời gian và kinh nghiệm của người làm nghề. Khám phá Mã Châu, em sẽ thấy một sản phẩm đẹp còn chứa đựng câu chuyện lao động và văn hóa của quê hương.",
+        "fact": "Tấm lụa từ sợi tơ.",
+        "q": "Sản phẩm nào gắn với nghề dệt ở Mã Châu?",
         "answers": [
-          "Chú thích xuất xứ và nguồn có căn cứ",
-          "Ảnh có màu đỏ",
-          "Ảnh có nhiều lượt thích"
+          "Tấm lụa từ sợi tơ",
+          "Chiếc chiêng đúc đồng",
+          "Chum nước mắm"
         ]
       },
       {
         "id": "g4-station-5-point-2",
         "title": "Từ kén đến sợi tơ",
-        "narration": "Trong nghề tơ tằm, con tằm ăn lá dâu rồi nhả tơ làm kén. Người làm nghề lấy sợi tơ từ kén và chuẩn bị sợi cho việc dệt. Em hãy phân biệt kén, sợi và tấm lụa: chúng không phải cùng một dạng sản phẩm. Bộ ảnh tư liệu về Mã Châu giúp quan sát các công đoạn ấy theo thời điểm chụp. Học sinh tìm hiểu qua ảnh hoặc mô phỏng với giấy, không tự xử lí kén bằng nước nóng hay vận hành máy.",
+        "narration": "Hành trình của tấm lụa bắt đầu từ con tằm. Tằm ăn lá dâu, lớn lên rồi nhả tơ tạo thành kén. Người làm nghề lấy tơ từ kén, chuẩn bị sợi để đưa vào dệt. Kén, sợi tơ và tấm lụa là những dạng khác nhau trong hành trình ấy. Từ nguyên liệu nhỏ bé đến sản phẩm hoàn chỉnh cần nhiều công sức. Em có thể xếp thẻ các công đoạn để hiểu mối liên hệ giữa nuôi tằm, làm tơ và dệt lụa.",
         "fact": "Kén, sợi tơ và tấm lụa thuộc các bước khác nhau của hành trình làm lụa.",
         "q": "Trong nghề tơ tằm, sợi tơ được lấy từ đâu?",
         "answers": [
@@ -535,13 +535,13 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-5-point-4",
         "title": "Quý sản phẩm, giữ câu chuyện nghề",
-        "narration": "Một tấm lụa mang theo công sức của người nuôi tằm, chuẩn bị tơ, dệt và hoàn thiện sản phẩm. Khi dùng, em nhờ người lớn xem hướng dẫn bảo quản của chính sản phẩm đó. Khi giới thiệu, ghi đúng xuất xứ đã có căn cứ; không gọi mọi loại vải mềm là lụa tơ tằm Mã Châu. Trong lớp, em có thể thiết kế hoa văn trên giấy, đặt tên và giải thích ý tưởng từ cảnh vật quê hương.",
-        "fact": "Trân trọng lụa bằng sử dụng phù hợp và giới thiệu đúng thông tin.",
-        "q": "Cách nhận định nào cần tránh?",
+        "narration": "Một tấm lụa mang theo công sức của người nuôi tằm, chuẩn bị tơ, dệt và hoàn thiện sản phẩm. Sử dụng cẩn thận, bảo quản theo hướng dẫn giúp giữ sản phẩm bền đẹp và tránh lãng phí. Trân trọng nghề còn là kể đúng tên, xuất xứ của sản phẩm và quan tâm đến người làm ra nó. Trong lớp, em có thể thiết kế một hoa văn trên giấy, lấy cảm hứng từ dòng sông, cây lá hay cảnh vật quê hương.",
+        "fact": "Trân trọng công sức lao động và hạn chế lãng phí.",
+        "q": "Sử dụng và bảo quản lụa cẩn thận thể hiện điều gì?",
         "answers": [
-          "Mọi vải mềm đều là lụa Mã Châu",
-          "Cần đọc thông tin của sản phẩm",
-          "Có thể thiết kế hoa văn trên giấy"
+          "Trân trọng công sức lao động và hạn chế lãng phí",
+          "Muốn mọi tấm lụa mau hỏng",
+          "Không quan tâm đến sản phẩm"
         ]
       }
     ],
@@ -620,19 +620,19 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-1-point-1",
         "title": "Theo dòng Thu Bồn",
-        "narration": "Em hãy quan sát dòng Thu Bồn trong ảnh chụp ở vùng Duy Xuyên năm 2018: mặt sông, bờ cây và những giàn lưới gợi ra một không gian sống ven sông. Đây chỉ là một đoạn sông ở một thời điểm. Muốn tìm vị trí và hướng chảy, em cần bản đồ có nguồn, hướng và chú giải. Sơ đồ tổng kết trong app giúp nhớ ý bài, không thay bản đồ địa lí.",
-        "fact": "Bản đồ có tên sông, chú giải và nguồn.",
-        "q": "Muốn tìm vị trí dòng Thu Bồn, tài liệu nào đủ căn cứ hơn?",
+        "narration": "Sông Thu Bồn gắn bó với cảnh quan và đời sống của đất Quảng. Dọc dòng sông có những vùng dân cư, bờ cây và hoạt động lao động. Dòng nước kết nối nhiều không gian, góp phần phục vụ sinh hoạt, sản xuất và đi lại. Tìm hiểu một dòng sông cũng là tìm hiểu mối quan hệ giữa thiên nhiên với con người. Em có thể bắt đầu bằng việc nhận ra dòng nước, hai bên bờ và những hoạt động ven sông.",
+        "fact": "Góp phần phục vụ sinh hoạt, sản xuất và đi lại.",
+        "q": "Sông Thu Bồn có mối liên hệ nào với đời sống con người?",
         "answers": [
-          "Bản đồ có tên sông, chú giải và nguồn",
-          "Sơ đồ trang trí chỉ có một đường màu xanh",
-          "Ảnh mặt nước không ghi địa điểm"
+          "Góp phần phục vụ sinh hoạt, sản xuất và đi lại",
+          "Chỉ có giá trị để ngắm từ xa",
+          "Không liên quan đến cư dân ven sông"
         ]
       },
       {
         "id": "g5-station-1-point-2",
         "title": "Hòn Kẽm Đá Dừng bên sông",
-        "narration": "Hòn Kẽm Đá Dừng là cảnh quan nổi bật bên dòng Thu Bồn, với núi đá và vách đá soi xuống mặt nước. Em thử mô tả bằng những chi tiết nhìn thấy: hình dáng sườn núi, dòng sông và cây xanh. Tên địa danh còn đi vào lời ca dân gian của đất Quảng. Khi giới thiệu, hãy phân biệt cảnh quan quan sát được với chuyện kể truyền miệng; lời ca không tự trở thành kết luận về quá trình hình thành đá.",
+        "narration": "Hòn Kẽm Đá Dừng là cảnh quan nổi bật bên dòng Thu Bồn. Núi đá và những vách đá đứng bên mặt nước tạo nên không gian vừa hùng vĩ vừa gần gũi với dòng sông. Địa danh này còn đi vào lời ca dân gian của đất Quảng, thể hiện sự gắn bó của con người với cảnh vật. Quan sát dáng núi, cây xanh và dòng nước, em có thể cảm nhận vì sao nơi đây để lại nhiều ấn tượng.",
         "fact": "Núi đá, vách đá bên dòng sông.",
         "q": "Nét cảnh quan nào làm Hòn Kẽm Đá Dừng nổi bật bên Thu Bồn?",
         "answers": [
@@ -644,7 +644,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-1-point-3",
         "title": "Dòng sông trong đời sống",
-        "narration": "Dòng Thu Bồn gắn với việc đi lại, nguồn nước và sinh kế của cư dân ven sông qua nhiều thời kì. Trong ảnh Duy Xuyên, em thấy các giàn lưới bên mặt nước: đó là một dấu hiệu về hoạt động của con người. Tuy nhiên, không thể từ ảnh này kết luận mọi gia đình đều làm nghề đánh cá. Cũng không thể nhìn màu nước rồi biết chắc độ sâu hay nơi nào an toàn để bơi.",
+        "narration": "Dòng Thu Bồn gắn với việc đi lại, nguồn nước và sinh kế của cư dân ven sông qua nhiều thời kì. Có người đánh bắt thủy sản, có người làm những công việc khác dựa vào điều kiện của vùng sông nước. Hoạt động lao động đem lại thu nhập, đồng thời cần đi cùng việc bảo vệ dòng sông. Giữ nước sạch và sử dụng tài nguyên hợp lí giúp gìn giữ điều kiện sống cho cộng đồng hôm nay và mai sau.",
         "fact": "Dòng sông gắn với sinh kế và hoạt động lao động ven bờ.",
         "q": "Những giàn lưới trong ảnh gợi mối liên hệ nào của sông với cư dân?",
         "answers": [
@@ -742,7 +742,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-2-point-1",
         "title": "Mẹ Nhu – người mẹ chở che",
-        "narration": "Ở Thanh Khê, Mẹ Nhu được ghi nhớ vì đã che chở, nuôi giấu các chiến sĩ biệt động trong kháng chiến chống Mỹ. Gia đình mẹ có hầm bí mật để bảo vệ chiến sĩ. Di tích Địa điểm nhà Mẹ Nhu giúp thế hệ sau tìm hiểu câu chuyện ấy. Khi xem tư liệu, em phân biệt di ảnh, hiện vật và căn hầm mô phỏng. Lòng dũng cảm của mẹ được hiểu từ việc làm có nguồn, không cần sáng tác lời thoại cho nhân vật.",
+        "narration": "Trong kháng chiến chống Mỹ, Mẹ Nhu ở Thanh Khê đã che chở, nuôi giấu các chiến sĩ biệt động. Gia đình mẹ có hầm bí mật để bảo vệ chiến sĩ giữa hoàn cảnh hiểm nguy. Những việc làm ấy thể hiện lòng yêu nước, sự dũng cảm và tình thương dành cho người chiến đấu. Di tích Địa điểm nhà Mẹ Nhu lưu giữ câu chuyện để thế hệ sau hiểu thêm về đóng góp của nhân dân và giá trị của hòa bình.",
         "fact": "Nuôi giấu, bảo vệ chiến sĩ biệt động.",
         "q": "Việc làm nào thể hiện sự chở che của Mẹ Nhu?",
         "answers": [
@@ -754,7 +754,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-2-point-2",
         "title": "Sự kiện Thanh Khê năm 1968",
-        "narration": "Ngày 26 tháng 12 năm 1968 gắn với sự hi sinh của Mẹ Nhu và cuộc chiến đấu của bảy chiến sĩ biệt động Thanh Khê. Mốc này thuộc kháng chiến chống Mỹ, khác thời điểm Cách mạng tháng Tám năm 1945. Đặt hai mốc trên dòng thời gian giúp em thấy chúng cách nhau nhiều năm. Có thể liên hệ truyền thống yêu nước, nhưng không gộp hai sự kiện thành một hoặc chuyển chiến công năm 1968 sang năm 1945.",
+        "narration": "Ngày 26 tháng 12 năm 1968 là dấu mốc trong câu chuyện về Mẹ Nhu và bảy chiến sĩ biệt động Thanh Khê. Trong kháng chiến chống Mỹ, mẹ đã hi sinh khi che chở cho các chiến sĩ; cuộc chiến đấu của họ được ghi nhớ trong lịch sử địa phương. Nhắc lại ngày ấy, chúng ta trân trọng lòng dũng cảm và sự gắn bó giữa nhân dân với người chiến đấu. Câu chuyện nhắc thế hệ hôm nay biết quý hòa bình và sống có trách nhiệm.",
         "fact": "Ngày 26 tháng 12 năm 1968.",
         "q": "Sự kiện Mẹ Nhu và bảy dũng sĩ Thanh Khê gắn với mốc nào?",
         "answers": [
@@ -766,7 +766,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-2-point-3",
         "title": "Mẹ Nguyễn Thị Thứ",
-        "narration": "Mẹ Nguyễn Thị Thứ là Bà mẹ Việt Nam anh hùng quê vùng Điện Bàn, đất Quảng. Mẹ đã chịu nhiều mất mát khi các con và người thân hi sinh trong những cuộc kháng chiến. Mẹ Nguyễn Thị Thứ và Mẹ Nhu là hai người khác nhau, có cuộc đời và tư liệu riêng. Em tìm hiểu bằng tên nhân vật, hoàn cảnh lịch sử và nguồn ghi chép; từ đó trân trọng sự hi sinh của thế hệ trước và cuộc sống hòa bình hôm nay.",
+        "narration": "Mẹ Nguyễn Thị Thứ là Bà mẹ Việt Nam anh hùng quê vùng Điện Bàn, đất Quảng. Mẹ đã chịu nhiều mất mát khi các con và người thân hi sinh trong những cuộc kháng chiến. Mẹ Thứ và Mẹ Nhu là hai người khác nhau, mỗi người có cuộc đời và đóng góp riêng. Tìm hiểu về các mẹ, chúng ta thêm trân trọng sự hi sinh của thế hệ trước và biết rằng cuộc sống hòa bình hôm nay được đổi bằng biết bao mất mát.",
         "fact": "Hai người khác nhau, có cuộc đời và tư liệu riêng.",
         "q": "Cần giới thiệu Mẹ Nhu và Mẹ Nguyễn Thị Thứ như thế nào?",
         "answers": [
@@ -778,13 +778,13 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-2-point-4",
         "title": "Tri ân bằng hiểu biết và việc làm",
-        "narration": "Ảnh trước mặt là tượng bán thân Mẹ Nguyễn Thị Thứ, chụp tại khuôn viên bảo tàng quân sự ở Hà Nội năm 2011. Đây không phải ảnh mẹ lúc còn sống và cũng không phải ảnh nhà lưu niệm ở Điện Bàn. Tượng và nơi lưu niệm giúp chúng ta tưởng nhớ theo những cách khác nhau. Em có thể viết lời tri ân bằng lời của mình, giữ trang nghiêm nơi tưởng niệm và làm việc có ích theo hướng dẫn.",
-        "fact": "Tượng Mẹ Nguyễn Thị Thứ chụp ở Hà Nội năm 2011.",
-        "q": "Chú thích nào đúng cho ảnh tượng bán thân trong bài?",
+        "narration": "Lòng biết ơn được thể hiện bằng sự trân trọng và những việc làm cụ thể. Tượng tưởng niệm, nơi lưu niệm giúp các thế hệ ghi nhớ đóng góp của những người đã hi sinh vì đất nước. Khi tìm hiểu về Mẹ Nhu và Mẹ Thứ, em có thể viết một lời tri ân bằng chính cảm nghĩ của mình. Giữ trang nghiêm nơi tưởng niệm, học tập chăm chỉ và biết quan tâm đến người khác là những cách nuôi dưỡng lòng biết ơn mỗi ngày.",
+        "fact": "Để ghi nhớ, tri ân đóng góp của các thế hệ trước.",
+        "q": "Vì sao chúng ta gìn giữ nơi lưu niệm và tượng tưởng niệm?",
         "answers": [
-          "Tượng Mẹ Nguyễn Thị Thứ chụp ở Hà Nội năm 2011",
-          "Ảnh Mẹ Nguyễn Thị Thứ lúc còn sống tại Điện Bàn",
-          "Ảnh chụp cuộc chiến đấu của các chiến sĩ Thanh Khê"
+          "Để ghi nhớ, tri ân đóng góp của các thế hệ trước",
+          "Để biến mọi nơi thành khu vui chơi",
+          "Để thay thế hoàn toàn việc học lịch sử"
         ]
       }
     ],
@@ -866,7 +866,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-3-point-1",
         "title": "Bà Nà – cảnh núi rừng",
-        "narration": "Bà Nà có cảnh quan núi rừng và là nơi có hoạt động tham quan, nghỉ dưỡng. Ảnh Bà Nà Hills cho thấy cả công trình du lịch do con người xây dựng; không nên gọi mọi chi tiết trong ảnh là cảnh tự nhiên. Câu nói “bốn mùa trong một ngày” gợi cảm nhận thời tiết thay đổi, không có nghĩa một ngày trải qua bốn mùa khí hậu thực sự. Em hãy phân biệt vẻ đẹp cảnh quan, công trình và thông tin thời tiết.",
+        "narration": "Bà Nà có cảnh quan núi rừng, đồng thời là nơi phát triển hoạt động tham quan và nghỉ dưỡng. Thiên nhiên và những công trình du lịch tạo nên các trải nghiệm khác nhau cho du khách. Cách nói “bốn mùa trong một ngày” gợi cảm nhận về sự thay đổi của thời tiết; đó là cách diễn đạt giàu hình ảnh, không có nghĩa một ngày trải qua bốn mùa khí hậu thực sự. Khám phá Bà Nà, em có thể tìm hiểu cả cảnh quan và cách con người tổ chức du lịch.",
         "fact": "Lời gợi tả cảm nhận thời tiết thay đổi.",
         "q": "Câu “bốn mùa trong một ngày” ở Bà Nà nên được hiểu thế nào?",
         "answers": [
@@ -878,7 +878,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-3-point-2",
         "title": "Hải Vân Quan trên đỉnh đèo",
-        "narration": "Hải Vân Quan nằm trên đỉnh đèo Hải Vân. Dưới thời Nguyễn, năm 1826, vua Minh Mạng cho xây dựng công trình phòng thủ tại đây để kiểm soát vị trí quan trọng trên tuyến đi lại Bắc – Nam. Đèo là dạng địa hình và tuyến đường; cửa ải là công trình lịch sử trên đèo. Ảnh cho thấy một góc công trình trong khu di tích, chụp ngày 1 tháng 8 năm 2024, khi di tích mở cửa trở lại sau đợt tu bổ. Nó không thay thông báo tham quan hiện hành.",
+        "narration": "Trên đỉnh đèo Hải Vân có Hải Vân Quan, một công trình phòng thủ thời Nguyễn. Năm 1826, vua Minh Mạng cho xây dựng công trình tại vị trí quan trọng trên tuyến đi lại Bắc – Nam. Đèo là dạng địa hình và tuyến đường qua núi, còn cửa ải là công trình lịch sử trên đèo. Vị trí ấy giúp em hiểu vì sao nơi đây gắn với việc kiểm soát đường đi và phòng thủ, kết hợp giá trị cảnh quan với dấu ấn lịch sử.",
         "fact": "Đèo là dạng địa hình, còn cửa ải là công trình trên đèo.",
         "q": "Đèo Hải Vân và Hải Vân Quan khác nhau ở điểm nào?",
         "answers": [
@@ -890,7 +890,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-3-point-3",
         "title": "Hai nơi, nhiều giá trị",
-        "narration": "Bà Nà và Hải Vân Quan đều giúp em khám phá không gian núi, nhưng không có cùng câu chuyện. Bà Nà gợi tìm hiểu cảnh quan và hoạt động du lịch; Hải Vân Quan còn mang dấu ấn phòng thủ thời Nguyễn. Ảnh cửa ải năm 2007 là tư liệu trước đợt tu bổ gần đây. So sánh với ảnh năm 2024 cần giữ đúng chú thích thời gian, không gọi ảnh cũ là cảnh hôm nay và không coi tu bổ là xây một khu vui chơi mới.",
+        "narration": "Cùng ở không gian núi nhưng Bà Nà và Hải Vân Quan đem đến những câu chuyện khác nhau. Bà Nà gắn với cảnh quan và hoạt động du lịch, nghỉ dưỡng. Hải Vân Quan lưu dấu công trình phòng thủ thời Nguyễn, giúp tìm hiểu cách người xưa sử dụng một vị trí quan trọng. Gìn giữ cửa ải cần đi cùng việc bảo vệ những dấu tích lịch sử. Hiểu giá trị riêng của mỗi nơi giúp chúng ta tham quan có ý thức và kể chuyện quê hương chính xác hơn.",
         "fact": "Kiểm soát vị trí quan trọng và phòng thủ.",
         "q": "Giá trị nào gắn trực tiếp với Hải Vân Quan thời Nguyễn?",
         "answers": [
@@ -989,7 +989,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "nghs-quan-the",
         "title": "Cảnh núi và hang động",
-        "narration": "Ngũ Hành Sơn là danh thắng gắn với núi đá, hang động và các dấu tích văn hóa ở Đà Nẵng. Cảnh quan và hoạt động của con người cùng tạo nên sức hấp dẫn của nơi này. Ảnh tư liệu năm 1992 chỉ phản ánh một góc nhìn tại thời điểm chụp. Em hãy mô tả chi tiết nhìn thấy rồi đối chiếu nguồn về từng địa điểm, không suy rằng mọi lối đi và công trình hiện nay đều giống ảnh cũ.",
+        "narration": "Ngũ Hành Sơn là danh thắng nổi bật của Đà Nẵng với núi đá, hang động và những dấu tích văn hóa. Các không gian tự nhiên kết hợp với công trình, hoạt động của con người qua nhiều thời kì tạo nên sức hấp dẫn riêng. Khi khám phá, em có thể tìm hiểu hình dáng cảnh quan và những câu chuyện văn hóa gắn với từng nơi. Trân trọng danh thắng cũng là giữ gìn sự hài hòa giữa thiên nhiên và những giá trị do con người tạo dựng.",
         "fact": "Núi đá, hang động và dấu tích văn hóa.",
         "q": "Nhóm đặc điểm nào phù hợp với Ngũ Hành Sơn?",
         "answers": [
@@ -1013,7 +1013,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "nghs-ma-nhai",
         "title": "Ma nhai – thông tin trên đá",
-        "narration": "Ma nhai ở Ngũ Hành Sơn là những văn khắc bằng chữ Hán và chữ Nôm trên vách đá, hang động. Chúng lưu lại thông tin giúp tìm hiểu lịch sử, văn hóa và giao lưu của con người. Năm 2022, ma nhai tại danh thắng được ghi danh trong Chương trình Ký ức Thế giới khu vực châu Á – Thái Bình Dương. Việc ghi danh di sản tư liệu không đồng nghĩa toàn bộ danh thắng là Di sản thế giới UNESCO theo loại hình văn hóa hoặc thiên nhiên.",
+        "narration": "Trên vách đá và trong các hang động ở Ngũ Hành Sơn có những văn khắc bằng chữ Hán và chữ Nôm, gọi là ma nhai. Những dòng chữ lưu lại dấu ấn của con người qua nhiều thời kì, giúp tìm hiểu lịch sử, văn hóa và giao lưu. Năm 2022, ma nhai tại danh thắng được ghi danh trong Chương trình Ký ức Thế giới khu vực châu Á – Thái Bình Dương. Đây là di sản tư liệu văn khắc trên đá, cần được bảo vệ để những thông tin quý tiếp tục được gìn giữ.",
         "fact": "Di sản tư liệu văn khắc trên đá.",
         "q": "Ma nhai tại Ngũ Hành Sơn được tìm hiểu với tư cách nào?",
         "answers": [
@@ -1114,19 +1114,19 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-5-point-1",
         "title": "Gặp cây sâm Ngọc Linh",
-        "narration": "Sâm Ngọc Linh còn gọi là sâm Việt Nam, có tên khoa học là Panax vietnamensis. Em tìm hiểu cây bằng tư liệu chuyên môn và ảnh có chú thích. Ảnh trong bài chụp tại Măng Ri, ngoài Đà Nẵng; nó minh họa cây theo nguồn ảnh, không phải vườn sâm Trà Linh. Một ảnh không đủ để học sinh xác định cây thật, cây giả hoặc chất lượng sản phẩm. Không tự hái hay nếm một cây chỉ vì nhìn giống ảnh.",
-        "fact": "Tham khảo cây theo nguồn và nơi chụp đã ghi.",
-        "q": "Ảnh cây sâm tại Măng Ri trong bài có thể dùng để làm gì?",
+        "narration": "Sâm Ngọc Linh còn gọi là sâm Việt Nam, có tên khoa học là Panax vietnamensis. Đây là loài cây quý gắn với vùng núi Ngọc Linh và được quan tâm nghiên cứu, bảo tồn. Tìm hiểu sâm giúp em thấy giá trị của sự đa dạng sinh học quê hương. Một loài cây có thể gắn với tri thức khoa học, công việc của người dân và trách nhiệm giữ gìn thiên nhiên. Em quan sát có hướng dẫn, không tự hái hay nếm cây.",
+        "fact": "Là loài cây quý, có giá trị đa dạng sinh học.",
+        "q": "Vì sao sâm Ngọc Linh được quan tâm nghiên cứu và bảo tồn?",
         "answers": [
-          "Tham khảo cây theo nguồn và nơi chụp đã ghi",
-          "Xác thực mọi cây giống ảnh là sâm thật",
-          "Khẳng định đây là ảnh chụp vườn sâm Trà Linh"
+          "Là loài cây quý, có giá trị đa dạng sinh học",
+          "Là vật liệu xây đường",
+          "Là tên một nghề đúc kim loại"
         ]
       },
       {
         "id": "g5-station-5-point-2",
         "title": "Cây quý dưới tán rừng",
-        "narration": "Sâm Ngọc Linh gắn với môi trường núi rừng có điều kiện sinh thái phù hợp. Tại xã Trà Linh, Đà Nẵng, cơ sở chuyên môn bảo tồn và phát triển cây dưới tán rừng. Tán cây, độ ẩm và môi trường đất cùng góp phần tạo nơi sống cho cây. Không phải cứ có bóng râm là trồng được sâm, cũng không thể tách việc giữ cây quý khỏi việc giữ rừng. Học sinh tìm hiểu mối liên hệ ấy, không tự mang cây về trồng thử.",
+        "narration": "Dưới tán rừng ở vùng núi, cây sâm Ngọc Linh cần điều kiện sinh thái phù hợp để sinh trưởng. Tại xã Trà Linh, Đà Nẵng, cơ sở chuyên môn thực hiện công việc bảo tồn và phát triển cây. Tán cây, độ ẩm và môi trường đất cùng góp phần tạo nên nơi sống của sâm. Vì vậy, giữ cây quý gắn liền với giữ rừng. Mối liên hệ ấy cho thấy bảo vệ một loài cây còn cần bảo vệ cả môi trường sống xung quanh nó.",
         "fact": "Cây cần môi trường sinh thái phù hợp dưới tán rừng.",
         "q": "Vì sao bảo tồn sâm Ngọc Linh cần gắn với giữ rừng?",
         "answers": [
@@ -1138,7 +1138,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-5-point-3",
         "title": "Giá trị và công sức gìn giữ",
-        "narration": "Để giữ nguồn sâm Ngọc Linh, có công việc nghiên cứu, sản xuất cây giống, chăm sóc và bảo vệ vườn. Người lao động và cán bộ chuyên môn cùng góp sức; sinh kế của địa phương gắn với việc phát triển cây có trách nhiệm. Điều đáng quý không chỉ nằm ở sản phẩm mà còn ở nguồn gen và môi trường rừng. Bài học này không dùng giá bán hay lời quảng cáo chữa bệnh để khuyến khích học sinh mua hoặc sử dụng sâm.",
+        "narration": "Giữ gìn nguồn sâm Ngọc Linh cần sự góp sức của nhiều người. Cán bộ chuyên môn nghiên cứu, bảo tồn nguồn gen và tạo cây giống; người làm vườn chăm sóc cây, bảo vệ vườn và môi trường xung quanh. Phát triển cây sâm có trách nhiệm góp phần tạo sinh kế cho địa phương. Giá trị của cây vì thế gắn liền với nguồn gen, khu rừng và công sức lao động. Bảo tồn thiên nhiên và phát triển đời sống cần được thực hiện cùng nhau.",
         "fact": "Nguồn gen, môi trường rừng và sinh kế có trách nhiệm.",
         "q": "Những giá trị nào là trọng tâm bài học về sâm?",
         "answers": [
@@ -1150,13 +1150,13 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-5-point-4",
         "title": "Người tìm hiểu có trách nhiệm",
-        "narration": "Người tìm hiểu có trách nhiệm biết hỏi điều mình chưa rõ và sử dụng thông tin đúng nguồn. Khi xem tư liệu về sâm, em ghi nơi chụp và phân biệt nội dung nghiên cứu với lời quảng cáo. Nếu tham quan, chỉ đi theo người phụ trách, không bứt lá, nhổ cây hay tự lấy hạt. Em có thể làm một thông điệp về giữ rừng và tôn trọng công sức người chăm sóc; không cần thử dùng cây để hoàn thành bài học.",
-        "fact": "Nhờ người lớn kiểm tra nguồn chuyên môn trước khi tin hoặc chia sẻ.",
-        "q": "Khi gặp lời quảng cáo về cây quý chưa rõ căn cứ, em nên làm gì?",
+        "narration": "Bảo vệ sâm Ngọc Linh bắt đầu từ việc bảo vệ môi trường rừng và tôn trọng công việc của người chăm sóc. Khi tham quan, em đi theo người phụ trách, quan sát trong khu vực được phép và không tự lấy lá, hạt hay cây. Trở về lớp, em có thể làm một thông điệp về mối liên hệ giữa rừng, cây sâm và sinh kế địa phương. Chia sẻ hiểu biết đúng và hành động vừa sức là cách góp phần gìn giữ nguồn cây quý.",
+        "fact": "Bảo vệ rừng và tôn trọng công sức người chăm sóc.",
+        "q": "Giữ gìn nguồn sâm Ngọc Linh gắn với điều gì?",
         "answers": [
-          "Nhờ người lớn kiểm tra nguồn chuyên môn trước khi tin hoặc chia sẻ",
-          "Chia sẻ trước rồi tìm hiểu sau vì có ảnh đẹp",
-          "Tự dùng thử cây để xác minh lời quảng cáo"
+          "Bảo vệ rừng và tôn trọng công sức người chăm sóc",
+          "Chỉ quan tâm đến hình thức bao bì",
+          "Tách cây khỏi môi trường sống của nó"
         ]
       }
     ],

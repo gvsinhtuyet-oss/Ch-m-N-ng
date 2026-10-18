@@ -70,7 +70,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
       {
         "title": "Nhà thờ lưu dấu người xưa",
         "points": [
-          "Tài liệu giới thiệu Nhà thờ Tiền hiền làng An Hải và Thoại Ngọc Hầu.",
+          "Nhà thờ Tiền hiền làng An Hải và Thoại Ngọc Hầu gắn với việc tưởng nhớ người có công.",
           "Di tích giúp chúng ta tìm hiểu và tưởng nhớ người có công."
         ],
         "question": "Khi đến di tích, em muốn tìm hiểu điều gì?",
@@ -156,7 +156,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
       {
         "title": "Cù Lao Chàm",
         "points": [
-          "Tài liệu giới thiệu quần đảo với Hòn Lao là đảo chính.",
+          "Hòn Lao là đảo chính của quần đảo Cù Lao Chàm.",
           "Cảnh quan có bãi cát, nước biển, rừng và sinh vật phong phú."
         ],
         "question": "Em có thể kể hai chi tiết cảnh quan vừa nghe không?",
@@ -246,7 +246,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
         "title": "Từ cánh đồng đến ngày hội",
         "points": [
           "Bài nghe–viết nói về cánh đồng quê em.",
-          "Tài liệu địa phương có giới thiệu Lễ hội Mừng lúa mới."
+          "Cùng tìm hiểu Lễ hội Mừng lúa mới và trân trọng công sức người trồng lúa."
         ],
         "question": "Hạt lúa gợi cho em nghĩ đến công việc của ai?",
         "answer": "Người trồng lúa và những người góp công làm ra lương thực.",
@@ -258,7 +258,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
         ]
       },
       {
-        "title": "Đọc đúng điều tài liệu cho biết",
+        "title": "Tìm hiểu nét riêng của ngày hội",
         "points": [
           "Lễ hội Mừng lúa mới có trong nhóm lễ hội truyền thống được giới thiệu.",
           "Các lễ hội thường có phần lễ và phần hội."
@@ -361,7 +361,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
       {
         "title": "Nét đẹp phố cổ",
         "points": [
-          "Tài liệu có hình phố cổ bên sông Hoài, Chùa Cầu, nhà cổ và hội quán.",
+          "Phố cổ Hội An bên sông Hoài có Chùa Cầu, nhà cổ và hội quán.",
           "Những công trình gợi vẻ cổ kính của Hội An."
         ],
         "question": "Em muốn quan sát công trình nào trong tư liệu?",
@@ -376,7 +376,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
       {
         "title": "Di sản còn có đời sống văn hóa",
         "points": [
-          "Tài liệu giới thiệu các hoạt động văn hóa và một số làng nghề.",
+          "Hội An còn có những hoạt động văn hóa và các làng nghề truyền thống.",
           "Làng gốm Thanh Hà, làng rau Trà Quế là các ví dụ được nêu."
         ],
         "question": "Người làm nghề góp gì cho nét đẹp quê hương?",
@@ -447,7 +447,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
       {
         "title": "Gọi tên ngày hội quê em",
         "points": [
-          "Tài liệu nêu Cầu ngư, Đình làng Túy Loan, Mục Đồng, Mừng lúa mới, Cầu bông.",
+          "Cầu ngư, Đình làng Túy Loan, Mục Đồng, Mừng lúa mới và Cầu bông là những lễ hội truyền thống.",
           "Mỗi lễ hội có nét riêng cần tìm hiểu."
         ],
         "question": "Em đã biết hoặc nghe tên lễ hội nào?",
@@ -462,7 +462,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
       {
         "title": "Phần lễ",
         "points": [
-          "Tài liệu giới thiệu nghi thức như dâng hương, lễ tế, cầu an, rước kiệu.",
+          "Phần lễ có những nghi thức trang nghiêm như dâng hương, lễ tế, cầu an, rước kiệu tùy lễ hội.",
           "Hoạt động cụ thể phụ thuộc từng lễ hội."
         ],
         "question": "Trong tư liệu, hoạt động nào thuộc phần lễ?",
@@ -478,7 +478,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
         "title": "Phần hội",
         "points": [
           "Có trò chơi dân gian, văn nghệ và thể thao.",
-          "Ví dụ trong tài liệu: Bài Chòi, lắc thúng, gói bánh tét."
+          "Bài Chòi, lắc thúng, gói bánh tét là những ví dụ về hoạt động ngày hội."
         ],
         "question": "Em thích tìm hiểu hoạt động hội nào?",
         "answer": "Câu hỏi mở; học sinh nêu lí do phù hợp.",
@@ -652,7 +652,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
         "title": "Người lớn làm những nghề gì?",
         "points": [
           "Mỗi công việc đóng góp cho cuộc sống.",
-          "Hôm nay chúng mình tìm hiểu nghề dệt chiếu trong tài liệu địa phương."
+          "Cùng khám phá cách người thợ dệt nên những tấm chiếu nhé!"
         ],
         "question": "Em biết nghề nào của người lớn?",
         "answer": "Chấp nhận nghề phù hợp; không yêu cầu học sinh công khai thông tin riêng của gia đình.",
@@ -666,7 +666,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
       {
         "title": "Chiếu Cẩm Nê – Chiếu Bàn Thạch",
         "points": [
-          "Tài liệu giới thiệu hai làng nghề làm chiếu truyền thống.",
+          "Cẩm Nê và Bàn Thạch gắn với nghề làm chiếu truyền thống.",
           "Sản phẩm của nghề là những tấm chiếu."
         ],
         "question": "Nghề được giới thiệu tạo ra sản phẩm gì?",
@@ -681,7 +681,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
       {
         "title": "Nguyên liệu và dụng cụ",
         "points": [
-          "Cói là nguyên liệu chính; tài liệu còn giới thiệu sợi đay.",
+          "Cói là nguyên liệu chính, được dệt cùng sợi đay trên giàn dệt.",
           "Người thợ dùng giàn dệt và các dụng cụ để tạo tấm chiếu."
         ],
         "question": "Cói và giàn dệt khác nhau ở điểm nào?",
@@ -770,7 +770,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
         "title": "Đọc thẻ Nguyễn Văn Thoại",
         "points": [
           "Nguyễn Văn Thoại được phong tước hiệu Thoại Ngọc Hầu.",
-          "Tài liệu nêu việc ông hỗ trợ lập chợ, xây dựng đình, chùa tại quê hương An Hải."
+          "Ông đã hỗ trợ lập chợ, xây dựng đình, chùa tại quê hương An Hải."
         ],
         "question": "Tìm trong thẻ một việc ông đã góp sức.",
         "answer": "Hỗ trợ lập chợ hoặc xây dựng đình, chùa.",
@@ -784,7 +784,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
       {
         "title": "Đọc thẻ Huỳnh Thúc Kháng",
         "points": [
-          "Tài liệu giới thiệu cụ học rộng, tài cao, yêu nước, thương dân.",
+          "Cụ Huỳnh Thúc Kháng học rộng, tài cao, yêu nước, thương dân.",
           "Nhà lưu niệm còn giữ không gian làm việc và vật dụng của cụ."
         ],
         "question": "Trong thẻ, chi tiết nào gợi cho em muốn tìm hiểu thêm?",

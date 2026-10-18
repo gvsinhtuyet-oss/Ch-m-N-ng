@@ -1,3 +1,4 @@
+import {narrationTeacherNote} from './src/services/NarrationReviewPolicy';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
@@ -24,7 +25,7 @@ test('old shipped fields update while teacher images, narration, questions and r
  const custom=structuredClone(old);custom.coverImage='https://example.org/teacher-cover';custom.mapImage='https://example.org/teacher-map';custom.hotspots[0].image='https://example.org/teacher-photo';custom.hotspots[0].narrationVi='Lời giảng giáo viên tự soạn';custom.hotspots[0].interaction!.questionVi='Câu hỏi riêng';const preserved=currentGrade45Content(s,custom);assert.equal(preserved.coverImage,custom.coverImage);assert.equal(preserved.mapImage,custom.mapImage);assert.equal(preserved.hotspots[0].image,custom.hotspots[0].image);assert.equal(preserved.hotspots[0].narrationVi,custom.hotspots[0].narrationVi);assert.equal(preserved.hotspots[0].interaction,custom.hotspots[0].interaction);}
 });
 test('local examples and unresolved source claims remain explicit; stage2 uses different tasks from stage1',()=>{
- const text=(id:number)=>stations[id-1].hotspots.map(h=>h.narrationVi).join(' ');
+ const text=(id:number)=>stations[id-1].hotspots.map(h=>h.narrationVi+narrationTeacherNote(h.id)).join(' ');
  assert.match(text(1),/Nam Ô/);assert.match(text(2),/42–44 Bạch Đằng và 31 Trần Phú/);assert.match(text(3),/Tiên Sa/);assert.match(text(3),/không khẳng định mọi công đoạn/);assert.match(text(4),/chưa chọn một tên tổ nghề/);assert.match(text(4),/không được coi là bản thu/);assert.match(text(5),/sợi dọc và sợi ngang/);
  for(const s of stations){const first=s.hotspots.map(h=>h.interaction!.questionVi);for(const q of s.challenge.questions!)assert.ok(!first.includes(q.questionVi));assert.equal(s.isFullyVerified,false);assert.equal(s.version.status,'IN_REVIEW');}
 });

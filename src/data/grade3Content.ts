@@ -7,7 +7,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-1-point-1",
         "title": "Mỹ Khê – bờ cát và nhịp sóng",
-        "narration": "Mỹ Khê là một cảnh biển quen thuộc của Đà Nẵng. Bờ cát rộng, mặt biển và những con sóng tạo nên không gian để ngắm cảnh, đi dạo và vui chơi phù hợp. Khi mô tả cảnh biển, em có thể nói về màu sắc, âm thanh và điều mình quan sát được. Ảnh chụp trong bài cho em quan sát bờ cát và mặt biển tại Mỹ Khê; cảnh biển và thời tiết có thể thay đổi theo thời điểm.",
+        "narration": "Đến Mỹ Khê, em bắt gặp bờ cát rộng bên mặt biển và những con sóng nối nhau vào bờ. Không gian biển là nơi mọi người ngắm cảnh, đi dạo và vui chơi tại khu vực được phép. Màu nước, ánh sáng và tiếng sóng đem đến những cảm nhận khác nhau. Em hãy dùng một vài từ của mình để kể về nét đẹp của bãi biển này.",
         "fact": "Mỹ Khê nổi bật với bãi cát và không gian biển.",
         "q": "Chi tiết nào phù hợp để mô tả Mỹ Khê?",
         "answers": [
@@ -19,7 +19,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-1-point-2",
         "title": "Bàn Than – ghềnh đá ven biển",
-        "narration": "Bàn Than ở vùng Tam Hải nổi bật với các ghềnh, vách đá bên biển. Đá có những hình dáng khác nhau do tác động lâu dài của tự nhiên. Tên bài trong đề cương dùng “Bãi biển Bàn Than”; khi tìm hiểu thực cảnh, em cần chú ý cả ghềnh đá, không hình dung nơi này chỉ có bãi cát. Không leo lên đá trơn hay tiến gần mép sóng để chụp ảnh.",
+        "narration": "Bàn Than ở vùng Tam Hải nổi bật với những ghềnh, vách đá bên biển. Qua tác động lâu dài của tự nhiên, đá mang nhiều hình dáng khác nhau, tạo nên một cảnh quan riêng. Nếu Mỹ Khê gây ấn tượng bởi bờ cát rộng thì Bàn Than gợi nhớ những ghềnh đá và sóng biển. Khi tham quan, em đi theo hướng dẫn, tránh đá trơn và mép sóng.",
         "fact": "Cảnh Bàn Than có ghềnh đá ven biển; khác với nét nổi bật của bờ cát Mỹ Khê.",
         "q": "Nét cảnh quan nào được nhấn mạnh ở Bàn Than?",
         "answers": [
@@ -151,7 +151,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "dn3-phong-trao-duy-tan",
         "title": "Duy Tân – khát vọng tiến bộ",
-        "narration": "Đầu thế kỉ XX, Huỳnh Thúc Kháng, Phan Châu Trinh và Trần Quý Cáp là những chí sĩ gắn với phong trào Duy Tân ở đất Quảng. Phong trào khuyến khích việc học và đổi mới để góp phần làm đất nước tiến bộ. Em hiểu đây là hoạt động trong một hoàn cảnh lịch sử; việc chăm học hôm nay là bài học noi gương, không phải chính sự kiện lịch sử ấy.",
+        "narration": "Đầu thế kỉ XX, Huỳnh Thúc Kháng, Phan Châu Trinh và Trần Quý Cáp là những chí sĩ gắn với phong trào Duy Tân ở đất Quảng. Các ông khuyến khích việc học, mở mang hiểu biết và đổi mới để đất nước tiến bộ. Tinh thần ham học, mong muốn giúp ích cho nhân dân là điều đáng trân trọng. Noi gương người đi trước, em có thể bắt đầu từ việc học tập chăm chỉ mỗi ngày.",
         "fact": "Duy Tân gắn với khát vọng đổi mới và mở mang việc học.",
         "q": "Cụm từ nào diễn tả tinh thần Duy Tân trong bài?",
         "answers": [
@@ -163,13 +163,13 @@ export const GRADE3_CONTENT = [
       {
         "id": "dn3-dau-chan-hom-nay",
         "title": "Tìm hiểu qua nơi lưu niệm và tư liệu",
-        "narration": "Nhà lưu niệm Huỳnh Thúc Kháng nằm tại xã Thạnh Bình, thành phố Đà Nẵng. Ngoài nơi lưu niệm, những tư liệu như tờ báo Tiếng Dân cũng giúp em tìm hiểu nhân vật. Ảnh trong bài là trang nhất số 1085 ngày 20 tháng 3 năm 1937, không phải số báo đầu tiên hay ảnh Nhà lưu niệm. Em đọc nhãn và hỏi người hướng dẫn, không đoán thêm chuyện từ một bức hình.",
-        "fact": "Tư liệu, nhãn trưng bày và người hướng dẫn giúp em tìm hiểu lịch sử.",
-        "q": "Điều nào giúp em tìm hiểu một hiện vật đúng hơn?",
+        "narration": "Nhà lưu niệm Huỳnh Thúc Kháng tại xã Thạnh Bình là nơi giúp thế hệ sau tìm hiểu cuộc đời của một người yêu nước. Tờ báo Tiếng Dân gắn với hoạt động của cụ cũng lưu giữ dấu ấn về tinh thần quan tâm đến nhân dân và việc nước. Những nơi lưu niệm và trang báo xưa nối câu chuyện lịch sử với hôm nay, nhắc chúng ta trân trọng việc học và trách nhiệm với cộng đồng.",
+        "fact": "Cuộc đời và đóng góp của một người yêu nước.",
+        "q": "Nhà lưu niệm Huỳnh Thúc Kháng giúp thế hệ sau tìm hiểu điều gì?",
         "answers": [
-          "Đọc nhãn và hỏi người hướng dẫn",
-          "Đoán từ màu sắc rồi khẳng định",
-          "Tự viết thêm một câu chuyện"
+          "Cuộc đời và đóng góp của một người yêu nước",
+          "Cách vận hành sân bay",
+          "Quy trình đóng tàu biển"
         ]
       }
     ],
@@ -248,7 +248,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-3-point-1",
         "title": "Nhiều cộng đồng, một quê hương",
-        "narration": "Thành phố Đà Nẵng có nhiều cộng đồng dân tộc cùng sinh sống. Ngoài người Kinh, có các cộng đồng như Cơ Tu, Xơ Đăng, Gié Triêng, Cor. Đây là một số ví dụ, không phải danh sách đầy đủ. Ảnh vòng đồng trong bài là hiện vật Cơ Tu có xuất xứ Quảng Nam theo nhãn bảo tàng; không thể từ một hiện vật mà mô tả tất cả các dân tộc. Mỗi người đều là thành viên đáng quý của cộng đồng. Không thể chỉ nhìn quần áo hay khuôn mặt để đoán chắc dân tộc của một người.",
+        "narration": "Thành phố Đà Nẵng là nơi nhiều cộng đồng dân tộc cùng sinh sống, trong đó có người Kinh, Cơ Tu, Xơ Đăng, Gié Triêng và Cor. Mỗi cộng đồng góp vào đời sống chung những nét văn hóa riêng. Sự phong phú ấy làm quê hương thêm đáng khám phá. Khi cùng học, cùng chơi, chúng ta lắng nghe và tôn trọng nhau để mọi bạn đều cảm thấy mình thuộc về cộng đồng.",
         "fact": "Có nhiều cộng đồng dân tộc cùng góp sức xây dựng quê hương.",
         "q": "Nhận định nào đúng?",
         "answers": [
@@ -260,25 +260,25 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-3-point-2",
         "title": "Tìm hiểu nét văn hóa",
-        "narration": "Trong ảnh bảo tàng, bộ trang phục bên phải được chú thích là của người Cơ Tu ở Quảng Nam, niên đại 1980; bên trái là trang phục Ê Đê ở Đắk Lắk. Đây là hai hiện vật cụ thể, không phải trang phục của mọi cộng đồng Đà Nẵng. Em đọc nhãn để phân biệt nơi có hiện vật với nơi chụp ảnh: ảnh này chụp tại Bảo tàng Phụ nữ Việt Nam ở Hà Nội.",
-        "fact": "Đọc chú thích để gọi đúng tên hiện vật và cộng đồng.",
-        "q": "Khi xem một bộ trang phục ở bảo tàng, em nên dựa vào đâu để tìm hiểu?",
+        "narration": "Trang phục, nghề dệt và âm nhạc là những nét đẹp trong đời sống văn hóa của các cộng đồng. Màu sắc, hoa văn và cách làm sản phẩm có thể mang dấu ấn riêng của từng nơi. Tìm hiểu những nét đẹp ấy giúp em biết thêm về sự khéo léo và sáng tạo của con người. Em hãy lắng nghe lời giới thiệu của chủ nhân văn hóa, không lấy một bộ trang phục để đại diện cho mọi dân tộc.",
+        "fact": "Dệt, tạo hoa văn và chơi âm nhạc truyền thống.",
+        "q": "Những hoạt động nào góp phần làm nên nét đẹp văn hóa cộng đồng?",
         "answers": [
-          "Nhãn giới thiệu và người hướng dẫn",
-          "Đoán theo màu mình thích",
-          "Cho rằng trang phục nào cũng giống nhau"
+          "Dệt, tạo hoa văn và chơi âm nhạc truyền thống",
+          "Chỉ đếm số đường phố",
+          "Chỉ đo chiều cao ngọn núi"
         ]
       },
       {
         "id": "g3-3-point-3",
         "title": "Văn hóa trong đời sống hôm nay",
-        "narration": "Ở Tà Lang – Giàn Bí, Đà Nẵng, cộng đồng Cơ Tu gìn giữ những nét văn hóa như nhà Gươl, cồng chiêng và nghề dệt thổ cẩm. Nhà Gươl là nơi sinh hoạt chung và trao truyền văn hóa. Đây là ví dụ về một cộng đồng cụ thể, không phải kiểu nhà hoặc nghề của mọi dân tộc. Mỗi gia đình vẫn có những cách học tập, lao động và sinh hoạt khác nhau.",
-        "fact": "Văn hóa được gìn giữ và tiếp nối trong đời sống; mỗi gia đình có thể khác nhau.",
-        "q": "Khi giới thiệu nhà Gươl trong tư liệu, cách nói nào phù hợp?",
+        "narration": "Ở Tà Lang và Giàn Bí, đời sống văn hóa của cộng đồng Cơ Tu gắn với nhà Gươl, cồng chiêng và nghề dệt thổ cẩm. Nhà Gươl là không gian sinh hoạt chung, nơi cộng đồng gặp gỡ và gìn giữ các giá trị văn hóa. Tiếng cồng chiêng, hoa văn và bàn tay người thợ góp phần làm nên nét riêng của nơi này. Tìm hiểu từng cộng đồng giúp em thêm yêu sự phong phú của quê hương.",
+        "fact": "Là không gian sinh hoạt chung của cộng đồng.",
+        "q": "Nhà Gươl có vai trò gì trong cộng đồng Cơ Tu?",
         "answers": [
-          "Đây là một nét văn hóa Cơ Tu, không phải kiểu nhà của mọi dân tộc",
-          "Mọi dân tộc đều có cùng một kiểu nhà Gươl",
-          "Chỉ nhìn mái nhà là biết hết văn hóa một cộng đồng"
+          "Là không gian sinh hoạt chung của cộng đồng",
+          "Là bến đỗ tàu chở hàng",
+          "Là nơi sản xuất nước mắm"
         ]
       },
       {
@@ -491,7 +491,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-5-point-1",
         "title": "Thuyền thúng – phương tiện sông biển",
-        "narration": "Thuyền thúng còn được gọi là thúng chai, có dạng tròn, lòng lõm, gắn với đời sống sông biển. Nghề đan thúng tại Thọ Quang, Sơn Trà được ghi nhận qua tư liệu về gia đình ông Phan Liêm. Ảnh bờ biển trong bài cho thấy sản phẩm; bộ ảnh tại nguồn cho thấy người làm nghề. Các tư liệu có năm chụp riêng, không dùng để khẳng định số hộ còn làm nghề hôm nay.",
+        "narration": "Thuyền thúng, còn gọi là thúng chai, có dạng tròn và lòng lõm, gắn bó với đời sống sông biển. Tại Thọ Quang, Sơn Trà, nghề đan thúng được lưu giữ qua những người thợ như ông Phan Liêm và gia đình. Từ những nan tre nhỏ, bàn tay khéo léo tạo nên một phương tiện dùng trên nước. Chiếc thúng cho thấy kinh nghiệm và sự sáng tạo của người dân miền biển.",
         "fact": "Thuyền thúng là phương tiện dạng tròn gắn với đời sống sông biển.",
         "q": "Đặc điểm nào giúp nhận ra thuyền thúng?",
         "answers": [
@@ -503,7 +503,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-5-point-2",
         "title": "Vật liệu và bàn tay người thợ",
-        "narration": "Tre được chẻ và chuốt thành nan để đan thân thúng. Khảo sát tại Thọ Quang và Hòa Minh công bố năm 2018 ghi lại việc chuẩn bị nan, đan và xử lí chống thấm. Dầu rái là một vật liệu truyền thống được nhắc đến. Chi tiết nghề ở Hội An chỉ là tham khảo chung; bài này đã có thêm tư liệu tại Đà Nẵng. Em quan sát ảnh cùng thầy cô, không tự lấy dao chẻ tre.",
+        "narration": "Tre là nguyên liệu để làm thân thúng. Người thợ chẻ tre, chuốt thành những nan phù hợp rồi đan các nan lại với nhau. Thân thúng còn được xử lí chống thấm; dầu rái là một vật liệu truyền thống dùng trong công việc này. Từng công đoạn đòi hỏi sự cẩn thận để sản phẩm đạt yêu cầu. Em quan sát cùng người lớn, không tự dùng dao chẻ tre hay thử các vật liệu chống thấm.",
         "fact": "Nan tre tạo thân thúng; khâu xử lí chống thấm giúp thúng dùng trên nước.",
         "q": "Nan tre được dùng chủ yếu để làm gì?",
         "answers": [
@@ -515,7 +515,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-5-point-3",
         "title": "Các bước khái quát",
-        "narration": "Tư liệu khảo sát Đà Nẵng mô tả các công đoạn: chuẩn bị nan, đan, tạo hình, làm vành và nối thân, xử lí chống thấm, hoàn thiện khung bên trong. Bộ ảnh gia đình ông Phan Liêm tại Sơn Trà giúp em đối chiếu một số bước. Sơ đồ là bản tóm tắt để học, không phải quy trình riêng của mọi hộ hay hướng dẫn để em tự chế tạo thúng.",
+        "narration": "Làm một chiếc thúng trải qua nhiều công đoạn. Trước hết, người thợ chuẩn bị nan tre và đan thân, rồi tạo dáng tròn, làm vành và nối thân. Sau đó là xử lí chống thấm và hoàn thiện khung bên trong. Mỗi bước góp phần tạo nên chiếc thúng dùng trên nước. Công việc cần kinh nghiệm, sự phối hợp và kiên nhẫn; em có thể tìm hiểu trình tự bằng một mô hình giấy trong lớp.",
         "fact": "Nghề làm thúng cần nhiều bước, kĩ năng và sự cẩn thận.",
         "q": "Sau khi đan thân và tạo dáng, cần làm gì tiếp theo trong sơ đồ?",
         "answers": [

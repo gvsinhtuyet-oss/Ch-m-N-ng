@@ -7,7 +7,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-1",
         "title": "Nơi em ở",
-        "narration": "Quê hương là nơi gần gũi, gắn bó với em. Nơi em ở có nhà cửa, đường đi và những người em quen biết. Em hãy cùng thầy cô nói tên xã hoặc phường nơi mình ở. Mỗi bạn có thể sống ở một nơi khác nhau trong thành phố Đà Nẵng. Ảnh cầu Sông Hàn là cảnh quê hương để tham khảo; em hãy liên hệ với khu vực mình thật sự sinh sống.",
+        "narration": "Quê hương là nơi gần gũi, gắn bó với em. Đó là ngôi nhà, con đường và những người em gặp mỗi ngày. Mỗi bạn có thể sống ở một xã, phường khác nhau của thành phố Đà Nẵng. Em hãy kể tên nơi mình ở và một điều khiến em yêu nơi ấy nhé!",
         "fact": "Em biết tên khu vực nơi mình ở.",
         "q": "Em đang tìm hiểu điều gì ở điểm này?",
         "answers": [
@@ -31,7 +31,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-3",
         "title": "Từ nhà đến trường",
-        "narration": "Trên đường từ nhà đến trường, em có thể đi qua hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn có đường đi khác nhau. Em hãy chọn một địa điểm mình thật sự nhìn thấy và kể với thầy cô. Em cũng có thể vẽ lại một đoạn đường quen thuộc. Ảnh cầu Sông Hàn gợi một cảnh để kể, không có nghĩa mọi bạn đều đi qua cây cầu này.",
+        "narration": "Trên đường từ nhà đến trường, em có thể đi qua hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn có một đường đi riêng với những điều thân quen. Em hãy chọn một địa điểm mình đã quan sát và kể lại. Một bức tranh nhỏ cũng giúp em giới thiệu con đường đến trường của mình đấy!",
         "fact": "Mỗi bạn có những địa điểm quen thuộc trên đường đến trường.",
         "q": "Tranh về đường đến trường nên có gì?",
         "answers": [
@@ -132,7 +132,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "tdh-tuong-thanh-hao",
         "title": "Cửa thành, tường thành và hào",
-        "narration": "Theo tài liệu, Thành Điện Hải có cửa phía nam và cửa phía đông. Thành được xây bằng gạch; xung quanh có hào. Cửa thành, tường thành và hào là những dấu tích giúp em hình dung ngôi thành xưa. Ảnh tư liệu cho thấy tường và hào của thành; ảnh không phải bản vẽ đo đạc di tích.",
+        "narration": "Thành Điện Hải được xây bằng gạch, có cửa phía nam và cửa phía đông. Xung quanh thành có hào. Tường thành, cửa thành và hào cùng góp phần bảo vệ ngôi thành xưa. Ngắm những dấu tích còn lại, em có thể hình dung một công trình phòng thủ của cha ông.",
         "fact": "Cửa thành, tường thành và hào là những dấu tích của ngôi thành.",
         "q": "Hào được giới thiệu ở đâu?",
         "answers": [
@@ -233,7 +233,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-game-1",
         "title": "Những trò chơi quen thuộc",
-        "narration": "Bịt mắt bắt dê, kéo co và nhảy bao bố là những trò chơi dân gian được giới thiệu trong tài liệu. Các trò chơi tạo niềm vui và giúp bạn bè gắn bó. Em hãy nói tên trò mình biết. Nếu chưa từng chơi, em có thể nhờ thầy cô giới thiệu trước.",
+        "narration": "Bịt mắt bắt dê, kéo co và nhảy bao bố là những trò chơi dân gian vui nhộn. Có trò cần đôi tai lắng nghe, có trò cần cả đội cùng góp sức. Khi cùng chơi, bạn bè thêm gần gũi. Em biết trò nào trong những trò ấy? Hãy cùng thầy cô tìm hiểu cách chơi nhé!",
         "fact": "Trò chơi dân gian mang lại niềm vui và sự gắn bó.",
         "q": "Đâu là trò chơi dân gian vừa được giới thiệu?",
         "answers": [
@@ -257,7 +257,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-game-3",
         "title": "Phạm vi và lượt chơi",
-        "narration": "Người chơi chỉ di chuyển trong phạm vi đã thống nhất. Người cổ vũ không nhắc hướng tìm dê cho người bịt mắt. Theo cách chơi trong tài liệu, khi bắt được dê, người bắt thắng lượt đó; người bị bắt làm người bắt dê ở lượt tiếp theo.",
+        "narration": "Trước khi chơi bịt mắt bắt dê, cả nhóm thống nhất phạm vi chơi. Các bạn chỉ di chuyển trong phạm vi ấy, người cổ vũ không nhắc hướng tìm dê. Khi bắt được một bạn làm dê, người bắt thắng lượt đó. Bạn bị bắt sẽ làm người bắt dê ở lượt tiếp theo. Chơi đúng luật giúp cuộc vui công bằng hơn!",
         "fact": "Chơi trong phạm vi đã thống nhất và đổi vai theo luật.",
         "q": "Người đóng vai dê di chuyển ở đâu?",
         "answers": [
@@ -346,7 +346,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-1",
         "title": "Gọi tên suối, thác",
-        "narration": "Tài liệu giới thiệu Suối Tiên, Suối Lương, thác Ồ Ồ, thác ở Hố Giang Thơm, thác Grăng và Hòa Phú Thành. Tài liệu cũng có hai địa điểm cùng tên Suối Mơ: một ở Hà Nha, một ở Bà Nà. Không nên ghép hai nơi này thành một. Tranh minh họa gợi hoạt động quan sát suối, không phải ảnh chụp một trong các địa điểm vừa kể.",
+        "narration": "Quê hương có nhiều suối và thác đẹp như Suối Tiên, Suối Lương, thác Ồ Ồ, thác Grăng, Hố Giang Thơm và Hòa Phú Thành. Có hai nơi cùng tên Suối Mơ: một ở Hà Nha, một ở Bà Nà. Mỗi nơi có vẻ đẹp riêng. Em muốn tìm hiểu dòng suối nào?",
         "fact": "Có nhiều dòng suối, thác nước; hai địa điểm có thể cùng tên.",
         "q": "Hai địa điểm cùng tên được nhắc đến là gì?",
         "answers": [
@@ -358,7 +358,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-2",
         "title": "Rừng cây bên Suối Tiên",
-        "narration": "Theo tài liệu, Suối Tiên ở Quế Sơn Trung có rừng cây xanh. Cây cối và dòng nước tạo nên cảnh quan gần gũi với thiên nhiên. Hình trên app là tranh minh họa rừng và dòng suối, không phải ảnh chụp hay hình tái hiện chính xác Suối Tiên. Em có thể kể màu sắc hoặc cảnh vật mình yêu thích trong tranh.",
+        "narration": "Suối Tiên ở Quế Sơn Trung có rừng cây xanh bao quanh. Cây cối và dòng nước tạo nên một cảnh quan gần gũi với thiên nhiên. Màu xanh của lá, hình dáng của cây và dòng suối là những điều em có thể quan sát. Em thích nét đẹp nào của rừng và suối?",
         "fact": "Rừng cây xanh là một nét đẹp được giới thiệu ở Suối Tiên.",
         "q": "Cảnh vật nào được giới thiệu bên Suối Tiên?",
         "answers": [
@@ -370,7 +370,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-3",
         "title": "Dòng nước và thác ở Suối Tiên",
-        "narration": "Tài liệu miêu tả Suối Tiên có nước trong và mát. Nước từ thác trên cao chảy xuống tạo thành hồ. Đây là nét đẹp để quan sát, không có nghĩa là nơi nào cũng an toàn để xuống nước. Khi tham quan, em luôn đi cùng người lớn và làm theo hướng dẫn. Tranh minh họa giúp hình dung dòng thác và hồ nước, không phải ảnh tư liệu của Suối Tiên.",
+        "narration": "Ở Suối Tiên, dòng nước trong và mát chảy từ thác trên cao xuống, tạo thành hồ. Dòng thác, hồ nước và cây xanh làm nên cảnh đẹp của suối. Khi tham quan, em đi cùng người lớn và làm theo hướng dẫn. Nước trông trong, đẹp không có nghĩa là an toàn để tự xuống chơi.",
         "fact": "Suối Tiên có dòng nước và thác tạo nên cảnh đẹp.",
         "q": "Theo lời giới thiệu, nước ở Suối Tiên thế nào?",
         "answers": [
@@ -382,7 +382,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-4",
         "title": "Giới thiệu cảnh đẹp em yêu",
-        "narration": "Suối và thác nước là những cảnh đẹp, điểm du lịch sinh thái của địa phương. Để giới thiệu một nơi, em có thể nói tên, nơi được giới thiệu trong tài liệu và một nét đẹp. Em có thể sưu tầm tranh ảnh cùng người lớn hoặc vẽ lại cảnh mình thích.",
+        "narration": "Suối và thác nước góp thêm vẻ đẹp cho quê hương, cũng là nơi mọi người tìm hiểu thiên nhiên. Muốn giới thiệu một dòng suối, em hãy nói tên và một nét đẹp của nơi ấy. Em có thể cùng người lớn sưu tầm tranh ảnh hoặc vẽ cảnh mình yêu thích. Giữ sạch dòng suối cũng là cách yêu quê hương.",
         "fact": "Em có thể giới thiệu một cảnh đẹp bằng lời nói hoặc tranh vẽ.",
         "q": "Khi giới thiệu một dòng suối, em có thể nói gì?",
         "answers": [
@@ -459,7 +459,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-1",
         "title": "Món ngon quê hương",
-        "narration": "Tài liệu giới thiệu mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng. Mỗi món có tên gọi, nguyên liệu và cách thưởng thức riêng. Em có thể kể món từng ăn, hoặc món vừa biết qua tài liệu. Không cần nói rằng em đã ăn nếu chưa từng thử.",
+        "narration": "Mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng là những món ăn quen thuộc của quê hương. Mỗi món có nguyên liệu, cách làm và hương vị riêng. Em đã biết món nào? Hãy kể tên một món em từng ăn hoặc muốn tìm hiểu cùng gia đình nhé!",
         "fact": "Quê hương có nhiều món ăn truyền thống.",
         "q": "Món nào có trong danh sách vừa được giới thiệu?",
         "answers": [
@@ -471,7 +471,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-2",
         "title": "Nguyên liệu món mì Quảng",
-        "narration": "Theo cách giới thiệu trong tài liệu, mì Quảng có sợi mì, tôm, thịt và trứng; có nước dùng, rau ăn kèm, đậu phụng và bánh tráng nướng. Cách nấu ở mỗi gia đình có thể khác. Khi ăn, em báo người lớn nếu có nguyên liệu mình không ăn được.",
+        "narration": "Một tô mì Quảng có thể có sợi mì, tôm, thịt và trứng, thêm nước dùng, rau thơm, đậu phụng và bánh tráng nướng. Các nguyên liệu kết hợp tạo nên hương vị của món ăn. Mỗi gia đình có thể nấu khác nhau. Nếu có nguyên liệu không ăn được, em nhớ báo người lớn nhé!",
         "fact": "Sợi mì cùng các nguyên liệu tạo nên món mì Quảng.",
         "q": "Mì Quảng trong tài liệu có nhóm nguyên liệu nào?",
         "answers": [
@@ -483,7 +483,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-3",
         "title": "Bày tô mì và thưởng thức",
-        "narration": "Trong cách trình bày ở tài liệu, cho mì vào tô, thêm tôm, thịt, trứng rồi chan nước dùng, rắc đậu phụng và rau thơm. Rau sống có thể để riêng để ăn kèm. Khi ăn có thể thêm chanh và bánh tráng nướng tùy sở thích, không phải ai cũng ăn cay. Ảnh tô mì là một cách bày để tham khảo; thành phần có thể khác với ví dụ trong tài liệu.",
+        "narration": "Để bày tô mì Quảng, cho sợi mì vào tô, thêm tôm, thịt, trứng rồi chan nước dùng. Rắc thêm đậu phụng và rau thơm, bày rau ăn kèm bên cạnh. Bánh tráng nướng góp vị giòn cho món ăn. Khi thưởng thức, mỗi người có thể thêm chanh và chọn nguyên liệu phù hợp với mình.",
         "fact": "Có thể thưởng thức mì Quảng cùng rau và bánh tráng nướng.",
         "q": "Đồ ăn kèm nào vừa được giới thiệu?",
         "answers": [

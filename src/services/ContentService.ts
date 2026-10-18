@@ -1,3 +1,4 @@
+import {currentNarrationContent} from './NarrationReviewPolicy';
 import {currentGrade2Content} from './Grade2ContentPolicy';
 import {currentGrade45Content} from './Grade45ContentPolicy';
 import {currentGrade3Content} from './Grade3ContentPolicy';
@@ -49,7 +50,7 @@ const isLegacyPlaceholderCover = (url: string) =>
 
 export const contentService = {
   get(station: Station): StationContent {
-    return records[station.id] ? currentGrade45Content(station,currentGrade3Content(station,currentGrade2Content(station,currentGrade1Content(station,records[station.id])))) : {
+    return records[station.id] ? currentNarrationContent(currentGrade45Content(station,currentGrade3Content(station,currentGrade2Content(station,currentGrade1Content(station,records[station.id]))))) : {
       contentRevision:station.version.version,
       coverImage: station.coverImage, mapImage: station.journeyMap?.image || '',
       hotspots: station.hotspots, resources: [],
@@ -58,7 +59,7 @@ export const contentService = {
   apply(station: Station) {
     const saved = records[station.id];
     if (!saved) return;
-    const content=currentGrade45Content(station,currentGrade3Content(station,currentGrade2Content(station,currentGrade1Content(station,saved))));
+    const content=currentNarrationContent(currentGrade45Content(station,currentGrade3Content(station,currentGrade2Content(station,currentGrade1Content(station,saved)))));
     // Dữ liệu đã xuất bản từ các bản cũ có thể còn ảnh stock Unsplash.
     // Không cho ảnh placeholder cũ ghi đè bộ cover đã được biên tập đúng theo 25 trạm.
     if (content.coverImage && !isLegacyPlaceholderCover(content.coverImage)) {

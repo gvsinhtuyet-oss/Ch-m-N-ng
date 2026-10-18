@@ -20,7 +20,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
   subtitleVi: 'Quan sát phố cổ – nhận biết công trình, hoạt động văn hóa và làng nghề',
   subtitleEn: 'Explore ancient streets, heritage buildings, cultural activities and craft villages',
   coverImage: 'https://commons.wikimedia.org/wiki/Special:FilePath/Hoi%20An%20Ancient%20Town.jpg',
-  openingMessageVi: 'Chào mừng em đến với phố cổ Hội An! Hãy cùng quan sát những con đường, công trình cổ, hoạt động văn hóa và làng nghề được giới thiệu trong tài liệu lớp 2 nhé!',
+  openingMessageVi: 'Chào mừng em đến với phố cổ Hội An! Hãy cùng quan sát những con đường, công trình cổ, hoạt động văn hóa và làng nghề gắn với đời sống phố cổ nhé!',
   openingMessageEn: 'Welcome to Hoi An Ancient Town! Explore its streets, buildings, cultural activities and traditional craft villages.',
   totalPeriods: 7,
   officialCurriculumReference: 'Tài liệu GDĐP TP Đà Nẵng lớp 2 đang sử dụng – Chủ đề 2: Di sản văn hóa thế giới Hội An',
@@ -103,7 +103,7 @@ export const CANONICAL_HOI_AN_STATION: Station = {
       titleVi:'5. Làng gốm Thanh Hà',
       subtitleVi:'Quan sát sản phẩm và trải nghiệm làm gốm',
       image:'https://commons.wikimedia.org/wiki/Special:FilePath/Gom%20Thanh%20Ha.JPG',
-      narrationVi:'Làng gốm Thanh Hà là một làng nghề truyền thống được giới thiệu trong tài liệu lớp 2. Ở đây, em có thể quan sát cổng làng, các sản phẩm gốm và tìm hiểu cách người thợ tạo nên đồ gốm từ đất.',
+      narrationVi: "Ở làng gốm Thanh Hà, đất được người thợ khéo léo tạo thành những sản phẩm gốm. Từ nguyên liệu gần gũi, bàn tay và kinh nghiệm của người làm nghề tạo nên đồ dùng với nhiều hình dáng. Đến thăm làng, em có thể quan sát sản phẩm, lắng nghe câu chuyện làm gốm và trân trọng công sức của người thợ.",
       keyFactVi:'Điều cần nhớ: Thanh Hà nổi tiếng với nghề làm gốm và các sản phẩm gốm truyền thống.',
       interaction:{id:'ha-i5',type:'single-choice',questionVi:'Làng Thanh Hà nổi tiếng với nghề nào?',options:[
         {id:'a',textVi:'Làm gốm',isCorrect:true},{id:'b',textVi:'Dệt chiếu',isCorrect:false},{id:'c',textVi:'Đóng tàu',isCorrect:false}

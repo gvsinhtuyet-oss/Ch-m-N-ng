@@ -1,3 +1,4 @@
+import {narrationTeacherNote} from './src/services/NarrationReviewPolicy';
 import {test} from 'node:test';
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
@@ -36,8 +37,8 @@ test('reviewed photos are packaged locally, attributed and integrity checked; di
  assert.equal(GRADE_3_STATIONS.flatMap(s=>s.hotspots).filter(h=>grade3MediaBySrc(h.image)).length,13);
 });
 test('source conflicts and scope limitations remain visible; no invented mapping or portrait',()=>{
- const history=GRADE_3_STATIONS[1].hotspots.map(h=>h.narrationVi).join(' ');assert.match(history,/Tiếng Dân/);assert.match(history,/Trần Quý Cáp/);assert.doesNotMatch(history,/Phan Bội Châu/);
- const craft=GRADE_3_STATIONS[4].hotspots.map(h=>h.narrationVi).join(' ');assert.match(craft,/Hội An.*tham khảo chung/);assert.match(craft,/không phải quy trình riêng/);
+ const history=GRADE_3_STATIONS[1].hotspots.map(h=>h.narrationVi+narrationTeacherNote(h.id)).join(' ');assert.match(history,/Tiếng Dân/);assert.match(history,/Trần Quý Cáp/);assert.doesNotMatch(history,/Phan Bội Châu/);
+ const craft=GRADE_3_STATIONS[4].hotspots.map(h=>h.narrationVi+narrationTeacherNote(h.id)).join(' ');assert.match(craft,/Hội An.*tham khảo chung/);assert.match(craft,/không phải quy trình riêng/);
  assert.match(GRADE3_TOPIC_DECKS[1].reviewNotes.join(' '),/Hoàng Diệu/);assert.match(GRADE3_TOPIC_DECKS[4].reviewNotes.join(' '),/khảo sát.*2017.*2018/);
  for(const d of GRADE3_TOPIC_DECKS){assert.equal(d.mappingReview?.currentYearConfirmed,false);assert.equal(d.sourceRecord.week,'Chưa gắn kế hoạch');assert.equal(getGddpLessonDeck(d.sourceRecord),null);}
 });
@@ -75,8 +76,8 @@ test('photo revision upgrades only exact built-in assets and narration; teacher 
  for(const station of GRADE_3_STATIONS){const content={contentRevision:'3.0.2-grade3-review',coverImage:`/learning/grade3/${station.id}-cover.svg`,mapImage:station.journeyMap!.image!,resources:[],hotspots:station.hotspots.map((h,i)=>({...h,image:`/learning/grade3/${station.id}-point-${i+1}.svg`,narrationVi:GRADE3_PREVIOUS_NARRATIONS[h.id]||h.narrationVi}))};const before=JSON.stringify(content);const result=currentGrade3Content(station,content);assert.equal(result.coverImage,station.coverImage);assert.deepEqual(result.hotspots.map(h=>h.image),station.hotspots.map(h=>h.image));assert.deepEqual(result.hotspots.map(h=>h.narrationVi),station.hotspots.map(h=>h.narrationVi));assert.equal(JSON.stringify(content),before);}
 });
 test('local examples and photo scope cannot silently become unrelated places or approved curriculum',()=>{
- const community=GRADE_3_STATIONS[2];assert.match(community.hotspots[1].narrationVi,/bên phải.*Cơ Tu.*Quảng Nam/);assert.match(community.hotspots[1].narrationVi,/bên trái.*Ê Đê.*Đắk Lắk/);assert.match(community.hotspots[2].narrationVi,/Tà Lang – Giàn Bí/);assert.match(grade3MediaBySrc(community.hotspots[2].image)!.caption,/mô hình.*Hà Nội.*Không phải/);
- const craft=GRADE_3_STATIONS[4];assert.match(grade3MediaBySrc(craft.coverImage)!.caption,/Thọ Quang.*2024.*không phải ảnh công đoạn/);assert.match(craft.hotspots[0].narrationVi,/không dùng để khẳng định số hộ/);assert.match(grade3MediaBySrc(GRADE_3_STATIONS[3].coverImage)!.caption,/không phải ảnh cơ sở sản xuất/);
+ const community=GRADE_3_STATIONS[2];assert.match(community.hotspots[1].narrationVi+narrationTeacherNote(community.hotspots[1].id),/bên phải.*Cơ Tu.*Quảng Nam/);assert.match(community.hotspots[1].narrationVi+narrationTeacherNote(community.hotspots[1].id),/bên trái.*Ê Đê.*Đắk Lắk/);assert.match(community.hotspots[2].narrationVi,/Tà Lang.*Giàn Bí/);assert.match(grade3MediaBySrc(community.hotspots[2].image)!.caption,/mô hình.*Hà Nội.*Không phải/);
+ const craft=GRADE_3_STATIONS[4];assert.match(grade3MediaBySrc(craft.coverImage)!.caption,/Thọ Quang.*2024.*không phải ảnh công đoạn/);assert.match(craft.hotspots[0].narrationVi+narrationTeacherNote(craft.hotspots[0].id),/không dùng để khẳng định số hộ/);assert.match(grade3MediaBySrc(GRADE_3_STATIONS[3].coverImage)!.caption,/không phải ảnh cơ sở sản xuất/);
  for(const deck of GRADE3_TOPIC_DECKS)for(const slide of deck.slides)for(const image of slide.images||[]){const media=grade3MediaBySrc(image.src);if(media)assert.equal(image.caption,media.caption);}
 });
 

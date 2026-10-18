@@ -11,7 +11,7 @@ root = Path(__file__).resolve().parent.parent
 records = json.loads((root / 'content-review/grade3-media-sources.json').read_text())
 results = []
 for record in records:
-    url = record['originalUrl']
+    url = record['downloadUrl']
     assert url.startswith('https://upload.wikimedia.org/wikipedia/commons/')
     request = urllib.request.Request(url, headers={'User-Agent': 'ChamDaNangEducation/1.0 (open-license educational media import)'})
     for attempt in range(4):
@@ -30,7 +30,7 @@ for record in records:
     image.save(output, 'WEBP', quality=83, method=6)
     binary = output.read_bytes()
     assert 1000 < len(binary) < 900000
-    results.append({'id': record['id'], 'src': record['src'], 'sha256': hashlib.sha256(binary).hexdigest(), 'bytes': len(binary), 'width': image.width, 'height': image.height, 'originalSha256': hashlib.sha256(data).hexdigest()})
+    results.append({'id': record['id'], 'src': record['src'], 'sha256': hashlib.sha256(binary).hexdigest(), 'bytes': len(binary), 'width': image.width, 'height': image.height, 'downloadSha256': hashlib.sha256(data).hexdigest()})
     print(record['id'], image.size, len(binary), flush=True)
-    time.sleep(1)
+    time.sleep(5)
 (root / 'content-review/grade3-media-integrity.json').write_text(json.dumps(results, indent=2) + '\n')

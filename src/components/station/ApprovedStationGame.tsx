@@ -14,6 +14,7 @@ interface Props {
 const APPROVED_GAMES: Record<string, { path: string; title: string }> = {
   'g2-station-4': { path: '/games/hoi-an/index.html', title: 'Giải mã thương cảng Hội An' },
   'g2-station-2': { path: '/games/cu-lao-cham/index.html', title: 'Biệt đội xanh cứu đảo' },
+  'g2-station-3': { path: '/games/dau-an-xua/index.html', title: 'Dấu Ấn Xưa · An Hải' },
 };
 
 export const ApprovedStationGame: React.FC<Props> = ({ station, studentId, isReadOnly, onCompleteStage }) => {

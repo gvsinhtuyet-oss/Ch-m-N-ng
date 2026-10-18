@@ -54,15 +54,6 @@
     "downloadSha256": "ce4c993fdd02e9ee52c3bba6f0c025df02e5d71d134c69ef86f04e68fd98df62"
   },
   {
-    "id": "phan-chau-trinh",
-    "src": "/learning/grade3/photos/phan-chau-trinh.webp",
-    "sha256": "47080056eda81bc17f464a86bb4e7d024898b2f370d1a2972b5838b30b31c22a",
-    "bytes": 8664,
-    "width": 148,
-    "height": 200,
-    "downloadSha256": "d049a8ec57657caafe6f338630949a037e5ebc09bca6865f7395d0b64b4e5d21"
-  },
-  {
     "id": "tho-quang-2024",
     "src": "/learning/grade3/photos/tho-quang-2024.webp",
     "sha256": "8c785f4df8d002137ce46f90553875e723e022dad46795bf3e6aad683425b3d8",
@@ -97,5 +88,32 @@
     "width": 1280,
     "height": 960,
     "downloadSha256": "00c0040f3bf0c2e22164aba736664accc5dce673bcaa3028526a3bbe8997e1a1"
+  },
+  {
+    "id": "phan-chau-trinh",
+    "src": "/learning/grade3/photos/phan-chau-trinh.webp",
+    "sha256": "1be525ade8ee557774c066c604599bd1a7e25a1b7ea4e4625b9138bb9b906808",
+    "bytes": 185584,
+    "width": 900,
+    "height": 1212,
+    "downloadSha256": "4e57152a19574c588d53c2ceb00f5f1b786b3c7624b14489e3ce222611b376c4"
+  },
+  {
+    "id": "tran-quy-cap",
+    "src": "/learning/grade3/photos/tran-quy-cap.webp",
+    "sha256": "11e37361a52f8d1e0db2373c8b6f7c72c631778687d3287ad4c5dcfde4724fc2",
+    "bytes": 7248,
+    "width": 263,
+    "height": 350,
+    "downloadSha256": "646b4cb8e7fd71eb2794468d8c21236956023269a8fde8b09cdbaf64b594181d"
+  },
+  {
+    "id": "tieng-dan-1937",
+    "src": "/learning/grade3/photos/tieng-dan-1937.webp",
+    "sha256": "256086348a08daa5bfea9bcb8ab7c8ec35fba909dd6b9b9e23aa096a1875245f",
+    "bytes": 374284,
+    "width": 960,
+    "height": 1245,
+    "downloadSha256": "cf23b0ff517c128ad872fae5d7901854b58c91c0c98c61d186f5955762f50a91"
   }
 ]

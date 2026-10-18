@@ -1,0 +1,101 @@
+[
+  {
+    "id": "my-khe",
+    "src": "/learning/grade3/photos/my-khe.webp",
+    "sha256": "42dc91fc0df40474f81b920b8ea585cf2c8e83eafe6296d1f9a1afb1a885d3c2",
+    "bytes": 391042,
+    "width": 1280,
+    "height": 836,
+    "downloadSha256": "cb66f7fb5d6276b01c9d076924384ad4fe457a6f51755794b4e034971157de9b"
+  },
+  {
+    "id": "ban-than",
+    "src": "/learning/grade3/photos/ban-than.webp",
+    "sha256": "997415613e59bd8659b91b37ffccad7214b0f12990590be2928bf98b5f84060b",
+    "bytes": 225966,
+    "width": 1280,
+    "height": 960,
+    "downloadSha256": "eb29902eedd5d3715fcdd192311b9e8707f51c9b42ec273bd95675ed23df65d0"
+  },
+  {
+    "id": "huynh-thuc-khang",
+    "src": "/learning/grade3/photos/huynh-thuc-khang.webp",
+    "sha256": "f3494c48e23343c4411688d48fa04eed7424f05e7ea77898d3d891633a2a90de",
+    "bytes": 76582,
+    "width": 765,
+    "height": 1294,
+    "downloadSha256": "41f0e047e4650bd00ae03c19500c9ed9296101e25fef692f0fd26c1bcd6653aa"
+  },
+  {
+    "id": "co-tu-bracelets",
+    "src": "/learning/grade3/photos/co-tu-bracelets.webp",
+    "sha256": "8f6d912106c33feddf8d29b50fa700cfa9dbb40cdefaa61ab84b81d62fc8effb",
+    "bytes": 131732,
+    "width": 1031,
+    "height": 1440,
+    "downloadSha256": "9227fe5bab966e6b8c7ae2b0863133f0c1041e812f23af7c04f1574daf38015a"
+  },
+  {
+    "id": "co-tu-costumes",
+    "src": "/learning/grade3/photos/co-tu-costumes.webp",
+    "sha256": "aac01d5b91cddeef63da05540fbf05e82292757abd920e0d7c4e60a0de06a8b1",
+    "bytes": 291214,
+    "width": 1146,
+    "height": 1440,
+    "downloadSha256": "1df736ac688e11cdf3d476311932a173a0000366d92ac46e79524e625e0dbe39"
+  },
+  {
+    "id": "nam-o",
+    "src": "/learning/grade3/photos/nam-o.webp",
+    "sha256": "ce349930717c4502ad9ccb42e1bcef9ce436fdc3753746263da1302a92d6fe34",
+    "bytes": 175466,
+    "width": 1280,
+    "height": 720,
+    "downloadSha256": "e94b5ed2d7383bfb7ce4d27d1bbeeb87388a3ac457877f11e0d73d94c1c97706"
+  },
+  {
+    "id": "thung-my-khe",
+    "src": "/learning/grade3/photos/thung-my-khe.webp",
+    "sha256": "392705f6ebafe9708399d4906d3965d12dd3790a1686770f51b7962c271ab7a5",
+    "bytes": 285136,
+    "width": 1280,
+    "height": 960,
+    "downloadSha256": "ce4c993fdd02e9ee52c3bba6f0c025df02e5d71d134c69ef86f04e68fd98df62"
+  },
+  {
+    "id": "phan-chau-trinh",
+    "src": "/learning/grade3/photos/phan-chau-trinh.webp",
+    "sha256": "47080056eda81bc17f464a86bb4e7d024898b2f370d1a2972b5838b30b31c22a",
+    "bytes": 8664,
+    "width": 148,
+    "height": 200,
+    "downloadSha256": "d049a8ec57657caafe6f338630949a037e5ebc09bca6865f7395d0b64b4e5d21"
+  },
+  {
+    "id": "tho-quang-2024",
+    "src": "/learning/grade3/photos/tho-quang-2024.webp",
+    "sha256": "8c785f4df8d002137ce46f90553875e723e022dad46795bf3e6aad683425b3d8",
+    "bytes": 338234,
+    "width": 1280,
+    "height": 854,
+    "downloadSha256": "b8ee50d0d9173cae1c7cbcf471f963f9d9d493c66453a2d4812e6823c7995eab"
+  },
+  {
+    "id": "tho-quang-day",
+    "src": "/learning/grade3/photos/tho-quang-day.webp",
+    "sha256": "e7445e7c5491f045def332a608f5065c0fdb3e20ebe89645e754d81546fae40e",
+    "bytes": 240318,
+    "width": 1280,
+    "height": 853,
+    "downloadSha256": "da3bce2efa2219da4e05995cdabe27e94322102b72efa3e52fbc5ed1950e51de"
+  },
+  {
+    "id": "guol-model",
+    "src": "/learning/grade3/photos/guol-model.webp",
+    "sha256": "90d707f41cf26a2b6ab21aa20225b54611e22a8f3091ac9d0cdd6f2645db23ec",
+    "bytes": 90264,
+    "width": 800,
+    "height": 603,
+    "downloadSha256": "6f4f1f8af828b09c34e7be1c2b6b9912d68756ae7e832d3010e0967f3fc8851f"
+  }
+]

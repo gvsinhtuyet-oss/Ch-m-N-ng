@@ -33,3 +33,5 @@ jobs:
           git commit -m 'Import reviewed Grade 5 river and restored Hai Van Quan photographs'
           git pull --rebase origin main
           git push origin HEAD:main
+
+# Re-select the view facing the restored gate after visual review.

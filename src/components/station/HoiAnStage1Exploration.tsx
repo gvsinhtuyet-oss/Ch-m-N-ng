@@ -1,3 +1,4 @@
+import {allHotspotsAnswered} from '../../features/stations/stageAccess';
 import {LearningImage} from '../LearningImage';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
@@ -137,7 +138,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   };
 
   const check = () => {
-    if (!selected || !hotspot.interaction) return;
+    if (submitted || !selected || !hotspot.interaction) return;
     const ok = !!hotspot.interaction.options.find(option => option.id === selected)?.isCorrect;
     setCorrect(ok);
     setSubmitted(true);
@@ -154,7 +155,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
         window.setTimeout(() => {
           if (index < station.hotspots.length - 1) {
             setIndex(index + 1);
-          } else {
+          } else if (allHotspotsAnswered(station.hotspots,[...sessionCompletedHotspotIds,hotspot.id])) {
             if (!readOnly) {
               progressService.completeStage1(studentId, station.id);
             }
@@ -189,6 +190,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   };
 
   const next = () => {
+    if(!freeReview&&!completedHotspotIds.has(hotspot.id)){
+      setLockMessage('Em hãy trả lời đúng câu hỏi của điểm hiện tại trước khi đi tiếp nhé!');
+      return;
+    }
     // Giữ đúng luồng tuần tự theo số điểm chạm thực tế của từng bài.
     // Không tự bỏ qua một điểm chỉ vì điểm đó đã có dữ liệu hoàn thành từ lần thử trước.
     if (index < station.hotspots.length - 1) {
@@ -198,20 +203,12 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
       return;
     }
 
-    const allCompleted = station.hotspots.every(item =>
-      new Set([
-        ...progressService.getStationProgress(studentId, station.id).exploredHotspotIds,
-        ...sessionCompletedHotspotIds,
-        hotspot.id,
-      ]).has(item.id)
-    );
+    const allCompleted = freeReview || allHotspotsAnswered(station.hotspots,[...completedHotspotIds]);
 
     if (!allCompleted) {
       const firstMissingIndex = station.hotspots.findIndex(item =>
         !new Set([
-          ...progressService.getStationProgress(studentId, station.id).exploredHotspotIds,
           ...sessionCompletedHotspotIds,
-          hotspot.id,
         ]).has(item.id)
       );
       if (firstMissingIndex >= 0) {
@@ -793,6 +790,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             }
           }}
           onContinue={() => {
+            if(!freeReview&&!allHotspotsAnswered(station.hotspots,[...completedHotspotIds]))return;
             setShowReward(false);
             onCompleteStage();
           }}

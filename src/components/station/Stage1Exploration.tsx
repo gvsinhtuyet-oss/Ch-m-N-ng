@@ -1,3 +1,4 @@
+import {allHotspotsAnswered} from '../../features/stations/stageAccess';
 import {LearningMediaCredit} from '../LearningMediaCredit';
 import { contentService } from '../../services/ContentService';
 import React, { useState, useEffect, useMemo } from 'react';
@@ -42,6 +43,7 @@ interface Props {
 export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage }) => {
   const { currentUser, role, isOnline, language, setAssistantHotspot } = useApp();
   const isReadOnly = role !== 'student';
+  const [answeredIds,setAnsweredIds]=useState<string[]>(()=>progressService.getStationProgress(currentUser?.id||'guest',station.id).exploredHotspotIds);
   const [currentHotspotIdx, setCurrentHotspotIdx] = useState(0);
   const [narrationState, setNarrationState] = useState<NarrationState>('idle');
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
@@ -103,6 +105,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
+  const freeReview=progress.stage1Completed||progress.stationCompleted||progress.stampReceived;
   const isExplored = progress.exploredHotspotIds.includes(hotspot.id);
 
   // Audio Playback Controls
@@ -138,6 +141,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
     setAnswerSubmitted(true);
 
     if (correct) {
+      setAnsweredIds(ids=>ids.includes(hotspot.id)?ids:[...ids,hotspot.id]);
       audioService.playSfx('correct');
       if (!isReadOnly) {
         progressService.completeHotspot(studentId, station.id, hotspot.id);
@@ -148,6 +152,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   };
 
   const changeHotspot = (newIndex: number) => {
+    if(!freeReview&&newIndex>currentHotspotIdx&&!station.hotspots.slice(0,newIndex).every(h=>answeredIds.includes(h.id)))return;
     if (newIndex >= 0 && newIndex < station.hotspots.length) {
       audioService.playSfx('transition');
       setCurrentHotspotIdx(newIndex);
@@ -155,6 +160,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   };
 
   const handleNextHotspot = () => {
+    if(!freeReview&&(!answerSubmitted||!isCorrect||!answeredIds.includes(hotspot.id)))return;
     audioService.playSfx('click');
     if (!isReadOnly) {
       progressService.completeHotspot(studentId, station.id, hotspot.id);
@@ -163,6 +169,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
     if (currentHotspotIdx < station.hotspots.length - 1) {
       changeHotspot(currentHotspotIdx + 1);
     } else {
+      if(!freeReview&&!allHotspotsAnswered(station.hotspots,answeredIds))return;
       if (!isReadOnly) {
         progressService.completeStage1(studentId, station.id);
       }
@@ -702,6 +709,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
             }
           }}
           onContinue={() => {
+            if(!freeReview&&!allHotspotsAnswered(station.hotspots,answeredIds))return;
             setShowRewardModal(false);
             onCompleteStage();
           }}

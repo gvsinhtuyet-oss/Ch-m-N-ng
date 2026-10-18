@@ -10,7 +10,7 @@ import { Stage2Challenge } from '../../components/station/Stage2Challenge';
 import { Stage3CheckIn } from '../../components/station/Stage3CheckIn';
 import { Stage4Stamp } from '../../components/station/Stage4Stamp';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
-import { unlockedStage } from './stageAccess';
+import { unlockedStage,visibleStage } from './stageAccess';
 import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles } from 'lucide-react';
 
 interface Props {
@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const StationView: React.FC<Props> = ({ station, onBack }) => {
-  const { currentUser, currentStage, setCurrentStage } = useApp();
+  const { currentUser, currentStage: requestedStage, setCurrentStage } = useApp();
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
   const isPolishedJourney = DEMO_STATION_IDS.has(station.id);
@@ -28,8 +28,16 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const [offlinePkg, setOfflinePkg] = useState(offlineService.getPackage(station.id));
 
   // If completed once or stamp received, student can freely navigate stages
-  const isUnlockedAllStages = progress.stationCompleted || progress.stampReceived;
-  const highestAccessibleStage = Math.max(currentStage, unlockedStage(progress));
+  const [sessionUnlockedStage,setSessionUnlockedStage]=useState(()=>unlockedStage(progress));
+  const highestAccessibleStage=Math.max(sessionUnlockedStage,unlockedStage(progress));
+  const currentStage=visibleStage(requestedStage,progress,sessionUnlockedStage);
+  const isUnlockedAllStages=progress.stationCompleted||progress.stampReceived;
+  const finishStage=(stage:1|2|3)=>{
+    if(stage>highestAccessibleStage)return;
+    const next=(stage+1) as 2|3|4;
+    setSessionUnlockedStage(highest=>Math.max(highest,next));
+    setCurrentStage(next);
+  };
 
   const handleDownload = async () => {
     audioService.playSfx('click');
@@ -212,23 +220,23 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
       <div className="transition-all duration-300">
         {currentStage === 1 && (
           isPolishedJourney ? (
-            <HoiAnStage1Exploration station={station} onCompleteStage={() => setCurrentStage(2)} />
+            <HoiAnStage1Exploration station={station} onCompleteStage={() => finishStage(1)} />
           ) : (
-            <Stage1Exploration station={station} onCompleteStage={() => setCurrentStage(2)} />
+            <Stage1Exploration station={station} onCompleteStage={() => finishStage(1)} />
           )
         )}
 
         {currentStage === 2 && (
           <Stage2Challenge
             station={station}
-            onCompleteStage={() => setCurrentStage(3)}
+            onCompleteStage={() => finishStage(2)}
           />
         )}
 
         {currentStage === 3 && (
           <Stage3CheckIn
             station={station}
-            onCompleteStage={() => setCurrentStage(4)}
+            onCompleteStage={() => finishStage(3)}
           />
         )}
 

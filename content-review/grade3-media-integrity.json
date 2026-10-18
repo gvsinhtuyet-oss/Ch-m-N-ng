@@ -1,14 +1,5 @@
 [
   {
-    "id": "my-khe",
-    "src": "/learning/grade3/photos/my-khe.webp",
-    "sha256": "42dc91fc0df40474f81b920b8ea585cf2c8e83eafe6296d1f9a1afb1a885d3c2",
-    "bytes": 391042,
-    "width": 1280,
-    "height": 836,
-    "downloadSha256": "cb66f7fb5d6276b01c9d076924384ad4fe457a6f51755794b4e034971157de9b"
-  },
-  {
     "id": "ban-than",
     "src": "/learning/grade3/photos/ban-than.webp",
     "sha256": "997415613e59bd8659b91b37ffccad7214b0f12990590be2928bf98b5f84060b",
@@ -97,5 +88,14 @@
     "width": 800,
     "height": 603,
     "downloadSha256": "6f4f1f8af828b09c34e7be1c2b6b9912d68756ae7e832d3010e0967f3fc8851f"
+  },
+  {
+    "id": "my-khe",
+    "src": "/learning/grade3/photos/my-khe.webp",
+    "sha256": "fc752fcfdf091d69478308ef13bf401112679cd030856876824225fe6b469fd8",
+    "bytes": 280084,
+    "width": 1280,
+    "height": 960,
+    "downloadSha256": "4934bdeb0d5a510b120079f1754a1195ec3c06ddb2942d0908c67f7749a95df8"
   }
 ]

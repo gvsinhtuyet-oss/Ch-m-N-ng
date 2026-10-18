@@ -36,6 +36,8 @@ Ngày rà soát: 18/10/2026. Phạm vi: 5 trạm, 20 điểm học, 25 câu th�
 
 ## Sửa trong lần rà soát này
 
+- Thay hai phương án nhiễu phi thực tế ở câu quy trình nước mắm bằng các nhầm lẫn về thời gian xử lí. Đổi câu quy trình thúng để không hỏi lại công dụng nan tre ở điểm ngay trước đó; chặng 2 giữ nguyên 25 tình huống.
+
 - Sửa điều kiện huy hiệu thiên nhiên đang tham chiếu nhầm mã khối 1 sang trạm biển khối 3; giữ nguyên ID vật phẩm và tiến độ.
 - Hiển thị trọn sơ đồ khối 3 trong ảnh chính và ảnh phóng to, tránh cắt chữ do lấp đầy khung.
 - Bỏ cách xưng hô “đề cương cô cung cấp” trong lời thuyết minh cho học sinh; giữ thông tin địa điểm và ghi chú giới hạn ở phần nguồn.
@@ -46,7 +48,7 @@ Ngày rà soát: 18/10/2026. Phạm vi: 5 trạm, 20 điểm học, 25 câu th�
 Các lệnh và kịch bản chạy cục bộ, chặn mạng ngoài và giả lập API:
 
 - `grade3-content-test.ts`, `stage2-distinct-test.ts`, `stage-access-test.ts`: nội dung, đáp án, hình cục bộ, nguồn, quyền mở chặng, không trùng câu và không truy cập mạng khi đọc học liệu.
-- Kiểm tra TypeScript và build ứng dụng đạt. Nhóm kiểm tra nội dung khối 3, phân biệt câu hỏi, quyền mở chặng và đối chiếu trình chiếu khối 1–2: 25 kiểm tra đạt.
+- Kiểm tra TypeScript và build ứng dụng đạt. Nhóm kiểm tra nội dung khối 3, phân biệt câu hỏi, quyền mở chặng và đối chiếu trình chiếu khối 1–2: 26 kiểm tra đạt.
 - Kịch bản trình duyệt: 5 trạm trên khung máy tính và điện thoại; trả sai ở chặng 1; làm lại duy nhất câu sai ở chặng 2; check-in; nhận bản đồ và dấu; quay lại chặng trước; kiểm tra tiến độ sau tải lại. Kết quả: cả 5 trạm đạt trên máy tính và điện thoại (10 hành trình, 40 lượt điểm học); bản đồ tải được; tiến độ còn sau tải lại; không có lệnh ghi API hoặc lỗi JavaScript trong luồng học được kiểm tra.
 
 Không dùng các kiểm tra trên để khẳng định đã thử đăng nhập thật, giọng đọc trên mọi thiết bị, hoặc đồng bộ Firestore thực tế.

@@ -50,3 +50,8 @@ test('grade-3 review uses its own nature badge and retains primary evidence for 
 test('minor source review preserves previous reviewed teacher narration, media and resources without mutating the record',()=>{
  const s=GRADE_3_STATIONS[1];const edited={contentRevision:'3.0.0-grade3-source',coverImage:'https://school.example/cover.jpg',mapImage:'https://school.example/map.svg',hotspots:s.hotspots.map((h,i)=>i?{...h}:{...h,narrationVi:'Lời thuyết minh giáo viên đã duyệt',image:'https://school.example/photo.jpg'}),resources:[]};const before=JSON.stringify(edited);const updated=currentGrade3Content(s,edited);assert.equal(updated.hotspots[0].narrationVi,edited.hotspots[0].narrationVi);assert.equal(updated.hotspots[0].image,edited.hotspots[0].image);assert.equal(updated.coverImage,edited.coverImage);assert.equal(updated.mapImage,edited.mapImage);assert.equal(JSON.stringify(edited),before);assert.equal(updated.contentRevision,GRADE3_CONTENT_REVISION);
 });
+
+test('fish-sauce process options stay realistic and the basket sequence adds a distinct stage-1 objective',()=>{
+ const fish=GRADE_3_STATIONS[3].hotspots[2].interaction!;assert.doesNotMatch(JSON.stringify(fish.options),/bằng sơn|cá thành tre/);assert.match(fish.questionVi,/Sau khi trộn/);
+ const craft=GRADE_3_STATIONS[4];assert.match(craft.hotspots[2].interaction!.questionVi,/Sau khi đan thân/);assert.notEqual(craft.hotspots[1].interaction!.options.find(o=>o.isCorrect)!.textVi,craft.hotspots[2].interaction!.options.find(o=>o.isCorrect)!.textVi);
+});

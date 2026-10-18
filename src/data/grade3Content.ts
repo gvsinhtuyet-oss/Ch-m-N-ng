@@ -394,11 +394,11 @@ export const GRADE3_CONTENT = [
         "title": "Từ nguyên liệu đến sản phẩm",
         "narration": "Ở mức khái quát, nghề làm nước mắm gồm chuẩn bị nguyên liệu, phối trộn và ủ chượp, sau đó lọc lấy nước mắm và hoàn thiện sản phẩm. Cá cần thời gian chuyển hóa trong quá trình ủ, không phải trộn xong là có chai nước mắm dùng ngay. Mỗi cơ sở có quy trình cụ thể; bài học không yêu cầu em thuộc tỉ lệ muối hay số tháng ủ.",
         "fact": "Ủ chượp cần thời gian; sản phẩm trải qua nhiều công đoạn.",
-        "q": "Vì sao không thể trộn cá và muối rồi đóng chai dùng ngay?",
+        "q": "Sau khi trộn cá với muối, cần làm gì để thu được nước mắm?",
         "answers": [
-          "Cần quá trình ủ và các công đoạn tiếp theo",
-          "Vì nước mắm được làm bằng sơn",
-          "Vì phải biến cá thành tre"
+          "Ủ chượp rồi thực hiện các công đoạn tiếp theo",
+          "Lọc và đóng chai dùng ngay sau khi trộn",
+          "Chỉ thêm nước rồi đóng chai dùng ngay"
         ]
       },
       {
@@ -515,11 +515,11 @@ export const GRADE3_CONTENT = [
         "title": "Các bước khái quát",
         "narration": "Có thể tìm hiểu quá trình làm thúng ở mức khái quát: chuẩn bị nan, đan thân và tạo dáng, làm vành, xử lí chống thấm và kiểm tra. Người thợ cần kĩ năng ở từng công đoạn. Sơ đồ học tập chỉ giúp em hiểu trình tự chung, không phải công thức chế tạo hay quy trình riêng đã được khảo sát tại từng hộ ở Sơn Trà. Học sinh không tự dùng dao, lửa hoặc chất trét để làm thử.",
         "fact": "Nghề làm thúng cần nhiều bước, kĩ năng và sự cẩn thận.",
-        "q": "Bước nào giúp các nan trở thành thân thúng?",
+        "q": "Sau khi đan thân và tạo dáng, cần làm gì tiếp theo trong sơ đồ?",
         "answers": [
-          "Đan và tạo dáng",
-          "Đổ đầy cát để dùng ngay",
-          "Chỉ sơn nhãn bên ngoài"
+          "Làm vành rồi xử lí chống thấm",
+          "Bỏ bước làm vành và đem sử dụng ngay",
+          "Chỉ trang trí bên ngoài rồi đem sử dụng"
         ]
       },
       {

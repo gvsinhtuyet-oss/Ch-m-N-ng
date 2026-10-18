@@ -1,7 +1,7 @@
 import type {Station,ExplorationHotspot,ChallengeQuestion} from '../types';
 import {OFFICIAL_25_CATALOG} from './curriculumCatalog';
 import {GRADE3_CONTENT} from './grade3Content';
-export const GRADE3_CONTENT_REVISION='3.0.1-grade3-review';
+export const GRADE3_CONTENT_REVISION='3.0.2-grade3-review';
 const source='Đề cương dự thảo GDĐP TP Đà Nẵng – pl 1 de cuong chi tiet.docx, phần lớp 3, trang 16–17; bộ nội dung tham khảo, chờ kế hoạch tích hợp mới';
 function choices(answers:string[],offset:number){const options=answers.map((textVi,i)=>({id:'opt-'+(i+1),textVi,isCorrect:i===0}));return [...options.slice(offset),...options.slice(0,offset)];}
 export const GRADE_3_STATIONS:Station[]=GRADE3_CONTENT.map(lesson=>{

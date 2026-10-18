@@ -12,7 +12,8 @@ interface Props {
 }
 
 const APPROVED_GAMES: Record<string, { path: string; title: string }> = {
-  'g2-station-1': { path: '/games/det-sac-mau-que-em/index.html', title: 'Dệt Sắc Màu Quê Em' },
+  'g2-station-1': { path: '/games/det-sac-mau-que-em/index.html', title: 'Dệt Sắc Mắc Quê Em' },
+  'g2-station-5': { path: '/games/ron-rang-hoi-que/index.html', title: 'Rộn Ràng Chợ Quê' },
   'g2-station-4': { path: '/games/hoi-an/index.html', title: 'Giải mã thương cảng Hội An' },
   'g2-station-2': { path: '/games/cu-lao-cham/index.html', title: 'Biệt đội xanh cứu đảo' },
   'g2-station-3': { path: '/games/dau-an-xua/index.html', title: 'Dấu Ấn Xưa · An Hải' },

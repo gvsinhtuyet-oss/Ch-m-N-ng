@@ -4,6 +4,7 @@ import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
 import { progressService } from '../../services/ProgressService';
+import { ApprovedStationGame } from './ApprovedStationGame';
 import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle, Gamepad2 } from 'lucide-react';
 
 
@@ -165,6 +166,17 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const wrongQuestions = questions.filter(q =>
     !q.options.some(option => option.isCorrect && option.id === selectedAnswers[q.id]),
   );
+
+  if (station.id === 'g2-station-4' || station.id === 'g2-station-2') {
+    return (
+      <ApprovedStationGame
+        station={station}
+        studentId={studentId}
+        isReadOnly={isReadOnly}
+        onCompleteStage={onCompleteStage}
+      />
+    );
+  }
 
   const handleRetry = () => {
     audioService.playSfx('click');

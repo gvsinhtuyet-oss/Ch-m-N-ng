@@ -92,10 +92,10 @@
   {
     "id": "my-khe",
     "src": "/learning/grade3/photos/my-khe.webp",
-    "sha256": "fc752fcfdf091d69478308ef13bf401112679cd030856876824225fe6b469fd8",
-    "bytes": 280084,
+    "sha256": "6fae4b16daa6a56acd18eb9815a705bbc3b92b5b264b2cff31f1fd08c2f3c428",
+    "bytes": 157100,
     "width": 1280,
     "height": 960,
-    "downloadSha256": "4934bdeb0d5a510b120079f1754a1195ec3c06ddb2942d0908c67f7749a95df8"
+    "downloadSha256": "00c0040f3bf0c2e22164aba736664accc5dce673bcaa3028526a3bbe8997e1a1"
   }
 ]

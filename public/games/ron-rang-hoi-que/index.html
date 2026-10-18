@@ -59,6 +59,10 @@
 @media(min-width:821px){.wrap{height:min(590px,calc(100dvh - 44px));width:min(100%,960px);padding:8px 14px;top:50%;transform:translateY(-50%)}.top{height:48px;margin-bottom:6px;padding:4px 10px}.arena{grid-template-columns:minmax(175px,.58fr) minmax(390px,1.42fr);gap:10px}.story{padding:12px}.story h2{font-size:clamp(18px,1.7vw,23px);margin:8px 0 5px}.festival-photo{flex:1;min-height:0;width:100%;height:auto;max-height:none;align-self:stretch;margin:4px auto;object-fit:contain}.play{padding:12px}.question{margin:6px 0 4px}.instruction{margin-bottom:5px}.photo-choice{max-height:175px}}
 @media(max-width:820px){.lantern-run{gap:3px}.lantern{font-size:14px}.progress{max-width:185px}.story{grid-template-columns:1fr 132px}.festival-photo{flex:none;width:130px;height:122px}}
 @media(max-width:460px){.story{grid-template-columns:1fr 110px}.festival-photo{width:108px;height:105px}}
+.question{position:relative;padding:11px 14px;margin:9px 0 6px;border:1px solid #efc25b;border-left:5px solid #ec9d35;border-radius:14px;background:linear-gradient(120deg,#fff2bd 0%,#fff9df 58%,#eaf6d9 100%);box-shadow:0 4px 0 #d7bb7180,0 7px 14px #28534b18;color:#164943;font-size:clamp(17px,1.65vw,22px);line-height:1.25;letter-spacing:-.018em;text-shadow:0 1px #fff9}
+.instruction{display:block;width:fit-content;max-width:100%;min-height:0;margin:0 0 8px;padding:4px 9px;border:1px solid #d8dfc4;border-radius:9px;background:#f7f8e8d9;color:#667663;font-size:11px;line-height:1.35}
+@media(max-width:820px){.question{font-size:19px;padding:10px 12px;margin:8px 0 6px}.instruction{font-size:11px;margin-bottom:7px}}
+@media(max-width:460px){.question{font-size:17px;padding:9px 10px;border-radius:12px}.instruction{font-size:10px;padding:4px 7px}}
 </style>
 
 </head>
@@ -103,31 +107,31 @@ const soundToggle=$('#sound-toggle');
 let soundOn=true,ctx=null,started=false,index=0,inReview=false,reviewIds=[],reviewPos=0,wrongFirst=new Set(),collected=new Set(),submitting=false,selectedActivity=null,assignments={},selectedMulti=new Set(),answerOrders={},fireTimer=null,celebrationPlayed=false,completionSent=false,toastTimer=null;
 const GOOD='Tốt lắm! Dấu ấn đã sáng lên. Mình cùng sang nhiệm vụ tiếp theo nhé!';
 const questions=[
- {id:'festival-photo',type:'picture',icon:'🖼️',label:'NHẬN DIỆN LỄ HỘI',title:'Hình nào ghi lại Lễ hội Cầu Ngư?',hint:'Chọn một bức ảnh.',help:'Lễ hội Cầu Ngư gắn với đời sống của cộng đồng ngư dân vùng biển.',good:GOOD,bad:'Thử quan sát đoàn người, trang phục và không khí trong ảnh nhé.',choices:[
+ {id:'festival-photo',type:'picture',icon:'🖼️',label:'NHẬN DIỆN LỄ HỘI',title:'Bức ảnh nào ghi lại Lễ hội Cầu Ngư?',hint:'Chọn một bức ảnh.',help:'Lễ hội Cầu Ngư gắn với đời sống của cộng đồng ngư dân vùng biển.',good:GOOD,bad:'Thử quan sát đoàn người, trang phục và không khí trong ảnh nhé.',choices:[
   {id:'cau-ngu',src:'./assets/cau-ngu-festival.webp',alt:'Lễ hội Cầu Ngư',caption:'Lễ hội Cầu Ngư',ok:true},
   {id:'song-hoai',src:'../hoi-an/song-hoai.jpeg',alt:'Sông Hoài ở Hội An',caption:'Sông Hoài · Hội An',ok:false},
   {id:'nha-co',src:'../hoi-an/nha-co.webp',alt:'Nhà cổ Hội An',caption:'Nhà cổ · Hội An',ok:false},
   {id:'cu-lao',src:'../cu-lao-cham/cu-lao-cham-island.webp',alt:'Cảnh đảo Cù Lao Chàm',caption:'Đảo Cù Lao Chàm',ok:false}
  ]},
- {id:'sort-activities',type:'sort',icon:'🧩',label:'GHÉP ĐÚNG PHẦN HỘI',title:'Đưa từng hoạt động về đúng phần nhé!',hint:'Chạm một thẻ hoạt động, rồi chạm “Phần lễ” hoặc “Phần hội”. Có thể đổi vị trí trước khi xác nhận.',help:'Phần lễ trang nghiêm; phần hội có trò chơi và hoạt động vui tươi.',good:GOOD,bad:'Hãy nhớ: nghi thức trang nghiêm thuộc phần lễ; trò chơi vui cùng nhau thuộc phần hội.',activities:[
+ {id:'sort-activities',type:'sort',icon:'🧩',label:'GHÉP ĐÚNG PHẦN HỘI',title:'Hoạt động nào thuộc phần lễ, hoạt động nào thuộc phần hội?',hint:'Chạm thẻ hoạt động rồi chọn “Phần lễ” hoặc “Phần hội”. Có thể đổi lựa chọn trước khi xác nhận.',help:'Phần lễ trang nghiêm; phần hội có trò chơi và hoạt động vui tươi.',good:GOOD,bad:'Hãy nhớ: nghi thức trang nghiêm thuộc phần lễ; trò chơi vui cùng nhau thuộc phần hội.',activities:[
   {id:'incense',icon:'🙏',text:'Dâng hương',group:'le'},
   {id:'palanquin',icon:'🏮',text:'Rước kiệu',group:'le'},
   {id:'baichoi',icon:'🎴',text:'Chơi Bài Chòi',group:'hoi'},
   {id:'tug',icon:'🪢',text:'Kéo co',group:'hoi'}
  ]},
- {id:'festival-meaning',type:'single',icon:'💛',label:'LỜI ƯỚC NGÀY HỘI',title:'Lễ hội truyền thống gửi gắm điều gì?',hint:'Chọn câu trả lời phù hợp nhất.',help:'Lễ hội gắn với truyền thống và những mong ước tốt đẹp của cộng đồng.',good:GOOD,bad:'Nghĩ đến điều mà mọi người cùng mong cho quê hương và cộng đồng nhé.',choices:[
+ {id:'festival-meaning',type:'single',icon:'💛',label:'LỜI ƯỚC NGÀY HỘI',title:'Lễ hội truyền thống thường gửi gắm điều gì?',hint:'Chọn câu trả lời phù hợp nhất.',help:'Lễ hội gắn với truyền thống và những mong ước tốt đẹp của cộng đồng.',good:GOOD,bad:'Nghĩ đến điều mà mọi người cùng mong cho quê hương và cộng đồng nhé.',choices:[
   {id:'a',icon:'🌾',text:'Những mong ước tốt đẹp và sự gắn kết cộng đồng',ok:true},
   {id:'b',icon:'🧩',text:'Làm cho mọi người xa cách nhau',ok:false},
   {id:'c',icon:'🏁',text:'Chỉ để thi đua thắng thua',ok:false},
   {id:'d',icon:'🧹',text:'Để quên đi truyền thống quê hương',ok:false}
  ]},
- {id:'lost-adult',type:'single',icon:'🧭',label:'TÌNH HUỐNG Ở HỘI',title:'Đi hội cùng lớp, em không thấy cô giáo đâu. Em nên làm gì?',hint:'Chọn cách an toàn nhất.',help:'Khi không thấy người đi cùng, hãy ở nơi an toàn và nhờ người có trách nhiệm giúp đỡ.',good:GOOD,bad:'Không chạy đi xa và không đi theo người lạ. Hãy tìm người phụ trách tại lễ hội.',choices:[
+ {id:'lost-adult',type:'single',icon:'🧭',label:'TÌNH HUỐNG Ở HỘI',title:'Nếu đi hội cùng lớp mà không thấy cô giáo, em nên làm gì?',hint:'Chọn cách an toàn nhất.',help:'Khi không thấy người đi cùng, hãy ở nơi an toàn và nhờ người có trách nhiệm giúp đỡ.',good:GOOD,bad:'Không chạy đi xa và không đi theo người lạ. Hãy tìm người phụ trách tại lễ hội.',choices:[
   {id:'a',icon:'🛡️',text:'Ở nơi an toàn, nhờ người phụ trách hỗ trợ liên hệ cô',ok:true},
   {id:'b',icon:'🏃',text:'Tự chạy đi khắp nơi để tìm cô',ok:false},
   {id:'c',icon:'🚶',text:'Đi theo người lạ rủ đi tìm',ok:false},
   {id:'d',icon:'📱',text:'Rời khu vực lễ hội một mình',ok:false}
  ]},
- {id:'good-festival',type:'multi',icon:'✨',label:'HƯỚNG DẪN VIÊN NHÍ',title:'Chọn đủ việc giúp ngày hội vui và văn minh.',hint:'Chọn các việc phù hợp, rồi xác nhận một lần.',help:'Em hãy nhớ những việc nhỏ để giữ trật tự, vệ sinh và làm theo nội quy.',good:GOOD,bad:'Xem lại các lựa chọn về xếp hàng, vệ sinh, trang phục và nội quy nhé.',choices:[
+ {id:'good-festival',type:'multi',icon:'✨',label:'HƯỚNG DẪN VIÊN NHÍ',title:'Việc nào giúp ngày hội vui, an toàn và văn minh?',hint:'Chọn các việc phù hợp, rồi xác nhận một lần.',help:'Em hãy nhớ những việc nhỏ để giữ trật tự, vệ sinh và làm theo nội quy.',good:GOOD,bad:'Xem lại các lựa chọn về xếp hàng, vệ sinh, trang phục và nội quy nhé.',choices:[
   {id:'queue',icon:'🚶',text:'Xếp hàng trật tự',ok:true},
   {id:'bin',icon:'🗑️',text:'Bỏ rác đúng nơi',ok:true},
   {id:'dress',icon:'👕',text:'Mặc trang phục phù hợp',ok:true},

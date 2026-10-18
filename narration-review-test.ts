@@ -16,6 +16,8 @@ test('current saved defaults update purely and idempotently; custom teaching con
  const snapshot=JSON.stringify(content),updated=currentNarrationContent(content);assert.equal(JSON.stringify(content),snapshot);assert.equal(updated.resources,content.resources);assert.equal(updated.contentRevision,content.contentRevision);assert.deepEqual(updated.hotspots.map(h=>h.narrationVi),s.hotspots.map(h=>h.narrationVi));
  for(const h of updated.hotspots){const canonical=s.hotspots.find(p=>p.id===h.id)!;assert.equal(h.interaction?.questionVi,canonical.interaction?.questionVi);assert.equal(h.interaction?.options.find(o=>o.isCorrect)?.textVi,canonical.interaction?.options.find(o=>o.isCorrect)?.textVi);}
  assert.equal(currentNarrationContent(updated),updated);
+ const reorder=(v:any):any=>Array.isArray(v)?v.map(reorder):v&&typeof v==='object'?Object.fromEntries(Object.entries(v).reverse().map(([k,x])=>[k,reorder(x)])):v;
+ assert.deepEqual(currentNarrationContent(reorder(content)),updated);
  const custom=structuredClone(content);custom.hotspots.forEach((h:any)=>{h.narrationVi='Lời giảng riêng của giáo viên';h.interaction.questionVi='Câu hỏi riêng';h.image='https://example.org/teacher.webp';h.keyFactVi='Ý chính riêng của giáo viên';});assert.equal(currentNarrationContent(custom),custom);
  }
 });

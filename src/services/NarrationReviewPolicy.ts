@@ -1,5 +1,7 @@
 import {NARRATION_REVIEW} from '../data/narrationReview';
 import type {StationContent} from './ContentService';
+// Firestore/JSON serializers may reorder object keys; array and field values must still match.
+const stableJSON=(value:unknown)=>JSON.stringify(value,(_key,v)=>v&&typeof v==='object'&&!Array.isArray(v)?Object.fromEntries(Object.entries(v).sort(([a],[b])=>a.localeCompare(b))):v);
 /** Pure upgrade of shipped wording; teacher edits and resources remain untouched. */
 export function currentNarrationContent(content:StationContent):StationContent {
  let changed=false;
@@ -10,7 +12,7 @@ export function currentNarrationContent(content:StationContent):StationContent {
   let interaction=h.interaction;
   let keyFactVi=h.keyFactVi;
   if('fact' in r && keyFactVi===r.fact.before)keyFactVi=r.fact.after;
-  if('question' in r && interaction && JSON.stringify(interaction)===JSON.stringify(r.question.before)){
+  if('question' in r && interaction && stableJSON(interaction)===stableJSON(r.question.before)){
    const a=r.question.after;
    interaction={...interaction,questionVi:a.q,options:a.answers.map((textVi,i)=>({id:interaction!.options[i]?.id||`opt-${i}`,textVi,isCorrect:i===0})),explanationVi:a.answers[0]+'.'};
    if(keyFactVi===r.question.beforeFact)keyFactVi=a.answers[0]+'.';

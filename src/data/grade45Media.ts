@@ -1,3 +1,4 @@
+import {GRADE3_MEDIA} from './grade3Media';
 export const GRADE45_MEDIA = [
   {
     "id": "hon-kem",
@@ -171,15 +172,19 @@ export const GRADE45_MEDIA = [
   }
 ];
 const bindings:Record<string,Record<number,string>>={
-'g4-station-1':{0:'hon-kem'},
-'g4-station-2':{0:'museum-old',1:'cham',2:'cham'},
-'g4-station-3':{2:'port'},
-'g4-station-5':{0:'ma-chau'},
+'g4-station-1':{0:'hon-kem',2:'hon-kem'},
+'g4-station-2':{1:'cham'},
+'g4-station-3':{1:'ma-chau'},
+'g4-station-5':{0:'ma-chau',3:'ma-chau'},
 'g5-station-1':{1:'hon-kem'},
 'g5-station-2':{2:'me-thu'},
 'g5-station-3':{0:'bana',1:'hai-van'},
 'g5-station-4':{0:'ngu-hanh'},
 'g5-station-5':{0:'sam'}
 };
-export const grade45PointMedia=(stationId:string,index:number)=>GRADE45_MEDIA.find(m=>m.id===bindings[stationId]?.[index]);
+export const grade45PointMedia=(stationId:string,index:number)=>{
+ const sharedId=stationId==='g4-station-1'?({1:'nam-o',3:'my-khe'} as Record<number,string>)[index]:undefined;
+ const shared=GRADE3_MEDIA.find(m=>m.id===sharedId);
+ return shared?{...shared,credit:`${shared.caption} Tác giả: ${shared.author} · ${shared.license} · ${shared.changes}`} : GRADE45_MEDIA.find(m=>m.id===bindings[stationId]?.[index]);
+};
 export const grade45MediaBySrc=(src:string)=>GRADE45_MEDIA.find(m=>m.src===src);

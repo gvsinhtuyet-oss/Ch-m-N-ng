@@ -3,12 +3,12 @@ export const GRADE45_CONTENT = [
     "id": "g4-station-1",
     "grade": 4,
     "subtitle": "Từ cảnh quan đến cuộc sống quê hương",
-    "opening": "Cùng khám phá từ cảnh quan đến cuộc sống quê hương. Em hãy quan sát, tìm căn cứ và chia sẻ cách làm của mình nhé!",
+    "opening": "Chúng mình cùng tìm hiểu từ cảnh quan đến cuộc sống quê hương. Em hãy quan sát hình, nghe câu chuyện và thử giải thích bằng điều mình tìm được nhé!",
     "points": [
       {
         "id": "g4-station-1-point-1",
         "title": "Quê hương có nhiều cảnh quan",
-        "narration": "Đà Nẵng có miền núi phía tây, vùng gò đồi và đồng bằng ven biển. Quan sát ảnh có chú thích, em tìm dấu hiệu như sườn núi, bờ sông, ruộng hoặc bãi biển. Một tấm ảnh chỉ phản ánh một nơi vào một thời điểm, không đại diện cho mọi khu vực của thành phố.",
+        "narration": "Em hãy nhìn cảnh Hòn Kẽm Đá Dừng bên sông Thu Bồn: dòng sông đi giữa những vách núi. Đà Nẵng có miền núi phía tây, vùng gò đồi trung du và đồng bằng ven biển. Mỗi vùng có những cảnh quan khác nhau. Ảnh này giúp em nhận ra núi và sông, nhưng không cho thấy toàn bộ địa hình thành phố. Khi giới thiệu quê hương, em hãy gọi đúng tên nơi chụp và tìm thêm tư liệu về những vùng khác.",
         "fact": "Địa hình đa dạng tạo nên nhiều không gian sống.",
         "q": "Nhận xét nào phù hợp về cảnh quan Đà Nẵng?",
         "answers": [
@@ -20,7 +20,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-1-point-2",
         "title": "Con người sinh sống và lao động",
-        "narration": "Người dân sinh sống, học tập và làm việc trong nhiều không gian khác nhau. Trồng trọt, đánh bắt, sản xuất và dịch vụ là những ví dụ về công việc. Cùng một nơi có thể có nhiều nghề; không thể nhìn một cảnh núi hay biển rồi kết luận mọi gia đình ở đó làm cùng một việc.",
+        "narration": "Ở làng chài Nam Ô, biển gắn với đời sống và một số nghề của người dân. Đến những nơi khác, em có thể gặp người trồng trọt, người thợ, người bán hàng hoặc người làm dịch vụ. Cùng một khu vực vẫn có nhiều công việc. Vì vậy, không thể nhìn một ảnh làng chài rồi nói rằng mọi gia đình ở đó đều đánh cá. Em hãy quan sát và hỏi thêm để hiểu con người cụ thể.",
         "fact": "Cảnh quan gợi điều kiện sống, không quyết định duy nhất nghề của mỗi người.",
         "q": "Nhận định nào tránh khái quát quá mức?",
         "answers": [
@@ -32,7 +32,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-1-point-3",
         "title": "Thiên nhiên gắn với đời sống",
-        "narration": "Nguồn nước, đất đai và cảnh quan tạo điều kiện cho hoạt động của con người. Đổi lại, cách sử dụng đất, nước và tài nguyên có thể làm môi trường tốt lên hoặc xấu đi. Em thử tìm một ví dụ gần trường: cây cho bóng mát, mương dẫn nước hay một nơi cần được giữ sạch.",
+        "narration": "Sông Thu Bồn, các dãy núi và vùng ven biển là những ví dụ về thiên nhiên quê hương. Nước, đất và cảnh quan tạo điều kiện cho sản xuất, sinh hoạt và du lịch. Cách con người sử dụng tài nguyên cũng tác động trở lại môi trường. Gần trường, em có thể tìm ví dụ nhỏ như cây cho bóng mát hoặc mương dẫn nước. Giữ sạch nguồn nước, chăm cây là việc vừa sức để gìn giữ nơi sống.",
         "fact": "Con người sử dụng thiên nhiên và cũng có trách nhiệm gìn giữ thiên nhiên.",
         "q": "Ví dụ nào thể hiện lợi ích của cây xanh?",
         "answers": [
@@ -44,7 +44,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-1-point-4",
         "title": "Giới thiệu nơi em sống bằng căn cứ",
-        "narration": "Để giới thiệu một nơi, em có thể dùng ảnh tự chụp được phép, quan sát thực tế và thông tin có nguồn. Nói rõ đâu là điều em nhìn thấy, đâu là điều đọc được. Không cần đưa địa chỉ nhà riêng vào bài. Hành động nhỏ như giữ nước sạch, chăm cây và làm theo cảnh báo giúp quê hương đáng sống hơn.",
+        "narration": "Ảnh Mỹ Khê cho em một góc nhìn về bãi biển Đà Nẵng tại thời điểm chụp. Em hãy tập giới thiệu ba điều: tên nơi, đặc điểm nhìn thấy và nguồn tư liệu. Phân biệt điều mình quan sát được với điều đọc thêm từ nguồn khác. Không cần đưa địa chỉ nhà riêng của bạn vào bài. Một lời giới thiệu ngắn, có căn cứ và lời nhắc giữ cảnh quan sẽ giúp người nghe hiểu quê hương hơn.",
         "fact": "Giới thiệu quê hương bằng thông tin cụ thể và hành động phù hợp.",
         "q": "Thông tin nào cần tránh công khai trong bài giới thiệu của lớp?",
         "answers": [
@@ -114,20 +114,23 @@ export const GRADE45_CONTENT = [
     "badge": "Người quan sát quê hương",
     "sources": [
       "https://cttdt.danangportal.gov.vn/en/web/dng/dieu-kien-tu-nhien",
-      "https://dbnd.danang.gov.vn/chi-tiet-tin/group/157/nid/4557/kinh-te--xa-hoi-6-thang-dau-nam-2-26-tang-truong-tich-cuc-nhung-can-khoi-thong-nhung-diem-nghen-de-but-pha"
+      "https://namgiang.danang.gov.vn/dieu-kien-tu-nhien",
+      "https://hdnd.danang.gov.vn/chi-tiet-tin/group/157/nid/23688/ngay-moi-truong-the-gioi-5-6-chung-tay-hanh-dong-vi-da-nang-xanh-va-phat-trien-ben-vung"
     ],
-    "notes": []
+    "notes": [
+      "Rà soát 18/10/2026: ảnh thật đọc theo chú thích; sơ đồ là minh họa. Ảnh tại trang nguồn chưa rõ quyền tái sử dụng chỉ được dẫn liên kết, không tải lại hoặc nhúng. Chờ kế hoạch tích hợp mới."
+    ]
   },
   {
     "id": "g4-station-2",
     "grade": 4,
     "subtitle": "Đọc những câu chuyện trong bảo tàng",
-    "opening": "Cùng khám phá đọc những câu chuyện trong bảo tàng. Em hãy quan sát, tìm căn cứ và chia sẻ cách làm của mình nhé!",
+    "opening": "Chúng mình cùng tìm hiểu đọc những câu chuyện trong bảo tàng. Em hãy quan sát hình, nghe câu chuyện và thử giải thích bằng điều mình tìm được nhé!",
     "points": [
       {
         "id": "bt4-luu-giu-ky-uc",
         "title": "Nơi gìn giữ di sản",
-        "narration": "Bảo tàng sưu tầm, bảo quản, nghiên cứu và giới thiệu hiện vật, tài liệu. Nhờ đó, người xem có thể tìm hiểu lịch sử, văn hóa và nghệ thuật. Mỗi bảo tàng có nội dung riêng. Trước chuyến tham quan, em cùng cô tìm thông tin chính thức về nơi đến, không dùng một địa chỉ cũ cho mọi bảo tàng.",
+        "narration": "Bảo tàng sưu tầm, bảo quản, nghiên cứu và giới thiệu hiện vật, tài liệu để chúng ta tìm hiểu lịch sử và văn hóa. Bảo tàng Đà Nẵng đã chuyển từ khuôn viên Thành Điện Hải sang cơ sở gồm các địa chỉ 42–44 Bạch Đằng và 31 Trần Phú. Vì thế, ảnh chụp ở nơi cũ cần được ghi rõ thời điểm. Trước chuyến đi, em cùng thầy cô xem thông báo chính thức về cơ sở định tham quan.",
         "fact": "Bảo tàng giúp gìn giữ và tìm hiểu di sản.",
         "q": "Công việc nào thuộc chức năng bảo tàng?",
         "answers": [
@@ -139,7 +142,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "bt4-my-thuat-nghe-thuat",
         "title": "Những không gian khác nhau",
-        "narration": "Bảo tàng Đà Nẵng giới thiệu lịch sử, văn hóa địa phương; Bảo tàng Mỹ thuật có tác phẩm nghệ thuật; Bảo tàng Điêu khắc Chăm có các hiện vật điêu khắc Chăm. Em có thể chọn một tác phẩm hoặc hiện vật rồi tìm hiểu hình dáng, chất liệu, nội dung và thông tin đi kèm. Không phải mọi đồ trưng bày đều có cùng công dụng.",
+        "narration": "Ở Đà Nẵng, mỗi bảo tàng mở ra một cách khám phá: Bảo tàng Đà Nẵng giới thiệu lịch sử và văn hóa địa phương; Bảo tàng Mỹ thuật giới thiệu tác phẩm nghệ thuật; Bảo tàng Điêu khắc Chăm giới thiệu di sản điêu khắc Chăm. Ảnh trước mặt là bên ngoài Bảo tàng Điêu khắc Chăm, không phải ảnh một hiện vật. Muốn hiểu tác phẩm cụ thể, em cần xem thêm ảnh và thông tin của chính tác phẩm ấy.",
         "fact": "Chọn bảo tàng và tư liệu phù hợp với điều muốn tìm hiểu.",
         "q": "Muốn tìm hiểu một hiện vật điêu khắc Chăm, nguồn nào phù hợp trước tiên?",
         "answers": [
@@ -151,7 +154,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "bt4-giai-ma-hien-vat",
         "title": "Hiện vật và nhãn giới thiệu",
-        "narration": "Quan sát cho em biết một số đặc điểm bên ngoài. Nhãn giới thiệu có thể cung cấp tên, chất liệu, niên đại và nguồn gốc. Khi chưa rõ, em hỏi hướng dẫn viên. Bảo tàng có thể trưng bày hiện vật gốc, bản sao hoặc mô hình; hãy đọc chú thích thay vì mặc định mọi vật đều là bản gốc.",
+        "narration": "Khi đứng trước một hiện vật, em hãy quan sát hình dáng rồi đọc nhãn giới thiệu. Nhãn có thể cho biết tên, chất liệu, niên đại và nơi phát hiện. Những thông tin ấy giúp em hiểu hơn điều mắt thường nhìn thấy. Bảo tàng cũng có thể trưng bày bản sao hoặc mô hình phục vụ học tập. Vì vậy, muốn biết một vật có phải bản gốc hay không, em hãy đọc chú thích hoặc hỏi hướng dẫn viên.",
         "fact": "Phối hợp quan sát với nhãn giới thiệu để hiểu hiện vật.",
         "q": "Đâu là căn cứ tốt để biết một vật là bản sao?",
         "answers": [
@@ -163,7 +166,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "bt4-nguoi-ban-di-san",
         "title": "Người bạn của bảo tàng",
-        "narration": "Em đi theo hướng dẫn, không tự ý sờ, di chuyển hiện vật hay dùng đèn chụp trái quy định. Khi làm thẻ giới thiệu, ghi tên hiện vật và nguồn thông tin. Nếu ảnh chưa được phép sử dụng lại, em dẫn người xem tới trang nguồn hoặc dùng ảnh mình được quyền dùng, không xóa tên tác giả.",
+        "narration": "Một chuyến tham quan tốt bắt đầu từ việc tôn trọng hiện vật và người xung quanh. Em đi theo hướng dẫn, không tự ý sờ hay di chuyển đồ trưng bày; chụp ảnh theo nội quy của nơi đến. Khi làm thẻ giới thiệu, ghi tên hiện vật cùng nguồn thông tin. Ảnh trên mạng cần được kiểm tra điều kiện sử dụng; nếu chưa được phép dùng lại, lớp có thể mở trang nguồn để cùng xem.",
         "fact": "Giữ hiện vật và chia sẻ thông tin, hình ảnh đúng nguồn.",
         "q": "Khi muốn dùng ảnh hiện vật trong sản phẩm của lớp, em cần kiểm tra gì?",
         "answers": [
@@ -232,23 +235,25 @@ export const GRADE45_CONTENT = [
     ],
     "badge": "Bạn nhỏ gìn giữ di sản",
     "sources": [
-      "https://baotangdanang.vn/chuc-nang-nhiem-vu",
-      "https://chammuseum.vn/view.aspx?ID=663&title=cau_chuyen_bao_tang__bao_vat_quoc_gia_%E2%80%9Cdai_tho_tra_kieu%E2%80%9D"
+      "https://www.baotangdanang.vn/hoi-lu-hanh-va-huong-dan-vien-du-lich-tham-quan-khao-sat-tai-bao-tang-da-nang",
+      "https://www.baotangdanang.vn/",
+      "https://chammuseum.vn/"
     ],
     "notes": [
-      "Ảnh bảo tàng phải ghi thời điểm/bối cảnh; không dùng ảnh trụ sở cũ để xác nhận địa chỉ đang hoạt động."
+      "Ảnh bảo tàng phải ghi thời điểm/bối cảnh; không dùng ảnh trụ sở cũ để xác nhận địa chỉ đang hoạt động.",
+      "Rà soát 18/10/2026: ảnh thật đọc theo chú thích; sơ đồ là minh họa. Ảnh tại trang nguồn chưa rõ quyền tái sử dụng chỉ được dẫn liên kết, không tải lại hoặc nhúng. Chờ kế hoạch tích hợp mới."
     ]
   },
   {
     "id": "g4-station-3",
     "grade": 4,
     "subtitle": "Một sản phẩm, nhiều bàn tay",
-    "opening": "Cùng khám phá một sản phẩm, nhiều bàn tay. Em hãy quan sát, tìm căn cứ và chia sẻ cách làm của mình nhé!",
+    "opening": "Chúng mình cùng tìm hiểu một sản phẩm, nhiều bàn tay. Em hãy quan sát hình, nghe câu chuyện và thử giải thích bằng điều mình tìm được nhé!",
     "points": [
       {
         "id": "g4-station-3-point-1",
         "title": "Kinh tế quanh em",
-        "narration": "Thức ăn, quần áo và những dịch vụ hằng ngày gắn với hoạt động kinh tế. Đà Nẵng có nhiều hoạt động nông nghiệp, công nghiệp và dịch vụ. Bài học dùng những ví dụ gần gũi để tìm hiểu con người làm ra và trao đổi giá trị, không yêu cầu em nhớ chỉ tiêu tăng trưởng hoặc thứ hạng kinh tế.",
+        "narration": "Chiếc áo em mặc, bữa ăn gia đình và chuyến xe đến trường đều gắn với hoạt động kinh tế. Ở Đà Nẵng có nông nghiệp, công nghiệp và dịch vụ. Các làng nghề như Mã Châu, Phước Kiều là những ví dụ gần gũi về người lao động làm ra sản phẩm. Bài học này giúp em nhận biết công việc và sự phối hợp giữa các khâu, không yêu cầu học thuộc chỉ tiêu tăng trưởng hay thứ hạng kinh tế.",
         "fact": "Kinh tế gắn với sản xuất, trao đổi và các dịch vụ trong đời sống.",
         "q": "Ví dụ nào là một hoạt động kinh tế?",
         "answers": [
@@ -260,7 +265,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-3-point-2",
         "title": "Tạo ra sản phẩm",
-        "narration": "Người nông dân trồng cây, nuôi con vật; người thợ và công nhân chế biến, chế tạo sản phẩm. Một sản phẩm có thể đi qua nhiều khâu. Với ví dụ chiếc áo, em có thể tìm hiểu nguyên liệu, dệt vải và may. Cần phân biệt ví dụ minh họa với quy trình thực tế của từng cơ sở.",
+        "narration": "Em hãy theo dõi ví dụ một chiếc áo: có nguyên liệu, có khâu dệt vải rồi mới may thành áo. Người nông dân, người thợ và công nhân có thể góp sức ở những khâu khác nhau. Tấm lụa Mã Châu trong ảnh là ví dụ về sản phẩm dệt, không phải ảnh xưởng may. Chuỗi chiếc áo là mô hình học tập khái quát; bài học không khẳng định mọi công đoạn đều được thực hiện trong cùng một làng hoặc trong thành phố.",
         "fact": "Nhiều người và nhiều khâu cùng góp phần tạo ra sản phẩm.",
         "q": "Trong ví dụ chiếc áo, việc nào trực tiếp tạo sản phẩm?",
         "answers": [
@@ -272,7 +277,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-3-point-3",
         "title": "Dịch vụ kết nối cuộc sống",
-        "narration": "Vận chuyển, mua bán và hướng dẫn du lịch là những ví dụ về dịch vụ. Dịch vụ giúp sản phẩm đến người dùng và đáp ứng nhu cầu của mọi người. Người cung cấp dịch vụ cần có kiến thức, kĩ năng và trách nhiệm. Không nên đánh giá nghề nào đáng quý hơn chỉ vì nhìn thấy ít hay nhiều máy móc.",
+        "narration": "Sau khi làm ra sản phẩm, còn cần vận chuyển và đưa sản phẩm đến người dùng. Đó là những hoạt động dịch vụ. Ở Đà Nẵng, cảng Tiên Sa là một ví dụ về nơi có hoạt động phục vụ vận tải biển. Bán hàng và hướng dẫn du lịch cũng là dịch vụ, nhưng có công việc khác nhau. Ảnh trụ sở doanh nghiệp không thể thay cho ảnh cầu cảng hoặc hoạt động bốc dỡ hàng hóa.",
         "fact": "Dịch vụ hỗ trợ nhu cầu và kết nối các hoạt động kinh tế.",
         "q": "Việc nào là dịch vụ trong hành trình chiếc áo?",
         "answers": [
@@ -284,7 +289,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-3-point-4",
         "title": "Sáng tạo và trách nhiệm",
-        "narration": "Người tổ chức công việc phân công, phối hợp các khâu; người lao động có thể đề xuất cách làm tốt hơn. Sắp xếp dụng cụ dễ tìm, tiết kiệm vật liệu và giữ chất lượng là những ví dụ cải tiến. Học sinh có thể tập tinh thần ấy khi làm việc nhóm, sử dụng đồ dùng và trân trọng công sức người khác.",
+        "narration": "Để sản phẩm đến tay người dùng, nhiều người cần phân công và phối hợp. Người làm nghề có thể cải tiến cách sắp xếp dụng cụ, giảm vật liệu bỏ đi hoặc kiểm tra chất lượng tốt hơn. Cải tiến cần đi cùng sự trung thực và trách nhiệm. Trong lớp, em tập điều đó bằng cách nhận phần việc vừa sức, dùng giấy tiết kiệm, trao đổi khi gặp lỗi và trân trọng công sức của mọi người.",
         "fact": "Làm việc tốt cần hợp tác, sáng tạo và trách nhiệm.",
         "q": "Cách cải tiến nào vừa hữu ích vừa có trách nhiệm?",
         "answers": [
@@ -354,22 +359,25 @@ export const GRADE45_CONTENT = [
     "badge": "Bạn nhỏ trân trọng lao động",
     "sources": [
       "https://dbnd.danang.gov.vn/chi-tiet-tin/group/157/nid/4557/kinh-te--xa-hoi-6-thang-dau-nam-2-26-tang-truong-tich-cuc-nhung-can-khoi-thong-nhung-diem-nghen-de-but-pha",
-      "https://cttdt.danangportal.gov.vn/vi/web/dng/w/kinh-te-da-nang-2026-mo-khoa-dong-luc-tang-toc-phat-trien"
+      "https://cttdt.danangportal.gov.vn/vi/web/dng/w/kinh-te-da-nang-2026-mo-khoa-dong-luc-tang-toc-phat-trien",
+      "https://danangport.com/cau-ben/",
+      "https://vietnam.vnanet.vn/english/english/english/tin-tuc/tam-tangs-silk-36803.html"
     ],
     "notes": [
-      "Chuỗi chiếc áo là mô hình học tập khái quát, không khẳng định mọi công đoạn diễn ra trong thành phố."
+      "Chuỗi chiếc áo là mô hình học tập khái quát, không khẳng định mọi công đoạn diễn ra trong thành phố.",
+      "Rà soát 18/10/2026: ảnh thật đọc theo chú thích; sơ đồ là minh họa. Ảnh tại trang nguồn chưa rõ quyền tái sử dụng chỉ được dẫn liên kết, không tải lại hoặc nhúng. Chờ kế hoạch tích hợp mới."
     ]
   },
   {
     "id": "g4-station-4",
     "grade": 4,
     "subtitle": "Giữ tiếng đồng ngân vang",
-    "opening": "Cùng khám phá giữ tiếng đồng ngân vang. Em hãy quan sát, tìm căn cứ và chia sẻ cách làm của mình nhé!",
+    "opening": "Chúng mình cùng tìm hiểu giữ tiếng đồng ngân vang. Em hãy quan sát hình, nghe câu chuyện và thử giải thích bằng điều mình tìm được nhé!",
     "points": [
       {
         "id": "g4-station-4-point-1",
         "title": "Gặp làng nghề Phước Kiều",
-        "narration": "Phước Kiều là làng nghề đúc đồng của đất Quảng, nổi tiếng với những sản phẩm như cồng, chiêng, chuông và đồ đồng. Các sản phẩm gắn với đời sống và sinh hoạt văn hóa. Khi tìm hiểu một sản phẩm, em cần ghi đúng tên, vật liệu và nơi làm, không coi mọi đồ đồng đều được làm ở Phước Kiều.",
+        "narration": "Phước Kiều là làng nghề đúc đồng ở vùng Điện Bàn, đất Quảng. Làng nổi tiếng với những sản phẩm như cồng, chiêng, chuông và các đồ đồng dùng trong đời sống, sinh hoạt văn hóa. Từ kim loại, người thợ tạo ra nhiều hình dáng và công dụng khác nhau. Khi giới thiệu một sản phẩm, em hãy tìm đúng tên và nơi làm; không phải mọi chiếc chiêng hay mọi đồ đồng đều xuất xứ từ Phước Kiều.",
         "fact": "Phước Kiều gắn với nghề đúc đồng và các nhạc khí truyền thống.",
         "q": "Sản phẩm nào phù hợp với nghề đúc đồng?",
         "answers": [
@@ -381,7 +389,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-4-point-2",
         "title": "Từ khuôn đến sản phẩm",
-        "narration": "Ở mức khái quát, người thợ chuẩn bị khuôn, nấu kim loại, rót vào khuôn rồi hoàn thiện sản phẩm sau khi nguội. Mỗi công đoạn cần kinh nghiệm và sự cẩn thận. Đây là sơ đồ để hiểu nghề, không phải hướng dẫn học sinh thực hành với lửa hay kim loại nóng. Quy trình cụ thể phụ thuộc sản phẩm và cơ sở.",
+        "narration": "Để đúc một sản phẩm, người thợ cần chuẩn bị khuôn, nấu kim loại và rót kim loại vào khuôn. Khi sản phẩm đã nguội, còn có công việc hoàn thiện và kiểm tra. Khuôn góp phần tạo hình; tay nghề và kinh nghiệm giúp sản phẩm đạt yêu cầu. Đây là sơ đồ khái quát để em hiểu nghề, không phải công thức cho mọi cơ sở. Học sinh chỉ quan sát theo hướng dẫn, không thao tác với lò, lửa hay kim loại nóng.",
         "fact": "Khuôn, kim loại và công đoạn hoàn thiện cùng tạo ra sản phẩm.",
         "q": "Khuôn giúp người thợ làm gì trong quá trình đúc?",
         "answers": [
@@ -393,7 +401,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-4-point-3",
         "title": "Đôi tai và bàn tay nghệ nhân",
-        "narration": "Với nhạc khí, hình dáng đẹp chưa đủ; âm thanh cũng cần phù hợp. Nghệ nhân dùng kinh nghiệm để nghe, kiểm tra và điều chỉnh sản phẩm. Kĩ năng ấy được gọi là thẩm âm. Em có thể nghe một bản thu đúng nguồn để tìm hiểu, nhưng không khẳng định âm hiệu ứng trong app là tiếng chiêng Phước Kiều thật.",
+        "narration": "Với cồng, chiêng và chuông, người thợ không chỉ quan tâm hình dáng mà còn phải kiểm tra tiếng vang. Nghệ nhân Phước Kiều có kĩ năng nghe và điều chỉnh âm thanh để nhạc khí phù hợp với yêu cầu sử dụng. Đó là kĩ năng thẩm âm, được tích lũy qua thực hành và kinh nghiệm. Em có thể tìm hiểu qua tư liệu đúng nguồn; âm hiệu ứng trong trò chơi không được coi là bản thu tiếng chiêng Phước Kiều thật.",
         "fact": "Thẩm âm là kĩ năng nghe, kiểm tra và điều chỉnh âm thanh nhạc khí.",
         "q": "Kĩ năng thẩm âm liên quan chủ yếu tới điều gì?",
         "answers": [
@@ -405,7 +413,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-4-point-4",
         "title": "Trân trọng nghề và người thợ",
-        "narration": "Em có thể hỏi về vật liệu, công đoạn và cách học nghề khi được phép tham quan. Luôn đứng trong khu vực an toàn, không tự lấy dụng cụ hoặc chạm sản phẩm đang nóng. Các nguồn kể khác nhau về nguồn gốc nghề; bài học này chưa chọn một tên tổ nghề làm đáp án bắt buộc. Điều chắc chắn cần hiểu là công sức và kĩ năng của người làm nghề.",
+        "narration": "Nghề được gìn giữ nhờ người làm nghề trao truyền kinh nghiệm và thế hệ sau tiếp tục học hỏi. Khi tham quan, em hỏi lịch sự, đứng ở nơi được hướng dẫn và không tự lấy dụng cụ. Các nguồn hiện kể khác nhau về người truyền nghề; bài học này chưa chọn một tên tổ nghề làm đáp án bắt buộc. Em vẫn có thể giới thiệu chắc chắn những điều đã đối chiếu: sản phẩm đúc đồng, kĩ năng thẩm âm và công sức người thợ.",
         "fact": "Giữ nghề bằng tìm hiểu trung thực, trân trọng lao động và tham quan an toàn.",
         "q": "Khi nguồn kể khác nhau về tổ nghề, cách học nào phù hợp?",
         "answers": [
@@ -474,24 +482,24 @@ export const GRADE45_CONTENT = [
     ],
     "badge": "Người bạn của tiếng đồng",
     "sources": [
-      "https://danang.gov.vn/vi/w/ghe-tham-lang-nghe-duc-dong-phuoc-kieu",
-      "https://vietnamtourism.vn/index.php/tourism/items/2838/4",
-      "https://dienban.danang.gov.vn/%C4%91at-va-nguoi"
+      "https://dienban.danang.gov.vn/chi-tiet-tin/group/131/nid/4326/default",
+      "https://csdl.vietnamtourism.gov.vn/dest/?item=412"
     ],
     "notes": [
-      "Các nguồn khác nhau về tổ nghề/quê quán người truyền nghề. Không đưa chi tiết này thành kiến thức hay đáp án duy nhất. Không dùng tiếng hiệu ứng làm bản thu chiêng thật."
+      "Các nguồn khác nhau về tổ nghề/quê quán người truyền nghề. Không đưa chi tiết này thành kiến thức hay đáp án duy nhất. Không dùng tiếng hiệu ứng làm bản thu chiêng thật.",
+      "Rà soát 18/10/2026: ảnh thật đọc theo chú thích; sơ đồ là minh họa. Ảnh tại trang nguồn chưa rõ quyền tái sử dụng chỉ được dẫn liên kết, không tải lại hoặc nhúng. Chờ kế hoạch tích hợp mới."
     ]
   },
   {
     "id": "g4-station-5",
     "grade": 4,
     "subtitle": "Theo sợi tơ về làng lụa",
-    "opening": "Cùng khám phá theo sợi tơ về làng lụa. Em hãy quan sát, tìm căn cứ và chia sẻ cách làm của mình nhé!",
+    "opening": "Chúng mình cùng tìm hiểu theo sợi tơ về làng lụa. Em hãy quan sát hình, nghe câu chuyện và thử giải thích bằng điều mình tìm được nhé!",
     "points": [
       {
         "id": "g4-station-5-point-1",
         "title": "Mã Châu và những tấm lụa",
-        "narration": "Mã Châu là một làng nghề gắn với tơ lụa của đất Quảng. Sản phẩm có thể được dùng để may trang phục và làm đồ dùng phù hợp. Tìm hiểu nghề, em quan sát sản phẩm, nghe câu chuyện người thợ và đọc nguồn giới thiệu. Một tấm vải có ghi rõ xuất xứ có giá trị thông tin hơn ảnh vải đẹp nhưng không biết ở đâu.",
+        "narration": "Mã Châu ở vùng Duy Xuyên, bên dòng Thu Bồn, là làng nghề nổi tiếng về tơ lụa của đất Quảng. Người làm nghề tạo ra những tấm vải để may trang phục và làm các sản phẩm phù hợp. Ảnh đang xem là sản phẩm lụa Mã Châu theo chú thích tác giả, không phải toàn cảnh làng hay xưởng dệt. Tìm hiểu nghề, em hãy kết hợp nhìn sản phẩm với đọc nguồn và nghe câu chuyện của người thợ.",
         "fact": "Mã Châu gắn với nghề tơ lụa truyền thống.",
         "q": "Thông tin nào giúp xác định ảnh sản phẩm thuộc Mã Châu?",
         "answers": [
@@ -503,19 +511,19 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-5-point-2",
         "title": "Từ kén đến sợi tơ",
-        "narration": "Trong nghề tơ tằm, kén là nguồn để lấy sợi tơ. Sợi được chuẩn bị để dùng cho công đoạn dệt. Kén, sợi và tấm lụa là các dạng khác nhau trong hành trình sản phẩm. Sơ đồ này chỉ khái quát; không yêu cầu học sinh thực hiện thao tác với nước nóng, máy quay hay tự xử lí kén.",
+        "narration": "Trong nghề tơ tằm, con tằm ăn lá dâu rồi nhả tơ làm kén. Người làm nghề lấy sợi tơ từ kén và chuẩn bị sợi cho việc dệt. Em hãy phân biệt kén, sợi và tấm lụa: chúng không phải cùng một dạng sản phẩm. Bộ ảnh tư liệu về Mã Châu giúp quan sát các công đoạn ấy theo thời điểm chụp. Học sinh tìm hiểu qua ảnh hoặc mô phỏng với giấy, không tự xử lí kén bằng nước nóng hay vận hành máy.",
         "fact": "Kén, sợi tơ và tấm lụa thuộc các bước khác nhau của hành trình làm lụa.",
-        "q": "Dạng nào được dùng làm sợi để dệt lụa tơ tằm?",
+        "q": "Trong nghề tơ tằm, sợi tơ được lấy từ đâu?",
         "answers": [
-          "Sợi tơ",
-          "Sợi dây điện",
-          "Mảnh kim loại"
+          "Từ kén do tằm nhả tơ tạo nên",
+          "Từ dây điện cũ",
+          "Từ mảnh đồng nung chảy"
         ]
       },
       {
         "id": "g4-station-5-point-3",
         "title": "Khung dệt và hoa văn",
-        "narration": "Các sợi được đan kết theo cách dệt để tạo thành tấm vải. Người thợ cần chuẩn bị, vận hành và kiểm tra để có sản phẩm phù hợp. Hoa văn, màu sắc và công nghệ có thể thay đổi theo thời gian. Không nên nghĩ rằng giữ nghề nghĩa là mọi dụng cụ, mẫu mã đều phải bất biến.",
+        "narration": "Trên khung dệt, các sợi dọc và sợi ngang đan kết để tạo thành tấm vải. Người thợ cần chuẩn bị sợi, điều khiển công việc và kiểm tra sản phẩm. Nghề dệt Mã Châu gắn với sự khéo léo và công sức của nhiều người. Hoa văn, màu sắc, dụng cụ và công nghệ có thể thay đổi theo thời gian. Giữ nghề là tiếp nối kiến thức, kĩ năng và giá trị của nghề, đồng thời sáng tạo những cách làm phù hợp.",
         "fact": "Nghề dệt kết hợp kĩ năng truyền thống với sự sáng tạo.",
         "q": "Nhận định nào phù hợp về giữ nghề?",
         "answers": [
@@ -527,7 +535,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-5-point-4",
         "title": "Quý sản phẩm, giữ câu chuyện nghề",
-        "narration": "Một tấm lụa mang theo công sức của nhiều người. Khi sử dụng, em nhờ người lớn xem hướng dẫn bảo quản của sản phẩm cụ thể. Khi giới thiệu, nêu điều đã có nguồn, không khẳng định mọi vải mềm đều là lụa tơ tằm Mã Châu. Em có thể thiết kế hoa văn trên giấy và giải thích ý tưởng quê hương của mình.",
+        "narration": "Một tấm lụa mang theo công sức của người nuôi tằm, chuẩn bị tơ, dệt và hoàn thiện sản phẩm. Khi dùng, em nhờ người lớn xem hướng dẫn bảo quản của chính sản phẩm đó. Khi giới thiệu, ghi đúng xuất xứ đã có căn cứ; không gọi mọi loại vải mềm là lụa tơ tằm Mã Châu. Trong lớp, em có thể thiết kế hoa văn trên giấy, đặt tên và giải thích ý tưởng từ cảnh vật quê hương.",
         "fact": "Trân trọng lụa bằng sử dụng phù hợp và giới thiệu đúng thông tin.",
         "q": "Cách nhận định nào cần tránh?",
         "answers": [
@@ -596,10 +604,12 @@ export const GRADE45_CONTENT = [
     ],
     "badge": "Người bạn của sợi tơ",
     "sources": [
-      "https://danang.gov.vn/vi/w/lang-nghe-det-vai-to-lua-ma-chau-cham-vao-soi-to-ngan-nam-xu-quang",
-      "https://hoianheritage.net/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/lua-trong-doi-song-nguoi-viet-tai-do-thi-co-hoi-an-thanh-pho-da-nang-1363.html"
+      "https://vietnam.vnanet.vn/english/english/english/tin-tuc/tam-tangs-silk-36803.html",
+      "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/to-tam-quang-nam-trong-con-duong-to-lua-tren-bien-648.html"
     ],
-    "notes": []
+    "notes": [
+      "Rà soát 18/10/2026: ảnh thật đọc theo chú thích; sơ đồ là minh họa. Ảnh tại trang nguồn chưa rõ quyền tái sử dụng chỉ được dẫn liên kết, không tải lại hoặc nhúng. Chờ kế hoạch tích hợp mới."
+    ]
   },
   {
     "id": "g5-station-1",

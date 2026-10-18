@@ -68,7 +68,7 @@ jobs:
         run: node --import tsx --test grade1-lesson-decks-test.ts
 
       - name: Grade 4 and 5 reviewed content, media rights and isolation
-        run: node --import tsx --test grade45-content-test.ts
+        run: node --import tsx --test grade45-content-test.ts grade4-review-test.ts
 
       - name: Grade 3 topics, presentations and zero-network content tests
         run: node --import tsx --test grade3-content-test.ts

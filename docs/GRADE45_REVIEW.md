@@ -1,3 +1,5 @@
+> Khối 4 đã có bản rà soát tiếp theo: [18/10/2026](GRADE4_REVIEW_2026-10-18.md). Các mô tả khối 4 dưới đây là hồ sơ phiên bản 16/10, không phải bản mới nhất.
+
 # Hồ sơ rà soát học liệu lớp 4–5 – 16/10/2026
 
 ## Phạm vi và trạng thái

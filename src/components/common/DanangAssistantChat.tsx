@@ -85,18 +85,18 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
       <button
         type="button"
         onClick={() => setOpen(value => !value)}
-        className="group fixed bottom-14 left-4 z-[58] inline-flex h-12 items-center gap-2.5 rounded-full border border-sky-200 bg-gradient-to-r from-sky-700 via-sky-600 to-cyan-500 px-4 pr-5 text-white shadow-[0_12px_28px_rgba(3,105,161,0.28)] ring-2 ring-white/70 transition hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(3,105,161,0.34)] active:translate-y-0"
+        className="group fixed bottom-14 left-4 z-[58] inline-flex h-12 w-12 items-center justify-center rounded-full border border-sky-200 bg-gradient-to-r from-sky-700 via-sky-600 to-cyan-500 p-0 text-white shadow-[0_12px_28px_rgba(3,105,161,0.28)] ring-2 ring-white/70 transition hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(3,105,161,0.34)] active:translate-y-0"
         aria-label="Mở Trợ lý khám phá Đà Nẵng"
         title="Trợ lý khám phá Đà Nẵng"
       >
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25">
           <Compass className="h-5 w-5 animate-spin-slow drop-shadow-sm" />
         </span>
-        <span className="flex flex-col items-start leading-tight">
+        <span className="pointer-events-none absolute bottom-full left-0 mb-2 hidden w-48 flex-col items-start rounded-xl bg-sky-800 px-3 py-2 leading-tight shadow-lg group-hover:flex group-focus-visible:flex">
           <span className="text-[12px] font-black sm:text-[13px]">Trợ lý khám phá</span>
           <span className="mt-0.5 text-[9px] font-semibold text-sky-100 sm:text-[10px]">Hỏi mình về điểm đến này</span>
         </span>
-        <MessageCircle className="ml-1 h-4 w-4 text-white/90" />
+        
       </button>
 
       {open && (

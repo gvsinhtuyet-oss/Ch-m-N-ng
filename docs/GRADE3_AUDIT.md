@@ -12,11 +12,11 @@ Ngày rà soát: 18/10/2026. Phạm vi: 5 trạm, 20 điểm học, 25 câu th�
 
 | Trạm | Bốn điểm học đã rà soát | Cần hoàn thiện trước khi duyệt dạy chính thức |
 |---|---|---|
-| Mỹ Khê – Bàn Than | Bờ cát Mỹ Khê; ghềnh đá Bàn Than; sinh kế biển; an toàn và môi trường | Bổ sung ảnh thật có chú thích của hai nơi; không dùng sơ đồ làm bằng chứng về màu sắc, hình dạng thực tế. Không biến Bàn Than thành một bãi cát giống Mỹ Khê. |
-| Huỳnh Thúc Kháng – Phan Châu Trinh | Báo Tiếng Dân; tư tưởng canh tân; phong trào Duy Tân; tìm hiểu qua tư liệu lưu niệm | Xác nhận lại bài theo kế hoạch mới vì bảng tích hợp ghi Hoàng Diệu – Phan Châu Trinh. Cần chân dung và ảnh hiện vật đúng người, có nguồn. |
-| Cộng đồng các dân tộc | Sự đa dạng; đọc chú thích văn hóa; đời sống hôm nay; tôn trọng và cùng tham gia | Thêm ví dụ văn hóa cụ thể gắn với đúng cộng đồng và địa điểm. Không suy đoán dân tộc qua khuôn mặt, trang phục hoặc coi một hình là đại diện cho mọi người. |
-| Nước mắm Nam Ô | Nghề truyền thống; cá cơm than và muối; quy trình khái quát; sử dụng và tham quan phù hợp | Thêm ảnh nguyên liệu, dụng cụ, người làm nghề và sản phẩm có nguồn. Không bắt học sinh nhớ một tỉ lệ hoặc thời gian ủ áp dụng cho mọi cơ sở. Không khẳng định công dụng chữa bệnh hoặc yêu cầu tự nếm nguyên liệu. |
-| Đan thuyền thúng ở Sơn Trà | Đặc điểm thúng; vật liệu; các bước chung; nghề và an toàn | Có nguồn ghi nhận nghề tại Thọ Quang nhưng còn thiếu tư liệu chuyên đề về quy trình tại Sơn Trà. Tài liệu Cẩm Kim – Hội An chỉ dùng tham khảo chung, không đổi chú thích thành Sơn Trà. |
+| Mỹ Khê – Bàn Than | Bờ cát Mỹ Khê; ghềnh đá Bàn Than; sinh kế biển; an toàn và môi trường | Đã có ảnh thật Mỹ Khê và Bàn Than, nguồn/tác giả/giấy phép rõ ràng; sơ đồ an toàn vẫn được ghi nhãn. Không biến Bàn Than thành một bãi cát giống Mỹ Khê. |
+| Huỳnh Thúc Kháng – Phan Châu Trinh | Báo Tiếng Dân; tư tưởng canh tân; phong trào Duy Tân; tìm hiểu qua tư liệu lưu niệm | Xác nhận lại bài theo kế hoạch mới vì bảng tích hợp ghi Hoàng Diệu – Phan Châu Trinh. Đã có hai chân dung có nguồn; bản Phan Châu Trinh chỉ 148 × 200 px, chưa đạt yêu cầu ảnh trình chiếu nét cao. Chưa có ảnh Nhà lưu niệm được cấp phép. |
+| Cộng đồng các dân tộc | Sự đa dạng; đọc chú thích văn hóa; đời sống hôm nay; tôn trọng và cùng tham gia | Đã bổ sung hiện vật Cơ Tu có xuất xứ Quảng Nam, ảnh mô hình nhà Gươl ở bảo tàng và ví dụ giữ văn hóa tại Tà Lang – Giàn Bí. Không suy đoán dân tộc qua khuôn mặt, trang phục hoặc coi một hình là đại diện cho mọi người. |
+| Nước mắm Nam Ô | Nghề truyền thống; cá cơm than và muối; quy trình khái quát; sử dụng và tham quan phù hợp | Đã có ảnh bối cảnh làng Nam Ô; vẫn thiếu ảnh nguyên liệu, dụng cụ, người làm nghề và sản phẩm tại Nam Ô với quyền tái sử dụng rõ ràng. Không bắt học sinh nhớ một tỉ lệ hoặc thời gian ủ áp dụng cho mọi cơ sở. Không khẳng định công dụng chữa bệnh hoặc yêu cầu tự nếm nguyên liệu. |
+| Đan thuyền thúng ở Sơn Trà | Đặc điểm thúng; vật liệu; các bước chung; nghề và an toàn | Đã kiểm tra được bản bài gốc trên cổng thành phố (bản lưu Cẩm Lệ) xác nhận nghề đan thúng tại Thọ Quang; đã có hai ảnh thúng trên bờ biển Thọ Quang năm 2024. Còn thiếu ảnh công đoạn đan và tư liệu khảo sát hộ nghề Sơn Trà. Tài liệu Cẩm Kim – Hội An chỉ dùng tham khảo chung, không đổi chú thích thành Sơn Trà. |
 
 ## Những điểm đã xác minh và giới hạn
 
@@ -32,7 +32,7 @@ Ngày rà soát: 18/10/2026. Phạm vi: 5 trạm, 20 điểm học, 25 câu th�
 - Đã đọc lại 20 câu chặng 1 và 25 tình huống chặng 2. Kiểm tra tự động phát hiện trùng câu, trùng đáp án đúng và các câu hồi tưởng đã loại; kiểm tra này không thay cho đánh giá sư phạm của giáo viên.
 - Chặng 2 dùng tình huống vận dụng; không chấm cảm xúc ở chặng 3 là đúng/sai.
 - 5 bộ trình chiếu có 11 trang/bộ; vẫn là bản theo chủ đề, chưa tự gắn tuần hoặc bài SGK. Không đồng nhất trình chiếu theo chủ đề với bài dạy tích hợp đã được phê duyệt.
-- Học liệu khá thiên về chữ và tình huống. Cần ảnh thật và hoạt động quan sát cụ thể trước khi coi là bộ học liệu thị giác hoàn chỉnh cho học sinh.
+- Đã thay 11/20 ảnh điểm học và 5/5 bìa bằng 11 ảnh chụp đã kiểm tra nguồn; ảnh mô hình bảo tàng được ghi rõ là mô hình. 9 điểm giữ sơ đồ để thể hiện khái niệm/quy trình chưa có ảnh chuyên đề được phép sử dụng. Không coi ảnh làng Nam Ô là ảnh sản xuất, hoặc ảnh thúng trên bãi biển là ảnh xưởng đan.
 
 ## Sửa trong lần rà soát này
 
@@ -64,3 +64,22 @@ Không dùng các kiểm tra trên để khẳng định đã thử đăng nhậ
 - https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/nghe-thung-chai-o-cam-kim-hoi-an-599.html
 
 Lưu ý truy cập nguồn: một số địa chỉ cũ của cổng thành phố chuyển hướng hoặc không tải được trong đợt rà soát. Không coi khả năng tìm thấy tên bài trên công cụ tìm kiếm là xác nhận một trang nguồn còn hoạt động ổn định. Nguồn nghề ở Sơn Trà vẫn cần tư liệu trực tiếp mới hơn trước khi duyệt nội dung chuyên sâu.
+
+## Cập nhật ảnh và tư liệu ngày 18/10/2026
+
+- 11 ảnh WebP cục bộ, danh mục nguồn tại `content-review/grade3-media-sources.json`; checksum/kích thước tại `content-review/grade3-media-integrity.json`. Giữ nguyên bố cục, không tạo cảnh hoặc chân dung bằng AI. Tổng dung lượng 2.020.676 byte (khoảng 1,93 MiB); nằm trong Git/static assets, không đưa ảnh/base64 vào Firestore.
+- Tác giả, nguồn, giấy phép, nơi chụp và giới hạn nội dung hiển thị ở cả điểm học lẫn trình chiếu. Ảnh Bàn Than có ngày mô tả khác EXIF nên chỉ ghi năm 2022.
+- Ảnh trang phục: Cơ Tu bên phải, Ê Đê bên trái. Ảnh hiện vật/mô hình chụp tại Hà Nội không được gắn thành ảnh sinh hoạt Đà Nẵng. Tên Quảng Nam trên nhãn là xuất xứ trong hồ sơ hiện vật, không tự cập nhật thành địa điểm chụp mới.
+- Tà Lang – Giàn Bí: bổ sung ví dụ nhà Gươl, cồng chiêng, dệt thổ cẩm theo Trung tâm Thông tin du lịch/Cục Du lịch Quốc gia. Không gán những nét này cho tất cả dân tộc.
+- Thọ Quang: bài “Dân chài Thọ Quang sắt son với biển”, tác giả Hương Xuân, ghi nhận nghề đan thúng. Đây là tư liệu lịch sử địa phương, không chứng minh số hộ, quy trình riêng hoặc hiện trạng nghề năm 2026. Nguồn: https://camle.danang.gov.vn/vi/web/dng-old/w/d%C3%A2n-ch%C3%A0i-th%E1%BB%8D-quang-s%E1%BA%AFt-son-v%E1%BB%9Bi-bi%E1%BB%83n
+- Vẫn chờ kế hoạch tích hợp mới để quyết định Huỳnh Thúc Kháng hay Hoàng Diệu. Không tìm được văn bản đủ căn cứ để tự xác nhận hoặc gắn tuần/bài SGK; giữ trạng thái IN_REVIEW.
+- Cập nhật tương thích trong bộ nhớ chỉ thay ảnh SVG và lời cũ được nhận diện chính xác; giữ ảnh/lời giáo viên tự sửa, tài liệu và ID tiến độ. Không chạy migration, không gọi Firestore thật.
+
+Nguồn văn hóa cụ thể: https://dantoc.vietnamtourism.gov.vn/trai-nghiem-ban-lang-co-tu-ta-lang-gian-bi-suc-song-moi-cho-du-lich-vung-cao-da-nang/
+
+
+Kiểm tra bổ sung cho bản ảnh: 28 kiểm tra nội dung/trình chiếu liên quan đạt; kiểm tra checksum cả 11 ảnh và quyền sử dụng; 55 trang trình chiếu trên máy tính và 55 trên điện thoại tải hình đúng, có nguồn ảnh, không tràn ngang và không phát sinh yêu cầu ghi API. Khi rà soát phát hiện nút trợ lý nổi che nút mở trạm đầu trên máy tính; đã thu gọn thành nút biểu tượng, giữ nhãn trợ năng và chú giải khi trỏ/đặt focus.
+
+Ảnh Mỹ Khê đã loại bản có bể bơi chiếm tiền cảnh và bản có geotag sát Thọ Quang dù tên file ghi Mỹ Khê. Bản chọn cuối của Dragfyre chụp tháng 5/2009 thể hiện bờ cát, sóng và không gian biển; chú thích không khẳng định hiện trạng đô thị năm 2026.
+
+Bản ảnh mới đã chạy đủ 10 hành trình học (5 máy tính, 5 điện thoại), 40 lượt điểm học, trả sai/làm lại, check-in, bản đồ/dấu và tiến độ sau tải lại. Nút trợ lý mở/đóng được ở cả hai kích thước và không còn che nút mở trạm. Không phát sinh ghi API hoặc lỗi JavaScript trong các luồng thử.

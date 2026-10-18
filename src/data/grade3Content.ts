@@ -7,7 +7,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-1-point-1",
         "title": "Mỹ Khê – bờ cát và nhịp sóng",
-        "narration": "Mỹ Khê là một cảnh biển quen thuộc của Đà Nẵng. Bờ cát rộng, mặt biển và những con sóng tạo nên không gian để ngắm cảnh, đi dạo và vui chơi phù hợp. Khi mô tả cảnh biển, em có thể nói về màu sắc, âm thanh và điều mình quan sát được. Bức hình trong app chỉ là sơ đồ gợi ý, không thay cho ảnh chụp thực tế.",
+        "narration": "Mỹ Khê là một cảnh biển quen thuộc của Đà Nẵng. Bờ cát rộng, mặt biển và những con sóng tạo nên không gian để ngắm cảnh, đi dạo và vui chơi phù hợp. Khi mô tả cảnh biển, em có thể nói về màu sắc, âm thanh và điều mình quan sát được. Ảnh chụp trong bài cho em quan sát bờ cát và mặt biển tại Mỹ Khê; cảnh biển và thời tiết có thể thay đổi theo thời điểm.",
         "fact": "Mỹ Khê nổi bật với bãi cát và không gian biển.",
         "q": "Chi tiết nào phù hợp để mô tả Mỹ Khê?",
         "answers": [
@@ -248,7 +248,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-3-point-1",
         "title": "Nhiều cộng đồng, một quê hương",
-        "narration": "Thành phố Đà Nẵng có nhiều cộng đồng dân tộc cùng sinh sống. Ngoài người Kinh, có các cộng đồng như Cơ Tu, Xơ Đăng, Gié Triêng, Cor. Đây là một số ví dụ, không phải danh sách đầy đủ. Mỗi người đều là thành viên đáng quý của cộng đồng. Không thể chỉ nhìn quần áo hay khuôn mặt để đoán chắc dân tộc của một người.",
+        "narration": "Thành phố Đà Nẵng có nhiều cộng đồng dân tộc cùng sinh sống. Ngoài người Kinh, có các cộng đồng như Cơ Tu, Xơ Đăng, Gié Triêng, Cor. Đây là một số ví dụ, không phải danh sách đầy đủ. Ảnh vòng đồng trong bài là hiện vật Cơ Tu có xuất xứ Quảng Nam theo nhãn bảo tàng; không thể từ một hiện vật mà mô tả tất cả các dân tộc. Mỗi người đều là thành viên đáng quý của cộng đồng. Không thể chỉ nhìn quần áo hay khuôn mặt để đoán chắc dân tộc của một người.",
         "fact": "Có nhiều cộng đồng dân tộc cùng góp sức xây dựng quê hương.",
         "q": "Nhận định nào đúng?",
         "answers": [
@@ -260,7 +260,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-3-point-2",
         "title": "Tìm hiểu nét văn hóa",
-        "narration": "Trang phục, ngôn ngữ, nhạc cụ, sinh hoạt và nghề thủ công có thể giúp em tìm hiểu văn hóa của một cộng đồng. Những nét văn hóa ấy được giới thiệu qua tư liệu, hiện vật và lời kể. Không phải mọi dân tộc đều có cùng một loại nhà hay cùng một lễ hội. Khi quan sát, em đọc chú thích để biết hiện vật thuộc cộng đồng nào.",
+        "narration": "Trong ảnh bảo tàng, bộ trang phục bên phải được chú thích là của người Cơ Tu ở Quảng Nam, niên đại 1980; bên trái là trang phục Ê Đê ở Đắk Lắk. Đây là hai hiện vật cụ thể, không phải trang phục của mọi cộng đồng Đà Nẵng. Em đọc nhãn để phân biệt nơi có hiện vật với nơi chụp ảnh: ảnh này chụp tại Bảo tàng Phụ nữ Việt Nam ở Hà Nội.",
         "fact": "Đọc chú thích để gọi đúng tên hiện vật và cộng đồng.",
         "q": "Khi xem một bộ trang phục ở bảo tàng, em nên dựa vào đâu để tìm hiểu?",
         "answers": [
@@ -272,13 +272,13 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-3-point-3",
         "title": "Văn hóa trong đời sống hôm nay",
-        "narration": "Văn hóa không chỉ nằm trong tủ trưng bày. Người dân học tập, lao động và trao truyền những điều quý cho thế hệ sau bằng nhiều cách. Cùng một cộng đồng, mỗi gia đình có thể có cách sinh hoạt khác nhau. Em nên dùng lời giới thiệu cụ thể, chẳng hạn “trong tư liệu này”, tránh khẳng định tất cả mọi người đều sống giống một hình ảnh đã xem.",
+        "narration": "Ở Tà Lang – Giàn Bí, Đà Nẵng, cộng đồng Cơ Tu gìn giữ những nét văn hóa như nhà Gươl, cồng chiêng và nghề dệt thổ cẩm. Nhà Gươl là nơi sinh hoạt chung và trao truyền văn hóa. Đây là ví dụ về một cộng đồng cụ thể, không phải kiểu nhà hoặc nghề của mọi dân tộc. Mỗi gia đình vẫn có những cách học tập, lao động và sinh hoạt khác nhau.",
         "fact": "Văn hóa được gìn giữ và tiếp nối trong đời sống; mỗi gia đình có thể khác nhau.",
-        "q": "Cách nói nào phù hợp khi xem một ảnh sinh hoạt?",
+        "q": "Khi giới thiệu nhà Gươl trong tư liệu, cách nói nào phù hợp?",
         "answers": [
-          "Ảnh cho thấy một nét sinh hoạt trong tư liệu này",
-          "Mọi gia đình đều giống hệt ảnh này",
-          "Người trong ảnh không thể học điều mới"
+          "Đây là một nét văn hóa Cơ Tu, không phải kiểu nhà của mọi dân tộc",
+          "Mọi dân tộc đều có cùng một kiểu nhà Gươl",
+          "Chỉ nhìn mái nhà là biết hết văn hóa một cộng đồng"
         ]
       },
       {
@@ -354,10 +354,11 @@ export const GRADE3_CONTENT = [
     "badge": "Người bạn đoàn kết",
     "sources": [
       "https://danangfantasticity.com/vi/bao-tang-lich-su-va-van-hoa/bao-tang-da-nang-co-so-2",
-      "https://tratan.danang.gov.vn/gioi-thieu/gioi-thieu-chung"
+      "https://tratan.danang.gov.vn/gioi-thieu/gioi-thieu-chung",
+      "https://dantoc.vietnamtourism.gov.vn/trai-nghiem-ban-lang-co-tu-ta-lang-gian-bi-suc-song-moi-cho-du-lich-vung-cao-da-nang/"
     ],
     "notes": [
-      "Không yêu cầu học thuộc số dân tộc, tỉ lệ dân số hoặc gán một kiểu nhà, trang phục cho mọi cộng đồng."
+      "Không yêu cầu học thuộc số dân tộc, tỉ lệ dân số hoặc gán một kiểu nhà, trang phục cho mọi cộng đồng. Các ảnh hiện vật và mô hình Cơ Tu được chụp tại bảo tàng ở Hà Nội; xuất xứ Quảng Nam và niên đại là thông tin của hiện vật. Ví dụ văn hóa hôm nay dùng tư liệu Tà Lang – Giàn Bí của Cục Du lịch; không dùng ảnh hiện vật thay ảnh sinh hoạt hiện nay."
     ]
   },
   {
@@ -489,7 +490,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-5-point-1",
         "title": "Thuyền thúng – phương tiện sông biển",
-        "narration": "Thuyền thúng còn được gọi là thúng chai, có dạng tròn, lòng lõm, thường được đan bằng tre và xử lí chống thấm. Đây là phương tiện gắn với đời sống sông biển. Tư liệu địa phương ghi nhận nghề đóng thuyền, đan thúng ở vùng Thọ Quang, Sơn Trà. Tên địa danh trong tư liệu nghề được dùng để tìm hiểu văn hóa, không thay cho bản đồ hành chính hiện hành.",
+        "narration": "Thuyền thúng còn được gọi là thúng chai, có dạng tròn, lòng lõm, thường được đan bằng tre và xử lí chống thấm. Đây là phương tiện gắn với đời sống sông biển. Bài “Dân chài Thọ Quang sắt son với biển” trên cổng thông tin thành phố ghi nhận người dân Thọ Quang gắn bó với nghề đan thúng bên cạnh đánh bắt hải sản và làm mắm. Đây là ghi nhận trong tư liệu, không phải khảo sát số hộ còn làm nghề hiện nay. Tên địa danh trong tư liệu nghề được dùng để tìm hiểu văn hóa, không thay cho bản đồ hành chính hiện hành.",
         "fact": "Thuyền thúng là phương tiện dạng tròn gắn với đời sống sông biển.",
         "q": "Đặc điểm nào giúp nhận ra thuyền thúng?",
         "answers": [
@@ -596,11 +597,12 @@ export const GRADE3_CONTENT = [
     "sources": [
       "https://sontra.danang.gov.vn/chitiettintuc.aspx?ID=503",
       "https://danang.gov.vn/vi/web/dng/w/dan-chai-tho-quang-sat-son-voi-bien-i",
+      "https://camle.danang.gov.vn/vi/web/dng-old/w/d%C3%A2n-ch%C3%A0i-th%E1%BB%8D-quang-s%E1%BA%AFt-son-v%E1%BB%9Bi-bi%E1%BB%83n",
       "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/ve-nguon-goc-ra-doi-cua-thung-chai-1173.html",
       "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/nghe-thung-chai-o-cam-kim-hoi-an-599.html"
     ],
     "notes": [
-      "Nguồn Sơn Trà xác nhận địa bàn nghề; chi tiết vật liệu, công đoạn dùng tư liệu thúng chai Hội An làm kiến thức chung, đã ghi rõ phạm vi. Chờ tư liệu chuyên đề Sơn Trà để bổ sung quy trình riêng, lịch sử hộ nghề, ảnh thật."
+      "Nguồn Sơn Trà xác nhận địa bàn nghề; chi tiết vật liệu, công đoạn dùng tư liệu thúng chai Hội An làm kiến thức chung, đã ghi rõ phạm vi. Đã bổ sung ảnh thúng ở bờ biển Thọ Quang (2024), ghi đúng địa điểm và thời gian. Chờ tư liệu chuyên đề Sơn Trà để bổ sung quy trình riêng, lịch sử hộ nghề và ảnh xưởng đan có quyền sử dụng. Ảnh bãi biển không chứng minh quy trình tại Thọ Quang."
     ]
   }
 ];

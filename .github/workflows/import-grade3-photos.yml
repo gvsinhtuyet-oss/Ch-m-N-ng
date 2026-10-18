@@ -25,6 +25,8 @@ jobs:
         run: |
           if [ ! -f content-review/grade3-media-integrity.json ]; then
             python scripts/import-grade3-photos.py
+          else
+            python scripts/import-grade3-photos.py my-khe
           fi
       - name: Prepare temporary local visual review transport
         run: |

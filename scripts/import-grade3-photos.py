@@ -3,14 +3,19 @@ import hashlib
 import io
 import json
 import time
+import sys
 import urllib.request
 from pathlib import Path
 from PIL import Image, ImageOps
 
 root = Path(__file__).resolve().parent.parent
 records = json.loads((root / 'content-review/grade3-media-sources.json').read_text())
-results = []
+only=set(sys.argv[1:])
+previous=root / 'content-review/grade3-media-integrity.json'
+results = [m for m in json.loads(previous.read_text()) if m['id'] not in only] if only and previous.exists() else []
 for record in records:
+    if only and record['id'] not in only:
+        continue
     url = record['downloadUrl']
     assert url.startswith('https://upload.wikimedia.org/wikipedia/commons/')
     request = urllib.request.Request(url, headers={'User-Agent': 'ChamDaNangEducation/1.0 (open-license educational media import)'})

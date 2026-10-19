@@ -82,6 +82,7 @@ export interface HotspotInteraction {
   type: 'single-choice' | 'true-false';
   questionVi: string;
   questionEn?: string;
+  level?: 'NHAN_BIET' | 'THONG_HIEU' | 'VAN_DUNG';
   options: {
     id: string;
     textVi: string;

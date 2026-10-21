@@ -167,7 +167,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
     !q.options.some(option => option.isCorrect && option.id === selectedAnswers[q.id]),
   );
 
-  if (station.id === 'g1-station-1' || station.id === 'g2-station-1' || station.id === 'g2-station-4' || station.id === 'g2-station-3' || station.id === 'g2-station-2' || station.id === 'g2-station-5') {
+  if (station.id === 'g1-station-2' || station.id === 'g1-station-1' || station.id === 'g2-station-1' || station.id === 'g2-station-4' || station.id === 'g2-station-3' || station.id === 'g2-station-2' || station.id === 'g2-station-5') {
     return (
       <ApprovedStationGame
         station={station}

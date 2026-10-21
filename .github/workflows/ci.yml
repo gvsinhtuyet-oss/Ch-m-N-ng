@@ -76,6 +76,9 @@ jobs:
       - name: Grade 1 authored content and no-network regression
         run: node --import tsx --test grade1-content-test.ts stage-access-test.ts stage2-distinct-test.ts
 
+      - name: Grade 1 folk game completion and replay
+        run: node --test hoi-vui-game-test.mjs
+
       - name: Grade 2 current-book content and image tests
         run: npx tsx --test grade2-content-image-test.ts
 

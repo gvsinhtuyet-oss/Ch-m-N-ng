@@ -2,11 +2,11 @@
 export const NARRATION_REVIEW = {
   "g1-home-1": {
     "before": "Quê hương là nơi gần gũi, gắn bó với em. Nơi em ở có nhà cửa, đường đi và những người em quen biết. Em hãy cùng thầy cô nói tên xã hoặc phường nơi mình ở. Mỗi bạn có thể sống ở một nơi khác nhau trong thành phố Đà Nẵng. Ảnh cầu Sông Hàn là cảnh quê hương để tham khảo; em hãy liên hệ với khu vực mình thật sự sinh sống.",
-    "after": "Quê hương là nơi gần gũi, gắn bó với em. Đó là ngôi nhà, con đường và những người em gặp mỗi ngày. Mỗi bạn có thể sống ở một xã, phường khác nhau của thành phố Đà Nẵng. Em hãy kể tên nơi mình ở và một điều khiến em yêu nơi ấy nhé!"
+    "after": "Quê hương là nơi em sống và gắn bó với những người thân quen. Trong sách, em được gặp phường Hải Châu, phường Hội An, xã Nam Trà My, xã Hiệp Đức và đặc khu Hoàng Sa của thành phố Đà Nẵng. Mỗi nơi có tên gọi và cảnh vật riêng. Em đang sống ở xã hay phường nào? Hãy nhờ người thân cùng em gọi đúng tên nơi mình ở nhé!"
   },
   "g1-home-2": {
     "before": "Trường học là nơi em học tập và vui chơi cùng thầy cô, bạn bè. Mỗi trường có tên gọi riêng. Em hãy quan sát tên trường trên cổng trường hoặc nhờ thầy cô đọc cùng. Sau đó, em nói tên trường và xã hoặc phường của trường mình. Tranh chỉ minh họa một ngôi trường, không ghi tên trường cụ thể; em tìm tên trường thật của mình trên cổng trường.",
-    "after": "Trường học là nơi em học tập và vui chơi cùng thầy cô, bạn bè. Mỗi trường có tên gọi riêng. Em hãy quan sát tên trường trên cổng trường hoặc nhờ thầy cô đọc cùng. Sau đó, em nói tên trường và xã hoặc phường của trường mình. Tranh chỉ minh họa một ngôi trường, không ghi tên trường cụ thể; em tìm tên trường thật của mình trên cổng trường."
+    "after": "Cùng tìm hiểu ngôi trường của em nhé! Sách giới thiệu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Tranh ở đây chỉ minh họa, không phải ảnh trường của em."
   },
   "g1-home-3": {
     "before": "Trên đường từ nhà đến trường, em có thể đi qua hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn có đường đi khác nhau. Em hãy chọn một địa điểm mình thật sự nhìn thấy và kể với thầy cô. Em cũng có thể vẽ lại một đoạn đường quen thuộc. Ảnh cầu Sông Hàn gợi một cảnh để kể, không có nghĩa mọi bạn đều đi qua cây cầu này.",
@@ -14,23 +14,23 @@ export const NARRATION_REVIEW = {
   },
   "g1-home-4": {
     "before": "Quê hương có cảnh vật và những người sống quanh em. Em có thể giới thiệu một nơi mình yêu thích bằng lời nói hoặc tranh vẽ. Giữ sân trường sạch, chăm cây và bỏ rác đúng chỗ là những việc nhỏ thể hiện tình yêu nơi mình sống.",
-    "after": "Quê hương có cảnh vật và những người sống quanh em. Em có thể giới thiệu một nơi mình yêu thích bằng lời nói hoặc tranh vẽ. Giữ sân trường sạch, chăm cây và bỏ rác đúng chỗ là những việc nhỏ thể hiện tình yêu nơi mình sống."
+    "after": "Em hãy giới thiệu nơi mình ở bằng lời kể hoặc tranh vẽ. Trước hết, nói tên xã hoặc phường. Tiếp theo, kể một cảnh vật quen thuộc mà em yêu thích. Em cũng có thể kể tên một xã hoặc phường khác của Đà Nẵng mà mình đã đến. Cùng chăm cây, giữ sân sạch và bỏ rác đúng chỗ là những việc nhỏ em có thể làm để yêu quý nơi mình sống."
   },
   "tdh-thanh-co": {
     "before": "Thành Điện Hải là một di tích lịch sử của thành phố Đà Nẵng. Năm 2017, Thành Điện Hải được công nhận là Di tích quốc gia đặc biệt. Di tích giúp chúng ta tìm hiểu câu chuyện bảo vệ quê hương.",
-    "after": "Thành Điện Hải là một di tích lịch sử của thành phố Đà Nẵng. Năm 2017, Thành Điện Hải được công nhận là Di tích quốc gia đặc biệt. Di tích giúp chúng ta tìm hiểu câu chuyện bảo vệ quê hương."
+    "after": "Chào em đến với Thành Điện Hải ở phường Hải Châu, thành phố Đà Nẵng! Đây là một di tích lịch sử, nơi lưu lại câu chuyện cha ông bảo vệ quê hương. Năm 2017, thành được công nhận là Di tích quốc gia đặc biệt. Cùng quan sát những dấu tích còn lại để tìm hiểu ngôi thành xưa nhé!"
   },
   "tdh-tuong-thanh-hao": {
     "before": "Theo tài liệu, Thành Điện Hải có cửa phía nam và cửa phía đông. Thành được xây bằng gạch; xung quanh có hào. Cửa thành, tường thành và hào là những dấu tích giúp em hình dung ngôi thành xưa. Ảnh tư liệu cho thấy tường và hào của thành; ảnh không phải bản vẽ đo đạc di tích.",
-    "after": "Thành Điện Hải được xây bằng gạch, có cửa phía nam và cửa phía đông. Xung quanh thành có hào. Tường thành, cửa thành và hào cùng góp phần bảo vệ ngôi thành xưa. Ngắm những dấu tích còn lại, em có thể hình dung một công trình phòng thủ của cha ông."
+    "after": "Ngôi thành được xây bằng gạch, có hai cửa: cửa phía nam là cửa chính và cửa phía đông. Theo sách, tường thành cao hơn năm mét, hào quanh thành sâu ba mét. Hào là phần được đào sâu bao quanh thành. Tường cao và hào sâu giúp ngăn quân tấn công, bảo vệ ngôi thành. Em thử tìm cửa thành, tường thành và hào trong những hình ảnh đã học nhé!"
   },
   "tdh-dai-bac": {
     "before": "Trong di tích có hiện vật súng thần công, còn gọi là đại bác. Thành Điện Hải là đồn lũy quan trọng góp phần chống cuộc tấn công của liên quân Pháp và Tây Ban Nha vào Đà Nẵng. Những dấu tích này nhắc chúng ta biết ơn người đã bảo vệ quê hương.",
-    "after": "Trong di tích có hiện vật súng thần công, còn gọi là đại bác. Thành Điện Hải là đồn lũy quan trọng góp phần chống cuộc tấn công của liên quân Pháp và Tây Ban Nha vào Đà Nẵng. Những dấu tích này nhắc chúng ta biết ơn người đã bảo vệ quê hương."
+    "after": "Em hãy quan sát súng thần công, còn gọi là đại bác, được lưu giữ trong di tích. Hiện vật này gợi lại câu chuyện chiến đấu giữ thành. Thành Điện Hải là đồn lũy quan trọng, góp phần đánh bại cuộc tấn công của liên quân Pháp và Tây Ban Nha vào Đà Nẵng. Đồn lũy là nơi được xây dựng để phòng thủ. Tìm hiểu ngôi thành, em thêm biết ơn những người đã bảo vệ quê hương."
   },
   "tdh-nguyen-tri-phuong": {
     "before": "Thành Điện Hải gắn với danh tướng Nguyễn Tri Phương. Trong khuôn viên có tượng của ông. Khi tìm hiểu di tích, em biết thêm về người có công với quê hương. Nếu được tham quan, em đi cùng người lớn, giữ trật tự và không trèo lên hiện vật.",
-    "after": "Thành Điện Hải gắn với danh tướng Nguyễn Tri Phương. Trong khuôn viên có tượng của ông. Khi tìm hiểu di tích, em biết thêm về người có công với quê hương. Nếu được tham quan, em đi cùng người lớn, giữ trật tự và không trèo lên hiện vật."
+    "after": "Thành Điện Hải gắn với danh tướng Nguyễn Tri Phương. Trong khuôn viên thành có tượng của ông. Khi cùng lớp chuẩn bị tham quan, em hãy bàn với thầy cô: đi lúc nào, đi bằng gì và muốn tìm hiểu điều gì. Em có thể hỏi: Ngày xưa, cha ông bảo vệ thành thế nào? Khi tham quan, em đi cùng người lớn, giữ trật tự và không trèo lên hiện vật nhé!"
   },
   "g1-game-1": {
     "before": "Bịt mắt bắt dê, kéo co và nhảy bao bố là những trò chơi dân gian được giới thiệu trong tài liệu. Các trò chơi tạo niềm vui và giúp bạn bè gắn bó. Em hãy nói tên trò mình biết. Nếu chưa từng chơi, em có thể nhờ thầy cô giới thiệu trước.",
@@ -38,7 +38,7 @@ export const NARRATION_REVIEW = {
   },
   "g1-game-2": {
     "before": "Trong trò Bịt mắt bắt dê, một người đóng vai người bắt dê và được bịt mắt bằng khăn. Những người còn lại đóng vai dê, tạo tiếng động và di chuyển trong phạm vi chơi. Người bắt dê dựa vào tiếng động để tìm bạn.",
-    "after": "Trong trò Bịt mắt bắt dê, một người đóng vai người bắt dê và được bịt mắt bằng khăn. Những người còn lại đóng vai dê, tạo tiếng động và di chuyển trong phạm vi chơi. Người bắt dê dựa vào tiếng động để tìm bạn."
+    "after": "Trong trò Bịt mắt bắt dê, một bạn làm người bắt dê và được bịt kín mắt bằng khăn. Các bạn còn lại làm dê, vừa tạo tiếng động vừa di chuyển trong phạm vi chơi. Không nhìn thấy các bạn, người bắt dê phải lắng nghe tiếng động để tìm. Vì thế, người cổ vũ không được chỉ chỗ cho bạn bắt dê nhé!"
   },
   "g1-game-3": {
     "before": "Người chơi chỉ di chuyển trong phạm vi đã thống nhất. Người cổ vũ không nhắc hướng tìm dê cho người bịt mắt. Theo cách chơi trong tài liệu, khi bắt được dê, người bắt thắng lượt đó; người bị bắt làm người bắt dê ở lượt tiếp theo.",
@@ -50,7 +50,7 @@ export const NARRATION_REVIEW = {
   },
   "g1-stream-1": {
     "before": "Tài liệu giới thiệu Suối Tiên, Suối Lương, thác Ồ Ồ, thác ở Hố Giang Thơm, thác Grăng và Hòa Phú Thành. Tài liệu cũng có hai địa điểm cùng tên Suối Mơ: một ở Hà Nha, một ở Bà Nà. Không nên ghép hai nơi này thành một. Tranh minh họa gợi hoạt động quan sát suối, không phải ảnh chụp một trong các địa điểm vừa kể.",
-    "after": "Quê hương có nhiều suối và thác đẹp như Suối Tiên, Suối Lương, thác Ồ Ồ, thác Grăng, Hố Giang Thơm và Hòa Phú Thành. Có hai nơi cùng tên Suối Mơ: một ở Hà Nha, một ở Bà Nà. Mỗi nơi có vẻ đẹp riêng. Em muốn tìm hiểu dòng suối nào?"
+    "after": "Cùng làm quen với những tên suối, thác trong sách nhé! Suối Tiên ở xã Quế Sơn Trung; Suối Lương ở phường Hải Vân. Hai nơi cùng mang tên Suối Mơ: một ở xã Hà Nha, một ở xã Bà Nà. Ngoài ra còn có thác Ồ Ồ ở xã Sơn Cẩm Hà và thác ở Hố Giang Thơm, xã Tam Mỹ. Em không cần nhớ hết ngay. Hãy chọn một nơi em thích, nghe lại tên và nơi có suối hoặc thác ấy nhé!"
   },
   "g1-stream-2": {
     "before": "Theo tài liệu, Suối Tiên ở Quế Sơn Trung có rừng cây xanh. Cây cối và dòng nước tạo nên cảnh quan gần gũi với thiên nhiên. Hình trên app là tranh minh họa rừng và dòng suối, không phải ảnh chụp hay hình tái hiện chính xác Suối Tiên. Em có thể kể màu sắc hoặc cảnh vật mình yêu thích trong tranh.",
@@ -62,7 +62,7 @@ export const NARRATION_REVIEW = {
   },
   "g1-stream-4": {
     "before": "Suối và thác nước là những cảnh đẹp, điểm du lịch sinh thái của địa phương. Để giới thiệu một nơi, em có thể nói tên, nơi được giới thiệu trong tài liệu và một nét đẹp. Em có thể sưu tầm tranh ảnh cùng người lớn hoặc vẽ lại cảnh mình thích.",
-    "after": "Suối và thác nước góp thêm vẻ đẹp cho quê hương, cũng là nơi mọi người tìm hiểu thiên nhiên. Muốn giới thiệu một dòng suối, em hãy nói tên và một nét đẹp của nơi ấy. Em có thể cùng người lớn sưu tầm tranh ảnh hoặc vẽ cảnh mình yêu thích. Giữ sạch dòng suối cũng là cách yêu quê hương."
+    "after": "Trong sách còn có thác Grăng ở xã Bến Giằng và thác Hòa Phú Thành ở xã Hòa Vang. Suối và thác là những cảnh đẹp, thu hút mọi người đến tìm hiểu thiên nhiên. Để giới thiệu một nơi, em hãy nói ba điều: tên là gì, ở đâu và có cảnh gì đẹp. Ví dụ: Suối Tiên ở xã Quế Sơn Trung, có rừng xanh, nước trong và thác chảy xuống hồ. Em có thể sưu tầm ảnh hoặc vẽ để kể với người thân. Khi tham quan, nhớ giữ sạch cảnh quan nhé!"
   },
   "g1-food-1": {
     "before": "Tài liệu giới thiệu mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng. Mỗi món có tên gọi, nguyên liệu và cách thưởng thức riêng. Em có thể kể món từng ăn, hoặc món vừa biết qua tài liệu. Không cần nói rằng em đã ăn nếu chưa từng thử.",
@@ -70,15 +70,15 @@ export const NARRATION_REVIEW = {
   },
   "g1-food-2": {
     "before": "Theo cách giới thiệu trong tài liệu, mì Quảng có sợi mì, tôm, thịt và trứng; có nước dùng, rau ăn kèm, đậu phụng và bánh tráng nướng. Cách nấu ở mỗi gia đình có thể khác. Khi ăn, em báo người lớn nếu có nguyên liệu mình không ăn được.",
-    "after": "Một tô mì Quảng có thể có sợi mì, tôm, thịt và trứng, thêm nước dùng, rau thơm, đậu phụng và bánh tráng nướng. Các nguyên liệu kết hợp tạo nên hương vị của món ăn. Mỗi gia đình có thể nấu khác nhau. Nếu có nguyên liệu không ăn được, em nhớ báo người lớn nhé!"
+    "after": "Cùng xem nguyên liệu món mì Quảng trong sách nhé! Có sợi mì, tôm tươi, thịt ba chỉ, trứng vịt hoặc trứng cút. Xương lợn được dùng để nấu nước dùng. Còn có bánh tráng nướng, đậu phụng và rau sống. Người nấu thêm gia vị như muối, nước mắm, hành, tỏi để món ăn có hương vị. Mỗi gia đình có thể nấu khác nhau. Nếu có nguyên liệu em không ăn được, hãy báo người lớn để chọn phần phù hợp nhé!"
   },
   "g1-food-3": {
     "before": "Trong cách trình bày ở tài liệu, cho mì vào tô, thêm tôm, thịt, trứng rồi chan nước dùng, rắc đậu phụng và rau thơm. Rau sống có thể để riêng để ăn kèm. Khi ăn có thể thêm chanh và bánh tráng nướng tùy sở thích, không phải ai cũng ăn cay. Ảnh tô mì là một cách bày để tham khảo; thành phần có thể khác với ví dụ trong tài liệu.",
-    "after": "Để bày tô mì Quảng, cho sợi mì vào tô, thêm tôm, thịt, trứng rồi chan nước dùng. Rắc thêm đậu phụng và rau thơm, bày rau ăn kèm bên cạnh. Bánh tráng nướng góp vị giòn cho món ăn. Khi thưởng thức, mỗi người có thể thêm chanh và chọn nguyên liệu phù hợp với mình."
+    "after": "Em cùng quan sát cách bày tô mì trong bài nhé! Đầu tiên, cho sợi mì vào tô. Tiếp đến, thêm tôm, thịt, trứng rồi nhờ người lớn chan nước dùng. Sau đó, rắc đậu phụng, hành và ngò lên trên. Rau sống có thể cho vào tô hoặc để riêng ăn kèm. Khi ăn, có thể thêm chanh, bánh tráng nướng, hoa chuối hoặc ớt xanh theo sở thích và phần ăn phù hợp. Người lớn giúp em xử lí nước nóng nhé!"
   },
   "g1-food-4": {
     "before": "Cùng nhóm chọn một món truyền thống, vẽ món ăn, nhờ thầy cô viết tên nguyên liệu rồi giới thiệu trước lớp. Em có thể nói tên món và điều mình thích. Ở nhà, em tham gia việc vừa sức với người thân; người lớn làm việc với dao, bếp và nước nóng.",
-    "after": "Cùng nhóm chọn một món truyền thống, vẽ món ăn, nhờ thầy cô viết tên nguyên liệu rồi giới thiệu trước lớp. Em có thể nói tên món và điều mình thích. Ở nhà, em tham gia việc vừa sức với người thân; người lớn làm việc với dao, bếp và nước nóng."
+    "after": "Đến lượt nhóm em làm Đầu bếp siêu hạng! Cùng chọn một món truyền thống của Đà Nẵng, vẽ món ăn rồi nhờ thầy cô hỗ trợ ghi tên nguyên liệu. Khi giới thiệu, em nói: món gì, làm từ những nguyên liệu nào, em có thích món đó không và vì sao. Mỗi bạn có thể thích một món khác nhau. Ở nhà, em cùng người thân làm việc vừa sức; người lớn sử dụng dao, bếp và nước nóng. Nhớ cảm ơn người đã chuẩn bị món ăn nhé!"
   },
   "hoi-an-pho-co": {
     "before": "Phố cổ Hội An nổi bật với không gian cổ kính bên dòng sông Hoài. Năm 1999, Hội An được UNESCO công nhận là Di sản văn hóa thế giới.",

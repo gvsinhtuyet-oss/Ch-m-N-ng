@@ -7,8 +7,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-1",
         "title": "Nơi em ở",
-        "narration": "Quê hương là nơi gần gũi, gắn bó với em. Đó là ngôi nhà, con đường và những người em gặp mỗi ngày. Mỗi bạn có thể sống ở một xã, phường khác nhau của thành phố Đà Nẵng. Em hãy kể tên nơi mình ở và một điều khiến em yêu nơi ấy nhé!",
-        "fact": "Em biết tên khu vực nơi mình ở.",
+        "narration": "Quê hương là nơi em sống và gắn bó với những người thân quen. Trong sách, em được gặp phường Hải Châu, phường Hội An, xã Nam Trà My, xã Hiệp Đức và đặc khu Hoàng Sa của thành phố Đà Nẵng. Mỗi nơi có tên gọi và cảnh vật riêng. Em đang sống ở xã hay phường nào? Hãy nhờ người thân cùng em gọi đúng tên nơi mình ở nhé!",
+        "fact": "Em biết tên xã hoặc phường nơi mình ở và làm quen với một số địa danh của Đà Nẵng.",
         "q": "Em đang tìm hiểu điều gì ở điểm này?",
         "answers": [
           "Nơi em ở",
@@ -19,8 +19,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-2",
         "title": "Ngôi trường của em",
-        "narration": "Trường học là nơi em học tập và vui chơi cùng thầy cô, bạn bè. Mỗi trường có tên gọi riêng. Em hãy quan sát tên trường trên cổng trường hoặc nhờ thầy cô đọc cùng. Sau đó, em nói tên trường và xã hoặc phường của trường mình. Tranh chỉ minh họa một ngôi trường, không ghi tên trường cụ thể; em tìm tên trường thật của mình trên cổng trường.",
-        "fact": "Em biết tên trường và khu vực có trường mình.",
+        "narration": "Cùng tìm hiểu ngôi trường của em nhé! Sách giới thiệu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Tranh ở đây chỉ minh họa, không phải ảnh trường của em.",
+        "fact": "Biết tên trường và xã hoặc phường giúp em giới thiệu rõ trường mình.",
         "q": "Đâu là điều giúp em gọi đúng tên trường?",
         "answers": [
           "Tên ghi trên cổng trường",
@@ -43,8 +43,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-4",
         "title": "Cùng yêu nơi mình sống",
-        "narration": "Quê hương có cảnh vật và những người sống quanh em. Em có thể giới thiệu một nơi mình yêu thích bằng lời nói hoặc tranh vẽ. Giữ sân trường sạch, chăm cây và bỏ rác đúng chỗ là những việc nhỏ thể hiện tình yêu nơi mình sống.",
-        "fact": "Em thể hiện tình yêu quê hương bằng việc làm vừa sức.",
+        "narration": "Em hãy giới thiệu nơi mình ở bằng lời kể hoặc tranh vẽ. Trước hết, nói tên xã hoặc phường. Tiếp theo, kể một cảnh vật quen thuộc mà em yêu thích. Em cũng có thể kể tên một xã hoặc phường khác của Đà Nẵng mà mình đã đến. Cùng chăm cây, giữ sân sạch và bỏ rác đúng chỗ là những việc nhỏ em có thể làm để yêu quý nơi mình sống.",
+        "fact": "Em giới thiệu nơi ở bằng tên xã hoặc phường và một cảnh vật quen thuộc.",
         "q": "Bức tranh ở điểm này nhắc đến việc nào?",
         "answers": [
           "Chăm sóc nơi mình sống",
@@ -120,8 +120,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "tdh-thanh-co",
         "title": "Thành Điện Hải – di tích lịch sử",
-        "narration": "Thành Điện Hải là một di tích lịch sử của thành phố Đà Nẵng. Năm 2017, Thành Điện Hải được công nhận là Di tích quốc gia đặc biệt. Di tích giúp chúng ta tìm hiểu câu chuyện bảo vệ quê hương.",
-        "fact": "Thành Điện Hải là Di tích quốc gia đặc biệt.",
+        "narration": "Chào em đến với Thành Điện Hải ở phường Hải Châu, thành phố Đà Nẵng! Đây là một di tích lịch sử, nơi lưu lại câu chuyện cha ông bảo vệ quê hương. Năm 2017, thành được công nhận là Di tích quốc gia đặc biệt. Cùng quan sát những dấu tích còn lại để tìm hiểu ngôi thành xưa nhé!",
+        "fact": "Thành Điện Hải ở phường Hải Châu, Đà Nẵng, là Di tích quốc gia đặc biệt.",
         "q": "Thành Điện Hải là địa điểm nào?",
         "answers": [
           "Một di tích lịch sử",
@@ -132,8 +132,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "tdh-tuong-thanh-hao",
         "title": "Cửa thành, tường thành và hào",
-        "narration": "Thành Điện Hải được xây bằng gạch, có cửa phía nam và cửa phía đông. Xung quanh thành có hào. Tường thành, cửa thành và hào cùng góp phần bảo vệ ngôi thành xưa. Ngắm những dấu tích còn lại, em có thể hình dung một công trình phòng thủ của cha ông.",
-        "fact": "Cửa thành, tường thành và hào là những dấu tích của ngôi thành.",
+        "narration": "Ngôi thành được xây bằng gạch, có hai cửa: cửa phía nam là cửa chính và cửa phía đông. Theo sách, tường thành cao hơn năm mét, hào quanh thành sâu ba mét. Hào là phần được đào sâu bao quanh thành. Tường cao và hào sâu giúp ngăn quân tấn công, bảo vệ ngôi thành. Em thử tìm cửa thành, tường thành và hào trong những hình ảnh đã học nhé!",
+        "fact": "Thành có cửa nam, cửa đông, tường gạch và hào bao quanh để góp phần bảo vệ thành.",
         "q": "Hào được giới thiệu ở đâu?",
         "answers": [
           "Xung quanh thành",
@@ -144,8 +144,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "tdh-dai-bac",
         "title": "Súng thần công và câu chuyện giữ thành",
-        "narration": "Trong di tích có hiện vật súng thần công, còn gọi là đại bác. Thành Điện Hải là đồn lũy quan trọng góp phần chống cuộc tấn công của liên quân Pháp và Tây Ban Nha vào Đà Nẵng. Những dấu tích này nhắc chúng ta biết ơn người đã bảo vệ quê hương.",
-        "fact": "Súng thần công gợi nhớ câu chuyện chiến đấu bảo vệ quê hương.",
+        "narration": "Em hãy quan sát súng thần công, còn gọi là đại bác, được lưu giữ trong di tích. Hiện vật này gợi lại câu chuyện chiến đấu giữ thành. Thành Điện Hải là đồn lũy quan trọng, góp phần đánh bại cuộc tấn công của liên quân Pháp và Tây Ban Nha vào Đà Nẵng. Đồn lũy là nơi được xây dựng để phòng thủ. Tìm hiểu ngôi thành, em thêm biết ơn những người đã bảo vệ quê hương.",
+        "fact": "Súng thần công và ngôi thành giúp em tìm hiểu câu chuyện chiến đấu bảo vệ quê hương.",
         "q": "Hiện vật được nhắc đến ở điểm này là gì?",
         "answers": [
           "Súng thần công",
@@ -156,8 +156,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "tdh-nguyen-tri-phuong",
         "title": "Nhớ người có công",
-        "narration": "Thành Điện Hải gắn với danh tướng Nguyễn Tri Phương. Trong khuôn viên có tượng của ông. Khi tìm hiểu di tích, em biết thêm về người có công với quê hương. Nếu được tham quan, em đi cùng người lớn, giữ trật tự và không trèo lên hiện vật.",
-        "fact": "Thành Điện Hải gắn với danh tướng Nguyễn Tri Phương.",
+        "narration": "Thành Điện Hải gắn với danh tướng Nguyễn Tri Phương. Trong khuôn viên thành có tượng của ông. Khi cùng lớp chuẩn bị tham quan, em hãy bàn với thầy cô: đi lúc nào, đi bằng gì và muốn tìm hiểu điều gì. Em có thể hỏi: Ngày xưa, cha ông bảo vệ thành thế nào? Khi tham quan, em đi cùng người lớn, giữ trật tự và không trèo lên hiện vật nhé!",
+        "fact": "Thành Điện Hải gắn với danh tướng Nguyễn Tri Phương; em có thể cùng lớp chuẩn bị chuyến tham quan.",
         "q": "Vị tướng được nhắc đến là ai?",
         "answers": [
           "Nguyễn Tri Phương",
@@ -245,8 +245,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-game-2",
         "title": "Ai là người bắt dê?",
-        "narration": "Trong trò Bịt mắt bắt dê, một người đóng vai người bắt dê và được bịt mắt bằng khăn. Những người còn lại đóng vai dê, tạo tiếng động và di chuyển trong phạm vi chơi. Người bắt dê dựa vào tiếng động để tìm bạn.",
-        "fact": "Người bắt dê được bịt mắt; các bạn đóng vai dê tạo tiếng động.",
+        "narration": "Trong trò Bịt mắt bắt dê, một bạn làm người bắt dê và được bịt kín mắt bằng khăn. Các bạn còn lại làm dê, vừa tạo tiếng động vừa di chuyển trong phạm vi chơi. Không nhìn thấy các bạn, người bắt dê phải lắng nghe tiếng động để tìm. Vì thế, người cổ vũ không được chỉ chỗ cho bạn bắt dê nhé!",
+        "fact": "Người bắt dê bịt kín mắt và dựa vào tiếng động để tìm các bạn làm dê.",
         "q": "Ai được bịt mắt trong trò chơi?",
         "answers": [
           "Người bắt dê",
@@ -346,8 +346,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-1",
         "title": "Gọi tên suối, thác",
-        "narration": "Quê hương có nhiều suối và thác đẹp như Suối Tiên, Suối Lương, thác Ồ Ồ, thác Grăng, Hố Giang Thơm và Hòa Phú Thành. Có hai nơi cùng tên Suối Mơ: một ở Hà Nha, một ở Bà Nà. Mỗi nơi có vẻ đẹp riêng. Em muốn tìm hiểu dòng suối nào?",
-        "fact": "Có nhiều dòng suối, thác nước; hai địa điểm có thể cùng tên.",
+        "narration": "Cùng làm quen với những tên suối, thác trong sách nhé! Suối Tiên ở xã Quế Sơn Trung; Suối Lương ở phường Hải Vân. Hai nơi cùng mang tên Suối Mơ: một ở xã Hà Nha, một ở xã Bà Nà. Ngoài ra còn có thác Ồ Ồ ở xã Sơn Cẩm Hà và thác ở Hố Giang Thơm, xã Tam Mỹ. Em không cần nhớ hết ngay. Hãy chọn một nơi em thích, nghe lại tên và nơi có suối hoặc thác ấy nhé!",
+        "fact": "Hai nơi cùng tên Suối Mơ ở xã Hà Nha và xã Bà Nà; cần biết thêm địa điểm để phân biệt.",
         "q": "Hai địa điểm cùng tên được nhắc đến là gì?",
         "answers": [
           "Suối Mơ",
@@ -382,11 +382,11 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-4",
         "title": "Giới thiệu cảnh đẹp em yêu",
-        "narration": "Suối và thác nước góp thêm vẻ đẹp cho quê hương, cũng là nơi mọi người tìm hiểu thiên nhiên. Muốn giới thiệu một dòng suối, em hãy nói tên và một nét đẹp của nơi ấy. Em có thể cùng người lớn sưu tầm tranh ảnh hoặc vẽ cảnh mình yêu thích. Giữ sạch dòng suối cũng là cách yêu quê hương.",
-        "fact": "Em có thể giới thiệu một cảnh đẹp bằng lời nói hoặc tranh vẽ.",
+        "narration": "Trong sách còn có thác Grăng ở xã Bến Giằng và thác Hòa Phú Thành ở xã Hòa Vang. Suối và thác là những cảnh đẹp, thu hút mọi người đến tìm hiểu thiên nhiên. Để giới thiệu một nơi, em hãy nói ba điều: tên là gì, ở đâu và có cảnh gì đẹp. Ví dụ: Suối Tiên ở xã Quế Sơn Trung, có rừng xanh, nước trong và thác chảy xuống hồ. Em có thể sưu tầm ảnh hoặc vẽ để kể với người thân. Khi tham quan, nhớ giữ sạch cảnh quan nhé!",
+        "fact": "Giới thiệu một suối hoặc thác: nói tên, địa điểm và nét đẹp của nơi ấy.",
         "q": "Khi giới thiệu một dòng suối, em có thể nói gì?",
         "answers": [
-          "Tên và một nét đẹp của suối",
+          "Tên, địa điểm và một nét đẹp của suối",
           "Chỉ tên các món ăn",
           "Một câu chuyện không liên quan"
         ]
@@ -471,8 +471,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-2",
         "title": "Nguyên liệu món mì Quảng",
-        "narration": "Một tô mì Quảng có thể có sợi mì, tôm, thịt và trứng, thêm nước dùng, rau thơm, đậu phụng và bánh tráng nướng. Các nguyên liệu kết hợp tạo nên hương vị của món ăn. Mỗi gia đình có thể nấu khác nhau. Nếu có nguyên liệu không ăn được, em nhớ báo người lớn nhé!",
-        "fact": "Sợi mì cùng các nguyên liệu tạo nên món mì Quảng.",
+        "narration": "Cùng xem nguyên liệu món mì Quảng trong sách nhé! Có sợi mì, tôm tươi, thịt ba chỉ, trứng vịt hoặc trứng cút. Xương lợn được dùng để nấu nước dùng. Còn có bánh tráng nướng, đậu phụng và rau sống. Người nấu thêm gia vị như muối, nước mắm, hành, tỏi để món ăn có hương vị. Mỗi gia đình có thể nấu khác nhau. Nếu có nguyên liệu em không ăn được, hãy báo người lớn để chọn phần phù hợp nhé!",
+        "fact": "Mì Quảng trong bài có sợi mì, tôm, thịt, trứng; xương lợn dùng để nấu nước dùng.",
         "q": "Mì Quảng trong tài liệu có nhóm nguyên liệu nào?",
         "answers": [
           "Sợi mì, tôm, thịt và trứng",
@@ -483,8 +483,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-3",
         "title": "Bày tô mì và thưởng thức",
-        "narration": "Để bày tô mì Quảng, cho sợi mì vào tô, thêm tôm, thịt, trứng rồi chan nước dùng. Rắc thêm đậu phụng và rau thơm, bày rau ăn kèm bên cạnh. Bánh tráng nướng góp vị giòn cho món ăn. Khi thưởng thức, mỗi người có thể thêm chanh và chọn nguyên liệu phù hợp với mình.",
-        "fact": "Có thể thưởng thức mì Quảng cùng rau và bánh tráng nướng.",
+        "narration": "Em cùng quan sát cách bày tô mì trong bài nhé! Đầu tiên, cho sợi mì vào tô. Tiếp đến, thêm tôm, thịt, trứng rồi nhờ người lớn chan nước dùng. Sau đó, rắc đậu phụng, hành và ngò lên trên. Rau sống có thể cho vào tô hoặc để riêng ăn kèm. Khi ăn, có thể thêm chanh, bánh tráng nướng, hoa chuối hoặc ớt xanh theo sở thích và phần ăn phù hợp. Người lớn giúp em xử lí nước nóng nhé!",
+        "fact": "Theo cách bày trong bài: sợi mì trước, rồi tôm, thịt, trứng, tiếp đến nước dùng và các phần ăn kèm.",
         "q": "Đồ ăn kèm nào vừa được giới thiệu?",
         "answers": [
           "Bánh tráng nướng",
@@ -495,8 +495,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-4",
         "title": "Đầu bếp siêu hạng",
-        "narration": "Cùng nhóm chọn một món truyền thống, vẽ món ăn, nhờ thầy cô viết tên nguyên liệu rồi giới thiệu trước lớp. Em có thể nói tên món và điều mình thích. Ở nhà, em tham gia việc vừa sức với người thân; người lớn làm việc với dao, bếp và nước nóng.",
-        "fact": "Em có thể giới thiệu món ăn bằng tranh và lời kể.",
+        "narration": "Đến lượt nhóm em làm Đầu bếp siêu hạng! Cùng chọn một món truyền thống của Đà Nẵng, vẽ món ăn rồi nhờ thầy cô hỗ trợ ghi tên nguyên liệu. Khi giới thiệu, em nói: món gì, làm từ những nguyên liệu nào, em có thích món đó không và vì sao. Mỗi bạn có thể thích một món khác nhau. Ở nhà, em cùng người thân làm việc vừa sức; người lớn sử dụng dao, bếp và nước nóng. Nhớ cảm ơn người đã chuẩn bị món ăn nhé!",
+        "fact": "Giới thiệu món ăn bằng tên món, nguyên liệu và điều em thích hoặc chưa thích về món đó.",
         "q": "Sản phẩm nhóm có thể làm trong trò Đầu bếp siêu hạng là gì?",
         "answers": [
           "Tranh món ăn kèm tên nguyên liệu",

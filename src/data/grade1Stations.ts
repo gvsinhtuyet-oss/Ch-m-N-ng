@@ -2,7 +2,7 @@ import type {Station,ExplorationHotspot,ChallengeQuestion} from '../types';
 import {OFFICIAL_25_CATALOG} from './curriculumCatalog';
 import {GRADE1_CONTENT} from './grade1Content';
 import {grade1PointMedia} from './grade1Media';
-export const GRADE1_CONTENT_REVISION='4.0.0-grade1-media';
+export const GRADE1_CONTENT_REVISION='4.1.0-grade1-textbook';
 const source='Tài liệu Giáo dục địa phương thành phố Đà Nẵng lớp 1 – tái bản lần thứ hai; bản cô cung cấp: TLĐP 1. 08-8-2025 (Nhóm 1).docx';
 function choices(answers:string[],offset:number){const options=answers.map((textVi,i)=>({id:'opt-'+(i+1),textVi,isCorrect:i===0}));return [...options.slice(offset),...options.slice(0,offset)];}
 export const GRADE_1_STATIONS:Station[]=GRADE1_CONTENT.map(lesson=>{
@@ -17,6 +17,6 @@ export const GRADE_1_STATIONS:Station[]=GRADE1_CONTENT.map(lesson=>{
  rewards:[{id:cat.id==='g1-station-4'?'rw-tdh-1':`rw-${cat.id}-1`,stationId:cat.id,stage:1,nameVi:'La bàn khám phá',nameEn:'Discovery compass',template:'discovery_compass',descriptionVi:'Ghi nhận em đã quan sát và tìm hiểu các điểm chạm.'},{id:cat.id==='g1-station-4'?'rw-tdh-2':`rw-${cat.id}-2`,stationId:cat.id,stage:2,nameVi:'Chìa khóa hiểu biết',nameEn:'Knowledge key',template:'scholar_scroll',descriptionVi:'Ghi nhận em đã giải quyết đủ 5 thử thách.'},{id:cat.id==='g1-station-4'?'rw-tdh-3':`rw-${cat.id}-3`,stationId:cat.id,stage:3,nameVi:lesson.badge,nameEn:'Homeland friend',template:cat.id==='g1-station-3'?'nature_leaf':'guardian_star',descriptionVi:'Ghi nhận cảm xúc và việc làm em lựa chọn.'}],
  stamp:{id:cat.id==='g1-station-4'?'stamp-thanh-dien-hai':'stamp-'+cat.id,stationId:cat.id,nameVi:lesson.badge,nameEn:'My homeland stamp',iconName:cat.id==='g1-station-4'?'shield':'award',colorTheme:'#ea580c',quoteVi:'Em hiểu thêm và yêu quê hương bằng việc nhỏ mỗi ngày.'},
  journeyMap:{id:cat.id==='g1-station-4'?'map-g1-thanh-dien-hai':'map-'+cat.id,stationId:cat.id,grade:1,titleVi:'Bản đồ hành trình '+cat.titleVi,subtitleVi:lesson.subtitle,image:asset('map'),summaryNodes:hotspots.map(h=>({id:'map-'+h.id,titleVi:h.titleVi,textVi:h.keyFactVi})),knowVi:cat.knowGoalVi,understandVi:cat.understandGoalVi,actVi:cat.behaviorGoalVi,rewardNameVi:'Bản đồ '+cat.titleVi,stampNameVi:lesson.badge},
- version:{stationId:cat.id,version:GRADE1_CONTENT_REVISION,status:'IN_REVIEW',createdBy:'Nhóm biên soạn CHẠM ĐÀ NẴNG',createdAt:'2026-10-16',changelog:'Đối chiếu tài liệu lớp 1 do giáo viên cung cấp; 4 điểm tìm hiểu, 5 tình huống vận dụng riêng, cảm xúc và hành động. Sơ đồ minh họa cục bộ; không khẳng định là ảnh tư liệu. Nội dung số chờ giáo viên duyệt sử dụng.'},
+ version:{stationId:cat.id,version:GRADE1_CONTENT_REVISION,status:'IN_REVIEW',createdBy:'Nhóm biên soạn CHẠM ĐÀ NẴNG',createdAt:'2026-10-22',changelog:'Bổ sung lời dẫn Chặng 1 theo sách lớp 1: địa danh, trường trùng tên, Thành Điện Hải, địa điểm suối thác và nguyên liệu mì Quảng; câu ngắn, giải thích từ khó. Đối chiếu tài liệu lớp 1 do giáo viên cung cấp; 4 điểm tìm hiểu, 5 tình huống vận dụng riêng, cảm xúc và hành động. Sơ đồ minh họa cục bộ; không khẳng định là ảnh tư liệu. Nội dung số chờ giáo viên duyệt sử dụng.'},
  sources:[{id:cat.id+'-source',title:source+` – Chủ đề ${cat.lessonNumber}: ${cat.titleVi}`,organization:'Sở Giáo dục và Đào tạo TP Đà Nẵng',sourceType:'department_document',verified:true}]};
 });

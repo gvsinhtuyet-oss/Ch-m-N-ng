@@ -1,6 +1,6 @@
 import type {Station} from '../types';
 import type {StationContent} from './ContentService';
-export const GRADE1_REVISION='4.1.0-grade1-textbook';
+export const GRADE1_REVISION='4.2.0-grade1-textbook-complete';
 // Pure in-memory compatibility policy. Never writes or migrates server records.
 export function currentGrade1Content(station:Station,content:StationContent):StationContent{
  if(station.grade!==1||station.version.version!==GRADE1_REVISION||content.contentRevision===GRADE1_REVISION)return content;

@@ -2,7 +2,7 @@ import type {Station,ExplorationHotspot,ChallengeQuestion} from '../types';
 import {OFFICIAL_25_CATALOG} from './curriculumCatalog';
 import {GRADE1_CONTENT} from './grade1Content';
 import {grade1PointMedia} from './grade1Media';
-export const GRADE1_CONTENT_REVISION='4.1.0-grade1-textbook';
+export const GRADE1_CONTENT_REVISION='4.2.0-grade1-textbook-complete';
 const source='Tài liệu Giáo dục địa phương thành phố Đà Nẵng lớp 1 – tái bản lần thứ hai; bản cô cung cấp: TLĐP 1. 08-8-2025 (Nhóm 1).docx';
 function choices(answers:string[],offset:number){const options=answers.map((textVi,i)=>({id:'opt-'+(i+1),textVi,isCorrect:i===0}));return [...options.slice(offset),...options.slice(0,offset)];}
 export const GRADE_1_STATIONS:Station[]=GRADE1_CONTENT.map(lesson=>{

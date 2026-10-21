@@ -31,8 +31,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-3",
         "title": "Từ nhà đến trường",
-        "narration": "Trên đường từ nhà đến trường, em có thể đi qua hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn có một đường đi riêng với những điều thân quen. Em hãy chọn một địa điểm mình đã quan sát và kể lại. Một bức tranh nhỏ cũng giúp em giới thiệu con đường đến trường của mình đấy!",
-        "fact": "Mỗi bạn có những địa điểm quen thuộc trên đường đến trường.",
+        "narration": "Mỗi ngày đến trường, em đi qua những cảnh vật nào? Có thể là hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn ở một nơi nên đường đến trường cũng có thể khác nhau. Em hãy nhớ lại một địa điểm mình đã nhìn thấy, rồi kể với thầy cô và các bạn. Sau đó, em vẽ quang cảnh từ nhà đến trường. Hãy vẽ những điều quen thuộc trên đường của chính em nhé!",
+        "fact": "Em kể và vẽ những cảnh vật đã quan sát trên đường từ nhà đến trường.",
         "q": "Tranh về đường đến trường nên có gì?",
         "answers": [
           "Địa điểm em đã quan sát",
@@ -233,8 +233,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-game-1",
         "title": "Những trò chơi quen thuộc",
-        "narration": "Bịt mắt bắt dê, kéo co và nhảy bao bố là những trò chơi dân gian vui nhộn. Có trò cần đôi tai lắng nghe, có trò cần cả đội cùng góp sức. Khi cùng chơi, bạn bè thêm gần gũi. Em biết trò nào trong những trò ấy? Hãy cùng thầy cô tìm hiểu cách chơi nhé!",
-        "fact": "Trò chơi dân gian mang lại niềm vui và sự gắn bó.",
+        "narration": "Bịt mắt bắt dê, kéo co và nhảy bao bố là những trò chơi dân gian được giới thiệu trong bài. Trò chơi dân gian được mọi người truyền lại và cùng nhau chơi. Có trò cần lắng nghe, có trò cần cả đội góp sức. Cùng chơi giúp em rèn kĩ năng và thêm đoàn kết với bạn. Em đã chơi trò nào, chơi với ai và thích điều gì? Hãy kể một điều em nhớ nhé!",
+        "fact": "Trò chơi dân gian giúp em rèn kĩ năng và đoàn kết với bạn.",
         "q": "Đâu là trò chơi dân gian vừa được giới thiệu?",
         "answers": [
           "Kéo co",
@@ -257,8 +257,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-game-3",
         "title": "Phạm vi và lượt chơi",
-        "narration": "Trước khi chơi bịt mắt bắt dê, cả nhóm thống nhất phạm vi chơi. Các bạn chỉ di chuyển trong phạm vi ấy, người cổ vũ không nhắc hướng tìm dê. Khi bắt được một bạn làm dê, người bắt thắng lượt đó. Bạn bị bắt sẽ làm người bắt dê ở lượt tiếp theo. Chơi đúng luật giúp cuộc vui công bằng hơn!",
-        "fact": "Chơi trong phạm vi đã thống nhất và đổi vai theo luật.",
+        "narration": "Trước khi chơi, cả nhóm cùng chọn và thống nhất phạm vi chơi. Đó là khu vực các bạn được di chuyển. Các bạn làm dê không chạy ra ngoài khu vực ấy. Người cổ vũ chỉ cổ vũ, không nhắc hướng tìm dê. Khi bắt được một bạn làm dê, người bắt thắng lượt đó. Bạn vừa bị bắt sẽ bịt mắt để làm người bắt dê ở lượt tiếp theo. Cùng giữ luật để ai cũng được chơi công bằng nhé!",
+        "fact": "Chơi trong phạm vi đã thống nhất, không chỉ hướng và đổi vai khi bắt được dê.",
         "q": "Người đóng vai dê di chuyển ở đâu?",
         "answers": [
           "Trong phạm vi chơi",
@@ -269,8 +269,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-game-4",
         "title": "Chơi cùng bạn và gia đình",
-        "narration": "Trò chơi dân gian giúp em rèn kĩ năng và đoàn kết với bạn. Em có thể cùng nhóm chọn một trò yêu thích, nói cách chơi rồi thực hiện dưới sự hướng dẫn của người lớn. Khi về nhà, em có thể mời người thân cùng chơi một trò phù hợp.",
-        "fact": "Cùng giữ gìn trò chơi dân gian bằng cách chơi và chia sẻ.",
+        "narration": "Em hãy cùng nhóm chọn một trò chơi dân gian yêu thích. Trước khi chơi, các bạn cùng nói lại cách chơi và luật chơi, rồi thực hiện theo hướng dẫn của thầy cô. Cùng hợp tác và giữ luật sẽ giúp cuộc chơi vui hơn. Em cũng có thể kể tên và cách chơi một trò dân gian khác mà mình biết. Về nhà, hãy mời người thân cùng chơi một trò phù hợp nhé!",
+        "fact": "Em biết giới thiệu cách chơi và cùng bạn, người thân tham gia trò chơi dân gian.",
         "q": "Em có thể mời ai cùng chơi trò phù hợp ở nhà?",
         "answers": [
           "Người thân trong gia đình",
@@ -358,8 +358,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-2",
         "title": "Rừng cây bên Suối Tiên",
-        "narration": "Suối Tiên ở Quế Sơn Trung có rừng cây xanh bao quanh. Cây cối và dòng nước tạo nên một cảnh quan gần gũi với thiên nhiên. Màu xanh của lá, hình dáng của cây và dòng suối là những điều em có thể quan sát. Em thích nét đẹp nào của rừng và suối?",
-        "fact": "Rừng cây xanh là một nét đẹp được giới thiệu ở Suối Tiên.",
+        "narration": "Suối Tiên ở xã Quế Sơn Trung. Nơi đây có rừng cây xanh, dòng nước và thác đẹp. Em hãy quan sát màu xanh của lá, hình dáng cây và dòng suối trong tranh minh họa. Rừng cây là một phần làm nên vẻ đẹp của Suối Tiên. Em thích rừng cây, dòng nước hay thác nước? Hãy chọn một nét đẹp để kể với người thân nhé!",
+        "fact": "Suối Tiên ở xã Quế Sơn Trung, có rừng cây xanh.",
         "q": "Cảnh vật nào được giới thiệu bên Suối Tiên?",
         "answers": [
           "Rừng cây xanh",
@@ -370,8 +370,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-3",
         "title": "Dòng nước và thác ở Suối Tiên",
-        "narration": "Ở Suối Tiên, dòng nước trong và mát chảy từ thác trên cao xuống, tạo thành hồ. Dòng thác, hồ nước và cây xanh làm nên cảnh đẹp của suối. Khi tham quan, em đi cùng người lớn và làm theo hướng dẫn. Nước trông trong, đẹp không có nghĩa là an toàn để tự xuống chơi.",
-        "fact": "Suối Tiên có dòng nước và thác tạo nên cảnh đẹp.",
+        "narration": "Ở Suối Tiên, nước trong và mát. Thác từ trên cao chảy xuống tạo thành hồ. Rừng cây, dòng thác và hồ nước cùng làm nên cảnh đẹp nơi đây. Em thử chỉ trên tranh: đâu là thác, đâu là hồ? Tranh đang xem là tranh minh họa, không phải ảnh tư liệu của Suối Tiên. Nếu được tham quan, em đi cùng người lớn và làm theo hướng dẫn. Nước trông trong, đẹp không có nghĩa là an toàn để tự xuống chơi nhé!",
+        "fact": "Suối Tiên có nước trong, mát và thác trên cao chảy xuống tạo thành hồ.",
         "q": "Theo lời giới thiệu, nước ở Suối Tiên thế nào?",
         "answers": [
           "Trong và mát",
@@ -459,8 +459,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-1",
         "title": "Món ngon quê hương",
-        "narration": "Mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng là những món ăn quen thuộc của quê hương. Mỗi món có nguyên liệu, cách làm và hương vị riêng. Em đã biết món nào? Hãy kể tên một món em từng ăn hoặc muốn tìm hiểu cùng gia đình nhé!",
-        "fact": "Quê hương có nhiều món ăn truyền thống.",
+        "narration": "Quê hương Đà Nẵng có nhiều món ăn ngon như mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng. Trong đó, mì Quảng là món ăn nổi tiếng được bài học giới thiệu kĩ. Mỗi món có nguyên liệu và hương vị riêng. Em đã biết hoặc từng ăn món nào? Hãy gọi tên một món và chia sẻ điều em thích. Nếu chưa từng ăn, em vẫn có thể tìm hiểu món ấy qua tranh và lời kể nhé!",
+        "fact": "Đà Nẵng có nhiều món ăn truyền thống; bài học tìm hiểu kĩ món mì Quảng.",
         "q": "Món nào có trong danh sách vừa được giới thiệu?",
         "answers": [
           "Cao lầu",
@@ -471,7 +471,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-2",
         "title": "Nguyên liệu món mì Quảng",
-        "narration": "Cùng xem nguyên liệu món mì Quảng trong sách nhé! Có sợi mì, tôm tươi, thịt ba chỉ, trứng vịt hoặc trứng cút. Xương lợn được dùng để nấu nước dùng. Còn có bánh tráng nướng, đậu phụng và rau sống. Người nấu thêm gia vị như muối, nước mắm, hành, tỏi để món ăn có hương vị. Mỗi gia đình có thể nấu khác nhau. Nếu có nguyên liệu em không ăn được, hãy báo người lớn để chọn phần phù hợp nhé!",
+        "narration": "Cùng xem nguyên liệu món mì Quảng trong sách nhé! Có sợi mì, tôm tươi, thịt ba chỉ, trứng vịt hoặc trứng cút. Xương lợn được dùng để nấu nước dùng. Còn có bánh tráng nướng, đậu phụng và rau sống. Người nấu dùng các gia vị như muối, bột ngọt, tiêu, nước mắm, dầu ăn, hành, tỏi và ớt để tạo hương vị. Mỗi gia đình có thể nấu khác nhau. Nếu có nguyên liệu em không ăn được, hãy báo người lớn để chọn phần phù hợp nhé!",
         "fact": "Mì Quảng trong bài có sợi mì, tôm, thịt, trứng; xương lợn dùng để nấu nước dùng.",
         "q": "Mì Quảng trong tài liệu có nhóm nguyên liệu nào?",
         "answers": [

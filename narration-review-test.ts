@@ -9,7 +9,7 @@ const entries=Object.entries(NARRATION_REVIEW);
 test('105 reviewed spoken lessons use canonical revised wording and retain source context outside speech',()=>{
  assert.equal(entries.length,105);assert.equal(ALL_25_STATIONS.length,25);let edited=0;
  for(const s of ALL_25_STATIONS)for(const h of s.hotspots){const r=NARRATION_REVIEW[h.id as keyof typeof NARRATION_REVIEW];assert.equal(h.narrationVi,r.after,h.id);assert.ok(h.narrationVi.length>100);assert.doesNotMatch(h.narrationVi,/Theo tài liệu|Tài liệu giới thiệu|Ảnh trong bài|Ảnh trước mặt|Sơ đồ tổng kết trong app|chưa chọn một tên tổ nghề/);if(r.before!==r.after){edited++;assert.ok(narrationTeacherNote(h.id).includes(r.before));}}
- assert.equal(edited,62);
+ assert.equal(edited,63);
 });
 test('current saved defaults update purely and idempotently; custom teaching content survives',()=>{
  for(const s of ALL_25_STATIONS){const content={contentRevision:s.version.version,coverImage:s.coverImage,mapImage:s.journeyMap?.image||'',resources:[],hotspots:s.hotspots.map(h=>{const r=NARRATION_REVIEW[h.id as keyof typeof NARRATION_REVIEW];return {...h,narrationVi:r.before,...('fact'in r?{keyFactVi:r.fact.before}:{}),...('question'in r?{interaction:r.question.before}:{} )};})} as any;

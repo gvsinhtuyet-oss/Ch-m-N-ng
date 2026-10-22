@@ -12,11 +12,11 @@ interface Props {
 }
 
 const APPROVED_GAMES: Record<string, { path: string; title: string }> = {
-  'g1-station-2': { path: '/games/khoi-1-kham-pha/index.html?station=g1-station-2', title: 'Hội vui quê em' },
+  'g1-station-2': { path: '/games/khoi-1-duyet/tram-2/index.html', title: 'Hội vui quê em' },
   'g1-station-4': { path: '/games/thanh-dien-hai/index.html', title: 'Nhà thám hiểm nhí – Thành Điện Hải' },
-  'g1-station-1': { path: '/games/khoi-1-kham-pha/index.html?station=g1-station-1', title: 'Bản đồ quê em' },
-  'g1-station-3': { path: '/games/khoi-1-kham-pha/index.html?station=g1-station-3', title: 'Khám phá Suối Tiên' },
-  'g1-station-5': { path: '/games/khoi-1-kham-pha/index.html?station=g1-station-5', title: 'Đầu bếp siêu hạng – Mì Quảng' },
+  'g1-station-1': { path: '/games/khoi-1-duyet/tram-1/index.html', title: 'Bản đồ quê em' },
+  'g1-station-3': { path: '/games/khoi-1-duyet/tram-3/index.html', title: 'Khám phá Suối Tiên' },
+  'g1-station-5': { path: '/games/khoi-1-duyet/tram-5/index.html', title: 'Đầu bếp siêu hạng – Mì Quảng' },
   'g2-station-1': { path: '/games/det-sac-mau-que-em/index.html', title: 'Dệt Sắc Màu Quê Em' },
   'g2-station-5': { path: '/games/ron-rang-hoi-que/index.html', title: 'Rộn Ràng Chợ Quê' },
   'g2-station-4': { path: '/games/hoi-an/index.html', title: 'Giải mã thương cảng Hội An' },

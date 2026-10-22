@@ -9,6 +9,8 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
   const [answerVisible, setAnswerVisible] = useState(false);
   const [notesVisible, setNotesVisible] = useState(false);
   const [sourcesVisible, setSourcesVisible] = useState(false);
+  const [guideVisible, setGuideVisible] = useState(true);
+  const [teacherMode, setTeacherMode] = useState(false);
   const dialog = useRef<HTMLDivElement>(null);
   const body = useRef<HTMLDivElement>(null);
   const move = (delta: number) => {setIndex(value => Math.max(0, Math.min(deck.slides.length - 1, value + delta)));setAnswerVisible(false);};
@@ -21,6 +23,13 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
   }, []);
   useEffect(() => {body.current?.scrollTo(0, 0);}, [index]);
   const slide = deck.slides[index];
+  const stageLabel = index===0?'Khởi động / kết nối':index===deck.slides.length-1?'Vận dụng / củng cố':'Khám phá / liên hệ GDĐP';
+  const lessonGuide = [
+    'Dạy nội dung chính theo SGK; chỉ mở học liệu GDĐP tại vị trí tích hợp phù hợp.',
+    'Đặt câu hỏi trên slide, cho học sinh suy nghĩ và chia sẻ trước khi hiện gợi ý trả lời.',
+    'Dùng nút Tiếp / Trước để chuyển trang; không bắt buộc trình chiếu toàn bộ nếu không đủ thời gian.',
+    'Kiểm tra Ghi chú giáo viên và Nguồn & rà soát trước giờ dạy; không xem gợi ý là đáp án SGK.'
+  ];
   return <div ref={dialog} tabIndex={-1} role="dialog" aria-modal="true" aria-label={`Trình chiếu bài ${record.lesson}`} onKeyDown={event => {
     if (event.key === 'Escape') {event.preventDefault();onExit();}
     if (event.altKey || event.ctrlKey || event.metaKey) return;
@@ -34,11 +43,19 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
   }} className="fixed inset-0 z-[75] flex flex-col bg-[#f8fafc] text-slate-900 outline-none">
     <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-white px-4 py-3 sm:px-7">
       <div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-wider text-emerald-700">CHẠM ĐÀ NẴNG · {deck.presentationKind==='topic'?'HỌC LIỆU CHỦ ĐỀ':'TÍCH HỢP GDĐP'} · KHỐI {record.grade}</p><h2 className="text-sm font-black sm:text-base">{record.lesson}</h2><p className="text-xs text-slate-500">{record.subject} · {deck.presentationKind==='topic'?record.week:'Tuần '+record.week} · {record.integrationType}</p></div>
-      <div className="flex flex-wrap gap-2"><button type="button" onClick={()=>setNotesVisible(value=>!value)} aria-pressed={notesVisible} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold"><FileText className="mr-1 inline h-4 w-4" />{notesVisible?'Ẩn ghi chú':'Ghi chú giáo viên'}</button><button type="button" onClick={()=>setSourcesVisible(value=>!value)} aria-pressed={sourcesVisible} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold"><BookOpen className="mr-1 inline h-4 w-4" />Nguồn & rà soát</button><button type="button" onClick={onExit} className="rounded-xl bg-slate-900 px-3 py-2 text-xs font-bold text-white"><X className="mr-1 inline h-4 w-4" />Đóng</button></div>
+      <div className="flex flex-wrap gap-2"><button type="button" onClick={()=>setGuideVisible(value=>!value)} aria-pressed={guideVisible} className="rounded-xl border border-emerald-300 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-900">{guideVisible?'Ẩn hướng dẫn':'Hướng dẫn sử dụng'}</button><button type="button" onClick={()=>setTeacherMode(value=>!value)} aria-pressed={teacherMode} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold">{teacherMode?'Chế độ học sinh':'Chế độ giáo viên'}</button><button type="button" onClick={()=>setNotesVisible(value=>!value)} aria-pressed={notesVisible} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold"><FileText className="mr-1 inline h-4 w-4" />{notesVisible?'Ẩn ghi chú':'Ghi chú giáo viên'}</button><button type="button" onClick={()=>setSourcesVisible(value=>!value)} aria-pressed={sourcesVisible} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold"><BookOpen className="mr-1 inline h-4 w-4" />Nguồn & rà soát</button><button type="button" onClick={onExit} className="rounded-xl bg-slate-900 px-3 py-2 text-xs font-bold text-white"><X className="mr-1 inline h-4 w-4" />Đóng</button></div>
     </header>
     {deck.mappingReview&&!deck.mappingReview.currentYearConfirmed&&<p role="status" className="shrink-0 border-b border-amber-200 bg-amber-50 px-4 py-2 text-xs font-semibold text-amber-900">{deck.presentationKind==='topic'?deck.mappingReview.note:<>Bản tham khảo từ bảng {deck.mappingReview.sourceYear} · Chưa xác nhận địa chỉ tích hợp năm học hiện hành.</>}</p>}
     <div ref={body} className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-7">
-      {sourcesVisible && <aside className="mx-auto mb-5 max-w-6xl space-y-3 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm">
+      {guideVisible&&!teacherMode&&<aside className="mx-auto mb-5 max-w-6xl rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-slate-900">
+        <div className="flex flex-wrap items-center justify-between gap-2"><h3 className="font-black text-emerald-900">Hướng dẫn sử dụng trong tiết dạy</h3><span className="rounded-full bg-white px-3 py-1 font-semibold text-emerald-800">Trang {index+1}: {stageLabel}</span></div>
+        <p className="mt-2"><strong>Vị trí tích hợp theo dữ liệu bài:</strong> {record.activity || 'Giáo viên lựa chọn phù hợp với tiến trình SGK'}</p>
+        <p className="mt-1"><strong>Hình thức:</strong> {record.integrationType}. <strong>Lưu ý:</strong> Bộ {deck.slides.length} trang là học liệu hỗ trợ, không phải toàn bộ tiết dạy và không có thời lượng cố định được phê duyệt.</p>
+        <ol className="mt-2 list-decimal space-y-1 pl-5">{lessonGuide.map(t=><li key={t}>{t}</li>)}</ol>
+        <p className="mt-2 font-semibold text-emerald-900">Gợi ý tổ chức trang này: {slide.teacherNotes}</p>
+        <button type="button" onClick={()=>{setGuideVisible(false);setTeacherMode(true);}} className="mt-3 rounded-lg bg-emerald-700 px-4 py-2 font-bold text-white">Đã hiểu · Bắt đầu trình chiếu</button>
+      </aside>}
+      {sourcesVisible && !teacherMode && <aside className="mx-auto mb-5 max-w-6xl space-y-3 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm">
         <h3 className="font-black">Nguồn và phạm vi sử dụng</h3><p>Bản biên soạn đối chiếu nguồn; chưa phải xác nhận phê duyệt của tổ chuyên môn. Không thay thế nội dung bài học chính trong sách.</p>
         <ul className="list-disc space-y-1 pl-5">{deck.sources.map(source=><li key={source} className="break-words [overflow-wrap:anywhere]">{source}</li>)}</ul>
         {deck.reviewNotes.map(note=><p key={note} className="font-semibold text-amber-900">Cần duyệt: {note}</p>)}
@@ -50,7 +67,7 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
           <div className="flex flex-col justify-center gap-3 rounded-2xl border border-emerald-100 bg-emerald-50/60 p-5"><p className="text-[10px] font-bold uppercase tracking-widest text-emerald-700">{(deck.sourceRecord.grade>=3&&deck.sourceRecord.grade<=5)?'Hình ảnh và sơ đồ học tập':'Sơ đồ minh hoạ học tập'}</p>{slide.images&&slide.images.length>0&&<div className={`grid gap-3 ${slide.images.length>1?'sm:grid-cols-3':''}`}>{slide.images.map(img=><figure key={img.src} className="min-w-0 overflow-hidden rounded-xl border border-emerald-100 bg-white p-2"><img src={img.src} alt={img.alt} className="max-h-56 w-full object-contain"/><figcaption className="mt-1 text-[10px] leading-relaxed text-slate-500"><LearningMediaCredit src={img.src} credit={img.caption}/></figcaption></figure>)}</div>}{slide.visual.map((item,i)=><div key={item} className="flex items-center gap-3 rounded-2xl border border-white bg-white p-4 shadow-sm"><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-orange-100 text-sm font-black text-orange-700">{i+1}</span><span className="text-lg font-bold sm:text-xl">{item}</span></div>)}</div>
           <div className="space-y-5"><ul className="space-y-4">{slide.points.map(point=><li key={point} className="flex gap-3 text-lg leading-relaxed sm:text-2xl"><Check className="mt-1 h-5 w-5 shrink-0 text-emerald-600" /><span>{point}</span></li>)}</ul><section className="rounded-2xl border border-orange-100 bg-orange-50 p-5"><p className="mb-2 text-xs font-black uppercase text-orange-700">Cùng trao đổi</p><p className="text-lg font-bold sm:text-xl">{slide.question}</p><button type="button" onClick={()=>setAnswerVisible(value=>!value)} aria-expanded={answerVisible} className="mt-4 inline-flex items-center gap-2 rounded-xl bg-white px-3 py-2 text-sm font-bold text-orange-800 shadow-sm"><Eye className="h-4 w-4" />{answerVisible?'Ẩn gợi ý trả lời':'Hiện gợi ý trả lời'}</button>{answerVisible&&<p className="mt-4 rounded-xl bg-white p-4 text-base leading-relaxed text-emerald-900">{slide.answer}</p>}</section></div>
         </div>
-        {notesVisible&&<aside className="border-t border-slate-100 bg-slate-50 p-5 text-sm leading-relaxed"><p className="mb-2 font-black">Ghi chú giáo viên · {record.activity.replace(/\n/g,' · ')}</p><p>{slide.teacherNotes}</p>{index===0&&<ul className="mt-3 list-disc pl-5">{deck.outcomes.map(goal=><li key={goal}>{goal}</li>)}</ul>}</aside>}
+        {notesVisible&&!teacherMode&&<aside className="border-t border-slate-100 bg-slate-50 p-5 text-sm leading-relaxed"><p className="mb-2 font-black">Ghi chú giáo viên · {record.activity.replace(/\n/g,' · ')}</p><p>{slide.teacherNotes}</p>{index===0&&<ul className="mt-3 list-disc pl-5">{deck.outcomes.map(goal=><li key={goal}>{goal}</li>)}</ul>}</aside>}
       </article>
     </div>
     <footer className="flex shrink-0 items-center justify-between gap-3 border-t border-slate-200 bg-white px-4 py-3 sm:px-7"><button type="button" onClick={()=>move(-1)} disabled={index===0} className="rounded-xl border border-slate-200 px-3 py-2 text-sm font-bold disabled:opacity-30"><ArrowLeft className="mr-1 inline h-4 w-4" />Trước</button><span className="text-xs font-semibold text-slate-500">Trang {index+1} / {deck.slides.length}</span>{index===deck.slides.length-1?<button type="button" onClick={onExit} className="rounded-xl bg-emerald-700 px-4 py-2 text-sm font-bold text-white">Về bài dạy</button>:<button type="button" onClick={()=>move(1)} className="rounded-xl bg-emerald-700 px-4 py-2 text-sm font-bold text-white">Tiếp<ArrowRight className="ml-1 inline h-4 w-4" /></button>}</footer>

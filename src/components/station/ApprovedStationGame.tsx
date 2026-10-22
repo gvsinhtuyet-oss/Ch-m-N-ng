@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Award, CheckCircle2 } from 'lucide-react';
+import { Award, CheckCircle2, Maximize2, Minimize2 } from 'lucide-react';
 import { Station } from '../../types';
 import { progressService } from '../../services/ProgressService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
@@ -25,9 +25,34 @@ const APPROVED_GAMES: Record<string, { path: string; title: string }> = {
 export const ApprovedStationGame: React.FC<Props> = ({ station, studentId, isReadOnly, onCompleteStage }) => {
   const game = APPROVED_GAMES[station.id];
   const frameRef = useRef<HTMLIFrameElement>(null);
+  const fullscreenContainerRef = useRef<HTMLDivElement>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const completionHandled = useRef(false);
   const [completed, setCompleted] = useState(false);
   const mainReward = station.rewards.find(reward => reward.stage === 2) || station.rewards[1];
+
+  useEffect(() => {
+    const syncFullscreen = () => setIsFullscreen(document.fullscreenElement === fullscreenContainerRef.current);
+    document.addEventListener('fullscreenchange', syncFullscreen);
+    return () => document.removeEventListener('fullscreenchange', syncFullscreen);
+  }, []);
+
+  const toggleFullscreen = async () => {
+    const container = fullscreenContainerRef.current;
+    if (!container) return;
+    try {
+      if (document.fullscreenElement === container) {
+        await document.exitFullscreen();
+      } else if (document.fullscreenElement) {
+        await document.exitFullscreen();
+        await container.requestFullscreen();
+      } else {
+        await container.requestFullscreen();
+      }
+    } catch {
+      // The browser may disallow fullscreen; the normal game remains usable.
+    }
+  };
 
   useEffect(() => {
     backgroundMusic.setForegroundSource('approved-station-game', true);
@@ -66,18 +91,47 @@ export const ApprovedStationGame: React.FC<Props> = ({ station, studentId, isRea
           </span>
           <h2 className="text-base font-black text-slate-900 sm:text-lg">{game.title}</h2>
         </div>
-        <div className="flex shrink-0 items-center gap-2 rounded-xl bg-amber-50 px-3 py-2 text-xs font-bold text-amber-900">
-          <Award className="h-4 w-4" />
-          <span>{station.id === 'g1-station-2' || station.id === 'g1-station-4' ? '4 nhiệm vụ · cùng chơi, cùng khám phá' : '5 nhiệm vụ · truy lại dấu vết đến khi đúng'}</span>
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2 rounded-xl bg-amber-50 px-3 py-2 text-xs font-bold text-amber-900">
+            <Award className="h-4 w-4" />
+            <span>{station.id === 'g1-station-2' || station.id === 'g1-station-4' ? '4 nhiệm vụ · cùng chơi, cùng khám phá' : '5 nhiệm vụ · truy lại dấu vết đến khi đúng'}</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => { void toggleFullscreen(); }}
+            aria-label="Mở trò chơi toàn màn hình"
+            className="inline-flex items-center gap-2 rounded-xl bg-sky-700 px-4 py-2.5 text-xs font-black text-white shadow-sm transition hover:bg-sky-800"
+          >
+            <Maximize2 className="h-4 w-4" />
+            Toàn màn hình
+          </button>
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-950 shadow-lg">
+      <div
+        ref={fullscreenContainerRef}
+        className={isFullscreen
+          ? 'relative flex h-[100dvh] w-screen items-center justify-center overflow-hidden bg-slate-950'
+          : 'relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-950 shadow-lg'}
+      >
+        {isFullscreen && (
+          <button
+            type="button"
+            onClick={() => { void toggleFullscreen(); }}
+            aria-label="Thoát toàn màn hình"
+            className="absolute right-3 top-3 z-20 inline-flex items-center gap-2 rounded-xl bg-slate-950/75 px-3 py-2 text-xs font-black text-white shadow-md backdrop-blur-sm hover:bg-slate-800"
+          >
+            <Minimize2 className="h-4 w-4" />
+            Thu nhỏ
+          </button>
+        )}
         <iframe
           ref={frameRef}
           src={game.path}
           title={game.title}
-          className="block h-[82vh] min-h-[680px] w-full border-0 max-sm:h-[86vh] max-sm:min-h-[760px]"
+          className={isFullscreen
+            ? 'block h-full w-full border-0'
+            : 'block h-[82vh] min-h-[680px] w-full border-0 max-sm:h-[86vh] max-sm:min-h-[760px]'}
           allow="autoplay; fullscreen"
           allowFullScreen
         />

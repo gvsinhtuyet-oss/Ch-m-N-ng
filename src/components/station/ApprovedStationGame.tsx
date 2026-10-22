@@ -13,6 +13,7 @@ interface Props {
 
 const APPROVED_GAMES: Record<string, { path: string; title: string }> = {
   'g1-station-2': { path: '/games/hoi-vui-que-em/index.html', title: 'Hội vui quê em' },
+  'g1-station-4': { path: '/games/thanh-dien-hai/index.html', title: 'Nhà thám hiểm nhí – Thành Điện Hải' },
   'g1-station-1': { path: '/games/ban-do-que-em/index.html', title: 'Bản đồ quê em' },
   'g2-station-1': { path: '/games/det-sac-mau-que-em/index.html', title: 'Dệt Sắc Màu Quê Em' },
   'g2-station-5': { path: '/games/ron-rang-hoi-que/index.html', title: 'Rộn Ràng Chợ Quê' },
@@ -67,7 +68,7 @@ export const ApprovedStationGame: React.FC<Props> = ({ station, studentId, isRea
         </div>
         <div className="flex shrink-0 items-center gap-2 rounded-xl bg-amber-50 px-3 py-2 text-xs font-bold text-amber-900">
           <Award className="h-4 w-4" />
-          <span>{station.id === 'g1-station-2' ? '4 nhiệm vụ · cùng chơi, cùng khám phá' : '5 nhiệm vụ · truy lại dấu vết đến khi đúng'}</span>
+          <span>{station.id === 'g1-station-2' || station.id === 'g1-station-4' ? '4 nhiệm vụ · cùng chơi, cùng khám phá' : '5 nhiệm vụ · truy lại dấu vết đến khi đúng'}</span>
         </div>
       </div>
 

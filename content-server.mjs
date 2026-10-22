@@ -278,6 +278,29 @@ const server = createServer(async (req,res) => {
       });
       return json(res,200,{saved:true,records:catalog.records.length,published:false});
     }
+    if (pathname === '/api/teacher/gddp/lesson-suggestion' && req.method === 'POST') {
+      auth.sameOrigin(req);
+      await auth.requireTeacher(req);
+      if (!process.env.GEMINI_API_KEY) return json(res,503,{error:'Máy chủ chưa cấu hình Gemini API. Giáo viên vẫn có thể chỉnh sửa KHBD thủ công.'});
+      const input=await body(req);
+      const id=String(input?.id||'');
+      if (!/^[a-zA-Z0-9_-]{1,90}$/.test(id)) return json(res,400,{error:'Mã bài không hợp lệ.'});
+      const published=cloudStore ? await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT).catch(()=>null) : null;
+      const catalog=published?.published ? published.catalog : published?.previousPublishedCatalog || bundledGddpCatalog;
+      const row=catalog.records.find(item=>item.id===id);
+      if (!row?.content?.trim()) return json(res,404,{error:'Không tìm thấy nội dung GDĐP được cung cấp cho bài này.'});
+      const {GoogleGenAI}=await import('@google/genai');
+      const ai=new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY});
+      const response=await ai.models.generateContent({
+        model:'gemini-2.5-flash-lite',
+        contents:gddpPrompt(row),
+        config:{responseMimeType:'application/json',temperature:0.2,maxOutputTokens:600}
+      });
+      let parsed;
+      try { parsed=JSON.parse(response.text||''); }
+      catch { return json(res,502,{error:'AI chưa trả về gợi ý hợp lệ. Vui lòng thử lại.'}); }
+      return json(res,200,{...cleanGddpAiSuggestion(parsed),reviewRequired:true});
+    }
     if (pathname === '/api/admin/gddp/suggest' && req.method === 'POST') {
       auth.sameOrigin(req);
       await auth.requireAdmin(req);

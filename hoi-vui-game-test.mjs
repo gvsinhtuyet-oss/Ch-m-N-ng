@@ -30,6 +30,6 @@ test('replay resets the round and stops fireworks; continue is exposed only on v
 });
 test('game routing and wrapper validate iframe source and correct station before accepting completion',()=>{
  const wrapper=readFileSync('src/components/station/ApprovedStationGame.tsx','utf8'),stage=readFileSync('src/components/station/Stage2Challenge.tsx','utf8');
- assert.match(wrapper,/'g1-station-2': \\{ path: '\/games\/khoi-1-kham-pha\/index.html\\?station=g1-station-2'/);assert.match(stage,/station.id === 'g1-station-2'/);
+ assert.match(wrapper,/'g1-station-2': \{ path: '\/games\/khoi-1-kham-pha\/index.html\?station=g1-station-2'/);assert.match(stage,/station.id === 'g1-station-2'/);
  assert.match(wrapper,/event.origin !== window.location.origin/);assert.match(wrapper,/event.source !== frameRef.current\?\.contentWindow/);assert.match(wrapper,/event.data\?\.stationId === station.id && completionHandled.current/);
 });

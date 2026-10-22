@@ -505,5 +505,11 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
     }
     json(res,404,{error:'Not found'}); return true;
   }
-  return { handle, requireAdmin, sameOrigin };
+  async function requireTeacher(req) {
+    const user=await userFor(req);
+    if(!user) throw fail(401,'Vui lòng đăng nhập tài khoản giáo viên.');
+    if(user.role!=='teacher' && user.role!=='admin') throw fail(403,'Chức năng chỉ dành cho giáo viên và quản trị viên.');
+    return user;
+  }
+  return { handle, requireAdmin, requireTeacher, sameOrigin };
 }

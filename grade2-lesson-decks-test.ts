@@ -43,6 +43,14 @@ test('each presentation renders lesson identity, first slide, question and navig
   const html=renderToStaticMarkup(React.createElement(GddpPreparedPresentation,{record:row,deck,onExit:()=>{}}));
   assert.ok(html.includes(deck.slides[0].title));assert.ok(html.includes(deck.slides[0].question));
   assert.ok(!html.includes(deck.slides[0].answer),'answer hidden');
-  assert.match(html,/aria-modal="true"/);assert.match(html,/Sơ đồ minh hoạ học tập/);assert.match(html,/Trang 1 \/ 5/);
+  assert.match(html,/aria-modal="true"/);assert.match(html,/Sơ đồ minh hoạ học tập/);assert.match(html,row.id==='gddp-2026-2-01'?/Trang 1 \/ 3/:/Trang 1 \/ 5/);
  }
+});
+
+test('quick pilot is limited to Bop nat qua cam, with three stages and classroom assessment entry',()=>{
+ const row=grade2.find(r=>r.id==='gddp-2026-2-01')!;
+ const html=renderToStaticMarkup(React.createElement(GddpPreparedPresentation,{record:row,deck:getGddpLessonDeck(row)!,onExit:()=>{}}));
+ assert.match(html,/Tích hợp nhanh/);
+ assert.match(html,/8 phút/);
+ assert.match(html,/Trang 1 \/ 3/);
 });

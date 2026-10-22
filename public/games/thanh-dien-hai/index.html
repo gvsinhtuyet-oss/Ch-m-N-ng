@@ -20,7 +20,7 @@ const choiceRects={0:[[13,38,26,50],[40,38,27,50],[69,38,27,50]],1:[[40,39,53,18
 const matchRightRects=[[61,22,36,20],[61,44,36,20],[61,66,36,20]];
 let choiceOrder={0:[0,1,2],1:[0,1,2],2:[0,1,2],3:[0,1,2]};
 function shuffledDifferent(last){let a=[0,1,2];for(let tries=0;tries<20;tries++){a=[0,1,2];for(let i=2;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}if(a.some((n,i)=>n!==last[i]))return a}return [last[1],last[2],last[0]]}
-function reshuffleAll(){choiceOrder[0]=[0,1,2];choiceOrder[2]=[0,1,2];choiceOrder[3]=[0,1,2];choiceOrder[1]=shuffledDifferent(choiceOrder[1])}
+function reshuffleAll(){[0,1,2,3].forEach(q=>{choiceOrder[q]=[0,1,2]})}
 function tile(page,source,target){
  const [sx,sy,sw,sh]=source,[x,y,w,h]=target;
  let div=document.createElement('div');div.className='answer-tile';

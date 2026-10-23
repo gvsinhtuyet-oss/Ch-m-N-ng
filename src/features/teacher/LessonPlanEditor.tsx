@@ -6,7 +6,7 @@ export function LessonPlanEditor({record,sourceLabel,storageVariant}:{record:Gdd
   const {currentUser}=useApp();
   const [plan,setPlan]=useState<LessonPlan>(()=>({...createLessonPlan(record),school:(currentUser as any)?.schoolName||'',teacher:currentUser?.name||'',...(sourceLabel?{source:sourceLabel}:{})}));
   const [opened,setOpened]=useState(false);
-  const [aiSuggestion,setAiSuggestion]=useState<{outcomes:string;teachingSuggestion:string}|null>(null);
+  const [aiSuggestion,setAiSuggestion]=useState<{outcomes:string;teachingSuggestion:string;topicLink?:{stationId:string;stationTitle:string}|null;textbook?:{status:string;note:string}}|null>(null);
   const [error,setError]=useState('');const [busy,setBusy]=useState(false);const [reviewed,setReviewed]=useState(false);const [saved,setSaved]=useState('');
   const key=`cham-khbd-v2:${currentUser?.id||'guest'}:${record.id}${storageVariant?':'+storageVariant:''}`;
   const update=(field:keyof LessonPlan,value:string)=>{setPlan(p=>({...p,[field]:value}));setReviewed(false);setSaved('');};
@@ -19,7 +19,7 @@ export function LessonPlanEditor({record,sourceLabel,storageVariant}:{record:Gdd
       const data=await response.json();
       if(!response.ok)throw new Error(data.error||'Không tạo được gợi ý AI.');
       if(typeof data.outcomes!=='string'||typeof data.teachingSuggestion!=='string')throw new Error('Dữ liệu gợi ý chưa hợp lệ.');
-      setAiSuggestion({outcomes:data.outcomes,teachingSuggestion:data.teachingSuggestion});
+      setAiSuggestion({outcomes:data.outcomes,teachingSuggestion:data.teachingSuggestion,topicLink:data.topicLink,textbook:data.textbook});
       setReviewed(false);
     }catch(e){setError(e instanceof Error?e.message:'Không kết nối được AI.');}
     finally{setBusy(false);}
@@ -37,7 +37,7 @@ export function LessonPlanEditor({record,sourceLabel,storageVariant}:{record:Gdd
     <div className="rounded-lg border border-sky-200 bg-sky-50 p-3 space-y-2">
       <button type="button" disabled={busy} onClick={()=>void suggest()} className="rounded-lg bg-sky-700 px-4 py-2 font-bold text-white disabled:opacity-50">{busy?'AI đang gợi ý…':'✨ ✨ AI soạn hoạt động tích hợp 5 phút'}</button>
       <p className="text-xs text-slate-600">AI đề xuất kịch bản tích hợp 5 phút (2 phút khám phá, 2 phút tương tác, 1 phút vận dụng) từ địa chỉ GDĐP đang có: lời dẫn, câu hỏi, trả lời dự kiến và lời chốt. Tên bài/tuần trong bảng chưa chứng minh đã đối chiếu toàn văn SGK hiện hành; không tự nhận có trang SGK hoặc học liệu chưa xác minh. Giáo viên cần duyệt trước khi sử dụng.</p>
-      {aiSuggestion&&<div className="space-y-2 rounded-lg bg-white p-3 text-sm"><p className="font-bold">Gợi ý AI — chưa áp dụng</p><p className="whitespace-pre-wrap"><strong>Yêu cầu cần đạt:</strong> {aiSuggestion.outcomes}</p><p className="whitespace-pre-wrap"><strong>Tổ chức hoạt động:</strong> {aiSuggestion.teachingSuggestion}</p><div className="flex gap-2"><button type="button" onClick={applySuggestion} className="rounded bg-emerald-700 px-3 py-2 text-white">Đưa vào KHBD để chỉnh sửa</button><button type="button" onClick={()=>setAiSuggestion(null)} className="rounded border px-3 py-2">Bỏ gợi ý</button></div></div>}
+      {aiSuggestion&&<div className="space-y-2 rounded-lg bg-white p-3 text-sm"><p className="font-bold">Gợi ý AI — chưa áp dụng</p><p className="text-amber-800"><strong>Trạng thái đối chiếu SGK:</strong> {aiSuggestion.textbook?.note||'Chưa xác minh SGK hiện hành.'}</p><p><strong>Học liệu học sinh:</strong> {aiSuggestion.topicLink?`${aiSuggestion.topicLink.stationTitle} (trạm ${aiSuggestion.topicLink.stationId}, mới khớp chủ đề GDĐP)`:'Chưa có liên kết học liệu được kiểm chứng cho bài này.'}</p><p className="whitespace-pre-wrap"><strong>Yêu cầu cần đạt:</strong> {aiSuggestion.outcomes}</p><p className="whitespace-pre-wrap"><strong>Tổ chức hoạt động:</strong> {aiSuggestion.teachingSuggestion}</p><div className="flex gap-2"><button type="button" onClick={applySuggestion} className="rounded bg-emerald-700 px-3 py-2 text-white">Đưa vào KHBD để chỉnh sửa</button><button type="button" onClick={()=>setAiSuggestion(null)} className="rounded border px-3 py-2">Bỏ gợi ý</button></div></div>}
     </div>
     <div className="grid gap-3 sm:grid-cols-2">{field('school','Trường',false)}{field('teacher','Giáo viên',false)}{field('className','Lớp dạy',false)}{field('date','Ngày dạy',false)}</div>
     {field('objectives','I. Yêu cầu cần đạt')}{field('competencies','Năng lực')}{field('qualities','Phẩm chất')}{field('materials','II. Đồ dùng dạy học')}{field('integration','Nội dung tích hợp GDĐP')}

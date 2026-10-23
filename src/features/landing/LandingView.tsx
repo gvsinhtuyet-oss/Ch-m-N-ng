@@ -458,14 +458,14 @@ export const LandingView: React.FC = () => {
           />
           <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
           <div className="absolute inset-0 bg-slate-950/38 backdrop-blur-[2px] pointer-events-none" />
-          <div role="dialog" aria-modal="true" aria-label="Chọn vai trò và đăng nhập" className={`relative z-10 w-full max-h-[90dvh] overflow-y-auto rounded-3xl border border-white/80 bg-[#fffdf9]/95 p-5 text-slate-800 shadow-2xl backdrop-blur-xl sm:p-6 space-y-4 ${showTeacherLogin ? 'max-w-[420px]' : showStudentLogin ? 'max-w-[460px]' : 'max-w-[860px]'}`}>
+          <div role="dialog" aria-modal="true" aria-label="Chọn vai trò và đăng nhập" className={`relative z-10 w-full max-h-[90dvh] overflow-y-auto rounded-[30px] border border-white/30 p-5 text-slate-800 shadow-[0_28px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:p-7 space-y-5 ${showTeacherLogin || showStudentLogin ? 'max-w-[460px] bg-[#fffdf9]/95' : 'max-w-[920px] bg-gradient-to-br from-[#102b45]/95 via-[#123a53]/95 to-[#064e52]/95'}`}>
             <div className="flex items-center justify-between">
               <div>
-                <span className="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-800 text-[11px] font-bold">
+                <span className={`px-3 py-1 rounded-full text-[11px] font-bold tracking-widest ${!showStudentLogin && !showTeacherLogin ? 'bg-amber-300/15 text-amber-200 ring-1 ring-amber-200/25' : 'bg-sky-100 text-sky-800'}`}>
                   CHẠM ĐÀ NẴNG
                 </span>
-                <h3 className="mt-2 text-xl font-black tracking-tight text-slate-900">{showTeacherLogin ? (adminLogin ? 'Không gian quản trị' : 'Không gian giáo viên') : showStudentLogin ? 'Chào Nhà phiêu lưu!' : 'Bạn sẽ khám phá với vai trò nào?'}</h3>
-                {!showStudentLogin && !showTeacherLogin && <p className="mt-1 text-xs text-slate-500">Chọn không gian dành cho bạn</p>}
+                <h3 className={`mt-3 font-black tracking-tight ${!showStudentLogin && !showTeacherLogin ? 'text-2xl sm:text-3xl text-white' : 'text-xl text-slate-900'}`}>{showTeacherLogin ? (adminLogin ? 'Không gian quản trị' : 'Không gian giáo viên') : showStudentLogin ? 'Chào Nhà phiêu lưu!' : 'Bạn muốn bắt đầu hành trình nào?'}</h3>
+                {!showStudentLogin && !showTeacherLogin && <p className="mt-2 text-sm text-sky-100/85">Mỗi hành trình là một cách chạm vào di sản quê hương</p>}
               </div>
               <button
                 onClick={() => {
@@ -474,7 +474,7 @@ export const LandingView: React.FC = () => {
                   setShowTeacherLogin(false);
                   setLoginError('');
                 }}
-                aria-label="Đóng khung đăng nhập" className="w-9 h-9 shrink-0 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition"
+                aria-label="Đóng khung đăng nhập" className={`w-9 h-9 shrink-0 rounded-xl flex items-center justify-center transition ${!showStudentLogin && !showTeacherLogin ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-slate-100 hover:bg-slate-200 text-slate-600'}`}
               >
                 <X className="w-5 h-5" />
               </button>
@@ -483,26 +483,32 @@ export const LandingView: React.FC = () => {
             {!showStudentLogin && !showTeacherLogin ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
                 {[
-                  {id:'student',name:'HỌC SINH',demo:'Khám phá tự do dành cho học sinh',Icon:Compass,color:'bg-orange-600',description:'Khám phá quê hương, sưu tập dấu ấn.'},
-                  {id:'teacher',name:'GIÁO VIÊN',demo:'Khám phá tự do dành cho giáo viên',Icon:Presentation,color:'bg-emerald-700',description:'Tổ chức bài học, theo dõi học sinh.'},
-                ].map(({id,name,demo,Icon,color,description})=><section key={id} className={`group relative flex flex-col gap-3 overflow-hidden rounded-3xl border bg-white p-4 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg motion-reduce:transform-none sm:p-5 ${id==='student' ? 'border-orange-100 hover:border-orange-300' : id==='teacher' ? 'border-emerald-100 hover:border-emerald-300' : 'border-sky-100 hover:border-sky-300'}`}>
-                  <div className={`flex h-14 w-14 items-center justify-center rounded-full ring-8 ring-slate-50 ${color} text-white shadow-sm`}><Icon className="h-7 w-7" /></div>
-                  <h4 className="text-sm font-bold text-slate-900">{name}</h4>
-                  <p className="flex-1 text-xs leading-relaxed text-slate-500">{description}</p>
-                  <button type="button" onClick={()=>{
-                    audioService.playSfx('click');setLoginError('');setStaffPassword('');
-                    if(id==='student'){setGuestMode(false);setChosenGrade(null);setShowStudentLogin(true);}
-                    else{setAdminLogin(false);setShowTeacherLogin(true);}
-                  }} className={`h-10 rounded-xl ${color} px-4 text-sm font-bold text-white transition hover:brightness-110`}>Đăng nhập</button>
-                  <button type="button" disabled={staffBusy} onClick={async()=>{
-                    setLoginError('');
-                    if(id==='student'){setGuestMode(true);setChosenGrade(null);setShowStudentLogin(true);return;}
-                    setStaffBusy(true);
-                    try{await enterTeacherDemo();setShowRolePicker(false);}
-                    catch(error){setLoginError((error as Error).message);}finally{setStaffBusy(false);}
-                  }} aria-label={demo} className="h-9 rounded-xl border border-slate-200 px-4 text-xs font-bold text-slate-600 transition hover:bg-slate-50 disabled:opacity-50">
-                    Khám phá tự do
-                  </button>
+                  {id:'student',name:'HỌC SINH',demo:'Khám phá tự do dành cho học sinh',Icon:Compass,color:'bg-orange-600',description:'Nhà thám hiểm nhí · Khám phá di sản, tích lũy dấu ấn.'},
+                  {id:'teacher',name:'GIÁO VIÊN',demo:'Khám phá tự do dành cho giáo viên',Icon:Presentation,color:'bg-emerald-700',description:'Người dẫn đường tri thức · Dạy học, trình chiếu và sáng tạo.'},
+                ].map(({id,name,demo,Icon,color,description})=><section key={id} className={`group relative flex flex-col overflow-hidden rounded-[26px] border bg-white shadow-[0_12px_35px_rgba(0,0,0,0.16)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_rgba(0,0,0,0.28)] motion-reduce:transform-none ${id==='student' ? 'border-orange-200 hover:border-orange-400' : 'border-emerald-200 hover:border-emerald-400'}`}>
+                  <div className={`relative flex h-36 sm:h-44 items-end overflow-hidden p-5 ${id==='student' ? 'bg-gradient-to-br from-orange-500 via-amber-400 to-sky-500' : 'bg-gradient-to-br from-emerald-800 via-teal-500 to-sky-400'}`}>
+                    <div className="absolute inset-0 opacity-30" style={{backgroundImage:'radial-gradient(circle at 80% 15%, white 0%, transparent 42%), repeating-linear-gradient(125deg, transparent 0px, transparent 24px, rgba(255,255,255,.22) 25px, transparent 26px)'}} />
+                    <div className="absolute right-5 top-4 rounded-full border border-white/40 bg-white/15 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white backdrop-blur-md">{id==='student' ? 'Hành trình khám phá' : 'Không gian sáng tạo'}</div>
+                    <div className="relative flex items-center gap-3">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/60 bg-white/20 text-white shadow-xl backdrop-blur-md transition-transform duration-300 group-hover:rotate-[-5deg] group-hover:scale-110"><Icon className="h-9 w-9" /></div>
+                      <div className="text-white"><div className="text-xl font-black tracking-wide drop-shadow-md">{name}</div><div className="text-xs font-medium opacity-90">CHẠM ĐÀ NẴNG</div></div>
+                    </div>
+                  </div>
+                  <div className="flex flex-1 flex-col gap-3 bg-gradient-to-b from-white to-slate-50 p-5">
+                    <p className="min-h-[40px] text-sm leading-relaxed text-slate-600">{description}</p>
+                    <button type="button" onClick={()=>{
+                      audioService.playSfx('click');setLoginError('');setStaffPassword('');
+                      if(id==='student'){setGuestMode(false);setChosenGrade(null);setShowStudentLogin(true);}
+                      else{setAdminLogin(false);setShowTeacherLogin(true);}
+                    }} className={`h-11 rounded-xl ${color} px-4 text-sm font-black text-white shadow-md transition hover:brightness-110 active:scale-[.99]`}>Đăng nhập <span aria-hidden="true">→</span></button>
+                    <button type="button" disabled={staffBusy} onClick={async()=>{
+                      setLoginError('');
+                      if(id==='student'){setGuestMode(true);setChosenGrade(null);setShowStudentLogin(true);return;}
+                      setStaffBusy(true);
+                      try{await enterTeacherDemo();setShowRolePicker(false);}
+                      catch(error){setLoginError((error as Error).message);}finally{setStaffBusy(false);}
+                    }} aria-label={demo} className={`h-11 rounded-xl border px-4 text-sm font-bold transition hover:bg-slate-100 disabled:opacity-50 ${id==='student' ? 'border-orange-200 text-orange-700' : 'border-emerald-200 text-emerald-700'}`}>Khám phá tự do</button>
+                  </div>
                 </section>)}
                 {loginError && <p role="alert" className="md:col-span-2 rounded-xl bg-rose-50 p-3 text-rose-700">{loginError}</p>}
               </div>

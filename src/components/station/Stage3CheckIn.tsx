@@ -15,6 +15,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
   const { currentUser, role } = useApp();
   const isReadOnly = role !== 'student';
   const checkIn = station.checkIn;
+  const speak = (text: string) => audioService.speakNarration(text, 'vi-VN');
 
   const [selectedEmotion, setSelectedEmotion] = useState<string>('');
   const [selectedRememberIds, setSelectedRememberIds] = useState<string[]>([]);
@@ -83,6 +84,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
 
       {!isSubmitted ? (
         <div className="space-y-6">
+          <button type="button" onClick={() => speak('Em hãy chọn cảm xúc, điều em nhớ và việc em muốn làm sau chuyến khám phá.')} className="rounded-xl bg-sky-100 px-4 py-2 text-sm font-bold text-sky-900">🔊 Nghe hướng dẫn Check-in</button>
           {/* Step 1: Emotion selection */}
           <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
             <h3 className="font-extrabold text-sm sm:text-base text-slate-900 mb-3 flex items-center gap-2">
@@ -121,6 +123,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
               <span className="w-6 h-6 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center text-xs font-bold">2</span>
               {checkIn.rememberPromptVi}
             </h3>
+            <button type="button" onClick={() => speak(checkIn.rememberPromptVi)} className="mb-2 rounded-lg bg-sky-50 px-3 py-2 text-xs font-bold text-sky-800">🔊 Nghe câu hỏi</button>
             <p className="text-xs text-slate-400 mb-3">(Em có thể chọn 1 hoặc nhiều điều)</p>
 
             <div className="space-y-2.5">
@@ -156,6 +159,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
               <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold">3</span>
               {checkIn.actionPromptVi}
             </h3>
+            <button type="button" onClick={() => speak(checkIn.actionPromptVi)} className="mb-2 rounded-lg bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-800">🔊 Nghe câu hỏi</button>
             <p className="text-xs text-slate-400 mb-3">(Chọn những hành động em muốn thực hiện)</p>
 
             <div className="space-y-2.5">

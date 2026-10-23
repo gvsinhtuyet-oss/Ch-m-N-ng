@@ -13,7 +13,7 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
   const [assessment, setAssessment] = useState({strong:0,met:0,support:0});
   const [classSize, setClassSize] = useState('');
   const [assessmentNote, setAssessmentNote] = useState('');
-  const sequence = quickMode && isPilot ? (isHoiAn ? [0,1,3,4] : [0,1,4]) : deck.slides.map((_,i)=>i);
+  const sequence = quickMode && isPilot ? (isHoiAn ? [1,3,4] : [0,1,4]) : deck.slides.map((_,i)=>i);
   const visibleSlides = sequence.map(i=>deck.slides[i]);
   const [answerVisible, setAnswerVisible] = useState(false);
   const [notesVisible, setNotesVisible] = useState(false);
@@ -32,17 +32,16 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
   }, []);
   useEffect(() => {body.current?.scrollTo(0, 0);}, [index]);
   const slide = visibleSlides[index];
-  const minutes = quickMode && isPilot ? (isHoiAn ? [2,4,4,2][index] : [2,4,2][index]) : null;
+  const minutes = quickMode && isPilot ? (isHoiAn ? [2,2,1][index] : [2,4,2][index]) : null;
   const pilotScripts = [
     'GV: Trong bài Bóp nát quả cam, Trần Quốc Toản thể hiện tình yêu nước như thế nào? Mời 1–2 em trả lời. Chuyển ý: Quê hương Đà Nẵng cũng có những người được nhân dân tưởng nhớ vì đóng góp của họ.',
     'GV: Đây là tên Nguyễn Văn Thoại, còn gọi là Thoại Ngọc Hầu. Theo tư liệu GDĐP, ông có đóng góp cho quê hương An Hải. Mời các em đọc hai tên và trả lời: đây là một người hay hai người? Nếu có ảnh tư liệu Chặng 1 được liên kết, mở ảnh ấy để quan sát; không sử dụng sơ đồ chữ như ảnh lịch sử.',
     'GV: Em hoàn thành câu “Em biết ơn… vì…”. Mời 2–3 em trả lời. Hỏi thêm: khi đến di tích, em nên làm gì? Chốt ý và quay về hoạt động Tiếng Việt theo SGK.'
   ];
   const hoiAnScripts = [
-    'GV: Hôm nay trong bài Em yêu quê hương, chúng mình cùng nhìn một di sản của quê hương. Em nhận ra nơi nào? Em yêu thích điều gì ở đó?',
-    'GV: Mời cả lớp quan sát ảnh thật của phố cổ Hội An, Chùa Cầu và nhà cổ. Em hãy chỉ một chi tiết làm em thấy Hội An đẹp. Vì sao chúng ta cần giữ gìn nơi này?',
-    'GV: Tình huống: Một bạn định viết tên lên tường nhà cổ để làm kỉ niệm. Em sẽ nói gì với bạn? Mời hai em trao đổi và giải thích lựa chọn.',
-    'GV: Mỗi em hãy nói một việc nhỏ em sẽ làm để thể hiện tình yêu quê hương. Cô ghi nhận câu trả lời, rồi chúng ta trở lại hoạt động của bài Đạo đức.'
+    'GV (2 phút): Đây là phố cổ Hội An. Em nhìn thấy nét đẹp nào? Mời 1–2 học sinh quan sát ảnh Chùa Cầu, nhà cổ và trả lời ngắn.',
+    'GV (2 phút): Một bạn muốn viết tên lên tường nhà cổ để làm kỉ niệm. Theo em, bạn nên làm gì? Cho học sinh chọn cách ứng xử và nói lí do.',
+    'GV (1 phút): Mỗi em nói một việc nhỏ để giữ gìn vẻ đẹp quê hương. Giáo viên nhận xét và quay lại nội dung chính bài Đạo đức.'
   ];
   const lessonImages = isHoiAn ? [
     [{src:'/learning/grade2/media/hoi-an-pho-co.webp',alt:'Phố cổ Hội An',caption:'Ảnh tư liệu phố cổ Hội An'}],
@@ -61,7 +60,7 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');a.href=url;a.download='danh-gia-gddp-lop-2.txt';a.click();URL.revokeObjectURL(url);
   };
-  const stageLabel = index===0?'Khởi động / kết nối':index===visibleSlides.length-1?'Vận dụng / củng cố':'Khám phá / liên hệ GDĐP';
+  const stageLabel = index===0?(isHoiAn?'Khám phá / liên hệ quê hương':'Khởi động / kết nối'):index===visibleSlides.length-1?'Vận dụng / củng cố':'Khám phá / liên hệ GDĐP';
   const lessonGuide = [
     'Dạy nội dung chính theo SGK; chỉ mở học liệu GDĐP tại vị trí tích hợp phù hợp.',
     'Đặt câu hỏi trên slide, cho học sinh suy nghĩ và chia sẻ trước khi hiện gợi ý trả lời.',
@@ -81,7 +80,7 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
   }} className="fixed inset-0 z-[75] flex flex-col bg-[#f8fafc] text-slate-900 outline-none">
     <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-white px-4 py-3 sm:px-7">
       <div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-wider text-emerald-700">CHẠM ĐÀ NẴNG · {deck.presentationKind==='topic'?'HỌC LIỆU CHỦ ĐỀ':'TÍCH HỢP GDĐP'} · KHỐI {record.grade}</p><h2 className="text-sm font-black sm:text-base">{record.lesson}</h2><p className="text-xs text-slate-500">{record.subject} · {deck.presentationKind==='topic'?record.week:'Tuần '+record.week} · {record.integrationType}</p></div>
-      <div className="flex flex-wrap gap-2">{isPilot&&<button type="button" onClick={()=>{setQuickMode(v=>!v);setIndex(0);setAnswerVisible(false);setAssessmentOpen(false);}} className="rounded-xl bg-orange-100 px-3 py-2 text-xs font-black text-orange-900">{quickMode?`⚡ Tích hợp nhanh · ${isHoiAn?12:8} phút`:`Bật tích hợp nhanh · ${isHoiAn?12:8} phút`}</button>}<button type="button" onClick={()=>setGuideVisible(value=>!value)} aria-pressed={guideVisible} className="rounded-xl border border-emerald-300 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-900">{guideVisible?'Ẩn hướng dẫn':'Hướng dẫn sử dụng'}</button><button type="button" onClick={()=>setTeacherMode(value=>!value)} aria-pressed={teacherMode} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold">{teacherMode?'Chế độ học sinh':'Chế độ giáo viên'}</button><button type="button" onClick={()=>setNotesVisible(value=>!value)} aria-pressed={notesVisible} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold"><FileText className="mr-1 inline h-4 w-4" />{notesVisible?'Ẩn ghi chú':'Ghi chú giáo viên'}</button><button type="button" onClick={()=>setSourcesVisible(value=>!value)} aria-pressed={sourcesVisible} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold"><BookOpen className="mr-1 inline h-4 w-4" />Nguồn & rà soát</button><button type="button" onClick={onExit} className="rounded-xl bg-slate-900 px-3 py-2 text-xs font-bold text-white"><X className="mr-1 inline h-4 w-4" />Đóng</button></div>
+      <div className="flex flex-wrap gap-2">{isPilot&&<button type="button" onClick={()=>{setQuickMode(v=>!v);setIndex(0);setAnswerVisible(false);setAssessmentOpen(false);}} className="rounded-xl bg-orange-100 px-3 py-2 text-xs font-black text-orange-900">{quickMode?`⚡ Tích hợp nhanh · ${isHoiAn?5:8} phút`:`Bật tích hợp nhanh · ${isHoiAn?5:8} phút`}</button>}<button type="button" onClick={()=>setGuideVisible(value=>!value)} aria-pressed={guideVisible} className="rounded-xl border border-emerald-300 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-900">{guideVisible?'Ẩn hướng dẫn':'Hướng dẫn sử dụng'}</button><button type="button" onClick={()=>setTeacherMode(value=>!value)} aria-pressed={teacherMode} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold">{teacherMode?'Chế độ học sinh':'Chế độ giáo viên'}</button><button type="button" onClick={()=>setNotesVisible(value=>!value)} aria-pressed={notesVisible} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold"><FileText className="mr-1 inline h-4 w-4" />{notesVisible?'Ẩn ghi chú':'Ghi chú giáo viên'}</button><button type="button" onClick={()=>setSourcesVisible(value=>!value)} aria-pressed={sourcesVisible} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold"><BookOpen className="mr-1 inline h-4 w-4" />Nguồn & rà soát</button><button type="button" onClick={onExit} className="rounded-xl bg-slate-900 px-3 py-2 text-xs font-bold text-white"><X className="mr-1 inline h-4 w-4" />Đóng</button></div>
     </header>
     {deck.mappingReview&&!deck.mappingReview.currentYearConfirmed&&<p role="status" className="shrink-0 border-b border-amber-200 bg-amber-50 px-4 py-2 text-xs font-semibold text-amber-900">{deck.presentationKind==='topic'?deck.mappingReview.note:<>Bản tham khảo từ bảng {deck.mappingReview.sourceYear} · Chưa xác nhận địa chỉ tích hợp năm học hiện hành.</>}</p>}
     <div ref={body} className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-7">

@@ -10,14 +10,17 @@ export const StudentProfileView: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const [online, setOnline] = useState(() => navigator.onLine);
   const [savedLocally, setSavedLocally] = useState(false);
+  const [storageError, setStorageError] = useState(false);
   useEffect(() => {
     const update = () => setOnline(navigator.onLine);
-    const refresh = () => setSavedLocally(progressService.getStudentProgressRecords(student?.id || 'guest') && Object.keys(progressService.getStudentProgressRecords(student?.id || 'guest')).length > 0);
+    const refresh = () => setSavedLocally(Object.keys(progressService.getStudentProgressRecords(student?.id || 'guest')).length > 0);
+    const handleStorageError = () => setStorageError(true);
     update(); refresh();
     window.addEventListener('online', update);
     window.addEventListener('offline', update);
     window.addEventListener('cham-progress-changed', refresh);
-    return () => { window.removeEventListener('online', update); window.removeEventListener('offline', update); window.removeEventListener('cham-progress-changed', refresh); };
+    window.addEventListener('cham-progress-storage-error', handleStorageError);
+    return () => { window.removeEventListener('online', update); window.removeEventListener('offline', update); window.removeEventListener('cham-progress-changed', refresh); window.removeEventListener('cham-progress-storage-error', handleStorageError); };
   }, [student?.id]);
   const syncCode = useMemo(() => {
     try {
@@ -57,7 +60,7 @@ export const StudentProfileView: React.FC = () => {
         </div>
 
         <div role="status" className="rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 text-left text-xs text-sky-950">
-          {student?.isGuest ? 'Chế độ khám phá tự do: không ghi nhận kết quả cá nhân.' : !online ? 'Đang ngoại tuyến. Tiến độ đã ghi trên thiết bị sẽ chờ đồng bộ khi có mạng.' : savedLocally ? 'Tiến độ đã lưu trên thiết bị. Dữ liệu máy chủ được đồng bộ tự động khi kết nối ổn định.' : 'Chưa có hoạt động học tập được ghi nhận trên thiết bị.'}
+          {storageError ? 'Không thể lưu dữ liệu trên thiết bị. Hãy kiểm tra bộ nhớ và cài đặt trình duyệt.' : student?.isGuest ? 'Chế độ khám phá tự do: không ghi nhận kết quả cá nhân.' : !online ? 'Đang ngoại tuyến. Tiến độ đã ghi trên thiết bị sẽ chờ đồng bộ khi có mạng.' : savedLocally ? 'Tiến độ đã lưu trên thiết bị. Dữ liệu máy chủ được đồng bộ tự động khi kết nối ổn định.' : 'Chưa có hoạt động học tập được ghi nhận trên thiết bị.'}
         </div>
 
         {/* Security and Privacy Notice */}

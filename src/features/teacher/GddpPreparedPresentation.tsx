@@ -32,7 +32,7 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
     return () => {audioService.stopNarration();document.body.style.overflow = overflow;previous?.focus();};
   }, []);
   useEffect(() => {body.current?.scrollTo(0, 0);}, [index]);
-  const slide = visibleSlides[index];
+  const slide = visibleSlides[index] ?? visibleSlides[0] ?? deck.slides[0];
   const minutes = quickMode && isPilot ? [2,2,1][index] : null;
   const hoiAnScripts = [
     'GV (2 phút): Đây là phố cổ Hội An. Em nhìn thấy nét đẹp nào? Mời 1–2 học sinh quan sát ảnh Chùa Cầu, nhà cổ và trả lời ngắn.',
@@ -46,8 +46,8 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
     [{src:'/learning/grade2/media/hoi-an-pho-co.webp',alt:'Phố cổ Hội An',caption:'Di sản cần gìn giữ'}],
     [{src:'/learning/grade2/media/hoi-an-pho-co.webp',alt:'Hội An',caption:'Em yêu quê hương'}]
   ] : null;
-  const activeImages = slide.images?.length ? slide.images : lessonImages?.[sequence[index] ?? index];
-  const quickScript = isHoiAn ? hoiAnScripts[index] : `GV (${minutes} phút): ${slide.teacherNotes} Đặt câu hỏi: ${slide.question} Mời học sinh quan sát, trả lời và giải thích. Sau đó trở lại bài học chính.`;
+  const activeImages = slide?.images?.length ? slide.images : lessonImages?.[sequence[index] ?? index];
+  const quickScript = isHoiAn ? hoiAnScripts[index] : `GV (${minutes} phút): ${slide?.teacherNotes || 'Cho học sinh quan sát học liệu.'} Đặt câu hỏi: ${slide?.question || 'Em nhận thấy điều gì?'} Mời học sinh quan sát, trả lời và giải thích. Sau đó trở lại bài học chính.`;
   const assessed = assessment.strong+assessment.met+assessment.support;
   const classCount = Number(classSize);
   const assessmentValid = Number.isInteger(classCount) && classCount>0 && assessed===classCount;
@@ -81,7 +81,7 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
     </header>
     {deck.mappingReview&&!deck.mappingReview.currentYearConfirmed&&<p role="status" className="shrink-0 border-b border-amber-200 bg-amber-50 px-4 py-2 text-xs font-semibold text-amber-900">{deck.presentationKind==='topic'?deck.mappingReview.note:<>Bản tham khảo từ bảng {deck.mappingReview.sourceYear} · Chưa xác nhận địa chỉ tích hợp năm học hiện hành.</>}</p>}
     <div ref={body} className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-7">
-      {quickMode&&isPilot&&<div className="mx-auto mb-4 max-w-6xl rounded-xl border border-orange-200 bg-orange-50 p-3 text-sm text-orange-900"><strong>⚡ Bài mẫu tích hợp nhanh · {isHoiAn?12:8} phút</strong> · {stageLabel} · {minutes} phút. {isHoiAn?'Phần Đạo đức chính vẫn dạy theo SGK.':'Phần bài học chính vẫn dạy theo SGK.'} Đây là kịch bản tham khảo, giáo viên cần kiểm chứng nguồn và địa chỉ tích hợp hiện hành.</div>}
+      {quickMode&&isPilot&&<div className="mx-auto mb-4 max-w-6xl rounded-xl border border-orange-200 bg-orange-50 p-3 text-sm text-orange-900"><strong>⚡ Bài mẫu tích hợp nhanh · {5} phút</strong> · {stageLabel} · {minutes} phút. {isHoiAn?'Phần Đạo đức chính vẫn dạy theo SGK.':'Phần bài học chính vẫn dạy theo SGK.'} Đây là kịch bản tham khảo, giáo viên cần kiểm chứng nguồn và địa chỉ tích hợp hiện hành.</div>}
       {guideVisible&&!teacherMode&&<aside className="mx-auto mb-5 max-w-6xl rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-slate-900">
         <div className="flex flex-wrap items-center justify-between gap-2"><h3 className="font-black text-emerald-900">Hướng dẫn sử dụng trong tiết dạy</h3><span className="rounded-full bg-white px-3 py-1 font-semibold text-emerald-800">Trang {index+1}: {stageLabel}</span></div>
         <p className="mt-2"><strong>Vị trí tích hợp theo dữ liệu bài:</strong> {record.activity || 'Giáo viên lựa chọn phù hợp với tiến trình SGK'}</p>

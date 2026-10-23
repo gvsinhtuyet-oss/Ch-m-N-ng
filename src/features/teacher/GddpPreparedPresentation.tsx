@@ -34,11 +34,6 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
   useEffect(() => {body.current?.scrollTo(0, 0);}, [index]);
   const slide = visibleSlides[index];
   const minutes = quickMode && isPilot ? [2,2,1][index] : null;
-  const pilotScripts = [
-    'GV: Trong bài Bóp nát quả cam, Trần Quốc Toản thể hiện tình yêu nước như thế nào? Mời 1–2 em trả lời. Chuyển ý: Quê hương Đà Nẵng cũng có những người được nhân dân tưởng nhớ vì đóng góp của họ.',
-    'GV: Đây là tên Nguyễn Văn Thoại, còn gọi là Thoại Ngọc Hầu. Theo tư liệu GDĐP, ông có đóng góp cho quê hương An Hải. Mời các em đọc hai tên và trả lời: đây là một người hay hai người? Nếu có ảnh tư liệu Chặng 1 được liên kết, mở ảnh ấy để quan sát; không sử dụng sơ đồ chữ như ảnh lịch sử.',
-    'GV: Em hoàn thành câu “Em biết ơn… vì…”. Mời 2–3 em trả lời. Hỏi thêm: khi đến di tích, em nên làm gì? Chốt ý và quay về hoạt động Tiếng Việt theo SGK.'
-  ];
   const hoiAnScripts = [
     'GV (2 phút): Đây là phố cổ Hội An. Em nhìn thấy nét đẹp nào? Mời 1–2 học sinh quan sát ảnh Chùa Cầu, nhà cổ và trả lời ngắn.',
     'GV (2 phút): Một bạn muốn viết tên lên tường nhà cổ để làm kỉ niệm. Theo em, bạn nên làm gì? Cho học sinh chọn cách ứng xử và nói lí do.',

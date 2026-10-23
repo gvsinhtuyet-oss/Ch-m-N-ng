@@ -57,6 +57,16 @@ export const StudentJourneyView: React.FC = () => {
     progressByStation.find(item => !item.progress.stationCompleted)?.station ||
     demoStations[0];
 
+  // Resume the first unfinished stage rather than restarting a station at stage 1.
+  const resumeStage = (station: Station): 1 | 2 | 3 | 4 => {
+    const p = progressService.getStationProgress(studentId, station.id);
+    if (p.stationCompleted) return 1;
+    if (p.stage3Completed) return 4;
+    if (p.stage2Completed) return 3;
+    if (p.stage1Completed) return 2;
+    return 1;
+  };
+
   const completed = gradeProgress.completedStations;
   // Progress is measured only against stations that are actually open.
   // Locked "Đang phát triển" cards remain visible but must not make completion impossible.
@@ -134,7 +144,7 @@ export const StudentJourneyView: React.FC = () => {
             {nextStation && (
               <button
                 type="button"
-                onClick={() => openStation(nextStation)}
+                onClick={() => openStation(nextStation, resumeStage(nextStation))}
                 className="inline-flex h-10 min-w-[124px] items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 px-4 text-[12px] font-black text-white shadow-md shadow-orange-500/20 transition hover:-translate-y-0.5"
               >
                 <Play className="h-3.5 w-3.5 fill-current" />
@@ -270,7 +280,7 @@ export const StudentJourneyView: React.FC = () => {
                     {isDemoReady ? (
                       <button
                         type="button"
-                        onClick={() => openStation(station)}
+                        onClick={() => openStation(station, resumeStage(station))}
                         className={`mt-1 flex w-full items-center justify-center gap-2 rounded-2xl px-3 py-3 text-xs font-black text-white shadow-sm transition active:scale-[0.99] ${
                           isCompleted
                             ? 'bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600'

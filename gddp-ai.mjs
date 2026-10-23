@@ -1,5 +1,5 @@
 // Text-only, Admin-initiated AI suggestions. Never send student records or authentication data.
-export function gddpPrompt(row) {
+export function gddpPrompt(row,context={}) {
   return [
     'Bạn là trợ lý chuyên môn giáo dục tiểu học Việt Nam.',
     'Chỉ đề xuất phần tích hợp Giáo dục địa phương Đà Nẵng, KHÔNG soạn cả tiết, KHÔNG tạo tiết GDĐP riêng.',
@@ -9,6 +9,9 @@ export function gddpPrompt(row) {
     'Tên bài, tuần và hoạt động trong dữ liệu là bảng địa chỉ tích hợp, CHƯA phải bằng chứng đã kiểm chứng toàn văn SGK hiện hành. Không khẳng định số trang, yêu cầu cần đạt SGK, lời văn SGK hay mức độ khớp SGK nếu nguồn không có.',
     'Không thêm kiến thức địa phương, mốc thời gian, danh nhân hoặc chi tiết lịch sử ngoài dữ liệu. Nếu dữ liệu quá sơ lược, nêu rõ phần cần giáo viên kiểm tra, không tự điền.',
     'Giữ nguyên địa chỉ tích hợp và hình thức từ nguồn; nếu thiếu chi tiết, dùng cách diễn đạt chung an toàn.',
+    'Chỉ đề xuất sử dụng trạm học sinh khi DỮ LIỆU LIÊN KẾT có topicLink; đây chỉ là liên kết chủ đề GDĐP, KHÔNG xác nhận khớp bài/trang SGK. Nếu không có topicLink, ghi rõ chưa xác nhận học liệu học sinh.',
+    'DỮ LIỆU LIÊN KẾT:',
+    JSON.stringify(context),
     'DỮ LIỆU NGUỒN:',
     JSON.stringify({grade:row.grade,subject:row.subject,week:row.week,
       lesson:row.lesson,activity:row.activity,integrationType:row.integrationType,

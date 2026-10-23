@@ -36,6 +36,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const { currentUser, role, isOnline } = useApp();
   const isReadOnly = role !== 'student';
   const challenge = station.challenge;
+  const speak = (text: string) => audioService.speakNarration(text, 'vi-VN');
   const questions = useMemo(
     () => (challenge.questions || []).map(question => ({
       ...question,
@@ -242,6 +243,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               )}
               {currentQ && (
                 <div className="space-y-4">
+                  <button type="button" onClick={() => speak(currentQ.questionVi + '. ' + currentQ.options.map(option => option.textVi).join('. '))} className="rounded-lg bg-sky-100 px-3 py-2 text-sm font-bold text-sky-900">🔊 Nghe câu hỏi và đáp án</button>
                   <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
                     {currentQ.questionVi}
                   </h3>

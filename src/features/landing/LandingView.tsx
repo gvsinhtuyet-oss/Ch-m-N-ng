@@ -29,7 +29,6 @@ export const LandingView: React.FC = () => {
     loginAsStudent,
     loginAsTeacher,
     enterTeacherDemo,
-    enterAdminDemo,
     loginAsAdmin,
     soundEnabled,
     toggleSound,
@@ -444,9 +443,10 @@ export const LandingView: React.FC = () => {
           <span>Thiết kế: </span>
           <span className="font-bold text-amber-300">Trương Sinh Tuyết – Nguyễn Thị Thanh</span>
         </div>
+        <button type="button" onClick={()=>{setAdminLogin(true);setShowTeacherLogin(true);setShowStudentLogin(false);setShowRolePicker(true);setLoginError('');setStaffPassword('');}} className="inline-flex items-center gap-1 text-[10px] text-slate-300/75 hover:text-white transition" aria-label="Đăng nhập quản trị"><Settings className="w-3 h-3" /> Quản trị</button>
       </footer>
 
-      {/* Role Picker Modal */}
+      {/* Role Picker Modal */
       {showRolePicker && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden">
           <img
@@ -481,11 +481,10 @@ export const LandingView: React.FC = () => {
             </div>
 
             {!showStudentLogin && !showTeacherLogin ? (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
                 {[
-                  {id:'student',name:'HỌC SINH',demo:'Học sinh trải nghiệm',Icon:Compass,color:'bg-orange-600',description:'Khám phá quê hương, sưu tập dấu ấn.'},
-                  {id:'teacher',name:'GIÁO VIÊN',demo:'Giáo viên trải nghiệm',Icon:Presentation,color:'bg-emerald-700',description:'Tổ chức bài học, theo dõi học sinh.'},
-                  {id:'admin',name:'QUẢN TRỊ',demo:'Quản trị trải nghiệm',Icon:Settings,color:'bg-sky-700',description:'Quản lý học liệu, kết nối nhà trường.'},
+                  {id:'student',name:'HỌC SINH',demo:'Khám phá tự do dành cho học sinh',Icon:Compass,color:'bg-orange-600',description:'Khám phá quê hương, sưu tập dấu ấn.'},
+                  {id:'teacher',name:'GIÁO VIÊN',demo:'Khám phá tự do dành cho giáo viên',Icon:Presentation,color:'bg-emerald-700',description:'Tổ chức bài học, theo dõi học sinh.'},
                 ].map(({id,name,demo,Icon,color,description})=><section key={id} className={`group relative flex flex-col gap-3 overflow-hidden rounded-3xl border bg-white p-4 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg motion-reduce:transform-none sm:p-5 ${id==='student' ? 'border-orange-100 hover:border-orange-300' : id==='teacher' ? 'border-emerald-100 hover:border-emerald-300' : 'border-sky-100 hover:border-sky-300'}`}>
                   <div className={`flex h-14 w-14 items-center justify-center rounded-full ring-8 ring-slate-50 ${color} text-white shadow-sm`}><Icon className="h-7 w-7" /></div>
                   <h4 className="text-sm font-bold text-slate-900">{name}</h4>
@@ -493,19 +492,19 @@ export const LandingView: React.FC = () => {
                   <button type="button" onClick={()=>{
                     audioService.playSfx('click');setLoginError('');setStaffPassword('');
                     if(id==='student'){setGuestMode(false);setChosenGrade(null);setShowStudentLogin(true);}
-                    else{setAdminLogin(id==='admin');setShowTeacherLogin(true);}
+                    else{setAdminLogin(false);setShowTeacherLogin(true);}
                   }} className={`h-10 rounded-xl ${color} px-4 text-sm font-bold text-white transition hover:brightness-110`}>Đăng nhập</button>
                   <button type="button" disabled={staffBusy} onClick={async()=>{
                     setLoginError('');
                     if(id==='student'){setGuestMode(true);setChosenGrade(null);setShowStudentLogin(true);return;}
                     setStaffBusy(true);
-                    try{if(id==='admin')await enterAdminDemo();else await enterTeacherDemo();setShowRolePicker(false);}
+                    try{await enterTeacherDemo();setShowRolePicker(false);}
                     catch(error){setLoginError((error as Error).message);}finally{setStaffBusy(false);}
                   }} aria-label={demo} className="h-9 rounded-xl border border-slate-200 px-4 text-xs font-bold text-slate-600 transition hover:bg-slate-50 disabled:opacity-50">
-                    Trải nghiệm
+                    Khám phá tự do
                   </button>
                 </section>)}
-                {loginError && <p role="alert" className="md:col-span-3 rounded-xl bg-rose-50 p-3 text-rose-700">{loginError}</p>}
+                {loginError && <p role="alert" className="md:col-span-2 rounded-xl bg-rose-50 p-3 text-rose-700">{loginError}</p>}
               </div>
             ) : showStudentLogin ? (
               /* Student Login Form: chọn khối và nhập thông tin ngay trên cùng một màn hình */
@@ -513,7 +512,7 @@ export const LandingView: React.FC = () => {
                 <div>
                   <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                     <h4 className="text-sm font-bold text-slate-900">
-                      {guestMode ? 'Trải nghiệm · Chọn khối lớp' : 'Chọn khối lớp của em'}
+                      {guestMode ? 'Khám phá tự do · Chọn khối lớp' : 'Chọn khối lớp của em'}
                     </h4>
                     <button
                       type="button"
@@ -669,7 +668,7 @@ export const LandingView: React.FC = () => {
                     </button>
                   </div>
                 )}
-                {!guestMode && <button type="button" onClick={()=>{setGuestMode(true);setChosenGrade(null);setLoginError('');}} className="h-9 w-full rounded-xl border border-orange-200 text-xs font-bold text-orange-700 hover:bg-orange-50">Trải nghiệm học sinh</button>}
+                {!guestMode && <button type="button" onClick={()=>{setGuestMode(true);setChosenGrade(null);setLoginError('');}} className="h-9 w-full rounded-xl border border-orange-200 text-xs font-bold text-orange-700 hover:bg-orange-50">Khám phá tự do</button>}
               </form>
             ) : (
               <form className="space-y-4 text-sm" onSubmit={async e => {
@@ -677,6 +676,8 @@ export const LandingView: React.FC = () => {
                 try {
                   const user = await authService.login(staffEmail,staffPassword);
                   setStaffPassword('');
+                  if(adminLogin && user.role !== 'admin') throw new Error('Tài khoản này không có quyền quản trị.');
+                  if(!adminLogin && user.role !== 'teacher') throw new Error('Vui lòng dùng tài khoản giáo viên tại đây.');
                   if(user.role === 'admin') loginAsAdmin(user); else loginAsTeacher(user);
                   setShowRolePicker(false);
                 } catch(error) { setLoginError((error as Error).message); }
@@ -693,27 +694,8 @@ export const LandingView: React.FC = () => {
                 {loginError && <p role="alert" className="p-3 rounded-xl bg-rose-50 text-rose-700">{loginError}</p>}
                 <p className="text-xs text-slate-500">Quên mật khẩu? Liên hệ quản trị nhà trường để được đặt lại.</p>
                 <button disabled={staffBusy} className={`h-11 w-full rounded-xl text-sm font-bold text-white shadow-sm disabled:opacity-50 ${adminLogin ? 'bg-sky-700 hover:bg-sky-800' : 'bg-emerald-700 hover:bg-emerald-800'}`}>{staffBusy ? 'Đang đăng nhập…' : 'Đăng nhập'}</button>
-                <button
-                  type="button"
-                  disabled={staffBusy}
-                  onClick={async () => {
-                    setStaffBusy(true);
-                    setLoginError('');
-                    try {
-                      if (adminLogin) await enterAdminDemo(); else await enterTeacherDemo();
-                      setStaffPassword('');
-                      setShowRolePicker(false);
-                    } catch (error) {
-                      setLoginError((error as Error).message);
-                    } finally {
-                      setStaffBusy(false);
-                    }
-                  }}
-                  className="h-9 w-full rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50"
-                >
-                  {adminLogin ? 'Quản trị trải nghiệm' : 'Giáo viên trải nghiệm'}
-                </button>
-                <p className="text-center text-[10px] text-slate-400">Dữ liệu trải nghiệm chỉ lưu trên thiết bị này.</p>
+                {!adminLogin && <button type="button" disabled={staffBusy} onClick={async()=>{setStaffBusy(true);setLoginError('');try{await enterTeacherDemo();setStaffPassword('');setShowRolePicker(false);}catch(error){setLoginError((error as Error).message);}finally{setStaffBusy(false);}} className="h-9 w-full rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50">Khám phá tự do</button>}
+                <p className="text-center text-[10px] text-slate-400">Chế độ tự do không lưu dữ liệu lớp học trên máy chủ.</p>
                 <button type="button" disabled={staffBusy} onClick={()=>{setShowTeacherLogin(false);setStaffPassword('');setLoginError('');}} className="block w-full text-center text-xs font-semibold text-slate-500 hover:text-slate-800">← Chọn vai trò khác</button>
               </form>
             )}

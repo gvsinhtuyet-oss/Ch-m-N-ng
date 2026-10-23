@@ -44,8 +44,8 @@ const DEMO_STATIONS: DemoStationMeta[] = [
   {
     stationId: 'g4-station-2',
     scope: 'bao-tang-da-nang',
-    title: 'Những bảo tàng ở thành phố Đà Nẵng',
-    aliases: ['bảo tàng đà nẵng', 'bảo tàng mỹ thuật', 'bảo tàng'],
+    title: 'Khu đền tháp Mỹ Sơn – Bảo tàng Điêu khắc Chăm Đà Nẵng',
+    aliases: ['mỹ sơn', 'đền tháp mỹ sơn', 'bảo tàng điêu khắc chăm', 'bảo tàng đà nẵng', 'bảo tàng'],
   },
   {
     stationId: 'g3-station-2',

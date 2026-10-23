@@ -20,7 +20,7 @@ export const DEMO_STATION_IDS = new Set([
   'g4-station-1',
   'g4-station-3',
   'g4-station-4',
-  'g4-station-5',
+  'g4-thu-bon-hon-kem',
   'g4-station-2', // Những bảo tàng ở thành phố Đà Nẵng
   'g5-station-1',
   'g5-station-2',

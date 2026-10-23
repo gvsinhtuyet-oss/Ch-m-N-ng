@@ -6,99 +6,123 @@ export const GRADE45_CONTENT = [
     "opening": "Chúng mình cùng tìm hiểu từ cảnh quan đến cuộc sống quê hương. Em hãy quan sát hình, nghe câu chuyện và thử giải thích bằng điều mình tìm được nhé!",
     "points": [
       {
-        "id": "g4-station-1-point-1",
-        "title": "Quê hương có nhiều cảnh quan",
-        "narration": "Từ những dãy núi phía tây đến vùng gò đồi trung du rồi đồng bằng ven biển, thiên nhiên Đà Nẵng có nhiều dáng vẻ. Có nơi núi đá đứng bên dòng sông như Hòn Kẽm Đá Dừng, có nơi mở ra bờ cát và mặt biển. Địa hình khác nhau tạo nên cảnh quan phong phú, đồng thời ảnh hưởng đến đời sống của con người. Khám phá từng vùng, em sẽ hiểu thêm vẻ đẹp của quê hương.",
-        "fact": "Địa hình đa dạng tạo nên nhiều không gian sống.",
-        "q": "Nhận xét nào phù hợp về cảnh quan Đà Nẵng?",
+        "id": "g4-station-1-textbook-point-1",
+        "title": "Đà Nẵng trên bản đồ",
+        "narration": "Thành phố Đà Nẵng nằm ở miền Trung Việt Nam. Phía bắc giáp thành phố Huế, phía nam giáp tỉnh Quảng Ngãi, phía tây giáp nước Lào và phía đông giáp Biển Đông. Từ vùng núi phía tây ra biển phía đông, quê hương mở ra nhiều cảnh quan khác nhau. Em hãy cùng thầy cô xác định các hướng trên bản đồ và kể tên những nơi tiếp giáp với Đà Nẵng nhé!",
+        "fact": "Đà Nẵng giáp Huế ở phía bắc, Quảng Ngãi ở phía nam, Lào ở phía tây và Biển Đông ở phía đông.",
+        "q": "Phía tây của Đà Nẵng tiếp giáp với đâu?",
         "answers": [
-          "Có núi, gò đồi và đồng bằng ven biển",
-          "Chỉ có những phố ven biển",
-          "Mọi nơi đều là núi cao"
+          "Nước Lào",
+          "Thành phố Huế",
+          "Biển Đông"
         ]
       },
       {
-        "id": "g4-station-1-point-2",
-        "title": "Con người sinh sống và lao động",
-        "narration": "Thiên nhiên gắn bó với công việc hằng ngày của con người. Ở Nam Ô, biển góp phần nuôi dưỡng nghề đánh bắt và nghề làm nước mắm. Ở những vùng khác, người dân trồng trọt, làm sản phẩm thủ công, buôn bán hoặc phục vụ du lịch. Một khu vực có thể có nhiều nghề cùng phát triển. Mỗi công việc đáp ứng một nhu cầu và góp phần tạo nên nhịp sống của quê hương.",
-        "fact": "Có nhiều nghề đáp ứng những nhu cầu khác nhau.",
-        "q": "Đặc điểm nào phù hợp với công việc của người dân trong một khu vực?",
+        "id": "g4-station-1-textbook-point-2",
+        "title": "Núi, trung du và đồng bằng ven biển",
+        "narration": "Địa hình Đà Nẵng có vùng đồi núi phía tây, vùng trung du và đồng bằng ven biển phía đông. Núi rừng, sông ngòi và bờ biển tạo nên vẻ đẹp phong phú. Ở nơi đất bằng, người dân có điều kiện trồng trọt, xây dựng khu dân cư; vùng núi và vùng biển lại có những thế mạnh riêng. Khi giới thiệu quê hương, em có thể chọn một cảnh núi, một dòng sông hoặc một bãi biển mà mình biết.",
+        "fact": "Đà Nẵng có địa hình đa dạng: đồi núi, trung du và đồng bằng ven biển.",
+        "q": "Nhóm nào nêu đúng các dạng địa hình trong bài?",
         "answers": [
-          "Có nhiều nghề đáp ứng những nhu cầu khác nhau",
-          "Mọi gia đình luôn làm duy nhất một nghề",
-          "Chỉ có nghề đánh bắt cá"
+          "Đồi núi, trung du, đồng bằng ven biển",
+          "Chỉ đồng bằng ven biển",
+          "Chỉ núi cao và thung lũng"
         ]
       },
       {
-        "id": "g4-station-1-point-3",
-        "title": "Thiên nhiên gắn với đời sống",
-        "narration": "Sông Thu Bồn, các dãy núi và vùng ven biển là những ví dụ về thiên nhiên quê hương. Nước, đất và cảnh quan tạo điều kiện cho sản xuất, sinh hoạt và du lịch. Cách con người sử dụng tài nguyên cũng tác động trở lại môi trường. Gần trường, em có thể tìm ví dụ nhỏ như cây cho bóng mát hoặc mương dẫn nước. Giữ sạch nguồn nước, chăm cây là việc vừa sức để gìn giữ nơi sống.",
-        "fact": "Con người sử dụng thiên nhiên và cũng có trách nhiệm gìn giữ thiên nhiên.",
-        "q": "Ví dụ nào thể hiện lợi ích của cây xanh?",
+        "id": "g4-station-1-textbook-point-3",
+        "title": "Khí hậu và những dòng sông",
+        "narration": "Đà Nẵng có khí hậu nhiệt đới gió mùa, với mùa mưa và mùa khô. Vùng núi cao thường mát hơn vùng thấp. Sông Hàn, sông Thu Bồn cùng các sông Vu Gia, Vĩnh Điện, Túy Loan, Yên góp phần phục vụ sinh hoạt, sản xuất và đi lại. Vào mùa mưa bão, em cần theo hướng dẫn của người lớn, tránh đến gần sông suối khi nước dâng. Cùng kể tên một dòng sông và lợi ích của dòng sông ấy nhé!",
+        "fact": "Khí hậu có mùa mưa, mùa khô; sông ngòi gắn với đời sống và sản xuất của người dân.",
+        "q": "Hoạt động nào cho thấy lợi ích của sông ngòi?",
         "answers": [
-          "Cho bóng mát ở sân trường",
-          "Làm cho mọi nơi không bao giờ ngập",
-          "Thay thế hoàn toàn nước uống"
+          "Cung cấp nước phục vụ sản xuất",
+          "Làm mọi khu vực không bao giờ ngập",
+          "Thay thế hoàn toàn đường bộ"
         ]
       },
       {
-        "id": "g4-station-1-point-4",
-        "title": "Giới thiệu nơi em sống bằng căn cứ",
-        "narration": "Bãi biển Mỹ Khê là một nét đẹp của quê hương Đà Nẵng. Bờ cát rộng và không gian biển đem đến nơi nghỉ ngơi, vui chơi, đồng thời gắn với hoạt động dịch vụ và du lịch. Cảnh đẹp được gìn giữ nhờ ý thức của mỗi người: bỏ rác đúng chỗ, tôn trọng sinh vật và tuân thủ hướng dẫn. Khi giới thiệu quê hương, em có thể kể cả vẻ đẹp của nơi ấy và việc mình làm để giữ gìn.",
-        "fact": "Giúp gìn giữ cảnh quan và môi trường sống.",
-        "q": "Vì sao giữ bãi biển sạch góp phần chăm sóc quê hương?",
+        "id": "g4-station-1-textbook-point-4",
+        "title": "Giữ gìn rừng, biển và sinh vật",
+        "narration": "Thiên nhiên quê hương có nhiều loài động, thực vật đáng quý. Sơn Trà có voọc chà vá chân nâu; vùng núi Ngọc Linh có cây sâm Ngọc Linh. Vườn quốc gia Sông Thanh, các khu bảo tồn Sơn Trà, Bà Nà – Núi Chúa và vùng biển Cù Lao Chàm góp phần gìn giữ môi trường sống của sinh vật. Em bảo vệ thiên nhiên bằng cách không bẻ cây, không làm hại động vật, không cho thú hoang ăn và giữ sạch nơi tham quan.",
+        "fact": "Bảo vệ rừng và biển cũng là bảo vệ môi trường sống của các loài sinh vật.",
+        "q": "Việc nào góp phần bảo vệ sinh vật khi tham quan?",
         "answers": [
-          "Giúp gìn giữ cảnh quan và môi trường sống",
-          "Giúp nước biển biến thành nước ngọt",
-          "Làm cho mọi công việc đều giống nhau"
+          "Quan sát theo hướng dẫn, không làm hại động vật",
+          "Cho thú hoang ăn để chụp ảnh gần",
+          "Bẻ cành cây mang về làm kỉ niệm"
+        ]
+      },
+      {
+        "id": "g4-station-1-textbook-point-5",
+        "title": "Con người và những nét đẹp quê hương",
+        "narration": "Người Kinh, Cơ Tu, Xơ Đăng, Giẻ Triêng, Co, Chăm, Tày cùng nhiều cộng đồng khác sinh sống tại Đà Nẵng, góp phần tạo nên đời sống văn hóa phong phú. Qua câu chuyện về người dân xứ Quảng, em biết thêm những nét đẹp như chân thật, cần cù, chịu khó và giàu tình cảm. Những phẩm chất ấy được thể hiện bằng việc làm cụ thể. Em có thể kể về một người chăm chỉ lao động, giúp đỡ hàng xóm hoặc có hành động đẹp mà mình biết.",
+        "fact": "Cần cù, chân thật và nghĩa tình là những nét đẹp được giới thiệu về con người quê hương.",
+        "q": "Câu chuyện nào phù hợp để giới thiệu nét đẹp nghĩa tình?",
+        "answers": [
+          "Một người giúp hàng xóm khi gặp khó khăn",
+          "Một người chỉ quan tâm thành tích của mình",
+          "Một người chê bai công việc của người khác"
+        ]
+      },
+      {
+        "id": "g4-station-1-textbook-point-6",
+        "title": "Em giới thiệu và chăm sóc quê hương",
+        "narration": "Cầu Sông Hàn, phố cổ Hội An, Mỹ Sơn, biển Mỹ Khê hay hồ Phú Ninh đều có thể gợi cho em câu chuyện về quê hương. Em hãy chọn một địa điểm để giới thiệu bằng lời nói, tranh vẽ hoặc một bức thư gửi người thân. Trong bài giới thiệu, nói rõ tên nơi ấy, một nét đẹp và cảm nhận của em. Giữ vệ sinh, tiết kiệm nước và chăm sóc cây xanh là những việc nhỏ góp phần làm thành phố xanh, sạch, đẹp.",
+        "fact": "Em có thể giới thiệu cảnh đẹp bằng lời nói, tranh vẽ hoặc thư và góp phần giữ gìn môi trường.",
+        "q": "Một bài giới thiệu cảnh đẹp nên có những gì?",
+        "answers": [
+          "Tên địa điểm, nét đẹp và cảm nhận của em",
+          "Chỉ một lời khen giống mọi địa điểm",
+          "Địa chỉ nhà riêng của tất cả bạn trong lớp"
         ]
       }
     ],
     "questions": [
       {
-        "text": "Nhóm chỉ hỏi một người rồi kết luận mọi gia đình đều có cùng sinh hoạt. Cần sửa cách tìm hiểu thế nào?",
+        "text": "Nhóm em vẽ sơ đồ từ vùng núi phía tây ra biển phía đông. Cách sắp xếp nào phù hợp?",
         "answers": [
-          "Bổ sung nhiều trường hợp phù hợp và ghi rõ phạm vi khảo sát",
-          "Đổi tên người được hỏi rồi giữ kết luận",
-          "Cho rằng một người đại diện được tất cả"
+          "Đồi núi → trung du → đồng bằng ven biển",
+          "Đồng bằng ven biển → trung du → núi phía đông",
+          "Ghi mọi nơi đều là đồng bằng"
         ],
-        "hint": "Tìm hiểu con người và đời sống cần tránh suy rộng một trường hợp thành toàn cộng đồng."
+        "hint": "Địa hình thay đổi theo không gian từ tây sang đông."
       },
       {
-        "text": "Nhóm em muốn tìm hiểu nghề quanh trường. Cách nào có căn cứ?",
+        "text": "Bạn nói: Ai ở ven biển cũng chỉ làm nghề đánh cá. Em giải thích thế nào?",
         "answers": [
-          "Hỏi người lớn phù hợp, ghi lại thông tin được đồng ý chia sẻ",
-          "Đoán nghề từ trang phục của mọi người",
-          "Sao chép danh sách nghề ở một nơi khác"
+          "Một nơi có nhiều nghề; cần tìm hiểu từng công việc",
+          "Đồng ý vì nhìn thấy một thuyền đánh cá",
+          "Kết luận mọi người đều làm du lịch"
         ],
-        "hint": "Tìm hiểu bằng quan sát và hỏi có sự đồng ý."
+        "hint": "Tránh lấy một ví dụ để kết luận về tất cả mọi người."
       },
       {
-        "text": "Sau khi làm mô hình dòng sông, nhóm còn giấy vụn. Em chọn gì?",
+        "text": "Sau mưa lớn, nhóm định ra bờ sông quan sát nước. Em chọn cách nào?",
         "answers": [
-          "Thu gom, phân loại phù hợp và giữ sạch khu vực",
-          "Giấu vào bồn cây",
-          "Thả xuống mương cho trôi đi"
+          "Dừng lại, theo hướng dẫn người lớn và tìm hiểu qua tư liệu",
+          "Ra sát bờ nếu có nhiều bạn đi cùng",
+          "Xuống thử xem nước có sâu không"
         ],
-        "hint": "Giữ nguồn nước bắt đầu từ việc nhỏ."
+        "hint": "Mưa lớn có thể làm nước dâng và bờ sông mất an toàn."
       },
       {
-        "text": "Em chụp ảnh một đoạn đường sau mưa. Chú thích nào trung thực?",
+        "text": "Em muốn viết thư kể về người tốt quanh mình. Nên chọn nội dung nào?",
         "answers": [
-          "Đoạn đường em quan sát sau trận mưa hôm nay",
-          "Mọi đường của thành phố đều như thế suốt năm",
-          "Đây chắc chắn là cảnh ở mọi miền núi"
+          "Một việc giúp đỡ cụ thể mà em biết, với lời kể trung thực",
+          "Bịa một việc thật lớn cho hấp dẫn",
+          "Công khai mọi thông tin riêng của người đó"
         ],
-        "hint": "Ghi đúng nơi, thời điểm và phạm vi quan sát."
+        "hint": "Kể việc thật, cụ thể và tôn trọng người được nhắc đến."
       },
       {
-        "text": "Có cảnh báo mưa lớn nhưng nhóm muốn đến bờ sông quay bài. Nên làm gì?",
+        "text": "Lớp muốn giữ sân trường xanh, sạch, đẹp. Kế hoạch nào phù hợp?",
         "answers": [
-          "Đổi sang tư liệu an toàn và theo hướng dẫn người lớn",
-          "Đi nhanh trước khi nước lên",
-          "Nhờ một bạn đứng sát mép nước quay"
+          "Phân công chăm cây và bỏ rác đúng nơi",
+          "Hái hoa mang vào lớp để sân đỡ lá",
+          "Chỉ chụp ảnh khẩu hiệu mà không thực hiện"
         ],
-        "hint": "Mục tiêu học tập không đòi hỏi đặt mình vào nguy hiểm."
+        "hint": "Chọn việc vừa sức và có người cùng thực hiện."
       }
     ],
     "feel": [
@@ -118,232 +142,271 @@ export const GRADE45_CONTENT = [
       "https://hdnd.danang.gov.vn/chi-tiet-tin/group/157/nid/23688/ngay-moi-truong-the-gioi-5-6-chung-tay-hanh-dong-vi-da-nang-xanh-va-phat-trien-ben-vung"
     ],
     "notes": [
-      "Rà soát 18/10/2026: ảnh thật đọc theo chú thích; sơ đồ là minh họa. Ảnh tại trang nguồn chưa rõ quyền tái sử dụng chỉ được dẫn liên kết, không tải lại hoặc nhúng. Chờ kế hoạch tích hợp mới."
+      "Đối chiếu TLGĐP L 4- CĐ 1. Thien nhien va con nguoi da nang.docx và biên bản Nhom4_BB gopy Chude 4_lop 4_dã bổ sung.docx do giáo viên cung cấp, ngày 23/10/2026.",
+      "Thứ tự chủ đề theo biên bản hiệu chỉnh; không lấy số chủ đề chưa thống nhất trong file kinh tế làm thứ tự. Không tự gán tuần/bài tích hợp hoặc xác nhận phân phối tiết khi chưa có kế hoạch."
     ]
   },
   {
     "id": "g4-station-2",
     "grade": 4,
-    "subtitle": "Đọc những câu chuyện trong bảo tàng",
-    "opening": "Chúng mình cùng tìm hiểu đọc những câu chuyện trong bảo tàng. Em hãy quan sát hình, nghe câu chuyện và thử giải thích bằng điều mình tìm được nhé!",
+    "subtitle": "Từ thung lũng Mỹ Sơn đến những tác phẩm trong bảo tàng",
+    "opening": "Cùng khám phá khu đền tháp Mỹ Sơn và Bảo tàng Điêu khắc Chăm để hiểu, trân trọng và gìn giữ di sản quê hương.",
     "points": [
       {
-        "id": "bt4-luu-giu-ky-uc",
-        "title": "Nơi gìn giữ di sản",
-        "narration": "Một đồ vật xưa có thể mở ra câu chuyện về cách sống và lao động của những thế hệ trước. Bảo tàng sưu tầm, bảo quản, nghiên cứu và giới thiệu hiện vật, tài liệu để chúng ta tìm hiểu lịch sử, văn hóa. Nhờ công việc ấy, những dấu tích quý được gìn giữ và chia sẻ với nhiều người. Tham quan bảo tàng là dịp khám phá quá khứ, hiểu hơn quê hương và trân trọng những giá trị được trao truyền.",
-        "fact": "Bảo tàng giúp gìn giữ và tìm hiểu di sản.",
-        "q": "Công việc nào thuộc chức năng bảo tàng?",
+        "id": "g4-station-2-textbook-point-1",
+        "title": "Mỹ Sơn trong thung lũng",
+        "narration": "Khu đền tháp Mỹ Sơn ở xã Thu Bồn, thành phố Đà Nẵng, nằm trong một thung lũng bao quanh bởi đồi núi. Đây là di tích gắn với lịch sử và đời sống tín ngưỡng của các vương triều Chăm-pa. Cùng quan sát cảnh quan, những ngôi tháp và dấu tích còn lại để hình dung một không gian văn hóa xưa. Em hãy phân biệt tên của khu di tích với tên của một ngôi tháp riêng lẻ nhé!",
+        "fact": "Mỹ Sơn thuộc xã Thu Bồn, là khu đền tháp Chăm-pa nằm trong thung lũng có đồi núi bao quanh.",
+        "q": "Mỹ Sơn là địa điểm nào?",
         "answers": [
-          "Bảo quản và giới thiệu hiện vật",
-          "Cho khách tùy ý mang hiện vật về",
-          "Chỉ bán đồ lưu niệm"
+          "Một khu đền tháp Chăm-pa",
+          "Một làng nghề đúc đồng",
+          "Một bãi biển có ghềnh đá"
         ]
       },
       {
-        "id": "bt4-my-thuat-nghe-thuat",
-        "title": "Những không gian khác nhau",
-        "narration": "Các bảo tàng mở ra những cánh cửa khám phá khác nhau. Bảo tàng Đà Nẵng giới thiệu lịch sử và văn hóa địa phương. Bảo tàng Mỹ thuật đưa người xem đến với các tác phẩm nghệ thuật. Bảo tàng Điêu khắc Chăm giúp tìm hiểu di sản điêu khắc Chăm. Biết nội dung của từng nơi, em có thể chọn điểm tham quan phù hợp với điều muốn học và chuẩn bị những câu hỏi thú vị cho chuyến đi.",
-        "fact": "Bảo tàng Điêu khắc Chăm.",
-        "q": "Muốn khám phá di sản điêu khắc Chăm, em tìm hiểu nơi nào?",
+        "id": "g4-station-2-textbook-point-2",
+        "title": "Dấu ấn nhiều thế kỉ",
+        "narration": "Mỹ Sơn được hình thành và xây dựng qua nhiều thế kỉ, từ khoảng thế kỉ IV đến thế kỉ XIII. Hơn 70 công trình từng tạo nên không gian đền tháp với những phong cách khác nhau. Chiến tranh và thời gian làm nhiều công trình hư hại; công việc bảo tồn, trùng tu giúp gìn giữ các dấu tích còn lại. Năm 1999, Mỹ Sơn được UNESCO ghi danh là Di sản văn hóa thế giới. Đó là niềm tự hào và cũng là trách nhiệm gìn giữ di sản.",
+        "fact": "Mỹ Sơn lưu giữ dấu ấn nhiều thế kỉ và được UNESCO ghi danh Di sản văn hóa thế giới năm 1999.",
+        "q": "Mỹ Sơn được UNESCO ghi danh Di sản văn hóa thế giới vào năm nào?",
         "answers": [
-          "Bảo tàng Điêu khắc Chăm",
-          "Một giàn dệt chiếu",
-          "Một khuôn đúc đồng"
+          "1999",
+          "1919",
+          "2025"
         ]
       },
       {
-        "id": "bt4-giai-ma-hien-vat",
-        "title": "Hiện vật và nhãn giới thiệu",
-        "narration": "Khi đứng trước một hiện vật, em hãy quan sát hình dáng rồi đọc nhãn giới thiệu. Nhãn có thể cho biết tên, chất liệu, niên đại và nơi phát hiện. Những thông tin ấy giúp em hiểu hơn điều mắt thường nhìn thấy. Bảo tàng cũng có thể trưng bày bản sao hoặc mô hình phục vụ học tập. Vì vậy, muốn biết một vật có phải bản gốc hay không, em hãy đọc chú thích hoặc hỏi hướng dẫn viên.",
-        "fact": "Phối hợp quan sát với nhãn giới thiệu để hiểu hiện vật.",
-        "q": "Đâu là căn cứ tốt để biết một vật là bản sao?",
+        "id": "g4-station-2-textbook-point-3",
+        "title": "Kiến trúc và điêu khắc Chăm-pa",
+        "narration": "Ở Mỹ Sơn, các ngôi đền tháp cùng hoa văn, hình tượng và tác phẩm điêu khắc thể hiện tài nghệ của người Chăm-pa xưa. Nhiều tác phẩm được tạo trên gạch và đá. Nghệ thuật nơi đây có sự giao lưu với văn hóa Ấn Độ và mang dấu ấn riêng của Chăm-pa. Khi quan sát, em hãy tìm một chi tiết trang trí hoặc hình dáng công trình mình ấn tượng, rồi nói điều nhìn thấy trước khi chia sẻ cảm nhận.",
+        "fact": "Mỹ Sơn có giá trị nổi bật về lịch sử, kiến trúc và điêu khắc Chăm-pa.",
+        "q": "Chi tiết nào giúp tìm hiểu nghệ thuật tại Mỹ Sơn?",
         "answers": [
-          "Thông tin ghi trên nhãn trưng bày",
-          "Vật có màu sáng",
-          "Vật được đặt gần cửa"
+          "Hoa văn và tác phẩm điêu khắc trên gạch, đá",
+          "Các sản phẩm nước mắm đóng chai",
+          "Dụng cụ dùng để dệt chiếu cói"
         ]
       },
       {
-        "id": "bt4-nguoi-ban-di-san",
-        "title": "Người bạn của bảo tàng",
-        "narration": "Hiện vật được gìn giữ để nhiều thế hệ cùng tìm hiểu. Một cái chạm tay hay việc tự ý di chuyển có thể làm ảnh hưởng đến đồ trưng bày. Vì vậy, em quan sát theo hướng dẫn, giữ khoảng cách và làm theo nội quy chụp ảnh. Nói vừa đủ nghe cũng giúp mọi người cùng tham quan thuận lợi. Tôn trọng hiện vật và người xung quanh, mỗi học sinh đều có thể trở thành một người bạn của di sản.",
-        "fact": "Để bảo vệ đồ trưng bày cho nhiều người cùng tìm hiểu.",
-        "q": "Vì sao cần giữ khoảng cách và không tự ý di chuyển hiện vật?",
+        "id": "g4-station-2-textbook-point-4",
+        "title": "Bảo tàng Điêu khắc Chăm Đà Nẵng",
+        "narration": "Bảo tàng Điêu khắc Chăm Đà Nẵng, còn được gọi là Cổ viện Chàm, là nơi lưu giữ, nghiên cứu và giới thiệu nghệ thuật điêu khắc Chăm-pa. Bảo tàng được khởi công xây dựng năm 1915 và mở cửa đón khách năm 1919. Tư liệu, hiện vật giúp người xem tìm hiểu văn hóa của cư dân Chăm-pa xưa. Bảo tàng và khu di tích Mỹ Sơn là hai địa điểm khác nhau, cùng giúp chúng ta khám phá di sản Chăm-pa.",
+        "fact": "Bảo tàng Điêu khắc Chăm khởi công năm 1915, mở cửa năm 1919 và gìn giữ di sản điêu khắc Chăm-pa.",
+        "q": "Nhận định nào đúng về Mỹ Sơn và Bảo tàng Điêu khắc Chăm?",
         "answers": [
-          "Để bảo vệ đồ trưng bày cho nhiều người cùng tìm hiểu",
-          "Để giấu hiện vật khỏi khách tham quan",
-          "Để thay hiện vật bằng đồ chơi"
+          "Là hai địa điểm khác nhau, cùng giúp tìm hiểu di sản Chăm-pa",
+          "Là hai tên của cùng một tòa nhà",
+          "Đều là làng nghề làm đồ đồng"
+        ]
+      },
+      {
+        "id": "g4-station-2-textbook-point-5",
+        "title": "Từ công trình đến hiện vật",
+        "narration": "Tòa nhà Bảo tàng Điêu khắc Chăm có kiến trúc riêng, gợi những đường nét của đền tháp Chăm và kiến trúc Pháp đầu thế kỉ XX. Những tác phẩm bằng đá, đất nung và các chất liệu khác cho thấy sự sáng tạo của nghệ nhân xưa. Khi đứng trước hiện vật, em quan sát hình dáng và đọc nhãn để biết tên, chất liệu, niên đại, xuất xứ. Nhãn giúp em hiểu tác phẩm chính xác hơn thay vì chỉ đoán từ hình ảnh.",
+        "fact": "Quan sát kết hợp đọc nhãn giúp hiểu tên gọi, chất liệu, niên đại và xuất xứ của hiện vật.",
+        "q": "Muốn biết xuất xứ một hiện vật, em nên làm gì?",
+        "answers": [
+          "Đọc nhãn và hỏi người hướng dẫn",
+          "Đoán nơi xuất xứ chỉ từ màu sắc",
+          "Lấy tên địa điểm nổi tiếng nhất để ghi"
+        ]
+      },
+      {
+        "id": "g4-station-2-textbook-point-6",
+        "title": "Tham quan và gìn giữ di sản",
+        "narration": "Khi đến Mỹ Sơn hoặc Bảo tàng Điêu khắc Chăm, em đi theo hướng dẫn, giữ trật tự và thực hiện nội quy chụp ảnh. Không leo trèo lên tháp, không viết lên gạch đá và không tự ý chạm vào hiện vật. Sau chuyến đi hoặc xem video, em có thể vẽ sơ đồ tư duy, một bức tranh hay kể lại điều mình ấn tượng. Hiểu và giữ gìn di sản là cách để những câu chuyện quý tiếp tục đến với nhiều người.",
+        "fact": "Tham quan văn minh là tuân thủ nội quy, bảo vệ công trình và hiện vật.",
+        "q": "Hành động nào giúp bảo vệ di sản?",
+        "answers": [
+          "Quan sát theo hướng dẫn, không viết hay chạm lên hiện vật",
+          "Viết tên lên tháp để lưu kỉ niệm",
+          "Di chuyển hiện vật để chụp ảnh rõ hơn"
         ]
       }
     ],
     "questions": [
       {
-        "text": "Nhóm muốn biết công dụng một đồ vật nhưng nhãn ảnh bị cắt mất. Em chọn gì?",
+        "text": "Bạn ghi Mỹ Sơn và Bảo tàng Điêu khắc Chăm là cùng một địa điểm. Em sửa thế nào?",
         "answers": [
-          "Tìm bản đầy đủ hoặc hỏi người hướng dẫn trước khi kết luận",
-          "Đoán theo hình dáng rồi khẳng định",
-          "Lấy công dụng của một vật khác cho vào"
+          "Đó là hai địa điểm khác nhau cùng giúp tìm hiểu di sản Chăm-pa",
+          "Đổi mọi chú thích thành một địa chỉ",
+          "Bỏ hết tên địa điểm khỏi bài"
         ],
-        "hint": "Thiếu thông tin thì cần tìm thêm căn cứ."
+        "hint": "Phân biệt di tích với bảo tàng, dù cùng liên quan một nền văn hóa."
       },
       {
-        "text": "Nhóm có 20 phút tham quan và muốn xem thật kĩ một chủ đề. Nên chọn kế hoạch nào?",
+        "text": "Một chi tiết gạch ở tháp bị hư hại, bạn muốn lấy về làm kỉ niệm. Em nên làm gì?",
         "answers": [
-          "Chọn vài hiện vật liên quan, phân công ghi chép rồi trao đổi",
-          "Chạy qua mọi phòng mà không dừng lại",
-          "Chỉ đếm số đồ vật rồi kết thúc"
+          "Ngăn bạn lấy và báo người phụ trách",
+          "Lấy một mảnh nhỏ vì đã bị hỏng",
+          "Đổi chỗ mảnh gạch để chụp ảnh"
         ],
-        "hint": "Chọn trọng tâm và phân công giúp chuyến tham quan ngắn vẫn có kết quả học tập cụ thể."
+        "hint": "Không tự lấy hay di chuyển vật liệu của di tích."
       },
       {
-        "text": "Bạn muốn nhấc hiện vật lên xem mặt dưới. Em làm gì?",
+        "text": "Nhóm chọn ảnh một tác phẩm nhưng chưa biết tên và xuất xứ. Cần làm gì?",
         "answers": [
-          "Nhắc bạn dừng và hỏi hướng dẫn viên",
-          "Đợi không có người rồi xem",
-          "Cùng nâng cho chắc tay"
+          "Đọc chú thích hoặc nhờ thầy cô kiểm tra nguồn",
+          "Đoán tên từ hình dáng rồi khẳng định",
+          "Gán mọi tác phẩm là của Mỹ Sơn"
         ],
-        "hint": "Không tự di chuyển hiện vật."
+        "hint": "Giới thiệu hiện vật cần có căn cứ."
       },
       {
-        "text": "Thẻ giới thiệu của nhóm chỉ ghi “rất đẹp”. Bổ sung nào hữu ích nhất?",
+        "text": "Khi làm sơ đồ tư duy về Mỹ Sơn, nhóm nên chọn các nhánh nào?",
         "answers": [
-          "Tên, đặc điểm quan sát được và thông tin có nguồn",
-          "Giá tự đoán của hiện vật",
-          "Một câu chuyện tưởng tượng không ghi chú"
+          "Vị trí, lịch sử, kiến trúc–điêu khắc và gìn giữ di sản",
+          "Chỉ các quán ăn quanh nơi đến",
+          "Chỉ màu áo của nhóm tham quan"
         ],
-        "hint": "Thông tin cụ thể giúp người nghe hiểu được hiện vật."
+        "hint": "Sơ đồ cần giúp người xem hiểu các giá trị chính của di tích."
       },
       {
-        "text": "Hai ảnh cùng tên bảo tàng nhưng chụp ở hai thời điểm khác nhau. Em xử lí thế nào?",
+        "text": "Lớp muốn chia sẻ cảm nhận sau khi xem video di sản. Cách nào phù hợp?",
         "answers": [
-          "Kiểm tra thời điểm, địa điểm và ghi rõ bối cảnh",
-          "Đổi cả hai thành ảnh chụp hôm nay",
-          "Dùng ảnh cũ để khẳng định mọi trưng bày hiện tại"
+          "Nói điều đã thấy và cảm nghĩ riêng, lắng nghe bạn",
+          "Bắt mọi bạn phải thích cùng một hiện vật",
+          "Chấm cảm xúc của bạn là sai vì khác mình"
         ],
-        "hint": "Bảo tàng và trưng bày có thể thay đổi theo thời gian."
+        "hint": "Hiểu biết có căn cứ có thể đi cùng nhiều cảm nhận khác nhau."
       }
     ],
     "feel": [
-      "Em tò mò về câu chuyện của hiện vật.",
-      "Em quý người gìn giữ di sản.",
-      "Em muốn tìm hiểu thêm một tác phẩm."
+      "Em ấn tượng với kiến trúc và điêu khắc Chăm-pa.",
+      "Em trân trọng công sức gìn giữ di sản.",
+      "Em muốn tìm hiểu thêm một hiện vật."
     ],
     "act": [
-      "Em đọc nhãn trước khi giới thiệu.",
-      "Em giữ trật tự và không chạm hiện vật.",
-      "Em ghi nguồn ảnh mình sử dụng."
+      "Em tuân thủ nội quy tham quan.",
+      "Em giới thiệu đúng một giá trị của Mỹ Sơn.",
+      "Em không viết hay chạm lên di tích, hiện vật."
     ],
-    "badge": "Bạn nhỏ gìn giữ di sản",
+    "badge": "Người bạn của di sản Chăm",
     "sources": [
-      "https://www.baotangdanang.vn/hoi-lu-hanh-va-huong-dan-vien-du-lich-tham-quan-khao-sat-tai-bao-tang-da-nang",
-      "https://www.baotangdanang.vn/",
-      "https://chammuseum.vn/"
+      "https://mysonsanctuary.com.vn/lien-he.html",
+      "https://whc.unesco.org/en/list/949/",
+      "https://chammuseum.vn/view.aspx?ID=403",
+      "https://artsandculture.google.com/story/-QUx5dyN4OuwJQ?hl=vi"
     ],
     "notes": [
-      "Ảnh bảo tàng phải ghi thời điểm/bối cảnh; không dùng ảnh trụ sở cũ để xác nhận địa chỉ đang hoạt động.",
-      "Rà soát 18/10/2026: ảnh thật đọc theo chú thích; sơ đồ là minh họa. Ảnh tại trang nguồn chưa rõ quyền tái sử dụng chỉ được dẫn liên kết, không tải lại hoặc nhúng. Chờ kế hoạch tích hợp mới."
+      "Đối chiếu TLGDDP L4- CĐ3. Khu đền tháp Mỹ Sơn.docx và biên bản Nhom4_BB gopy Chude 4_lop 4_dã bổ sung.docx do giáo viên cung cấp, ngày 23/10/2026.",
+      "Thứ tự chủ đề theo biên bản hiệu chỉnh; không lấy số chủ đề chưa thống nhất trong file kinh tế làm thứ tự. Không tự gán tuần/bài tích hợp hoặc xác nhận phân phối tiết khi chưa có kế hoạch.",
+      "Địa chỉ Mỹ Sơn dùng xã Thu Bồn theo trang liên hệ của Ban quản lý di sản, kiểm tra ngày 23/10/2026. Phần Bảo tàng được bổ sung từ nguồn bảo tàng và hồ sơ giới thiệu của chính bảo tàng trên Google Arts & Culture."
     ]
   },
   {
     "id": "g4-station-3",
     "grade": 4,
-    "subtitle": "Một sản phẩm, nhiều bàn tay",
-    "opening": "Chúng mình cùng tìm hiểu một sản phẩm, nhiều bàn tay. Em hãy quan sát hình, nghe câu chuyện và thử giải thích bằng điều mình tìm được nhé!",
+    "subtitle": "Những ngành nghề cùng xây dựng quê hương",
+    "opening": "Cùng tìm hiểu công nghiệp, dịch vụ, nông nghiệp, kinh tế biển và nghề truyền thống qua những công việc gần gũi nhé!",
     "points": [
       {
-        "id": "g4-station-3-point-1",
-        "title": "Kinh tế quanh em",
-        "narration": "Chiếc áo em mặc, bữa ăn gia đình và chuyến xe đến trường đều gắn với hoạt động kinh tế. Ở Đà Nẵng có nông nghiệp, công nghiệp và dịch vụ. Các làng nghề như Mã Châu, Phước Kiều là những ví dụ gần gũi về người lao động làm ra sản phẩm. Bài học này giúp em nhận biết công việc và sự phối hợp giữa các khâu, không yêu cầu học thuộc chỉ tiêu tăng trưởng hay thứ hạng kinh tế.",
-        "fact": "Kinh tế gắn với sản xuất, trao đổi và các dịch vụ trong đời sống.",
-        "q": "Ví dụ nào là một hoạt động kinh tế?",
+        "id": "g4-station-3-textbook-point-1",
+        "title": "Công nghiệp làm ra sản phẩm",
+        "narration": "Ở Đà Nẵng, hoạt động công nghiệp tạo ra nhiều sản phẩm phục vụ đời sống và sản xuất. Khu công nghiệp Hòa Cầm và Khu kinh tế mở Chu Lai là những ví dụ trong bài. Các công việc gồm chế biến nông, lâm, thủy sản; may mặc; sản xuất thiết bị điện, điện tử và cơ khí lắp ráp. Từ nguyên liệu đến sản phẩm hoàn chỉnh cần nhiều người phối hợp. Em thử kể tên một sản phẩm công nghiệp gần gũi trong gia đình mình.",
+        "fact": "Công nghiệp tạo ra sản phẩm qua các hoạt động chế biến, sản xuất và lắp ráp.",
+        "q": "Hoạt động nào thuộc công nghiệp?",
         "answers": [
-          "Người thợ làm sản phẩm để cung cấp cho người dùng",
-          "Chỉ nhìn mây rồi tưởng tượng",
-          "Đếm số trang vở đã trắng"
+          "Lắp ráp ô tô",
+          "Hướng dẫn khách tham quan",
+          "Trồng rau tại vườn"
         ]
       },
       {
-        "id": "g4-station-3-point-2",
-        "title": "Tạo ra sản phẩm",
-        "narration": "Một chiếc áo đến tay người mặc nhờ nhiều công đoạn nối tiếp. Từ nguyên liệu, người làm nghề chuẩn bị sợi, dệt vải rồi cắt và may thành áo. Người nông dân, người thợ và công nhân có thể góp sức ở những khâu khác nhau. Mã Châu là một ví dụ về nghề dệt tạo ra vải lụa. Nhìn một sản phẩm quen thuộc, em có thể nhận ra sự liên kết giữa nhiều công việc và trân trọng công sức lao động.",
-        "fact": "Nhiều người và nhiều khâu cùng góp phần tạo ra sản phẩm.",
-        "q": "Trong ví dụ chiếc áo, việc nào trực tiếp tạo sản phẩm?",
+        "id": "g4-station-3-textbook-point-2",
+        "title": "Dịch vụ và du lịch",
+        "narration": "Biển, núi rừng, di sản, lễ hội và làng nghề tạo điều kiện cho du lịch Đà Nẵng phát triển. Người làm dịch vụ vận tải, lưu trú, ăn uống hoặc hướng dẫn tham quan đáp ứng nhu cầu của du khách và người dân. Một chuyến đi thuận lợi cần sự phối hợp của nhiều nghề. Giữ cảnh quan sạch đẹp và ứng xử thân thiện cũng góp phần làm điểm đến được yêu mến. Em biết công việc dịch vụ nào ở nơi mình sống?",
+        "fact": "Dịch vụ du lịch gắn với vận chuyển, lưu trú, ăn uống và hướng dẫn tham quan.",
+        "q": "Công việc nào thuộc dịch vụ du lịch?",
         "answers": [
-          "May các phần vải thành áo",
-          "Vận chuyển áo tới cửa hàng",
-          "Giới thiệu lịch tham quan"
+          "Hướng dẫn khách tìm hiểu di sản",
+          "Đúc một chiếc chuông đồng",
+          "Trồng lúa trên đồng ruộng"
         ]
       },
       {
-        "id": "g4-station-3-point-3",
-        "title": "Dịch vụ kết nối cuộc sống",
-        "narration": "Sản phẩm làm ra còn cần được vận chuyển, trao đổi và đưa đến người sử dụng. Vận tải và bán hàng là những hoạt động dịch vụ giúp nối người sản xuất với người tiêu dùng. Ở Đà Nẵng, cảng Tiên Sa gắn với hoạt động vận tải biển. Hướng dẫn du lịch cũng là một dịch vụ, phục vụ nhu cầu khác. Các ngành nghề cùng góp sức để hàng hóa lưu thông và đời sống thuận tiện hơn.",
-        "fact": "Dịch vụ hỗ trợ nhu cầu và kết nối các hoạt động kinh tế.",
-        "q": "Việc nào là dịch vụ trong hành trình chiếc áo?",
+        "id": "g4-station-3-textbook-point-3",
+        "title": "Nông nghiệp và cách làm mới",
+        "narration": "Người dân Đà Nẵng trồng lúa, rau, hoa, cây ăn quả, chè và sản xuất nấm. Làng rau Trà Quế là một ví dụ về trồng rau gắn với trải nghiệm du lịch. Một số cơ sở áp dụng nông nghiệp hữu cơ, trồng rau thủy canh hoặc ứng dụng công nghệ để nâng chất lượng sản phẩm. Những cách làm ấy cần đi cùng việc sử dụng đất, nước hợp lí. Em hãy tìm một sản phẩm nông nghiệp trong bữa ăn và kể về công sức làm ra nó.",
+        "fact": "Nông nghiệp tạo ra lương thực, thực phẩm; cách làm phù hợp có thể nâng chất lượng và bảo vệ môi trường.",
+        "q": "Ví dụ nào thuộc nông nghiệp?",
         "answers": [
-          "Vận chuyển áo đến nơi bán",
-          "May thân áo",
-          "Dệt thành tấm vải"
+          "Trồng rau theo phương pháp thủy canh",
+          "Vận chuyển hàng bằng tàu biển",
+          "Sản xuất thiết bị điện tử"
         ]
       },
       {
-        "id": "g4-station-3-point-4",
-        "title": "Sáng tạo và trách nhiệm",
-        "narration": "Để sản phẩm đến tay người dùng, nhiều người cần phân công và phối hợp. Người làm nghề có thể cải tiến cách sắp xếp dụng cụ, giảm vật liệu bỏ đi hoặc kiểm tra chất lượng tốt hơn. Cải tiến cần đi cùng sự trung thực và trách nhiệm. Trong lớp, em tập điều đó bằng cách nhận phần việc vừa sức, dùng giấy tiết kiệm, trao đổi khi gặp lỗi và trân trọng công sức của mọi người.",
-        "fact": "Làm việc tốt cần hợp tác, sáng tạo và trách nhiệm.",
-        "q": "Cách cải tiến nào vừa hữu ích vừa có trách nhiệm?",
+        "id": "g4-station-3-textbook-point-4",
+        "title": "Kinh tế biển và sự kết nối",
+        "narration": "Biển đem đến điều kiện phát triển đánh bắt, chế biến thủy hải sản, du lịch biển và vận tải đường biển. Những cảng như Tiên Sa, Kỳ Hà và Chu Lai giúp kết nối hoạt động vận chuyển hàng hóa. Các dịch vụ hậu cần nghề cá hỗ trợ tàu thuyền và người lao động. Khai thác lợi ích từ biển cần đi cùng bảo vệ nguồn lợi và môi trường. Em có thể nhận ra những nghề khác nhau cùng gắn với biển không?",
+        "fact": "Kinh tế biển gồm nhiều hoạt động như thủy sản, du lịch biển, vận tải và dịch vụ hậu cần.",
+        "q": "Nhóm nào gồm các hoạt động kinh tế biển?",
         "answers": [
-          "Giảm lãng phí mà vẫn giữ chất lượng",
-          "Bỏ kiểm tra để làm nhanh bằng mọi giá",
-          "Giấu lỗi sản phẩm với người dùng"
+          "Đánh bắt thủy sản, du lịch biển, vận tải biển",
+          "Chỉ trồng lúa và cây ăn quả",
+          "Chỉ sản xuất đồ dùng học tập"
+        ]
+      },
+      {
+        "id": "g4-station-3-textbook-point-5",
+        "title": "Làng nghề và công việc của người thân",
+        "narration": "Đá mỹ nghệ Non Nước, nước mắm Nam Ô, bánh tráng Túy Loan, đúc đồng Phước Kiều, gốm Thanh Hà và mộc Kim Bồng là những ví dụ về nghề truyền thống. Các nghề tạo việc làm, thu nhập và góp phần gìn giữ văn hóa. Khi gắn với tham quan, làng nghề còn mở thêm cơ hội giới thiệu sản phẩm. Em hãy hỏi người thân về công việc của họ, rồi kể tên nghề, sản phẩm hoặc dịch vụ và điều em trân trọng ở công việc ấy.",
+        "fact": "Nghề truyền thống có giá trị kinh tế và văn hóa; mỗi công việc có ích đều đáng được trân trọng.",
+        "q": "Vì sao cần gìn giữ nghề truyền thống?",
+        "answers": [
+          "Vì nghề tạo sinh kế và lưu giữ giá trị văn hóa",
+          "Vì chỉ nghề truyền thống mới có ích",
+          "Vì mọi sản phẩm phải giữ nguyên mãi, không được cải tiến"
         ]
       }
     ],
     "questions": [
       {
-        "text": "Thẻ hành trình chiếc áo bị đảo: bán áo, may áo, dệt vải. Em sắp thế nào?",
+        "text": "Nhóm tìm hiểu một hộ trồng rau kết hợp đón khách trải nghiệm. Nhận xét nào phù hợp?",
         "answers": [
-          "Dệt vải → may áo → bán áo",
-          "Bán áo → may áo → dệt vải",
-          "May áo → bán áo → dệt vải"
+          "Nông nghiệp có thể kết nối với du lịch",
+          "Mỗi gia đình chỉ được làm một ngành",
+          "Trồng rau không tạo ra sản phẩm"
         ],
-        "hint": "Dựa vào mối liên hệ giữa các khâu trong ví dụ."
+        "hint": "Các hoạt động kinh tế có thể liên kết với nhau."
       },
       {
-        "text": "Hai nhóm làm cùng sản phẩm giấy nhưng một nhóm dùng nhiều giấy hơn mà chất lượng tương đương. Nên so sánh thêm điều gì?",
+        "text": "Một chuyến hàng thủy sản cần vận chuyển đến nơi tiêu thụ. Hoạt động nào giúp kết nối?",
         "answers": [
-          "Lượng vật liệu đã dùng và phần bị bỏ đi",
-          "Tên nhóm nào nghe hay hơn",
-          "Bạn nào nói lớn hơn khi giới thiệu"
+          "Dịch vụ vận tải",
+          "Chỉ việc tạo mẫu đồng",
+          "Chỉ việc trồng thêm hoa"
         ],
-        "hint": "So sánh hiệu quả cần xem cả sản phẩm và nguồn lực đã sử dụng, tránh chỉ nhìn số lượng làm ra."
+        "hint": "Vận tải giúp đưa hàng hóa từ nơi sản xuất đến người dùng."
       },
       {
-        "text": "Nhóm nói chỉ nghề có máy móc lớn mới đáng quý. Em góp ý gì?",
+        "text": "Thấy bạn chê công việc của người thân một bạn khác, em nên làm gì?",
         "answers": [
-          "Mỗi nghề hợp pháp, có ích đều có đóng góp cần trân trọng",
-          "Chỉ tôn trọng nghề của người quen",
-          "Đồng ý vì nghề thủ công không tạo giá trị"
+          "Nhắc bạn tôn trọng các công việc có ích",
+          "Cùng chê vì công việc ấy ít nổi tiếng",
+          "Xếp hạng giá trị con người theo nghề"
         ],
-        "hint": "Nhìn đóng góp thay vì xếp hạng con người."
+        "hint": "Mỗi công việc có ích đều góp phần vào đời sống."
       },
       {
-        "text": "Một cửa hàng quảng cáo hàng thủ công do học sinh làm nhưng thực tế mua sẵn. Em nhận xét gì?",
+        "text": "Nhóm giới thiệu kinh tế quê hương bằng một tỉ lệ trên mạng không rõ năm. Nên xử lí thế nào?",
         "answers": [
-          "Cần nói đúng người làm và nguồn gốc sản phẩm",
-          "Có thể ghi tùy ý nếu bán được nhiều",
-          "Giấu nguồn gốc luôn giúp sản phẩm có giá trị hơn"
+          "Kiểm tra nguồn và thời điểm trước khi sử dụng",
+          "Ghi ngay vì con số trông chính xác",
+          "Đổi thành con số lớn hơn để gây ấn tượng"
         ],
-        "hint": "Giới thiệu trung thực nguồn gốc là trách nhiệm trong hoạt động mua bán."
+        "hint": "Số liệu phải có nguồn, thời gian và phạm vi rõ ràng."
       },
       {
-        "text": "Nhóm đưa tỉ lệ tăng trưởng trên một bài báo cũ vào phần “hiện nay”. Nên sửa thế nào?",
+        "text": "Một làng nghề muốn đón khách nhưng vẫn giữ môi trường sạch. Cách nào phù hợp?",
         "answers": [
-          "Ghi năm, nguồn hoặc bỏ số liệu không cần thiết",
-          "Giữ nguyên vì mọi năm đều giống nhau",
-          "Đổi năm mà không kiểm tra"
+          "Tổ chức lối tham quan và thu gom rác, tôn trọng người làm nghề",
+          "Để khách tự đi vào mọi khu vực sản xuất",
+          "Bỏ yêu cầu vệ sinh để đón nhiều khách"
         ],
-        "hint": "Số liệu có thời điểm, không tự biến thành hiện hành."
+        "hint": "Phát triển du lịch cần gắn với bảo vệ môi trường và hoạt động của làng nghề."
       }
     ],
     "feel": [
@@ -364,121 +427,134 @@ export const GRADE45_CONTENT = [
       "https://vietnam.vnanet.vn/english/english/english/tin-tuc/tam-tangs-silk-36803.html"
     ],
     "notes": [
-      "Chuỗi chiếc áo là mô hình học tập khái quát, không khẳng định mọi công đoạn diễn ra trong thành phố.",
-      "Rà soát 18/10/2026: ảnh thật đọc theo chú thích; sơ đồ là minh họa. Ảnh tại trang nguồn chưa rõ quyền tái sử dụng chỉ được dẫn liên kết, không tải lại hoặc nhúng. Chờ kế hoạch tích hợp mới."
+      "Đối chiếu TLGDDP Da Nang lop 4-Thành phố Đà Nẵng.docx và biên bản Nhom4_BB gopy Chude 4_lop 4_dã bổ sung.docx do giáo viên cung cấp, ngày 23/10/2026.",
+      "Thứ tự chủ đề theo biên bản hiệu chỉnh; không lấy số chủ đề chưa thống nhất trong file kinh tế làm thứ tự. Không tự gán tuần/bài tích hợp hoặc xác nhận phân phối tiết khi chưa có kế hoạch.",
+      "Các tỉ lệ tăng trưởng, lượt khách và sản lượng trong bản dự thảo thiếu kỳ thống kê thống nhất; chưa đưa vào lời dẫn hoặc câu hỏi chấm điểm."
     ]
   },
   {
     "id": "g4-station-4",
     "grade": 4,
-    "subtitle": "Giữ tiếng đồng ngân vang",
-    "opening": "Chúng mình cùng tìm hiểu giữ tiếng đồng ngân vang. Em hãy quan sát hình, nghe câu chuyện và thử giải thích bằng điều mình tìm được nhé!",
+    "subtitle": "Từ mẫu, khuôn đến sản phẩm đồng",
+    "opening": "Cùng đến với Phước Kiều, tìm hiểu sản phẩm và công sức của người thợ qua các công đoạn đúc đồng.",
     "points": [
       {
-        "id": "g4-station-4-point-1",
-        "title": "Gặp làng nghề Phước Kiều",
-        "narration": "Phước Kiều là làng nghề đúc đồng ở vùng Điện Bàn, đất Quảng. Làng nổi tiếng với những sản phẩm như cồng, chiêng, chuông và các đồ đồng dùng trong đời sống, sinh hoạt văn hóa. Từ kim loại, người thợ tạo ra nhiều hình dáng và công dụng khác nhau. Khi giới thiệu một sản phẩm, em hãy tìm đúng tên và nơi làm; không phải mọi chiếc chiêng hay mọi đồ đồng đều xuất xứ từ Phước Kiều.",
-        "fact": "Phước Kiều gắn với nghề đúc đồng và các nhạc khí truyền thống.",
-        "q": "Sản phẩm nào phù hợp với nghề đúc đồng?",
+        "id": "g4-station-4-textbook-point-1",
+        "title": "Phước Kiều – làng nghề hơn 400 năm",
+        "narration": "Làng đúc đồng Phước Kiều nằm tại khối phố Thanh Chiêm 1, phường Điện Bàn, thành phố Đà Nẵng. Làng nghề đã tồn tại và phát triển hơn 400 năm, gắn với lịch sử dinh trấn Thanh Chiêm. Người thợ qua nhiều thế hệ tạo nên những sản phẩm bằng đồng phục vụ đời sống và văn hóa. Cùng tìm hiểu điều gì làm nên giá trị của làng nghề lâu đời này nhé!",
+        "fact": "Phước Kiều ở Thanh Chiêm 1, phường Điện Bàn, là làng nghề đúc đồng có lịch sử hơn 400 năm.",
+        "q": "Phước Kiều nổi tiếng với nghề nào?",
         "answers": [
-          "Chiêng đồng",
-          "Tấm lụa tơ tằm",
-          "Chiếu cói"
+          "Đúc đồng",
+          "Dệt chiếu cói",
+          "Làm nước mắm"
         ]
       },
       {
-        "id": "g4-station-4-point-2",
-        "title": "Từ khuôn đến sản phẩm",
-        "narration": "Khuôn là bộ phận quan trọng giúp tạo hình sản phẩm đúc đồng. Người thợ chuẩn bị khuôn, nấu kim loại và rót vào khuôn; khi sản phẩm nguội, họ tiếp tục hoàn thiện và kiểm tra. Từ hình dáng đến chất lượng đều cần kinh nghiệm và sự cẩn thận. Hiểu vai trò của từng công đoạn, em càng trân trọng tay nghề người thợ. Khi tham quan, học sinh đứng ở vị trí được hướng dẫn, tránh lò và kim loại nóng.",
-        "fact": "Khuôn, kim loại và công đoạn hoàn thiện cùng tạo ra sản phẩm.",
-        "q": "Khuôn giúp người thợ làm gì trong quá trình đúc?",
+        "id": "g4-station-4-textbook-point-2",
+        "title": "Tạo mẫu và làm khuôn",
+        "narration": "Để tạo một sản phẩm đồng, người thợ trước hết tạo mẫu rồi làm khuôn đúc. Mẫu giúp xác định hình dáng sản phẩm; khuôn tạo khoảng trống để nhận kim loại nóng chảy. Mỗi loại sản phẩm cần cách chuẩn bị phù hợp. Sự chính xác, cẩn thận ở những bước đầu ảnh hưởng đến kết quả cuối cùng. Em hãy dùng thẻ hình để phân biệt bước tạo mẫu với bước làm khuôn.",
+        "fact": "Tạo mẫu và làm khuôn là những công đoạn đầu của quá trình đúc đồng.",
+        "q": "Trình tự nào phù hợp ở đầu quá trình đúc đồng?",
         "answers": [
-          "Tạo hình cho sản phẩm",
-          "Biến kim loại thành tơ",
-          "Làm nước sông sạch ngay"
+          "Tạo mẫu rồi làm khuôn",
+          "Đánh bóng rồi mới tạo mẫu",
+          "Rót đồng trước khi có khuôn"
         ]
       },
       {
-        "id": "g4-station-4-point-3",
-        "title": "Đôi tai và bàn tay nghệ nhân",
-        "narration": "Một chiếc chiêng hay chiếc chuông cần có hình dáng phù hợp và âm thanh đạt yêu cầu. Người thợ Phước Kiều lắng nghe tiếng vang, nhận ra chỗ cần điều chỉnh rồi tiếp tục hoàn thiện nhạc khí. Kĩ năng ấy được gọi là thẩm âm. Đằng sau mỗi âm thanh là thời gian luyện tập, kinh nghiệm và đôi tai tinh tế. Đây là một nét đặc sắc của nghề đúc đồng, cho thấy giá trị của tri thức người làm nghề.",
-        "fact": "Thẩm âm là kĩ năng nghe, kiểm tra và điều chỉnh âm thanh nhạc khí.",
-        "q": "Kĩ năng thẩm âm liên quan chủ yếu tới điều gì?",
+        "id": "g4-station-4-textbook-point-3",
+        "title": "Nấu, rót đồng và hoàn thiện",
+        "narration": "Khi khuôn đã được chuẩn bị, người thợ nấu đồng rồi rót đồng nóng chảy vào khuôn. Sản phẩm cần được làm nguội trước khi tiếp tục đánh bóng và hoàn thiện. Công việc đòi hỏi tay nghề và tuân thủ an toàn vì có lò, kim loại nóng và dụng cụ chuyên dùng. Học sinh chỉ quan sát ở nơi được hướng dẫn. Em có thể xếp các thẻ: nấu đồng, rót khuôn, làm nguội, đánh bóng để ghi nhớ trình tự.",
+        "fact": "Sau khi làm khuôn là nấu đồng, rót vào khuôn, làm nguội và hoàn thiện sản phẩm.",
+        "q": "Sau khi rót đồng vào khuôn, cần làm gì trước khi đánh bóng?",
         "answers": [
-          "Âm thanh của nhạc khí",
-          "Màu nền bức ảnh",
-          "Số người đứng xem"
+          "Để sản phẩm nguội theo quy trình",
+          "Cầm ngay sản phẩm vừa rót",
+          "Bỏ qua mọi bước kiểm tra"
         ]
       },
       {
-        "id": "g4-station-4-point-4",
-        "title": "Trân trọng nghề và người thợ",
-        "narration": "Nghề đúc đồng được tiếp nối khi người thợ truyền lại kinh nghiệm và thế hệ sau kiên trì học hỏi. Những hiểu biết về khuôn, kim loại và thẩm âm cần được thực hành qua thời gian. Gìn giữ nghề vì thế cũng là trân trọng con người và tạo điều kiện để nghề tiếp tục sống. Khi đến làng nghề, em lắng nghe câu chuyện, hỏi lịch sự và quan sát an toàn để hiểu giá trị của từng sản phẩm.",
-        "fact": "Người thợ truyền dạy và thế hệ sau kiên trì học hỏi.",
-        "q": "Điều gì giúp kinh nghiệm đúc đồng được tiếp nối?",
+        "id": "g4-station-4-textbook-point-4",
+        "title": "Sản phẩm truyền thống và sản phẩm mới",
+        "narration": "Sản phẩm truyền thống của Phước Kiều có cồng, chiêng, đỉnh, chuông và đồ thờ cúng bằng đồng. Người thợ còn tạo tượng, đồ lưu niệm và những sản phẩm mới đáp ứng nhu cầu xã hội. Với các nhạc khí, kĩ năng thẩm âm giúp nghệ nhân nghe, kiểm tra và điều chỉnh âm thanh. Một sản phẩm kết hợp hình dáng, công dụng và kinh nghiệm của người làm nghề. Em thích tìm hiểu sản phẩm nào nhất?",
+        "fact": "Phước Kiều có sản phẩm truyền thống như cồng, chiêng, chuông và sản phẩm mới như tượng, đồ lưu niệm.",
+        "q": "Nhóm nào gồm các sản phẩm của nghề đúc đồng?",
         "answers": [
-          "Người thợ truyền dạy và thế hệ sau kiên trì học hỏi",
-          "Không cho ai tìm hiểu nghề",
-          "Chỉ giữ tên nghề mà bỏ mọi kĩ năng"
+          "Cồng, chiêng, chuông và tượng đồng",
+          "Vải lụa, chiếu cói và thổ cẩm",
+          "Nước mắm, bánh tráng và rau xanh"
+        ]
+      },
+      {
+        "id": "g4-station-4-textbook-point-5",
+        "title": "Giữ nghề và giới thiệu làng nghề",
+        "narration": "Nghề đúc đồng tạo việc làm, thu nhập và góp phần giữ gìn bản sắc văn hóa. Người thợ truyền lại kinh nghiệm để thế hệ sau tiếp tục học hỏi và sáng tạo. Em có thể viết đoạn văn từ 6 đến 8 câu giới thiệu địa điểm, sản phẩm, công việc và cảm nghĩ về làng nghề. Nếu lập kế hoạch tham quan, hãy cùng thầy cô xác định mục đích, thời gian, nhiệm vụ và cách trình bày kết quả. Luôn giữ khoảng cách an toàn khi quan sát người thợ làm việc.",
+        "fact": "Trân trọng người thợ, tìm hiểu và giới thiệu đúng là những cách góp phần gìn giữ nghề truyền thống.",
+        "q": "Kế hoạch tham quan làng nghề cần có nội dung nào?",
+        "answers": [
+          "Mục đích, thời gian, nhiệm vụ và cách trình bày kết quả",
+          "Chỉ tên bạn được chụp ảnh nhiều nhất",
+          "Chỉ danh sách đồ muốn mua"
         ]
       }
     ],
     "questions": [
       {
-        "text": "Bộ thẻ nghề bị lẫn công đoạn dệt lụa. Thẻ nào nên bỏ khỏi sơ đồ đúc đồng?",
+        "text": "Nhóm xếp rót đồng trước làm khuôn. Em đề nghị gì?",
         "answers": [
-          "Ươm tơ từ kén",
-          "Chuẩn bị khuôn",
-          "Hoàn thiện sản phẩm"
+          "Sắp lại: tạo mẫu, làm khuôn, nấu và rót đồng",
+          "Giữ nguyên vì khuôn không cần thiết",
+          "Đánh bóng trước khi có sản phẩm"
         ],
-        "hint": "Phân biệt vật liệu và công đoạn của hai nghề."
+        "hint": "Khuôn phải sẵn sàng trước khi rót kim loại."
       },
       {
-        "text": "Lớp muốn làm phim ngắn về người thợ đúc đồng đang bận. Cách nào phù hợp?",
+        "text": "Khi tham quan, bạn muốn đến sát lò để nhìn rõ. Em nên làm gì?",
         "answers": [
-          "Hẹn thời gian được đồng ý và không cản công việc",
-          "Tự đứng sát lò để quay bất cứ lúc nào",
-          "Yêu cầu người thợ dừng việc ngay để diễn lại"
+          "Nhắc bạn đứng ở vị trí được người phụ trách cho phép",
+          "Đi cùng bạn vì có hai người sẽ an toàn",
+          "Chạm thử dụng cụ xem có nóng không"
         ],
-        "hint": "Tìm hiểu làng nghề cần tôn trọng thời gian, sự đồng ý và điều kiện lao động của người thợ."
+        "hint": "Quan sát làng nghề cần tuân thủ giới hạn an toàn."
       },
       {
-        "text": "Bạn muốn sờ sản phẩm mới ra khỏi khuôn. Em làm gì?",
+        "text": "Làng nghề làm thêm tượng và đồ lưu niệm. Nhận xét nào phù hợp?",
         "answers": [
-          "Nhắc bạn tránh xa và hỏi người hướng dẫn",
-          "Lấy nước tự đổ vào để làm nguội",
-          "Thử chạm nhanh bằng đầu ngón tay"
+          "Có thể sáng tạo sản phẩm mới và tiếp nối kĩ năng truyền thống",
+          "Làm sản phẩm mới đồng nghĩa phải bỏ mọi nghề cũ",
+          "Chỉ một mẫu sản phẩm được phép tồn tại"
         ],
-        "hint": "Học sinh không tự xử lí vật nóng."
+        "hint": "Giữ nghề có thể đi cùng sáng tạo phù hợp nhu cầu."
       },
       {
-        "text": "Nhóm đặt một nhạc khí vào bài giới thiệu nhưng không ghi cách sử dụng. Nên bổ sung gì?",
+        "text": "Bài giới thiệu của nhóm chỉ có tên sản phẩm. Nên bổ sung gì?",
         "answers": [
-          "Công dụng có nguồn và lưu ý chỉ trải nghiệm khi được hướng dẫn",
-          "Giá trị do nhóm tự đoán",
-          "Khẳng định ai cũng được gõ mọi nhạc khí ở xưởng"
+          "Địa điểm, công đoạn, giá trị và cảm nghĩ về người thợ",
+          "Giá bán tự đoán của tất cả sản phẩm",
+          "Tên và địa chỉ riêng của mọi khách tham quan"
         ],
-        "hint": "Giới thiệu sản phẩm cần giúp người xem hiểu công dụng và cách tiếp cận phù hợp, không tự ý sử dụng."
+        "hint": "Giới thiệu làng nghề cần cả sản phẩm, con người và quá trình lao động."
       },
       {
-        "text": "Một bạn chê nghề thủ công vì có công đoạn làm chậm. Em góp ý thế nào?",
+        "text": "Lớp lập kế hoạch tham quan Phước Kiều. Cách phân công nào tốt?",
         "answers": [
-          "Tìm hiểu yêu cầu tỉ mỉ của từng công đoạn trước khi đánh giá",
-          "Công việc chậm chắc chắn không có ích",
-          "Có thể bỏ các khâu mất thời gian mà không cần hỏi"
+          "Có nhóm ghi chép, hỏi theo hướng dẫn và tổng hợp kết quả",
+          "Để các bạn tự tách nhóm đi khắp xưởng",
+          "Không cần thống nhất mục đích tìm hiểu"
         ],
-        "hint": "Thời gian lao động có thể gắn với yêu cầu kĩ thuật; cần tìm hiểu trước khi phán xét người làm nghề."
+        "hint": "Nhiệm vụ rõ ràng giúp chuyến đi có ý nghĩa và trật tự."
       }
     ],
     "feel": [
-      "Em khâm phục sự khéo léo.",
-      "Em quý công sức giữ nghề.",
-      "Em tò mò về âm thanh nhạc khí."
+      "Em khâm phục đôi bàn tay khéo léo của người thợ.",
+      "Em yêu những sản phẩm đồng mang nét văn hóa quê hương.",
+      "Em muốn tìm hiểu cách một sản phẩm được tạo ra."
     ],
     "act": [
-      "Em ghi nguồn khi giới thiệu nghề.",
-      "Em tuân thủ hướng dẫn an toàn.",
-      "Em hỏi lịch sự về công việc nghệ nhân."
+      "Em giới thiệu đúng các bước đúc đồng.",
+      "Em lắng nghe và trân trọng người làm nghề.",
+      "Em lập kế hoạch tham quan an toàn cùng người lớn."
     ],
     "badge": "Người bạn của tiếng đồng",
     "sources": [
@@ -486,129 +562,143 @@ export const GRADE45_CONTENT = [
       "https://csdl.vietnamtourism.gov.vn/dest/?item=412"
     ],
     "notes": [
-      "Các nguồn khác nhau về tổ nghề/quê quán người truyền nghề. Không đưa chi tiết này thành kiến thức hay đáp án duy nhất. Không dùng tiếng hiệu ứng làm bản thu chiêng thật.",
-      "Rà soát 18/10/2026: ảnh thật đọc theo chú thích; sơ đồ là minh họa. Ảnh tại trang nguồn chưa rõ quyền tái sử dụng chỉ được dẫn liên kết, không tải lại hoặc nhúng. Chờ kế hoạch tích hợp mới."
+      "Đối chiếu TLGDDP L4- CD5. Nghe duc dong Phuoc Kieu.docx và biên bản Nhom4_BB gopy Chude 4_lop 4_dã bổ sung.docx do giáo viên cung cấp, ngày 23/10/2026.",
+      "Thứ tự chủ đề theo biên bản hiệu chỉnh; không lấy số chủ đề chưa thống nhất trong file kinh tế làm thứ tự. Không tự gán tuần/bài tích hợp hoặc xác nhận phân phối tiết khi chưa có kế hoạch.",
+      "Thẩm âm là thông tin bổ trợ có nguồn nghề; trọng tâm theo tài liệu là địa điểm, lịch sử, công đoạn và sản phẩm."
     ]
   },
   {
-    "id": "g4-station-5",
+    "id": "g4-thu-bon-hon-kem",
     "grade": 4,
-    "subtitle": "Theo sợi tơ về làng lụa",
-    "opening": "Chúng mình cùng tìm hiểu theo sợi tơ về làng lụa. Em hãy quan sát hình, nghe câu chuyện và thử giải thích bằng điều mình tìm được nhé!",
+    "subtitle": "Theo dòng sông, khám phá cảnh quan và lịch sử",
+    "opening": "Cùng theo dòng Thu Bồn, tìm hiểu đời sống ven sông và vẻ đẹp Hòn Kẽm Đá Dừng nhé!",
     "points": [
       {
-        "id": "g4-station-5-point-1",
-        "title": "Mã Châu và những tấm lụa",
-        "narration": "Mã Châu ở vùng Duy Xuyên, bên dòng Thu Bồn, là làng nghề nổi tiếng về tơ lụa của đất Quảng. Từ sợi tơ, người thợ dệt nên những tấm lụa dùng may trang phục và làm nhiều sản phẩm. Tấm lụa mang theo sự khéo léo, thời gian và kinh nghiệm của người làm nghề. Khám phá Mã Châu, em sẽ thấy một sản phẩm đẹp còn chứa đựng câu chuyện lao động và văn hóa của quê hương.",
-        "fact": "Tấm lụa từ sợi tơ.",
-        "q": "Sản phẩm nào gắn với nghề dệt ở Mã Châu?",
+        "id": "g4-thu-bon-hon-kem-textbook-point-1",
+        "title": "Từ núi Ngọc Linh đến Cửa Đại",
+        "narration": "Sông Thu Bồn bắt nguồn từ vùng núi Ngọc Linh, thuộc xã Trà Linh. Dòng sông chảy qua nhiều xã, phường và phần lớn đổ ra biển tại Cửa Đại, phường Hội An Đông. Từ vùng núi đến vùng cửa sông, cảnh vật và hoạt động của người dân có nhiều nét khác nhau. Em hãy theo dõi hướng chảy trên bản đồ có chú giải và kể lại hành trình từ thượng nguồn ra biển.",
+        "fact": "Thu Bồn bắt nguồn từ vùng núi Ngọc Linh và phần lớn đổ ra biển qua Cửa Đại.",
+        "q": "Sông Thu Bồn bắt nguồn từ vùng núi nào trong bài?",
         "answers": [
-          "Tấm lụa từ sợi tơ",
-          "Chiếc chiêng đúc đồng",
-          "Chum nước mắm"
+          "Ngọc Linh",
+          "Bà Nà",
+          "Hải Vân"
         ]
       },
       {
-        "id": "g4-station-5-point-2",
-        "title": "Từ kén đến sợi tơ",
-        "narration": "Hành trình của tấm lụa bắt đầu từ con tằm. Tằm ăn lá dâu, lớn lên rồi nhả tơ tạo thành kén. Người làm nghề lấy tơ từ kén, chuẩn bị sợi để đưa vào dệt. Kén, sợi tơ và tấm lụa là những dạng khác nhau trong hành trình ấy. Từ nguyên liệu nhỏ bé đến sản phẩm hoàn chỉnh cần nhiều công sức. Em có thể xếp thẻ các công đoạn để hiểu mối liên hệ giữa nuôi tằm, làm tơ và dệt lụa.",
-        "fact": "Kén, sợi tơ và tấm lụa thuộc các bước khác nhau của hành trình làm lụa.",
-        "q": "Trong nghề tơ tằm, sợi tơ được lấy từ đâu?",
+        "id": "g4-thu-bon-hon-kem-textbook-point-2",
+        "title": "Cuộc sống trên dòng Thu Bồn",
+        "narration": "Dòng Thu Bồn gắn với giao thương, đánh bắt thủy sản và việc đi lại của người dân. Vào dịp lễ hội còn có hoạt động đua thuyền, thể hiện sức mạnh và tinh thần đoàn kết. Những thuyền đánh cá, chuyến hàng và ngày hội ven sông cho thấy dòng nước gắn bó với đời sống quê hương. Em thử phân biệt một hoạt động mưu sinh với một hoạt động lễ hội được giới thiệu trong bài.",
+        "fact": "Trên sông Thu Bồn có hoạt động giao thương, khai thác thủy sản và đua thuyền vào dịp lễ hội.",
+        "q": "Hoạt động nào thường gắn với dịp lễ hội trên sông?",
         "answers": [
-          "Từ kén do tằm nhả tơ tạo nên",
-          "Từ dây điện cũ",
-          "Từ mảnh đồng nung chảy"
+          "Đua thuyền",
+          "Vận chuyển hàng hóa hằng ngày",
+          "Đánh bắt cá để mưu sinh"
         ]
       },
       {
-        "id": "g4-station-5-point-3",
-        "title": "Khung dệt và hoa văn",
-        "narration": "Trên khung dệt, các sợi dọc và sợi ngang đan kết để tạo thành tấm vải. Người thợ cần chuẩn bị sợi, điều khiển công việc và kiểm tra sản phẩm. Nghề dệt Mã Châu gắn với sự khéo léo và công sức của nhiều người. Hoa văn, màu sắc, dụng cụ và công nghệ có thể thay đổi theo thời gian. Giữ nghề là tiếp nối kiến thức, kĩ năng và giá trị của nghề, đồng thời sáng tạo những cách làm phù hợp.",
-        "fact": "Nghề dệt kết hợp kĩ năng truyền thống với sự sáng tạo.",
-        "q": "Nhận định nào phù hợp về giữ nghề?",
+        "id": "g4-thu-bon-hon-kem-textbook-point-3",
+        "title": "Hòn Kẽm Đá Dừng – sông núi hữu tình",
+        "narration": "Hòn Kẽm Đá Dừng là thắng cảnh ở thượng nguồn sông Thu Bồn. Hai bên dòng nước là những vách núi đá sừng sững mang nhiều hình dáng. Dọc bờ còn có bãi cát, nương ngô và bãi dâu xanh. Buổi sớm, sương mờ làm cảnh sông núi thêm ấn tượng. Câu ca dao “Ngó lên Hòn Kẽm Đá Dừng, thương cha nhớ mẹ quá chừng bậu ơi” gắn cảnh quê với tình cảm gia đình. Em cảm nhận điều gì qua câu ca dao ấy?",
+        "fact": "Hòn Kẽm Đá Dừng nổi bật với những vách núi đá hai bên thượng nguồn sông Thu Bồn.",
+        "q": "Nét cảnh quan nào được giới thiệu ở Hòn Kẽm Đá Dừng?",
         "answers": [
-          "Có thể sáng tạo mẫu mã và cải tiến phù hợp",
-          "Không được học bất cứ cách làm mới nào",
-          "Chỉ cần đổi tên sản phẩm"
+          "Vách núi đá bên dòng sông",
+          "Đền tháp nằm giữa thung lũng",
+          "Bờ cát ven biển không có núi đá"
         ]
       },
       {
-        "id": "g4-station-5-point-4",
-        "title": "Quý sản phẩm, giữ câu chuyện nghề",
-        "narration": "Một tấm lụa mang theo công sức của người nuôi tằm, chuẩn bị tơ, dệt và hoàn thiện sản phẩm. Sử dụng cẩn thận, bảo quản theo hướng dẫn giúp giữ sản phẩm bền đẹp và tránh lãng phí. Trân trọng nghề còn là kể đúng tên, xuất xứ của sản phẩm và quan tâm đến người làm ra nó. Trong lớp, em có thể thiết kế một hoa văn trên giấy, lấy cảm hứng từ dòng sông, cây lá hay cảnh vật quê hương.",
-        "fact": "Trân trọng công sức lao động và hạn chế lãng phí.",
-        "q": "Sử dụng và bảo quản lụa cẩn thận thể hiện điều gì?",
+        "id": "g4-thu-bon-hon-kem-textbook-point-4",
+        "title": "Cảnh đẹp và câu chuyện lịch sử",
+        "narration": "Hòn Kẽm Đá Dừng không chỉ có phong cảnh đẹp mà còn gắn với những dấu tích và câu chuyện lịch sử. Nơi đây có những chữ cổ Chăm-pa trên đá và những giai thoại về cuộc khởi nghĩa của Nguyễn Duy Hiệu trong phong trào Cần Vương. Khi tìm hiểu, em lắng nghe người hướng dẫn và đọc tư liệu để phân biệt dấu tích với lời kể. Những thông tin ấy giúp chuyến khám phá cảnh quan thêm ý nghĩa.",
+        "fact": "Hòn Kẽm Đá Dừng có cả giá trị cảnh quan và những dấu ấn lịch sử, văn hóa.",
+        "q": "Thông tin nào cho thấy giá trị lịch sử, văn hóa của thắng cảnh?",
         "answers": [
-          "Trân trọng công sức lao động và hạn chế lãng phí",
-          "Muốn mọi tấm lụa mau hỏng",
-          "Không quan tâm đến sản phẩm"
+          "Chữ cổ Chăm-pa và câu chuyện về phong trào Cần Vương",
+          "Các biển quảng cáo bán hàng mới dựng",
+          "Màu áo của một nhóm khách tham quan"
+        ]
+      },
+      {
+        "id": "g4-thu-bon-hon-kem-textbook-point-5",
+        "title": "Đi thuyền khám phá, giữ sạch dòng sông",
+        "narration": "Du khách có thể đi thuyền ngắm cảnh, tham quan và chụp ảnh tại Hòn Kẽm Đá Dừng. Em đi cùng người phụ trách, mặc áo phao theo hướng dẫn và ngồi đúng vị trí khi thuyền di chuyển. Không nghiêng người ra mép thuyền, không xả rác xuống sông. Sau hành trình, em có thể viết đoạn văn giới thiệu nguồn sông, cảnh đẹp và một hoạt động đã tìm hiểu, hoặc sưu tầm hình ảnh có nguồn để chia sẻ với lớp.",
+        "fact": "Đi thuyền cần tuân thủ hướng dẫn an toàn và giữ sạch nguồn nước.",
+        "q": "Cách nào phù hợp khi thuyền đang di chuyển?",
+        "answers": [
+          "Ngồi đúng vị trí và làm theo hướng dẫn an toàn",
+          "Đứng lên đổi chỗ để chụp ảnh",
+          "Nghiêng người ra mép thuyền nhìn nước"
         ]
       }
     ],
     "questions": [
       {
-        "text": "Nhóm có ba thẻ: tấm lụa, kén, sợi tơ. Thứ tự khái quát nào đúng?",
+        "text": "Nhóm viết Thu Bồn chỉ có một hoạt động là đánh cá. Em bổ sung gì?",
         "answers": [
-          "Kén → sợi tơ → tấm lụa",
-          "Tấm lụa → kén → sợi tơ",
-          "Sợi tơ → tấm lụa → kén"
+          "Còn giao thương, đi lại và đua thuyền dịp lễ hội",
+          "Đồng ý vì thấy một ảnh đánh cá",
+          "Bỏ mọi hoạt động của người dân"
         ],
-        "hint": "Theo hành trình từ nguyên liệu tới sản phẩm."
+        "hint": "Dòng sông gắn với nhiều mặt của đời sống."
       },
       {
-        "text": "Nhóm chuẩn bị câu hỏi gặp người thợ lụa. Câu nào giúp hiểu công sức làm nghề?",
+        "text": "Bạn định đứng lên khi thuyền di chuyển để chụp vách núi. Em chọn cách nào?",
         "answers": [
-          "Khâu nào cần nhiều kinh nghiệm và vì sao ạ?",
-          "Có phải chỉ cần thích là dệt đẹp ngay không ạ?",
-          "Có thể gọi mọi người bán vải là người dệt không ạ?"
+          "Nhắc bạn ngồi đúng vị trí và hỏi người phụ trách",
+          "Giữ tay bạn để bạn nghiêng xa hơn",
+          "Cùng đứng lên cho ảnh cân đối"
         ],
-        "hint": "Câu hỏi mở về kinh nghiệm giúp tìm hiểu lao động và kĩ năng, thay vì chỉ nhìn sản phẩm hoàn thành."
+        "hint": "Cảnh đẹp không làm mất nguy cơ trên mặt nước."
       },
       {
-        "text": "Hai bạn cùng thiết kế hoa văn nhưng chưa thống nhất. Nên giải quyết thế nào?",
+        "text": "Sau buổi tham quan, còn chai rỗng trên thuyền. Nhóm làm gì?",
         "answers": [
-          "Nêu ý tưởng, lắng nghe và thử phối hợp trên bản nháp",
-          "Xóa bài của bạn mà không hỏi",
-          "Chọn theo người có nhiều đồ dùng hơn"
+          "Mang đến nơi thu gom rác",
+          "Thả xuống sông cho trôi đi",
+          "Giấu dưới ghế rồi bỏ lại"
         ],
-        "hint": "Thảo luận và thử trên bản nháp giúp giải quyết bất đồng trong hoạt động sáng tạo gắn với nghề dệt."
+        "hint": "Giữ sạch sông là trách nhiệm của người tham quan."
       },
       {
-        "text": "Lớp muốn trải nghiệm sáng tạo nghề dệt an toàn. Nên chọn gì?",
+        "text": "Nghe một giai thoại về Hòn Kẽm, em đưa vào bài giới thiệu thế nào?",
         "answers": [
-          "Đan giấy hoặc thiết kế hoa văn cùng cô",
-          "Tự vận hành máy dệt ở xưởng",
-          "Tự dùng nước nóng xử lí kén"
+          "Ghi rõ đó là câu chuyện được kể và kiểm tra tư liệu cùng thầy cô",
+          "Khẳng định mọi chi tiết đều là sự kiện đã được chứng minh",
+          "Tự thêm chi tiết rồi ghi là lịch sử"
         ],
-        "hint": "Mô phỏng học tập không cần thực hiện thao tác nguy hiểm."
+        "hint": "Phân biệt giai thoại, quan sát và thông tin đã được kiểm chứng."
       },
       {
-        "text": "Một tấm lụa có nhãn bảo quản riêng. Em nên làm gì?",
+        "text": "Em giới thiệu Thu Bồn và Hòn Kẽm Đá Dừng bằng đoạn văn. Nội dung nào phù hợp?",
         "answers": [
-          "Nhờ người lớn xem hướng dẫn trước khi giặt",
-          "Giặt mọi loại vải cùng một cách",
-          "Chà mạnh để thử độ bền"
+          "Nguồn sông, nét cảnh quan, hoạt động và việc giữ gìn",
+          "Chỉ một chuỗi lời khen không có tên địa điểm",
+          "Chỉ lịch mua sắm của gia đình"
         ],
-        "hint": "Sử dụng phù hợp với sản phẩm cụ thể."
+        "hint": "Chọn các thông tin chính đã học và cảm nhận của mình."
       }
     ],
     "feel": [
-      "Em quý công sức làm ra tấm lụa.",
-      "Em thích sự sáng tạo của người thợ.",
-      "Em muốn tìm hiểu thêm câu chuyện làng nghề."
+      "Em yêu vẻ đẹp sông núi quê hương.",
+      "Em quý công sức người lao động ven sông.",
+      "Em muốn tìm hiểu thêm câu chuyện bên dòng Thu Bồn."
     ],
     "act": [
-      "Em thiết kế hoa văn trên giấy.",
-      "Em ghi đúng nguồn ảnh sản phẩm.",
-      "Em dùng đồ phù hợp hướng dẫn."
+      "Em giữ sạch nguồn nước.",
+      "Em giới thiệu một nét đẹp của sông Thu Bồn.",
+      "Em tuân thủ hướng dẫn khi đi thuyền."
     ],
-    "badge": "Người bạn của sợi tơ",
+    "badge": "Bạn nhỏ yêu sông quê",
     "sources": [
-      "https://vietnam.vnanet.vn/english/english/english/tin-tuc/tam-tangs-silk-36803.html",
-      "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/to-tam-quang-nam-trong-con-duong-to-lua-tren-bien-648.html"
+      "https://www.danang.gov.vn/vi/web/dng/-/hon-kem-i"
     ],
     "notes": [
-      "Rà soát 18/10/2026: ảnh thật đọc theo chú thích; sơ đồ là minh họa. Ảnh tại trang nguồn chưa rõ quyền tái sử dụng chỉ được dẫn liên kết, không tải lại hoặc nhúng. Chờ kế hoạch tích hợp mới."
+      "Đối chiếu TLGDDP L4-CD 4. Song Thu Bon.docx và biên bản Nhom4_BB gopy Chude 4_lop 4_dã bổ sung.docx do giáo viên cung cấp, ngày 23/10/2026.",
+      "Thứ tự chủ đề theo biên bản hiệu chỉnh; không lấy số chủ đề chưa thống nhất trong file kinh tế làm thứ tự. Không tự gán tuần/bài tích hợp hoặc xác nhận phân phối tiết khi chưa có kế hoạch.",
+      "Không sử dụng số đo vách núi, thời gian di chuyển hoặc địa giới thắng cảnh còn cần kiểm tra làm đáp án chấm điểm."
     ]
   },
   {

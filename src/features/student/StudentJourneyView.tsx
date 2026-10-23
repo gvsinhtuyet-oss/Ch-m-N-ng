@@ -1,3 +1,6 @@
+import {GRADE4_MA_CHAU_EXTENSION} from '../../data/grade4ExtensionContent';
+import {LearningMediaCredit} from '../../components/LearningMediaCredit';
+import {audioService} from '../../services/AudioService';
 import React from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { Station } from '../../types';
@@ -297,6 +300,17 @@ export const StudentJourneyView: React.FC = () => {
           </div>
         </div>
       </section>
+      {currentGrade === 4 && <details className="rounded-2xl border border-emerald-200 bg-white p-4 shadow-sm" onToggle={event=>{if(!event.currentTarget.open)audioService.stopNarration();}}>
+        <summary className="cursor-pointer text-lg font-bold text-emerald-900">Học liệu mở rộng: Nghề dệt lụa Mã Châu</summary>
+        <p className="mt-3 text-sm text-slate-600">Khám phá thêm câu chuyện tơ lụa quê hương sau năm trạm chính. Phần này không tính vào tiến độ hay điều kiện nhận hộ chiếu khối 4.</p>
+        <figure className="mt-4 max-w-xl"><img loading="lazy" src="/learning/grade45/photos/ma-chau.webp" alt="Sản phẩm lụa Mã Châu" className="max-h-64 w-full rounded-xl object-contain"/><figcaption className="mt-2 text-xs text-slate-600"><LearningMediaCredit src="/learning/grade45/photos/ma-chau.webp"/></figcaption></figure>
+        <div className="mt-4 grid gap-4 md:grid-cols-2">{GRADE4_MA_CHAU_EXTENSION.points.map(point=><article key={point.id} className="rounded-xl bg-emerald-50 p-4">
+          <h2 className="text-lg font-bold text-emerald-950">{point.title}</h2><p className="mt-2 leading-relaxed text-slate-800">{point.narration}</p><p className="mt-2 font-semibold text-emerald-900">{point.fact}</p>
+          <button type="button" className="mt-3 rounded-lg bg-emerald-800 px-4 py-2 text-sm font-bold text-white" onClick={()=>audioService.speakNarration(point.narration,'vi-VN')}>Nghe: {point.title}</button>
+        </article>)}</div>
+        <button type="button" onClick={()=>audioService.stopNarration()} className="mt-3 rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold">Dừng thuyết minh</button>
+        <details className="mt-4 rounded-xl border border-slate-200 p-4"><summary className="cursor-pointer font-bold">Cùng suy nghĩ và luyện tập</summary>{GRADE4_MA_CHAU_EXTENSION.questions.map((question,index)=><div key={question.text} className="mt-4"><h3 className="font-semibold">{index+1}. {question.text}</h3><ul className="ml-5 mt-2 list-disc">{question.answers.map(answer=><li key={answer}>{answer}</li>)}</ul><details className="mt-2"><summary className="cursor-pointer text-emerald-800">Xem gợi ý</summary><p>{question.answers[0]}. {question.hint}</p></details></div>)}</details>
+      </details>}
     </div>
   );
 };

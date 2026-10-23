@@ -293,7 +293,7 @@ export const AdminDashboard: React.FC = () => {
                     <span className="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[10px] font-bold">
                       Khối {cat.grade} • Bài {cat.lessonNumber}
                     </span>
-                    <span className="text-[10px] font-bold text-slate-400">{cat.periods} tiết</span>
+                    <span className="text-[10px] font-bold text-slate-400">{cat.periods>0?`${cat.periods} tiết`:'Chưa xác nhận số tiết'}</span>
                   </div>
                   <h4 className="font-extrabold text-sm text-slate-900 mt-1">{cat.titleVi}</h4>
                   <p className="text-[11px] text-indigo-900 font-semibold">{cat.themeNameVi}</p>

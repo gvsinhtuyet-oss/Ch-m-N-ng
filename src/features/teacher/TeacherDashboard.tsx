@@ -220,7 +220,7 @@ export const TeacherDashboard: React.FC = () => {
                         <span className="px-2.5 py-0.5 rounded-lg bg-emerald-50 text-emerald-800 text-[11px] font-bold">
                           Bài {station.number}
                         </span>
-                        <span className="text-xs text-slate-400 font-semibold">• {station.totalPeriods} tiết</span>
+                        <span className="text-xs text-slate-400 font-semibold">• {station.totalPeriods>0?`${station.totalPeriods} tiết`:'Chưa xác nhận số tiết'}</span>
                         {!isDemoReady ? (
                           <span className="px-2.5 py-0.5 rounded-full bg-slate-800 text-white text-[11px] font-bold">
                             🔒 ĐANG PHÁT TRIỂN

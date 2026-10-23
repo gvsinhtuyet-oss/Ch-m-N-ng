@@ -184,6 +184,18 @@ const bindings:Record<string,Record<number,string>>={
 'g5-station-5':{0:'sam'}
 };
 export const grade45PointMedia=(stationId:string,index:number)=>{
+ if(stationId.startsWith('g4-')){
+  const map:Record<string,Record<number,string>>={
+   'g4-station-1':{1:'hon-kem',5:'my-khe'},
+   'g4-station-2':{3:'cham'},
+   'g4-station-3':{4:'nam-o'},
+   'g4-thu-bon-hon-kem':{0:'thu-bon-2018',1:'thu-bon-2018',2:'hon-kem'},
+   'g4-station-4':{}
+  };
+  const id=map[stationId]?.[index];
+  const shared=GRADE3_MEDIA.find(m=>m.id===id)||GRADE45_MEDIA.find(m=>m.id===id)|| (id==='thu-bon-2018'?grade5PointMedia('g5-station-1',0):undefined);
+  return shared?{...shared,credit:`${shared.caption} Tác giả: ${shared.author} · ${shared.license} · ${shared.changes}`}:undefined;
+ }
  const reviewed=grade5PointMedia(stationId,index);
  if(reviewed)return {...reviewed,credit:`${reviewed.caption} Tác giả: ${reviewed.author} · ${reviewed.license} · ${reviewed.changes}`};
  const sharedId=stationId==='g4-station-1'?({1:'nam-o',3:'my-khe'} as Record<number,string>)[index]:undefined;

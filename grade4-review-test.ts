@@ -1,31 +1,55 @@
-import {narrationTeacherNote} from './src/services/NarrationReviewPolicy';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync,existsSync} from 'node:fs';
-import React from 'react';
-import {renderToStaticMarkup} from 'react-dom/server';
 import {GRADE_45_STATIONS,GRADE4_CONTENT_REVISION} from './src/data/grade45Stations';
-import {GRADE4_PREVIOUS_POINTS} from './src/data/grade4PreviousContent';
-import {GRADE4_PHOTO_REFERENCES} from './src/data/grade4PhotoReferences';
-import {GRADE3_MEDIA} from './src/data/grade3Media';
-import {GRADE45_MEDIA} from './src/data/grade45Media';
-import {LearningMediaCredit} from './src/components/LearningMediaCredit';
+import {GRADE4_TEXTBOOK_PREVIOUS_CONTENT} from './src/data/grade4TextbookPreviousContent';
+import {GRADE4_MA_CHAU_EXTENSION} from './src/data/grade4ExtensionContent';
+import {OFFICIAL_25_CATALOG} from './src/data/curriculumCatalog';
+import {getStationsForGrade,ALL_25_STATIONS} from './src/data/allStations';
+import {DEMO_STATION_IDS} from './src/data/demoStations';
 import {currentGrade45Content} from './src/services/Grade45ContentPolicy';
-const stations=GRADE_45_STATIONS.filter(s=>s.grade===4);
-test('grade4 has twenty reviewed narratives, eight local photo placements, twelve selected source references',()=>{
- let photos=0,refs=0;
- for(const s of stations){assert.equal(s.version.version,GRADE4_CONTENT_REVISION);for(const h of s.hotspots){assert.notEqual(h.narrationVi,GRADE4_PREVIOUS_POINTS[h.id].narrationVi);assert.ok(existsSync('public'+h.image));const html=renderToStaticMarkup(React.createElement(LearningMediaCredit,{src:h.image,credit:h.mediaCredit}));
- if(h.image.endsWith('.webp')){photos++;const media=[...GRADE3_MEDIA,...GRADE45_MEDIA].find(m=>m.src===h.image)!;assert.ok(media);assert.ok(html.includes(media.licenseUrl));assert.ok(html.includes(media.sourceUrl));assert.ok(html.includes(media.author));}else{refs++;const ref=GRADE4_PHOTO_REFERENCES.find(r=>r.localSrc===h.image)!;assert.ok(ref);assert.ok(html.includes(ref.sourceUrl));assert.ok(html.includes(ref.scope));assert.equal(ref.rights,'LINK_ONLY_PENDING_PERMISSION');assert.ok(!html.includes('<img'));}
- assert.ok(!h.image.endsWith('museum-old.webp'));assert.ok(!h.image.endsWith('port.webp'));}}
- assert.equal(photos,8);assert.equal(refs,12);assert.equal(GRADE4_PHOTO_REFERENCES.length,12);assert.deepEqual(JSON.parse(readFileSync('content-review/grade4-photo-references.json','utf8')),GRADE4_PHOTO_REFERENCES);
+import {currentNarrationContent} from './src/services/NarrationReviewPolicy';
+const stations=getStationsForGrade(4);
+const text=(id:string)=>stations.find(s=>s.id===id)!.hotspots.map(h=>h.narrationVi).join(' ');
+test('grade4 follows five corrected themes with fresh river identity and retained silk extension',()=>{
+ assert.equal(ALL_25_STATIONS.length,25);assert.equal(OFFICIAL_25_CATALOG.length,25);
+ assert.deepEqual(stations.map(s=>s.id),['g4-station-1','g4-station-3','g4-station-2','g4-thu-bon-hon-kem','g4-station-4']);
+ assert.deepEqual(stations.map(s=>s.number),[1,2,3,4,5]);assert.ok(stations.every(s=>DEMO_STATION_IDS.has(s.id)));
+ assert.match(stations[2].titleVi,/Mỹ Sơn.*Bảo tàng Điêu khắc Chăm/);assert.equal(GRADE4_MA_CHAU_EXTENSION.id,'g4-station-5');
+ assert.equal(GRADE4_MA_CHAU_EXTENSION.points.length,4);assert.equal(GRADE4_MA_CHAU_EXTENSION.questions.length,5);assert.ok(!stations.some(s=>s.id===GRADE4_MA_CHAU_EXTENSION.id));
 });
-test('old shipped fields update while teacher images, narration, questions and resources survive without mutations',()=>{
- for(const s of stations){const old={contentRevision:'3.0.0-grade45-source',coverImage:s.coverImage,mapImage:s.journeyMap!.image!,resources:[{id:'teacher',kind:'document' as const,title:'Tài liệu riêng',url:'https://example.org/doc'}],hotspots:s.hotspots.map(h=>{const b=GRADE4_PREVIOUS_POINTS[h.id];return {...h,image:b.image,narrationVi:b.narrationVi,interaction:{...h.interaction!,questionVi:b.questionVi,options:b.answers.map((textVi,i)=>({id:'opt-'+i,textVi,isCorrect:i===0}))}}})};
- const snapshot=JSON.stringify(old),updated=currentGrade45Content(s,old);assert.equal(JSON.stringify(old),snapshot);assert.equal(updated.contentRevision,GRADE4_CONTENT_REVISION);assert.equal(updated.resources,old.resources);assert.deepEqual(updated.hotspots.map(h=>h.image),s.hotspots.map(h=>h.image));assert.deepEqual(updated.hotspots.map(h=>h.narrationVi),s.hotspots.map(h=>h.narrationVi));assert.equal(currentGrade45Content(s,updated),updated);
- const custom=structuredClone(old);custom.coverImage='https://example.org/teacher-cover';custom.mapImage='https://example.org/teacher-map';custom.hotspots[0].image='https://example.org/teacher-photo';custom.hotspots[0].narrationVi='Lời giảng giáo viên tự soạn';custom.hotspots[0].interaction!.questionVi='Câu hỏi riêng';const preserved=currentGrade45Content(s,custom);assert.equal(preserved.coverImage,custom.coverImage);assert.equal(preserved.mapImage,custom.mapImage);assert.equal(preserved.hotspots[0].image,custom.hotspots[0].image);assert.equal(preserved.hotspots[0].narrationVi,custom.hotspots[0].narrationVi);assert.equal(preserved.hotspots[0].interaction,custom.hotspots[0].interaction);}
+test('27 points retain textbook-specific knowledge across nature, economy, heritage, river and craft',()=>{
+ assert.equal(stations.reduce((n,s)=>n+s.hotspots.length,0),27);
+ const expected:Record<string,string[]>={
+ 'g4-station-1':['Huế','Quảng Ngãi','Lào','đồi núi','mùa mưa','Sông Hàn','voọc chà vá chân nâu','cần cù'],
+ 'g4-station-3':['Chu Lai','Trà Quế','Tiên Sa','thủy canh','Non Nước'],
+ 'g4-station-2':['xã Thu Bồn','thế kỉ IV','1999','điêu khắc','1915','1919','nhãn'],
+ 'g4-thu-bon-hon-kem':['Ngọc Linh','Cửa Đại','giao thương','đua thuyền','vách núi','Chăm-pa','Nguyễn Duy Hiệu'],
+ 'g4-station-4':['Thanh Chiêm 1','phường Điện Bàn','400 năm','tạo mẫu','làm khuôn','nấu đồng','rót đồng','làm nguội','thẩm âm','đồ lưu niệm']};
+ for(const [id,terms] of Object.entries(expected))for(const term of terms)assert.ok(text(id).toLowerCase().includes(term.toLowerCase()),id+': '+term);
 });
-test('local examples and unresolved source claims remain explicit; stage2 uses different tasks from stage1',()=>{
- const text=(id:number)=>stations[id-1].hotspots.map(h=>h.narrationVi+narrationTeacherNote(h.id)).join(' ');
- assert.match(text(1),/Nam Ô/);assert.match(text(2),/42–44 Bạch Đằng và 31 Trần Phú/);assert.match(text(3),/Tiên Sa/);assert.match(text(3),/không khẳng định mọi công đoạn/);assert.match(text(4),/chưa chọn một tên tổ nghề/);assert.match(text(4),/không được coi là bản thu/);assert.match(text(5),/sợi dọc và sợi ngang/);
- for(const s of stations){const first=s.hotspots.map(h=>h.interaction!.questionVi);for(const q of s.challenge.questions!)assert.ok(!first.includes(q.questionVi));assert.equal(s.isFullyVerified,false);assert.equal(s.version.status,'IN_REVIEW');}
+test('questions, reflection, passport summaries and assets agree with the revised topics',()=>{
+ for(const s of stations){assert.equal(s.version.version,GRADE4_CONTENT_REVISION);assert.equal(s.challenge.questions!.length,5);assert.equal(s.journeyMap?.summaryNodes.length,s.hotspots.length);assert.equal(s.checkIn.actionOptions.length,3);
+ const questions=new Set(s.hotspots.map(h=>h.interaction!.questionVi));for(const q of s.challenge.questions!){assert.ok(!questions.has(q.questionVi));assert.equal(q.options.filter(o=>o.isCorrect).length,1);}
+ for(const h of s.hotspots){assert.ok(h.narrationVi.length>150);assert.equal(h.interaction!.options.filter(o=>o.isCorrect).length,1);assert.ok(existsSync('public'+h.image));assert.ok(s.journeyMap?.summaryNodes.some(n=>n.titleVi===h.titleVi&&n.textVi===h.keyFactVi));assert.doesNotMatch(h.narrationVi,/chưa gắn|đề cương dự thảo|không yêu cầu học thuộc/);}
+ for(const src of [s.coverImage,s.journeyMap!.image!]){assert.ok(existsSync('public'+src));assert.match(readFileSync('public'+src,'utf8'),/không phải ảnh tư liệu/);}
+ }
+});
+test('old shipped grade4 content upgrades to all new points without mutating resources or input',()=>{
+ for(const s of stations){const previous=GRADE4_TEXTBOOK_PREVIOUS_CONTENT.find(l=>l.id===s.id);if(!previous)continue;
+ const old={contentRevision:'3.1.0-grade4-reviewed-media',coverImage:`/learning/grade45/${s.id}-cover.svg`,mapImage:`/learning/grade45/${s.id}-map.svg`,resources:[{id:'teacher',kind:'document' as const,title:'Tài liệu riêng',url:'https://school.example/doc'}],hotspots:previous.points.map((p,i)=>({...s.hotspots[i],id:p.id,titleVi:`${i+1}. ${p.title}`,narrationVi:p.narration,keyFactVi:p.fact,image:`/learning/grade45/${s.id}-point-${i+1}.svg`,interaction:{...s.hotspots[i].interaction!,questionVi:p.q,options:p.answers.map((textVi,i)=>({id:'opt-'+i,textVi,isCorrect:i===0}))}}))};
+ const snapshot=JSON.stringify(old),updated=currentNarrationContent(currentGrade45Content(s,old));assert.equal(JSON.stringify(old),snapshot);assert.equal(updated.contentRevision,GRADE4_CONTENT_REVISION);assert.equal(updated.resources,old.resources);
+ assert.deepEqual(updated.hotspots.map(h=>[h.id,h.titleVi,h.narrationVi,h.keyFactVi,h.image,h.interaction?.questionVi]),s.hotspots.map(h=>[h.id,h.titleVi,h.narrationVi,h.keyFactVi,h.image,h.interaction?.questionVi]));assert.equal(currentGrade45Content(s,updated),updated);
+ }
+});
+test('teacher edits to wording, answers, images and resources survive while missing textbook points are added',()=>{
+ const s=stations[0],previous=GRADE4_TEXTBOOK_PREVIOUS_CONTENT.find(l=>l.id===s.id)!;
+ const custom={contentRevision:'3.1.0-grade4-reviewed-media',coverImage:'https://school.example/cover',mapImage:'https://school.example/map',resources:[],hotspots:previous.points.map((p,i)=>({...s.hotspots[i],id:p.id,titleVi:'Tiêu đề riêng',narrationVi:'Lời dẫn riêng',keyFactVi:'Kiến thức giáo viên biên tập',image:'https://school.example/photo',interaction:{...s.hotspots[i].interaction!,questionVi:p.q,options:[{id:'teacher-answer',textVi:'Đáp án riêng',isCorrect:true}]}}))};
+ const snapshot=JSON.stringify(custom),out=currentGrade45Content(s,custom);assert.equal(out.hotspots.length,s.hotspots.length);assert.equal(out.coverImage,custom.coverImage);assert.equal(out.mapImage,custom.mapImage);assert.equal(JSON.stringify(custom),snapshot);
+ for(let i=0;i<4;i++){assert.equal(out.hotspots[i].titleVi,'Tiêu đề riêng');assert.equal(out.hotspots[i].narrationVi,'Lời dẫn riêng');assert.equal(out.hotspots[i].image,custom.hotspots[i].image);assert.equal(out.hotspots[i].interaction,custom.hotspots[i].interaction);}
+});
+test('river cannot inherit silk completion and uncertain quantities are not quiz answers',()=>{
+ const river=stations.find(s=>s.id==='g4-thu-bon-hon-kem')!;assert.notEqual(river.id,GRADE4_MA_CHAU_EXTENSION.id);assert.ok(!river.hotspots.some(h=>GRADE4_MA_CHAU_EXTENSION.points.some(p=>p.id===h.id)));
+ const economy=stations.find(s=>s.id==='g4-station-3')!;assert.doesNotMatch(JSON.stringify(economy.hotspots)+JSON.stringify(economy.challenge),/5,9%|37%|200 000|70%/);
+ assert.ok(stations.every(s=>s.totalPeriods===0));
 });

@@ -172,17 +172,6 @@ export const GRADE45_MEDIA = [
     "sha256": "fc3328183dd93ccc3e0b8f135cd67f7812095cb25a166c56d7531521b83dd3d6"
   }
 ];
-const bindings:Record<string,Record<number,string>>={
-'g4-station-1':{0:'hon-kem',2:'hon-kem'},
-'g4-station-2':{1:'cham'},
-'g4-station-3':{1:'ma-chau'},
-'g4-station-5':{0:'ma-chau',3:'ma-chau'},
-'g5-station-1':{1:'hon-kem'},
-'g5-station-2':{3:'me-thu'},
-'g5-station-3':{0:'bana',2:'hai-van'},
-'g5-station-4':{0:'ngu-hanh'},
-'g5-station-5':{0:'sam'}
-};
 export const grade45PointMedia=(stationId:string,index:number)=>{
  if(stationId.startsWith('g4-')){
   const map:Record<string,Record<number,string>>={
@@ -196,10 +185,15 @@ export const grade45PointMedia=(stationId:string,index:number)=>{
   const shared=GRADE3_MEDIA.find(m=>m.id===id)||GRADE45_MEDIA.find(m=>m.id===id)|| (id==='thu-bon-2018'?grade5PointMedia('g5-station-1',0):undefined);
   return shared?{...shared,credit:`${shared.caption} Tác giả: ${shared.author} · ${shared.license} · ${shared.changes}`}:undefined;
  }
- const reviewed=grade5PointMedia(stationId,index);
- if(reviewed)return {...reviewed,credit:`${reviewed.caption} Tác giả: ${reviewed.author} · ${reviewed.license} · ${reviewed.changes}`};
- const sharedId=stationId==='g4-station-1'?({1:'nam-o',3:'my-khe'} as Record<number,string>)[index]:undefined;
- const shared=GRADE3_MEDIA.find(m=>m.id===sharedId);
- return shared?{...shared,credit:`${shared.caption} Tác giả: ${shared.author} · ${shared.license} · ${shared.changes}`} : GRADE45_MEDIA.find(m=>m.id===bindings[stationId]?.[index]);
+ const map:Record<string,Record<number,string>>={
+  'g5-ky-anh-me-nhu':{},
+  'g5-station-3':{1:'bana',3:'hai-van-2024'},
+  'g5-station-4':{0:'ngu-hanh'},
+  'g5-lua-ma-chau':{0:'ma-chau'},
+  'g5-station-5':{0:'sam'}
+ };
+ const id=map[stationId]?.[index];
+ const shared=GRADE45_MEDIA.find(m=>m.id===id)||(id==='hai-van-2024'?grade5PointMedia('g5-station-3',1):undefined);
+ return shared?{...shared,credit:`${shared.caption} Tác giả: ${shared.author} · ${shared.license} · ${shared.changes}`}:undefined;
 };
 export const grade45MediaBySrc=(src:string)=>GRADE45_MEDIA.find(m=>m.src===src);

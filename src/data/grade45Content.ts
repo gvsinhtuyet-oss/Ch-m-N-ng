@@ -80,13 +80,13 @@ export const GRADE45_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Nhóm em vẽ sơ đồ từ vùng núi phía tây ra biển phía đông. Cách sắp xếp nào phù hợp?",
+        "text": "Nhóm em làm mô hình quê hương có sườn đồi dốc. Đề xuất nào giúp giữ đất và cảnh quan?",
         "answers": [
-          "Đồi núi → trung du → đồng bằng ven biển",
-          "Đồng bằng ven biển → trung du → núi phía đông",
-          "Ghi mọi nơi đều là đồng bằng"
+          "Bố trí cây xanh phù hợp và giữ thảm thực vật trên sườn đồi",
+          "Bỏ hết cây để đất trống quanh năm",
+          "Đổ rác xuống chân đồi cho đầy chỗ trũng"
         ],
-        "hint": "Địa hình thay đổi theo không gian từ tây sang đông."
+        "hint": "Cây và thảm thực vật góp phần giữ đất, giữ nước; chọn cách sử dụng địa hình có trách nhiệm."
       },
       {
         "text": "Bạn nói: Ai ở ven biển cũng chỉ làm nghề đánh cá. Em giải thích thế nào?",
@@ -702,620 +702,710 @@ export const GRADE45_CONTENT = [
     ]
   },
   {
-    "id": "g5-station-1",
+    "id": "g5-ky-anh-me-nhu",
     "grade": 5,
-    "subtitle": "Dòng sông nối những câu chuyện quê hương",
-    "opening": "Chúng mình cùng khám phá dòng sông nối những câu chuyện quê hương. Hãy quan sát tư liệu, tìm điều có căn cứ rồi chọn cách hành động của mình nhé!",
+    "subtitle": "Dấu tích lịch sử và lòng biết ơn",
+    "opening": "Một đường hầm dưới lòng đất và một khu lưu niệm kể cho chúng mình câu chuyện gì? Em cùng tìm hiểu sự bền bỉ của người dân Kỳ Anh, lòng dũng cảm của Mẹ Nhu và 7 Dũng sĩ Thanh Khê nhé!",
     "points": [
       {
-        "id": "g5-station-1-point-1",
-        "title": "Theo dòng Thu Bồn",
-        "narration": "Sông Thu Bồn gắn bó với cảnh quan và đời sống của đất Quảng. Dọc dòng sông có những vùng dân cư, bờ cây và hoạt động lao động. Dòng nước kết nối nhiều không gian, góp phần phục vụ sinh hoạt, sản xuất và đi lại. Tìm hiểu một dòng sông cũng là tìm hiểu mối quan hệ giữa thiên nhiên với con người. Em có thể bắt đầu bằng việc nhận ra dòng nước, hai bên bờ và những hoạt động ven sông.",
-        "fact": "Góp phần phục vụ sinh hoạt, sản xuất và đi lại.",
-        "q": "Sông Thu Bồn có mối liên hệ nào với đời sống con người?",
+        "id": "g5-ky-anh-me-nhu-textbook-point-1",
+        "title": "Địa đạo Kỳ Anh ở đâu?",
+        "narration": "Em hãy hình dung một mạng đường hầm nối các nhà và những nơi kín đáo trong làng. Đó là địa đạo Kỳ Anh, nay thuộc phường Bàn Thạch, thành phố Đà Nẵng. Người dân bắt đầu đào từ tháng 5 năm 1965 và tiếp tục đến cuối năm 1967. Trong những năm kháng chiến chống Mỹ, công trình được làm bằng sức lao động và sự chung lòng của nhân dân.",
+        "fact": "Địa đạo Kỳ Anh được đào từ năm 1965 đến cuối năm 1967, nay thuộc phường Bàn Thạch.",
+        "q": "Địa đạo Kỳ Anh ngày nay thuộc địa bàn nào?",
         "answers": [
-          "Góp phần phục vụ sinh hoạt, sản xuất và đi lại",
-          "Chỉ có giá trị để ngắm từ xa",
-          "Không liên quan đến cư dân ven sông"
+          "Phường Bàn Thạch, thành phố Đà Nẵng",
+          "Phường Thanh Khê, thành phố Đà Nẵng",
+          "Xã Nam Phước, thành phố Đà Nẵng"
         ]
       },
       {
-        "id": "g5-station-1-point-2",
-        "title": "Hòn Kẽm Đá Dừng bên sông",
-        "narration": "Hòn Kẽm Đá Dừng là cảnh quan nổi bật bên dòng Thu Bồn. Núi đá và những vách đá đứng bên mặt nước tạo nên không gian vừa hùng vĩ vừa gần gũi với dòng sông. Địa danh này còn đi vào lời ca dân gian của đất Quảng, thể hiện sự gắn bó của con người với cảnh vật. Quan sát dáng núi, cây xanh và dòng nước, em có thể cảm nhận vì sao nơi đây để lại nhiều ấn tượng.",
-        "fact": "Núi đá, vách đá bên dòng sông.",
-        "q": "Nét cảnh quan nào làm Hòn Kẽm Đá Dừng nổi bật bên Thu Bồn?",
+        "id": "g5-ky-anh-me-nhu-textbook-point-2",
+        "title": "Mạng đường hầm và các bộ phận",
+        "narration": "Các đoạn địa đạo nối nhau quanh co như bàn cờ, có lối thông tới nhà dân, giếng nước và những nơi được che kín. Bên trong có hầm chỉ huy, hầm cứu thương, kho lương thực, nơi cảnh giới và lỗ thông hơi. Mỗi bộ phận phục vụ một việc riêng. Em thử giải thích: vì sao một đường hầm để trú ẩn vẫn cần có lỗ thông hơi?",
+        "fact": "Địa đạo có nhiều bộ phận phục vụ chỉ huy, trú ẩn, cứu thương, dự trữ và thông khí.",
+        "q": "Bộ phận nào giúp không khí lưu thông trong địa đạo?",
         "answers": [
-          "Núi đá, vách đá bên dòng sông",
-          "Bãi cát và những đụn cát ven biển",
-          "Công trình cửa ải trên đỉnh đèo"
+          "Lỗ thông hơi",
+          "Kho lương thực",
+          "Hầm cứu thương"
         ]
       },
       {
-        "id": "g5-station-1-point-3",
-        "title": "Dòng sông trong đời sống",
-        "narration": "Dòng Thu Bồn gắn với việc đi lại, nguồn nước và sinh kế của cư dân ven sông qua nhiều thời kì. Có người đánh bắt thủy sản, có người làm những công việc khác dựa vào điều kiện của vùng sông nước. Hoạt động lao động đem lại thu nhập, đồng thời cần đi cùng việc bảo vệ dòng sông. Giữ nước sạch và sử dụng tài nguyên hợp lí giúp gìn giữ điều kiện sống cho cộng đồng hôm nay và mai sau.",
-        "fact": "Dòng sông gắn với sinh kế và hoạt động lao động ven bờ.",
-        "q": "Những giàn lưới trong ảnh gợi mối liên hệ nào của sông với cư dân?",
+        "id": "g5-ky-anh-me-nhu-textbook-point-3",
+        "title": "Đình Thạch Tân và vai trò địa đạo",
+        "narration": "Địa đạo giúp cán bộ, chiến sĩ và nhân dân trú ẩn, liên lạc, cất giữ lương thực và chăm sóc người bị thương. Đình Thạch Tân là một địa điểm gắn với việc tập kết, cất giấu và cứu chữa trong hệ thống này. Những dấu tích ấy cho thấy người dân đã dựa vào nhau để bám đất, bám làng. Khi nghe kể, em hãy tìm một chi tiết thể hiện sự đoàn kết đó.",
+        "fact": "Địa đạo Kỳ Anh là cơ sở phục vụ kháng chiến và là nơi giáo dục truyền thống hôm nay.",
+        "q": "Chi tiết nào thể hiện vai trò của địa đạo trong kháng chiến?",
         "answers": [
-          "Sinh kế và hoạt động lao động ven sông",
-          "Chỉ dùng để trang trí cảnh quan du lịch",
-          "Một công trình phòng thủ được xây trên sông"
+          "Có nơi trú ẩn và cứu chữa người bị thương",
+          "Có khu vui chơi giải trí dưới đất",
+          "Có nơi khai thác đá làm đồ trang trí"
         ]
       },
       {
-        "id": "g5-station-1-point-4",
-        "title": "Giữ nước, giữ cảnh quan",
-        "narration": "Một dòng sông sạch mang lại lợi ích cho nhiều người ở ven bờ và phía hạ lưu. Rác và nước thải chưa xử lí có thể làm hại môi trường nước. Em góp phần bằng cách tiết kiệm nước, giảm rác và giữ sạch nơi sống. Khi tham quan, đi cùng người phụ trách và làm theo hướng dẫn an toàn trên phương tiện. Nếu thấy người gặp nguy hiểm dưới nước, gọi ngay người lớn hoặc cứu hộ, không tự lao xuống.",
-        "fact": "Gọi người lớn hoặc cứu hộ và không tự lao xuống.",
-        "q": "Nếu thấy người gặp nguy hiểm dưới nước, học sinh cần làm gì trước?",
+        "id": "g5-ky-anh-me-nhu-textbook-point-4",
+        "title": "Mẹ Nhu và ngày 26 tháng 12 năm 1968",
+        "narration": "Mẹ Nhu tên thật là Lê Thị Dảnh, được gọi theo tên người con trai đầu. Mẹ giúp vận chuyển lương thực, đào hầm bí mật và che chở chiến sĩ. Ngày 26 tháng 12 năm 1968, khi nhà bị bao vây, mẹ không tiết lộ nơi ẩn náu của các chiến sĩ và đã hy sinh. Câu chuyện của Mẹ Nhu và 7 Dũng sĩ Thanh Khê nhắc chúng mình về lòng yêu nước, sự dũng cảm và tình nghĩa.",
+        "fact": "Mẹ Nhu tên thật là Lê Thị Dảnh; mẹ che chở chiến sĩ và hy sinh ngày 26 tháng 12 năm 1968.",
+        "q": "Mẹ Nhu được nhắc đến trong bài tên thật là gì?",
         "answers": [
-          "Gọi người lớn hoặc cứu hộ và không tự lao xuống",
-          "Tự xuống nước ngay để đưa người lên",
-          "Tự chèo thuyền ra dù chưa được hướng dẫn"
+          "Lê Thị Dảnh",
+          "Nguyễn Thị Thứ",
+          "Nguyễn Thị Minh Khai"
+        ]
+      },
+      {
+        "id": "g5-ky-anh-me-nhu-textbook-point-5",
+        "title": "Khu lưu niệm và tượng Mẹ Dũng sĩ",
+        "narration": "Khu lưu niệm Mẹ Nhu và 07 Dũng sĩ Thanh Khê ở kiệt 746 đường Trần Cao Vân, phường Thanh Khê, lưu giữ câu chuyện về cơ sở cách mạng và trận đánh. Em cần phân biệt nơi này với tượng Mẹ Dũng sĩ tại nút giao Điện Biên Phủ – Huỳnh Ngọc Huệ – Dũng Sĩ Thanh Khê. Tượng do nhà điêu khắc Phạm Văn Hạng sáng tác. Hai địa điểm cùng giúp chúng mình tưởng nhớ, nhưng không phải cùng một công trình.",
+        "fact": "Khu lưu niệm ở kiệt 746 Trần Cao Vân khác với tượng Mẹ Dũng sĩ tại nút giao ba đường.",
+        "q": "Khi giới thiệu khu lưu niệm, em cần phân biệt với địa điểm nào?",
+        "answers": [
+          "Tượng Mẹ Dũng sĩ tại nút giao ba đường",
+          "Đình Thạch Tân trong câu chuyện địa đạo",
+          "Làng dệt lụa Mã Châu ở Nam Phước"
+        ]
+      },
+      {
+        "id": "g5-ky-anh-me-nhu-textbook-point-6",
+        "title": "Giới thiệu một di tích bằng lòng biết ơn",
+        "narration": "Em chọn địa đạo Kỳ Anh hoặc khu lưu niệm Mẹ Nhu để làm hướng dẫn viên nhỏ. Bài giới thiệu có thể gồm tên, vị trí, một dấu tích và ý nghĩa em hiểu được. Khi tham quan, em đi cùng người lớn, theo hướng dẫn của nơi đón khách, nói vừa đủ nghe và giữ nguyên hiện vật. Một lời giới thiệu đúng cùng việc làm lịch sự là cách gần gũi để bày tỏ lòng biết ơn.",
+        "fact": "Tìm hiểu đúng lịch sử và giữ gìn di tích là những việc học sinh có thể làm để tri ân.",
+        "q": "Bài giới thiệu một di tích nên có nội dung nào?",
+        "answers": [
+          "Tên, vị trí, dấu tích và ý nghĩa",
+          "Chỉ liệt kê những món ăn quanh nơi đó",
+          "Tự thêm chi tiết cho câu chuyện hấp dẫn"
         ]
       }
     ],
     "questions": [
       {
-        "text": "Nhóm phỏng vấn hai hộ ven sông: một hộ làm nghề cá, một hộ bán hàng. Kết luận nào phù hợp với cuộc tìm hiểu?",
+        "text": "Bạn ghi Mẹ Nhu là Nguyễn Thị Thứ. Em giúp bạn sửa thế nào?",
         "answers": [
-          "Hai hộ có công việc khác nhau; cần ghi rõ phạm vi đã khảo sát",
-          "Mọi hộ ven sông đều bán hàng",
-          "Một hộ làm nghề cá đủ đại diện toàn bộ cư dân"
+          "Đối chiếu bài học: Mẹ Nhu là Lê Thị Dảnh",
+          "Giữ nguyên vì đều được gọi là mẹ",
+          "Bỏ tên nhân vật khỏi bài giới thiệu"
         ],
-        "hint": "Từ hai trường hợp, chỉ kết luận trong phạm vi đã tìm hiểu; không suy rộng ra toàn bộ cộng đồng."
+        "hint": "Đọc lại điểm về Mẹ Nhu."
       },
       {
-        "text": "Một đoạn kể về cảnh sông có cả lời ca dân gian và kết quả quan sát thực địa. Nhóm nên sắp nội dung ra sao?",
+        "text": "Nhóm em muốn giải thích vì sao địa đạo có nhiều loại hầm. Cách nào phù hợp?",
         "answers": [
-          "Ghi riêng lời ca và phần quan sát, nêu nguồn cho mỗi phần",
-          "Dùng lời ca thay cho mọi kết quả quan sát",
-          "Xóa phần khác ý kiến của nhóm"
+          "Nối từng bộ phận với công việc mà nó phục vụ",
+          "Gọi mọi bộ phận là kho lương thực",
+          "Chỉ đọc tên mà bỏ qua công dụng"
         ],
-        "hint": "Lời ca và quan sát là hai loại tư liệu; mỗi loại có vai trò riêng khi giới thiệu cảnh quan."
+        "hint": "Đối chiếu hầm cứu thương, hầm chỉ huy và lỗ thông hơi."
       },
       {
-        "text": "Đi thuyền, bạn tháo áo phao để chụp ảnh. Em chọn gì?",
+        "text": "Em có ảnh tượng Mẹ Dũng sĩ để giới thiệu khu lưu niệm. Em nên làm gì?",
         "answers": [
-          "Nhắc bạn làm theo hướng dẫn an toàn của người phụ trách",
-          "Đợi tới giữa dòng rồi tháo cùng",
-          "Giữ áo giúp bạn để chụp đẹp"
+          "Chú thích đúng là ảnh tượng và phân biệt hai nơi",
+          "Ghi ảnh này là toàn cảnh khu lưu niệm",
+          "Bỏ chú thích vì cùng nói về Mẹ Nhu"
         ],
-        "hint": "Không đánh đổi an toàn lấy một bức ảnh."
+        "hint": "Tên và vị trí công trình phải khớp ảnh."
       },
       {
-        "text": "Lớp muốn góp phần giữ dòng sông sạch. Kế hoạch nào phù hợp?",
+        "text": "Khi viết lời tri ân, em chọn câu nào?",
         "answers": [
-          "Giảm rác ở trường, tuyên truyền và hoạt động có người lớn tổ chức an toàn",
-          "Tự xuống nước vớt rác",
-          "Tự xử lí một nguồn xả thải chưa rõ"
+          "Em biết ơn những người đã bảo vệ và che chở chiến sĩ",
+          "Em chỉ quan tâm di tích có nhiều khách hay không",
+          "Em nghĩ dấu tích cũ không cần giữ gìn"
         ],
-        "hint": "Việc có ích phải vừa sức và an toàn."
+        "hint": "Nghĩ về đóng góp của nhân dân và các chiến sĩ."
       },
       {
-        "text": "Nhóm làm thông điệp giữ sông sạch nhưng chỉ viết khẩu hiệu. Bổ sung nào khiến kế hoạch thực hiện được?",
+        "text": "Trong chuyến tham quan, bạn rủ tự đi vào đường hầm. Em chọn cách nào?",
         "answers": [
-          "Việc cụ thể, người phụ trách và cách theo dõi kết quả",
-          "Thêm nhiều lời hứa nhưng không chia việc",
-          "Chỉ tăng cỡ chữ của khẩu hiệu"
+          "Ở cùng đoàn và chỉ vào khu được người phụ trách hướng dẫn",
+          "Tách đoàn để khám phá cho nhanh",
+          "Đi theo bạn dù chưa được hướng dẫn"
         ],
-        "hint": "Một kế hoạch cần hành động, trách nhiệm và cách xem kết quả; khẩu hiệu riêng lẻ chưa đủ."
+        "hint": "Tìm hiểu di tích cần tuân theo hướng dẫn của nơi tham quan."
       }
     ],
     "feel": [
-      "Em yêu cảnh sông núi quê hương.",
-      "Em muốn nghe thêm chuyện dòng sông.",
-      "Em quan tâm đến nguồn nước sạch."
+      "Em xúc động trước lòng dũng cảm của Mẹ Nhu",
+      "Em khâm phục sự chung sức của người dân Kỳ Anh",
+      "Em muốn tìm hiểu thêm dấu tích lịch sử"
     ],
     "act": [
-      "Em ghi nguồn khi giới thiệu cảnh sông.",
-      "Em không xả rác và tiết kiệm nước.",
-      "Em tuân thủ hướng dẫn khi tham quan."
+      "Viết lời giới thiệu một trong hai di tích",
+      "Cùng người lớn tìm tư liệu đúng về Mẹ Nhu",
+      "Giữ gìn và ứng xử lịch sự khi tham quan"
     ],
-    "badge": "Người bạn của dòng sông",
-    "sources": [
-      "https://cttdt.danangportal.gov.vn/vi/web/dng/w/hon-kem-i",
-      "https://danang.gov.vn/vi/web/dng/w/ve-nong-son-tha-minh-giua-thien-nhien",
-      "https://hdnd.danang.gov.vn/chi-tiet-tin/group/157/nid/23688/ngay-moi-truong-the-gioi-5-6-chung-tay-hanh-dong-vi-da-nang-xanh-va-phat-trien-ben-vung"
-    ],
+    "badge": "Người bạn tri ân",
+    "sources": [],
     "notes": [
-      "Rà soát 18/10/2026: ảnh đọc theo đúng nơi chụp, thời điểm và loại tư liệu; ảnh tại nguồn chưa rõ quyền sao chép chỉ dẫn liên kết. Chưa gắn tuần hoặc bài SGK khi chưa có kế hoạch mới."
-    ]
-  },
-  {
-    "id": "g5-station-2",
-    "grade": 5,
-    "subtitle": "Nhớ người đi trước, quý cuộc sống hòa bình",
-    "opening": "Chúng mình cùng khám phá nhớ người đi trước, quý cuộc sống hòa bình. Hãy quan sát tư liệu, tìm điều có căn cứ rồi chọn cách hành động của mình nhé!",
-    "points": [
-      {
-        "id": "g5-station-2-point-1",
-        "title": "Mẹ Nhu – người mẹ chở che",
-        "narration": "Trong kháng chiến chống Mỹ, Mẹ Nhu ở Thanh Khê đã che chở, nuôi giấu các chiến sĩ biệt động. Gia đình mẹ có hầm bí mật để bảo vệ chiến sĩ giữa hoàn cảnh hiểm nguy. Những việc làm ấy thể hiện lòng yêu nước, sự dũng cảm và tình thương dành cho người chiến đấu. Di tích Địa điểm nhà Mẹ Nhu lưu giữ câu chuyện để thế hệ sau hiểu thêm về đóng góp của nhân dân và giá trị của hòa bình.",
-        "fact": "Nuôi giấu, bảo vệ chiến sĩ biệt động.",
-        "q": "Việc làm nào thể hiện sự chở che của Mẹ Nhu?",
-        "answers": [
-          "Nuôi giấu, bảo vệ chiến sĩ biệt động",
-          "Tổ chức khôi phục di tích sau năm 2000",
-          "Viết tài liệu nghiên cứu về làng nghề"
-        ]
-      },
-      {
-        "id": "g5-station-2-point-2",
-        "title": "Sự kiện Thanh Khê năm 1968",
-        "narration": "Ngày 26 tháng 12 năm 1968 là dấu mốc trong câu chuyện về Mẹ Nhu và bảy chiến sĩ biệt động Thanh Khê. Trong kháng chiến chống Mỹ, mẹ đã hi sinh khi che chở cho các chiến sĩ; cuộc chiến đấu của họ được ghi nhớ trong lịch sử địa phương. Nhắc lại ngày ấy, chúng ta trân trọng lòng dũng cảm và sự gắn bó giữa nhân dân với người chiến đấu. Câu chuyện nhắc thế hệ hôm nay biết quý hòa bình và sống có trách nhiệm.",
-        "fact": "Ngày 26 tháng 12 năm 1968.",
-        "q": "Sự kiện Mẹ Nhu và bảy dũng sĩ Thanh Khê gắn với mốc nào?",
-        "answers": [
-          "Ngày 26 tháng 12 năm 1968",
-          "Cách mạng tháng Tám năm 1945",
-          "Ngày giải phóng Đà Nẵng năm 1975"
-        ]
-      },
-      {
-        "id": "g5-station-2-point-3",
-        "title": "Mẹ Nguyễn Thị Thứ",
-        "narration": "Mẹ Nguyễn Thị Thứ là Bà mẹ Việt Nam anh hùng quê vùng Điện Bàn, đất Quảng. Mẹ đã chịu nhiều mất mát khi các con và người thân hi sinh trong những cuộc kháng chiến. Mẹ Thứ và Mẹ Nhu là hai người khác nhau, mỗi người có cuộc đời và đóng góp riêng. Tìm hiểu về các mẹ, chúng ta thêm trân trọng sự hi sinh của thế hệ trước và biết rằng cuộc sống hòa bình hôm nay được đổi bằng biết bao mất mát.",
-        "fact": "Hai người khác nhau, có cuộc đời và tư liệu riêng.",
-        "q": "Cần giới thiệu Mẹ Nhu và Mẹ Nguyễn Thị Thứ như thế nào?",
-        "answers": [
-          "Hai người khác nhau, có cuộc đời và tư liệu riêng",
-          "Một người có hai tên gọi trong cùng một sự kiện",
-          "Hai nhân vật có thể dùng thay ảnh và tiểu sử cho nhau"
-        ]
-      },
-      {
-        "id": "g5-station-2-point-4",
-        "title": "Tri ân bằng hiểu biết và việc làm",
-        "narration": "Lòng biết ơn được thể hiện bằng sự trân trọng và những việc làm cụ thể. Tượng tưởng niệm, nơi lưu niệm giúp các thế hệ ghi nhớ đóng góp của những người đã hi sinh vì đất nước. Khi tìm hiểu về Mẹ Nhu và Mẹ Thứ, em có thể viết một lời tri ân bằng chính cảm nghĩ của mình. Giữ trang nghiêm nơi tưởng niệm, học tập chăm chỉ và biết quan tâm đến người khác là những cách nuôi dưỡng lòng biết ơn mỗi ngày.",
-        "fact": "Để ghi nhớ, tri ân đóng góp của các thế hệ trước.",
-        "q": "Vì sao chúng ta gìn giữ nơi lưu niệm và tượng tưởng niệm?",
-        "answers": [
-          "Để ghi nhớ, tri ân đóng góp của các thế hệ trước",
-          "Để biến mọi nơi thành khu vui chơi",
-          "Để thay thế hoàn toàn việc học lịch sử"
-        ]
-      }
-    ],
-    "questions": [
-      {
-        "text": "Hai tư liệu về một hoạt động tri ân ghi ngày khác nhau. Nhóm nên làm gì trước khi đưa lên bài?",
-        "answers": [
-          "Đối chiếu bản gốc và hỏi người phụ trách để xác định đúng",
-          "Chọn ngày nào nhìn đẹp hơn",
-          "Đổi cả hai thành ngày hôm nay"
-        ],
-        "hint": "Khi nguồn chưa thống nhất, cần xác minh thay vì tự chọn một mốc cho thuận tiện."
-      },
-      {
-        "text": "Nhóm chọn nhạc vui nhộn và hiệu ứng gây cười cho phần tri ân các mẹ. Em đề xuất gì?",
-        "answers": [
-          "Chọn cách thể hiện trang trọng, phù hợp mục đích tưởng nhớ",
-          "Càng gây cười càng thể hiện lòng biết ơn",
-          "Chỉ cần nhiều hiệu ứng, không cần xét nội dung"
-        ],
-        "hint": "Hình thức trình bày phải phù hợp nội dung lịch sử và sự tôn trọng người được tưởng nhớ."
-      },
-      {
-        "text": "Bạn tự viết một câu cảm động rồi đặt trong ngoặc kép như lời mẹ từng nói. Em đề nghị gì?",
-        "answers": [
-          "Đổi thành lời cảm nghĩ của học sinh, không gán cho nhân vật",
-          "Thêm một năm bất kì để giống tư liệu",
-          "Giữ vì câu nghe rất hay"
-        ],
-        "hint": "Không sáng tác trích dẫn lịch sử."
-      },
-      {
-        "text": "Bạn chép nguyên một bài viết về các mẹ rồi ghi tên mình là tác giả. Cần sửa thế nào?",
-        "answers": [
-          "Viết lại bằng lời của mình, dẫn nguồn và chỉ trích ngắn khi cần",
-          "Chỉ đổi vài dấu câu rồi giữ tên mình",
-          "Xóa tên tác giả gốc để bài ngắn hơn"
-        ],
-        "hint": "Tôn trọng tư liệu lịch sử bao gồm ghi nhận tác giả và phân biệt lời mình với phần trích dẫn."
-      },
-      {
-        "text": "Lớp xây hoạt động tri ân. Cách nào vừa phù hợp vừa tôn trọng?",
-        "answers": [
-          "Tìm hiểu tư liệu, viết lời cảm nghĩ và làm việc có ích theo hướng dẫn",
-          "Thi xem ai kể chuyện đau buồn nhất",
-          "Bắt mọi bạn phải nói mình xúc động giống nhau"
-        ],
-        "hint": "Tri ân không cần thi đua nỗi buồn hay ép cảm xúc."
-      }
-    ],
-    "feel": [
-      "Em biết ơn những người có công.",
-      "Em quý cuộc sống hòa bình.",
-      "Em muốn tìm hiểu lịch sử đúng hơn."
-    ],
-    "act": [
-      "Em viết lời tri ân bằng lời của mình.",
-      "Em giữ trang nghiêm nơi tưởng niệm.",
-      "Em kiểm tra nhân vật và mốc sự kiện."
-    ],
-    "badge": "Người giữ lời tri ân",
-    "sources": [
-      "https://baodanang.vn/di-tich-dia-diem-nha-me-nhu-3196770.html",
-      "https://cttdt.danangportal.gov.vn/vi/w/le-thi-danh-1968-i",
-      "https://baochinhphu.vn/ky-niem-120-nam-ngay-sinh-me-viet-nam-anh-hung-nguyen-thi-thu-102240727212121574.htm",
-      "https://baodanang.vn/dai-ta-tran-hong-va-hai-buc-chan-dung-dac-biet-3299045.html"
-    ],
-    "notes": [
-      "Bảng lớp 5 cũ liên hệ sự kiện 1968 trong bài Cách mạng tháng Tám 1945: phải tách mốc, chưa tự gắn bài/tuần. Không thi đua số người hi sinh, không dựng lời nhân vật.",
-      "Rà soát 18/10/2026: ảnh đọc theo đúng nơi chụp, thời điểm và loại tư liệu; ảnh tại nguồn chưa rõ quyền sao chép chỉ dẫn liên kết. Chưa gắn tuần hoặc bài SGK khi chưa có kế hoạch mới."
+      "Biên soạn theo tài liệu lớp 5 và biên bản góp ý ngày 29/7/2025; chưa xác nhận phân phối số tiết.",
+      "Nguồn chính: biên bản lớp 5 ngày 29/7/2025 và bài chủ đề tương ứng do giáo viên cung cấp; số thứ tự cũ 6 trên bài sâm được chuẩn hóa thành chủ đề 5."
     ]
   },
   {
     "id": "g5-station-3",
     "grade": 5,
-    "subtitle": "Giữa núi rừng và cửa ải",
-    "opening": "Chúng mình cùng khám phá giữa núi rừng và cửa ải. Hãy quan sát tư liệu, tìm điều có căn cứ rồi chọn cách hành động của mình nhé!",
+    "subtitle": "Hai điểm đến, những giá trị riêng",
+    "opening": "Một nơi có núi rừng mát lành, một nơi lưu dấu cửa quan xưa. Em cùng so sánh Bà Nà và Hải Vân Quan để thiết kế một hành trình vừa khám phá thiên nhiên vừa tìm hiểu lịch sử nhé!",
     "points": [
       {
-        "id": "g5-station-3-point-1",
-        "title": "Bà Nà – cảnh núi rừng",
-        "narration": "Bà Nà có cảnh quan núi rừng, đồng thời là nơi phát triển hoạt động tham quan và nghỉ dưỡng. Thiên nhiên và những công trình du lịch tạo nên các trải nghiệm khác nhau cho du khách. Cách nói “bốn mùa trong một ngày” gợi cảm nhận về sự thay đổi của thời tiết; đó là cách diễn đạt giàu hình ảnh, không có nghĩa một ngày trải qua bốn mùa khí hậu thực sự. Khám phá Bà Nà, em có thể tìm hiểu cả cảnh quan và cách con người tổ chức du lịch.",
-        "fact": "Lời gợi tả cảm nhận thời tiết thay đổi.",
-        "q": "Câu “bốn mùa trong một ngày” ở Bà Nà nên được hiểu thế nào?",
+        "id": "g5-station-3-textbook-point-1",
+        "title": "Núi cao và khí hậu Bà Nà",
+        "narration": "Bà Nà còn gọi là núi Lỗ Đông, thuộc xã Bà Nà, thành phố Đà Nẵng. Đỉnh Núi Chúa cao 1 487 m so với mực nước biển. Khí hậu mát mẻ, mây và sương cùng địa hình núi rừng tạo nên cảnh quan hấp dẫn. Nơi đây còn là thượng nguồn các hệ thống sông Túy Loan, Lỗ Đông và sông Vàng. Em thử nối đặc điểm khí hậu với lí do Bà Nà trở thành nơi nghỉ mát.",
+        "fact": "Núi Chúa cao 1 487 m; khí hậu mát mẻ và cảnh núi rừng thuận lợi cho du lịch Bà Nà.",
+        "q": "Đặc điểm nào thuận lợi cho việc nghỉ mát ở Bà Nà?",
         "answers": [
-          "Lời gợi tả cảm nhận thời tiết thay đổi",
-          "Bốn mùa khí hậu lần lượt diễn ra trọn vẹn trong một ngày",
-          "Căn cứ chắc chắn để dự báo thời tiết mọi chuyến đi"
+          "Khí hậu mát mẻ và cảnh núi rừng",
+          "Địa hình đồng bằng ngập nước quanh năm",
+          "Khí hậu khô nóng và không có rừng"
         ]
       },
       {
-        "id": "g5-station-3-point-2",
+        "id": "g5-station-3-textbook-point-2",
+        "title": "Từ khu nghỉ mát đến điểm du lịch",
+        "narration": "Năm 1901, đoàn khảo sát của người Pháp do Debay dẫn đầu tìm hiểu vùng Núi Chúa; đến năm 1919, đường lên núi và khu nghỉ mát tiếp tục được xây dựng. Ngày nay, Bà Nà có nhiều công trình và dịch vụ du lịch. Khi xem tư liệu xưa và nay, em tìm điểm thay đổi của công trình, đồng thời phân biệt công trình do con người xây với núi rừng tự nhiên.",
+        "fact": "Bà Nà có lịch sử phát triển khu nghỉ mát; công trình du lịch khác với cảnh quan núi rừng tự nhiên.",
+        "q": "Trong ảnh Bà Nà, đâu là công trình do con người xây dựng?",
+        "answers": [
+          "Nhà nghỉ và hệ thống cáp treo",
+          "Sườn núi và mây trời",
+          "Rừng cây và dòng suối tự nhiên"
+        ]
+      },
+      {
+        "id": "g5-station-3-textbook-point-3",
+        "title": "Rừng Núi Chúa và bảo tồn thiên nhiên",
+        "narration": "Khu du lịch Bà Nà nằm bên cạnh khu rừng đặc dụng Núi Chúa. Rừng có nhiều loài động, thực vật cần được bảo vệ, trong đó có hoa đào chuông. Dưới chân núi còn có Suối Mơ và thác Tóc Tiên. Cảnh đẹp và sự đa dạng sinh học góp phần tạo sức hấp dẫn của vùng núi này. Tham quan có trách nhiệm là giữ rác đúng nơi, không bẻ cành và không làm phiền động vật.",
+        "fact": "Bảo vệ rừng và đa dạng sinh học giúp gìn giữ giá trị tự nhiên của vùng Bà Nà – Núi Chúa.",
+        "q": "Việc nào góp phần bảo vệ rừng khi tham quan Bà Nà?",
+        "answers": [
+          "Quan sát hoa đào chuông và để hoa trên cây",
+          "Bẻ cành mang về làm kỉ niệm",
+          "Cho động vật rừng ăn đồ mang theo"
+        ]
+      },
+      {
+        "id": "g5-station-3-textbook-point-4",
         "title": "Hải Vân Quan trên đỉnh đèo",
-        "narration": "Trên đỉnh đèo Hải Vân có Hải Vân Quan, một công trình phòng thủ thời Nguyễn. Năm 1826, vua Minh Mạng cho xây dựng công trình tại vị trí quan trọng trên tuyến đi lại Bắc – Nam. Đèo là dạng địa hình và tuyến đường qua núi, còn cửa ải là công trình lịch sử trên đèo. Vị trí ấy giúp em hiểu vì sao nơi đây gắn với việc kiểm soát đường đi và phòng thủ, kết hợp giá trị cảnh quan với dấu ấn lịch sử.",
-        "fact": "Đèo là dạng địa hình, còn cửa ải là công trình trên đèo.",
-        "q": "Đèo Hải Vân và Hải Vân Quan khác nhau ở điểm nào?",
+        "narration": "Hải Vân Quan nằm trên đỉnh đèo Hải Vân, ở vùng tiếp giáp thành phố Đà Nẵng và thành phố Huế. Cửa quan được xây dựng năm 1826 dưới thời vua Minh Mạng. Vị trí trên núi cao giúp quan sát con đường Bắc – Nam và vùng biển. Vì vậy, công trình từng giữ vai trò phòng thủ cửa ngõ phía nam kinh thành Huế và cửa biển Đà Nẵng.",
+        "fact": "Hải Vân Quan được xây dựng năm 1826, từng là công trình phòng thủ ở vị trí quan trọng trên đèo.",
+        "q": "Vai trò lịch sử nổi bật của Hải Vân Quan là gì?",
         "answers": [
-          "Đèo là dạng địa hình, còn cửa ải là công trình trên đèo",
-          "Cả hai đều chỉ là tên gọi của một công trình du lịch",
-          "Cửa ải là tên một khu rừng, còn đèo là tên một bảo tàng"
+          "Quan sát và phòng thủ cửa ngõ quan trọng",
+          "Nuôi tằm và sản xuất lụa",
+          "Lưu giữ lương thực trong địa đạo"
         ]
       },
       {
-        "id": "g5-station-3-point-3",
-        "title": "Hai nơi, nhiều giá trị",
-        "narration": "Cùng ở không gian núi nhưng Bà Nà và Hải Vân Quan đem đến những câu chuyện khác nhau. Bà Nà gắn với cảnh quan và hoạt động du lịch, nghỉ dưỡng. Hải Vân Quan lưu dấu công trình phòng thủ thời Nguyễn, giúp tìm hiểu cách người xưa sử dụng một vị trí quan trọng. Gìn giữ cửa ải cần đi cùng việc bảo vệ những dấu tích lịch sử. Hiểu giá trị riêng của mỗi nơi giúp chúng ta tham quan có ý thức và kể chuyện quê hương chính xác hơn.",
-        "fact": "Kiểm soát vị trí quan trọng và phòng thủ.",
-        "q": "Giá trị nào gắn trực tiếp với Hải Vân Quan thời Nguyễn?",
+        "id": "g5-station-3-textbook-point-5",
+        "title": "Hai dòng chữ trên cửa quan",
+        "narration": "Cửa hướng về Đà Nẵng mang ba chữ Hải Vân Quan. Cửa hướng về phía Huế mang sáu chữ Thiên hạ đệ nhất hùng quan, gợi sự hùng vĩ của cửa ải. Khi đọc tên và quan sát kiến trúc, em có thêm căn cứ để hiểu giá trị lịch sử của di tích. Danh xưng ấy thể hiện cách ca ngợi cảnh quan, không phải một phép đo để xếp hạng mọi cửa ải trên thế giới.",
+        "fact": "Hai cửa mang các dòng chữ Hải Vân Quan và Thiên hạ đệ nhất hùng quan.",
+        "q": "Dòng chữ nào gồm sáu chữ ca ngợi vẻ hùng vĩ của cửa ải?",
         "answers": [
-          "Kiểm soát vị trí quan trọng và phòng thủ",
-          "Giới thiệu sản phẩm tơ lụa của làng nghề",
-          "Bảo tồn một loài cây dưới tán rừng"
+          "Thiên hạ đệ nhất hùng quan",
+          "Hải Vân Quan",
+          "Bà Nà Núi Chúa"
         ]
       },
       {
-        "id": "g5-station-3-point-4",
-        "title": "Tham quan để hiểu và gìn giữ",
-        "narration": "Tham quan có trách nhiệm là vừa tìm hiểu vừa góp phần gìn giữ điểm đến. Em cùng người phụ trách xem thông báo, lối đi và điều kiện tiếp cận trước chuyến đi. Tại di tích, không trèo lên tường hoặc làm hỏng công trình; trong cảnh quan núi rừng, không bẻ cây hay bỏ rác. Sau chuyến khám phá, em chọn một điều đã có căn cứ và một câu hỏi muốn tìm hiểu thêm để chia sẻ với lớp.",
-        "fact": "Đi theo lối cho phép, không trèo lên tường di tích.",
-        "q": "Cách nào thể hiện tham quan có trách nhiệm tại di tích?",
+        "id": "g5-station-3-textbook-point-6",
+        "title": "Tu bổ di tích và so sánh hai điểm đến",
+        "narration": "Hải Vân Quan được công nhận là Di tích quốc gia năm 2017. Dự án bảo tồn, tu bổ và phục hồi được khởi công ngày 19 tháng 12 năm 2021. Khi xem ảnh trước và sau tu bổ, em cần đọc thời điểm chụp. Bà Nà nổi bật về núi rừng và du lịch nghỉ dưỡng; Hải Vân Quan nổi bật về lịch sử, kiến trúc và cảnh đèo. Một hành trình tốt cần vừa giới thiệu giá trị riêng vừa nhắc cách gìn giữ cả hai nơi.",
+        "fact": "Bà Nà và Hải Vân Quan có những giá trị riêng; cần bảo vệ cảnh quan và bảo tồn di tích khi phát triển du lịch.",
+        "q": "Cặp giới thiệu nào phù hợp với hai điểm đến?",
         "answers": [
-          "Đi theo lối cho phép, không trèo lên tường di tích",
-          "Tự mở lối tắt qua khu vực đang bảo tồn",
-          "Đứng lên tường để quan sát rõ hơn"
+          "Bà Nà: núi rừng, nghỉ dưỡng; Hải Vân Quan: di tích cửa ải",
+          "Bà Nà: địa đạo; Hải Vân Quan: làng dệt lụa",
+          "Bà Nà: làng đá; Hải Vân Quan: vùng trồng sâm"
         ]
       }
     ],
     "questions": [
       {
-        "text": "Nhóm ghi ảnh một cây cầu du lịch là “cảnh tự nhiên hoàn toàn”. Nên sửa gì?",
+        "text": "Trong bảng so sánh, em xếp “di tích lịch sử – quân sự” vào đâu?",
         "answers": [
-          "Phân biệt công trình xây dựng với cảnh núi rừng xung quanh",
-          "Giữ nguyên vì cầu ở trên núi",
-          "Đổi tên mọi công trình thành rừng"
+          "Cột Hải Vân Quan",
+          "Cột Bà Nà",
+          "Cả hai đều chỉ có loại hình này"
         ],
-        "hint": "Địa điểm tự nhiên có thể chứa công trình do con người tạo dựng."
+        "hint": "Nhớ vai trò cửa quan."
       },
       {
-        "text": "Nhóm chuẩn bị chuyến tìm hiểu có bạn khó di chuyển. Cách chọn lịch trình nào phù hợp?",
+        "text": "Bạn nói khí hậu Bà Nà có bốn mùa thực sự trong một ngày. Em góp ý thế nào?",
         "answers": [
-          "Hỏi nhu cầu, kiểm tra khả năng tiếp cận và điều chỉnh cùng người phụ trách",
-          "Mặc định bạn ở lại để nhóm đi nhanh",
-          "Chỉ chọn nơi xa nhất vì khó mới thú vị"
+          "Nói thời tiết có thể thay đổi, còn khí hậu cần được mô tả qua thời gian dài",
+          "Đồng ý vì mây xuất hiện bốn lần",
+          "Khẳng định ngày nào cũng có tuyết"
         ],
-        "hint": "Hoạt động khám phá cần tạo điều kiện cho các thành viên tham gia phù hợp khả năng và nhu cầu."
+        "hint": "Phân biệt thay đổi thời tiết với các mùa khí hậu."
       },
       {
-        "text": "Nhóm chỉ có một phút giới thiệu cả Bà Nà và Hải Vân Quan. Cách chọn nội dung nào làm rõ được hai nơi?",
+        "text": "Em dùng ảnh Hải Vân Quan cũ để làm tờ giới thiệu. Em cần bổ sung gì?",
         "answers": [
-          "Chọn một nét tiêu biểu có nguồn của mỗi nơi rồi nêu điểm khác nhau",
-          "Dùng toàn bộ thời gian để liệt kê tên điểm bán vé",
-          "Lặp lại một lời khen giống nhau cho cả hai nơi"
+          "Năm chụp và bối cảnh trước hoặc sau tu bổ",
+          "Dòng chữ khẳng định đây là hiện trạng hôm nay",
+          "Lời giới thiệu bỏ hết thông tin về ảnh"
         ],
-        "hint": "Tập trung một nét có căn cứ cho từng nơi giúp bài giới thiệu ngắn vẫn rõ đối tượng."
+        "hint": "Ảnh ghi lại công trình ở một thời điểm."
       },
       {
-        "text": "Chuyến tham quan bị thay đổi vì thời tiết. Lớp cần chọn phương án học thay thế nào?",
+        "text": "Nhóm em thiết kế tour cả hai điểm đến. Nội dung nào nên có?",
         "answers": [
-          "Tìm hiểu qua tư liệu tại lớp và trao đổi với người phụ trách về lịch phù hợp",
-          "Tự tách nhóm đi để giữ đúng kế hoạch cũ",
-          "Dùng ảnh nắng đẹp để khẳng định thời tiết thực tế an toàn"
+          "Giá trị riêng của mỗi nơi và thông điệp giữ gìn",
+          "Chỉ tên các trò chơi và giá vé tự đoán",
+          "Chỉ khen đẹp mà không tìm hiểu lịch sử"
         ],
-        "hint": "Mục tiêu học tập có thể thực hiện bằng tư liệu; lịch trình thực tế phải theo tình hình và hướng dẫn người phụ trách."
+        "hint": "Bài học yêu cầu nối thiên nhiên với lịch sử."
       },
       {
-        "text": "Bạn muốn dùng một đoạn nhạc tải trên mạng cho video chuyến khám phá. Cần kiểm tra gì?",
+        "text": "Nếu đề xuất phát triển du lịch, em chọn phương án nào?",
         "answers": [
-          "Điều kiện sử dụng và yêu cầu ghi nguồn của bản nhạc",
-          "Chỉ số lượt thích của bài nhạc",
-          "Tên tệp có ngắn hay không"
+          "Có hướng dẫn bảo vệ rừng và giữ nguyên dấu tích được bảo tồn",
+          "Mở lối đi tùy ý xuyên rừng",
+          "Cho khách khắc tên lên tường cửa quan"
         ],
-        "hint": "Video học tập vẫn cần dùng âm nhạc theo điều kiện cho phép và ghi nguồn khi được yêu cầu."
+        "hint": "Phát triển du lịch đi cùng bảo tồn."
       }
     ],
     "feel": [
-      "Em thích cảnh núi rừng.",
-      "Em muốn hiểu thêm lịch sử cửa ải.",
-      "Em quý công sức bảo tồn di tích."
+      "Em thích cảnh núi rừng Bà Nà",
+      "Em ấn tượng với kiến trúc Hải Vân Quan",
+      "Em muốn tìm hiểu sự thay đổi của di tích"
     ],
     "act": [
-      "Em ghi thời điểm của ảnh tư liệu.",
-      "Em phân biệt tự nhiên với công trình.",
-      "Em tuân thủ lối đi và giữ cảnh quan."
+      "Làm bảng so sánh hai điểm đến",
+      "Thiết kế sổ tay hoặc poster có thông điệp bảo tồn",
+      "Viết thư chia sẻ cảm nhận về một hành trình"
     ],
-    "badge": "Người bạn của núi và di tích",
-    "sources": [
-      "https://danang.gov.vn/web/dng/-/khu-du-lich-ba-na-hills-i",
-      "https://baotangdanang.vn/hai-van-quan-mo-cua-don-khach-tham-quan",
-      "https://vietnam.vnanet.vn/vietnamese/long-form/hai-van-quan-cua-ai-hiem-yeu-tren-con-duong-thien-li-bac-nam-xua-374910.html"
-    ],
+    "badge": "Người bạn núi và cửa quan",
+    "sources": [],
     "notes": [
-      "Rà soát 18/10/2026: ảnh đọc theo đúng nơi chụp, thời điểm và loại tư liệu; ảnh tại nguồn chưa rõ quyền sao chép chỉ dẫn liên kết. Chưa gắn tuần hoặc bài SGK khi chưa có kế hoạch mới.",
-      "Năm 1826 nói về công trình phòng thủ thời Minh Mạng; không khẳng định là thời điểm sớm nhất xuất hiện cửa ải. Không lấy hướng chữ trên hai cổng làm câu hỏi khi nguồn mô tả còn khác nhau. Ảnh 2007 là trước tu bổ, ảnh 2024 là tư liệu sau tu bổ, không gọi là ảnh hôm nay."
+      "Biên soạn theo tài liệu lớp 5 và biên bản góp ý ngày 29/7/2025; chưa xác nhận phân phối số tiết.",
+      "Nguồn chính: biên bản lớp 5 ngày 29/7/2025 và bài chủ đề tương ứng do giáo viên cung cấp; số thứ tự cũ 6 trên bài sâm được chuẩn hóa thành chủ đề 5."
     ]
   },
   {
     "id": "g5-station-4",
     "grade": 5,
-    "subtitle": "Đọc dấu xưa trên miền non nước",
-    "opening": "Chúng mình cùng khám phá đọc dấu xưa trên miền non nước. Hãy quan sát tư liệu, tìm điều có căn cứ rồi chọn cách hành động của mình nhé!",
+    "subtitle": "Núi đá, ma nhai và bàn tay người thợ",
+    "opening": "Ngũ Hành Sơn có những gì ngoài các ngọn núi? Em cùng tìm những câu chuyện trong hang động, chữ khắc trên đá và sản phẩm của làng nghề Non Nước nhé!",
     "points": [
       {
         "id": "nghs-quan-the",
-        "title": "Cảnh núi và hang động",
-        "narration": "Ngũ Hành Sơn là danh thắng nổi bật của Đà Nẵng với núi đá, hang động và những dấu tích văn hóa. Các không gian tự nhiên kết hợp với công trình, hoạt động của con người qua nhiều thời kì tạo nên sức hấp dẫn riêng. Khi khám phá, em có thể tìm hiểu hình dáng cảnh quan và những câu chuyện văn hóa gắn với từng nơi. Trân trọng danh thắng cũng là giữ gìn sự hài hòa giữa thiên nhiên và những giá trị do con người tạo dựng.",
-        "fact": "Núi đá, hang động và dấu tích văn hóa.",
-        "q": "Nhóm đặc điểm nào phù hợp với Ngũ Hành Sơn?",
+        "title": "Quần thể núi Ngũ Hành Sơn",
+        "narration": "Danh thắng Ngũ Hành Sơn thuộc phường Ngũ Hành Sơn, thành phố Đà Nẵng, gần Biển Đông và sông Cổ Cò. Những tên Kim Sơn, Mộc Sơn, Thủy Sơn, Hỏa Sơn và Thổ Sơn gắn với ngũ hành. Riêng Hỏa Sơn gồm Dương Hỏa Sơn và Âm Hỏa Sơn. Vì thế, em cần phân biệt năm tên gọi theo ngũ hành với các ngọn núi thực tế trong quần thể.",
+        "fact": "Năm tên theo ngũ hành là Kim, Mộc, Thủy, Hỏa, Thổ; Hỏa Sơn gồm hai ngọn.",
+        "q": "Điều nào giải thích đúng tên Ngũ Hành Sơn?",
         "answers": [
-          "Núi đá, hang động và dấu tích văn hóa",
-          "Một quần đảo chỉ có bãi cát, không có núi",
-          "Một công trình phòng thủ riêng lẻ trên đỉnh đèo"
+          "Gồm năm tên theo ngũ hành, trong đó Hỏa Sơn có hai ngọn",
+          "Chỉ có năm hang động và không có núi",
+          "Gồm năm làng nghề cùng ở dưới chân núi"
         ]
       },
       {
         "id": "nghs-hang-dong-chua",
-        "title": "Dấu tích và không gian văn hóa",
-        "narration": "Ở Ngũ Hành Sơn, các hang động và chùa như động Huyền Không, chùa Tam Thai là những địa điểm có tên gọi và thông tin riêng. Không gian tự nhiên kết hợp với dấu tích văn hóa qua nhiều thời kì. Khi giới thiệu, em cần gọi đúng tên và đọc nguồn của nơi đó. Khi đến nơi sinh hoạt tín ngưỡng, hãy giữ thái độ tôn trọng và theo hướng dẫn; bài học tìm hiểu di sản không yêu cầu học sinh thực hiện nghi lễ.",
-        "fact": "Đọc tên từng nơi và tôn trọng không gian văn hóa.",
-        "q": "Khi tìm hiểu chùa và hang động, cách nào phù hợp?",
+        "title": "Hang động, chùa cổ và bảo tàng",
+        "narration": "Thủy Sơn có động Huyền Không và những ngôi chùa như Tam Thai, Linh Ứng. Trong quần thể còn có các hang động Âm Phủ, Hoa Nghiêm, Vân Thông và nhiều dấu tích văn hóa. Bảo tàng Văn hóa Phật giáo tại chùa Quán Thế Âm ở Kim Sơn trưng bày các hiện vật có giá trị. Em chọn một cảnh hoặc một công trình để giới thiệu, nói rõ đó là cảnh tự nhiên hay công trình văn hóa.",
+        "fact": "Núi đá, hang động, chùa cổ và hiện vật cùng góp phần tạo nên giá trị danh thắng.",
+        "q": "Động Huyền Không nằm trên ngọn núi nào?",
         "answers": [
-          "Đọc tên từng nơi và tôn trọng không gian văn hóa",
-          "Dùng một câu chuyện cho tất cả địa điểm vì ở gần nhau",
-          "Mặc định mọi công trình đều được xây cùng một năm"
+          "Thủy Sơn",
+          "Mộc Sơn",
+          "Thổ Sơn"
         ]
       },
       {
         "id": "nghs-ma-nhai",
-        "title": "Ma nhai – thông tin trên đá",
-        "narration": "Trên vách đá và trong các hang động ở Ngũ Hành Sơn có những văn khắc bằng chữ Hán và chữ Nôm, gọi là ma nhai. Những dòng chữ lưu lại dấu ấn của con người qua nhiều thời kì, giúp tìm hiểu lịch sử, văn hóa và giao lưu. Năm 2022, ma nhai tại danh thắng được ghi danh trong Chương trình Ký ức Thế giới khu vực châu Á – Thái Bình Dương. Đây là di sản tư liệu văn khắc trên đá, cần được bảo vệ để những thông tin quý tiếp tục được gìn giữ.",
-        "fact": "Di sản tư liệu văn khắc trên đá.",
-        "q": "Ma nhai tại Ngũ Hành Sơn được tìm hiểu với tư cách nào?",
+        "title": "Ma nhai: chữ khắc lưu giữ ký ức",
+        "narration": "Ma nhai là chữ khắc trên vách đá. Tại Ngũ Hành Sơn có hệ thống 78 văn bản bằng chữ Hán và chữ Nôm, có niên đại từ nửa đầu thế kỉ XVII đến thế kỉ XX. Đây là di sản tư liệu văn khắc trên đá, giúp người sau tìm hiểu lịch sử và văn hóa. Năm 2022, ma nhai tại danh thắng được ghi danh trong Chương trình Ký ức Thế giới khu vực châu Á – Thái Bình Dương. Sự ghi danh này dành cho hệ thống tư liệu ma nhai.",
+        "fact": "Ma nhai Ngũ Hành Sơn là di sản tư liệu được ghi danh ở cấp khu vực châu Á – Thái Bình Dương năm 2022.",
+        "q": "Ma nhai là loại tư liệu nào?",
         "answers": [
-          "Di sản tư liệu văn khắc trên đá",
-          "Danh hiệu Di sản thế giới dành cho toàn bộ các ngọn núi",
-          "Bản đồ địa lí mô tả các tuyến tham quan"
+          "Văn tự khắc trên vách đá",
+          "Tranh in trên vải lụa",
+          "Hiện vật đúc bằng đồng"
+        ]
+      },
+      {
+        "id": "g5-station-4-textbook-point-4",
+        "title": "Làng đá Non Nước và lịch sử nghề",
+        "narration": "Làng nghề điêu khắc đá mĩ nghệ Non Nước nằm dưới chân Ngũ Hành Sơn. Nghề hình thành khoảng thế kỉ XVII, gắn với cụ Huỳnh Bá Quát quê gốc Thanh Hóa. Từ những đồ dùng ban đầu, người thợ phát triển nhiều tác phẩm tinh xảo. Nghề điêu khắc đá mĩ nghệ Non Nước được đưa vào danh mục Di sản văn hóa phi vật thể quốc gia năm 2014.",
+        "fact": "Non Nước là làng nghề điêu khắc đá truyền thống dưới chân Ngũ Hành Sơn.",
+        "q": "Nghề truyền thống tiêu biểu dưới chân Ngũ Hành Sơn là gì?",
+        "answers": [
+          "Điêu khắc đá mĩ nghệ",
+          "Dệt lụa tơ tằm",
+          "Đúc cồng chiêng đồng"
+        ]
+      },
+      {
+        "id": "g5-station-4-textbook-point-5",
+        "title": "Sản phẩm đa dạng và bảo vệ núi đá",
+        "narration": "Bàn tay người thợ làm ra tượng, bình hoa, bàn ghế, đồ trang trí và trang sức bằng đá. Mỗi nhóm sản phẩm có công dụng và hình dáng riêng. Trước đây có việc lấy đá tại núi; để bảo vệ danh thắng, nguồn đá cho làng nghề được đưa từ nơi khác về. Vì vậy, giữ nghề không có nghĩa là tiếp tục khai thác đá ở Ngũ Hành Sơn. Em hãy nghĩ một cách giới thiệu sản phẩm vừa tôn vinh người thợ vừa bảo vệ cảnh quan.",
+        "fact": "Nghề đá có nhiều nhóm sản phẩm; bảo tồn làng nghề cần đi cùng bảo vệ danh thắng.",
+        "q": "Vì sao làng nghề sử dụng đá đưa từ nơi khác về?",
+        "answers": [
+          "Để bảo vệ cảnh quan núi Ngũ Hành Sơn",
+          "Vì mọi sản phẩm đều làm từ gỗ",
+          "Để không cần đến tay nghề của nghệ nhân"
         ]
       },
       {
         "id": "nghs-lang-da",
-        "title": "Giữ đá, giữ nghề và câu chuyện",
-        "narration": "Đá còn gắn với bàn tay tài hoa của người thợ ở làng đá mỹ nghệ Non Nước. Sản phẩm làng nghề và văn khắc tại di tích có giá trị, bối cảnh khác nhau. Trân trọng nghề không có nghĩa được lấy đá ở núi di tích làm quà. Với ma nhai, em chỉ quan sát theo hướng dẫn, không viết thêm, tô chữ hoặc chà lên bề mặt đá. Tư liệu số có nguồn giúp tìm hiểu chi tiết mà hạn chế việc chạm trực tiếp di sản.",
-        "fact": "Quan sát theo hướng dẫn, không viết hoặc chà lên đá.",
-        "q": "Cách nào bảo vệ bề mặt ma nhai?",
+        "title": "Giữ gìn cảnh quan và di sản",
+        "narration": "Năm 2018, danh thắng Ngũ Hành Sơn được xếp hạng là Di tích quốc gia đặc biệt. Khi tham quan, em đi theo lối hướng dẫn, không viết vẽ lên vách đá và không chạm vào chữ khắc. Em có thể vẽ một cảnh yêu thích trên giấy hoặc dùng đất nặn để thể hiện núi, hang động. Sản phẩm của em là cách chia sẻ điều đã hiểu mà vẫn giữ nguyên vẻ đẹp và dấu tích của danh thắng.",
+        "fact": "Không viết vẽ lên vách đá; có thể giới thiệu di sản qua tranh, mô hình và thông tin đúng.",
+        "q": "Cách nào phù hợp để ghi lại cảnh em yêu thích?",
         "answers": [
-          "Quan sát theo hướng dẫn, không viết hoặc chà lên đá",
-          "Tô lại chữ bằng bút để lớp sau dễ đọc",
-          "Dùng giấy và vật cứng chà trực tiếp để lấy mẫu"
+          "Vẽ trên giấy hoặc làm mô hình đất nặn",
+          "Khắc thêm tên mình cạnh ma nhai",
+          "Mang một mảnh đá trong hang về lớp"
         ]
       }
     ],
     "questions": [
       {
-        "text": "Nhóm muốn dùng bản dịch văn khắc nhưng bỏ mất tên người dịch. Nên làm gì?",
+        "text": "Bạn đếm Hỏa Sơn là một ngọn duy nhất. Em nhắc bạn điều gì?",
         "answers": [
-          "Bổ sung thông tin bản dịch và nguồn có thể đối chiếu",
-          "Ghi rằng mọi bản dịch đều do nhóm tự làm",
-          "Tự thêm nghĩa mới cho câu chưa hiểu"
+          "Hỏa Sơn gồm Dương Hỏa Sơn và Âm Hỏa Sơn",
+          "Hỏa Sơn không thuộc Ngũ Hành Sơn",
+          "Mỗi tên ngũ hành đều gồm hai ngọn"
         ],
-        "hint": "Bản dịch là một lớp tư liệu có người thực hiện và căn cứ; cần ghi rõ để người đọc đối chiếu."
+        "hint": "Phân biệt tên ngũ hành với từng ngọn núi."
       },
       {
-        "text": "Khi nghe một câu chuyện dân gian ở danh thắng, bạn ghi đó là sự kiện đã được chứng minh. Em sửa ra sao?",
+        "text": "Dòng giới thiệu nào ghi đúng phạm vi ghi danh năm 2022?",
         "answers": [
-          "Ghi rõ là chuyện kể dân gian, phân biệt với thông tin lịch sử có chứng cứ",
-          "Chuyện được kể hay thì chắc chắn là lịch sử",
-          "Xóa mọi nguồn để người xem tự hiểu"
+          "Ma nhai thuộc Chương trình Ký ức Thế giới khu vực châu Á – Thái Bình Dương",
+          "Toàn bộ danh thắng là Di sản thiên nhiên thế giới UNESCO",
+          "Mọi sản phẩm đá đều là di sản tư liệu thế giới"
         ],
-        "hint": "Có thể trân trọng câu chuyện dân gian đồng thời nêu đúng tính chất của nguồn."
+        "hint": "Phạm vi ghi danh gắn với ma nhai."
       },
       {
-        "text": "Một bản số hóa có nguồn được đưa vào bài. Lợi ích phù hợp là gì?",
+        "text": "Muốn giúp người xem hiểu sản phẩm làng nghề đa dạng, em nên làm gì?",
         "answers": [
-          "Giúp quan sát chi tiết mà không phải chạm di sản",
-          "Làm mọi bản sao trở thành hiện vật gốc",
-          "Cho phép bỏ việc giữ hiện vật thật"
+          "Giới thiệu ví dụ đồ dùng, tượng và trang sức",
+          "Chỉ nói làng nghề làm một loại tượng",
+          "Chỉ đọc tên làng mà không nêu sản phẩm"
         ],
-        "hint": "Tư liệu số hỗ trợ tiếp cận, không thay trách nhiệm bảo tồn."
+        "hint": "Các nhóm sản phẩm có công dụng khác nhau."
       },
       {
-        "text": "Bạn mua đồ đá rồi nói nguyên liệu chắc chắn lấy ngay từ núi di tích. Em góp ý gì?",
+        "text": "Bạn đề nghị lấy đá trên núi để lớp làm đồ lưu niệm. Em chọn cách nào?",
         "answers": [
-          "Không tự suy luận xuất xứ; cần thông tin sản phẩm có căn cứ",
-          "Đồng ý vì cửa hàng nằm gần núi",
-          "Đổi nhãn để hợp lời giới thiệu"
+          "Dùng vật liệu học tập phù hợp, giữ nguyên đá tại danh thắng",
+          "Đồng ý nếu chỉ lấy một ít",
+          "Nhờ bạn lấy hộ để mình không trực tiếp lấy"
         ],
-        "hint": "Vị trí bán hàng không xác nhận được nguồn vật liệu."
+        "hint": "Bảo vệ danh thắng là một phần giữ nghề."
       },
       {
-        "text": "Em muốn giới thiệu danh thắng trong một phút. Cách nào có chiều sâu?",
+        "text": "Poster của lớp về Ngũ Hành Sơn nên kết nối những nội dung nào?",
         "answers": [
-          "Nêu một nét cảnh quan, một giá trị văn hóa có nguồn và một việc gìn giữ",
-          "Chỉ đọc hàng loạt lời khen nhất",
-          "Gộp mọi chuyện kể thành sự kiện có thật"
+          "Cảnh quan, ma nhai và làng nghề cùng lời nhắc gìn giữ",
+          "Chỉ ghi nơi mua đồ và bỏ mọi giá trị khác",
+          "Khẳng định có thể chạm mọi hiện vật để trải nghiệm"
         ],
-        "hint": "Chọn thông tin cụ thể và hành động phù hợp."
+        "hint": "Bài học có cả giá trị tự nhiên và văn hóa."
       }
     ],
     "feel": [
-      "Em quý những dấu xưa trên đá.",
-      "Em muốn hiểu thêm câu chuyện di sản.",
-      "Em tự hào và muốn giữ cảnh quan."
+      "Em ấn tượng với các hang động",
+      "Em trân trọng chữ khắc lưu giữ ký ức",
+      "Em khâm phục bàn tay nghệ nhân Non Nước"
     ],
     "act": [
-      "Em giới thiệu đúng phạm vi di sản.",
-      "Em không viết, vẽ lên đá.",
-      "Em ghi nguồn tư liệu số đã dùng."
+      "Vẽ hoặc nặn một cảnh em yêu thích",
+      "Làm thẻ giới thiệu ma nhai đúng phạm vi ghi danh",
+      "Đề xuất poster giới thiệu nghề đá và bảo vệ núi"
     ],
-    "badge": "Người gìn giữ miền non nước",
-    "sources": [
-      "https://www.mowcapunesco.org/register/ma-nhai-inscriptions-on-the-marble-mountains-danang-city-2022/",
-      "https://dsvh.gov.vn/le-don-nhan-bang-ghi-danh-ma-nhai-tai-danh-thang-ngu-hanh-son-la-di-san-tu-lieu-thuoc-chuong-trinh-ky-uc-the-gioi-khu-vuc-chau-a-thai-binh-duong-22096",
-      "https://danangfantasticity.com/en/danh-thang-ngu-hanh-son-da-nang",
-      "https://danangfantasticity.com/en/di-san-unesco-vi/bia-ma-nhai-tai-danh-thang-ngu-hanh-son",
-      "https://danangfantasticity.com/en/lang-da-my-nghe-non-nuoc"
-    ],
+    "badge": "Người bạn di sản non nước",
+    "sources": [],
     "notes": [
-      "Không gọi toàn bộ danh thắng là Di sản thế giới UNESCO. Không yêu cầu học thuộc số lượng ma nhai vì nguồn có cách thống kê khác nhau.",
-      "Rà soát 18/10/2026: ảnh đọc theo đúng nơi chụp, thời điểm và loại tư liệu; ảnh tại nguồn chưa rõ quyền sao chép chỉ dẫn liên kết. Chưa gắn tuần hoặc bài SGK khi chưa có kế hoạch mới."
+      "Biên soạn theo tài liệu lớp 5 và biên bản góp ý ngày 29/7/2025; chưa xác nhận phân phối số tiết.",
+      "Nguồn chính: biên bản lớp 5 ngày 29/7/2025 và bài chủ đề tương ứng do giáo viên cung cấp; số thứ tự cũ 6 trên bài sâm được chuẩn hóa thành chủ đề 5."
+    ]
+  },
+  {
+    "id": "g5-lua-ma-chau",
+    "grade": 5,
+    "subtitle": "Từ lá dâu đến tấm lụa",
+    "opening": "Một chiếc khăn lụa bắt đầu từ đâu? Em cùng theo dấu lá dâu, con tằm và bàn tay người thợ để khám phá làng dệt lụa Mã Châu nhé!",
+    "points": [
+      {
+        "id": "g5-lua-ma-chau-textbook-point-1",
+        "title": "Làng lụa ở Nam Phước",
+        "narration": "Làng nghề dệt lụa Mã Châu ở xã Nam Phước, thành phố Đà Nẵng. Nghề dệt có lịch sử lâu đời, được bài học giới thiệu là hình thành từ trước thế kỉ XVI, bên cạnh vùng Trà Kiệu. Năm 2004, làng được công nhận là làng nghề truyền thống. Trồng dâu, nuôi tằm, xe tơ và dệt lụa kết nối công việc của nhiều người trong làng.",
+        "fact": "Mã Châu là làng nghề dệt lụa truyền thống ở xã Nam Phước, thành phố Đà Nẵng.",
+        "q": "Làng nghề dệt lụa Mã Châu ở đâu?",
+        "answers": [
+          "Xã Nam Phước, thành phố Đà Nẵng",
+          "Phường Ngũ Hành Sơn, thành phố Đà Nẵng",
+          "Phường Thanh Khê, thành phố Đà Nẵng"
+        ]
+      },
+      {
+        "id": "g5-lua-ma-chau-textbook-point-2",
+        "title": "Trồng dâu và nuôi tằm",
+        "narration": "Lá dâu là thức ăn của tằm. Người nuôi chăm sóc tằm, giữ điều kiện sống phù hợp để tằm phát triển rồi nhả tơ làm kén. Bài học giới thiệu mùa xuân và mùa thu là những thời điểm có thời tiết mát, thuận lợi cho việc nuôi tằm. Em nhìn chuỗi lá dâu – tằm – kén để thấy nguyên liệu dệt lụa gắn với việc chăm cây và nuôi con vật.",
+        "fact": "Tằm ăn lá dâu, lớn lên rồi nhả tơ tạo kén; nuôi tằm là một công đoạn của nghề lụa.",
+        "q": "Thức ăn được nhắc đến trong công đoạn nuôi tằm là gì?",
+        "answers": [
+          "Lá dâu",
+          "Lá thông",
+          "Lá sen"
+        ]
+      },
+      {
+        "id": "g5-lua-ma-chau-textbook-point-3",
+        "title": "Bủa kén và ươm tơ",
+        "narration": "Khi làm kén, tằm nhả sợi tơ quấn quanh mình. Sau khi thu kén, người thợ xử lí kén trong nước nóng để tìm đầu mối và kéo các sợi tơ. Công đoạn ươm tơ tạo ra nguyên liệu cho khâu dệt. Em chỉ quan sát qua hình hoặc theo hướng dẫn khi tham quan; công việc dùng nước nóng thuộc về người thợ. Mỗi sợi tơ nhắc chúng mình về sự kiên nhẫn của người làm nghề.",
+        "fact": "Bủa kén tạo tổ kén; ươm tơ là công đoạn lấy sợi tơ từ kén để chuẩn bị dệt.",
+        "q": "Sau khi có kén, công đoạn nào tạo sợi để dệt?",
+        "answers": [
+          "Ươm tơ",
+          "In hoa văn",
+          "Thêu sản phẩm"
+        ]
+      },
+      {
+        "id": "g5-lua-ma-chau-textbook-point-4",
+        "title": "Dệt và hoàn thiện tấm lụa",
+        "narration": "Từ sợi tơ, người thợ vận hành khung dệt, đan các sợi thành tấm lụa. Sau đó, sản phẩm có thể được nhuộm, in, vẽ hoặc thêu để có màu sắc và hoa văn phù hợp. Dệt cần cẩn thận, còn hoàn thiện đòi hỏi sự khéo léo và cảm nhận thẩm mĩ. Em thử kể lại đúng thứ tự: nuôi tằm, bủa kén và ươm tơ, dệt lụa, rồi hoàn thiện sản phẩm.",
+        "fact": "Quy trình chính gồm nuôi tằm → bủa kén, ươm tơ → dệt lụa → hoàn thiện sản phẩm.",
+        "q": "Nhóm công việc nào thuộc khâu hoàn thiện?",
+        "answers": [
+          "Nhuộm, in, vẽ, thêu",
+          "Cho tằm ăn lá dâu",
+          "Thu kén để tìm sợi tơ"
+        ]
+      },
+      {
+        "id": "g5-lua-ma-chau-textbook-point-5",
+        "title": "Sản phẩm và cách giữ nghề",
+        "narration": "Em có thể gặp các sản phẩm như vải Taffeta, lãnh hoa, lụa Satin và lụa thao. Hoa văn tinh tế, màu sắc hài hòa thể hiện tay nghề qua nhiều công đoạn. Em có thể làm thẻ giới thiệu tên làng, vị trí, quy trình và sản phẩm; khi gặp nghệ nhân, em lắng nghe và xin phép trước khi chụp ảnh. Hiểu đúng công sức của người thợ giúp chúng mình trân trọng và giới thiệu nghề truyền thống.",
+        "fact": "Lụa Mã Châu có nhiều loại sản phẩm, nổi bật ở hoa văn, phối màu và sự khéo léo của người thợ.",
+        "q": "Nhóm sản phẩm nào được giới thiệu trong bài Lụa Mã Châu?",
+        "answers": [
+          "Lãnh hoa, lụa Satin, lụa thao",
+          "Tượng đá, vòng đá, bình đá",
+          "Chuông đồng, cồng chiêng, lư đồng"
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "text": "Bạn xếp thẻ “dệt lụa” trước “ươm tơ”. Em nên sửa ra sao?",
+        "answers": [
+          "Ươm lấy sợi tơ trước rồi mới dệt thành tấm",
+          "Giữ nguyên vì không cần sợi tơ",
+          "Bỏ cả hai thẻ khỏi quy trình"
+        ],
+        "hint": "Tìm nguyên liệu cần có để dệt."
+      },
+      {
+        "text": "Trong bài giới thiệu làng nghề, chi tiết nào cần chỉnh?",
+        "answers": [
+          "Ghi Mã Châu làm tượng đá Non Nước",
+          "Ghi làng nghề ở xã Nam Phước",
+          "Ghi người thợ thực hiện nhiều công đoạn"
+        ],
+        "hint": "Phân biệt nghề dệt với nghề điêu khắc đá."
+      },
+      {
+        "text": "Khi tham quan khâu ươm tơ có nước nóng, em chọn cách nào?",
+        "answers": [
+          "Quan sát ở vị trí người hướng dẫn cho phép",
+          "Tự nhúng kén thử cho biết",
+          "Rủ bạn kéo sợi khi người thợ chưa đồng ý"
+        ],
+        "hint": "Đây là công việc cần thao tác của người thợ."
+      },
+      {
+        "text": "Muốn giới thiệu nét đẹp sản phẩm bằng căn cứ đã học, em nói gì?",
+        "answers": [
+          "Hoa văn và cách phối màu thể hiện sự khéo léo của người thợ",
+          "Mọi loại lụa đều tự có hoa văn, không cần người làm",
+          "Chỉ cần biết giá bán là đủ hiểu sản phẩm"
+        ],
+        "hint": "Nhớ khâu dệt và hoàn thiện."
+      },
+      {
+        "text": "Lớp em làm thẻ quảng bá nghề truyền thống. Bộ thông tin nào phù hợp?",
+        "answers": [
+          "Tên làng, vị trí, quy trình và sản phẩm chính",
+          "Tên làng cùng công dụng sức khỏe tự đoán",
+          "Chỉ một bức ảnh không ghi nguồn hay tên nghề"
+        ],
+        "hint": "Dựa vào bốn gợi ý thực hành của bài."
+      }
+    ],
+    "feel": [
+      "Em thích hoa văn và màu lụa",
+      "Em khâm phục sự tỉ mỉ của người thợ",
+      "Em tò mò về hành trình từ kén đến sợi tơ"
+    ],
+    "act": [
+      "Làm sơ đồ các công đoạn sản xuất lụa",
+      "Viết thẻ giới thiệu làng nghề và sản phẩm",
+      "Sắm vai hướng dẫn viên giới thiệu nghề dệt"
+    ],
+    "badge": "Người bạn làng lụa",
+    "sources": [],
+    "notes": [
+      "Biên soạn theo tài liệu lớp 5 và biên bản góp ý ngày 29/7/2025; chưa xác nhận phân phối số tiết.",
+      "Nguồn chính: biên bản lớp 5 ngày 29/7/2025 và bài chủ đề tương ứng do giáo viên cung cấp; số thứ tự cũ 6 trên bài sâm được chuẩn hóa thành chủ đề 5."
     ]
   },
   {
     "id": "g5-station-5",
     "grade": 5,
-    "subtitle": "Giữ rừng để giữ cây quý",
-    "opening": "Chúng mình cùng khám phá giữ rừng để giữ cây quý. Hãy quan sát tư liệu, tìm điều có căn cứ rồi chọn cách hành động của mình nhé!",
+    "subtitle": "Hiểu cây quý, gìn giữ rừng",
+    "opening": "Vì sao một cây nhỏ sống dưới tán rừng lại được gọi là dược liệu quý? Em cùng tìm hiểu sâm Ngọc Linh, công sức người trồng và cách bảo vệ môi trường sống của cây nhé!",
     "points": [
       {
-        "id": "g5-station-5-point-1",
-        "title": "Gặp cây sâm Ngọc Linh",
-        "narration": "Sâm Ngọc Linh còn gọi là sâm Việt Nam, có tên khoa học là Panax vietnamensis. Đây là loài cây quý gắn với vùng núi Ngọc Linh và được quan tâm nghiên cứu, bảo tồn. Tìm hiểu sâm giúp em thấy giá trị của sự đa dạng sinh học quê hương. Một loài cây có thể gắn với tri thức khoa học, công việc của người dân và trách nhiệm giữ gìn thiên nhiên. Em quan sát có hướng dẫn, không tự hái hay nếm cây.",
-        "fact": "Là loài cây quý, có giá trị đa dạng sinh học.",
-        "q": "Vì sao sâm Ngọc Linh được quan tâm nghiên cứu và bảo tồn?",
+        "id": "g5-station-5-textbook-point-1",
+        "title": "Sâm Việt Nam dưới tán rừng",
+        "narration": "Sâm Ngọc Linh còn gọi là sâm Việt Nam, tên khoa học Panax vietnamensis, thuộc họ Ngũ gia bì. Cây thân thảo, lá có các lá chét xòe như bàn tay, phần thân rễ thường được gọi là củ. Hình dáng chỉ giúp chúng mình bước đầu quan sát; việc xác định đúng loài cần chuyên môn. Em không tự hái hay nếm cây trong rừng vì thấy giống ảnh.",
+        "fact": "Sâm Ngọc Linh là cây thân thảo thuộc họ Ngũ gia bì, có thân rễ và lá chét xòe dạng bàn tay.",
+        "q": "Đặc điểm nào được mô tả ở sâm Ngọc Linh?",
         "answers": [
-          "Là loài cây quý, có giá trị đa dạng sinh học",
-          "Là vật liệu xây đường",
-          "Là tên một nghề đúc kim loại"
+          "Cây thân thảo, lá chét xòe như bàn tay",
+          "Cây gỗ lớn có thân cao và tán rộng",
+          "Cây sống nổi hoàn toàn trên mặt nước"
         ]
       },
       {
-        "id": "g5-station-5-point-2",
-        "title": "Cây quý dưới tán rừng",
-        "narration": "Dưới tán rừng ở vùng núi, cây sâm Ngọc Linh cần điều kiện sinh thái phù hợp để sinh trưởng. Tại xã Trà Linh, Đà Nẵng, cơ sở chuyên môn thực hiện công việc bảo tồn và phát triển cây. Tán cây, độ ẩm và môi trường đất cùng góp phần tạo nên nơi sống của sâm. Vì vậy, giữ cây quý gắn liền với giữ rừng. Mối liên hệ ấy cho thấy bảo vệ một loài cây còn cần bảo vệ cả môi trường sống xung quanh nó.",
-        "fact": "Cây cần môi trường sinh thái phù hợp dưới tán rừng.",
-        "q": "Vì sao bảo tồn sâm Ngọc Linh cần gắn với giữ rừng?",
+        "id": "g5-station-5-textbook-point-2",
+        "title": "Môi trường sống ở núi Ngọc Linh",
+        "narration": "Sâm sống dưới tán rừng ẩm, mát ở vùng núi cao Ngọc Linh, thường ở độ cao khoảng 1 500 đến 2 100 m theo tài liệu. Vùng núi này trải trên địa bàn Đà Nẵng và Quảng Ngãi, tương ứng với phần địa bàn Quảng Nam và Kon Tum trước sắp xếp. Tán cây che mát và lớp đất rừng giúp tạo môi trường phù hợp. Vì thế, muốn giữ cây sâm phải giữ cả khu rừng nơi cây sinh trưởng.",
+        "fact": "Sâm Ngọc Linh cần môi trường rừng núi cao, ẩm và mát; vùng phân bố không chỉ thuộc Đà Nẵng.",
+        "q": "Môi trường nào phù hợp với sâm Ngọc Linh?",
         "answers": [
-          "Cây cần môi trường sinh thái phù hợp dưới tán rừng",
-          "Chỉ cần bóng râm, đất và độ ẩm không quan trọng",
-          "Có thể dời cây quý đến bất cứ sân trường nào"
+          "Dưới tán rừng núi cao ẩm, mát",
+          "Bãi cát khô nóng sát biển",
+          "Ruộng ngập nước giữa đồng bằng"
         ]
       },
       {
-        "id": "g5-station-5-point-3",
-        "title": "Giá trị và công sức gìn giữ",
-        "narration": "Giữ gìn nguồn sâm Ngọc Linh cần sự góp sức của nhiều người. Cán bộ chuyên môn nghiên cứu, bảo tồn nguồn gen và tạo cây giống; người làm vườn chăm sóc cây, bảo vệ vườn và môi trường xung quanh. Phát triển cây sâm có trách nhiệm góp phần tạo sinh kế cho địa phương. Giá trị của cây vì thế gắn liền với nguồn gen, khu rừng và công sức lao động. Bảo tồn thiên nhiên và phát triển đời sống cần được thực hiện cùng nhau.",
-        "fact": "Nguồn gen, môi trường rừng và sinh kế có trách nhiệm.",
-        "q": "Những giá trị nào là trọng tâm bài học về sâm?",
+        "id": "g5-station-5-textbook-point-3",
+        "title": "Tri thức bản địa và nghiên cứu khoa học",
+        "narration": "Người dân bản địa đã biết sử dụng cây sâm trước khi các nhà chuyên môn tìm hiểu. Năm 1973 là mốc gắn với hành trình phát hiện sâm Ngọc Linh trong nghiên cứu dược liệu của nhóm cán bộ có dược sĩ Đào Kim Long và Nguyễn Châu Giang. Em hãy phân biệt mốc nghiên cứu với việc người dân đã biết cây từ trước. Tri thức cộng đồng và nghiên cứu đều góp phần giúp chúng ta hiểu giá trị cây quý.",
+        "fact": "Năm 1973 là mốc nghiên cứu gắn với hành trình tìm ra sâm Ngọc Linh; người dân bản địa đã biết cây từ trước.",
+        "q": "Mốc năm nào gắn với hành trình nghiên cứu tìm ra sâm Ngọc Linh trong bài?",
         "answers": [
-          "Nguồn gen, môi trường rừng và sinh kế có trách nhiệm",
-          "Giá bán càng cao thì mọi cách khai thác càng phù hợp",
-          "Lời quảng cáo có thể thay cho kết quả nghiên cứu"
+          "1973",
+          "1826",
+          "2004"
         ]
       },
       {
-        "id": "g5-station-5-point-4",
-        "title": "Người tìm hiểu có trách nhiệm",
-        "narration": "Bảo vệ sâm Ngọc Linh bắt đầu từ việc bảo vệ môi trường rừng và tôn trọng công việc của người chăm sóc. Khi tham quan, em đi theo người phụ trách, quan sát trong khu vực được phép và không tự lấy lá, hạt hay cây. Trở về lớp, em có thể làm một thông điệp về mối liên hệ giữa rừng, cây sâm và sinh kế địa phương. Chia sẻ hiểu biết đúng và hành động vừa sức là cách góp phần gìn giữ nguồn cây quý.",
-        "fact": "Bảo vệ rừng và tôn trọng công sức người chăm sóc.",
-        "q": "Giữ gìn nguồn sâm Ngọc Linh gắn với điều gì?",
+        "id": "g5-station-5-textbook-point-4",
+        "title": "Giá trị dược liệu và thông tin có căn cứ",
+        "narration": "Sâm Ngọc Linh có những thành phần được các nhà khoa học nghiên cứu, trong đó có nhóm chất saponin. Đây là dược liệu quý, nhưng kết quả nghiên cứu cần được hiểu đúng phạm vi. Em không biến lời quảng bá thành kết luận rằng sâm chữa được mọi bệnh. Khi tìm hiểu sản phẩm, em đọc nguồn thông tin; việc sử dụng dược liệu cần người lớn hỏi ý kiến nhân viên y tế phù hợp, không tự dùng theo lời truyền miệng.",
+        "fact": "Sâm có giá trị nghiên cứu dược liệu; giới thiệu đúng thông tin và không tự dùng theo quảng cáo.",
+        "q": "Cách tìm hiểu giá trị dược liệu nào phù hợp?",
         "answers": [
-          "Bảo vệ rừng và tôn trọng công sức người chăm sóc",
-          "Chỉ quan tâm đến hình thức bao bì",
-          "Tách cây khỏi môi trường sống của nó"
+          "Đọc nguồn đáng tin và hỏi người có chuyên môn",
+          "Tin mọi lời quảng cáo chữa bệnh",
+          "Tự nếm sản phẩm để kết luận công dụng"
+        ]
+      },
+      {
+        "id": "g5-station-5-textbook-point-5",
+        "title": "Người trồng sâm và sinh kế dưới rừng",
+        "narration": "Ở vùng Trà Linh và những nơi phù hợp, người dân, trong đó có cộng đồng Xơ Đăng, góp phần giữ giống, trồng và chăm sóc sâm dưới tán rừng. Cây cần nhiều thời gian và công sức; phát triển sâm còn gắn với nghiên cứu, quản lí nguồn giống và truy xuất nguồn gốc. Giá trị kinh tế bền vững cần đi cùng bảo vệ rừng, không khai thác cây tự nhiên tùy tiện hay phá rừng để mở rộng diện tích.",
+        "fact": "Giữ giống, chăm sóc và truy xuất nguồn gốc giúp phát triển sinh kế gắn với bảo vệ rừng.",
+        "q": "Cách phát triển sâm nào gắn với bảo tồn?",
+        "answers": [
+          "Trồng phù hợp dưới tán rừng và giữ nguồn giống",
+          "Chặt tán rừng để cây nhận nắng trực tiếp",
+          "Đào hết cây tự nhiên để bán nhanh"
+        ]
+      },
+      {
+        "id": "g5-station-5-textbook-point-6",
+        "title": "Lễ hội và gian giới thiệu dược liệu",
+        "narration": "Lễ hội sâm Ngọc Linh là dịp giới thiệu cây sâm, công sức người trồng và sản phẩm có nguồn gốc. Em có thể làm một gian trưng bày nhỏ bằng tranh, ảnh và thẻ thông tin về cây, môi trường sống, bảo tồn và sản phẩm được giới thiệu trong tư liệu. Với trà, cao hoặc sản phẩm khác có thành phần sâm, cần đọc nhãn và nguồn gốc, không tự gán công dụng điều trị. Một đoạn giới thiệu ngắn của em có thể kết bằng lời nhắn: giữ rừng để giữ cây quý.",
+        "fact": "Giới thiệu sâm có trách nhiệm là dùng thông tin có nguồn, tôn trọng người trồng và nhắc bảo vệ rừng.",
+        "q": "Gian giới thiệu của học sinh nên ưu tiên nội dung nào?",
+        "answers": [
+          "Đặc điểm cây, môi trường sống, nguồn gốc và bảo tồn",
+          "Lời hứa chữa khỏi mọi bệnh cho người mua",
+          "Mời các bạn dùng thử dược liệu không rõ nguồn"
         ]
       }
     ],
     "questions": [
       {
-        "text": "Lớp làm hoạt động tìm hiểu cây quý nhưng định công khai vị trí cây ngoài tự nhiên. Nên làm gì?",
+        "text": "Bạn nói sâm Ngọc Linh chỉ phân bố ở Đà Nẵng. Em góp ý thế nào?",
         "answers": [
-          "Hỏi người phụ trách và dùng thông tin được phép chia sẻ",
-          "Đăng tọa độ thật chi tiết để ai cũng đến hái",
-          "Tổ chức tự tìm cây mà không có người chuyên môn"
+          "Vùng núi Ngọc Linh còn trải sang địa bàn Quảng Ngãi",
+          "Đồng ý vì tên cây là một địa danh",
+          "Sửa thành cây chỉ sống sát biển"
         ],
-        "hint": "Thông tin về cây quý cần được chia sẻ có trách nhiệm, tránh tạo điều kiện khai thác trái phép."
+        "hint": "Đọc lại phạm vi núi Ngọc Linh."
       },
       {
-        "text": "Nhóm muốn phỏng vấn người trồng sâm nhưng định hỏi giá bán trước mọi vấn đề. Câu hỏi nào phù hợp mục tiêu học tập hơn?",
+        "text": "Nhóm em kể hành trình năm 1973. Cách diễn đạt nào đúng?",
         "answers": [
-          "Công việc chăm sóc và gìn giữ cây đòi hỏi những trách nhiệm nào ạ?",
-          "Làm sao mua thật nhiều để tự dùng ngay ạ?",
-          "Chỉ cần biết giá là hiểu hết nghề trồng sâm phải không ạ?"
+          "Đó là mốc nghiên cứu, không phủ nhận tri thức bản địa trước đó",
+          "Đó là lần đầu tiên bất cứ người nào nhìn thấy cây",
+          "Trước năm đó không có người sống ở vùng núi"
         ],
-        "hint": "Bài học hướng tới hiểu lao động, trách nhiệm và bảo tồn; không biến hoạt động học thành quảng cáo mua dùng."
+        "hint": "Phân biệt mốc khoa học với hiểu biết của cộng đồng."
       },
       {
-        "text": "Bạn muốn nhổ cây trong vườn tham quan để xem rễ. Em chọn gì?",
+        "text": "Một quảng cáo nói sản phẩm sâm chữa được mọi bệnh. Em nên làm gì?",
         "answers": [
-          "Nhắc bạn dừng và xem tư liệu được người hướng dẫn cho phép",
-          "Đào xong trồng lại là được",
-          "Nhổ một cây nhỏ sẽ không sao"
+          "Không dùng lời đó làm kết luận; kiểm tra nguồn và hỏi người có chuyên môn",
+          "Chép vào poster vì nghe hấp dẫn",
+          "Rủ bạn dùng để kiểm tra quảng cáo"
         ],
-        "hint": "Không làm hại cây để đáp ứng tò mò."
+        "hint": "Nghiên cứu dược liệu không chứng minh mọi lời quảng cáo."
       },
       {
-        "text": "Nhóm làm trò chơi nhận biết cây rồi dự định cho người chơi dùng kết quả để chọn cây ăn thử. Cần sửa gì?",
+        "text": "Em đề xuất gì để người dân phát triển sinh kế bền vững từ sâm?",
         "answers": [
-          "Ghi rõ trò chơi phục vụ học tập, không dùng để quyết định ăn hay dùng cây",
-          "Chỉ cần đạt điểm cao là có thể ăn thử",
-          "Đổi tên trò chơi thành chuyên gia để kết quả đáng tin hơn"
+          "Giữ rừng, bảo tồn giống và giới thiệu sản phẩm có nguồn gốc",
+          "Phá hết cây che bóng để tăng chỗ trồng",
+          "Đào cây nhỏ trong rừng rồi bán hết"
         ],
-        "hint": "Kết quả trò chơi không thay việc xác định cây và hướng dẫn sử dụng của người có chuyên môn."
+        "hint": "Cây sâm gắn với môi trường rừng và nguồn giống."
       },
       {
-        "text": "Kết thúc bài về sâm, nhóm muốn đánh giá hoạt động tuyên truyền. Nên xem điều gì?",
+        "text": "Ngày hội khám phá dược liệu của lớp nên tổ chức thế nào?",
         "answers": [
-          "Người xem có hiểu việc cần làm để bảo tồn và biết tìm nguồn tin phù hợp không",
-          "Có bao nhiêu bạn muốn tự mua dùng ngay",
-          "Bài có nhiều lời quảng cáo hơn nhóm khác không"
+          "Trưng bày tư liệu có nguồn, giải thích giá trị và bảo tồn",
+          "Thi xem bạn nào nếm nhiều dược liệu hơn",
+          "Bán sản phẩm với lời hứa công dụng tự nghĩ"
         ],
-        "hint": "Đánh giá sản phẩm học tập nên bám mục tiêu hiểu và hành động có trách nhiệm, không đo bằng ý định mua dùng."
+        "hint": "Đây là hoạt động tìm hiểu cây quý, không phải thử thuốc."
       }
     ],
     "feel": [
-      "Em quý sự đa dạng của rừng.",
-      "Em biết ơn người gìn giữ cây quý.",
-      "Em muốn tìm hiểu khoa học có căn cứ."
+      "Em quý trọng môi trường rừng núi Ngọc Linh",
+      "Em trân trọng công sức của người trồng sâm",
+      "Em muốn tìm hiểu dược liệu qua nguồn đáng tin"
     ],
     "act": [
-      "Em không làm hại cây khi tham quan.",
-      "Em ghi đúng nguồn và nơi chụp ảnh.",
-      "Em chia sẻ thông điệp giữ rừng."
+      "Viết đoạn giới thiệu ngắn về cây và việc bảo vệ rừng",
+      "Làm thẻ tư liệu phân biệt quan sát cây với xác định loài",
+      "Thiết kế gian trưng bày bằng tranh ảnh có nguồn"
     ],
-    "badge": "Người bạn của rừng và cây quý",
+    "badge": "Người bạn rừng Ngọc Linh",
     "sources": [
-      "https://vkist.mst.gov.vn/vi/ctype-service_news/sam-viet-nam--panax-vietnamensis-ha-grushv--cay-thuoc-quy-cua-viet-nam-103.htm",
-      "https://samngoclinh.danang.gov.vn/cong-tac-tuan-tra-bao-ve-vuon-bao-ton-sam-ngoc-linh-174.html",
-      "https://samngoclinh.danang.gov.vn/bi-thu-thanh-uy-le-ngoc-quang-tham-khao-sat-vung-trong-sam-ngoc-linh-tai-xa-tra-linh-188.html"
+      "https://vkist.gov.vn/vi/ctype-service_news/sam-viet-nam--panax-vietnamensis-ha-grushv--cay-thuoc-quy-cua-viet-nam-103.htm",
+      "https://vienkiemnghiem.gov.vn/dinh-danh-va-xac-thuc-sam-viet-nam-thong-qua-phan-tich-hoa-hoc-va-sinh-hoc-phan-tu-co-che-khoa-hoc-chuyen-biet-giup-nhan-dien-chuan-xac-nguon-goc-duoc-lieu/"
     ],
     "notes": [
-      "Không dạy nhận biết thật/giả qua một ảnh; không công dụng chữa bệnh, liều dùng, giá bán hay kêu gọi mua. Ảnh Măng Ri phải ghi đúng địa điểm ngoài Đà Nẵng.",
-      "Rà soát 18/10/2026: ảnh đọc theo đúng nơi chụp, thời điểm và loại tư liệu; ảnh tại nguồn chưa rõ quyền sao chép chỉ dẫn liên kết. Chưa gắn tuần hoặc bài SGK khi chưa có kế hoạch mới."
+      "Biên soạn theo tài liệu lớp 5 và biên bản góp ý ngày 29/7/2025; chưa xác nhận phân phối số tiết.",
+      "Nguồn chính: biên bản lớp 5 ngày 29/7/2025 và bài chủ đề tương ứng do giáo viên cung cấp; số thứ tự cũ 6 trên bài sâm được chuẩn hóa thành chủ đề 5.",
+      "Đối chiếu cả hai bản sâm, ưu tiên bản có ngày 8/8; không dùng tuyên bố chữa bệnh, số lượng saponin tuyệt đối hoặc lời mời trẻ dùng thử. Nguồn khoa học bổ sung phân biệt mô hình thực nghiệm với hiệu quả điều trị ở người."
     ]
   }
 ];

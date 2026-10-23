@@ -1,3 +1,4 @@
+import {getCuratedGddpLink,textbookReviewStatus} from './gddp-curriculum-links.mjs';
 
 import { isDeepStrictEqual } from 'node:util';
 import { fileURLToPath } from 'node:url';
@@ -293,13 +294,13 @@ const server = createServer(async (req,res) => {
       const ai=new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY});
       const response=await ai.models.generateContent({
         model:'gemini-2.5-flash-lite',
-        contents:gddpPrompt(row),
+        contents:gddpPrompt(row,{topicLink:getCuratedGddpLink(row),textbook:textbookReviewStatus(row)}),
         config:{responseMimeType:'application/json',temperature:0.2,maxOutputTokens:600}
       });
       let parsed;
       try { parsed=JSON.parse(response.text||''); }
       catch { return json(res,502,{error:'AI chưa trả về gợi ý hợp lệ. Vui lòng thử lại.'}); }
-      return json(res,200,{...cleanGddpAiSuggestion(parsed),reviewRequired:true});
+      return json(res,200,{...cleanGddpAiSuggestion(parsed),topicLink:getCuratedGddpLink(row),textbook:textbookReviewStatus(row),reviewRequired:true});
     }
     if (pathname === '/api/admin/gddp/suggest' && req.method === 'POST') {
       auth.sameOrigin(req);

@@ -446,7 +446,7 @@ export const LandingView: React.FC = () => {
         <button type="button" onClick={()=>{setAdminLogin(true);setShowTeacherLogin(true);setShowStudentLogin(false);setShowRolePicker(true);setLoginError('');setStaffPassword('');}} className="inline-flex items-center gap-1 text-[10px] text-slate-300/75 hover:text-white transition" aria-label="Đăng nhập quản trị"><Settings className="w-3 h-3" /> Quản trị</button>
       </footer>
 
-      {/* Role Picker Modal */
+      {/* Role Picker Modal */}
       {showRolePicker && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden">
           <img

@@ -107,4 +107,4 @@ export const GRADE3_PHOTO_REFERENCES = [
     "localSrc": "/learning/grade3/g3-station-5-point-3.svg"
   }
 ] as const;
-export function grade3PhotoReferenceForSrc(src:string){return GRADE3_PHOTO_REFERENCES.find(r=>r.localSrc===src);}
+export function grade3PhotoReferenceForSrc(src:string){return src==='/learning/grade3/g3-station-2-point-4.svg'?undefined:GRADE3_PHOTO_REFERENCES.find(r=>r.localSrc===src);}

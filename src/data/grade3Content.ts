@@ -6,50 +6,50 @@ export const GRADE3_CONTENT = [
     "points": [
       {
         "id": "g3-1-point-1",
-        "title": "Mỹ Khê – bờ cát và nhịp sóng",
-        "narration": "Đến Mỹ Khê, em bắt gặp bờ cát rộng bên mặt biển và những con sóng nối nhau vào bờ. Không gian biển là nơi mọi người ngắm cảnh, đi dạo và vui chơi tại khu vực được phép. Màu nước, ánh sáng và tiếng sóng đem đến những cảm nhận khác nhau. Em hãy dùng một vài từ của mình để kể về nét đẹp của bãi biển này.",
-        "fact": "Mỹ Khê nổi bật với bãi cát và không gian biển.",
-        "q": "Chi tiết nào phù hợp để mô tả Mỹ Khê?",
+        "title": "Mỹ Khê – bờ cát dài và phẳng",
+        "narration": "Bãi biển Mỹ Khê thuộc phường Sơn Trà, thành phố Đà Nẵng. Nơi đây có bờ cát dài và phẳng, thu hút nhiều người đến tham quan, vui chơi. Qua hình ảnh trong bài, em có thể tìm hiểu các hoạt động như tắm biển, đá bóng trên cát, tạo hình trên cát, bay dù lượn và đua thuyền buồm. Em thích cảnh đẹp hoặc hoạt động nào nhất? Khi đi biển, em chỉ tham gia hoạt động phù hợp với lứa tuổi và theo hướng dẫn của người lớn.",
+        "fact": "Mỹ Khê thuộc phường Sơn Trà, nổi bật với bờ cát dài và phẳng.",
+        "q": "Bãi biển Mỹ Khê thuộc địa phương nào trong tài liệu?",
         "answers": [
-          "Bãi cát rộng bên biển",
-          "Đỉnh núi phủ tuyết",
-          "Đồng lúa giữa thành phố"
+          "Phường Sơn Trà",
+          "Xã Tam Hải",
+          "Xã Gò Nổi"
         ]
       },
       {
         "id": "g3-1-point-2",
-        "title": "Bàn Than – ghềnh đá ven biển",
-        "narration": "Bàn Than ở vùng Tam Hải nổi bật với những ghềnh, vách đá bên biển. Qua tác động lâu dài của tự nhiên, đá mang nhiều hình dáng khác nhau, tạo nên một cảnh quan riêng. Nếu Mỹ Khê gây ấn tượng bởi bờ cát rộng thì Bàn Than gợi nhớ những ghềnh đá và sóng biển. Khi tham quan, em đi theo hướng dẫn, tránh đá trơn và mép sóng.",
-        "fact": "Cảnh Bàn Than có ghềnh đá ven biển; khác với nét nổi bật của bờ cát Mỹ Khê.",
-        "q": "Nét cảnh quan nào được nhấn mạnh ở Bàn Than?",
+        "title": "Bàn Than – đá đen và rêu xanh",
+        "narration": "Bãi biển Bàn Than thuộc xã đảo Tam Hải, thành phố Đà Nẵng. Nét đặc trưng ở đây là những dãy đá đen nằm san sát, có nhiều hình dáng độc đáo; rêu xanh phủ trên đá tạo thêm vẻ đẹp cho cảnh biển. Hình ảnh trong bài còn giới thiệu hoạt động khai thác rong biển, khai thác hải sản, câu cá và tắm biển. Em thử so sánh nét nổi bật của Bàn Than với bờ cát Mỹ Khê nhé!",
+        "fact": "Bàn Than thuộc xã Tam Hải, có những dãy đá đen nhiều hình dáng và rêu xanh phủ trên đá.",
+        "q": "Đặc điểm nào nổi bật ở biển Bàn Than?",
         "answers": [
-          "Ghềnh, vách đá bên biển",
-          "Rừng thông trên đỉnh tuyết",
-          "Ruộng bậc thang"
+          "Đá đen nhiều hình dáng, có rêu xanh",
+          "Đồi cát nằm giữa sa mạc",
+          "Núi tuyết quanh năm"
         ]
       },
       {
         "id": "g3-1-point-3",
-        "title": "Biển gắn với cuộc sống",
-        "narration": "Biển là không gian sinh sống và làm việc của nhiều gia đình. Nghề đánh bắt, các dịch vụ và hoạt động du lịch gắn với biển mang lại việc làm. Một cảnh biển sạch đẹp cũng là nơi mọi người nghỉ ngơi, tìm hiểu thiên nhiên. Việc phát triển hoạt động ven biển cần đi cùng giữ gìn môi trường và tôn trọng người dân địa phương.",
-        "fact": "Biển có giá trị với đời sống, nghề nghiệp và du lịch.",
-        "q": "Biển gắn với hoạt động nào?",
+        "title": "Nhận biết hệ thống cứu hộ Mỹ Khê",
+        "narration": "Ở bãi biển Mỹ Khê có chòi canh, phao cứu sinh, cờ báo hiệu vùng nước xoáy và lực lượng cứu hộ túc trực. Những phương tiện và người làm nhiệm vụ ấy giúp nhắc nhở, hỗ trợ và ứng cứu khi cần. Em hãy nhận biết các dấu hiệu cảnh báo và làm theo hướng dẫn của người lớn, nhân viên cứu hộ. Có cứu hộ không có nghĩa em được tự xuống nước hoặc đi vào vùng bị cấm.",
+        "fact": "Hệ thống cứu hộ Mỹ Khê có chòi canh, phao cứu sinh, cờ báo hiệu và lực lượng cứu hộ.",
+        "q": "Đâu là một bộ phận của hệ thống cứu hộ bãi biển?",
         "answers": [
-          "Đánh bắt và du lịch phù hợp",
-          "Trồng lúa trên mặt sóng",
-          "Đào hết đá làm quà"
+          "Chòi canh và phao cứu sinh",
+          "Giàn dệt và sợi cói",
+          "Chum ủ cá và vuột tre"
         ]
       },
       {
         "id": "g3-1-point-4",
-        "title": "An toàn và giữ biển sạch",
-        "narration": "Khi đi biển, em cần đi cùng người lớn, theo dõi hướng dẫn và chỉ hoạt động tại nơi được phép. Trời đẹp không bảo đảm mặt nước an toàn. Khi có biển cấm hoặc cảnh báo, em dừng lại và báo người lớn. Mang rác về đúng nơi quy định, không làm hại sinh vật và không lấy đá ở danh thắng giúp giữ vẻ đẹp của biển.",
-        "fact": "Tuân thủ hướng dẫn, tránh vùng cấm và bỏ rác đúng nơi.",
-        "q": "Khi có biển cảnh báo nguy hiểm, em cần làm gì?",
+        "title": "Vui chơi an toàn, giữ biển sạch",
+        "narration": "Trước chuyến đi, em cùng người lớn chuẩn bị đồ dùng cần thiết. Khi tắm biển, luôn có người lớn đi cùng, khởi động theo hướng dẫn và chỉ xuống nước tại nơi được phép. Nếu thấy cờ hoặc biển cảnh báo nguy hiểm, em dừng lại và làm theo hướng dẫn cứu hộ. Khi mệt hoặc lạnh, hãy báo người lớn để lên bờ nghỉ. Sau buổi chơi, cùng thu gom rác đúng nơi quy định để bãi biển luôn sạch đẹp nhé!",
+        "fact": "Đi biển cần có người lớn đi cùng, tuân thủ hướng dẫn an toàn và bỏ rác đúng nơi quy định.",
+        "q": "Khi thấy cảnh báo vùng nước nguy hiểm, em nên làm gì?",
         "answers": [
-          "Dừng lại và theo hướng dẫn người lớn",
-          "Vẫn xuống vì trời nắng",
-          "Rủ bạn vượt qua biển báo"
+          "Dừng lại và làm theo hướng dẫn người lớn, cứu hộ",
+          "Xuống thử vì thấy nước đẹp",
+          "Rủ bạn vượt qua cảnh báo"
         ]
       }
     ],
@@ -116,60 +116,60 @@ export const GRADE3_CONTENT = [
       "https://danang.gov.vn/vi/web/dng/w/xa-tam-hai-1"
     ],
     "notes": [
-      "Bảng tích hợp cũ viết Mỹ Khuê/Bàn Thàn; chuẩn hóa theo đề cương: Mỹ Khê/Bàn Than. Không gán tuần hay bài đọc mới."
+      "Đối chiếu CHU DE 3- LOP 3 và BIEN BAN HC LOP 3- 6.8.25.docx do giáo viên cung cấp ngày 23/10/2026."
     ]
   },
   {
     "id": "g3-station-2",
-    "subtitle": "Dấu chân người khai sáng",
-    "opening": "Cùng tìm hiểu Huỳnh Thúc Kháng và Phan Châu Trinh, rồi chọn việc nhỏ để noi gương tinh thần học tập, trách nhiệm nhé!",
+    "subtitle": "Theo dấu hai nhà yêu nước quê hương",
+    "opening": "Cùng tìm hiểu Hoàng Diệu và Phan Châu Trinh: hai nhà yêu nước của quê hương, với những việc làm đáng trân trọng vì đất nước!",
     "points": [
       {
         "id": "dn3-huynh-thuc-khang",
-        "title": "Huỳnh Thúc Kháng – học và phụng sự",
-        "narration": "Huỳnh Thúc Kháng là một chí sĩ yêu nước của đất Quảng. Ông tham gia phong trào Duy Tân và hoạt động báo chí với tờ Tiếng Dân. Qua những tư liệu về cuộc đời ông, chúng ta tìm hiểu tinh thần học tập, sự ngay thẳng và trách nhiệm với đất nước. Em không cần nhớ nhiều mốc năm; hãy biết tên nhân vật và một đóng góp có căn cứ.",
-        "fact": "Huỳnh Thúc Kháng gắn với phong trào Duy Tân và báo Tiếng Dân.",
-        "q": "Tờ báo nào gắn với Huỳnh Thúc Kháng?",
+        "title": "Hoàng Diệu – tấm gương yêu nước",
+        "narration": "Hoàng Diệu sinh năm 1828, tên ban đầu là Hoàng Kim Tích. Ông quê ở làng Xuân Đài, nay thuộc xã Gò Nổi, thành phố Đà Nẵng. Ông nổi tiếng có tài, sống thanh liêm và yêu nước. Ngày 25 tháng 4 năm 1882, khi quân Pháp tấn công thành Hà Nội, ông chỉ huy quân sĩ chiến đấu bảo vệ thành. Dù thành thất thủ, lòng yêu nước và tinh thần trách nhiệm của ông vẫn được nhân dân ghi nhớ. Em khâm phục điều gì ở ông?",
+        "fact": "Hoàng Diệu quê ở xã Gò Nổi; ông chỉ huy quân sĩ bảo vệ thành Hà Nội năm 1882.",
+        "q": "Khi quân Pháp tấn công thành Hà Nội, Hoàng Diệu đã làm gì?",
         "answers": [
-          "Tiếng Dân",
-          "Nhật kí tập bơi",
-          "Bản tin thời tiết của lớp"
+          "Chỉ huy quân sĩ chiến đấu bảo vệ thành",
+          "Mở trường dạy chữ Quốc ngữ trong phong trào Duy Tân",
+          "Lập làng nghề làm nước mắm Nam Ô"
         ]
       },
       {
         "id": "dn3-phan-chau-trinh",
-        "title": "Phan Châu Trinh – coi trọng việc học",
-        "narration": "Phan Châu Trinh là nhà yêu nước đề cao canh tân đất nước. Ông coi trọng mở mang hiểu biết, khơi dậy ý chí và cải thiện đời sống của nhân dân. Việc học không chỉ để thuộc bài mà còn giúp con người suy nghĩ và làm điều có ích. Trong bài học này, em tìm hiểu tư tưởng của ông bằng lời giải thích gần gũi, không biến mọi lời trong sách thành câu nói của nhân vật.",
-        "fact": "Phan Châu Trinh coi trọng mở mang hiểu biết và canh tân đất nước.",
-        "q": "Điều nào phù hợp với tư tưởng của Phan Châu Trinh?",
+        "title": "Phan Châu Trinh – người mong đất nước đổi mới",
+        "narration": "Phan Châu Trinh sinh năm 1872, quê ở làng Tây Lộc, nay thuộc xã Tây Hồ, thành phố Đà Nẵng. Ông học rộng, tài cao và có lòng yêu nước. Sau một thời gian làm quan, ông từ quan để hoạt động vì đất nước. Ông mong người dân được mở mang hiểu biết, có đời sống tốt hơn và đất nước được đổi mới. Em hãy kể lại một điều mình vừa biết về ông nhé!",
+        "fact": "Phan Châu Trinh quê ở xã Tây Hồ, là nhà yêu nước coi trọng việc mở mang hiểu biết và đổi mới đất nước.",
+        "q": "Điều nào phù hợp với mong muốn của Phan Châu Trinh?",
         "answers": [
-          "Mở mang hiểu biết và đổi mới",
-          "Ngăn mọi người đọc sách",
-          "Chỉ học để hơn thua bạn bè"
+          "Mở mang hiểu biết, cải thiện đời sống nhân dân",
+          "Ngăn người dân đến trường học chữ",
+          "Chỉ giữ nguyên mọi cách làm cũ"
         ]
       },
       {
         "id": "dn3-phong-trao-duy-tan",
-        "title": "Duy Tân – khát vọng tiến bộ",
-        "narration": "Đầu thế kỉ XX, Huỳnh Thúc Kháng, Phan Châu Trinh và Trần Quý Cáp là những chí sĩ gắn với phong trào Duy Tân ở đất Quảng. Các ông khuyến khích việc học, mở mang hiểu biết và đổi mới để đất nước tiến bộ. Tinh thần ham học, mong muốn giúp ích cho nhân dân là điều đáng trân trọng. Noi gương người đi trước, em có thể bắt đầu từ việc học tập chăm chỉ mỗi ngày.",
-        "fact": "Duy Tân gắn với khát vọng đổi mới và mở mang việc học.",
-        "q": "Cụm từ nào diễn tả tinh thần Duy Tân trong bài?",
+        "title": "Phong trào Duy Tân – học để tiến bộ",
+        "narration": "Năm 1904, Phan Châu Trinh cùng Huỳnh Thúc Kháng và Trần Quý Cáp khởi xướng phong trào Duy Tân ở Quảng Nam, nay thuộc thành phố Đà Nẵng. Phong trào mở trường dạy chữ Quốc ngữ, khuyến khích lối sống tiết kiệm, văn minh và tinh thần tự lực, tự cường. Các ông còn khuyến khích khai hoang, làm vườn, sản xuất và trao đổi hàng hóa để chăm lo đời sống nhân dân. Qua câu chuyện ấy, em thấy việc học có thể giúp ích gì cho mọi người?",
+        "fact": "Phong trào Duy Tân khuyến khích học chữ Quốc ngữ, đổi mới lối sống và phát triển kinh tế để chăm lo đời sống nhân dân.",
+        "q": "Hoạt động nào thuộc phong trào Duy Tân trong bài?",
         "answers": [
-          "Đổi mới để tiến bộ",
-          "Giữ mọi điều lạc hậu",
-          "Không cần tìm hiểu điều mới"
+          "Mở trường dạy chữ Quốc ngữ",
+          "Xây chòi cứu hộ trên bãi biển",
+          "Đan nan tre làm thuyền thúng"
         ]
       },
       {
         "id": "dn3-dau-chan-hom-nay",
-        "title": "Tìm hiểu qua nơi lưu niệm và tư liệu",
-        "narration": "Nhà lưu niệm Huỳnh Thúc Kháng tại xã Thạnh Bình là nơi giúp thế hệ sau tìm hiểu cuộc đời của một người yêu nước. Tờ báo Tiếng Dân gắn với hoạt động của cụ cũng lưu giữ dấu ấn về tinh thần quan tâm đến nhân dân và việc nước. Những nơi lưu niệm và trang báo xưa nối câu chuyện lịch sử với hôm nay, nhắc chúng ta trân trọng việc học và trách nhiệm với cộng đồng.",
-        "fact": "Cuộc đời và đóng góp của một người yêu nước.",
-        "q": "Nhà lưu niệm Huỳnh Thúc Kháng giúp thế hệ sau tìm hiểu điều gì?",
+        "title": "Ghi nhớ công lao người đi trước",
+        "narration": "Nhân dân ghi nhớ Hoàng Diệu và Phan Châu Trinh bằng cách đặt tên các ông cho đường phố, trường học và công trình tưởng niệm. Em có thể cùng thầy cô xem video hoặc tìm hiểu Nhà lưu niệm Phan Châu Trinh tại xã Tây Hồ hay phường Hải Châu, thành phố Đà Nẵng. Sau khi tìm hiểu, hãy chia sẻ cảm xúc và giới thiệu một điều em biết về hai nhà yêu nước. Chăm học, trung thực và giúp đỡ bạn là những việc vừa sức để em noi gương người đi trước.",
+        "fact": "Đường phố, trường học và công trình tưởng niệm giúp các thế hệ ghi nhớ công lao các nhà yêu nước.",
+        "q": "Việc nào thể hiện sự ghi nhớ công lao Hoàng Diệu và Phan Châu Trinh?",
         "answers": [
-          "Cuộc đời và đóng góp của một người yêu nước",
-          "Cách vận hành sân bay",
-          "Quy trình đóng tàu biển"
+          "Tìm hiểu và giới thiệu đúng về cuộc đời, đóng góp của các ông",
+          "Gọi hai ông là cùng một người",
+          "Tự bịa một câu chuyện rồi coi là sự thật lịch sử"
         ]
       }
     ],
@@ -231,13 +231,9 @@ export const GRADE3_CONTENT = [
       "Em trung thực khi kể chuyện lịch sử."
     ],
     "badge": "Người học hỏi nhí",
-    "sources": [
-      "https://baotangdanang.vn/bao-tang-da-nang-to-chuc-chuoi-cac-hoat-dong-ky-niem-150-nam-ngay-sinh-cu-huynh-thuc-khang-01-10-1876-01-10-2026-1",
-      "https://baotangdanang.vn/chi-si-phan-chau-trinh-qua-cac-tu-lieu-hien-vat-luu-tru-tai-bao-tang-da-nang-1",
-      "https://baotangdanang.vn/cu-huynh-thuc-khang-va-chu-quoc-ngu"
-    ],
+    "sources": [],
     "notes": [
-      "Bảng GDĐP lớp 3 ghi Hoàng Diệu – Phan Châu Trinh; đề cương ghi Huỳnh Thúc Kháng – Phan Châu Trinh. Chưa coi hai nội dung là thay thế tương đương. Không lặp nhận định thiếu chính xác của đề cương về Phan Bội Châu cùng lãnh đạo Duy Tân."
+      "Đối chiếu CHU DE 1- LOP 3 và BIEN BAN HC LOP 3- 6.8.25.docx do giáo viên cung cấp ngày 23/10/2026."
     ]
   },
   {
@@ -247,50 +243,50 @@ export const GRADE3_CONTENT = [
     "points": [
       {
         "id": "g3-3-point-1",
-        "title": "Nhiều cộng đồng, một quê hương",
-        "narration": "Thành phố Đà Nẵng là nơi nhiều cộng đồng dân tộc cùng sinh sống, trong đó có người Kinh, Cơ Tu, Xơ Đăng, Gié Triêng và Cor. Mỗi cộng đồng góp vào đời sống chung những nét văn hóa riêng. Sự phong phú ấy làm quê hương thêm đáng khám phá. Khi cùng học, cùng chơi, chúng ta lắng nghe và tôn trọng nhau để mọi bạn đều cảm thấy mình thuộc về cộng đồng.",
-        "fact": "Có nhiều cộng đồng dân tộc cùng góp sức xây dựng quê hương.",
-        "q": "Nhận định nào đúng?",
+        "title": "Các cộng đồng cùng chung sống",
+        "narration": "Thành phố Đà Nẵng có nhiều cộng đồng dân tộc cùng sinh sống như Kinh, Cơ Tu, Co, Giẻ Triêng, Xơ Đăng và Hoa. Mỗi cộng đồng có những nét văn hóa riêng, cùng góp phần làm quê hương thêm phong phú. Em đã biết tên những cộng đồng nào? Hãy cùng quan sát hình ảnh có chú thích và lắng nghe câu chuyện về đời sống của họ.",
+        "fact": "Kinh, Cơ Tu, Co, Giẻ Triêng, Xơ Đăng và Hoa là những cộng đồng dân tộc được giới thiệu trong bài.",
+        "q": "Nhóm nào gồm các cộng đồng dân tộc được giới thiệu trong bài?",
         "answers": [
-          "Đà Nẵng có nhiều cộng đồng dân tộc",
-          "Mọi người phải có phong tục giống nhau",
-          "Chỉ một cộng đồng mới là người địa phương"
+          "Kinh, Cơ Tu, Co, Giẻ Triêng, Xơ Đăng, Hoa",
+          "Mỹ Khê, Bàn Than, Tam Thanh",
+          "Nam Ô, Cẩm Nê, Túy Loan"
         ]
       },
       {
         "id": "g3-3-point-2",
-        "title": "Tìm hiểu nét văn hóa",
-        "narration": "Trang phục, nghề dệt và âm nhạc là những nét đẹp trong đời sống văn hóa của các cộng đồng. Màu sắc, hoa văn và cách làm sản phẩm có thể mang dấu ấn riêng của từng nơi. Tìm hiểu những nét đẹp ấy giúp em biết thêm về sự khéo léo và sáng tạo của con người. Em hãy lắng nghe lời giới thiệu của chủ nhân văn hóa, không lấy một bộ trang phục để đại diện cho mọi dân tộc.",
-        "fact": "Dệt, tạo hoa văn và chơi âm nhạc truyền thống.",
-        "q": "Những hoạt động nào góp phần làm nên nét đẹp văn hóa cộng đồng?",
+        "title": "Nét văn hóa của đồng bào Cơ Tu",
+        "narration": "Đồng bào Cơ Tu có nhiều sinh hoạt văn hóa đặc sắc: múa Tung tung – da dá, sử dụng trống và chiêng trong lễ hội, dệt thổ cẩm và chế biến món ăn truyền thống. Tung tung – da dá là điệu múa truyền thống đã được đưa vào Danh mục di sản văn hóa phi vật thể quốc gia. Em muốn tìm hiểu thêm về điệu múa, âm nhạc hay những tấm thổ cẩm?",
+        "fact": "Tung tung – da dá là điệu múa truyền thống của đồng bào Cơ Tu.",
+        "q": "Điệu múa truyền thống nào của đồng bào Cơ Tu được nhắc trong bài?",
         "answers": [
-          "Dệt, tạo hoa văn và chơi âm nhạc truyền thống",
-          "Chỉ đếm số đường phố",
-          "Chỉ đo chiều cao ngọn núi"
+          "Tung tung – da dá",
+          "Múa lân",
+          "Múa sạp"
         ]
       },
       {
         "id": "g3-3-point-3",
-        "title": "Văn hóa trong đời sống hôm nay",
-        "narration": "Ở Tà Lang và Giàn Bí, đời sống văn hóa của cộng đồng Cơ Tu gắn với nhà Gươl, cồng chiêng và nghề dệt thổ cẩm. Nhà Gươl là không gian sinh hoạt chung, nơi cộng đồng gặp gỡ và gìn giữ các giá trị văn hóa. Tiếng cồng chiêng, hoa văn và bàn tay người thợ góp phần làm nên nét riêng của nơi này. Tìm hiểu từng cộng đồng giúp em thêm yêu sự phong phú của quê hương.",
-        "fact": "Là không gian sinh hoạt chung của cộng đồng.",
-        "q": "Nhà Gươl có vai trò gì trong cộng đồng Cơ Tu?",
+        "title": "Cây nêu của đồng bào Co",
+        "narration": "Trong lễ hội của đồng bào Co, cây nêu thể hiện lòng thành kính và ước mong cuộc sống yên bình, no đủ. Theo quan niệm của đồng bào, cây nêu kết nối thế giới con người với các vị thần. Cây thường làm bằng gỗ cây chò, cao khoảng 4 đến 9 mét. Cây nêu được trang trí bằng năm màu: đỏ, xanh lam, đen, trắng và vàng. Trên đỉnh có hình chim chèo bẻo bằng gỗ. Em hãy thử nhắc lại năm màu ấy nhé!",
+        "fact": "Cây nêu của người Co thường làm bằng gỗ chò, có năm màu trang trí và hình chim chèo bẻo bằng gỗ trên đỉnh.",
+        "q": "Trên đỉnh cây nêu của đồng bào Co có hình con vật nào?",
         "answers": [
-          "Là không gian sinh hoạt chung của cộng đồng",
-          "Là bến đỗ tàu chở hàng",
-          "Là nơi sản xuất nước mắm"
+          "Chim chèo bẻo",
+          "Cá cơm than",
+          "Con tằm"
         ]
       },
       {
         "id": "g3-3-point-4",
-        "title": "Tôn trọng và cùng tham gia",
-        "narration": "Tôn trọng sự khác biệt bắt đầu từ lời nói và việc làm nhỏ. Em gọi đúng tên bạn, lắng nghe khi bạn kể, không bắt chước giọng nói để trêu chọc. Trước khi chụp ảnh hay chạm vào đồ dùng của người khác, em xin phép. Khi chơi hay học theo nhóm, mọi bạn đều có cơ hội tham gia và chia sẻ điều mình biết.",
-        "fact": "Lắng nghe, xin phép và không trêu chọc giúp mọi người gần nhau hơn.",
-        "q": "Hành động nào thể hiện tôn trọng?",
+        "title": "Cùng giữ gìn nét đẹp văn hóa",
+        "narration": "Mỗi dân tộc có những nét văn hóa truyền thống riêng cần được giữ gìn và phát huy. Em có thể kể một sinh hoạt văn hóa mình yêu thích, vẽ lại cảnh lễ hội hoặc giới thiệu điều đã học với người thân. Khi học và chơi cùng nhau, hãy lắng nghe, gọi đúng tên bạn và tôn trọng sự khác biệt. Nếu muốn chụp ảnh hay chạm vào đồ dùng của người khác, em nhớ xin phép nhé!",
+        "fact": "Tìm hiểu, chia sẻ và tôn trọng sự khác biệt là những cách góp phần giữ gìn văn hóa của các cộng đồng.",
+        "q": "Em có thể làm gì để chia sẻ nét đẹp văn hóa đã học?",
         "answers": [
-          "Xin phép trước khi chụp ảnh người khác",
-          "Bắt chước giọng bạn để chọc cười",
-          "Loại bạn khỏi nhóm vì khác phong tục"
+          "Vẽ và giới thiệu một sinh hoạt văn hóa mình yêu thích",
+          "Trêu chọc giọng nói của bạn",
+          "Tự ý lấy đồ dùng của người khác"
         ]
       }
     ],
@@ -358,7 +354,7 @@ export const GRADE3_CONTENT = [
       "https://dantoc.vietnamtourism.gov.vn/trai-nghiem-ban-lang-co-tu-ta-lang-gian-bi-suc-song-moi-cho-du-lich-vung-cao-da-nang/"
     ],
     "notes": [
-      "Không yêu cầu học thuộc số dân tộc, tỉ lệ dân số hoặc gán một kiểu nhà, trang phục cho mọi cộng đồng. Các ảnh hiện vật và mô hình Cơ Tu được chụp tại bảo tàng ở Hà Nội; xuất xứ Quảng Nam và niên đại là thông tin của hiện vật. Ví dụ văn hóa hôm nay dùng tư liệu Tà Lang – Giàn Bí của Cục Du lịch; không dùng ảnh hiện vật thay ảnh sinh hoạt hiện nay."
+      "Đối chiếu CHU DE 2- LOP 3 và BIEN BAN HC LOP 3- 6.8.25.docx do giáo viên cung cấp ngày 23/10/2026."
     ]
   },
   {
@@ -368,50 +364,50 @@ export const GRADE3_CONTENT = [
     "points": [
       {
         "id": "g3-4-point-1",
-        "title": "Nam Ô – nghề làm nước mắm",
-        "narration": "Nam Ô gắn với một nghề làm nước mắm truyền thống của Đà Nẵng. Sản phẩm là gia vị trong bữa ăn và mang giá trị văn hóa của cộng đồng làm nghề. Nghề được trao truyền qua kinh nghiệm của người lao động. Tìm hiểu làng nghề là tìm hiểu cả sản phẩm và những người đã kiên trì gìn giữ nghề, không chỉ tìm một món quà để mua.",
-        "fact": "Nước mắm Nam Ô là sản phẩm gắn với nghề truyền thống địa phương.",
-        "q": "Nước mắm Nam Ô thuộc nhóm sản phẩm nào?",
+        "title": "Nam Ô – làng nghề bên cửa sông",
+        "narration": "Làng Nam Ô nằm ở cửa sông Cu Đê, dưới chân đèo Hải Vân, nay thuộc phường Hải Vân, thành phố Đà Nẵng. Biển có nhiều hải sản, tạo thuận lợi cho đánh bắt và nghề làm nước mắm. Nước mắm Nam Ô từng là sản vật tiến vua. Năm 2019, nghề làm nước mắm Nam Ô được đưa vào Danh mục di sản văn hóa phi vật thể quốc gia. Cùng tìm hiểu điều gì làm nên đặc sản này nhé!",
+        "fact": "Làng Nam Ô thuộc phường Hải Vân; nghề làm nước mắm Nam Ô được ghi danh di sản văn hóa phi vật thể quốc gia năm 2019.",
+        "q": "Làng nghề nước mắm Nam Ô thuộc địa phương nào trong tài liệu?",
         "answers": [
-          "Gia vị gắn với nghề truyền thống",
-          "Đồ chơi bằng nhựa",
-          "Vật liệu xây nhà"
+          "Phường Hải Vân",
+          "Xã Tam Hải",
+          "Xã Tây Hồ"
         ]
       },
       {
         "id": "g3-4-point-2",
-        "title": "Cá cơm than và muối",
-        "narration": "Cá cơm than và muối là những nguyên liệu quan trọng trong nghề làm nước mắm Nam Ô. Người làm nghề chọn nguyên liệu và thực hiện các công đoạn theo kinh nghiệm, yêu cầu vệ sinh. Em có thể quan sát tranh hoặc nghe người làm nghề giới thiệu. Đây không phải hướng dẫn để học sinh tự ủ cá hay nếm nguyên liệu chưa chế biến.",
-        "fact": "Nguyên liệu tiêu biểu là cá cơm than và muối.",
-        "q": "Cặp nguyên liệu nào phù hợp với nước mắm Nam Ô?",
+        "title": "Cá cơm than và muối biển",
+        "narration": "Nguyên liệu chính làm nước mắm Nam Ô là cá cơm than và muối. Khoảng tháng Giêng đến tháng Ba âm lịch, cá cơm than đến vịnh Đà Nẵng, người dân đánh bắt về làm mắm. Người làm nghề còn chọn muối Đề Gi ở Gia Lai, muối Sa Huỳnh ở Quảng Ngãi hoặc muối Cà Ná ở Khánh Hòa. Cá và muối đều gắn với biển, vì thế tài liệu gọi nước mắm là sản phẩm kết tinh từ biển.",
+        "fact": "Cá cơm than và muối là hai nguyên liệu chính làm nước mắm Nam Ô.",
+        "q": "Nguyên liệu chính làm nước mắm Nam Ô là gì?",
         "answers": [
           "Cá cơm than và muối",
-          "Bột mì và đường",
-          "Tre và sợi cói"
+          "Sợi cói và sợi đay",
+          "Tre và dầu rái"
         ]
       },
       {
         "id": "g3-4-point-3",
-        "title": "Từ nguyên liệu đến sản phẩm",
-        "narration": "Ở mức khái quát, nghề làm nước mắm gồm chuẩn bị nguyên liệu, phối trộn và ủ chượp, sau đó lọc lấy nước mắm và hoàn thiện sản phẩm. Cá cần thời gian chuyển hóa trong quá trình ủ, không phải trộn xong là có chai nước mắm dùng ngay. Mỗi cơ sở có quy trình cụ thể; bài học không yêu cầu em thuộc tỉ lệ muối hay số tháng ủ.",
-        "fact": "Ủ chượp cần thời gian; sản phẩm trải qua nhiều công đoạn.",
-        "q": "Sau khi trộn cá với muối, cần làm gì để thu được nước mắm?",
+        "title": "Bốn bước làm nước mắm",
+        "narration": "Cùng theo dõi bốn bước trong tài liệu nhé! Bước một: rửa cá bằng nước biển rồi ướp với muối. Bước hai: cho cá vào chum, ủ từ 12 đến 18 tháng và đảo để cá chín đều. Bước ba: lọc lấy nước mắm bằng vuột tre có lót vải sạch. Bước bốn: ủ tiếp nước mắm trong chum để hương vị thơm dịu hơn, sau đó mới đóng chai. Những chai mắm là thành quả của nhiều công đoạn và thời gian chờ đợi.",
+        "fact": "Quy trình gồm: ướp cá → ủ cá 12–18 tháng → lọc nước mắm → ủ nước mắm rồi đóng chai.",
+        "q": "Sau khi lọc lấy nước mắm, người làm nghề tiếp tục làm gì theo tài liệu?",
         "answers": [
-          "Ủ chượp rồi thực hiện các công đoạn tiếp theo",
-          "Lọc và đóng chai dùng ngay sau khi trộn",
-          "Chỉ thêm nước rồi đóng chai dùng ngay"
+          "Ủ tiếp nước mắm trong chum rồi mới đóng chai",
+          "Đóng chai ngay sau khi trộn cá với muối",
+          "Trộn thêm nan tre vào chum"
         ]
       },
       {
         "id": "g3-4-point-4",
-        "title": "Dùng hợp lí, quý người làm nghề",
-        "narration": "Khi dùng nước mắm, em nhờ người lớn chọn sản phẩm có nguồn gốc và thông tin phù hợp, dùng lượng vừa đủ theo bữa ăn. Không nếm ở nơi sản xuất khi chưa được hướng dẫn. Khi tham quan, em giữ vệ sinh và không mở chum, đụng dụng cụ. Một lời giới thiệu trung thực về nguyên liệu và công sức người làm nghề cũng góp phần trân trọng sản phẩm quê hương.",
-        "fact": "Giữ vệ sinh, chọn sản phẩm rõ nguồn gốc và sử dụng hợp lí.",
-        "q": "Cách sử dụng nào phù hợp?",
+        "title": "Quý đặc sản, gìn giữ làng nghề",
+        "narration": "Nước mắm Nam Ô có hương thơm, vị đậm đà, ngọt tự nhiên và màu đỏ thẫm. Sản phẩm được dùng làm gia vị, nước chấm và quà tặng quê hương. Nghề làm mắm tạo việc làm, tăng thu nhập cho người dân và lưu giữ kinh nghiệm truyền thống. Em hãy kể một món ăn thường dùng với nước mắm, rồi nghĩ một cách giới thiệu làng nghề với bạn bè. Khi tham quan, em giữ vệ sinh và không tự mở chum hay chạm vào dụng cụ nhé!",
+        "fact": "Nước mắm Nam Ô có giá trị ẩm thực, tạo việc làm và góp phần gìn giữ nghề truyền thống.",
+        "q": "Nghề làm nước mắm đem lại lợi ích nào cho người dân Nam Ô?",
         "answers": [
-          "Dùng vừa đủ và theo hướng dẫn người lớn",
-          "Uống thay nước hằng ngày",
-          "Nếm mọi chum khi tham quan"
+          "Tạo việc làm và tăng thu nhập",
+          "Làm mất mọi công việc ở làng",
+          "Chỉ tạo đồ chơi cho trẻ em"
         ]
       }
     ],
@@ -480,7 +476,7 @@ export const GRADE3_CONTENT = [
       "https://vnanet.vn/vi/anh/anh-thoi-su-trong-nuoc-1014/dac-sac-nuoc-mam-huong-lang-co-nam-o-da-nang-6744898.html"
     ],
     "notes": [
-      "Chỉ dạy quy trình khái quát; không tổ chức học sinh tự ủ cá, nếm chượp hay đưa ra công dụng chữa bệnh."
+      "Đối chiếu CHU DE 4- LOP 3 và BIEN BAN HC LOP 3- 6.8.25.docx do giáo viên cung cấp ngày 23/10/2026."
     ]
   },
   {
@@ -490,50 +486,50 @@ export const GRADE3_CONTENT = [
     "points": [
       {
         "id": "g3-5-point-1",
-        "title": "Thuyền thúng – phương tiện sông biển",
-        "narration": "Thuyền thúng, còn gọi là thúng chai, có dạng tròn và lòng lõm, gắn bó với đời sống sông biển. Tại Thọ Quang, Sơn Trà, nghề đan thúng được lưu giữ qua những người thợ như ông Phan Liêm và gia đình. Từ những nan tre nhỏ, bàn tay khéo léo tạo nên một phương tiện dùng trên nước. Chiếc thúng cho thấy kinh nghiệm và sự sáng tạo của người dân miền biển.",
-        "fact": "Thuyền thúng là phương tiện dạng tròn gắn với đời sống sông biển.",
-        "q": "Đặc điểm nào giúp nhận ra thuyền thúng?",
+        "title": "Nghề thúng chai bên biển",
+        "narration": "Thuyền thúng còn gọi là thúng chai, có dạng tròn, gắn với nghề đánh bắt hải sản gần bờ. Nghề đã được truyền qua nhiều thế hệ. Tài liệu giới thiệu những nơi còn duy trì nghề như làng Hà Bình ở xã Thăng An, làng Trà Nhiêu ở xã Nam Phước và làng Thọ Quang ở phường Sơn Trà. Cùng khám phá cách người thợ tạo nên chiếc thúng từ những thanh tre nhé!",
+        "fact": "Thuyền thúng có dạng tròn; Thọ Quang ở phường Sơn Trà là một trong những nơi duy trì nghề.",
+        "q": "Nơi nào ở phường Sơn Trà được tài liệu giới thiệu là nơi duy trì nghề đan thúng?",
         "answers": [
-          "Dạng tròn, lòng lõm để sử dụng trên nước",
-          "Thân dài có bánh xe chạy trên đường",
-          "Một tấm chiếu phẳng"
+          "Làng Thọ Quang",
+          "Làng Hà Bình",
+          "Làng Trà Nhiêu"
         ]
       },
       {
         "id": "g3-5-point-2",
-        "title": "Vật liệu và bàn tay người thợ",
-        "narration": "Tre là nguyên liệu để làm thân thúng. Người thợ chẻ tre, chuốt thành những nan phù hợp rồi đan các nan lại với nhau. Thân thúng còn được xử lí chống thấm; dầu rái là một vật liệu truyền thống dùng trong công việc này. Từng công đoạn đòi hỏi sự cẩn thận để sản phẩm đạt yêu cầu. Em quan sát cùng người lớn, không tự dùng dao chẻ tre hay thử các vật liệu chống thấm.",
-        "fact": "Nan tre tạo thân thúng; khâu xử lí chống thấm giúp thúng dùng trên nước.",
-        "q": "Nan tre được dùng chủ yếu để làm gì?",
+        "title": "Từ cây tre đến thân thúng",
+        "narration": "Tre là nguyên liệu chính để đan thuyền thúng. Người thợ cưa, chẻ tre và vót thành nan. Nan được chuốt kĩ rồi phơi khô. Từ những nan ấy, người thợ đan để tạo thành thân thúng tròn. Từng thao tác cần sự khéo léo và kiên nhẫn. Em có thể quan sát công đoạn này qua hình ảnh hoặc khi đi cùng người lớn; không tự dùng cưa, dao hay chạm vào nan sắc.",
+        "fact": "Người thợ cưa, chẻ, vót, chuốt và phơi nan tre, rồi đan thành thân thúng.",
+        "q": "Sau khi chuẩn bị nan tre, người thợ làm gì để tạo thân thúng?",
         "answers": [
-          "Đan thành thân thúng",
-          "Chế biến nước mắm",
-          "Dệt thành chiếu cói"
+          "Đan các nan tre lại với nhau",
+          "Ủ nan trong chum cá",
+          "Dệt nan thành tấm lụa"
         ]
       },
       {
         "id": "g3-5-point-3",
-        "title": "Các bước khái quát",
-        "narration": "Làm một chiếc thúng trải qua nhiều công đoạn. Trước hết, người thợ chuẩn bị nan tre và đan thân, rồi tạo dáng tròn, làm vành và nối thân. Sau đó là xử lí chống thấm và hoàn thiện khung bên trong. Mỗi bước góp phần tạo nên chiếc thúng dùng trên nước. Công việc cần kinh nghiệm, sự phối hợp và kiên nhẫn; em có thể tìm hiểu trình tự bằng một mô hình giấy trong lớp.",
-        "fact": "Nghề làm thúng cần nhiều bước, kĩ năng và sự cẩn thận.",
-        "q": "Sau khi đan thân và tạo dáng, cần làm gì tiếp theo trong sơ đồ?",
+        "title": "Nẹp vành, ép vành, chống thấm",
+        "narration": "Sau khi đan thân, người thợ dùng các thanh tre nẹp chặt vành, rồi dùng dụng cụ ép vành thuyền. Tiếp đó, dầu rái được phủ lên bề mặt thúng để chống thấm. Thúng được phơi nắng khoảng 3 đến 4 ngày cho dầu khô, giúp dùng được lâu bền hơn. Mỗi công đoạn đều góp phần làm chiếc thúng hoàn chỉnh. Em hãy thử kể lại trình tự: đan thân, nẹp vành, ép vành, phủ dầu và phơi khô.",
+        "fact": "Nẹp, ép vành giúp hoàn thiện thúng; phủ dầu rái và phơi khô giúp chống thấm.",
+        "q": "Vì sao người thợ phủ dầu rái lên thuyền thúng?",
         "answers": [
-          "Làm vành rồi xử lí chống thấm",
-          "Bỏ bước làm vành và đem sử dụng ngay",
-          "Chỉ trang trí bên ngoài rồi đem sử dụng"
+          "Để chống thấm nước và tăng độ bền",
+          "Để biến tre thành kim loại",
+          "Để làm thúng tự chạy bằng máy"
         ]
       },
       {
         "id": "g3-5-point-4",
-        "title": "Giữ nghề, giữ an toàn",
-        "narration": "Thuyền thúng hỗ trợ hoạt động sông biển và thể hiện sự khéo léo của người thợ. Khi tham quan, em xin phép trước khi chụp ảnh, hỏi lịch sự và không lấy dụng cụ làm đồ chơi. Muốn tìm hiểu cách sử dụng thúng, em quan sát cùng người lớn ở nơi an toàn; không tự xuống nước hay trèo vào thúng. Em có thể làm mô hình bằng giấy với thầy cô để giới thiệu nghề.",
-        "fact": "Trân trọng người thợ và quan sát an toàn; không tự xuống thúng hay xuống nước.",
-        "q": "Cách tìm hiểu nghề nào phù hợp với học sinh?",
+        "title": "Công dụng và giá trị của thuyền thúng",
+        "narration": "Thuyền thúng dễ xoay trở trong không gian hẹp, thuận tiện cho đánh bắt nhỏ gần bờ và du lịch khám phá sông nước. Tài liệu nêu ưu điểm khó bị lật, nhưng khi sử dụng vẫn phải tuân thủ hướng dẫn an toàn. Em không tự trèo vào thúng hoặc xuống nước. Trân trọng người thợ, em có thể vẽ, xé dán hoặc nặn một chiếc thúng, rồi giới thiệu hình dáng, nguyên liệu và cách làm với người thân.",
+        "fact": "Thuyền thúng phục vụ đánh bắt gần bờ và du lịch sông nước; sử dụng vẫn cần bảo đảm an toàn.",
+        "q": "Thuyền thúng được dùng vào việc gì trong bài?",
         "answers": [
-          "Quan sát có hướng dẫn và làm mô hình giấy",
-          "Tự lấy dao chẻ nan",
-          "Tự đưa thúng xuống biển"
+          "Đánh bắt gần bờ và du lịch sông nước",
+          "Chở người trên đường cao tốc",
+          "Bay qua đèo Hải Vân"
         ]
       }
     ],
@@ -606,7 +602,7 @@ export const GRADE3_CONTENT = [
       "https://thanhnien.vn/nghe-xua-con-mot-chut-nay-noi-nenh-nghe-dan-thung-chai-185230225014320344.htm"
     ],
     "notes": [
-      "Đã có khảo sát tại Đà Nẵng cuối năm 2017, công bố năm 2018, và bộ ảnh tại gia đình ông Phan Liêm năm 2012. Đây là tư liệu theo thời điểm, chưa xác nhận hiện trạng hộ nghề năm 2026. Ảnh báo chí được dẫn đến trang nguồn, chưa được đóng gói khi chưa có quyền tái sử dụng rõ ràng. Nguồn Hội An chỉ tham khảo, không thay ảnh Sơn Trà."
+      "Đối chiếu CHU DE 5- LOP 3 và BIEN BAN HC LOP 3- 6.8.25.docx do giáo viên cung cấp ngày 23/10/2026."
     ]
   }
 ];

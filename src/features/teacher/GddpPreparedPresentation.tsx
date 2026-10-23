@@ -1,7 +1,7 @@
 import {audioService} from '../../services/AudioService';
 import {LearningMediaCredit} from '../../components/LearningMediaCredit';
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, Check, Eye, FileText, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Check, Eye, FileText, Maximize, Minimize, X } from 'lucide-react';
 import type { GddpRecord } from '../../services/GddpService';
 import type { LessonDeckDefinition } from '../../data/teacher/grade2LessonDecks';
 
@@ -21,6 +21,14 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
   const [sourcesVisible, setSourcesVisible] = useState(false);
   const [guideVisible, setGuideVisible] = useState(true);
   const [teacherMode, setTeacherMode] = useState(false);
+  const [showVr360,setShowVr360] = useState(false);
+  const [fullScreen,setFullScreen] = useState(false);
+  const hoiAnVrUrl = isHoiAn ? 'https://vr360.com.vn/projects/hoian-metaverse/' : null;
+  const toggleFullScreen = async () => {
+    try {if(document.fullscreenElement){await document.exitFullscreen();}else if(dialog.current){await dialog.current.requestFullscreen();}}
+    catch(error){console.warn('Không thể bật toàn màn hình trên thiết bị này',error);}
+  };
+  useEffect(()=>{const sync=()=>setFullScreen(Boolean(document.fullscreenElement));document.addEventListener('fullscreenchange',sync);return()=>document.removeEventListener('fullscreenchange',sync);},[]);
   const dialog = useRef<HTMLDivElement>(null);
   const body = useRef<HTMLDivElement>(null);
   const move = (delta: number) => {audioService.stopNarration();setIndex(value => Math.max(0, Math.min(visibleSlides.length - 1, value + delta)));setAnswerVisible(false);};
@@ -65,7 +73,7 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
     'Kiểm tra Ghi chú giáo viên và Nguồn & rà soát trước giờ dạy; không xem gợi ý là đáp án SGK.'
   ];
   return <div ref={dialog} tabIndex={-1} role="dialog" aria-modal="true" aria-label={`Trình chiếu bài ${record.lesson}`} onKeyDown={event => {
-    if (event.key === 'Escape') {event.preventDefault();onExit();}
+    if (event.key === 'Escape') {event.preventDefault();if(showVr360){setShowVr360(false);}else if(!document.fullscreenElement){onExit();}return;}
     if (event.altKey || event.ctrlKey || event.metaKey) return;
     if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {event.preventDefault();move(event.key === 'ArrowRight' ? 1 : -1);}
     if (event.key === 'Tab' && dialog.current) {
@@ -77,7 +85,7 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
   }} className="fixed inset-0 z-[75] flex flex-col bg-[#f8fafc] text-slate-900 outline-none">
     <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-white px-4 py-3 sm:px-7">
       <div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-wider text-emerald-700">CHẠM ĐÀ NẴNG · {deck.presentationKind==='topic'?'HỌC LIỆU CHỦ ĐỀ':'TÍCH HỢP GDĐP'} · KHỐI {record.grade}</p><h2 className="text-sm font-black sm:text-base">{record.lesson}</h2><p className="text-xs text-slate-500">{record.subject} · {deck.presentationKind==='topic'?record.week:'Tuần '+record.week} · {record.integrationType}</p></div>
-      <div className="flex flex-wrap gap-2">{isPilot&&<button type="button" onClick={()=>{setQuickMode(v=>!v);setIndex(0);setAnswerVisible(false);setAssessmentOpen(false);}} className="rounded-xl bg-orange-100 px-3 py-2 text-xs font-black text-orange-900">{quickMode?`⚡ Tích hợp nhanh · ${5} phút`:`Bật tích hợp nhanh · ${5} phút`}</button>}<button type="button" onClick={()=>setGuideVisible(value=>!value)} aria-pressed={guideVisible} className="rounded-xl border border-emerald-300 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-900">{guideVisible?'Ẩn hướng dẫn':'Hướng dẫn sử dụng'}</button><button type="button" onClick={()=>setTeacherMode(value=>!value)} aria-pressed={teacherMode} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold">{teacherMode?'Chế độ học sinh':'Chế độ giáo viên'}</button><button type="button" onClick={()=>setNotesVisible(value=>!value)} aria-pressed={notesVisible} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold"><FileText className="mr-1 inline h-4 w-4" />{notesVisible?'Ẩn ghi chú':'Ghi chú giáo viên'}</button><button type="button" onClick={()=>setSourcesVisible(value=>!value)} aria-pressed={sourcesVisible} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold"><BookOpen className="mr-1 inline h-4 w-4" />Nguồn & rà soát</button><button type="button" onClick={onExit} className="rounded-xl bg-slate-900 px-3 py-2 text-xs font-bold text-white"><X className="mr-1 inline h-4 w-4" />Đóng</button></div>
+      <div className="flex flex-wrap gap-2">{isPilot&&<button type="button" onClick={()=>{setQuickMode(v=>!v);setIndex(0);setAnswerVisible(false);setAssessmentOpen(false);}} className="rounded-xl bg-orange-100 px-3 py-2 text-xs font-black text-orange-900">{quickMode?`⚡ Tích hợp nhanh · ${5} phút`:`Bật tích hợp nhanh · ${5} phút`}</button>}<button type="button" onClick={()=>setGuideVisible(value=>!value)} aria-pressed={guideVisible} className="rounded-xl border border-emerald-300 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-900">{guideVisible?'Ẩn hướng dẫn':'Hướng dẫn sử dụng'}</button><button type="button" onClick={()=>setTeacherMode(value=>!value)} aria-pressed={teacherMode} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold">{teacherMode?'Chế độ học sinh':'Chế độ giáo viên'}</button><button type="button" onClick={()=>setNotesVisible(value=>!value)} aria-pressed={notesVisible} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold"><FileText className="mr-1 inline h-4 w-4" />{notesVisible?'Ẩn ghi chú':'Ghi chú giáo viên'}</button><button type="button" onClick={()=>setSourcesVisible(value=>!value)} aria-pressed={sourcesVisible} className="rounded-xl border border-slate-200 px-3 py-2 text-xs font-bold"><BookOpen className="mr-1 inline h-4 w-4" />Nguồn & rà soát</button><button type="button" onClick={toggleFullScreen} className="inline-flex items-center gap-2 rounded-xl bg-indigo-700 px-3 py-2 text-xs font-bold text-white">{fullScreen?<Minimize className="h-4 w-4"/>:<Maximize className="h-4 w-4"/>}{fullScreen?'Thu nhỏ':'Toàn màn hình'}</button>{hoiAnVrUrl&&<button type="button" onClick={()=>{audioService.stopNarration();setShowVr360(true);}} className="rounded-xl bg-amber-400 px-3 py-2 text-xs font-black text-slate-950">🌐 Xem Hội An VR360</button>}<button type="button" onClick={onExit} className="rounded-xl bg-slate-900 px-3 py-2 text-xs font-bold text-white"><X className="mr-1 inline h-4 w-4" />Đóng</button></div>
     </header>
     {deck.mappingReview&&!deck.mappingReview.currentYearConfirmed&&<p role="status" className="shrink-0 border-b border-amber-200 bg-amber-50 px-4 py-2 text-xs font-semibold text-amber-900">{deck.presentationKind==='topic'?deck.mappingReview.note:<>Bản tham khảo từ bảng {deck.mappingReview.sourceYear} · Chưa xác nhận địa chỉ tích hợp năm học hiện hành.</>}</p>}
     <div ref={body} className="min-h-0 flex-1 overflow-y-auto p-4 sm:p-7">
@@ -107,6 +115,7 @@ export const GddpPreparedPresentation: React.FC<{record: GddpRecord; deck: Lesso
         {notesVisible&&!teacherMode&&<aside className="border-t border-slate-100 bg-slate-50 p-5 text-sm leading-relaxed"><p className="mb-2 font-black">Ghi chú giáo viên · {record.activity.replace(/\n/g,' · ')}</p><p>{slide.teacherNotes}</p>{index===0&&<ul className="mt-3 list-disc pl-5">{deck.outcomes.map(goal=><li key={goal}>{goal}</li>)}</ul>}</aside>}
       </article>
     </div>
+    {showVr360&&hoiAnVrUrl&&<div role="dialog" aria-modal="true" aria-label="Khám phá Hội An VR360" className="fixed inset-0 z-[90] flex flex-col bg-slate-950 p-3 text-white sm:p-5"><div className="mb-3 flex flex-wrap items-center justify-between gap-3"><h3 className="text-xl font-black">🌐 Khám phá Hội An 360°</h3><div className="flex flex-wrap gap-2"><a href={hoiAnVrUrl} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-amber-400 px-4 py-2 font-bold text-slate-950">Mở VR360 ở cửa sổ riêng ↗</a><button type="button" onClick={()=>setShowVr360(false)} className="rounded-xl bg-white px-4 py-2 font-bold text-slate-900">Đóng VR360 · Về bài học</button></div></div><p className="mb-2 text-xs text-slate-300">Dùng chuột hoặc chạm để xoay góc nhìn. Nếu nguồn không cho phép nhúng, chọn “Mở VR360 ở cửa sổ riêng”.</p><iframe title="Hội An VR360 – trình chiếu cho học sinh" src={hoiAnVrUrl} allow="fullscreen; gyroscope; accelerometer" allowFullScreen className="min-h-0 w-full flex-1 rounded-2xl border border-slate-700 bg-white"/></div>}
     {assessmentOpen&&quickMode&&isPilot&&<section className="max-h-[48vh] shrink-0 overflow-y-auto border-t border-emerald-200 bg-emerald-50 px-4 py-3 text-sm sm:px-7">
       <div className="mx-auto max-w-4xl space-y-3"><h3 className="font-black">Đánh giá nhanh tại lớp · bản mẫu</h3><p>Tiêu chí: học sinh nêu được một người có công với địa phương và một cách thể hiện lòng biết ơn. Giáo viên quan sát, ghi số lượng; không tự động coi đây là bằng chứng tác động dài hạn.</p>
       <label className="block">Số học sinh được đánh giá <input type="number" min="1" value={classSize} onChange={e=>setClassSize(e.target.value)} className="ml-2 w-24 rounded-lg border p-2" /></label>

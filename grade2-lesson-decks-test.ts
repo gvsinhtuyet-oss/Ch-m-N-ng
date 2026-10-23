@@ -37,20 +37,23 @@ test('source gaps are disclosed instead of asserting approval or fabricated loca
   assert.ok(deck.reviewNotes.length,id);assert.equal(deck.status,'source-aligned-draft');
  }
 });
-test('each presentation renders lesson identity, first slide, question and navigation, with answer initially hidden',()=>{
+test('each quick presentation renders its opening content and navigation with discussion and answers initially hidden',()=>{
  for(const row of grade2){
   const deck=getGddpLessonDeck(row)!;
   const html=renderToStaticMarkup(React.createElement(GddpPreparedPresentation,{record:row,deck,onExit:()=>{}}));
-  assert.ok(html.includes(deck.slides[0].title));assert.ok(html.includes(deck.slides[0].question));
-  assert.ok(!html.includes(deck.slides[0].answer),'answer hidden');
-  assert.match(html,/aria-modal="true"/);assert.match(html,/Sơ đồ minh hoạ học tập/);assert.match(html,row.id==='gddp-2026-2-01'?/Trang 1 \/ 3/:/Trang 1 \/ 5/);
+  // Quick view starts Hoi An on the observation slide; other decks start at zero.
+  const first=deck.slides[row.id==='gddp-2026-2-04'?1:0];
+  assert.ok(html.includes(first.title));assert.ok(html.includes(first.points[0]));
+  assert.ok(!html.includes('Cùng trao đổi'));assert.ok(!html.includes('Hiện gợi ý trả lời'));
+  assert.ok(!html.includes(first.answer),'answer hidden');
+  assert.match(html,/aria-modal="true"/);if(row.id==='gddp-2026-2-04')assert.match(html,/<img/);else assert.match(html,/Sơ đồ minh hoạ học tập/);assert.match(html,/Trang 1 \/ 3/);
  }
 });
 
-test('quick pilot is limited to Bop nat qua cam, with three stages and classroom assessment entry',()=>{
+test('quick view opens Bop nat qua cam with three stages and five-minute timing',()=>{
  const row=grade2.find(r=>r.id==='gddp-2026-2-01')!;
  const html=renderToStaticMarkup(React.createElement(GddpPreparedPresentation,{record:row,deck:getGddpLessonDeck(row)!,onExit:()=>{}}));
  assert.match(html,/Tích hợp nhanh/);
- assert.match(html,/8 phút/);
+ assert.match(html,/5 phút/);
  assert.match(html,/Trang 1 \/ 3/);
 });

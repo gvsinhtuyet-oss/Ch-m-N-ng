@@ -16,6 +16,8 @@ class AudioService {
   private clearPendingNarration: (() => void) | null = null;
 
   constructor() {
+    // Server-rendered lesson previews have no browser storage.
+    if (typeof localStorage === 'undefined') return;
     const saved = localStorage.getItem('cham_danang_sound_enabled');
     if (saved !== null) {
       this.soundEnabled = saved === 'true';

@@ -31,7 +31,7 @@ test('place corrections distinguish old district/province from new wards and ret
  assert.match(c.teachingContent!,/Không nói tỉnh Bình Thuận cũ đổi thành phường Mũi Né/);assert.ok(c.sources.some(x=>x.includes('1671')));assert.ok(c.sources.some(x=>x.includes('202/2025')));
 });
 test('each draft visibly renders grade 1, illustration and unconfirmed-year banner without exposing answer initially',()=>{
- for(const r of records){const d=getGddpLessonDeck(r)!;const html=renderToStaticMarkup(React.createElement(GddpPreparedPresentation,{record:r,deck:d,onExit:()=>{}}));assert.match(html,/KHỐI 1/);assert.doesNotMatch(html,/KHỐI 2/);assert.match(html,/Chưa xác nhận địa chỉ tích hợp năm học hiện hành/);assert.match(html,/<img/);assert.match(html,/Hiện gợi ý trả lời/);assert.ok(!html.includes(d.slides[0].answer));}
+ for(const r of records){const d=getGddpLessonDeck(r)!;const html=renderToStaticMarkup(React.createElement(GddpPreparedPresentation,{record:r,deck:d,onExit:()=>{}}));assert.match(html,/KHỐI 1/);assert.doesNotMatch(html,/KHỐI 2/);assert.match(html,/Chưa xác nhận địa chỉ tích hợp năm học hiện hành/);assert.match(html,/<img/);assert.match(html,/Chế độ học sinh/);assert.ok(!html.includes('Hiện gợi ý trả lời'));assert.ok(!html.includes(d.slides[0].answer));}
 });
 test('deck lookup and rendering never contact network or Firestore',()=>{
  const old=globalThis.fetch;let calls=0;globalThis.fetch=(()=>{calls++;throw Error('network forbidden')}) as typeof fetch;

@@ -282,9 +282,9 @@ export const GRADE3_CONTENT = [
         "title": "Cùng giữ gìn nét đẹp văn hóa",
         "narration": "Mỗi dân tộc có những nét văn hóa truyền thống riêng cần được giữ gìn và phát huy. Em có thể kể một sinh hoạt văn hóa mình yêu thích, vẽ lại cảnh lễ hội hoặc giới thiệu điều đã học với người thân. Khi học và chơi cùng nhau, hãy lắng nghe, gọi đúng tên bạn và tôn trọng sự khác biệt. Nếu muốn chụp ảnh hay chạm vào đồ dùng của người khác, em nhớ xin phép nhé!",
         "fact": "Tìm hiểu, chia sẻ và tôn trọng sự khác biệt là những cách góp phần giữ gìn văn hóa của các cộng đồng.",
-        "q": "Em có thể làm gì để chia sẻ nét đẹp văn hóa đã học?",
+        "q": "Em có thể làm gì để giới thiệu văn hóa dân tộc?",
         "answers": [
-          "Vẽ và giới thiệu một sinh hoạt văn hóa mình yêu thích",
+          "Vẽ lại cảnh lễ hội",
           "Trêu chọc giọng nói của bạn",
           "Tự ý lấy đồ dùng của người khác"
         ]

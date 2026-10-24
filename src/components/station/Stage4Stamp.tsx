@@ -122,52 +122,69 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     }
   };
 
-  // Pilot: only Lụa Mã Châu uses the full-screen knowledge-map layout.
-  // The existing reward persistence, passport stamp, and admin read-only behavior are unchanged.
+  // Pilot only: Lụa Mã Châu, grade 5. Other stations retain their original Stage 4.
   if (station.id === 'g5-lua-ma-chau') {
     return (
-      <div className="relative flex h-[calc(100dvh-170px)] min-h-[460px] w-full flex-col overflow-hidden rounded-[1.5rem] border-4 border-amber-500 bg-gradient-to-br from-sky-200 via-amber-100 to-emerald-200 p-2 shadow-2xl sm:p-3">
-        <div className="mb-2 flex shrink-0 items-center justify-between gap-2 rounded-xl border border-amber-300 bg-[#fff0c8]/95 px-3 py-2 shadow-md">
+      <div className="relative flex h-[calc(100dvh-170px)] min-h-[460px] w-full flex-col overflow-hidden rounded-[1.5rem] border-[3px] border-amber-500 bg-gradient-to-br from-[#b5e5e0] via-[#f8e8bb] to-[#b5d6a3] p-2 shadow-2xl sm:p-3">
+        <style>{`
+          @keyframes maChauStampDrop {
+            0% { opacity:0; transform: translateY(-90px) scale(2.2) rotate(-25deg); }
+            65% { opacity:1; transform: translateY(7px) scale(.86) rotate(-13deg); }
+            85% { transform: translateY(-4px) scale(1.05) rotate(-13deg); }
+            100% { opacity:1; transform: translateY(0) scale(1) rotate(-13deg); }
+          }
+          @media (prefers-reduced-motion:reduce) { .ma-chau-stamp { animation:none !important; } }
+        `}</style>
+        <header className="mb-2 flex shrink-0 items-center justify-between gap-2 rounded-xl border-2 border-amber-300 bg-[#fff1ce]/95 px-3 py-1.5 shadow-md">
           <div className="min-w-0">
-            <p className="text-[10px] font-black uppercase tracking-wide text-amber-900">CHẶNG 4 / 4</p>
-            <h2 className="truncate text-base font-black text-red-800 sm:text-xl">🏅 Dấu ấn hành trình · Lụa Mã Châu</h2>
+            <p className="text-[10px] font-black tracking-wide text-amber-900">CHẶNG 4 / 4 · LỤA MÃ CHÂU</p>
+            <h2 className="truncate text-base font-black text-red-800 sm:text-xl">✨ Dấu ấn hành trình</h2>
           </div>
-          <span className="hidden shrink-0 rounded-full bg-emerald-100 px-3 py-1 text-xs font-black text-emerald-800 sm:block">Bản đồ tri thức</span>
-        </div>
-        <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden rounded-xl border-2 border-amber-300 bg-[#fff8e7] shadow-inner">
-          {station.journeyMap?.image && !mapImageFailed ? (
-            <img src={station.journeyMap.image} alt="Bản đồ tri thức Lụa Mã Châu" className="h-full w-full object-contain" onError={() => setMapImageFailed(true)} />
-          ) : (
-            <div className="flex flex-col items-center gap-3 px-4 text-center text-amber-900">
-              <Map className="h-12 w-12" />
-              <strong>Bản đồ tri thức Lụa Mã Châu chưa tải được</strong>
-              <span className="text-xs">Hãy kiểm tra đường dẫn ảnh của trạm trong học liệu.</span>
+          <span className="hidden rounded-full bg-white/80 px-3 py-1 text-xs font-black text-emerald-800 sm:inline">Khám phá · Ghi nhớ · Lưu dấu</span>
+        </header>
+        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,1.65fr)_minmax(0,1fr)] gap-2 sm:gap-3">
+          <section aria-label="Bản đồ tri thức" className="flex min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border-[3px] border-[#ad7737] bg-[#fff3d4] p-1.5 shadow-[0_8px_20px_rgba(74,43,12,.22)] sm:p-2">
+            <div className="mb-1 flex shrink-0 items-center justify-between gap-2 px-1">
+              <h3 className="truncate text-xs font-black text-[#704315] sm:text-sm">🗺️ BẢN ĐỒ TRI THỨC</h3>
+              <button type="button" disabled={!station.journeyMap?.image || mapImageFailed} onClick={() => { audioService.playSfx('click'); setMapZoomed(true); }} className="flex shrink-0 items-center gap-1 rounded-lg bg-sky-700 px-2 py-1.5 text-[10px] font-black text-white disabled:opacity-50 sm:text-xs"><ZoomIn className="h-3.5 w-3.5" /> Phóng to</button>
             </div>
-          )}
-          {stamped && <div className="pointer-events-none absolute right-2 top-2 rounded-xl border border-emerald-300 bg-white/95 px-2 py-1 text-xs font-black text-emerald-800 shadow">✓ Đã nhận dấu ấn</div>}
+            <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden rounded-xl border border-amber-200 bg-white">
+              {station.journeyMap?.image && !mapImageFailed ? <img src={station.journeyMap.image} alt="Bản đồ tri thức Lụa Mã Châu" onError={() => setMapImageFailed(true)} className="h-full w-full object-contain" /> : <div className="px-3 text-center text-sm font-bold text-amber-900">Chưa tải được ảnh bản đồ tri thức Lụa Mã Châu.</div>}
+            </div>
+          </section>
+          <section aria-label="Hộ chiếu hành trình" className="relative flex min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border-[3px] border-[#9b6538] bg-gradient-to-br from-[#fff9e9] via-[#f8e5bb] to-[#eac58e] p-2 shadow-[0_8px_20px_rgba(74,43,12,.25)] sm:p-3">
+            <div className="shrink-0 border-b-2 border-dashed border-[#cba978] pb-2 text-center">
+              <p className="text-[10px] font-black tracking-wider text-[#96621c] sm:text-xs">CHẠM ĐÀ NẴNG</p>
+              <h3 className="text-sm font-black text-[#683917] sm:text-lg">📖 HỘ CHIẾU HÀNH TRÌNH</h3>
+              <p className="mt-1 text-[10px] font-semibold text-[#704e30] sm:text-xs">Khối 5 · Làng lụa Mã Châu</p>
+            </div>
+            <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-1">
+              <p className="text-center text-[10px] font-bold text-[#78542d] sm:text-xs">{stamped ? 'Dấu ấn đã lưu trong hộ chiếu' : 'Vị trí chờ đóng dấu hoàn thành'}</p>
+              <div className="relative flex aspect-square w-[min(100%,170px)] max-h-[60%] items-center justify-center rounded-full border-2 border-dashed border-[#bb9569] bg-white/35">
+                {stamped ? (
+                  <div className="ma-chau-stamp flex aspect-square w-[94%] flex-col items-center justify-center rounded-full border-[5px] border-double border-red-700 bg-red-50/30 p-1 text-center text-red-800 shadow-lg" style={{animation:'maChauStampDrop .7s cubic-bezier(.2,.85,.25,1.1) both'}}>
+                    <span className="text-[8px] font-black sm:text-[10px]">CHẠM ĐÀ NẴNG</span>
+                    <Stamp className="my-1 h-6 w-6 sm:h-9 sm:w-9" />
+                    <span className="text-[10px] font-black leading-tight sm:text-xs">LỤA MÃ CHÂU</span>
+                    <span className="text-[8px] font-black sm:text-[10px]">ĐÃ HOÀN THÀNH</span>
+                  </div>
+                ) : <div className="flex flex-col items-center gap-2 text-[#b99a75]"><Stamp className="h-10 w-10 opacity-50" /><span className="text-[10px] font-bold">CHƯA ĐÓNG DẤU</span></div>}
+              </div>
+              <div className="flex items-center justify-center gap-1 rounded-xl bg-white/70 px-2 py-1 text-center text-[10px] font-bold text-[#765023] sm:text-xs"><KeyRound className="h-4 w-4 shrink-0 text-amber-700" />{giftClaimed ? 'Đã nhận 1 mảnh chìa khóa' : 'Phần thưởng: 1 mảnh chìa khóa'}</div>
+              {saveMessage && <p role="status" className="line-clamp-2 text-center text-[10px] font-bold text-emerald-900">{saveMessage}</p>}
+            </div>
+          </section>
         </div>
-        <div className="mt-2 grid shrink-0 grid-cols-3 gap-2">
-          <button type="button" disabled={!station.journeyMap?.image || mapImageFailed} onClick={() => { audioService.playSfx('click'); setMapZoomed(true); }} className="flex min-h-12 items-center justify-center gap-1 rounded-xl border-2 border-sky-300 bg-gradient-to-b from-sky-100 to-sky-300 px-1 py-2 text-[11px] font-black text-sky-950 shadow sm:text-sm disabled:opacity-50"><ZoomIn className="h-4 w-4 shrink-0" />Phóng to bản đồ</button>
-          <button type="button" disabled={!canExchange} onClick={() => { audioService.playSfx('click'); handleJourneyGift(); }} className="flex min-h-12 items-center justify-center gap-1 rounded-xl border-2 border-yellow-500 bg-gradient-to-b from-yellow-100 to-amber-400 px-1 py-2 text-[11px] font-black text-amber-950 shadow sm:text-sm disabled:opacity-50"><Award className="h-4 w-4 shrink-0" />{stamped ? 'Đã nhận dấu ấn' : 'Nhận dấu ấn'}</button>
-          <button type="button" onClick={() => { audioService.playSfx('click'); onExploreNext(); }} className="flex min-h-12 items-center justify-center gap-1 rounded-xl border-2 border-emerald-400 bg-gradient-to-b from-emerald-100 to-lime-300 px-1 py-2 text-[11px] font-black text-emerald-950 shadow sm:text-sm"><ArrowRight className="h-4 w-4 shrink-0" />Trạm tiếp theo</button>
+        <div className="mt-2 grid shrink-0 grid-cols-3 gap-1.5 sm:gap-2">
+          <button type="button" disabled={!station.journeyMap?.image || mapImageFailed} onClick={() => { audioService.playSfx('click'); setMapZoomed(true); }} className="flex min-h-11 items-center justify-center gap-1 rounded-xl border-2 border-sky-300 bg-gradient-to-b from-sky-100 to-sky-300 px-1 py-2 text-[10px] font-black text-sky-950 shadow sm:text-sm disabled:opacity-50"><ZoomIn className="h-4 w-4 shrink-0" />Phóng to bản đồ</button>
+          <button type="button" disabled={!canExchange || stamped} onClick={() => { saveMapAndStamp(); }} className="flex min-h-11 items-center justify-center gap-1 rounded-xl border-2 border-yellow-500 bg-gradient-to-b from-yellow-100 to-amber-400 px-1 py-2 text-[10px] font-black text-amber-950 shadow sm:text-sm disabled:opacity-50"><Award className="h-4 w-4 shrink-0" />{stamped ? 'Đã nhận dấu ấn' : 'Nhận dấu ấn'}</button>
+          <button type="button" onClick={() => { audioService.playSfx('click'); onExploreNext(); }} className="flex min-h-11 items-center justify-center gap-1 rounded-xl border-2 border-emerald-400 bg-gradient-to-b from-emerald-100 to-lime-300 px-1 py-2 text-[10px] font-black text-emerald-950 shadow sm:text-sm"><ArrowRight className="h-4 w-4 shrink-0" />Trạm tiếp theo</button>
         </div>
         {isReadOnly && <p className="mt-1 text-center text-[10px] font-semibold text-amber-950">Chế độ xem thử: không lưu phần thưởng.</p>}
         {mapZoomed && station.journeyMap?.image && !mapImageFailed && (
           <div role="dialog" aria-modal="true" aria-label="Bản đồ tri thức phóng to" className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/95 p-3" onClick={() => setMapZoomed(false)}>
             <button type="button" onClick={() => setMapZoomed(false)} aria-label="Đóng bản đồ" className="absolute right-4 top-4 z-10 rounded-xl bg-white p-2 text-slate-900"><X className="h-6 w-6" /></button>
             <img src={station.journeyMap.image} alt="Bản đồ tri thức Lụa Mã Châu phóng to" className="max-h-full max-w-full object-contain" onClick={event => event.stopPropagation()} />
-          </div>
-        )}
-        {showGiftReveal && (
-          <div role="dialog" aria-modal="true" aria-label="Nhận dấu ấn hoàn thành" className="fixed inset-0 z-[75] flex items-center justify-center bg-slate-950/80 p-3">
-            <div className="w-full max-w-md rounded-3xl border-4 border-amber-400 bg-gradient-to-b from-amber-50 to-amber-200 p-5 text-center shadow-2xl">
-              <div className="mb-2 text-5xl">🏆</div>
-              <h3 className="text-xl font-black text-amber-950">Dấu ấn Lụa Mã Châu</h3>
-              <p className="mt-2 text-sm font-semibold text-amber-900">Lưu bản đồ, đóng dấu hộ chiếu và nhận mảnh chìa khóa hành trình.</p>
-              {saveMessage && <p role="status" className="mt-3 text-xs font-bold text-emerald-900">{saveMessage}</p>}
-              {!stamped ? <button type="button" onClick={saveMapAndStamp} className="mt-4 w-full rounded-xl bg-amber-500 px-4 py-3 font-black text-amber-950">Nhận dấu ấn hoàn thành</button> : <button type="button" onClick={() => setShowGiftReveal(false)} className="mt-4 w-full rounded-xl bg-emerald-700 px-4 py-3 font-black text-white">Tiếp tục hành trình</button>}
-              <button type="button" onClick={() => setShowGiftReveal(false)} className="mt-3 block w-full text-sm font-bold text-amber-950">Đóng</button>
-            </div>
           </div>
         )}
       </div>

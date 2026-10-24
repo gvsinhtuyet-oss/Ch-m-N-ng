@@ -23,6 +23,14 @@ const GEO_LESSON_POINTS: Record<string, {name:string;lat:number;lon:number;descr
   'g3-station-1': [{name:'Bãi biển Mỹ Khê',lat:16.060,lon:108.247,description:'Bãi biển Mỹ Khê',accuracy:'approximate'},{name:'Bãi biển Bàn Than',lat:15.3833,lon:108.6167,description:'Tâm khu vực Tam Hải theo cổng thông tin địa phương, KHÔNG phải ghim chính xác bãi Bàn Than',accuracy:'approximate'}],
   'g3-station-4': [{name:'Làng nước mắm Nam Ô',lat:16.124,lon:108.126,description:'Khu vực làng nghề Nam Ô',accuracy:'approximate'}],
   'g3-station-5': [{name:'Bán đảo Sơn Trà',lat:16.115,lon:108.295,description:'Khu vực bán đảo Sơn Trà',accuracy:'approximate'}],
+  'g4-station-2': [{name:'Khu đền tháp Mỹ Sơn',lat:15.764,lon:108.124,description:'Khu vực di sản Mỹ Sơn (tọa độ tham khảo)',accuracy:'approximate'},{name:'Bảo tàng Điêu khắc Chăm',lat:16.0607,lon:108.2231,description:'Bảo tàng tại đường 2 Tháng 9 (tọa độ tham khảo)',accuracy:'approximate'}],
+  'g4-thu-bon-hon-kem': [{name:'Hòn Kẽm Đá Dừng',lat:15.707,lon:107.982,description:'Khu vực thắng cảnh (tọa độ tham khảo)',accuracy:'approximate'},{name:'Sông Thu Bồn – đoạn Hội An',lat:15.877,lon:108.337,description:'Một đoạn sông, không đại diện toàn dòng sông',accuracy:'approximate'}],
+  'g4-station-4': [{name:'Làng đúc đồng Phước Kiều',lat:15.908,lon:108.240,description:'Khu vực làng nghề (tọa độ tham khảo)',accuracy:'approximate'}],
+  'g5-ky-anh-me-nhu': [{name:'Địa đạo Kỳ Anh',lat:15.548,lon:108.438,description:'Khu vực di tích, chưa xác minh cổng vào',accuracy:'approximate'},{name:'Khu lưu niệm Mẹ Nhu – Thanh Khê',lat:16.069,lon:108.184,description:'Khu vực Thanh Khê, chưa xác minh vị trí công trình',accuracy:'approximate'}],
+  'g5-station-3': [{name:'Bà Nà',lat:15.997,lon:107.988,description:'Khu vực đỉnh Bà Nà (tọa độ tham khảo)',accuracy:'approximate'},{name:'Hải Vân Quan',lat:16.186,lon:108.133,description:'Khu vực đỉnh đèo Hải Vân (tọa độ tham khảo)',accuracy:'approximate'}],
+  'g5-station-4': [{name:'Danh thắng Ngũ Hành Sơn',lat:16.004,lon:108.263,description:'Khu vực núi Thủy Sơn (tọa độ tham khảo)',accuracy:'approximate'}],
+  'g5-lua-ma-chau': [{name:'Làng lụa Mã Châu',lat:15.824,lon:108.294,description:'Khu vực làng nghề Mã Châu (tọa độ tham khảo)',accuracy:'approximate'}],
+  'g5-station-5': [{name:'Vùng núi Ngọc Linh',lat:15.076,lon:107.984,description:'Vùng núi tham khảo, không phải địa điểm trồng sâm cụ thể',accuracy:'approximate'}],
 };
 
 // Official destination VR portals. Links open separately and never replace embedded VR experiences.

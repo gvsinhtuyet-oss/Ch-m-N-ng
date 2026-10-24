@@ -304,7 +304,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-station-3-textbook-point-1",
         "title": "Công nghiệp làm ra sản phẩm",
-        "narration": "Ở Đà Nẵng, hoạt động công nghiệp tạo ra nhiều sản phẩm phục vụ đời sống và sản xuất. Khu công nghiệp Hòa Cầm và Khu kinh tế mở Chu Lai là những ví dụ trong bài. Các công việc gồm chế biến nông, lâm, thủy sản; may mặc; sản xuất thiết bị điện, điện tử và cơ khí lắp ráp. Từ nguyên liệu đến sản phẩm hoàn chỉnh cần nhiều người phối hợp. Em thử kể tên một sản phẩm công nghiệp gần gũi trong gia đình mình.",
+        "narration": "Ở Đà Nẵng, hoạt động công nghiệp tạo ra nhiều sản phẩm phục vụ đời sống và sản xuất. Khu công nghiệp Hòa Cầm và Khu kinh tế mở Chu Lai là những ví dụ ở đây. Các công việc gồm chế biến nông, lâm, thủy sản; may mặc; sản xuất thiết bị điện, điện tử và cơ khí lắp ráp. Từ nguyên liệu đến sản phẩm hoàn chỉnh cần nhiều người phối hợp. Em thử kể tên một sản phẩm công nghiệp gần gũi trong gia đình mình.",
         "fact": "Công nghiệp tạo ra sản phẩm qua các hoạt động chế biến, sản xuất và lắp ráp.",
         "q": "Theo bài nghe, hoạt động nào thuộc công nghiệp ở Đà Nẵng?",
         "answers": [
@@ -588,7 +588,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g4-thu-bon-hon-kem-textbook-point-2",
         "title": "Cuộc sống trên dòng Thu Bồn",
-        "narration": "Dòng Thu Bồn gắn với giao thương, đánh bắt thủy sản và việc đi lại của người dân. Vào dịp lễ hội còn có hoạt động đua thuyền, thể hiện sức mạnh và tinh thần đoàn kết. Những thuyền đánh cá, chuyến hàng và ngày hội ven sông cho thấy dòng nước gắn bó với đời sống quê hương. Em thử phân biệt một hoạt động mưu sinh với một hoạt động lễ hội được giới thiệu trong bài.",
+        "narration": "Dòng Thu Bồn gắn với giao thương, đánh bắt thủy sản và việc đi lại của người dân. Vào dịp lễ hội còn có hoạt động đua thuyền, thể hiện sức mạnh và tinh thần đoàn kết. Những thuyền đánh cá, chuyến hàng và ngày hội ven sông cho thấy dòng nước gắn bó với đời sống quê hương. Em thử phân biệt một hoạt động mưu sinh với một hoạt động lễ hội mà chúng mình cùng tìm hiểu.",
         "fact": "Trên sông Thu Bồn có hoạt động giao thương, khai thác thủy sản và đua thuyền vào dịp lễ hội.",
         "q": "Hoạt động nào thường gắn với dịp lễ hội trên sông?",
         "answers": [
@@ -1282,7 +1282,7 @@ export const GRADE45_CONTENT = [
       {
         "id": "g5-station-5-textbook-point-2",
         "title": "Môi trường sống ở núi Ngọc Linh",
-        "narration": "Sâm sống dưới tán rừng ẩm, mát ở vùng núi cao Ngọc Linh, thường ở độ cao khoảng 1 500 đến 2 100 m theo tài liệu. Vùng núi này trải trên địa bàn Đà Nẵng và Quảng Ngãi, tương ứng với phần địa bàn Quảng Nam và Kon Tum trước sắp xếp. Tán cây che mát và lớp đất rừng giúp tạo môi trường phù hợp. Vì thế, muốn giữ cây sâm phải giữ cả khu rừng nơi cây sinh trưởng.",
+        "narration": "Sâm sống dưới tán rừng ẩm, mát ở vùng núi cao Ngọc Linh, thường ở độ cao khoảng 1 500 đến 2 100 m vừa học. Vùng núi này trải trên địa bàn Đà Nẵng và Quảng Ngãi, tương ứng với phần địa bàn Quảng Nam và Kon Tum trước sắp xếp. Tán cây che mát và lớp đất rừng giúp tạo môi trường phù hợp. Vì thế, muốn giữ cây sâm phải giữ cả khu rừng nơi cây sinh trưởng.",
         "fact": "Sâm Ngọc Linh cần môi trường rừng núi cao, ẩm và mát; vùng phân bố không chỉ thuộc Đà Nẵng.",
         "q": "Môi trường nào phù hợp với sâm Ngọc Linh?",
         "answers": [

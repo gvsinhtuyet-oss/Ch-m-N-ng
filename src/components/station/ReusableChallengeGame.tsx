@@ -47,7 +47,7 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
   const [locked, setLocked] = useState(false);
   const [incorrect, setIncorrect] = useState(false);
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const questionSet = station.challenge.questions;
+  const questionSet = station.challenge.questions || [];
   const questions = useMemo(() => questionSet.map(q => ({
     ...q, options: [...q.options].sort((a,b) => a.id.localeCompare(b.id)),
   })), [questionSet]);

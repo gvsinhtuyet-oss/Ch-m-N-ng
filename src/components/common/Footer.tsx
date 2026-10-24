@@ -1,6 +1,5 @@
 import React from 'react';
 import { useApp } from '../../contexts/AppContext';
-import { Heart } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const { t } = useApp();
@@ -12,17 +11,8 @@ export const Footer: React.FC = () => {
         <span className="text-slate-400">© 2026</span>
         <span className="hidden text-slate-300 sm:inline">•</span>
         <span>
-          <span className="text-slate-400">Đơn vị thực hiện: </span>
-          <span className="font-semibold text-slate-600">{t.schoolName}</span>
-        </span>
-        <span className="hidden text-slate-300 sm:inline">•</span>
-        <span>
           <span className="text-slate-400">Người phát triển: </span>
           <span className="font-semibold text-slate-600">{t.authors}</span>
-        </span>
-        <span className="inline-flex items-center gap-1 rounded-full bg-white/45 px-2 py-0.5 text-[9px] font-semibold text-sky-700 backdrop-blur-[2px]">
-          <Heart className="h-2.5 w-2.5 fill-rose-400 text-rose-400" />
-          Giáo dục địa phương Tiểu học
         </span>
       </div>
     </footer>

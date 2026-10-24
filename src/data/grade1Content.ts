@@ -19,7 +19,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-2",
         "title": "Ngôi trường của em",
-        "narration": "Cùng tìm hiểu ngôi trường của em nhé! Chúng mình cùng tìm hiểu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Tranh ở đây chỉ minh họa, không phải ảnh trường của em.",
+        "narration": "Cùng tìm hiểu ngôi trường của em nhé! Chúng mình cùng tìm hiểu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Ảnh ở đây giúp em quan sát một ngôi trường; em hãy liên hệ với trường mình.",
         "fact": "Biết tên trường và xã hoặc phường giúp em giới thiệu rõ trường mình.",
         "q": "Theo bài nghe, hai trường nào có cùng tên?",
         "answers": [
@@ -358,7 +358,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-2",
         "title": "Rừng cây bên Suối Tiên",
-        "narration": "Suối Tiên ở xã Quế Sơn Trung. Nơi đây có rừng cây xanh, dòng nước và thác đẹp. Em hãy quan sát màu xanh của lá, hình dáng cây và dòng suối. Ảnh trên màn hình cho em quan sát cảnh suối, thác và rừng cây tại Suối Tiên Quế Sơn, theo nguồn Cù Lao Chàm Tour. Rừng cây là một phần làm nên vẻ đẹp của Suối Tiên. Em thích rừng cây, dòng nước hay thác nước? Hãy chọn một nét đẹp để kể với người thân nhé!",
+        "narration": "Suối Tiên ở xã Quế Sơn Trung. Nơi đây có rừng cây xanh, dòng nước và thác đẹp. Em hãy quan sát màu xanh của lá, hình dáng cây và dòng suối. Ảnh trên màn hình cho em quan sát cảnh suối, thác và rừng cây tại Suối Tiên Quế Sơn, theo nguồn Cục Du lịch Quốc gia Việt Nam. Rừng cây là một phần làm nên vẻ đẹp của Suối Tiên. Em thích rừng cây, dòng nước hay thác nước? Hãy chọn một nét đẹp để kể với người thân nhé!",
         "fact": "Suối Tiên ở xã Quế Sơn Trung, có rừng cây xanh.",
         "q": "Cảnh vật nào được giới thiệu bên Suối Tiên?",
         "answers": [
@@ -370,7 +370,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-3",
         "title": "Dòng nước và thác ở Suối Tiên",
-        "narration": "Ở Suối Tiên, nước trong và mát. Thác từ trên cao chảy xuống tạo thành hồ. Rừng cây, dòng thác và hồ nước cùng làm nên cảnh đẹp nơi đây. Em thử chỉ trên ảnh: đâu là ghềnh đá, đâu là hồ nước? Đây là ảnh giới thiệu Suối Tiên Quế Sơn từ nguồn Cù Lao Chàm Tour. Nếu được tham quan, em đi cùng người lớn và làm theo hướng dẫn. Nước trông trong, đẹp không có nghĩa là an toàn để tự xuống chơi nhé!",
+        "narration": "Ở Suối Tiên, nước trong và mát. Thác từ trên cao chảy xuống tạo thành hồ. Rừng cây, dòng thác và hồ nước cùng làm nên cảnh đẹp nơi đây. Em thử chỉ trên ảnh: đâu là ghềnh đá, đâu là hồ nước? Đây là ảnh giới thiệu Suối Tiên Quế Sơn từ nguồn Cục Du lịch Quốc gia Việt Nam. Nếu được tham quan, em đi cùng người lớn và làm theo hướng dẫn. Nước trông trong, đẹp không có nghĩa là an toàn để tự xuống chơi nhé!",
         "fact": "Suối Tiên có nước trong, mát và thác trên cao chảy xuống tạo thành hồ.",
         "q": "Theo lời giới thiệu, nước ở Suối Tiên thế nào?",
         "answers": [

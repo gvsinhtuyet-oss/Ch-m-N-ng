@@ -51,6 +51,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const [selected, setSelected] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [correct, setCorrect] = useState(false);
+  const [wrongLocked, setWrongLocked] = useState(false);
+  const wrongTimerRef = useRef<number | null>(null);
   const [showImage, setShowImage] = useState(false);
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const [showVr, setShowVr] = useState(false);
@@ -96,6 +98,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
     setSelected(null);
     setSubmitted(false);
     setCorrect(false);
+    setWrongLocked(false);
+    if (wrongTimerRef.current !== null) window.clearTimeout(wrongTimerRef.current);
     setLockMessage('');
     setNarrationCompleted(false);
     setNarrationMessage('');
@@ -131,19 +135,32 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
     audioService.speakNarration(text, language === 'en' && previewHotspot.narrationEn ? 'en-US' : 'vi-VN',undefined,narrationError);
   };
 
+  useEffect(() => () => {
+    if (wrongTimerRef.current !== null) window.clearTimeout(wrongTimerRef.current);
+  }, []);
+
   const choose = (id: string) => {
-    if (submitted) return;
+    if (submitted || wrongLocked) return;
     setCorrect(false);
     audioService.playSfx('click');
     setSelected(id);
   };
 
   const check = () => {
-    if (submitted || !selected || !hotspot.interaction) return;
+    if (submitted || wrongLocked || !selected || !hotspot.interaction) return;
     const ok = !!hotspot.interaction.options.find(option => option.id === selected)?.isCorrect;
     setCorrect(ok);
-    setSubmitted(ok);
-    if (!ok) setSelected(null);
+    setSubmitted(true);
+    if (!ok) {
+      setWrongLocked(true);
+      if (wrongTimerRef.current !== null) window.clearTimeout(wrongTimerRef.current);
+      wrongTimerRef.current = window.setTimeout(() => {
+        setWrongLocked(false);
+        setSubmitted(false);
+        setSelected(null);
+        wrongTimerRef.current = null;
+      }, 2000);
+    }
     audioService.playSfx(ok ? 'correct' : 'wrong');
     if (ok) {
       setSessionCompletedHotspotIds(current =>
@@ -503,7 +520,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       <button
                         key={option.id}
                         type="button"
-                        disabled={submitted}
+                        disabled={submitted || wrongLocked}
                         onClick={() => choose(option.id)}
                         className={`w-full rounded-xl border px-3.5 py-3 text-left text-[13px] font-bold leading-5 transition sm:text-[14px] ${className}`}
                       >
@@ -517,13 +534,13 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   <p
                     className={`mt-2 rounded-xl p-3 text-[13px] font-bold leading-5 sm:text-[14px] ${correct
                       ? 'bg-emerald-50 text-emerald-700'
-                      : 'bg-amber-50 text-amber-800'}`}
+                      : 'bg-rose-50 text-rose-800 border border-rose-300'}`}
                   >
                     {correct
                       ? (index < station.hotspots.length - 1
                           ? `Chính xác! Em đã mở Điểm ${index + 2}. Hãy tiếp tục khám phá nhé!`
                           : 'Chính xác! Em đã hoàn thành câu hỏi ở điểm cuối.')
-                      : 'Chưa đúng rồi. Em nhìn lại ảnh hoặc nghe thuyết minh nhé!'}
+                      : 'Chưa đúng rồi! Gợi ý: Em nghe lại lời thuyết minh phía trên nhé. Sau 2 giây, em có thể chọn đáp án khác.'}
                   </p>
                 )}
 
@@ -531,7 +548,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   {!submitted && (
                     <button
                       type="button"
-                      disabled={!selected}
+                      disabled={!selected || wrongLocked}
                       onClick={check}
                       className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 py-3.5 text-sm font-black !text-white shadow-md shadow-orange-200/70 transition hover:from-orange-600 hover:to-amber-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
                     >

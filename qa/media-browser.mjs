@@ -9,11 +9,11 @@ for(const viewport of [{width:1366,height:768},{width:390,height:844}]){
  const page=await context.newPage();const errors=[];
  page.on('pageerror',e=>errors.push(e.message));
  await page.goto('http://127.0.0.1:3000/qa/media.html');
- await page.locator('#qa-stations').waitFor();
+ await page.locator('#qa-stations').waitFor({state:'attached'});
  stations=JSON.parse(await page.locator('#qa-stations').textContent());
  for(const station of stations){
   await page.goto('http://127.0.0.1:3000/qa/media.html?station='+station.id);
-  await page.locator('#qa-stations').waitFor();
+  await page.locator('#qa-stations').waitFor({state:'attached'});
   for(let i=0;i<station.points.length;i++){
    const point=station.points[i];
    const label=point.title.replace(/^\d+\.\s*/, '');

@@ -382,9 +382,9 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-4",
         "title": "Giới thiệu cảnh đẹp em yêu",
-        "narration": "Trong sách còn có thác Grăng ở xã Bến Giằng và thác Hòa Phú Thành ở xã Hòa Vang. Suối và thác là những cảnh đẹp, thu hút mọi người đến tìm hiểu thiên nhiên. Để giới thiệu một nơi, em hãy nói ba điều: tên là gì, ở đâu và có cảnh gì đẹp. Ví dụ: Suối Tiên ở xã Quế Sơn Trung, có rừng xanh, nước trong và thác chảy xuống hồ. Em có thể sưu tầm ảnh hoặc vẽ để kể với người thân. Khi tham quan, nhớ giữ sạch cảnh quan nhé!",
+        "narration": "Các em ơi! Đà Nẵng của chúng ta có nhiều dòng suối và thác nước rất đẹp. Đây là thác Grăng ở xã Bến Giằng. Còn đây là thác Hòa Phú Thành ở xã Hòa Vang. Khi giới thiệu một cảnh đẹp, chúng mình hãy nhớ nói ba điều: tên địa điểm, nơi có cảnh đẹp và cảnh vật nổi bật. Ví dụ, Suối Tiên ở xã Quế Sơn Trung có rừng cây xanh, dòng nước trong mát và thác nước chảy xuống hồ. Các em hãy cùng yêu quý và giữ gìn những cảnh đẹp của quê hương nhé!",
         "fact": "Giới thiệu một suối hoặc thác: nói tên, địa điểm và nét đẹp của nơi ấy.",
-        "q": "Khi giới thiệu một dòng suối, em có thể nói gì?",
+        "q": "Khi giới thiệu một cảnh đẹp, chúng mình cần nói những điều gì?",
         "answers": [
           "Tên, địa điểm và một nét đẹp của suối",
           "Chỉ tên các món ăn",

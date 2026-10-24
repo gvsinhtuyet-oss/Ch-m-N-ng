@@ -141,9 +141,9 @@ export const GRADE3_CONTENT = [
         "title": "Phan Châu Trinh – người mong đất nước đổi mới",
         "narration": "Phan Châu Trinh sinh năm 1872, quê ở làng Tây Lộc, nay thuộc xã Tây Hồ, thành phố Đà Nẵng. Ông học rộng, tài cao và có lòng yêu nước. Sau một thời gian làm quan, ông từ quan để hoạt động vì đất nước. Ông mong người dân được mở mang hiểu biết, có đời sống tốt hơn và đất nước được đổi mới. Em hãy kể lại một điều mình vừa biết về ông nhé!",
         "fact": "Phan Châu Trinh quê ở xã Tây Hồ, là nhà yêu nước coi trọng việc mở mang hiểu biết và đổi mới đất nước.",
-        "q": "Điều nào phù hợp với mong muốn của Phan Châu Trinh?",
+        "q": "Phan Châu Trinh mong người dân được mở mang điều gì?",
         "answers": [
-          "Mở mang hiểu biết, cải thiện đời sống nhân dân",
+          "Hiểu biết",
           "Ngăn người dân đến trường học chữ",
           "Chỉ giữ nguyên mọi cách làm cũ"
         ]
@@ -513,9 +513,9 @@ export const GRADE3_CONTENT = [
         "title": "Nẹp vành, ép vành, chống thấm",
         "narration": "Sau khi đan thân, người thợ dùng các thanh tre nẹp chặt vành, rồi dùng dụng cụ ép vành thuyền. Tiếp đó, dầu rái được phủ lên bề mặt thúng để chống thấm. Thúng được phơi nắng khoảng 3 đến 4 ngày cho dầu khô, giúp dùng được lâu bền hơn. Mỗi công đoạn đều góp phần làm chiếc thúng hoàn chỉnh. Em hãy thử kể lại trình tự: đan thân, nẹp vành, ép vành, phủ dầu và phơi khô.",
         "fact": "Nẹp, ép vành giúp hoàn thiện thúng; phủ dầu rái và phơi khô giúp chống thấm.",
-        "q": "Vì sao người thợ phủ dầu rái lên thuyền thúng?",
+        "q": "Người thợ phủ dầu rái lên thúng để làm gì?",
         "answers": [
-          "Để chống thấm nước và tăng độ bền",
+          "Chống thấm",
           "Để biến tre thành kim loại",
           "Để làm thúng tự chạy bằng máy"
         ]

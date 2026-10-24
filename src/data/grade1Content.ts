@@ -271,9 +271,9 @@ export const GRADE1_CONTENT = [
         "title": "Chơi cùng bạn và gia đình",
         "narration": "Em hãy cùng nhóm chọn một trò chơi dân gian yêu thích. Trước khi chơi, các bạn cùng nói lại cách chơi và luật chơi, rồi thực hiện theo hướng dẫn của thầy cô. Cùng hợp tác và giữ luật sẽ giúp cuộc chơi vui hơn. Em cũng có thể kể tên và cách chơi một trò dân gian khác mà mình biết. Về nhà, hãy mời người thân cùng chơi một trò phù hợp nhé!",
         "fact": "Em biết giới thiệu cách chơi và cùng bạn, người thân tham gia trò chơi dân gian.",
-        "q": "Em có thể mời ai cùng chơi trò phù hợp ở nhà?",
+        "q": "Ở nhà, em có thể mời ai cùng chơi?",
         "answers": [
-          "Người thân trong gia đình",
+          "Người thân",
           "Chỉ người lạ",
           "Không được chơi cùng ai"
         ]
@@ -497,9 +497,9 @@ export const GRADE1_CONTENT = [
         "title": "Đầu bếp siêu hạng",
         "narration": "Đến lượt nhóm em làm Đầu bếp siêu hạng! Cùng chọn một món truyền thống của Đà Nẵng, vẽ món ăn rồi nhờ thầy cô hỗ trợ ghi tên nguyên liệu. Khi giới thiệu, em nói: món gì, làm từ những nguyên liệu nào, em có thích món đó không và vì sao. Mỗi bạn có thể thích một món khác nhau. Ở nhà, em cùng người thân làm việc vừa sức; người lớn sử dụng dao, bếp và nước nóng. Nhớ cảm ơn người đã chuẩn bị món ăn nhé!",
         "fact": "Giới thiệu món ăn bằng tên món, nguyên liệu và điều em thích hoặc chưa thích về món đó.",
-        "q": "Sản phẩm nhóm có thể làm trong trò Đầu bếp siêu hạng là gì?",
+        "q": "Nhóm em có thể làm gì để giới thiệu món ăn?",
         "answers": [
-          "Tranh món ăn kèm tên nguyên liệu",
+          "Vẽ món ăn",
           "Một bức tường thành",
           "Một bản chỉ đường đến suối"
         ]

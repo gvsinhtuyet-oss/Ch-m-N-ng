@@ -67,7 +67,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
       if (!panel || !map) return;
       const panelStyle = getComputedStyle(panel);
       if (panelStyle.overflowY === 'auto' || panelStyle.overflowY === 'scroll') {
-        panel.scrollTo({top: Math.max(0, map.offsetTop - panel.offsetTop), behavior: 'smooth'});
+        panel.scrollTo({top: Math.max(0, panel.scrollTop + map.getBoundingClientRect().top - panel.getBoundingClientRect().top), behavior: 'smooth'});
       } else {
         map.scrollIntoView({behavior: 'smooth', block: 'start'});
       }

@@ -1,5 +1,5 @@
+import {RealPhotoGallery} from '../RealPhotoGallery';
 import {allHotspotsAnswered} from '../../features/stations/stageAccess';
-import {LearningMediaCredit} from '../LearningMediaCredit';
 import { contentService } from '../../services/ContentService';
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
@@ -408,7 +408,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
             <img
               src={hotspot.image}
               alt={hotspot.titleVi}
-              className={`w-full h-full ${station.grade === 1 ? 'object-contain' : 'object-cover'} transition-transform duration-700 group-hover:scale-103`}
+              className={`w-full h-full object-contain`}
               onError={(e) => {
                 const image = e.currentTarget;
                 if (image.src.endsWith('/adventure-background.svg')) return;
@@ -484,11 +484,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
             </div>
           </div>
 
-          {/* Media source and copyright credit */}
-          <div className="px-5 py-2.5 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center justify-between text-[11px] text-slate-500">
-            <LearningMediaCredit src={hotspot.image} credit={hotspot.mediaCredit}/>
-            <span className="text-slate-600 font-medium">Tư liệu đang chuẩn hóa</span>
-          </div>
+          <RealPhotoGallery stationId={station.id} index={station.hotspots.findIndex(p=>p.id===hotspot.id)}/>
         </div>
 
         {/* Narrative, Key Fact & Knowledge Interaction (5 cols) */}

@@ -1,3 +1,4 @@
+import {REAL_PHOTOS} from './src/data/realPhotos';
 import {narrationTeacherNote} from './src/services/NarrationReviewPolicy';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
@@ -26,10 +27,17 @@ test('source-specific facts, two Suoi Mo sites, no invented fieldtrip/photo clai
  const citadel=byId('g1-station-4').hotspots.map(h=>h.narrationVi+narrationTeacherNote(h.id)).join(' ');for(const fact of ['2017','cửa phía nam','cửa phía đông','Pháp','Tây Ban Nha','Nguyễn Tri Phương'])assert.ok(citadel.includes(fact));
  const food=byId('g1-station-5').hotspots.map(h=>h.narrationVi+narrationTeacherNote(h.id)).join(' ');for(const fact of ['mì Quảng','cao lầu','bê thui','bánh đập','cơm gà','nem nướng','đậu phụng','bánh tráng'])assert.ok(food.includes(fact));
 });
-test('all 20 learning points use packaged photo or illustration assets with honest credits',()=>{
- assert.equal(GRADE1_MEDIA.length,18);assert.equal(GRADE1_MEDIA.filter(m=>m.kind==='photo').length,6);assert.equal(GRADE1_MEDIA.filter(m=>m.kind==='illustration').length,12);
- for(const s of GRADE_1_STATIONS){assert.ok(grade1MediaBySrc(s.coverImage));for(const h of s.hotspots){assert.match(h.image,/^\/learning\/grade1\/media\/[a-z0-9-]+\.webp$/);assert.ok(existsSync('public'+h.image),h.id);const m=grade1MediaBySrc(h.image)!;assert.ok(m);assert.ok(h.mediaCredit);assert.ok(h.sources?.length);if(m.kind==='photo'){assert.match(m.sourceUrl,/^https:\/\/commons.wikimedia.org\/wiki\/File:/);assert.match(m.licenseUrl,/creativecommons.org/);assert.ok(m.author);}else{assert.match(m.author,/AI/);assert.match(m.changes,/không phải ảnh chụp/);}}const map=readFileSync('public'+s.journeyMap!.image,'utf8');assert.match(map,/không phải ảnh tư liệu/);}
- const streams=GRADE_1_STATIONS.find(s=>s.id==='g1-station-3')!;for(const h of streams.hotspots)assert.equal(grade1MediaBySrc(h.image)!.kind,'illustration');assert.match(streams.hotspots[2].narrationVi+narrationTeacherNote(streams.hotspots[2].id),/không phải ảnh tư liệu/);
+test('all 20 learning points use local reviewed photographs with source metadata',()=>{
+ for(const station of GRADE_1_STATIONS){
+  for(const src of [station.coverImage,...station.hotspots.map(h=>h.image)]){
+   assert.ok(src.startsWith('/')&&src.endsWith('.webp'));assert.ok(existsSync('public'+src));
+   const m=REAL_PHOTOS.find(p=>p.src===src)||grade1MediaBySrc(src);
+   assert.ok(m);assert.ok(!('kind' in m)||m.kind==='photo');assert.ok('sourceUrl' in m&&m.sourceUrl&&m.author);
+  }
+  for(const h of station.hotspots){assert.ok(h.mediaCredit&&h.sources?.length);}
+  assert.match(readFileSync('public'+station.journeyMap!.image,'utf8'),/không phải ảnh tư liệu/);
+ }
+ const stream=GRADE_1_STATIONS.find(s=>s.id==='g1-station-3')!;assert.ok(stream.hotspots.every(h=>REAL_PHOTOS.some(m=>m.src===h.image&&m.sourceUrl.includes('vietnamtourism.vn'))));
 });
 
 test('media revision discards bundled schematic overrides without mutating storage or losing custom photo credit',()=>{

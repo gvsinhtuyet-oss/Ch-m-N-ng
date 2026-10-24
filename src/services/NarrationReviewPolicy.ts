@@ -8,7 +8,7 @@ export function currentNarrationContent(content:StationContent):StationContent {
  const hotspots=content.hotspots.map(h=>{
   const r=NARRATION_REVIEW[h.id as keyof typeof NARRATION_REVIEW];
   if(!r)return h;
-  const narrationVi=h.narrationVi===r.before?r.after:h.narrationVi;
+  const narrationVi=(h.narrationVi===r.before||('previousAfter' in r&&h.narrationVi===r.previousAfter)||('previousNarrations' in r&&r.previousNarrations.some(text=>text===h.narrationVi)))?r.after:h.narrationVi;
   let interaction=h.interaction;
   let keyFactVi=h.keyFactVi;
   if('fact' in r && keyFactVi===r.fact.before)keyFactVi=r.fact.after;

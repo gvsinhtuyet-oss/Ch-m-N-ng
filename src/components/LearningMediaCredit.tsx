@@ -1,3 +1,4 @@
+import {REAL_PHOTOS} from '../data/realPhotos';
 import React from 'react';
 import {grade5PhotoReferenceForSrc} from '../data/grade5PhotoReferences';
 import {grade5MediaBySrc} from '../data/grade5Media';
@@ -7,6 +8,8 @@ import {grade3MediaBySrc} from '../data/grade3Media';
 import {grade45MediaBySrc} from '../data/grade45Media';
 import {grade1MediaBySrc} from '../data/grade1Media';
 export function LearningMediaCredit({src,credit}:{src:string;credit?:string}){
+ const real=REAL_PHOTOS.find(p=>p.src===src);
+ if(real)return <span>{real.subject} · {real.author} · {real.license}{'licenseUrl' in real&&typeof real.licenseUrl==='string'&&<> · <a href={real.licenseUrl} target="_blank" rel="noopener noreferrer">Giấy phép</a></>} · <a href={real.sourceUrl} target="_blank" rel="noopener noreferrer">Nguồn ảnh</a></span>;
  const grade1=grade1MediaBySrc(src);
  if(grade1){
   if(grade1.kind==='illustration')return <span className="block break-words [overflow-wrap:anywhere]">{grade1.caption} <span className="block">{grade1.author} · {grade1.changes}</span>{grade1.id.startsWith('stream-')&&<span className="mt-2 block rounded-lg border border-emerald-300 bg-emerald-50 p-2 text-emerald-950"><strong>Ảnh thực tế Suối Tiên (xã Quế Sơn Trung): </strong><a className="font-semibold underline" href="https://baodanang.vn/suoi-tien-moi-goi-3325573.html" target="_blank" rel="noopener noreferrer">Xem ảnh thác và rừng tại Báo Đà Nẵng (Duy Thái, 25/02/2026)</a>. <span className="block text-xs">Ảnh tư liệu nằm trên trang báo; tranh đang hiển thị chỉ là minh họa, không phải ảnh địa danh.</span></span>}</span>;

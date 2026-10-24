@@ -32,7 +32,7 @@ test('questions, reflection, passport summaries and assets agree with the revise
  for(const s of stations){assert.equal(s.version.version,GRADE4_CONTENT_REVISION);assert.equal(s.challenge.questions!.length,5);assert.equal(s.journeyMap?.summaryNodes.length,s.hotspots.length);assert.equal(s.checkIn.actionOptions.length,3);
  const questions=new Set(s.hotspots.map(h=>h.interaction!.questionVi));for(const q of s.challenge.questions!){assert.ok(!questions.has(q.questionVi));assert.equal(q.options.filter(o=>o.isCorrect).length,1);}
  for(const h of s.hotspots){assert.ok(h.narrationVi.length>150);assert.equal(h.interaction!.options.filter(o=>o.isCorrect).length,1);assert.ok(existsSync('public'+h.image));assert.ok(s.journeyMap?.summaryNodes.some(n=>n.titleVi===h.titleVi&&n.textVi===h.keyFactVi));assert.doesNotMatch(h.narrationVi,/chưa gắn|đề cương dự thảo|không yêu cầu học thuộc/);}
- for(const src of [s.coverImage,s.journeyMap!.image!]){assert.ok(existsSync('public'+src));assert.match(readFileSync('public'+src,'utf8'),/không phải ảnh tư liệu/);}
+ for(const src of [s.coverImage,s.journeyMap!.image!]){assert.ok(existsSync('public'+src));if(src.endsWith('.svg'))assert.match(readFileSync('public'+src,'utf8'),/không phải ảnh tư liệu/);else assert.equal(readFileSync('public'+src).toString('ascii',8,12),'WEBP');}
  }
 });
 test('old shipped grade4 content upgrades to all new points without mutating resources or input',()=>{

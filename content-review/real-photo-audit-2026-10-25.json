@@ -1,0 +1,1226 @@
+[
+  {
+    "id": "g1-station-1",
+    "title": "Quê hương em",
+    "cover": "/learning/grade1/media/han-river-bridge.webp",
+    "points": [
+      {
+        "id": "g1-home-1",
+        "title": "1. Nơi em ở",
+        "image": "/learning/grade1/media/han-river-bridge.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g1-home-2",
+        "title": "2. Ngôi trường của em",
+        "image": "/images/real-photos/school-kim-dong.webp",
+        "local": true,
+        "source": "https://baodanang.vn/truong-tieu-hoc-kim-dong-tp-tam-ky-khanh-thanh-thu-vien-xanh-3133116.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g1-home-3",
+        "title": "3. Từ nhà đến trường",
+        "image": "/learning/grade1/media/han-river-bridge.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g1-home-4",
+        "title": "4. Cùng yêu nơi mình sống",
+        "image": "/images/real-photos/hoc-sinh-cham-cay.webp",
+        "local": true,
+        "source": "https://baodanang.vn/song-xanh-tu-truong-hoc-3321975.html",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g1-station-4",
+    "title": "Thành Điện Hải",
+    "cover": "/learning/grade1/media/dien-hai-gate.webp",
+    "points": [
+      {
+        "id": "tdh-thanh-co",
+        "title": "1. Thành Điện Hải – di tích lịch sử",
+        "image": "/learning/grade1/media/dien-hai-gate.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "tdh-tuong-thanh-hao",
+        "title": "2. Cửa thành, tường thành và hào",
+        "image": "/learning/grade1/media/dien-hai-moat.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "tdh-dai-bac",
+        "title": "3. Súng thần công và câu chuyện giữ thành",
+        "image": "/learning/grade1/media/dien-hai-cannon.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "tdh-nguyen-tri-phuong",
+        "title": "4. Nhớ người có công",
+        "image": "/learning/grade1/media/nguyen-tri-phuong.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g1-station-2",
+    "title": "Trò chơi dân gian",
+    "cover": "/images/real-photos/bit-mat-bat-de.webp",
+    "points": [
+      {
+        "id": "g1-game-1",
+        "title": "1. Những trò chơi quen thuộc",
+        "image": "/images/real-photos/bit-mat-bat-de.webp",
+        "local": true,
+        "source": "https://baodanang.vn/vui-he-voi-tro-choi-dan-gian-3191760.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g1-game-2",
+        "title": "2. Ai là người bắt dê?",
+        "image": "/images/real-photos/bit-mat-bat-de.webp",
+        "local": true,
+        "source": "https://baodanang.vn/vui-he-voi-tro-choi-dan-gian-3191760.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g1-game-3",
+        "title": "3. Phạm vi và lượt chơi",
+        "image": "/images/real-photos/bit-mat-bat-de.webp",
+        "local": true,
+        "source": "https://baodanang.vn/vui-he-voi-tro-choi-dan-gian-3191760.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g1-game-4",
+        "title": "4. Chơi cùng bạn và gia đình",
+        "image": "/images/real-photos/bit-mat-bat-de.webp",
+        "local": true,
+        "source": "https://baodanang.vn/vui-he-voi-tro-choi-dan-gian-3191760.html",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g1-station-3",
+    "title": "Những dòng suối ở thành phố Đà Nẵng",
+    "cover": "/images/real-photos/suoi-tien-official-1.webp",
+    "points": [
+      {
+        "id": "g1-stream-1",
+        "title": "1. Gọi tên suối, thác",
+        "image": "/images/real-photos/suoi-tien-official-1.webp",
+        "local": true,
+        "source": "https://vietnamtourism.vn/index.php/tourism/items/1056/5",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g1-stream-2",
+        "title": "2. Rừng cây bên Suối Tiên",
+        "image": "/images/real-photos/suoi-tien-official-1.webp",
+        "local": true,
+        "source": "https://vietnamtourism.vn/index.php/tourism/items/1056/5",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g1-stream-3",
+        "title": "3. Dòng nước và thác ở Suối Tiên",
+        "image": "/images/real-photos/suoi-tien-official-2.webp",
+        "local": true,
+        "source": "https://vietnamtourism.vn/index.php/tourism/items/1056/5",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g1-stream-4",
+        "title": "4. Giới thiệu cảnh đẹp em yêu",
+        "image": "/images/real-photos/suoi-tien-official-2.webp",
+        "local": true,
+        "source": "https://vietnamtourism.vn/index.php/tourism/items/1056/5",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g1-station-5",
+    "title": "Món ăn truyền thống",
+    "cover": "/learning/grade1/media/mi-quang.webp",
+    "points": [
+      {
+        "id": "g1-food-1",
+        "title": "1. Món ngon quê hương",
+        "image": "/learning/grade1/media/mi-quang.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:M%C3%AC_Qu%E1%BA%A3ng%2C_Da_Nang%2C_Vietnam.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g1-food-2",
+        "title": "2. Nguyên liệu món mì Quảng",
+        "image": "/learning/grade1/media/mi-quang.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:M%C3%AC_Qu%E1%BA%A3ng%2C_Da_Nang%2C_Vietnam.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g1-food-3",
+        "title": "3. Bày tô mì và thưởng thức",
+        "image": "/learning/grade1/media/mi-quang.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:M%C3%AC_Qu%E1%BA%A3ng%2C_Da_Nang%2C_Vietnam.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g1-food-4",
+        "title": "4. Đầu bếp siêu hạng",
+        "image": "/learning/grade1/media/mi-quang.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:M%C3%AC_Qu%E1%BA%A3ng%2C_Da_Nang%2C_Vietnam.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g2-station-4",
+    "title": "Di sản văn hóa thế giới Hội An",
+    "cover": "/learning/grade2/media/hoi-an-pho-co.webp",
+    "points": [
+      {
+        "id": "hoi-an-pho-co",
+        "title": "1. Phố cổ Hội An",
+        "image": "/learning/grade2/media/hoi-an-pho-co.webp",
+        "local": true,
+        "source": "https://github.com/gvsinhtuyet-oss/Ch-m-N-ng/blob/main/src/data/grade2Media.ts",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "hoi-an-duong-pho",
+        "title": "2. Những con đường ở phố cổ",
+        "image": "/learning/grade2/media/hoi-an-duong-pho.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "hoi-an-cong-trinh",
+        "title": "3. Những công trình cổ kính",
+        "image": "/learning/grade2/media/hoi-an-cong-trinh.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "hoi-an-hoat-dong",
+        "title": "4. Hoạt động văn hóa nghệ thuật",
+        "image": "/learning/grade2/media/hoi-an-hoat-dong.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "hoi-an-thanh-ha",
+        "title": "5. Làng gốm Thanh Hà",
+        "image": "/learning/grade2/media/hoi-an-thanh-ha.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "hoi-an-tra-que",
+        "title": "6. Làng rau Trà Quế",
+        "image": "/learning/grade2/media/hoi-an-tra-que.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g2-station-3",
+    "title": "Nhà thờ Nguyễn Văn Thoại – Nhà lưu niệm Huỳnh Thúc Kháng",
+    "cover": "/learning/grade2/media/g2s3-thoai.webp",
+    "points": [
+      {
+        "id": "g2s3-thoai",
+        "title": "1. Danh tướng Nguyễn Văn Thoại",
+        "image": "/learning/grade2/media/g2s3-thoai.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s3-nha-tho",
+        "title": "2. Nhà thờ Tiền hiền làng An Hải và Thoại Ngọc Hầu",
+        "image": "/learning/grade2/media/g2s3-nha-tho.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s3-huynh",
+        "title": "3. Cụ Huỳnh Thúc Kháng",
+        "image": "/learning/grade2/media/g2s3-huynh.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s3-luu-niem",
+        "title": "4. Nhà lưu niệm Huỳnh Thúc Kháng",
+        "image": "/learning/grade2/media/g2s3-luu-niem.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g2-station-5",
+    "title": "Lễ hội truyền thống ở thành phố Đà Nẵng",
+    "cover": "/learning/grade2/media/g2s5-le-hoi.webp",
+    "points": [
+      {
+        "id": "g2s5-le-hoi",
+        "title": "1. Những lễ hội quen thuộc",
+        "image": "/learning/grade2/media/g2s5-le-hoi.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s5-phan-le",
+        "title": "2. Phần lễ",
+        "image": "/learning/grade2/media/g2s5-phan-le.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s5-phan-hoi",
+        "title": "3. Phần hội",
+        "image": "/learning/grade2/media/g2s5-phan-hoi.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s5-y-nghia",
+        "title": "4. Ý nghĩa của lễ hội",
+        "image": "/learning/grade2/media/g2s5-y-nghia.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s5-ung-xu",
+        "title": "5. Em đi hội văn minh",
+        "image": "/learning/grade2/media/g2s5-ung-xu.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g2-station-2",
+    "title": "Cù Lao Chàm – Khu bảo tồn thiên nhiên Sơn Trà",
+    "cover": "/learning/grade2/media/g2s2-tong-quan.webp",
+    "points": [
+      {
+        "id": "g2s2-tong-quan",
+        "title": "1. Cù Lao Chàm – Hòn Lao là đảo chính",
+        "image": "/learning/grade2/media/g2s2-tong-quan.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s2-cu-lao",
+        "title": "2. Những nét đặc sắc của Cù Lao Chàm",
+        "image": "/learning/grade2/media/g2s2-cu-lao.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s2-hoat-dong",
+        "title": "3. Hoạt động khi tham quan Cù Lao Chàm",
+        "image": "/learning/grade2/media/g2s2-hoat-dong.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s2-son-tra",
+        "title": "4. Sinh vật ở Khu bảo tồn thiên nhiên Sơn Trà",
+        "image": "/learning/grade2/media/g2s2-son-tra.webp",
+        "local": true,
+        "source": "https://github.com/gvsinhtuyet-oss/Ch-m-N-ng/blob/main/src/data/grade2Media.ts",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s2-bao-ve",
+        "title": "5. Em bảo vệ Cù Lao Chàm và Sơn Trà",
+        "image": "/learning/grade2/media/g2s2-bao-ve.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g2-station-1",
+    "title": "Chiếu Cẩm Nê – Chiếu Bàn Thạch",
+    "cover": "/learning/grade2/media/g2s1-lang-chieu.webp",
+    "points": [
+      {
+        "id": "g2s1-lang-chieu",
+        "title": "1. Hai làng chiếu truyền thống",
+        "image": "/learning/grade2/media/g2s1-lang-chieu.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s1-nguyen-lieu",
+        "title": "2. Nguyên liệu làm chiếu",
+        "image": "/learning/grade2/media/g2s1-nguyen-lieu.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s1-cac-buoc",
+        "title": "3. Chuẩn bị và dệt chiếu",
+        "image": "/learning/grade2/media/g2s1-cac-buoc.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s1-gian-det",
+        "title": "4. Dụng cụ của người thợ",
+        "image": "/learning/grade2/media/g2s1-gian-det.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g2s1-tham-quan",
+        "title": "5. Em đến làng nghề",
+        "image": "/learning/grade2/media/g2s1-tham-quan.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g3-station-2",
+    "title": "Hoàng Diệu – Phan Châu Trinh",
+    "cover": "/learning/grade3/photos/phan-chau-trinh.webp",
+    "points": [
+      {
+        "id": "dn3-huynh-thuc-khang",
+        "title": "1. Hoàng Diệu – tấm gương yêu nước",
+        "image": "/images/real-photos/hoang-dieu-nha.webp",
+        "local": true,
+        "source": "https://baodaklak.vn/channel/9803/202105/en-quang-nam-tham-nha-luu-niem-tong-doc-hoang-dieu-5734778/",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "dn3-phan-chau-trinh",
+        "title": "2. Phan Châu Trinh – người mong đất nước đổi mới",
+        "image": "/learning/grade3/photos/phan-chau-trinh.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "dn3-phong-trao-duy-tan",
+        "title": "3. Phong trào Duy Tân – học để tiến bộ",
+        "image": "/learning/grade3/photos/tran-quy-cap.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "dn3-dau-chan-hom-nay",
+        "title": "4. Ghi nhớ công lao người đi trước",
+        "image": "/images/real-photos/hoang-dieu-lang.webp",
+        "local": true,
+        "source": "https://baodaklak.vn/channel/9803/202105/en-quang-nam-tham-nha-luu-niem-tong-doc-hoang-dieu-5734778/",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g3-station-3",
+    "title": "Cộng đồng các dân tộc ở thành phố Đà Nẵng",
+    "cover": "/learning/grade3/photos/co-tu-costumes.webp",
+    "points": [
+      {
+        "id": "g3-3-point-1",
+        "title": "1. Các cộng đồng cùng chung sống",
+        "image": "/learning/grade3/photos/guol-model.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g3-3-point-2",
+        "title": "2. Nét văn hóa của đồng bào Cơ Tu",
+        "image": "/learning/grade3/photos/co-tu-costumes.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g3-3-point-3",
+        "title": "3. Cây nêu của đồng bào Co",
+        "image": "/images/real-photos/co-cay-neu.webp",
+        "local": true,
+        "source": "https://baodanang.vn/nghe-thuat-tao-hinh-tren-cot-le-cua-nguoi-co-3305716.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g3-3-point-4",
+        "title": "4. Cùng giữ gìn nét đẹp văn hóa",
+        "image": "/learning/grade3/photos/co-tu-bracelets.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g3-station-1",
+    "title": "Bãi biển Mỹ Khê – Bãi biển Bàn Than",
+    "cover": "/learning/grade3/photos/my-khe.webp",
+    "points": [
+      {
+        "id": "g3-1-point-1",
+        "title": "1. Mỹ Khê – bờ cát dài và phẳng",
+        "image": "/learning/grade3/photos/my-khe.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:My_Khe_Beach_Da_Nang.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g3-1-point-2",
+        "title": "2. Bàn Than – đá đen và rêu xanh",
+        "image": "/learning/grade3/photos/ban-than.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g3-1-point-3",
+        "title": "3. Nhận biết hệ thống cứu hộ Mỹ Khê",
+        "image": "/images/real-photos/my-khe-31.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/en/kham-pha/chiem-nguong-bien-my-khe-1-trong-10-bai-bien-dep-nhat-chau-a",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g3-1-point-4",
+        "title": "4. Vui chơi an toàn, giữ biển sạch",
+        "image": "/images/real-photos/my-khe-31.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/en/kham-pha/chiem-nguong-bien-my-khe-1-trong-10-bai-bien-dep-nhat-chau-a",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g3-station-4",
+    "title": "Nước mắm Nam Ô",
+    "cover": "/images/real-photos/nam-o-lang.webp",
+    "points": [
+      {
+        "id": "g3-4-point-1",
+        "title": "1. Nam Ô – làng nghề bên cửa sông",
+        "image": "/images/real-photos/nam-o-lang.webp",
+        "local": true,
+        "source": "https://viettimes.vn/anh-ngam-quy-trinh-che-bien-ca-com-thanh-nuoc-mam-nam-o-tru-danh-post164376.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g3-4-point-2",
+        "title": "2. Cá cơm than và muối biển",
+        "image": "/images/real-photos/nam-o-ca.webp",
+        "local": true,
+        "source": "https://viettimes.vn/anh-ngam-quy-trinh-che-bien-ca-com-thanh-nuoc-mam-nam-o-tru-danh-post164376.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g3-4-point-3",
+        "title": "3. Bốn bước làm nước mắm",
+        "image": "/images/real-photos/nam-o-muoi.webp",
+        "local": true,
+        "source": "https://viettimes.vn/anh-ngam-quy-trinh-che-bien-ca-com-thanh-nuoc-mam-nam-o-tru-danh-post164376.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g3-4-point-4",
+        "title": "4. Quý đặc sản, gìn giữ làng nghề",
+        "image": "/images/real-photos/nam-o-chai.webp",
+        "local": true,
+        "source": "https://viettimes.vn/anh-ngam-quy-trinh-che-bien-ca-com-thanh-nuoc-mam-nam-o-tru-danh-post164376.html",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g3-station-5",
+    "title": "Nghề đan thuyền thúng ở Sơn Trà",
+    "cover": "/images/real-photos/thung-dan-than.webp",
+    "points": [
+      {
+        "id": "g3-5-point-1",
+        "title": "1. Nghề thúng chai bên biển",
+        "image": "/images/real-photos/thung-dan-than.webp",
+        "local": true,
+        "source": "https://baovanhoa.vn/kinh-te/kham-pha-nghe-dan-thung-chai-ven-song-tra-bong-93839.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g3-5-point-2",
+        "title": "2. Từ cây tre đến thân thúng",
+        "image": "/images/real-photos/thung-nan.webp",
+        "local": true,
+        "source": "https://baovanhoa.vn/kinh-te/kham-pha-nghe-dan-thung-chai-ven-song-tra-bong-93839.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g3-5-point-3",
+        "title": "3. Nẹp vành, ép vành, chống thấm",
+        "image": "/images/real-photos/thung-dan.webp",
+        "local": true,
+        "source": "https://baovanhoa.vn/kinh-te/kham-pha-nghe-dan-thung-chai-ven-song-tra-bong-93839.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g3-5-point-4",
+        "title": "4. Công dụng và giá trị của thuyền thúng",
+        "image": "/images/real-photos/thung-thanh-pham.webp",
+        "local": true,
+        "source": "https://baovanhoa.vn/kinh-te/kham-pha-nghe-dan-thung-chai-ven-song-tra-bong-93839.html",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g4-station-1",
+    "title": "Thiên nhiên và con người Đà Nẵng",
+    "cover": "/learning/grade3/photos/my-khe.webp",
+    "points": [
+      {
+        "id": "g4-station-1-textbook-point-1",
+        "title": "1. Đà Nẵng trên bản đồ",
+        "image": "/images/real-photos/danang-map-2025.webp",
+        "local": true,
+        "source": "https://baodanang.vn/nghi-quyet-cua-quoc-hoi-ve-don-vi-hanh-chinh-cap-xa-thanh-pho-da-nang-nam-2025-3162511.html",
+        "format": "webp",
+        "kind": "map"
+      },
+      {
+        "id": "g4-station-1-textbook-point-2",
+        "title": "2. Núi, trung du và đồng bằng ven biển",
+        "image": "/learning/grade45/photos/hon-kem.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:Honkemdadung.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-1-textbook-point-3",
+        "title": "3. Khí hậu và những dòng sông",
+        "image": "/learning/grade5/photos/thu-bon-2018.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:Thu_Bon_River_in_the_Duy_Xuy%C3%AAn_District.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-1-textbook-point-4",
+        "title": "4. Giữ gìn rừng, biển và sinh vật",
+        "image": "/learning/grade2/media/g2s2-son-tra.webp",
+        "local": true,
+        "source": "https://github.com/gvsinhtuyet-oss/Ch-m-N-ng/blob/main/src/data/grade2Media.ts",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-1-textbook-point-5",
+        "title": "5. Con người và những nét đẹp quê hương",
+        "image": "/images/real-photos/phuoc-kieu-khuon.webp",
+        "local": true,
+        "source": "https://baodanang.vn/channel/5433/202310/lang-duc-dong-phuoc-kieu-3958937/",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-1-textbook-point-6",
+        "title": "6. Em giới thiệu và chăm sóc quê hương",
+        "image": "/learning/grade3/photos/my-khe.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:My_Khe_Beach_Da_Nang.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g4-station-3",
+    "title": "Tìm hiểu một số hoạt động kinh tế Đà Nẵng",
+    "cover": "/images/real-photos/ma-chau-xuong.webp",
+    "points": [
+      {
+        "id": "g4-station-3-textbook-point-1",
+        "title": "1. Công nghiệp làm ra sản phẩm",
+        "image": "/images/real-photos/ma-chau-xuong.webp",
+        "local": true,
+        "source": "https://vietnam.vnanet.vn/english/english/english/tin-tuc/tam-tangs-silk-36803.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-3-textbook-point-2",
+        "title": "2. Dịch vụ và du lịch",
+        "image": "/learning/grade2/media/hoi-an-pho-co.webp",
+        "local": true,
+        "source": "https://github.com/gvsinhtuyet-oss/Ch-m-N-ng/blob/main/src/data/grade2Media.ts",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-3-textbook-point-3",
+        "title": "3. Nông nghiệp và cách làm mới",
+        "image": "/images/real-photos/tra-que-rau.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/en/lang-rau-tra-que",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-3-textbook-point-4",
+        "title": "4. Kinh tế biển và sự kết nối",
+        "image": "/images/real-photos/tien-sa-9.webp",
+        "local": true,
+        "source": "https://danangport.com/cau-ben/",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-3-textbook-point-5",
+        "title": "5. Làng nghề và công việc của người thân",
+        "image": "/learning/grade3/photos/nam-o.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g4-station-2",
+    "title": "Khu đền tháp Mỹ Sơn – Bảo tàng Điêu khắc Chăm Đà Nẵng",
+    "cover": "/images/real-photos/my-son.webp",
+    "points": [
+      {
+        "id": "g4-station-2-textbook-point-1",
+        "title": "1. Mỹ Sơn trong thung lũng",
+        "image": "/images/real-photos/my-son.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/en/di-san-unesco-vi/bia-ma-nhai-tai-danh-thang-ngu-hanh-son",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-2-textbook-point-2",
+        "title": "2. Dấu ấn nhiều thế kỉ",
+        "image": "/images/real-photos/my-son.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/en/di-san-unesco-vi/bia-ma-nhai-tai-danh-thang-ngu-hanh-son",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-2-textbook-point-3",
+        "title": "3. Kiến trúc và điêu khắc Chăm-pa",
+        "image": "/images/real-photos/cham-gajasimha.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/tin-tuc/them-2-hien-vat-duoc-cong-nhan-bao-vat-quoc-gia-tai-bao-tang-dieu-khac-cham-da-nang",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-2-textbook-point-4",
+        "title": "4. Bảo tàng Điêu khắc Chăm Đà Nẵng",
+        "image": "/learning/grade45/photos/cham.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:Museum_of_Cham_Sculpture.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-2-textbook-point-5",
+        "title": "5. Từ công trình đến hiện vật",
+        "image": "/images/real-photos/cham-ganesha.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/tin-tuc/them-2-hien-vat-duoc-cong-nhan-bao-vat-quoc-gia-tai-bao-tang-dieu-khac-cham-da-nang",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-2-textbook-point-6",
+        "title": "6. Tham quan và gìn giữ di sản",
+        "image": "/learning/grade45/photos/cham.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:Museum_of_Cham_Sculpture.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g4-thu-bon-hon-kem",
+    "title": "Sông Thu Bồn – Hòn Kẽm Đá Dừng",
+    "cover": "/learning/grade45/photos/hon-kem.webp",
+    "points": [
+      {
+        "id": "g4-thu-bon-hon-kem-textbook-point-1",
+        "title": "1. Từ núi Ngọc Linh đến Cửa Đại",
+        "image": "/learning/grade5/photos/thu-bon-2018.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:Thu_Bon_River_in_the_Duy_Xuy%C3%AAn_District.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-thu-bon-hon-kem-textbook-point-2",
+        "title": "2. Cuộc sống trên dòng Thu Bồn",
+        "image": "/learning/grade5/photos/thu-bon-2018.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:Thu_Bon_River_in_the_Duy_Xuy%C3%AAn_District.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-thu-bon-hon-kem-textbook-point-3",
+        "title": "3. Hòn Kẽm Đá Dừng – sông núi hữu tình",
+        "image": "/learning/grade45/photos/hon-kem.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:Honkemdadung.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-thu-bon-hon-kem-textbook-point-4",
+        "title": "4. Cảnh đẹp và câu chuyện lịch sử",
+        "image": "/learning/grade45/photos/hon-kem.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:Honkemdadung.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-thu-bon-hon-kem-textbook-point-5",
+        "title": "5. Đi thuyền khám phá, giữ sạch dòng sông",
+        "image": "/learning/grade5/photos/thu-bon-2018.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:Thu_Bon_River_in_the_Duy_Xuy%C3%AAn_District.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g4-station-4",
+    "title": "Nghề đúc đồng ở Phước Kiều",
+    "cover": "/images/real-photos/phuoc-kieu-san-pham.webp",
+    "points": [
+      {
+        "id": "g4-station-4-textbook-point-1",
+        "title": "1. Phước Kiều – làng nghề hơn 400 năm",
+        "image": "/images/real-photos/phuoc-kieu-san-pham.webp",
+        "local": true,
+        "source": "https://baodanang.vn/channel/5433/202310/lang-duc-dong-phuoc-kieu-3958937/",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-4-textbook-point-2",
+        "title": "2. Tạo mẫu và làm khuôn",
+        "image": "/images/real-photos/phuoc-kieu-khuon.webp",
+        "local": true,
+        "source": "https://baodanang.vn/channel/5433/202310/lang-duc-dong-phuoc-kieu-3958937/",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-4-textbook-point-3",
+        "title": "3. Nấu, rót đồng và hoàn thiện",
+        "image": "/images/real-photos/phuoc-kieu-nau.webp",
+        "local": true,
+        "source": "https://baodanang.vn/channel/5433/202310/lang-duc-dong-phuoc-kieu-3958937/",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-4-textbook-point-4",
+        "title": "4. Sản phẩm truyền thống và sản phẩm mới",
+        "image": "/images/real-photos/phuoc-kieu-san-pham.webp",
+        "local": true,
+        "source": "https://baodanang.vn/channel/5433/202310/lang-duc-dong-phuoc-kieu-3958937/",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g4-station-4-textbook-point-5",
+        "title": "5. Giữ nghề và giới thiệu làng nghề",
+        "image": "/images/real-photos/phuoc-kieu-san-pham.webp",
+        "local": true,
+        "source": "https://baodanang.vn/channel/5433/202310/lang-duc-dong-phuoc-kieu-3958937/",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g5-ky-anh-me-nhu",
+    "title": "Địa đạo Kỳ Anh – Khu lưu niệm Mẹ Nhu và 07 Dũng sĩ Thanh Khê",
+    "cover": "/images/real-photos/me-nhu-tuong.webp",
+    "points": [
+      {
+        "id": "g5-ky-anh-me-nhu-textbook-point-1",
+        "title": "1. Địa đạo Kỳ Anh ở đâu?",
+        "image": "/images/real-photos/ky-anh-loi-vao.webp",
+        "local": true,
+        "source": "https://www.sggp.org.vn/doc-dao-phao-dai-trong-cat-hon-32km-post805662.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-ky-anh-me-nhu-textbook-point-2",
+        "title": "2. Mạng đường hầm và các bộ phận",
+        "image": "/images/real-photos/ky-anh-duong-ham.webp",
+        "local": true,
+        "source": "https://www.sggp.org.vn/doc-dao-phao-dai-trong-cat-hon-32km-post805662.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-ky-anh-me-nhu-textbook-point-3",
+        "title": "3. Đình Thạch Tân và vai trò địa đạo",
+        "image": "/images/real-photos/ky-anh-dinh.webp",
+        "local": true,
+        "source": "https://www.sggp.org.vn/doc-dao-phao-dai-trong-cat-hon-32km-post805662.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-ky-anh-me-nhu-textbook-point-4",
+        "title": "4. Mẹ Nhu và ngày 26 tháng 12 năm 1968",
+        "image": "/images/real-photos/me-nhu-tuong.webp",
+        "local": true,
+        "source": "https://baodanang.vn/uy-nghiem-tuong-dai-me-dung-si-thanh-khe-3196042.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-ky-anh-me-nhu-textbook-point-5",
+        "title": "5. Khu lưu niệm và tượng Mẹ Dũng sĩ",
+        "image": "/images/real-photos/me-nhu-luu-niem.webp",
+        "local": true,
+        "source": "https://baodanang.vn/uy-nghiem-tuong-dai-me-dung-si-thanh-khe-3196042.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-ky-anh-me-nhu-textbook-point-6",
+        "title": "6. Giới thiệu một di tích bằng lòng biết ơn",
+        "image": "/images/real-photos/ky-anh-tham-quan.webp",
+        "local": true,
+        "source": "https://www.sggp.org.vn/doc-dao-phao-dai-trong-cat-hon-32km-post805662.html",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g5-station-3",
+    "title": "Bà Nà – Hải Vân Quan",
+    "cover": "/learning/grade45/photos/bana.webp",
+    "points": [
+      {
+        "id": "g5-station-3-textbook-point-1",
+        "title": "1. Núi cao và khí hậu Bà Nà",
+        "image": "/learning/grade45/photos/bana.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-station-3-textbook-point-2",
+        "title": "2. Từ khu nghỉ mát đến điểm du lịch",
+        "image": "/learning/grade45/photos/bana.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-station-3-textbook-point-3",
+        "title": "3. Rừng Núi Chúa và bảo tồn thiên nhiên",
+        "image": "/images/real-photos/bana-nature-19.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/ba-na-hills-khai-truong-tuyen-cap-treo-so-8-gia-tang-trai-nghiem-moi-cho-du-khach",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-station-3-textbook-point-4",
+        "title": "4. Hải Vân Quan trên đỉnh đèo",
+        "image": "/learning/grade5/photos/hai-van-2024.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:Fortress_on_top_of_the_Hai_Van_Pass_-_H%E1%BA%A3i_V%C3%A2n_Quan_%282024%29_-_img_22.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-station-3-textbook-point-5",
+        "title": "5. Hai dòng chữ trên cửa quan",
+        "image": "/learning/grade45/photos/hai-van.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-station-3-textbook-point-6",
+        "title": "6. Tu bổ di tích và so sánh hai điểm đến",
+        "image": "/images/real-photos/hai-van-tu-bo.webp",
+        "local": true,
+        "source": "https://baotangdanang.vn/hai-van-quan-mo-cua-don-khach-tham-quan",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g5-station-4",
+    "title": "Danh thắng Ngũ Hành Sơn",
+    "cover": "/learning/grade45/photos/ngu-hanh.webp",
+    "points": [
+      {
+        "id": "nghs-quan-the",
+        "title": "1. Quần thể núi Ngũ Hành Sơn",
+        "image": "/learning/grade45/photos/ngu-hanh.webp",
+        "local": true,
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "nghs-hang-dong-chua",
+        "title": "2. Hang động, chùa cổ và bảo tàng",
+        "image": "/images/real-photos/ma-nhai-1.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/en/di-san-unesco-vi/bia-ma-nhai-tai-danh-thang-ngu-hanh-son",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "nghs-ma-nhai",
+        "title": "3. Ma nhai: chữ khắc lưu giữ ký ức",
+        "image": "/images/real-photos/ma-nhai-2.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/en/di-san-unesco-vi/bia-ma-nhai-tai-danh-thang-ngu-hanh-son",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-station-4-textbook-point-4",
+        "title": "4. Làng đá Non Nước và lịch sử nghề",
+        "image": "/images/real-photos/non-nuoc-3.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/en/lang-da-my-nghe-non-nuoc",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-station-4-textbook-point-5",
+        "title": "5. Sản phẩm đa dạng và bảo vệ núi đá",
+        "image": "/images/real-photos/non-nuoc-1.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/en/lang-da-my-nghe-non-nuoc",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "nghs-lang-da",
+        "title": "6. Giữ gìn cảnh quan và di sản",
+        "image": "/images/real-photos/ma-nhai-1.webp",
+        "local": true,
+        "source": "https://danangfantasticity.com/en/di-san-unesco-vi/bia-ma-nhai-tai-danh-thang-ngu-hanh-son",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g5-lua-ma-chau",
+    "title": "Lụa Mã Châu",
+    "cover": "/images/real-photos/ma-chau-xuong.webp",
+    "points": [
+      {
+        "id": "g5-lua-ma-chau-textbook-point-1",
+        "title": "1. Làng lụa ở Nam Phước",
+        "image": "/images/real-photos/ma-chau-xuong.webp",
+        "local": true,
+        "source": "https://vietnam.vnanet.vn/english/english/english/tin-tuc/tam-tangs-silk-36803.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-lua-ma-chau-textbook-point-2",
+        "title": "2. Trồng dâu và nuôi tằm",
+        "image": "/images/real-photos/ma-chau-tam.webp",
+        "local": true,
+        "source": "https://vietnam.vnanet.vn/english/english/english/tin-tuc/tam-tangs-silk-36803.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-lua-ma-chau-textbook-point-3",
+        "title": "3. Bủa kén và ươm tơ",
+        "image": "/images/real-photos/ma-chau-ken.webp",
+        "local": true,
+        "source": "https://vietnam.vnanet.vn/english/english/english/tin-tuc/tam-tangs-silk-36803.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-lua-ma-chau-textbook-point-4",
+        "title": "4. Dệt và hoàn thiện tấm lụa",
+        "image": "/images/real-photos/ma-chau-det.webp",
+        "local": true,
+        "source": "https://vietnam.vnanet.vn/english/english/english/tin-tuc/tam-tangs-silk-36803.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-lua-ma-chau-textbook-point-5",
+        "title": "5. Sản phẩm và cách giữ nghề",
+        "image": "/images/real-photos/ma-chau-san-pham.webp",
+        "local": true,
+        "source": "https://vietnam.vnanet.vn/english/english/english/tin-tuc/tam-tangs-silk-36803.html",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "g5-station-5",
+    "title": "Sâm Ngọc Linh",
+    "cover": "/learning/grade45/photos/sam.webp",
+    "points": [
+      {
+        "id": "g5-station-5-textbook-point-1",
+        "title": "1. Sâm Việt Nam dưới tán rừng",
+        "image": "/learning/grade45/photos/sam.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:Cay_Sam_Ngoc_Linh_Panax_vietnamensis_tai_Mang_Ri.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-station-5-textbook-point-2",
+        "title": "2. Môi trường sống ở núi Ngọc Linh",
+        "image": "/images/real-photos/sam-vuon.webp",
+        "local": true,
+        "source": "https://samngoclinh.danang.gov.vn/bi-thu-thanh-uy-le-ngoc-quang-tham-khao-sat-vung-trong-sam-ngoc-linh-tai-xa-tra-linh-188.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-station-5-textbook-point-3",
+        "title": "3. Tri thức bản địa và nghiên cứu khoa học",
+        "image": "/images/real-photos/sam-nghien-cuu.webp",
+        "local": true,
+        "source": "https://samngoclinh.danang.gov.vn/phoi-hop-voi-vien-duoc-lieu-bo-y-te-xay-dung-de-an-nang-cao-nang-luc-trung-tam-phat-trien-sam-ngoc-linh-va-duoc-lieu-175.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-station-5-textbook-point-4",
+        "title": "4. Giá trị dược liệu và thông tin có căn cứ",
+        "image": "/learning/grade45/photos/sam.webp",
+        "local": true,
+        "source": "https://commons.wikimedia.org/wiki/File:Cay_Sam_Ngoc_Linh_Panax_vietnamensis_tai_Mang_Ri.jpg",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-station-5-textbook-point-5",
+        "title": "5. Người trồng sâm và sinh kế dưới rừng",
+        "image": "/images/real-photos/sam-uom.webp",
+        "local": true,
+        "source": "https://samngoclinh.danang.gov.vn/gieo-uom-cay-giong-sam-ngoc-linh-101.html",
+        "format": "webp",
+        "kind": "photograph"
+      },
+      {
+        "id": "g5-station-5-textbook-point-6",
+        "title": "6. Lễ hội và gian giới thiệu dược liệu",
+        "image": "/images/real-photos/sam-le-hoi.webp",
+        "local": true,
+        "source": "https://samngoclinh.danang.gov.vn/trung-tam-phat-trien-sam-ngoc-linh-va-duoc-lieu-khang-dinh-chat-luong-nguon-giong-tai-le-hoi-sam-quoc-te-2026-196.html",
+        "format": "webp",
+        "kind": "photograph"
+      }
+    ]
+  }
+]

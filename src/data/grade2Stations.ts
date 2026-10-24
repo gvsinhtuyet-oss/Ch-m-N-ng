@@ -809,6 +809,8 @@ const G2_STATION_5: Station = {
   isFullyVerified:true,
 };
 
+G2_STATION_2.vr360Experience = {url:'https://vr360.com.vn/projects/cu-lao-cham/',titleVi:'Khám phá Cù Lao Chàm 360°',sourceName:'VR360 – Bản đồ số Cù Lao Chàm',provider:'official_portal',verified:true,embedMode:'direct_link'};
+
 export const GRADE_2_STATIONS: Station[] = [
   G2_STATION_3,
   CANONICAL_HOI_AN_STATION,

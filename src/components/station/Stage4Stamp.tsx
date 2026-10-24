@@ -149,7 +149,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
               <button type="button" disabled={!station.journeyMap?.image || mapImageFailed} onClick={() => { audioService.playSfx('click'); setMapZoomed(true); }} className="flex shrink-0 items-center gap-1 rounded-lg bg-sky-700 px-2 py-1.5 text-[10px] font-black text-white disabled:opacity-50 sm:text-xs"><ZoomIn className="h-3.5 w-3.5" /> Phóng to</button>
             </div>
             <div className="flex min-h-0 flex-1 items-center justify-center overflow-hidden rounded-xl border border-amber-200 bg-white">
-              {station.journeyMap?.image && !mapImageFailed ? <img src={station.journeyMap.image} alt={\`Bản đồ tri thức \${station.titleVi}\`} onError={() => setMapImageFailed(true)} className="h-full w-full object-contain" /> : <div className="px-3 text-center text-sm font-bold text-amber-900">Chưa tải được ảnh bản đồ tri thức của trạm.</div>}
+              {station.journeyMap?.image && !mapImageFailed ? <img src={station.journeyMap.image} alt={"Bản đồ tri thức " + station.titleVi} onError={() => setMapImageFailed(true)} className="h-full w-full object-contain" /> : <div className="px-3 text-center text-sm font-bold text-amber-900">Chưa tải được ảnh bản đồ tri thức của trạm.</div>}
             </div>
           </section>
           <section aria-label="Hộ chiếu hành trình" className="relative flex min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border-[3px] border-[#9b6538] bg-gradient-to-br from-[#fff9e9] via-[#f8e5bb] to-[#eac58e] p-2 shadow-[0_8px_20px_rgba(74,43,12,.25)] sm:p-3">
@@ -184,7 +184,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
         {mapZoomed && station.journeyMap?.image && !mapImageFailed && (
           <div role="dialog" aria-modal="true" aria-label="Bản đồ tri thức phóng to" className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/95 p-3" onClick={() => setMapZoomed(false)}>
             <button type="button" onClick={() => setMapZoomed(false)} aria-label="Đóng bản đồ" className="absolute right-4 top-4 z-10 rounded-xl bg-white p-2 text-slate-900"><X className="h-6 w-6" /></button>
-            <img src={station.journeyMap.image} alt="Bản đồ tri thức {station.titleVi} phóng to" className="max-h-full max-w-full object-contain" onClick={event => event.stopPropagation()} />
+            <img src={station.journeyMap.image} alt={"Bản đồ tri thức " + station.titleVi + " phóng to"} className="max-h-full max-w-full object-contain" onClick={event => event.stopPropagation()} />
           </div>
         )}
       </div>

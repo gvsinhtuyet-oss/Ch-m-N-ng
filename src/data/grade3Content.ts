@@ -165,9 +165,9 @@ export const GRADE3_CONTENT = [
         "title": "Ghi nhớ công lao người đi trước",
         "narration": "Nhân dân ghi nhớ Hoàng Diệu và Phan Châu Trinh bằng cách đặt tên các ông cho đường phố, trường học và công trình tưởng niệm. Em có thể cùng thầy cô xem video hoặc tìm hiểu Nhà lưu niệm Phan Châu Trinh tại xã Tây Hồ hay phường Hải Châu, thành phố Đà Nẵng. Sau khi tìm hiểu, hãy chia sẻ cảm xúc và giới thiệu một điều em biết về hai nhà yêu nước. Chăm học, trung thực và giúp đỡ bạn là những việc vừa sức để em noi gương người đi trước.",
         "fact": "Đường phố, trường học và công trình tưởng niệm giúp các thế hệ ghi nhớ công lao các nhà yêu nước.",
-        "q": "Việc nào thể hiện sự ghi nhớ công lao Hoàng Diệu và Phan Châu Trinh?",
+        "q": "Người dân đặt tên các nhà yêu nước cho nơi nào?",
         "answers": [
-          "Tìm hiểu và giới thiệu đúng về cuộc đời, đóng góp của các ông",
+          "Trường học",
           "Gọi hai ông là cùng một người",
           "Tự bịa một câu chuyện rồi coi là sự thật lịch sử"
         ]
@@ -501,9 +501,9 @@ export const GRADE3_CONTENT = [
         "title": "Từ cây tre đến thân thúng",
         "narration": "Tre là nguyên liệu chính để đan thuyền thúng. Người thợ cưa, chẻ tre và vót thành nan. Nan được chuốt kĩ rồi phơi khô. Từ những nan ấy, người thợ đan để tạo thành thân thúng tròn. Từng thao tác cần sự khéo léo và kiên nhẫn. Em có thể quan sát công đoạn này qua hình ảnh hoặc khi đi cùng người lớn; không tự dùng cưa, dao hay chạm vào nan sắc.",
         "fact": "Người thợ cưa, chẻ, vót, chuốt và phơi nan tre, rồi đan thành thân thúng.",
-        "q": "Sau khi chuẩn bị nan tre, người thợ làm gì để tạo thân thúng?",
+        "q": "Người thợ dùng nan tre để tạo thành gì?",
         "answers": [
-          "Đan các nan tre lại với nhau",
+          "Thân thúng tròn",
           "Ủ nan trong chum cá",
           "Dệt nan thành tấm lụa"
         ]

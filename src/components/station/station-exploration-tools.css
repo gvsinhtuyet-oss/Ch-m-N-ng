@@ -1,0 +1,27 @@
+.station-exploration-layout { display:grid; grid-template-columns:100px minmax(0,1fr); align-items:start; gap:12px; }
+.station-tool-nav { position:sticky; top:12px; display:flex; flex-direction:column; gap:14px; align-self:start; z-index:45; padding:8px 2px; }
+.station-tool-badge { display:flex; min-height:124px; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:7px 4px 11px; border:2px solid #be9552; border-radius:22px; background:radial-gradient(ellipse at 40% 20%,#fffdf1,#f3dba9); box-shadow:0 5px 0 #ad7a36,0 9px 16px #6c481b25,inset 0 2px 0 #fff9e5; color:#63401b; transition:transform .15s,box-shadow .15s; }
+.station-tool-badge.is-vr { border-color:#6bbab3; background:radial-gradient(ellipse at 35% 20%,#f4ffec,#c5eee2); color:#075b67; box-shadow:0 5px 0 #438e8e,0 9px 16px #155e7525,inset 0 2px 0 white; }
+.station-tool-art { width:86px; height:76px; filter:drop-shadow(0 3px 2px #75451222); }
+.station-tool-badge>span { font-size:12px; font-weight:900; line-height:1.25; text-align:center; }
+.station-tool-badge:hover { transform:translateY(-2px); }
+.station-tool-badge:active { transform:translateY(2px); }
+.station-tool-badge:focus-visible,.station-tool-close:focus-visible { outline:3px solid #0369a1; outline-offset:4px; }
+.station-tool-backdrop { position:fixed; inset:0; z-index:120; display:flex; align-items:center; justify-content:center; padding:24px; background:#071b34b8; }
+.station-tool-dialog { width:100%; max-width:1150px; max-height:calc(100dvh - 48px); min-height:0; display:flex; flex-direction:column; overflow:hidden; border:3px solid #e6bc77; border-radius:24px; background:#fff8e8; box-shadow:0 25px 80px #0007; }
+.station-tool-dialog-header { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-shrink:0; padding:16px 20px; border-bottom:1px solid #eed9b0; background:linear-gradient(120deg,#fff9e9,#e3f7ed); }
+.station-tool-close { display:flex; align-items:center; gap:4px; flex-shrink:0; min-height:44px; padding:8px 12px; border-radius:12px; background:white; color:#713a20; font-size:13px; font-weight:900; }
+.station-tool-dialog-content { min-height:0; overflow:auto; padding:20px; overscroll-behavior:contain; }
+.station-immersive-root:fullscreen .station-tool-nav,.station-immersive-root.station-immersive-active .station-tool-nav { top:120px; }
+@media(max-width:1023px) {
+ .station-exploration-layout { grid-template-columns:minmax(0,1fr); gap:10px; }
+ .station-tool-nav { position:static; flex-direction:row; justify-content:flex-start; padding:2px 4px 6px; gap:12px; }
+ .station-tool-badge { min-height:56px; flex-direction:row; padding:4px 12px 4px 5px; border-radius:16px; gap:6px; }
+ .station-tool-art { width:52px; height:46px; }
+ .station-tool-badge>span { font-size:12px; }
+ .station-tool-backdrop { padding:8px; padding-top:max(8px,env(safe-area-inset-top)); padding-bottom:max(8px,env(safe-area-inset-bottom)); }
+ .station-tool-dialog { max-height:calc(100dvh - 24px); border-radius:20px; }
+ .station-tool-dialog-header { padding:12px; }
+ .station-tool-dialog-content { padding:12px; }
+}
+@media(prefers-reduced-motion:reduce) { .station-tool-badge { transition:none; } }

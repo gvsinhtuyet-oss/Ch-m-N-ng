@@ -1,5 +1,6 @@
+import {constrainAssistantPosition, type AssistantPosition} from '../../utils/assistantPosition';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Bot, Compass, MapPin, MessageCircle, Send, Sparkles, X } from 'lucide-react';
+import { Bot, MapPin, MessageCircle, Send, Sparkles, X } from 'lucide-react';
 import { ALL_25_STATIONS } from '../../data/allStations';
 import { ExplorationHotspot, Station } from '../../types';
 import {
@@ -44,6 +45,42 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     { id: 'welcome', role: 'assistant', text: WELCOME },
   ]);
   const endRef = useRef<HTMLDivElement | null>(null);
+  const [viewport, setViewport] = useState(() => ({width: window.innerWidth, height: window.innerHeight}));
+  const [launcherPosition, setLauncherPosition] = useState<AssistantPosition>(() =>
+    constrainAssistantPosition({x: 16, y: window.innerHeight - 182}, window.innerWidth, window.innerHeight));
+  const drag = useRef<{pointerId:number;startX:number;startY:number;origin:AssistantPosition} | null>(null);
+  const suppressClick = useRef(false);
+
+  useEffect(() => {
+    const resize = () => {
+      const width = window.innerWidth;
+      const height = window.visualViewport?.height || window.innerHeight;
+      setViewport({width, height});
+      setLauncherPosition(position => constrainAssistantPosition(position, width, height));
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    window.visualViewport?.addEventListener('resize', resize);
+    return () => {
+      window.removeEventListener('resize', resize);
+      window.visualViewport?.removeEventListener('resize', resize);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', escape);
+    return () => window.removeEventListener('keydown', escape);
+  }, [open]);
+
+  const panelHeight = Math.min(viewport.height * .72, viewport.height - 24);
+  const panelWidth = Math.min(390, viewport.width - 24);
+  const panelLeft = Math.max(12, Math.min(launcherPosition.x, viewport.width - panelWidth - 12));
+  const panelTop = Math.max(12, Math.min(
+    launcherPosition.y > viewport.height / 2 ? launcherPosition.y - panelHeight - 12 : launcherPosition.y + 122,
+    viewport.height - panelHeight - 12));
+
 
   useEffect(() => {
     setMessages([{ id: 'welcome', role: 'assistant', text: WELCOME }]);
@@ -82,28 +119,57 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(value => !value)}
-        className="group fixed bottom-14 left-4 z-[58] inline-flex h-12 w-12 items-center justify-center rounded-full border border-sky-200 bg-gradient-to-r from-sky-700 via-sky-600 to-cyan-500 p-0 text-white shadow-[0_12px_28px_rgba(3,105,161,0.28)] ring-2 ring-white/70 transition hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(3,105,161,0.34)] active:translate-y-0"
-        aria-label="Mở Trợ lý khám phá Đà Nẵng"
-        title="Trợ lý khám phá Đà Nẵng"
-      >
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/25">
-          <Compass className="h-5 w-5 animate-spin-slow drop-shadow-sm" />
-        </span>
-        <span className="pointer-events-none absolute bottom-full left-0 mb-2 hidden w-48 flex-col items-start rounded-xl bg-sky-800 px-3 py-2 leading-tight shadow-lg group-hover:flex group-focus-visible:flex">
-          <span className="text-[12px] font-black sm:text-[13px]">Trợ lý khám phá</span>
-          <span className="mt-0.5 text-[9px] font-semibold text-sky-100 sm:text-[10px]">Hỏi mình về điểm đến này</span>
-        </span>
-        
-      </button>
+      <div className="fixed z-[58] flex h-[122px] w-[156px] flex-col items-center gap-2 select-none"
+        style={{left: launcherPosition.x, top: launcherPosition.y}}>
+        <span className="pointer-events-none whitespace-nowrap rounded-full border-2 border-amber-300 bg-white px-3 py-1.5 text-[13px] font-black leading-tight text-sky-950 shadow-lg">Trợ lý khám phá</span>
+        <button
+          type="button"
+          onPointerDown={event => {
+            if (!event.isPrimary || event.button !== 0) return;
+            suppressClick.current = false;
+            drag.current = {pointerId:event.pointerId, startX:event.clientX, startY:event.clientY, origin:launcherPosition};
+            event.currentTarget.setPointerCapture(event.pointerId);
+          }}
+          onPointerMove={event => {
+            const current = drag.current;
+            if (!current || current.pointerId !== event.pointerId) return;
+            const dx = event.clientX-current.startX;
+            const dy = event.clientY-current.startY;
+            if (Math.hypot(dx,dy) > 6) suppressClick.current = true;
+            if (suppressClick.current) setLauncherPosition(constrainAssistantPosition(
+              {x:current.origin.x+dx, y:current.origin.y+dy}, viewport.width, viewport.height));
+          }}
+          onPointerUp={event => {
+            if (drag.current?.pointerId !== event.pointerId) return;
+            drag.current = null;
+            if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
+          }}
+          onPointerCancel={() => { drag.current = null; suppressClick.current = true; }}
+          onLostPointerCapture={() => { drag.current = null; }}
+          onClick={event => {
+            if (event.detail !== 0 && suppressClick.current) { suppressClick.current = false; return; }
+            setOpen(value => !value);
+          }}
+          style={{touchAction:'none'}}
+          className="relative inline-flex h-[72px] w-[72px] shrink-0 cursor-grab items-center justify-center rounded-full border-[3px] border-white bg-gradient-to-br from-sky-600 via-cyan-500 to-teal-500 text-white shadow-[0_8px_24px_rgba(3,105,161,.45)] ring-[3px] ring-amber-300 transition-shadow hover:shadow-[0_10px_30px_rgba(3,105,161,.6)] focus-visible:outline focus-visible:outline-4 focus-visible:outline-sky-900 active:cursor-grabbing"
+          aria-label={open ? 'Đóng Trợ lý khám phá Đà Nẵng' : 'Mở Trợ lý khám phá Đà Nẵng'}
+          aria-expanded={open}
+          aria-controls="danang-assistant-panel"
+          aria-describedby="assistant-drag-hint"
+          title="Bấm để trò chuyện · Giữ và kéo để di chuyển">
+          <Bot aria-hidden="true" className="h-10 w-10 drop-shadow-md" />
+          <span aria-hidden="true" className="absolute -bottom-1 -right-1 rounded-full border-2 border-white bg-amber-300 p-1.5 text-sky-950"><MessageCircle className="h-4 w-4" /></span>
+        </button>
+        <span id="assistant-drag-hint" className="sr-only">Giữ và kéo biểu tượng để tránh che nội dung.</span>
+      </div>
 
       {open && (
         <section
+          id="danang-assistant-panel"
           role="dialog"
           aria-label="Trợ lý khám phá Đà Nẵng"
-          className="fixed bottom-[8.5rem] left-3 z-[60] flex max-h-[72vh] w-[calc(100vw-1.5rem)] max-w-[390px] flex-col overflow-hidden rounded-[1.75rem] border border-sky-200 bg-white shadow-2xl sm:left-4"
+          style={{left:panelLeft, top:panelTop, width:panelWidth, maxHeight:panelHeight}}
+          className="fixed z-[60] flex flex-col overflow-hidden rounded-[1.75rem] border border-sky-200 bg-white shadow-2xl"
         >
           <header className="relative overflow-hidden bg-gradient-to-r from-sky-800 via-sky-700 to-cyan-600 px-4 py-4 text-white">
             <div className="absolute -right-7 -top-8 h-24 w-24 rounded-full bg-white/10" />

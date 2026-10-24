@@ -148,7 +148,10 @@ export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = fals
         {!localOnly && <button disabled={busy} type="button" className="rounded-xl bg-indigo-700 text-white px-4 py-3 font-bold disabled:opacity-50" onClick={() => void save(true)}>{busy ? 'Đang xử lý...' : 'Xuất bản cho học sinh'}</button>}
       </div>
       <p className="text-xs text-slate-600">{localOnly ? 'Quản trị trải nghiệm: ảnh và học liệu chỉ lưu trên thiết bị này.' : 'Xuất bản cần kho học liệu trực tuyến đã được cấu hình. Lưu xem thử chỉ áp dụng trên thiết bị này.'}</p>
-      {message && <p role="status" className="rounded-xl bg-white border p-3 text-sm font-semibold">{message}</p>}
+      {message && <div role="status" aria-live="polite" className="fixed bottom-4 left-4 right-4 z-[100] mx-auto flex max-w-2xl items-start gap-3 rounded-2xl border-2 border-indigo-300 bg-white p-4 text-sm font-bold text-slate-900 shadow-2xl">
+        <span className="flex-1">{message}</span>
+        <button type="button" aria-label="Đóng thông báo" className="rounded-lg border px-3 py-1 text-slate-700" onClick={() => setMessage('')}>Đóng</button>
+      </div>}
     </section>
   );
 };

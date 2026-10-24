@@ -15,6 +15,8 @@ import {
   ChevronRight,
   ExternalLink,
   Globe,
+  Map,
+  Maximize2,
   LockKeyhole,
   MapPin,
   Pause,
@@ -56,6 +58,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const [showImage, setShowImage] = useState(false);
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const [showVr, setShowVr] = useState(false);
+  const [showKnowledgeMap, setShowKnowledgeMap] = useState(false);
   const [showReward, setShowReward] = useState(false);
   const [lockMessage, setLockMessage] = useState('');
   const [sessionCompletedHotspotIds, setSessionCompletedHotspotIds] = useState<string[]>(() =>
@@ -290,79 +293,14 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
               </button>
 
-              <div className="absolute right-4 top-4 z-20">
-                {station.vr360Experience?.verified && station.vr360Experience.url && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      audioService.playSfx('click');
-                      setShowVr(true);
-                    }}
-                    className="inline-flex items-center gap-2 rounded-full border-2 border-white/90 bg-gradient-to-r from-orange-600 via-orange-500 to-amber-400 px-5 py-2.5 text-xs font-black text-white shadow-[0_10px_28px_rgba(249,115,22,0.35)] ring-2 ring-orange-200/70 transition hover:-translate-y-0.5 hover:scale-[1.02]"
-                  >
-                    <Globe className="h-4 w-4" />
-                    KHÁM PHÁ 360°
-                  </button>
-                )}
-              </div>
-
-              <div className="absolute bottom-4 left-4 right-4 z-20 flex items-end justify-between gap-3">
-                <div className="flex items-center gap-2 rounded-2xl bg-slate-950/74 p-1.5 backdrop-blur-md">
-                  {!playing && !paused && (
-                    <button
-                      type="button"
-                      onClick={speak}
-                      className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-2.5 text-xs font-black text-white"
-                    >
-                      <Volume2 className="h-4 w-4" />
-                      {narrationCompleted ? 'ĐÃ NGHE THUYẾT MINH' : 'NGHE THUYẾT MINH'}
-                      {narrationCompleted && <CheckCircle2 className="h-4 w-4" />}
-                    </button>
-                  )}
-
-                  {playing && (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() => audioService.pauseNarration()}
-                        className="inline-flex items-center gap-2 rounded-xl bg-amber-400 px-3 py-2.5 text-xs font-black text-slate-950"
-                      >
-                        <Pause className="h-4 w-4" />
-                        TẠM DỪNG
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          audioService.stopNarration();
-                          speak();
-                        }}
-                        className="rounded-xl bg-white/15 p-2.5 text-white"
-                        title="Nghe lại từ đầu"
-                      >
-                        <RotateCcw className="h-4 w-4" />
-                      </button>
-                    </>
-                  )}
-
-                  {paused && (
-                    <button
-                      type="button"
-                      onClick={() => audioService.resumeNarration()}
-                      className="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-3 py-2.5 text-xs font-black text-white"
-                    >
-                      <Play className="h-4 w-4 fill-current" />
-                      TIẾP TỤC NGHE
-                    </button>
-                  )}
-                </div>
-
-                <div className="rounded-full bg-white/94 px-3 py-1.5 text-[10px] font-black text-slate-700 shadow-lg">
-                  Điểm chạm {index + 1}/{station.hotspots.length}
-                </div>
-              </div>
+              <button type="button" onClick={() => openImagePreview(index)} aria-label="Phóng to hình ảnh" className="absolute right-3 top-3 z-20 rounded-xl bg-slate-900/75 p-3 text-white shadow-lg"><Maximize2 className="h-5 w-5" /></button>
             </div>
-
-
+            <div className="grid grid-cols-2 gap-2 rounded-2xl bg-gradient-to-r from-amber-50 to-sky-50 p-2 sm:grid-cols-4">
+              <button type="button" onClick={() => { if (playing) audioService.pauseNarration(); else if (paused) audioService.resumeNarration(); else speak(); }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-2 py-2 text-xs font-black text-white shadow"><Volume2 className="h-4 w-4 shrink-0" />{playing ? 'Tạm dừng' : paused ? 'Tiếp tục nghe' : 'Nghe thuyết minh'}</button>
+              <button type="button" onClick={() => setShowKnowledgeMap(true)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-sky-200 px-2 py-2 text-xs font-black text-sky-900 shadow"><Map className="h-4 w-4 shrink-0" />Khám phá bản đồ</button>
+              <button type="button" disabled={!station.vr360Experience?.verified || !station.vr360Experience?.url} onClick={() => { audioService.playSfx('click'); setShowVr(true); }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-violet-200 px-2 py-2 text-xs font-black text-violet-900 shadow disabled:opacity-50"><Globe className="h-4 w-4 shrink-0" />Xem VR360</button>
+              <button type="button" onClick={() => openImagePreview(index)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-emerald-200 px-2 py-2 text-xs font-black text-emerald-900 shadow"><Maximize2 className="h-4 w-4 shrink-0" />Phóng to</button>
+            </div>
             {narrationMessage&&<p role="status" className="rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-950">{narrationMessage}</p>}
             {/* hotspot shortcut cards */}
             <div className="grid shrink-0 grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
@@ -384,7 +322,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       }
                     }}
                     aria-disabled={false}
-                    className={`group relative flex min-w-0 items-center gap-2 overflow-hidden rounded-2xl border p-2 text-left transition ${
+                    className={`group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border p-1.5 text-center transition ${
                       active
                         ? 'border-orange-500 bg-orange-50 shadow-lg ring-2 ring-orange-300'
                         : done
@@ -399,7 +337,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       honestFallback={station.grade === 2 || station.grade === 5}
                       src={item.image}
                       alt=""
-                      className={`h-12 w-14 shrink-0 rounded-xl object-cover ${!unlocked && !freeReview ? 'opacity-70' : ''}`}
+                      className={`h-20 w-full shrink-0 rounded-xl object-cover ${!unlocked && !freeReview ? 'opacity-70' : ''}`}
                       onError={event => {
                         const img = event.currentTarget;
                         img.onerror = null;
@@ -444,7 +382,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
           {/* RIGHT: information rail */}
           <aside className="hoi-an-right-rail flex min-h-0 flex-col gap-3">
-            <div className="shrink-0 rounded-[1.5rem] border border-orange-200 bg-gradient-to-br from-orange-50 via-white to-amber-50/70 p-4 shadow-sm">
+            <div className="shrink-0 rounded-[1.5rem] border-2 border-amber-300 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-4 shadow-sm">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
@@ -486,7 +424,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             </div>
 
             {hotspot.interaction ? (
-              <div className="shrink-0 rounded-[1.5rem] border border-sky-200 bg-gradient-to-br from-sky-50 via-white to-cyan-50/70 p-4 shadow-sm shadow-sky-100/50">
+              <div className="shrink-0 rounded-[1.5rem] border-2 border-sky-200 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-4 shadow-sm">
                 <div className="mb-2 flex items-center gap-2">
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-600 text-xs font-black text-white shadow-sm shadow-sky-300/60">
                     ?
@@ -498,7 +436,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   {hotspot.interaction.questionVi}
                 </p>
 
-                <div className="mt-3 space-y-2">
+                <div className="mt-3 grid grid-cols-1 gap-2 xl:grid-cols-2">
                   {options.map(option => {
                     const active = selected === option.id;
                     let className =
@@ -568,6 +506,13 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
         </div>
       </section>
 
+      {showKnowledgeMap && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/85 p-4" role="dialog" aria-modal="true" aria-label="Bản đồ tri thức">
+        <div className="relative max-h-[90vh] w-full max-w-4xl overflow-auto rounded-2xl bg-amber-50 p-5">
+          <button type="button" onClick={() => setShowKnowledgeMap(false)} aria-label="Đóng bản đồ" className="absolute right-3 top-3 z-10 rounded-full bg-white p-2 shadow"><X className="h-5 w-5" /></button>
+          <h2 className="mb-3 pr-12 text-xl font-black text-amber-900">Bản đồ tri thức · {station.titleVi}</h2>
+          {station.journeyMap?.image ? <img src={station.journeyMap.image} alt={`Bản đồ tri thức ${station.titleVi}`} className="mx-auto max-h-[75vh] w-full object-contain" /> : <div className="grid gap-3 sm:grid-cols-2">{station.hotspots.map(item => <div key={item.id} className="rounded-xl bg-white p-3"><h3 className="font-black">{item.titleVi}</h3><p className="text-sm">{item.keyFactVi}</p></div>)}</div>}
+        </div>
+      </div>}
       {showImage && (
         <div className="fixed inset-0 z-[90] flex items-center justify-center bg-slate-950/85 p-3 backdrop-blur-md sm:p-6">
           <div className="grid h-[92dvh] max-h-[92dvh] min-h-0 w-full max-w-6xl overflow-hidden rounded-[2rem] border border-orange-200 bg-[#fffaf2] shadow-2xl lg:grid-cols-[1.55fr_.75fr]">

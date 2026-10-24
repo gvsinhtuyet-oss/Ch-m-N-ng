@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import confetti from 'canvas-confetti';
 import type { Station } from '../../types';
 import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
@@ -59,6 +60,15 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
   const mode = getMode(theme, station, index);
   const backdrop = screen === 'intro' ? theme.backgrounds?.intro : screen === 'playing' ? theme.backgrounds?.playing : theme.backgrounds?.victory;
   useEffect(() => () => { if (timeout.current) clearTimeout(timeout.current); }, []);
+  useEffect(() => {
+    if (screen !== 'victory') return;
+    let active = true;
+    const bursts = [0, 350, 800, 1300, 1900].map((ms, index) => setTimeout(() => {
+      if (!active) return;
+      confetti({ particleCount: index === 0 ? 130 : 70, spread: 75 + index * 7, startVelocity: 32, origin: { x: index % 2 ? .25 : .75, y: .7 }, scalar: 1.05, disableForReducedMotion: true });
+    }, ms));
+    return () => { active = false; bursts.forEach(clearTimeout); };
+  }, [screen]);
   const reset = () => { if(timeout.current) clearTimeout(timeout.current); setScreen('intro'); setIndex(0);setChoice(null);setRevealed([]);setLocked(false);setIncorrect(false);audioService.playSfx('click'); };
   const answer = (optionId: string) => {
     if(locked || !question || screen !== 'playing') return;
@@ -89,7 +99,7 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
         <div><p className="text-xs font-black tracking-wide text-white/80">CHẶNG 2 · THỬ THÁCH KHÁM PHÁ</p><h2 className="mt-1 text-xl font-black sm:text-3xl">{theme.title}</h2></div>
         <button onClick={reset} type="button" className="min-h-11 shrink-0 rounded-xl border border-white/40 bg-black/30 px-3 text-sm font-bold">↻ Chơi lại</button>
       </header>
-      {screen==='intro' && <div className="my-auto rounded-3xl border border-white/40 bg-slate-950/65 p-6 text-center shadow-xl backdrop-blur-sm sm:p-10">
+      {screen==='intro' && <div className="my-auto rounded-3xl border border-white/40 bg-slate-950/65 p-6 text-center shadow-xl backdrop-blur-sm animate-in fade-in zoom-in-95 duration-500 sm:p-10">
         <div className="mb-3 text-6xl" aria-hidden="true">🗺️</div>
         <h3 className="text-2xl font-black sm:text-4xl">{theme.title}</h3>
         <p className="mt-3 text-base text-white/90">{theme.intro || 'Vượt qua 5 thử thách với 3 mức độ. Chọn đúng để khám phá tiếp nhé!'}</p>
@@ -98,7 +108,7 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
       {screen==='playing' && question && <>
         <div className="mb-4 flex gap-2" aria-label={`Đã đến câu ${index+1} trong ${questions.length} câu`}>{questions.map((q,i)=><span key={q.id} className={`h-2.5 flex-1 rounded-full ${i<index?'bg-emerald-300':i===index?'bg-yellow-300':'bg-white/30'}`}/>)}</div>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2"><span className="rounded-full bg-white/20 px-4 py-2 text-sm font-black">{level(index)}</span><span className="rounded-full bg-white/20 px-4 py-2 text-sm font-black">Câu {index+1}/{questions.length}</span></div>
-        <div className="flex-1 rounded-3xl border border-white/50 bg-white/95 p-4 text-slate-900 shadow-2xl sm:p-7">
+        <div className="flex-1 rounded-3xl border border-white/50 bg-white/95 p-4 text-slate-900 shadow-2xl animate-in fade-in duration-300 sm:p-7">
           {sampleTask ? <>
             <div className="mb-3 text-sm font-black text-sky-800">🎮 {sampleTask.type === 'detective' ? 'Thám tử tìm dấu vết' : sampleTask.type === 'classify' ? 'Phân loại thông minh' : sampleTask.type === 'journey' ? 'Chọn đường khám phá' : sampleTask.type === 'flip' ? 'Lật thẻ bí mật' : 'Chọn đáp án'}</div>
             <h3 className="mb-5 text-lg font-black leading-relaxed sm:text-2xl">{sampleTask.prompt}</h3>
@@ -129,7 +139,7 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
           </div>
         </div>
       </>}
-      {screen==='victory' && <div className="my-auto rounded-3xl border border-yellow-200 bg-slate-950/75 p-7 text-center shadow-xl backdrop-blur-sm sm:p-12">
+      {screen==='victory' && <div className="my-auto rounded-3xl border border-yellow-200 bg-slate-950/75 p-7 text-center shadow-xl backdrop-blur-sm animate-in zoom-in-95 duration-500 sm:p-12">
         <div className="text-6xl" aria-hidden="true">🎉🏆🎊</div><h3 className="mt-4 text-3xl font-black">CHÚC MỪNG CHIẾN THẮNG!</h3>
         <p className="mt-3 text-lg">Em đã hoàn thành cả {questions.length} thử thách. Thật tuyệt vời!</p>
         <button type="button" onClick={onCompleteStage} className="mt-7 min-h-14 w-full rounded-2xl bg-yellow-400 px-6 font-black text-slate-950 sm:w-auto">TIẾP TỤC HÀNH TRÌNH →</button>

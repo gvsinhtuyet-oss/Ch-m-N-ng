@@ -9,9 +9,9 @@ export const GRADE1_CONTENT = [
         "title": "Nơi em ở",
         "narration": "Quê hương là nơi em sống và gắn bó với những người thân quen. Trong sách, em được gặp phường Hải Châu, phường Hội An, xã Nam Trà My, xã Hiệp Đức và đặc khu Hoàng Sa của thành phố Đà Nẵng. Mỗi nơi có tên gọi và cảnh vật riêng. Em đang sống ở xã hay phường nào? Hãy nhờ người thân cùng em gọi đúng tên nơi mình ở nhé!",
         "fact": "Em biết tên xã hoặc phường nơi mình ở và làm quen với một số địa danh của Đà Nẵng.",
-        "q": "Em đang tìm hiểu điều gì ở điểm này?",
+        "q": "Theo bài nghe, quê hương là nơi nào?",
         "answers": [
-          "Nơi em ở",
+          "Nơi em sống và gắn bó với người thân",
           "Một trò chơi",
           "Một món ăn"
         ]
@@ -21,9 +21,9 @@ export const GRADE1_CONTENT = [
         "title": "Ngôi trường của em",
         "narration": "Cùng tìm hiểu ngôi trường của em nhé! Sách giới thiệu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Tranh ở đây chỉ minh họa, không phải ảnh trường của em.",
         "fact": "Biết tên trường và xã hoặc phường giúp em giới thiệu rõ trường mình.",
-        "q": "Đâu là điều giúp em gọi đúng tên trường?",
+        "q": "Theo bài nghe, hai trường nào có cùng tên?",
         "answers": [
-          "Tên ghi trên cổng trường",
+          "Hai trường Võ Thị Sáu",
           "Màu chiếc cặp",
           "Tên một món ăn"
         ]
@@ -33,9 +33,9 @@ export const GRADE1_CONTENT = [
         "title": "Từ nhà đến trường",
         "narration": "Mỗi ngày đến trường, em đi qua những cảnh vật nào? Có thể là hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn ở một nơi nên đường đến trường cũng có thể khác nhau. Em hãy nhớ lại một địa điểm mình đã nhìn thấy, rồi kể với thầy cô và các bạn. Sau đó, em vẽ quang cảnh từ nhà đến trường. Hãy vẽ những điều quen thuộc trên đường của chính em nhé!",
         "fact": "Em kể và vẽ những cảnh vật đã quan sát trên đường từ nhà đến trường.",
-        "q": "Tranh về đường đến trường nên có gì?",
+        "q": "Theo bài nghe, em có thể nhìn thấy gì trên đường đến trường?",
         "answers": [
-          "Địa điểm em đã quan sát",
+          "Hàng cây, cửa hàng hoặc cây cầu",
           "Cảnh do em nói là có dù chưa thấy",
           "Chỉ các món ăn"
         ]
@@ -45,9 +45,9 @@ export const GRADE1_CONTENT = [
         "title": "Cùng yêu nơi mình sống",
         "narration": "Em hãy giới thiệu nơi mình ở bằng lời kể hoặc tranh vẽ. Trước hết, nói tên xã hoặc phường. Tiếp theo, kể một cảnh vật quen thuộc mà em yêu thích. Em cũng có thể kể tên một xã hoặc phường khác của Đà Nẵng mà mình đã đến. Cùng chăm cây, giữ sân sạch và bỏ rác đúng chỗ là những việc nhỏ em có thể làm để yêu quý nơi mình sống.",
         "fact": "Em giới thiệu nơi ở bằng tên xã hoặc phường và một cảnh vật quen thuộc.",
-        "q": "Bức tranh ở điểm này nhắc đến việc nào?",
+        "q": "Theo bài nghe, việc nào giúp giữ gìn nơi mình sống?",
         "answers": [
-          "Chăm sóc nơi mình sống",
+          "Chăm cây và bỏ rác đúng chỗ",
           "Làm bẩn nơi mình sống",
           "Bỏ mặc cây xanh"
         ]

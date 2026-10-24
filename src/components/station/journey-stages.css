@@ -1,0 +1,47 @@
+.journey-stage { position:relative; isolation:isolate; width:100%; border:2px solid #d9a441; border-radius:1.4rem; background-color:#f5e5bf; background-repeat:no-repeat; background-size:100% 100%; box-shadow:0 12px 32px #60370d26; }
+.stage-three { background-image:url('/images/stage3-checkin-cam-xuc.webp'); aspect-ratio:1672/941; min-height:620px; }
+.checkin-layout { position:absolute; inset:0; }
+.checkin-emotions { position:absolute; top:30%; left:19%; right:19%; height:9%; display:flex; align-items:center; }
+.checkin-emotions button { min-height:44px; }
+.checkin-pages { position:absolute; top:52%; bottom:17%; left:9%; right:8%; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:7%; }
+.checkin-page { display:flex; flex-direction:column; min-width:0; min-height:0; }
+.checkin-submit { position:absolute; top:90%; left:50%; transform:translateX(-50%); }
+.stage-four { background-image:url('/images/stage4-journey-background.webp'); aspect-ratio:1672/941; min-height:620px; }
+.journey-station-title { position:absolute; top:24%; left:11%; width:45%; text-align:center; color:#713b14; font-weight:900; font-size:clamp(14px,1.5vw,24px); }
+.stamp-layout { position:absolute; inset:0; }
+.journey-map-panel { position:absolute; left:8%; top:31%; width:50%; height:47%; display:flex; flex-direction:column; min-width:0; min-height:0; }
+.journey-passport-panel { position:absolute; left:79%; top:49%; width:16%; height:31%; display:flex; flex-direction:column; min-width:0; min-height:0; }
+.journey-passport-panel>div { gap:4px; }
+.journey-passport-panel p { font-size:11px; }
+.journey-controls { position:absolute; bottom:9%; left:10%; right:7%; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.journey-controls button { min-height:44px; }
+.journey-footer { position:absolute; bottom:1%; left:10%; right:7%; display:flex; align-items:center; justify-content:center; gap:12px; font-size:11px; color:#45270f; }
+.journey-stage button:focus-visible { outline:3px solid #075985; outline-offset:3px; }
+@media(min-width:1600px) { .checkin-pages button { font-size:20px; } .checkin-emotions button { font-size:20px; } }
+@media(max-width:767px) {
+ .journey-stage { aspect-ratio:auto; min-height:0; background-image:none; padding:0 12px 16px; }
+ .journey-stage::before { content:''; display:block; height:25vw; margin:0 -12px 12px; border-radius:1.3rem 1.3rem 0 0; background-size:100% auto; background-position:top center; background-repeat:no-repeat; }
+ .stage-three::before { background-image:url('/images/stage3-checkin-cam-xuc.webp'); }
+ .stage-four::before { background-image:url('/images/stage4-journey-background.webp'); }
+ .checkin-layout,.checkin-emotions,.checkin-pages,.checkin-submit,.stamp-layout,.journey-station-title,.journey-map-panel,.journey-passport-panel,.journey-controls,.journey-footer { position:static; width:auto; height:auto; inset:auto; transform:none; }
+ .checkin-emotions { margin-bottom:16px; }
+ .checkin-emotions button { flex-direction:column; min-height:64px; font-size:13px; }
+ .checkin-pages { grid-template-columns:1fr; gap:16px; }
+ .checkin-page { padding:14px; border:2px solid #d8ac6c; border-radius:16px; background:#fff2d2; }
+ .checkin-page:last-child { background:#edf5cd; border-color:#9db36e; }
+ .checkin-page h3 { position:static; width:auto; height:auto; margin:0 0 8px; clip:auto; overflow:visible; white-space:normal; font-weight:900; color:#663c17; }
+ .checkin-page p { font-size:13px; }
+ .checkin-page button { min-height:48px; font-size:16px; padding:10px; }
+ .checkin-page>div { overflow:visible; }
+ .checkin-submit { margin-top:18px; font-size:14px; }
+ .journey-station-title { margin-bottom:12px; font-size:18px; }
+ .stamp-layout { display:grid; gap:16px; }
+ .journey-map-panel,.journey-passport-panel { padding:12px; border:2px solid #c59350; border-radius:16px; background:#fff4db; }
+ .journey-map-panel>div:last-child { min-height:180px; aspect-ratio:16/10; }
+ .journey-passport-panel>div:first-child { position:static; width:auto; height:auto; clip:auto; white-space:normal; overflow:visible; }
+ .journey-passport-panel>div:last-child { min-height:240px; }
+ .journey-passport-panel p { font-size:13px; }
+ .journey-controls { margin-top:16px; gap:8px; }
+ .journey-controls button { flex-direction:column; font-size:12px; }
+ .journey-footer { margin-top:12px; flex-wrap:wrap; }
+}

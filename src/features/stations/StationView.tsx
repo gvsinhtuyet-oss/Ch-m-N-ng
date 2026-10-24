@@ -234,13 +234,43 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
                 <button type="button" aria-pressed={naturePlace === 'cham'} onClick={() => { audioService.playSfx('click'); setNaturePlace('cham'); }} className={`rounded-xl p-3 text-xs font-black sm:text-sm ${naturePlace === 'cham' ? 'bg-sky-700 text-white' : 'bg-sky-50 text-sky-800'}`}>🏝️ Cù Lao Chàm</button>
                 <button type="button" aria-pressed={naturePlace === 'sontra'} onClick={() => { audioService.playSfx('click'); setNaturePlace('sontra'); }} className={`rounded-xl p-3 text-xs font-black sm:text-sm ${naturePlace === 'sontra' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 text-emerald-800'}`}>🌳 Sơn Trà</button>
               </div>
-              <iframe key={naturePlace} title={naturePlace === 'cham' ? 'Bản đồ Cù Lao Chàm' : 'Bản đồ Sơn Trà'} loading="lazy" referrerPolicy="no-referrer" className="h-[300px] w-full rounded-2xl border border-sky-100 sm:h-[390px]" src={naturePlace === 'cham' ? 'https://www.openstreetmap.org/export/embed.html?bbox=108.440%2C15.900%2C108.580%2C16.020&layer=mapnik&marker=15.950%2C108.510' : 'https://www.openstreetmap.org/export/embed.html?bbox=108.220%2C16.065%2C108.340%2C16.160&layer=mapnik&marker=16.115%2C108.295'} />
+              <div className="relative overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-100 via-cyan-100 to-sky-300 p-3 sm:p-5">
+                <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                  <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-black text-sky-900">🧭 Sơ đồ vị trí tương đối</span>
+                  <span className="text-[11px] font-semibold text-sky-900">Minh họa, không theo tỉ lệ</span>
+                </div>
+                <svg viewBox="0 0 700 380" role="img" aria-label="Sơ đồ minh họa đất liền Đà Nẵng, bán đảo Sơn Trà và quần đảo Cù Lao Chàm" className="h-auto w-full rounded-xl bg-[#b9e8f1]">
+                  <defs>
+                    <linearGradient id="natureSea" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#c5f2f3"/><stop offset="100%" stopColor="#64bfd8"/></linearGradient>
+                    <linearGradient id="natureLand" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#d9eab4"/><stop offset="100%" stopColor="#79b98d"/></linearGradient>
+                  </defs>
+                  <rect width="700" height="380" fill="url(#natureSea)"/>
+                  <path d="M0 0H265Q235 40 250 86T230 158Q255 202 230 246T265 380H0Z" fill="url(#natureLand)" stroke="#e9f7d5" strokeWidth="7"/>
+                  <path d="M250 87Q295 51 344 68Q374 95 355 125Q313 146 255 122Z" fill="#6cad79" stroke="#f3ffe7" strokeWidth="5"/>
+                  <path d="M453 250Q490 215 546 238Q575 273 546 310Q502 337 461 299Z" fill="#70b783" stroke="#f3ffe7" strokeWidth="5"/>
+                  <ellipse cx="600" cy="310" rx="13" ry="7" fill="#6aad80"/><ellipse cx="425" cy="293" rx="11" ry="6" fill="#6aad80"/>
+                  <path d="M350 160Q402 205 458 240" fill="none" stroke="#ffffff" strokeWidth="3" strokeDasharray="8 8" opacity=".7"/>
+                  <text x="72" y="190" fill="#215d43" fontSize="23" fontWeight="bold" textAnchor="middle">ĐẤT LIỀN</text>
+                  <text x="72" y="219" fill="#215d43" fontSize="18" fontWeight="bold" textAnchor="middle">ĐÀ NẴNG</text>
+                  <text x="530" y="100" fill="#18769a" fontSize="23" fontWeight="bold" textAnchor="middle">BIỂN ĐÔNG</text>
+                  <circle cx="308" cy="94" r={naturePlace === 'sontra' ? 19 : 13} fill={naturePlace === 'sontra' ? '#f59e0b' : '#0f766e'} stroke="white" strokeWidth="5"/>
+                  <text x="380" y="53" fill="#064e3b" fontSize="22" fontWeight="bold" textAnchor="middle">Sơn Trà</text>
+                  <path d="M365 61L323 87" stroke="#064e3b" strokeWidth="3"/>
+                  <circle cx="502" cy="271" r={naturePlace === 'cham' ? 19 : 13} fill={naturePlace === 'cham' ? '#f59e0b' : '#0f766e'} stroke="white" strokeWidth="5"/>
+                  <text x="555" y="353" fill="#064e3b" fontSize="22" fontWeight="bold" textAnchor="middle">Cù Lao Chàm</text>
+                  <path d="M532 330L510 292" stroke="#064e3b" strokeWidth="3"/>
+                </svg>
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+                  <p className="text-xs font-semibold text-sky-950">📍 {naturePlace === 'cham' ? 'Cù Lao Chàm: quần đảo ngoài khơi Hội An' : 'Sơn Trà: bán đảo nối với đất liền Đà Nẵng'}</p>
+                  <a href={naturePlace === 'cham' ? 'https://www.openstreetmap.org/?mlat=15.950&mlon=108.510#map=12/15.950/108.510' : 'https://www.openstreetmap.org/?mlat=16.115&mlon=108.295#map=12/16.115/108.295'} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-sky-700 px-4 py-2 text-xs font-black text-white hover:bg-sky-800">🌐 Xem bản đồ địa lý thực ↗</a>
+                </div>
+              </div>
               <div className="rounded-xl bg-amber-50 p-4 text-sm text-slate-700">
                 <h4 className="font-black text-slate-900">{naturePlace === 'cham' ? '🏝️ Cù Lao Chàm – Hòn Lao là đảo chính' : '🌳 Sơn Trà – rừng gặp biển'}</h4>
                 <p className="mt-2">{naturePlace === 'cham' ? 'Cù Lao Chàm có 8 hòn đảo nhỏ, Hòn Lao là đảo chính. Khu dự trữ sinh quyển Cù Lao Chàm – Hội An được UNESCO công nhận năm 2009.' : 'Bán đảo Sơn Trà có rừng và biển, là nơi sinh sống của nhiều loài sinh vật, trong đó có voọc chà vá chân nâu.'}</p>
                 <button type="button" onClick={() => audioService.speakNarration(naturePlace === 'cham' ? 'Cù Lao Chàm có tám hòn đảo nhỏ. Hòn Lao là đảo chính. Chúng ta hãy bảo vệ biển đảo quê hương.' : 'Bán đảo Sơn Trà có rừng và biển. Đây là nơi sinh sống của voọc chà vá chân nâu. Chúng ta hãy bảo vệ thiên nhiên.', 'vi-VN')} className="mt-3 rounded-xl bg-sky-700 px-4 py-2 text-xs font-black text-white">🔊 Nghe giới thiệu</button>
               </div>
-              <p className="text-[11px] text-slate-500">© OpenStreetMap contributors · Bản đồ cần kết nối Internet · Hoạt động tự do, không ảnh hưởng tiến trình học.</p>
+              <p className="text-[11px] text-slate-500">Sơ đồ minh họa hoạt động không cần tải bản đồ bên ngoài. Liên kết bản đồ địa lý thực cần Internet. Không ảnh hưởng tiến trình học.</p>
             </div>
           )}
         </section>

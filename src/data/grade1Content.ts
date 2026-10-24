@@ -134,9 +134,9 @@ export const GRADE1_CONTENT = [
         "title": "Cửa thành, tường thành và hào",
         "narration": "Ngôi thành được xây bằng gạch, có hai cửa: cửa phía nam là cửa chính và cửa phía đông. Ở đây, tường thành cao hơn năm mét, hào quanh thành sâu ba mét. Hào là phần được đào sâu bao quanh thành. Tường cao và hào sâu giúp ngăn quân tấn công, bảo vệ ngôi thành. Em thử tìm cửa thành, tường thành và hào trong những hình ảnh đã học nhé!",
         "fact": "Thành có cửa nam, cửa đông, tường gạch và hào bao quanh để góp phần bảo vệ thành.",
-        "q": "Hào được giới thiệu ở đâu?",
+        "q": "Hào được đào ở đâu?",
         "answers": [
-          "Xung quanh thành",
+          "Bao quanh thành",
           "Trong một tô mì",
           "Trên ngọn cây"
         ]
@@ -259,9 +259,9 @@ export const GRADE1_CONTENT = [
         "title": "Phạm vi và lượt chơi",
         "narration": "Trước khi chơi, cả nhóm cùng chọn và thống nhất phạm vi chơi. Đó là khu vực các bạn được di chuyển. Các bạn làm dê không chạy ra ngoài khu vực ấy. Người cổ vũ chỉ cổ vũ, không nhắc hướng tìm dê. Khi bắt được một bạn làm dê, người bắt thắng lượt đó. Bạn vừa bị bắt sẽ bịt mắt để làm người bắt dê ở lượt tiếp theo. Cùng giữ luật để ai cũng được chơi công bằng nhé!",
         "fact": "Chơi trong phạm vi đã thống nhất, không chỉ hướng và đổi vai khi bắt được dê.",
-        "q": "Người đóng vai dê di chuyển ở đâu?",
+        "q": "Các bạn làm dê di chuyển trong khu vực nào?",
         "answers": [
-          "Trong phạm vi chơi",
+          "Phạm vi chơi",
           "Ra ngoài sân bất cứ lúc nào",
           "Vào nơi có xe chạy"
         ]

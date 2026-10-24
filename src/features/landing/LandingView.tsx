@@ -54,6 +54,7 @@ export const LandingView: React.FC = () => {
   const [savedSyncCode, setSavedSyncCode] = useState<string>('');
   const [restoreCode,setRestoreCode] = useState('');
   const [restoreBusy,setRestoreBusy] = useState(false);
+  const [studentBusy,setStudentBusy] = useState(false);
   const [loginError, setLoginError] = useState<string>('');
   const [introActive, setIntroActive] = useState(true);
   const [theme, setTheme] = useState(readTheme);
@@ -223,6 +224,7 @@ export const LandingView: React.FC = () => {
     e.preventDefault();
     audioService.playSfx('click');
     setLoginError('');
+    if (studentBusy) return;
 
     const normalizedName = guestMode ? 'Nhà phiêu lưu tự do' : studentName.trim().replace(/\s+/g,' ').normalize('NFC');
     if (!normalizedName || !chosenGrade) {
@@ -232,6 +234,15 @@ export const LandingView: React.FC = () => {
     if (!guestMode && !new RegExp(`^${chosenGrade}/[1-9][0-9]{0,2}$`).test(selectedClass)) {
       setLoginError(`Vui lòng chọn lớp thuộc Khối ${chosenGrade}.`);
       return;
+    }
+    if (!guestMode) {
+      setStudentBusy(true);
+      try {
+        const response = await fetch('/api/student/class-match', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:normalizedName,className:selectedClass,grade:chosenGrade})});
+        const result = await response.json();
+        if (!response.ok || !result.matched) {setLoginError(result.error || 'Họ tên chưa khớp danh sách lớp. Hãy liên hệ giáo viên.');return;}
+      } catch {setLoginError('Chưa xác minh được danh sách lớp. Hãy kiểm tra kết nối mạng hoặc chọn khám phá tự do.');return;}
+      finally {setStudentBusy(false);}
     }
     let guestId = '';
     if (guestMode) { try { guestId = localStorage.getItem('cham_danang_guest_id_v1') || ''; } catch {} }

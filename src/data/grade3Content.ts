@@ -7,7 +7,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-1-point-1",
         "title": "Mỹ Khê – bờ cát dài và phẳng",
-        "narration": "Bãi biển Mỹ Khê thuộc phường Sơn Trà, thành phố Đà Nẵng. Nơi đây có bờ cát dài và phẳng, thu hút nhiều người đến tham quan, vui chơi. Qua hình ảnh trong bài, em có thể tìm hiểu các hoạt động như tắm biển, đá bóng trên cát, tạo hình trên cát, bay dù lượn và đua thuyền buồm. Em thích cảnh đẹp hoặc hoạt động nào nhất? Khi đi biển, em chỉ tham gia hoạt động phù hợp với lứa tuổi và theo hướng dẫn của người lớn.",
+        "narration": "Bãi biển Mỹ Khê thuộc phường Sơn Trà, thành phố Đà Nẵng. Nơi đây có bờ cát dài và phẳng, thu hút nhiều người đến tham quan, vui chơi. Qua hình ảnh ở đây, em có thể tìm hiểu các hoạt động như tắm biển, đá bóng trên cát, tạo hình trên cát, bay dù lượn và đua thuyền buồm. Em thích cảnh đẹp hoặc hoạt động nào nhất? Khi đi biển, em chỉ tham gia hoạt động phù hợp với lứa tuổi và theo hướng dẫn của người lớn.",
         "fact": "Mỹ Khê thuộc phường Sơn Trà, nổi bật với bờ cát dài và phẳng.",
         "q": "Bãi biển Mỹ Khê thuộc địa phương nào trong tài liệu?",
         "answers": [
@@ -19,7 +19,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-1-point-2",
         "title": "Bàn Than – đá đen và rêu xanh",
-        "narration": "Bãi biển Bàn Than thuộc xã đảo Tam Hải, thành phố Đà Nẵng. Nét đặc trưng ở đây là những dãy đá đen nằm san sát, có nhiều hình dáng độc đáo; rêu xanh phủ trên đá tạo thêm vẻ đẹp cho cảnh biển. Hình ảnh trong bài còn giới thiệu hoạt động khai thác rong biển, khai thác hải sản, câu cá và tắm biển. Em thử so sánh nét nổi bật của Bàn Than với bờ cát Mỹ Khê nhé!",
+        "narration": "Bãi biển Bàn Than thuộc xã đảo Tam Hải, thành phố Đà Nẵng. Nét đặc trưng ở đây là những dãy đá đen nằm san sát, có nhiều hình dáng độc đáo; rêu xanh phủ trên đá tạo thêm vẻ đẹp cho cảnh biển. Hình ảnh ở đây còn giới thiệu hoạt động khai thác rong biển, khai thác hải sản, câu cá và tắm biển. Em thử so sánh nét nổi bật của Bàn Than với bờ cát Mỹ Khê nhé!",
         "fact": "Bàn Than thuộc xã Tam Hải, có những dãy đá đen nhiều hình dáng và rêu xanh phủ trên đá.",
         "q": "Đặc điểm nào nổi bật ở biển Bàn Than?",
         "answers": [
@@ -389,7 +389,7 @@ export const GRADE3_CONTENT = [
       {
         "id": "g3-4-point-3",
         "title": "Bốn bước làm nước mắm",
-        "narration": "Cùng theo dõi bốn bước trong tài liệu nhé! Bước một: rửa cá bằng nước biển rồi ướp với muối. Bước hai: cho cá vào chum, ủ từ 12 đến 18 tháng và đảo để cá chín đều. Bước ba: lọc lấy nước mắm bằng vuột tre có lót vải sạch. Bước bốn: ủ tiếp nước mắm trong chum để hương vị thơm dịu hơn, sau đó mới đóng chai. Những chai mắm là thành quả của nhiều công đoạn và thời gian chờ đợi.",
+        "narration": "Cùng theo dõi bốn bước nhé! Bước một: rửa cá bằng nước biển rồi ướp với muối. Bước hai: cho cá vào chum, ủ từ 12 đến 18 tháng và đảo để cá chín đều. Bước ba: lọc lấy nước mắm bằng vuột tre có lót vải sạch. Bước bốn: ủ tiếp nước mắm trong chum để hương vị thơm dịu hơn, sau đó mới đóng chai. Những chai mắm là thành quả của nhiều công đoạn và thời gian chờ đợi.",
         "fact": "Quy trình gồm: ướp cá → ủ cá 12–18 tháng → lọc nước mắm → ủ nước mắm rồi đóng chai.",
         "q": "Sau khi lọc lấy nước mắm, người làm nghề tiếp tục làm gì theo tài liệu?",
         "answers": [

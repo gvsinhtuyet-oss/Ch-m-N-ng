@@ -55,49 +55,54 @@ export const GRADE3_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Nhóm ghi chép tiếng sóng và điều quan sát được ở biển. Cách nào giúp bài ghi rõ hơn?",
+        "level": "NHAN_BIET",
+        "text": "Nét cảnh quan nào nổi bật ở bãi biển Mỹ Khê?",
         "answers": [
-          "Tách điều đã nghe, đã thấy với cảm nghĩ của mình",
-          "Ghi cảm nghĩ thành sự thật của mọi người",
-          "Chỉ chép lời khen mà bỏ hết quan sát"
+          "Bãi cát rộng bên biển",
+          "Ghềnh đá nằm giữa rừng núi",
+          "Ruộng bậc thang trên sườn núi"
         ],
-        "hint": "Phân biệt quan sát với cảm nghĩ giúp giới thiệu cảnh biển trung thực, rõ ràng."
+        "hint": "Nhớ chi tiết được giới thiệu về bờ biển Mỹ Khê."
       },
       {
-        "text": "Bạn muốn đứng trên tảng đá ướt sát sóng để có ảnh đẹp. Em chọn cách nào?",
+        "level": "NHAN_BIET",
+        "text": "Bàn Than ở vùng Tam Hải được nhắc đến với cảnh quan nào?",
         "answers": [
-          "Rủ bạn lùi về nơi an toàn cùng người lớn",
-          "Giữ tay bạn rồi tiến ra mép đá",
-          "Đợi sóng cao mới chụp"
+          "Ghềnh, vách đá bên biển",
+          "Bãi cát trắng trải dài",
+          "Rừng thông trên đỉnh núi"
         ],
-        "hint": "Bức ảnh đẹp không quan trọng bằng sự an toàn."
+        "hint": "Hãy nhớ nét riêng dùng để phân biệt Bàn Than với Mỹ Khê."
       },
       {
-        "text": "Sau buổi dã ngoại, còn túi bánh và chai rỗng. Nhóm em sẽ làm gì?",
+        "level": "THONG_HIEU",
+        "text": "Điều gì giúp em phân biệt nét nổi bật của Mỹ Khê và Bàn Than?",
         "answers": [
-          "Thu gom và mang đến nơi bỏ rác phù hợp",
-          "Thả ra biển để sóng cuốn đi",
-          "Chôn xuống cát cho gọn"
+          "Mỹ Khê nổi bật với bờ cát; Bàn Than có ghềnh, vách đá ven biển",
+          "Cả hai đều được giới thiệu chủ yếu bằng ruộng lúa",
+          "Mỹ Khê có ghềnh đá, còn Bàn Than nằm giữa đồng bằng"
         ],
-        "hint": "Sóng và cát không phải thùng rác."
+        "hint": "So sánh hai chi tiết cảnh quan trong bài."
       },
       {
-        "text": "Em muốn dùng ảnh một người bán hàng ven biển trong bài giới thiệu. Cần làm gì?",
+        "level": "THONG_HIEU",
+        "text": "Vì sao biển có ý nghĩa với cuộc sống của người dân ven biển?",
         "answers": [
-          "Hỏi phép người trong ảnh và kiểm tra quyền dùng ảnh",
-          "Đăng ngay vì người đó ở nơi công cộng",
-          "Tự thêm tên và địa chỉ của người đó"
+          "Biển gắn với việc làm, nghề đánh bắt và hoạt động du lịch",
+          "Biển chỉ có tác dụng làm cảnh, không liên quan đời sống",
+          "Biển là nơi trồng lúa và làm đường"
         ],
-        "hint": "Tìm hiểu cảnh biển cũng cần tôn trọng người dân và quyền sử dụng hình ảnh."
+        "hint": "Bài học nhắc đến những hoạt động nào gắn với biển?"
       },
       {
-        "text": "Thấy một người gặp nạn dưới nước, học sinh nên chọn việc nào?",
+        "level": "VAN_DUNG",
+        "text": "Em viết lời giới thiệu ngắn về cả Mỹ Khê và Bàn Than. Câu nào đúng với bài học?",
         "answers": [
-          "Gọi ngay người lớn, cứu hộ; không tự nhảy xuống",
-          "Cùng bạn chưa biết bơi lao xuống",
-          "Đứng quay video để khoe"
+          "Mỹ Khê có bờ cát rộng; Bàn Than nổi bật với ghềnh đá bên biển",
+          "Mỹ Khê và Bàn Than đều là những cánh đồng lúa",
+          "Bàn Than nổi bật với đỉnh núi phủ tuyết"
         ],
-        "hint": "Tìm người có khả năng cứu hộ; không tạo thêm nguy hiểm."
+        "hint": "Chọn lời giới thiệu giữ đúng nét riêng của mỗi cảnh biển."
       }
     ],
     "feel": [
@@ -175,49 +180,54 @@ export const GRADE3_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Bạn quên vở và chưa hiểu bài. Việc nào thể hiện tinh thần cùng học tiến bộ?",
+        "level": "NHAN_BIET",
+        "text": "Tờ báo nào gắn với Huỳnh Thúc Kháng?",
         "answers": [
-          "Chia sẻ cách học và giúp bạn hiểu bài",
-          "Cho bạn chép hết để khỏi cần học",
-          "Cười vì bạn chưa hiểu"
+          "Tiếng Dân",
+          "Đồng Khánh",
+          "Nông Cổ Mín Đàm"
         ],
-        "hint": "Giúp bạn hiểu và tự làm, thay vì làm thay."
+        "hint": "Tên tờ báo được nhắc trong phần tìm hiểu về cụ Huỳnh."
       },
       {
-        "text": "Bạn nói chăm học hôm nay chính là phong trào Duy Tân đầu thế kỉ XX. Em giải thích thế nào?",
+        "level": "NHAN_BIET",
+        "text": "Phan Châu Trinh gắn với tư tưởng nào trong bài học?",
         "answers": [
-          "Chăm học là cách noi gương; không phải chính sự kiện lịch sử ấy",
-          "Mọi việc chăm học đều là cùng một sự kiện lịch sử",
-          "Chỉ người sống đầu thế kỉ XX mới được học"
+          "Canh tân, mở mang hiểu biết",
+          "Giữ mọi cách làm cũ, không đổi mới",
+          "Chỉ quan tâm đến việc buôn bán"
         ],
-        "hint": "Phân biệt sự kiện trong quá khứ với bài học cho học sinh hôm nay."
+        "hint": "Nhớ ý tưởng được nêu khi giới thiệu cụ Phan."
       },
       {
-        "text": "Em thấy một câu hay trên mạng nhưng không rõ ai nói. Trước khi ghi là lời cụ Phan, em làm gì?",
+        "level": "THONG_HIEU",
+        "text": "Phong trào Duy Tân hướng đến điều gì theo nội dung bài?",
         "answers": [
-          "Nhờ cô kiểm tra nguồn; chưa gán tên khi chưa rõ",
-          "Chọn tên người nổi tiếng nhất",
-          "Gán tên vì nghe giống tư tưởng cụ"
+          "Khuyến khích học tập, mở mang hiểu biết và đổi mới",
+          "Ngăn người dân học điều mới",
+          "Chỉ tổ chức các hoạt động vui chơi"
         ],
-        "hint": "Tôn trọng lịch sử bằng thông tin có nguồn."
+        "hint": "Hãy nối tên phong trào với tinh thần tiến bộ được học."
       },
       {
-        "text": "Nhóm viết bài giới thiệu hai danh nhân nhưng chỉ một bạn được quyết định. Em đề xuất gì?",
+        "level": "THONG_HIEU",
+        "text": "Vì sao việc học và mở mang hiểu biết được xem là tinh thần tiến bộ?",
         "answers": [
-          "Chia phần tìm tư liệu, lắng nghe rồi thống nhất nội dung",
-          "Để bạn nói to nhất quyết định tất cả",
-          "Bỏ tên những bạn có ý kiến khác"
+          "Vì hiểu biết giúp con người suy nghĩ và góp phần làm điều có ích",
+          "Vì học chỉ để hơn thua với bạn bè",
+          "Vì học giúp mọi người không cần làm việc"
         ],
-        "hint": "Hợp tác khi tìm hiểu lịch sử đòi hỏi các thành viên có cơ hội đóng góp và cùng chịu trách nhiệm."
+        "hint": "Liên hệ việc học với điều có ích cho bản thân và cộng đồng."
       },
       {
-        "text": "Kết thúc chuyến xem tư liệu, sản phẩm nào cho thấy em đã biết tìm hiểu?",
+        "level": "VAN_DUNG",
+        "text": "Nhóm làm thẻ giới thiệu hai nhân vật. Thẻ nào ghi thông tin phù hợp với bài học?",
         "answers": [
-          "Thẻ ghi tên nhân vật, một đóng góp và nguồn đã đọc",
-          "Bức ảnh không có chú thích rồi đoán tiểu sử",
-          "Danh sách toàn lời khen không có thông tin"
+          "Huỳnh Thúc Kháng gắn với báo Tiếng Dân; Phan Châu Trinh đề cao canh tân, mở mang hiểu biết",
+          "Cả hai nhân vật đều lập ra một tờ báo thiếu nhi ngày nay",
+          "Phan Châu Trinh gắn với nghề đan thúng; Huỳnh Thúc Kháng làm nước mắm"
         ],
-        "hint": "Giới thiệu ngắn nhưng có căn cứ, không cần thuộc nhiều năm tháng."
+        "hint": "Đối chiếu từng nhân vật với thông tin đã học; không tự thêm chi tiết."
       }
     ],
     "feel": [
@@ -292,49 +302,54 @@ export const GRADE3_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Bạn nói tiếng Việt với giọng khác em. Nhóm nên làm gì?",
+        "level": "NHAN_BIET",
+        "text": "Ở Tà Lang và Giàn Bí, bài học giới thiệu cộng đồng dân tộc nào?",
         "answers": [
-          "Lắng nghe, hỏi lại lịch sự khi chưa rõ",
-          "Cười và nhại giọng bạn",
-          "Không cho bạn phát biểu"
+          "Cơ Tu",
+          "Chăm",
+          "Khơ-me"
         ],
-        "hint": "Khác biệt giọng nói không làm giảm giá trị ý kiến."
+        "hint": "Nhớ tên cộng đồng được nhắc cùng hai địa danh này."
       },
       {
-        "text": "Thấy một người mặc trang phục khác với ảnh trong sách, bạn nói người đó sai truyền thống. Em góp ý gì?",
+        "level": "NHAN_BIET",
+        "text": "Nhà Gươl có vai trò gì trong cộng đồng Cơ Tu?",
         "answers": [
-          "Không kết luận từ một ảnh; trang phục có thể khác theo dịp và hoàn cảnh",
-          "Mọi người phải mặc giống một ảnh duy nhất",
-          "Chỉ trang phục trong sách mới được dùng"
+          "Không gian sinh hoạt chung của cộng đồng",
+          "Nơi làm nước mắm",
+          "Bến đỗ thuyền đánh cá"
         ],
-        "hint": "Một ảnh không đại diện cho mọi hoàn cảnh sinh hoạt của một cộng đồng."
+        "hint": "Bài học nói mọi người trong cộng đồng dùng Nhà Gươl để làm gì."
       },
       {
-        "text": "Bạn muốn chia sẻ một lời chào bằng tiếng của gia đình mình. Nhóm nên làm gì?",
+        "level": "THONG_HIEU",
+        "text": "Nhà Gươl, cồng chiêng và nghề dệt thổ cẩm cho em biết điều gì về đời sống Cơ Tu ở Tà Lang – Giàn Bí?",
         "answers": [
-          "Lắng nghe, nhờ bạn hướng dẫn rồi thử đọc một cách tôn trọng",
-          "Tự sửa lời chào thành tiếng mình cho dễ",
-          "Biến lời chào thành câu trêu đùa"
+          "Đời sống cộng đồng có không gian sinh hoạt và những nét văn hóa riêng",
+          "Mọi cộng đồng đều có phong tục và sản phẩm giống hệt nhau",
+          "Các hoạt động ấy chỉ dùng để trang trí đường phố"
         ],
-        "hint": "Học một lời chào với sự hướng dẫn của bạn là cách giao lưu và tôn trọng ngôn ngữ."
+        "hint": "Hãy nghĩ xem những nét văn hóa này gắn với đời sống chung như thế nào."
       },
       {
-        "text": "Lớp làm ngày hội giao lưu nhưng có bạn không thể dùng món ăn đã chọn. Nên làm gì?",
+        "level": "THONG_HIEU",
+        "text": "Vì sao không nên lấy một bộ trang phục trong ảnh để đại diện cho tất cả mọi người trong một cộng đồng?",
         "answers": [
-          "Hỏi nhu cầu và chuẩn bị lựa chọn phù hợp cho bạn",
-          "Bắt bạn ăn để giống mọi người",
-          "Không cho bạn tham gia ngày hội"
+          "Trang phục có thể khác nhau theo nơi, dịp và hoàn cảnh",
+          "Mỗi người trong cộng đồng phải mặc giống hệt một bộ",
+          "Ảnh chụp không bao giờ có thể giúp tìm hiểu văn hóa"
         ],
-        "hint": "Tổ chức giao lưu cần quan tâm nhu cầu của từng người để mọi bạn cùng tham gia."
+        "hint": "Một hình ảnh chỉ cho thấy một người hoặc một hoàn cảnh cụ thể."
       },
       {
-        "text": "Hai bạn có thói quen sinh hoạt khác nhau cùng vào nhóm. Em đề xuất gì?",
+        "level": "VAN_DUNG",
+        "text": "Bạn giới thiệu Nhà Gươl là nơi sinh hoạt chung của cộng đồng Cơ Tu. Em chọn cách bổ sung nào để giới thiệu bài học chính xác?",
         "answers": [
-          "Hỏi ý kiến và chọn cách để cả hai cùng tham gia",
-          "Bắt một bạn bỏ mọi thói quen của mình",
-          "Chỉ cho bạn giống mình tham gia"
+          "Nêu thêm cồng chiêng và nghề dệt thổ cẩm là những nét văn hóa được bài học nhắc đến",
+          "Nói rằng tất cả dân tộc đều có Nhà Gươl giống nhau",
+          "Tự thêm một phong tục chưa có trong tư liệu"
         ],
-        "hint": "Đoàn kết được thể hiện khi mọi người có cơ hội đóng góp."
+        "hint": "Dùng đúng những nét văn hóa có căn cứ trong bài."
       }
     ],
     "feel": [
@@ -413,49 +428,54 @@ export const GRADE3_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Nhóm muốn phỏng vấn người làm nước mắm về công việc hằng ngày. Nên hỏi câu nào?",
+        "level": "NHAN_BIET",
+        "text": "Hai nguyên liệu tiêu biểu được nhắc đến khi làm nước mắm Nam Ô là gì?",
         "answers": [
-          "Khâu nào cần bác kiên nhẫn nhất và vì sao ạ?",
-          "Bác có thể bỏ qua mọi khâu cho nhanh không ạ?",
-          "Có phải nghề nào cũng làm xong trong một phút không ạ?"
+          "Cá cơm than và muối",
+          "Tre và lá dừa",
+          "Gạo nếp và đường"
         ],
-        "hint": "Câu hỏi mở giúp tìm hiểu kinh nghiệm và công sức người làm nghề."
+        "hint": "Nhớ cặp nguyên liệu chính trong bài học."
       },
       {
-        "text": "Bạn muốn mở nắp chum để tự nếm. Em chọn cách nào?",
+        "level": "NHAN_BIET",
+        "text": "Nước mắm Nam Ô thuộc nhóm sản phẩm nào?",
         "answers": [
-          "Nhắc bạn dừng lại, hỏi người hướng dẫn",
-          "Cùng mở vì chỉ nếm một chút",
-          "Dùng tay khuấy rồi đậy lại"
+          "Gia vị gắn với nghề truyền thống địa phương",
+          "Đồ chơi thủ công",
+          "Vật liệu xây dựng"
         ],
-        "hint": "Tôn trọng quy trình sản xuất và vệ sinh."
+        "hint": "Bài học giới thiệu nước mắm được dùng trong đời sống ra sao."
       },
       {
-        "text": "Một chai không có nhãn và không rõ nơi làm được mời cho lớp nếm. Nên làm gì?",
+        "level": "THONG_HIEU",
+        "text": "Sau khi cá và muối được chuẩn bị, vì sao không thể lọc thành nước mắm dùng ngay?",
         "answers": [
-          "Nhờ cô, người lớn kiểm tra; chưa tự nếm",
-          "Khẳng định an toàn vì màu đẹp",
-          "Nếm thử để đoán chất lượng"
+          "Cá cần thời gian ủ chượp trước các công đoạn tiếp theo",
+          "Chỉ cần thêm nước là thành sản phẩm",
+          "Nước mắm được tạo ra bằng cách phơi muối riêng"
         ],
-        "hint": "Màu sắc không đủ để xác định sản phẩm an toàn."
+        "hint": "Sản phẩm trải qua nhiều công đoạn; hãy nhớ công đoạn cần thời gian."
       },
       {
-        "text": "Một chai quà giới thiệu nghề có nhãn bị bong mất. Nhóm nên làm gì?",
+        "level": "THONG_HIEU",
+        "text": "Trình tự khái quát nào phù hợp với bài học về nghề làm nước mắm Nam Ô?",
         "answers": [
-          "Nhờ người phụ trách xác định thông tin, không tự bịa nhãn",
-          "Tự ghi tên cơ sở bất kì lên chai",
-          "Dùng nhãn của một sản phẩm khác"
+          "Chuẩn bị cá và muối, ủ chượp, rồi lọc và hoàn thiện sản phẩm",
+          "Trộn xong là đóng chai ngay, không cần chờ",
+          "Đóng chai trước rồi mới cho cá và muối vào"
         ],
-        "hint": "Nhãn sản phẩm cần đúng thông tin; không tự gán nguồn gốc cho vật chưa xác định."
+        "hint": "Sắp xếp các công đoạn từ nguyên liệu đến sản phẩm."
       },
       {
-        "text": "Sau buổi trưng bày nghề Nam Ô, nhóm còn nhiều giấy và vỏ hộp sạch. Nên làm gì?",
+        "level": "VAN_DUNG",
+        "text": "Nhóm làm tấm thẻ giới thiệu nghề Nam Ô. Nội dung nào đúng với bài học?",
         "answers": [
-          "Thu gom, phân loại và tận dụng phần còn dùng được",
-          "Ném tất cả xuống mương",
-          "Đốt ngay trong lớp cho gọn"
+          "Nước mắm Nam Ô dùng cá cơm than và muối; nguyên liệu được ủ chượp rồi qua các bước lọc, hoàn thiện",
+          "Nước mắm Nam Ô được làm từ tre, sau đó dệt thành chai",
+          "Cá trộn muối xong là có thể dùng ngay, không cần công đoạn nào nữa"
         ],
-        "hint": "Giới thiệu nghề truyền thống cần đi cùng trách nhiệm với vật liệu và môi trường."
+        "hint": "Chọn tấm thẻ nêu đúng nguyên liệu và quy trình khái quát."
       }
     ],
     "feel": [
@@ -535,49 +555,54 @@ export const GRADE3_CONTENT = [
     ],
     "questions": [
       {
-        "text": "Một bạn gọi chiếc thúng đang đan là đồ xấu vì chưa hoàn thành. Em góp ý gì?",
+        "level": "NHAN_BIET",
+        "text": "Đặc điểm hình dáng nào giúp nhận ra thuyền thúng?",
         "answers": [
-          "Cần hiểu sản phẩm đang ở công đoạn nào trước khi nhận xét",
-          "Cứ chưa hoàn thành là không có giá trị",
-          "Nên bỏ ngay để làm cái khác"
+          "Dạng tròn, lòng lõm để dùng trên nước",
+          "Thân dài có bánh xe chạy trên đường",
+          "Có cánh buồm lớn và nhiều tầng"
         ],
-        "hint": "Sản phẩm dở dang phản ánh một bước lao động; nhận xét cần tôn trọng quá trình làm nghề."
+        "hint": "Nhớ hình dáng cơ bản của thuyền thúng được giới thiệu."
       },
       {
-        "text": "Bạn đề nghị bỏ khâu chống thấm để làm nhanh. Em giải thích thế nào?",
+        "level": "NHAN_BIET",
+        "text": "Vật liệu nào được dùng để đan thân thuyền thúng?",
         "answers": [
-          "Các khe đan cần được xử lí để hạn chế nước vào",
-          "Thúng chỉ cần có màu đẹp",
-          "Nước không thể lọt qua khe nan"
+          "Nan tre",
+          "Sợi len",
+          "Lá giấy"
         ],
-        "hint": "Liên hệ công đoạn với công dụng trên nước."
+        "hint": "Nhớ vật liệu người thợ chuẩn bị và đan thành thân thúng."
       },
       {
-        "text": "Đến nơi làm nghề, bạn lấy dao chẻ tre để thử. Em làm gì?",
+        "level": "THONG_HIEU",
+        "text": "Vì sao thân thúng cần được xử lí chống thấm?",
         "answers": [
-          "Nhắc bạn đặt xuống và báo người lớn",
-          "Mang dao ra mép nước để thử",
-          "Cầm thêm một con dao làm cùng"
+          "Để hạn chế nước lọt qua các khe đan khi dùng trên nước",
+          "Để thúng có thể chạy nhanh trên đường",
+          "Để thay cho công đoạn đan nan tre"
         ],
-        "hint": "Học sinh quan sát, không tự dùng dụng cụ nguy hiểm."
+        "hint": "Liên hệ công đoạn này với việc thúng được dùng ở đâu."
       },
       {
-        "text": "Em xem ảnh thúng ở Hội An rồi làm chú thích cho trạm Sơn Trà. Cách nào trung thực?",
+        "level": "THONG_HIEU",
+        "text": "Trình tự khái quát nào phù hợp với cách làm thuyền thúng trong bài?",
         "answers": [
-          "Ghi rõ ảnh tham khảo thúng chai Hội An, chưa coi là ảnh nghề Sơn Trà",
-          "Đổi tên ảnh thành Sơn Trà cho hợp bài",
-          "Bỏ nguồn để không ai hỏi"
+          "Chuẩn bị nan tre, đan và tạo dáng thân, làm vành rồi xử lí chống thấm",
+          "Sơn trang trí trước, sau đó mới tìm vật liệu",
+          "Đưa tre xuống nước rồi chiếc thúng tự thành hình"
         ],
-        "hint": "Phân biệt tư liệu địa phương với kiến thức chung về cùng một nghề."
+        "hint": "Nhớ các bước từ chuẩn bị vật liệu đến hoàn thiện."
       },
       {
-        "text": "Nhóm muốn biết vì sao người thợ giữ nghề đan thúng. Cách tìm hiểu nào tốt?",
+        "level": "VAN_DUNG",
+        "text": "Em làm thẻ giới thiệu nghề đan thúng ở Sơn Trà. Câu nào mô tả đúng kiến thức đã học?",
         "answers": [
-          "Chuẩn bị câu hỏi và phỏng vấn khi người thợ đồng ý",
-          "Tự viết lời người thợ dù chưa hỏi",
-          "Chỉ đếm số người xem video để kết luận"
+          "Người thợ đan nan tre thành thân thúng, tạo dáng và xử lí chống thấm để dùng trên nước",
+          "Thân thúng được dệt từ sợi len và dùng để chạy trên đường",
+          "Chiếc thúng có thể dùng ngay khi chưa đan xong"
         ],
-        "hint": "Phỏng vấn có sự đồng ý giúp hiểu trải nghiệm và tình cảm của người làm nghề."
+        "hint": "Nối vật liệu, cách làm và công dụng trong cùng một lời giới thiệu."
       }
     ],
     "feel": [

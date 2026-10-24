@@ -242,6 +242,11 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
               )}
               {currentQ && (
                 <div className="space-y-4">
+                  {station.grade === 3 && currentQ.level && (
+                    <span className="inline-flex rounded-full bg-violet-100 px-3 py-1 text-xs font-extrabold text-violet-800">
+                      {currentQ.level === 'NHAN_BIET' ? 'Nhận biết' : currentQ.level === 'THONG_HIEU' ? 'Thông hiểu' : 'Vận dụng'}
+                    </span>
+                  )}
                   <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug">
                     {currentQ.questionVi}
                   </h3>

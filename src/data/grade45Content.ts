@@ -22,9 +22,9 @@ export const GRADE45_CONTENT = [
         "title": "Núi, trung du và đồng bằng ven biển",
         "narration": "Địa hình Đà Nẵng có vùng đồi núi phía tây, vùng trung du và đồng bằng ven biển phía đông. Núi rừng, sông ngòi và bờ biển tạo nên vẻ đẹp phong phú. Ở nơi đất bằng, người dân có điều kiện trồng trọt, xây dựng khu dân cư; vùng núi và vùng biển lại có những thế mạnh riêng. Khi giới thiệu quê hương, em có thể chọn một cảnh núi, một dòng sông hoặc một bãi biển mà mình biết.",
         "fact": "Đà Nẵng có địa hình đa dạng: đồi núi, trung du và đồng bằng ven biển.",
-        "q": "Nhóm nào nêu đúng các dạng địa hình trong bài?",
+        "q": "Vùng đồi núi của Đà Nẵng nằm ở phía nào?",
         "answers": [
-          "Đồi núi, trung du, đồng bằng ven biển",
+          "Phía tây",
           "Chỉ đồng bằng ven biển",
           "Chỉ núi cao và thung lũng"
         ]
@@ -34,9 +34,9 @@ export const GRADE45_CONTENT = [
         "title": "Khí hậu và những dòng sông",
         "narration": "Đà Nẵng có khí hậu nhiệt đới gió mùa, với mùa mưa và mùa khô. Vùng núi cao thường mát hơn vùng thấp. Sông Hàn, sông Thu Bồn cùng các sông Vu Gia, Vĩnh Điện, Túy Loan, Yên góp phần phục vụ sinh hoạt, sản xuất và đi lại. Vào mùa mưa bão, em cần theo hướng dẫn của người lớn, tránh đến gần sông suối khi nước dâng. Cùng kể tên một dòng sông và lợi ích của dòng sông ấy nhé!",
         "fact": "Khí hậu có mùa mưa, mùa khô; sông ngòi gắn với đời sống và sản xuất của người dân.",
-        "q": "Hoạt động nào cho thấy lợi ích của sông ngòi?",
+        "q": "Sông ngòi cung cấp gì cho sản xuất?",
         "answers": [
-          "Cung cấp nước phục vụ sản xuất",
+          "Nước",
           "Làm mọi khu vực không bao giờ ngập",
           "Thay thế hoàn toàn đường bộ"
         ]
@@ -46,9 +46,9 @@ export const GRADE45_CONTENT = [
         "title": "Giữ gìn rừng, biển và sinh vật",
         "narration": "Thiên nhiên quê hương có nhiều loài động, thực vật đáng quý. Sơn Trà có voọc chà vá chân nâu; vùng núi Ngọc Linh có cây sâm Ngọc Linh. Vườn quốc gia Sông Thanh, các khu bảo tồn Sơn Trà, Bà Nà – Núi Chúa và vùng biển Cù Lao Chàm góp phần gìn giữ môi trường sống của sinh vật. Em bảo vệ thiên nhiên bằng cách không bẻ cây, không làm hại động vật, không cho thú hoang ăn và giữ sạch nơi tham quan.",
         "fact": "Bảo vệ rừng và biển cũng là bảo vệ môi trường sống của các loài sinh vật.",
-        "q": "Việc nào góp phần bảo vệ sinh vật khi tham quan?",
+        "q": "Khi tham quan thiên nhiên, em không được làm hại gì?",
         "answers": [
-          "Quan sát theo hướng dẫn, không làm hại động vật",
+          "Động vật",
           "Cho thú hoang ăn để chụp ảnh gần",
           "Bẻ cành cây mang về làm kỉ niệm"
         ]
@@ -58,9 +58,9 @@ export const GRADE45_CONTENT = [
         "title": "Con người và những nét đẹp quê hương",
         "narration": "Người Kinh, Cơ Tu, Xơ Đăng, Giẻ Triêng, Co, Chăm, Tày cùng nhiều cộng đồng khác sinh sống tại Đà Nẵng, góp phần tạo nên đời sống văn hóa phong phú. Qua câu chuyện về người dân xứ Quảng, em biết thêm những nét đẹp như chân thật, cần cù, chịu khó và giàu tình cảm. Những phẩm chất ấy được thể hiện bằng việc làm cụ thể. Em có thể kể về một người chăm chỉ lao động, giúp đỡ hàng xóm hoặc có hành động đẹp mà mình biết.",
         "fact": "Cần cù, chân thật và nghĩa tình là những nét đẹp được giới thiệu về con người quê hương.",
-        "q": "Câu chuyện nào phù hợp để giới thiệu nét đẹp nghĩa tình?",
+        "q": "Người dân Đà Nẵng có nét đẹp nào được nhắc đến?",
         "answers": [
-          "Một người giúp hàng xóm khi gặp khó khăn",
+          "Chân thật, cần cù",
           "Một người chỉ quan tâm thành tích của mình",
           "Một người chê bai công việc của người khác"
         ]
@@ -181,9 +181,9 @@ export const GRADE45_CONTENT = [
         "title": "Kiến trúc và điêu khắc Chăm-pa",
         "narration": "Ở Mỹ Sơn, các ngôi đền tháp cùng hoa văn, hình tượng và tác phẩm điêu khắc thể hiện tài nghệ của người Chăm-pa xưa. Nhiều tác phẩm được tạo trên gạch và đá. Nghệ thuật nơi đây có sự giao lưu với văn hóa Ấn Độ và mang dấu ấn riêng của Chăm-pa. Khi quan sát, em hãy tìm một chi tiết trang trí hoặc hình dáng công trình mình ấn tượng, rồi nói điều nhìn thấy trước khi chia sẻ cảm nhận.",
         "fact": "Mỹ Sơn có giá trị nổi bật về lịch sử, kiến trúc và điêu khắc Chăm-pa.",
-        "q": "Chi tiết nào giúp tìm hiểu nghệ thuật tại Mỹ Sơn?",
+        "q": "Tác phẩm nghệ thuật ở Mỹ Sơn được tạo trên vật liệu nào?",
         "answers": [
-          "Hoa văn và tác phẩm điêu khắc trên gạch, đá",
+          "Gạch và đá",
           "Các sản phẩm nước mắm đóng chai",
           "Dụng cụ dùng để dệt chiếu cói"
         ]
@@ -193,9 +193,9 @@ export const GRADE45_CONTENT = [
         "title": "Bảo tàng Điêu khắc Chăm Đà Nẵng",
         "narration": "Bảo tàng Điêu khắc Chăm Đà Nẵng, còn được gọi là Cổ viện Chàm, là nơi lưu giữ, nghiên cứu và giới thiệu nghệ thuật điêu khắc Chăm-pa. Bảo tàng được khởi công xây dựng năm 1915 và mở cửa đón khách năm 1919. Tư liệu, hiện vật giúp người xem tìm hiểu văn hóa của cư dân Chăm-pa xưa. Bảo tàng và khu di tích Mỹ Sơn là hai địa điểm khác nhau, cùng giúp chúng ta khám phá di sản Chăm-pa.",
         "fact": "Bảo tàng Điêu khắc Chăm khởi công năm 1915, mở cửa năm 1919 và gìn giữ di sản điêu khắc Chăm-pa.",
-        "q": "Nhận định nào đúng về Mỹ Sơn và Bảo tàng Điêu khắc Chăm?",
+        "q": "Mỹ Sơn gắn với di sản của dân tộc nào?",
         "answers": [
-          "Là hai địa điểm khác nhau, cùng giúp tìm hiểu di sản Chăm-pa",
+          "Chăm-pa",
           "Là hai tên của cùng một tòa nhà",
           "Đều là làng nghề làm đồ đồng"
         ]
@@ -217,9 +217,9 @@ export const GRADE45_CONTENT = [
         "title": "Tham quan và gìn giữ di sản",
         "narration": "Khi đến Mỹ Sơn hoặc Bảo tàng Điêu khắc Chăm, em đi theo hướng dẫn, giữ trật tự và thực hiện nội quy chụp ảnh. Không leo trèo lên tháp, không viết lên gạch đá và không tự ý chạm vào hiện vật. Sau chuyến đi hoặc xem video, em có thể vẽ sơ đồ tư duy, một bức tranh hay kể lại điều mình ấn tượng. Hiểu và giữ gìn di sản là cách để những câu chuyện quý tiếp tục đến với nhiều người.",
         "fact": "Tham quan văn minh là tuân thủ nội quy, bảo vệ công trình và hiện vật.",
-        "q": "Hành động nào giúp bảo vệ di sản?",
+        "q": "Khi tham quan Mỹ Sơn, em không được làm gì?",
         "answers": [
-          "Quan sát theo hướng dẫn, không viết hay chạm lên hiện vật",
+          "Viết lên gạch đá",
           "Viết tên lên tháp để lưu kỉ niệm",
           "Di chuyển hiện vật để chụp ảnh rõ hơn"
         ]
@@ -306,9 +306,9 @@ export const GRADE45_CONTENT = [
         "title": "Công nghiệp làm ra sản phẩm",
         "narration": "Ở Đà Nẵng, hoạt động công nghiệp tạo ra nhiều sản phẩm phục vụ đời sống và sản xuất. Khu công nghiệp Hòa Cầm và Khu kinh tế mở Chu Lai là những ví dụ ở đây. Các công việc gồm chế biến nông, lâm, thủy sản; may mặc; sản xuất thiết bị điện, điện tử và cơ khí lắp ráp. Từ nguyên liệu đến sản phẩm hoàn chỉnh cần nhiều người phối hợp. Em thử kể tên một sản phẩm công nghiệp gần gũi trong gia đình mình.",
         "fact": "Công nghiệp tạo ra sản phẩm qua các hoạt động chế biến, sản xuất và lắp ráp.",
-        "q": "Theo bài nghe, hoạt động nào thuộc công nghiệp ở Đà Nẵng?",
+        "q": "Trong bài, ngành công nghiệp nào được nhắc đến?",
         "answers": [
-          "Sản xuất thiết bị điện, điện tử",
+          "Sản xuất thiết bị điện",
           "Hướng dẫn khách tham quan",
           "Trồng rau tại vườn"
         ]
@@ -330,9 +330,9 @@ export const GRADE45_CONTENT = [
         "title": "Nông nghiệp và cách làm mới",
         "narration": "Người dân Đà Nẵng trồng lúa, rau, hoa, cây ăn quả, chè và sản xuất nấm. Làng rau Trà Quế là một ví dụ về trồng rau gắn với trải nghiệm du lịch. Một số cơ sở áp dụng nông nghiệp hữu cơ, trồng rau thủy canh hoặc ứng dụng công nghệ để nâng chất lượng sản phẩm. Những cách làm ấy cần đi cùng việc sử dụng đất, nước hợp lí. Em hãy tìm một sản phẩm nông nghiệp trong bữa ăn và kể về công sức làm ra nó.",
         "fact": "Nông nghiệp tạo ra lương thực, thực phẩm; cách làm phù hợp có thể nâng chất lượng và bảo vệ môi trường.",
-        "q": "Ví dụ nào thuộc nông nghiệp?",
+        "q": "Trong bài, rau được trồng theo phương pháp nào?",
         "answers": [
-          "Trồng rau theo phương pháp thủy canh",
+          "Thủy canh",
           "Vận chuyển hàng bằng tàu biển",
           "Sản xuất thiết bị điện tử"
         ]
@@ -455,9 +455,9 @@ export const GRADE45_CONTENT = [
         "title": "Tạo mẫu và làm khuôn",
         "narration": "Để tạo một sản phẩm đồng, người thợ trước hết tạo mẫu rồi làm khuôn đúc. Mẫu giúp xác định hình dáng sản phẩm; khuôn tạo khoảng trống để nhận kim loại nóng chảy. Mỗi loại sản phẩm cần cách chuẩn bị phù hợp. Sự chính xác, cẩn thận ở những bước đầu ảnh hưởng đến kết quả cuối cùng. Em hãy dùng thẻ hình để phân biệt bước tạo mẫu với bước làm khuôn.",
         "fact": "Tạo mẫu và làm khuôn là những công đoạn đầu của quá trình đúc đồng.",
-        "q": "Trình tự nào phù hợp ở đầu quá trình đúc đồng?",
+        "q": "Đầu tiên, người thợ đúc đồng làm gì?",
         "answers": [
-          "Tạo mẫu rồi làm khuôn",
+          "Tạo mẫu",
           "Đánh bóng rồi mới tạo mẫu",
           "Rót đồng trước khi có khuôn"
         ]
@@ -467,9 +467,9 @@ export const GRADE45_CONTENT = [
         "title": "Nấu, rót đồng và hoàn thiện",
         "narration": "Khi khuôn đã được chuẩn bị, người thợ nấu đồng rồi rót đồng nóng chảy vào khuôn. Sản phẩm cần được làm nguội trước khi tiếp tục đánh bóng và hoàn thiện. Công việc đòi hỏi tay nghề và tuân thủ an toàn vì có lò, kim loại nóng và dụng cụ chuyên dùng. Học sinh chỉ quan sát ở nơi được hướng dẫn. Em có thể xếp các thẻ: nấu đồng, rót khuôn, làm nguội, đánh bóng để ghi nhớ trình tự.",
         "fact": "Sau khi làm khuôn là nấu đồng, rót vào khuôn, làm nguội và hoàn thiện sản phẩm.",
-        "q": "Sau khi rót đồng vào khuôn, cần làm gì trước khi đánh bóng?",
+        "q": "Sau khi rót đồng vào khuôn, người thợ đợi đồng thế nào?",
         "answers": [
-          "Để sản phẩm nguội theo quy trình",
+          "Nguội",
           "Cầm ngay sản phẩm vừa rót",
           "Bỏ qua mọi bước kiểm tra"
         ]
@@ -626,9 +626,9 @@ export const GRADE45_CONTENT = [
         "title": "Đi thuyền khám phá, giữ sạch dòng sông",
         "narration": "Du khách có thể đi thuyền ngắm cảnh, tham quan và chụp ảnh tại Hòn Kẽm Đá Dừng. Em đi cùng người phụ trách, mặc áo phao theo hướng dẫn và ngồi đúng vị trí khi thuyền di chuyển. Không nghiêng người ra mép thuyền, không xả rác xuống sông. Sau hành trình, em có thể viết đoạn văn giới thiệu nguồn sông, cảnh đẹp và một hoạt động đã tìm hiểu, hoặc sưu tầm hình ảnh có nguồn để chia sẻ với lớp.",
         "fact": "Đi thuyền cần tuân thủ hướng dẫn an toàn và giữ sạch nguồn nước.",
-        "q": "Cách nào phù hợp khi thuyền đang di chuyển?",
+        "q": "Khi đi thuyền, em cần mặc gì?",
         "answers": [
-          "Ngồi đúng vị trí và làm theo hướng dẫn an toàn",
+          "Áo phao",
           "Đứng lên đổi chỗ để chụp ảnh",
           "Nghiêng người ra mép thuyền nhìn nước"
         ]
@@ -760,9 +760,9 @@ export const GRADE45_CONTENT = [
         "title": "Khu lưu niệm và tượng Mẹ Dũng sĩ",
         "narration": "Khu lưu niệm Mẹ Nhu và 07 Dũng sĩ Thanh Khê ở kiệt 746 đường Trần Cao Vân, phường Thanh Khê, lưu giữ câu chuyện về cơ sở cách mạng và trận đánh. Em cần phân biệt nơi này với tượng Mẹ Dũng sĩ tại nút giao Điện Biên Phủ – Huỳnh Ngọc Huệ – Dũng Sĩ Thanh Khê. Tượng do nhà điêu khắc Phạm Văn Hạng sáng tác. Hai địa điểm cùng giúp chúng mình tưởng nhớ, nhưng không phải cùng một công trình.",
         "fact": "Khu lưu niệm ở kiệt 746 Trần Cao Vân khác với tượng Mẹ Dũng sĩ tại nút giao ba đường.",
-        "q": "Khi giới thiệu khu lưu niệm, em cần phân biệt với địa điểm nào?",
+        "q": "Khu lưu niệm Mẹ Nhu nằm ở đường nào?",
         "answers": [
-          "Tượng Mẹ Dũng sĩ tại nút giao ba đường",
+          "Trần Cao Vân",
           "Đình Thạch Tân trong câu chuyện địa đạo",
           "Làng dệt lụa Mã Châu ở Nam Phước"
         ]
@@ -772,9 +772,9 @@ export const GRADE45_CONTENT = [
         "title": "Giới thiệu một di tích bằng lòng biết ơn",
         "narration": "Em chọn địa đạo Kỳ Anh hoặc khu lưu niệm Mẹ Nhu để làm hướng dẫn viên nhỏ. Bài giới thiệu có thể gồm tên, vị trí, một dấu tích và ý nghĩa em hiểu được. Khi tham quan, em đi cùng người lớn, theo hướng dẫn của nơi đón khách, nói vừa đủ nghe và giữ nguyên hiện vật. Một lời giới thiệu đúng cùng việc làm lịch sự là cách gần gũi để bày tỏ lòng biết ơn.",
         "fact": "Tìm hiểu đúng lịch sử và giữ gìn di tích là những việc học sinh có thể làm để tri ân.",
-        "q": "Bài giới thiệu một di tích nên có nội dung nào?",
+        "q": "Khi tham quan di tích, em cần giữ nguyên điều gì?",
         "answers": [
-          "Tên, vị trí, dấu tích và ý nghĩa",
+          "Hiện vật",
           "Chỉ liệt kê những món ăn quanh nơi đó",
           "Tự thêm chi tiết cho câu chuyện hấp dẫn"
         ]
@@ -867,9 +867,9 @@ export const GRADE45_CONTENT = [
         "title": "Từ khu nghỉ mát đến điểm du lịch",
         "narration": "Năm 1901, đoàn khảo sát của người Pháp do Debay dẫn đầu tìm hiểu vùng Núi Chúa; đến năm 1919, đường lên núi và khu nghỉ mát tiếp tục được xây dựng. Ngày nay, Bà Nà có nhiều công trình và dịch vụ du lịch. Khi xem tư liệu xưa và nay, em tìm điểm thay đổi của công trình, đồng thời phân biệt công trình do con người xây với núi rừng tự nhiên.",
         "fact": "Bà Nà có lịch sử phát triển khu nghỉ mát; công trình du lịch khác với cảnh quan núi rừng tự nhiên.",
-        "q": "Theo bài nghe, Bà Nà đã phát triển thành địa điểm nào?",
+        "q": "Năm nào đường lên núi Bà Nà và khu nghỉ mát tiếp tục được xây dựng?",
         "answers": [
-          "Khu nghỉ mát và du lịch",
+          "1919",
           "Sườn núi và mây trời",
           "Rừng cây và dòng suối tự nhiên"
         ]
@@ -915,9 +915,9 @@ export const GRADE45_CONTENT = [
         "title": "Tu bổ di tích và so sánh hai điểm đến",
         "narration": "Hải Vân Quan được công nhận là Di tích quốc gia năm 2017. Dự án bảo tồn, tu bổ và phục hồi được khởi công ngày 19 tháng 12 năm 2021. Khi xem ảnh trước và sau tu bổ, em cần đọc thời điểm chụp. Bà Nà nổi bật về núi rừng và du lịch nghỉ dưỡng; Hải Vân Quan nổi bật về lịch sử, kiến trúc và cảnh đèo. Một hành trình tốt cần vừa giới thiệu giá trị riêng vừa nhắc cách gìn giữ cả hai nơi.",
         "fact": "Bà Nà và Hải Vân Quan có những giá trị riêng; cần bảo vệ cảnh quan và bảo tồn di tích khi phát triển du lịch.",
-        "q": "Cặp giới thiệu nào phù hợp với hai điểm đến?",
+        "q": "Hải Vân Quan được công nhận Di tích quốc gia năm nào?",
         "answers": [
-          "Bà Nà: núi rừng, nghỉ dưỡng; Hải Vân Quan: di tích cửa ải",
+          "2017",
           "Bà Nà: địa đạo; Hải Vân Quan: làng dệt lụa",
           "Bà Nà: làng đá; Hải Vân Quan: vùng trồng sâm"
         ]
@@ -1034,9 +1034,9 @@ export const GRADE45_CONTENT = [
         "title": "Làng đá Non Nước và lịch sử nghề",
         "narration": "Làng nghề điêu khắc đá mĩ nghệ Non Nước nằm dưới chân Ngũ Hành Sơn. Nghề hình thành khoảng thế kỉ XVII, gắn với cụ Huỳnh Bá Quát quê gốc Thanh Hóa. Từ những đồ dùng ban đầu, người thợ phát triển nhiều tác phẩm tinh xảo. Nghề điêu khắc đá mĩ nghệ Non Nước được đưa vào danh mục Di sản văn hóa phi vật thể quốc gia năm 2014.",
         "fact": "Non Nước là làng nghề điêu khắc đá truyền thống dưới chân Ngũ Hành Sơn.",
-        "q": "Nghề truyền thống tiêu biểu dưới chân Ngũ Hành Sơn là gì?",
+        "q": "Làng nghề Non Nước làm sản phẩm từ vật liệu gì?",
         "answers": [
-          "Điêu khắc đá mĩ nghệ",
+          "Đá",
           "Dệt lụa tơ tằm",
           "Đúc cồng chiêng đồng"
         ]
@@ -1046,9 +1046,9 @@ export const GRADE45_CONTENT = [
         "title": "Sản phẩm đa dạng và bảo vệ núi đá",
         "narration": "Bàn tay người thợ làm ra tượng, bình hoa, bàn ghế, đồ trang trí và trang sức bằng đá. Mỗi nhóm sản phẩm có công dụng và hình dáng riêng. Trước đây có việc lấy đá tại núi; để bảo vệ danh thắng, nguồn đá cho làng nghề được đưa từ nơi khác về. Vì vậy, giữ nghề không có nghĩa là tiếp tục khai thác đá ở Ngũ Hành Sơn. Em hãy nghĩ một cách giới thiệu sản phẩm vừa tôn vinh người thợ vừa bảo vệ cảnh quan.",
         "fact": "Nghề đá có nhiều nhóm sản phẩm; bảo tồn làng nghề cần đi cùng bảo vệ danh thắng.",
-        "q": "Vì sao làng nghề sử dụng đá đưa từ nơi khác về?",
+        "q": "Đá làm sản phẩm ở làng nghề được đưa từ đâu về?",
         "answers": [
-          "Để bảo vệ cảnh quan núi Ngũ Hành Sơn",
+          "Từ nơi khác",
           "Vì mọi sản phẩm đều làm từ gỗ",
           "Để không cần đến tay nghề của nghệ nhân"
         ]
@@ -1058,9 +1058,9 @@ export const GRADE45_CONTENT = [
         "title": "Giữ gìn cảnh quan và di sản",
         "narration": "Năm 2018, danh thắng Ngũ Hành Sơn được xếp hạng là Di tích quốc gia đặc biệt. Khi tham quan, em đi theo lối hướng dẫn, không viết vẽ lên vách đá và không chạm vào chữ khắc. Em có thể vẽ một cảnh yêu thích trên giấy hoặc dùng đất nặn để thể hiện núi, hang động. Sản phẩm của em là cách chia sẻ điều đã hiểu mà vẫn giữ nguyên vẻ đẹp và dấu tích của danh thắng.",
         "fact": "Không viết vẽ lên vách đá; có thể giới thiệu di sản qua tranh, mô hình và thông tin đúng.",
-        "q": "Cách nào phù hợp để ghi lại cảnh em yêu thích?",
+        "q": "Ngũ Hành Sơn được xếp hạng Di tích quốc gia đặc biệt năm nào?",
         "answers": [
-          "Vẽ trên giấy hoặc làm mô hình đất nặn",
+          "2018",
           "Khắc thêm tên mình cạnh ma nhai",
           "Mang một mảnh đá trong hang về lớp"
         ]
@@ -1308,9 +1308,9 @@ export const GRADE45_CONTENT = [
         "title": "Giá trị dược liệu và thông tin có căn cứ",
         "narration": "Sâm Ngọc Linh có những thành phần được các nhà khoa học nghiên cứu, trong đó có nhóm chất saponin. Đây là dược liệu quý, nhưng kết quả nghiên cứu cần được hiểu đúng phạm vi. Em không biến lời quảng bá thành kết luận rằng sâm chữa được mọi bệnh. Khi tìm hiểu sản phẩm, em đọc nguồn thông tin; việc sử dụng dược liệu cần người lớn hỏi ý kiến nhân viên y tế phù hợp, không tự dùng theo lời truyền miệng.",
         "fact": "Sâm có giá trị nghiên cứu dược liệu; giới thiệu đúng thông tin và không tự dùng theo quảng cáo.",
-        "q": "Cách tìm hiểu giá trị dược liệu nào phù hợp?",
+        "q": "Nhóm chất nào trong sâm Ngọc Linh được nghiên cứu?",
         "answers": [
-          "Đọc nguồn đáng tin và hỏi người có chuyên môn",
+          "Saponin",
           "Tin mọi lời quảng cáo chữa bệnh",
           "Tự nếm sản phẩm để kết luận công dụng"
         ]
@@ -1320,9 +1320,9 @@ export const GRADE45_CONTENT = [
         "title": "Người trồng sâm và sinh kế dưới rừng",
         "narration": "Ở vùng Trà Linh và những nơi phù hợp, người dân, trong đó có cộng đồng Xơ Đăng, góp phần giữ giống, trồng và chăm sóc sâm dưới tán rừng. Cây cần nhiều thời gian và công sức; phát triển sâm còn gắn với nghiên cứu, quản lí nguồn giống và truy xuất nguồn gốc. Giá trị kinh tế bền vững cần đi cùng bảo vệ rừng, không khai thác cây tự nhiên tùy tiện hay phá rừng để mở rộng diện tích.",
         "fact": "Giữ giống, chăm sóc và truy xuất nguồn gốc giúp phát triển sinh kế gắn với bảo vệ rừng.",
-        "q": "Cách phát triển sâm nào gắn với bảo tồn?",
+        "q": "Người dân trồng sâm Ngọc Linh ở đâu?",
         "answers": [
-          "Trồng phù hợp dưới tán rừng và giữ nguồn giống",
+          "Dưới tán rừng",
           "Chặt tán rừng để cây nhận nắng trực tiếp",
           "Đào hết cây tự nhiên để bán nhanh"
         ]

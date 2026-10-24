@@ -8,8 +8,8 @@ export const GRADE45_CONTENT_REVISION='3.0.0-grade45-source';
 function choices(answers:string[],offset:number){const options=answers.map((textVi,i)=>({id:'opt-'+(i+1),textVi,isCorrect:i===0}));return [...options.slice(offset),...options.slice(0,offset)];}
 const VERIFIED_VR_TOURS: Record<string,{url:string;titleVi:string;sourceName:string}> = {
  'g5-station-4': {url:'https://vr360.danangfantasticity.com/',titleVi:'Tham quan Ngũ Hành Sơn 360°',sourceName:'Cổng thông tin du lịch Đà Nẵng – Một chạm đến Đà Nẵng'},
- 'g5-station-3': {url:'https://vr360.danangfantasticity.com/',titleVi:'Khám phá Bà Nà 360°',sourceName:'Cổng thông tin du lịch Đà Nẵng – Một chạm đến Đà Nẵng'},
- 'g4-station-2': {url:'https://vr360.com.vn/projects/myson-metaverse/',titleVi:'Tham quan khu đền tháp Mỹ Sơn 360°',sourceName:'VR360 – Mỹ Sơn Metaverse'}
+ 'g5-station-3': {url:'https://vr360.huecit.vn/chanmaylangco/haivanquan/index.html',titleVi:'Khám phá Hải Vân Quan 360°',sourceName:'HueCIT – Hải Vân Quan (đường dẫn cần kiểm tra trên thiết bị)'},
+ 'g4-station-2': {url:'https://my.matterport.com/show/?m=YGa3cKbZseV',titleVi:'Tham quan Bảo tàng Điêu khắc Chăm 3D',sourceName:'VR360 – Matterport Bảo tàng Điêu khắc Chăm'}
 };
 export const GRADE_45_STATIONS:Station[]=GRADE45_CONTENT.map<Station>(lesson=>{
  const source=lesson.grade===4?'Tài liệu GDĐP lớp 4 và biên bản hiệu chỉnh do giáo viên cung cấp ngày 23/10/2026; chưa gắn kế hoạch tích hợp mới':'Tài liệu GDĐP lớp 5 và biên bản góp ý ngày 29/7/2025 do giáo viên cung cấp; chưa xác nhận số tiết và kế hoạch tích hợp';

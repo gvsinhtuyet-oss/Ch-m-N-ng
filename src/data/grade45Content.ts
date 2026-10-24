@@ -205,9 +205,9 @@ export const GRADE45_CONTENT = [
         "title": "Từ công trình đến hiện vật",
         "narration": "Tòa nhà Bảo tàng Điêu khắc Chăm có kiến trúc riêng, gợi những đường nét của đền tháp Chăm và kiến trúc Pháp đầu thế kỉ XX. Những tác phẩm bằng đá, đất nung và các chất liệu khác cho thấy sự sáng tạo của nghệ nhân xưa. Khi đứng trước hiện vật, em quan sát hình dáng và đọc nhãn để biết tên, chất liệu, niên đại, xuất xứ. Nhãn giúp em hiểu tác phẩm chính xác hơn thay vì chỉ đoán từ hình ảnh.",
         "fact": "Quan sát kết hợp đọc nhãn giúp hiểu tên gọi, chất liệu, niên đại và xuất xứ của hiện vật.",
-        "q": "Muốn biết xuất xứ một hiện vật, em nên làm gì?",
+        "q": "Theo bài nghe, đọc nhãn hiện vật giúp em biết điều gì?",
         "answers": [
-          "Đọc nhãn và hỏi người hướng dẫn",
+          "Tên, chất liệu, niên đại và xuất xứ",
           "Đoán nơi xuất xứ chỉ từ màu sắc",
           "Lấy tên địa điểm nổi tiếng nhất để ghi"
         ]
@@ -306,9 +306,9 @@ export const GRADE45_CONTENT = [
         "title": "Công nghiệp làm ra sản phẩm",
         "narration": "Ở Đà Nẵng, hoạt động công nghiệp tạo ra nhiều sản phẩm phục vụ đời sống và sản xuất. Khu công nghiệp Hòa Cầm và Khu kinh tế mở Chu Lai là những ví dụ trong bài. Các công việc gồm chế biến nông, lâm, thủy sản; may mặc; sản xuất thiết bị điện, điện tử và cơ khí lắp ráp. Từ nguyên liệu đến sản phẩm hoàn chỉnh cần nhiều người phối hợp. Em thử kể tên một sản phẩm công nghiệp gần gũi trong gia đình mình.",
         "fact": "Công nghiệp tạo ra sản phẩm qua các hoạt động chế biến, sản xuất và lắp ráp.",
-        "q": "Hoạt động nào thuộc công nghiệp?",
+        "q": "Theo bài nghe, hoạt động nào thuộc công nghiệp ở Đà Nẵng?",
         "answers": [
-          "Lắp ráp ô tô",
+          "Sản xuất thiết bị điện, điện tử",
           "Hướng dẫn khách tham quan",
           "Trồng rau tại vườn"
         ]
@@ -867,9 +867,9 @@ export const GRADE45_CONTENT = [
         "title": "Từ khu nghỉ mát đến điểm du lịch",
         "narration": "Năm 1901, đoàn khảo sát của người Pháp do Debay dẫn đầu tìm hiểu vùng Núi Chúa; đến năm 1919, đường lên núi và khu nghỉ mát tiếp tục được xây dựng. Ngày nay, Bà Nà có nhiều công trình và dịch vụ du lịch. Khi xem tư liệu xưa và nay, em tìm điểm thay đổi của công trình, đồng thời phân biệt công trình do con người xây với núi rừng tự nhiên.",
         "fact": "Bà Nà có lịch sử phát triển khu nghỉ mát; công trình du lịch khác với cảnh quan núi rừng tự nhiên.",
-        "q": "Trong ảnh Bà Nà, đâu là công trình do con người xây dựng?",
+        "q": "Theo bài nghe, Bà Nà đã phát triển thành địa điểm nào?",
         "answers": [
-          "Nhà nghỉ và hệ thống cáp treo",
+          "Khu nghỉ mát và du lịch",
           "Sườn núi và mây trời",
           "Rừng cây và dòng suối tự nhiên"
         ]

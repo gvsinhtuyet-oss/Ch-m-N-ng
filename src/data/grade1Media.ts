@@ -133,21 +133,27 @@ export const GRADE1_MEDIA = [
   },
   {
     "id": "stream-forest",
-    "src": "/learning/grade1/media/stream-forest.webp",
-    "kind": "illustration",
-    "caption": "Tranh minh họa khái quát rừng và dòng suối; không phải ảnh Suối Tiên.",
-    "author": "Tranh tạo bằng AI cho học liệu CHẠM ĐÀ NẴNG",
-    "date": "17/10/2026",
-    "changes": "Tranh minh họa hư cấu đã rà nội dung, không phải ảnh chụp tư liệu."
+    "src": "https://culaochamtour.com/wp-content/uploads/2021/10/suoi-tien-que-son-quang-nam-a-1024x438.jpg",
+    "kind": "photo",
+    "caption": "Ảnh Suối Tiên Quế Sơn: thác nước và rừng cây (ảnh ghép trên trang nguồn).",
+    "author": "Cù Lao Chàm Tour (nguồn đăng tải; tác giả ảnh gốc chưa xác minh)",
+    "date": "2021 (đường dẫn tệp; chưa xác minh ngày chụp)",
+    "changes": "Ảnh thực tế từ bài viết về Suối Tiên Quế Sơn; sử dụng đường dẫn ảnh của trang nguồn, không lưu bản sao vào GitHub.",
+    "sourceUrl": "https://culaochamtour.com/thong-tin-du-lich-quang-nam/suoi-tien-que-son-quang-nam-diem-den-thien-nhien-dep-tuyet-tran.html",
+    "license": "© Trang nguồn — chưa xác nhận quyền tái sử dụng",
+    "licenseUrl": "https://culaochamtour.com/thong-tin-du-lich-quang-nam/suoi-tien-que-son-quang-nam-diem-den-thien-nhien-dep-tuyet-tran.html"
   },
   {
     "id": "stream-waterfall",
-    "src": "/learning/grade1/media/stream-waterfall.webp",
-    "kind": "illustration",
-    "caption": "Tranh minh họa dòng thác và hồ nước; không tái hiện một thác cụ thể ở Suối Tiên.",
-    "author": "Tranh tạo bằng AI cho học liệu CHẠM ĐÀ NẴNG",
-    "date": "17/10/2026",
-    "changes": "Tranh minh họa hư cấu đã rà nội dung, không phải ảnh chụp tư liệu."
+    "src": "https://culaochamtour.com/wp-content/uploads/2021/10/suoi-tien-que-son-quang-nam-1024x401.jpg",
+    "kind": "photo",
+    "caption": "Ảnh Suối Tiên Quế Sơn: hồ nước và ghềnh đá (ảnh ghép trên trang nguồn).",
+    "author": "Cù Lao Chàm Tour (nguồn đăng tải; tác giả ảnh gốc chưa xác minh)",
+    "date": "2021 (đường dẫn tệp; chưa xác minh ngày chụp)",
+    "changes": "Ảnh thực tế từ bài viết về Suối Tiên Quế Sơn; sử dụng đường dẫn ảnh của trang nguồn, không lưu bản sao vào GitHub.",
+    "sourceUrl": "https://culaochamtour.com/thong-tin-du-lich-quang-nam/suoi-tien-que-son-quang-nam-diem-den-thien-nhien-dep-tuyet-tran.html",
+    "license": "© Trang nguồn — chưa xác nhận quyền tái sử dụng",
+    "licenseUrl": "https://culaochamtour.com/thong-tin-du-lich-quang-nam/suoi-tien-que-son-quang-nam-diem-den-thien-nhien-dep-tuyet-tran.html"
   },
   {
     "id": "stream-observation",

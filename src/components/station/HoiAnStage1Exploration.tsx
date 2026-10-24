@@ -249,7 +249,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   return (
     <div className="min-h-0">
       <section className="overflow-hidden rounded-[2rem] border border-orange-200/90 bg-white/92 p-3 shadow-[0_18px_55px_rgba(154,52,18,0.16)] backdrop-blur-xl">
-        <div className="grid gap-3 lg:grid-cols-[1.55fr_1fr]">
+        <div className="grid items-start gap-3 lg:grid-cols-[1.55fr_1fr]">
           {/* LEFT: immersive visual explorer */}
           <div className="flex min-h-0 flex-col gap-3">
             <div className="relative min-h-[300px] aspect-[16/10] overflow-hidden rounded-[1.65rem] border-2 border-orange-200 bg-slate-950 shadow-xl">
@@ -294,85 +294,13 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               </button>
 
               <button type="button" onClick={() => openImagePreview(index)} aria-label="Phóng to hình ảnh" className="absolute right-3 top-3 z-20 rounded-xl bg-slate-900/75 p-3 text-white shadow-lg"><Maximize2 className="h-5 w-5" /></button>
-            </div>
-            <div className="grid grid-cols-2 gap-2 rounded-2xl bg-gradient-to-r from-amber-50 to-sky-50 p-2 sm:grid-cols-4">
+            <div className="absolute bottom-3 left-3 right-3 z-20 grid grid-cols-1 gap-2 rounded-2xl bg-slate-950/30 p-2 backdrop-blur-sm sm:grid-cols-3">
               <button type="button" onClick={() => { if (playing) audioService.pauseNarration(); else if (paused) audioService.resumeNarration(); else speak(); }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-2 py-2 text-xs font-black text-white shadow"><Volume2 className="h-4 w-4 shrink-0" />{playing ? 'Tạm dừng' : paused ? 'Tiếp tục nghe' : 'Nghe thuyết minh'}</button>
               <button type="button" onClick={() => setShowKnowledgeMap(true)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-sky-200 px-2 py-2 text-xs font-black text-sky-900 shadow"><Map className="h-4 w-4 shrink-0" />Khám phá bản đồ</button>
               <button type="button" disabled={!station.vr360Experience?.verified || !station.vr360Experience?.url} onClick={() => { audioService.playSfx('click'); setShowVr(true); }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-violet-200 px-2 py-2 text-xs font-black text-violet-900 shadow disabled:opacity-50"><Globe className="h-4 w-4 shrink-0" />Xem VR360</button>
-              <button type="button" onClick={() => openImagePreview(index)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-emerald-200 px-2 py-2 text-xs font-black text-emerald-900 shadow"><Maximize2 className="h-4 w-4 shrink-0" />Phóng to</button>
+            </div>
             </div>
             {narrationMessage&&<p role="status" className="rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-950">{narrationMessage}</p>}
-            {/* hotspot shortcut cards */}
-            <div className="grid shrink-0 grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
-              {station.hotspots.map((item, itemIndex) => {
-                const done = completedHotspotIds.has(item.id);
-                const active = itemIndex === index;
-                const unlocked = canAccessHotspot(itemIndex);
-                const isCurrentOpen = !done && unlocked;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => {
-                      if (freeReview) {
-                        go(itemIndex);
-                      } else {
-                        audioService.playSfx('click');
-                        openImagePreview(itemIndex);
-                      }
-                    }}
-                    aria-disabled={false}
-                    className={`group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border p-1.5 text-center transition ${
-                      active
-                        ? 'border-orange-500 bg-orange-50 shadow-lg ring-2 ring-orange-300'
-                        : done
-                          ? 'border-emerald-300 bg-emerald-50 shadow-sm hover:bg-emerald-100'
-                          : isCurrentOpen
-                            ? 'border-sky-400 bg-sky-50 shadow-sm hover:bg-sky-100'
-                            : 'border-slate-300 bg-slate-100/95 text-slate-500 hover:border-orange-300 hover:bg-orange-50/70'
-                    }`}
-                  >
-                    <LearningImage
-                      key={item.id + item.image}
-                      honestFallback={station.grade === 2 || station.grade === 5}
-                      src={item.image}
-                      alt=""
-                      className={`h-20 w-full shrink-0 rounded-xl object-cover ${!unlocked && !freeReview ? 'opacity-70' : ''}`}
-                      onError={event => {
-                        const img = event.currentTarget;
-                        img.onerror = null;
-                        img.src = station.coverImage || DEFAULT_APP_BACKGROUND_DATA_URL;
-                      }}
-                    />
-                    <span className="min-w-0">
-                      <span className={`flex items-center gap-1 text-[9px] font-black uppercase ${
-                        done ? 'text-emerald-700' : isCurrentOpen ? 'text-sky-700' : 'text-slate-400'
-                      }`}>
-                        Điểm {itemIndex + 1}
-                        {done ? (
-                          <CheckCircle2 className="h-3 w-3 text-emerald-600" />
-                        ) : !unlocked ? (
-                          <LockKeyhole className="h-3 w-3" />
-                        ) : (
-                          <Play className="h-3 w-3 fill-current" />
-                        )}
-                      </span>
-                      <span className={`mt-0.5 line-clamp-2 block text-[11px] font-black leading-4 ${
-                        !unlocked ? 'text-slate-400' : 'text-slate-800'
-                      }`}>
-                        {item.titleVi}
-                      </span>
-                      <span className={`mt-0.5 block text-[9px] font-bold ${
-                        done ? 'text-emerald-600' : isCurrentOpen ? 'text-sky-600' : 'text-slate-400'
-                      }`}>
-                        {done ? 'Hoàn thành' : isCurrentOpen ? 'Đang khám phá' : freeReview ? 'Sẵn sàng' : 'Xem ảnh trước'}
-                      </span>
-                    </span>
-                    {!unlocked && freeReview && <span className="absolute inset-0 bg-white/15" />}
-                  </button>
-                );
-              })}
-            </div>
             {lockMessage && (
               <div className="shrink-0 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-[11px] font-bold text-amber-800 shadow-sm">
                 {lockMessage}
@@ -504,6 +432,81 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
           </aside>
         </div>
+        <section className="mt-3 rounded-[1.5rem] border-2 border-amber-300 bg-gradient-to-r from-amber-50 via-white to-orange-50 p-3 shadow-md">
+          <h2 className="mb-3 text-base font-black text-amber-900">📍 CÁC ĐIỂM CHẠM KHÁM PHÁ</h2>
+                      {/* hotspot shortcut cards */}
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+              {station.hotspots.map((item, itemIndex) => {
+                const done = completedHotspotIds.has(item.id);
+                const active = itemIndex === index;
+                const unlocked = canAccessHotspot(itemIndex);
+                const isCurrentOpen = !done && unlocked;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => {
+                      if (freeReview) {
+                        go(itemIndex);
+                      } else {
+                        audioService.playSfx('click');
+                        openImagePreview(itemIndex);
+                      }
+                    }}
+                    aria-disabled={false}
+                    className={`group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border p-1.5 text-center transition ${
+                      active
+                        ? 'border-orange-500 bg-orange-50 shadow-lg ring-2 ring-orange-300'
+                        : done
+                          ? 'border-emerald-300 bg-emerald-50 shadow-sm hover:bg-emerald-100'
+                          : isCurrentOpen
+                            ? 'border-sky-400 bg-sky-50 shadow-sm hover:bg-sky-100'
+                            : 'border-slate-300 bg-slate-100/95 text-slate-500 hover:border-orange-300 hover:bg-orange-50/70'
+                    }`}
+                  >
+                    <LearningImage
+                      key={item.id + item.image}
+                      honestFallback={station.grade === 2 || station.grade === 5}
+                      src={item.image}
+                      alt=""
+                      className={`h-24 w-full shrink-0 rounded-xl object-cover ${!unlocked && !freeReview ? 'opacity-70' : ''}`}
+                      onError={event => {
+                        const img = event.currentTarget;
+                        img.onerror = null;
+                        img.src = station.coverImage || DEFAULT_APP_BACKGROUND_DATA_URL;
+                      }}
+                    />
+                    <span className="min-w-0">
+                      <span className={`flex items-center gap-1 text-[9px] font-black uppercase ${
+                        done ? 'text-emerald-700' : isCurrentOpen ? 'text-sky-700' : 'text-slate-400'
+                      }`}>
+                        Điểm {itemIndex + 1}
+                        {done ? (
+                          <CheckCircle2 className="h-3 w-3 text-emerald-600" />
+                        ) : !unlocked ? (
+                          <LockKeyhole className="h-3 w-3" />
+                        ) : (
+                          <Play className="h-3 w-3 fill-current" />
+                        )}
+                      </span>
+                      <span className={`mt-0.5 line-clamp-2 block text-xs font-black leading-4 ${
+                        !unlocked ? 'text-slate-400' : 'text-slate-800'
+                      }`}>
+                        {item.titleVi}
+                      </span>
+                      <span className={`mt-0.5 block text-[9px] font-bold ${
+                        done ? 'text-emerald-600' : isCurrentOpen ? 'text-sky-600' : 'text-slate-400'
+                      }`}>
+                        {done ? 'Hoàn thành' : isCurrentOpen ? 'Đang khám phá' : freeReview ? 'Sẵn sàng' : 'Xem ảnh trước'}
+                      </span>
+                    </span>
+                    {!unlocked && freeReview && <span className="absolute inset-0 bg-white/15" />}
+                  </button>
+                );
+              })}
+            </div>
+
+        </section>
       </section>
 
       {showKnowledgeMap && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/85 p-4" role="dialog" aria-modal="true" aria-label="Bản đồ tri thức">

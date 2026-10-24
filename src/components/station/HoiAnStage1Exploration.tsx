@@ -246,10 +246,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   return (
     <div className="min-h-0">
       <section className="overflow-hidden rounded-[2rem] border border-orange-200/90 bg-white/92 p-3 shadow-[0_18px_55px_rgba(154,52,18,0.16)] backdrop-blur-xl">
-        <div className="grid min-h-[500px] gap-3 lg:h-[calc(100dvh-310px)] lg:min-h-[500px] lg:grid-cols-[1.72fr_1fr]">
+        <div className="grid gap-3 lg:grid-cols-[1.55fr_1fr]">
           {/* LEFT: immersive visual explorer */}
           <div className="flex min-h-0 flex-col gap-3">
-            <div className="relative min-h-[350px] flex-1 overflow-hidden rounded-[1.65rem] border-2 border-orange-200 bg-slate-950 shadow-xl">
+            <div className="relative min-h-[300px] aspect-[16/10] overflow-hidden rounded-[1.65rem] border-2 border-orange-200 bg-slate-950 shadow-xl">
               <button
                 type="button"
                 onClick={() => openImagePreview(index)}
@@ -280,16 +280,14 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               <button
                 type="button"
                 onClick={() => openImagePreview(index)}
-                className="absolute left-4 top-4 z-20 max-w-[62%] rounded-2xl border border-white/80 bg-white/95 px-4 py-3 text-left shadow-xl backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-orange-50"
+                className="absolute left-3 top-3 z-20 max-w-[72%] rounded-xl border border-white/80 bg-white/95 px-3 py-2 text-left shadow-lg"
                 aria-label={`Khám phá bức tranh ${station.titleVi} ở chế độ ảnh lớn`}
               >
                 <div className="flex items-center gap-2 text-orange-600">
                   <MapPin className="h-4 w-4 shrink-0" />
-                  <span className="truncate text-sm font-black">Khám phá hình ảnh</span>
+                  <span className="truncate text-sm font-black">Điểm chạm {index + 1}/{station.hotspots.length} · {hotspot.titleVi}</span>
                 </div>
-                <p className="mt-0.5 text-[11px] font-semibold text-slate-600">
-                  Chạm để xem ảnh lớn và quan sát kĩ từng chi tiết.
-                </p>
+
               </button>
 
               <div className="absolute right-4 top-4 z-20">
@@ -364,10 +362,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               </div>
             </div>
 
-            {(station.grade === 1 || !!hotspot.mediaCredit) && <div className="shrink-0 rounded-xl bg-orange-50 px-3 py-2 text-[11px] leading-relaxed text-slate-600"><LearningMediaCredit src={hotspot.image} credit={hotspot.mediaCredit}/></div>}
+
             {narrationMessage&&<p role="status" className="rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-950">{narrationMessage}</p>}
             {/* hotspot shortcut cards */}
-            <div className="grid shrink-0 grid-cols-2 gap-2 sm:grid-cols-4">
+            <div className="grid shrink-0 grid-cols-2 gap-2 sm:grid-cols-3 xl:grid-cols-6">
               {station.hotspots.map((item, itemIndex) => {
                 const done = completedHotspotIds.has(item.id);
                 const active = itemIndex === index;
@@ -445,7 +443,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
           </div>
 
           {/* RIGHT: information rail */}
-          <aside className="hoi-an-right-rail flex h-full min-h-0 flex-col gap-3 overflow-y-auto overscroll-contain pr-2 pb-2 lg:max-h-full">
+          <aside className="hoi-an-right-rail flex min-h-0 flex-col gap-3">
             <div className="shrink-0 rounded-[1.5rem] border border-orange-200 bg-gradient-to-br from-orange-50 via-white to-amber-50/70 p-4 shadow-sm">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
@@ -559,51 +557,13 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
                 </div>
               </div>
-            ) : (
-              <div />
-            )}
+            ) : null}
 
-            <div className="sticky bottom-0 z-20 shrink-0 rounded-[1.5rem] border border-emerald-200 bg-gradient-to-r from-emerald-50 via-teal-50 to-white p-3 shadow-[0_-8px_24px_rgba(15,118,110,0.10)] backdrop-blur-md">
-              <p className="text-[10px] font-black text-emerald-700">NHÀ PHIÊU LƯU ƠI!</p>
-              <p className="mt-1 text-[11px] font-semibold leading-4 text-slate-600">
-                {freeReview
-                  ? 'Em đã hoàn thành Chặng 1. Bây giờ có thể chọn xem lại bất kỳ điểm nào.'
-                  : 'Em có thể xem trước các ảnh. Muốn đi tiếp hành trình, hãy đóng ảnh và trả lời đúng câu hỏi của điểm hiện tại.'}
-              </p>
-
-              {submitted && correct && freeReview ? (
-                <>
-                  {remainingHotspotCount > 0 && (
-                    <p className="mt-2 rounded-xl bg-sky-50 px-3 py-2 text-[11px] font-bold leading-4 text-sky-800 ring-1 ring-sky-200">
-                      Tốt lắm! Em còn {remainingHotspotCount} điểm trước khi hoàn thành Chặng 1.
-                    </p>
-                  )}
-                  <button
-                    type="button"
-                    onClick={next}
-                    className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 py-3.5 text-sm font-black text-white shadow-lg shadow-orange-500/20"
-                  >
-                    {index === station.hotspots.length - 1 && remainingHotspotCount === 0
-                      ? 'HOÀN THÀNH CHẶNG 1'
-                      : `KHÁM PHÁ ĐIỂM ${Math.min(index + 2, station.hotspots.length)}`}
-                    <ChevronRight className="h-4 w-4" />
-                  </button>
-                </>
-              ) : (
-                <div className="mt-2 flex items-center gap-1.5">
-                  {station.hotspots.map((item, itemIndex) => (
-                    <span
-                      key={item.id}
-                      className={`h-2 flex-1 rounded-full ${itemIndex === index
-                        ? 'bg-orange-500'
-                        : completedHotspotIds.has(item.id)
-                          ? 'bg-emerald-400'
-                          : 'bg-slate-200'}`}
-                    />
-                  ))}
-                </div>
-              )}
+            <div className="flex items-center gap-1.5 rounded-xl bg-emerald-50 px-3 py-2" aria-label="Tiến độ điểm chạm">
+              {station.hotspots.map((item, itemIndex) => <span key={item.id} className={`h-2 flex-1 rounded-full ${itemIndex === index ? 'bg-orange-500' : completedHotspotIds.has(item.id) ? 'bg-emerald-400' : 'bg-slate-200'}`} />)}
             </div>
+            {submitted && correct && freeReview && <button type="button" onClick={next} className="rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-3 text-sm font-black text-white">{index === station.hotspots.length - 1 ? 'HOÀN THÀNH CHẶNG 1' : 'KHÁM PHÁ ĐIỂM TIẾP THEO'} <ChevronRight className="inline h-4 w-4" /></button>}
+
           </aside>
         </div>
       </section>

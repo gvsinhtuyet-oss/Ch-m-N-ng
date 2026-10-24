@@ -145,7 +145,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
             role="dialog"
             aria-modal="true"
             aria-label="Phần thưởng bản đồ hành trình"
-            className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-gradient-to-br from-amber-50 to-sky-50 border-4 border-amber-300 p-5 sm:p-8 text-center shadow-2xl space-y-5"
+            className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl bg-gradient-to-br from-[#f9edcf] to-[#e7c48c] border-[5px] border-[#9f6a30] p-5 sm:p-8 text-center shadow-2xl space-y-5"
           >
             <button
               type="button"
@@ -185,7 +185,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                       src={station.journeyMap.image}
                       alt={'Bản đồ hành trình ' + station.titleVi}
                       onError={() => setMapImageFailed(true)}
-                      className="max-h-[44vh] w-auto max-w-full object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+                      className="max-h-[52vh] w-auto max-w-full object-contain transition-transform duration-200 group-hover:scale-[1.02]"
                     />
                     {stamped && (
                       <div
@@ -205,32 +205,14 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                     </span>
                   </button>
                 </div>
-              ) : (
-                <svg viewBox="0 0 480 240" role="img" aria-label={'Bản đồ khám phá ' + station.titleVi} className="w-full mt-3 rounded-xl bg-amber-50">
-                  <path d="M65 65 C140 0 320 0 405 65 S340 230 250 175 S80 260 65 65" fill="none" stroke="#b45309" strokeWidth="5" strokeDasharray="10 8" />
-                  {[[65,65],[405,65],[405,175],[65,175]].map(([x,y],i) => (
-                    <g key={i}>
-                      <circle cx={x} cy={y} r="27" fill="#0284c7" stroke="white" strokeWidth="4" />
-                      <text x={x} y={y+8} textAnchor="middle" fill="white" fontSize="24" fontWeight="bold">{i+1}</text>
-                    </g>
-                  ))}
-                  <text x="240" y="105" textAnchor="middle" fontSize="34">🧭</text>
-                  <text x="240" y="140" textAnchor="middle" fill="#92400e" fontSize="18" fontWeight="bold">CHẠM ĐÀ NẴNG</text>
-                </svg>
+) : (
+                <div className="mt-3 flex aspect-[16/9] w-full flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-amber-700/50 bg-[#f5e6c4] px-5 text-center text-amber-950">
+                  <Map className="h-12 w-12 opacity-60" />
+                  <p className="text-base font-black">KHUNG BẢN ĐỒ KIẾN THỨC</p>
+                  <p className="text-xs">Bản đồ của trạm sẽ xuất hiện tại đây khi được bổ sung.</p>
+                </div>
               )}
 
-              <div className="grid grid-cols-2 gap-2 mt-3 text-left">
-                {(station.journeyMap?.summaryNodes || station.hotspots.map(h => ({
-                  id: h.id,
-                  titleVi: h.titleVi,
-                  textVi: h.keyFactVi,
-                }))).map((node, i) => (
-                  <div key={node.id} className="rounded-xl bg-white/80 p-2 text-xs text-amber-950">
-                    <strong>{i + 1}. {node.titleVi}</strong>
-                    <p className="mt-1">{node.textVi}</p>
-                  </div>
-                ))}
-              </div>
             </div>
 
             <div className="mx-auto flex items-center justify-center gap-3 rounded-2xl bg-amber-200 p-4 text-amber-950">
@@ -302,103 +284,59 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
         </div>
       )}
 
-      <section className="station-stage-four-card rounded-3xl bg-white border border-amber-200 shadow-sm p-4 sm:p-5 space-y-4 text-center">
-        <div>
-          <span className="text-xs font-black text-sky-700 uppercase">Chặng 4 · Hộ chiếu hành trình</span>
-          <h2 className="mt-1 text-xl sm:text-2xl font-black text-slate-900">{station.titleVi}</h2>
-          <p className="mt-2 text-sm text-slate-600">Ba vật phẩm em đã sưu tập trong hành trình</p>
+      <section className="station-stage-four-card relative isolate overflow-hidden rounded-[2rem] border-[5px] border-[#b67c31] bg-[#173a4c] p-3 text-center shadow-[0_20px_65px_rgba(16,34,46,.32)] sm:p-6">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10" style={{background:'radial-gradient(ellipse at 70% 8%, rgba(255,224,139,.45), transparent 38%),linear-gradient(150deg,#14374a 0%,#366473 33%,#6a4930 65%,#2c211e 100%)'}} />
+        <div aria-hidden="true" className="pointer-events-none absolute bottom-0 left-0 right-0 h-[32%] -z-10 opacity-80" style={{background:'repeating-linear-gradient(0deg,transparent 0 32px,rgba(32,18,10,.35) 33px 35px),linear-gradient(90deg,#624027,#95663b,#624027)'}} />
+        <div className="mx-auto mb-4 max-w-3xl rounded-2xl border-2 border-[#eac579] bg-gradient-to-b from-[#704524] to-[#3c251d] px-3 py-3 text-[#ffe8aa] shadow-xl sm:px-8">
+          <p className="text-xs font-black uppercase tracking-[.16em]">CHẶNG 4 / 4 · HỘ CHIẾU HÀNH TRÌNH</p>
+          <h2 className="mt-1 text-2xl font-black uppercase tracking-wide sm:text-3xl">DẤU ẤN NHÀ KHÁM PHÁ</h2>
+          <p className="mt-1 text-sm font-bold text-amber-100">{station.titleVi}</p>
         </div>
-
-        <div className="grid grid-cols-3 gap-2">
-          {station.rewards.map(reward => {
-            const received = isReadOnly || progress.rewardsCollected.includes(reward.id);
-            return (
-              <div
-                key={reward.id}
-                className={`rounded-2xl border p-3 ${received ? 'bg-amber-50 border-amber-300' : 'bg-slate-50 border-slate-200'}`}
-              >
-                <div className="mb-2 flex justify-center">
-                  <RewardBadge template={reward.template} size="sm" muted={!received} />
-                </div>
-                <p className="text-xs font-bold text-slate-900">{reward.nameVi}</p>
-                <p className={`text-[11px] mt-1 ${received ? 'text-emerald-700' : 'text-slate-400'}`}>
-                  {received ? '✓ Đã nhận' : 'Chưa nhận'}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className={`rounded-3xl border p-5 sm:p-6 ${giftClaimed ? 'border-emerald-200 bg-emerald-50' : 'border-amber-200 bg-gradient-to-r from-amber-50 to-orange-50'}`}>
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-200 text-amber-900">
-            {giftClaimed ? <CheckCircle2 className="w-7 h-7 text-emerald-700" /> : <Gift className="w-6 h-6" />}
-          </div>
-          <p className="text-xs font-black uppercase tracking-wider text-amber-700">Đổi quà cuối hành trình</p>
-          <h3 className="mt-1 text-lg font-black text-slate-950">
-            {giftClaimed ? 'Bản đồ hành trình đã được thu thập' : 'Mở khóa phần thưởng đặc biệt'}
-          </h3>
-          <p className="mt-2 text-sm text-slate-600">
-            {giftClaimed
-              ? 'Bản đồ đã nằm trong menu BẢN ĐỒ và em đã nhận 1 mảnh chìa khóa.'
-              : 'Dùng thành tích từ 3 chặng trước để mở Bản đồ hành trình và nhận mảnh chìa khóa.'}
-          </p>
-
-          <button
-            type="button"
-            disabled={!canExchange}
-            onClick={handleJourneyGift}
-            className={`mt-4 w-full sm:w-auto px-8 py-3.5 rounded-2xl font-black shadow-lg disabled:opacity-50 inline-flex items-center justify-center gap-2 ${
-              giftClaimed
-                ? 'bg-sky-700 text-white'
-                : 'bg-gradient-to-r from-amber-400 to-orange-400 text-amber-950'
-            }`}
-          >
-            {giftClaimed ? <Map className="w-5 h-5" /> : <Gift className="w-5 h-5" />}
-            {giftClaimed ? 'XEM LẠI BẢN ĐỒ' : 'NHẬN PHẦN THƯỞNG'}
-          </button>
-
-          {!canExchange && (
-            <p className="mt-3 text-xs text-slate-500">Em cần hoàn thành đủ 3 chặng trước để nhận phần thưởng.</p>
-          )}
-        </div>
-
-        {stamped && (
-          <div className="rounded-3xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-amber-50 p-5 sm:p-6 text-center">
-            <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700">
-              <CheckCircle2 className="w-7 h-7" />
+        <div className="grid gap-4 lg:grid-cols-[minmax(0,1.7fr)_minmax(230px,1fr)]">
+          <div className="relative min-w-0 rounded-[1.5rem] border-[5px] border-[#b17b3d] bg-[#ead4a4] p-3 shadow-[0_12px_30px_rgba(0,0,0,.35)] sm:p-5">
+            <div className="mb-2 flex items-center justify-between gap-2 text-left text-[#61401e]">
+              <p className="text-sm font-black uppercase">🧭 Bản đồ kiến thức</p>
+              {station.journeyMap?.image && !mapImageFailed && <button type="button" onClick={() => setMapZoomed(true)} className="inline-flex items-center gap-1 rounded-lg bg-[#714722] px-3 py-2 text-xs font-bold text-white"><ZoomIn className="h-4 w-4"/> Phóng to</button>}
             </div>
-            <p className="text-xs font-black uppercase tracking-wider text-emerald-700">Dấu ấn cuối hành trình</p>
-            <h3 className="mt-1 text-xl font-black text-slate-950">🏅 Hoàn thành trạm!</h3>
-            <p className="mt-2 text-sm text-slate-600">
-              Bản đồ đã lưu vào BẢN ĐỒ • Đã nhận 1 mảnh chìa khóa • Dấu ấn đã lưu vào HỘ CHIẾU.
-            </p>
+            {station.journeyMap?.image && !mapImageFailed ? (
+              <button type="button" onClick={() => setMapZoomed(true)} className="block w-full overflow-hidden rounded-xl border-2 border-[#c9a56a] bg-[#fbf1d9]" aria-label="Phóng to bản đồ kiến thức">
+                <img src={station.journeyMap.image} onError={() => setMapImageFailed(true)} alt={'Bản đồ kiến thức '+station.titleVi} className="aspect-[16/9] w-full object-contain" />
+              </button>
+            ) : (
+              <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-[#b08b51] bg-[#f7ecd1] px-4 text-[#75552d]">
+                <Map className="h-10 w-10 opacity-60 sm:h-14 sm:w-14" />
+                <p className="text-sm font-black uppercase sm:text-lg">Khung bản đồ kiến thức</p>
+                <p className="text-xs sm:text-sm">Bản đồ của trạm sẽ được bổ sung tại đây</p>
+              </div>
+            )}
+            <p className="mt-2 text-xs font-semibold text-[#765329]">Nhìn lại những điều em đã khám phá tại trạm</p>
           </div>
-        )}
-
-        {isReadOnly && (
-          <p className="text-xs text-amber-800">Bản xem thử – phần thưởng và dấu ấn không lưu vào tài khoản.</p>
-        )}
-
-        {stamped && (
-          <div className="flex flex-col sm:flex-row gap-3 justify-center border-t pt-5">
-            <button
-              type="button"
-              onClick={onReviewJourney}
-              className="rounded-xl bg-slate-100 px-4 py-3 text-slate-700 font-bold text-sm inline-flex items-center justify-center gap-2"
-            >
-              <RotateCcw className="w-4 h-4" />
-              Học lại
-            </button>
-            <button
-              type="button"
-              onClick={onExploreNext}
-              className="rounded-xl bg-sky-700 px-5 py-3 text-white font-bold text-sm inline-flex items-center justify-center gap-2"
-            >
-              Khám phá trạm tiếp theo
-              <ArrowRight className="w-4 h-4" />
+          <div className="flex flex-col gap-3">
+            <div className="relative flex-1 rounded-[1.5rem] border-[5px] border-[#9a6138] bg-gradient-to-br from-[#fff0c7] to-[#e4bf85] p-4 text-[#68401f] shadow-[0_12px_30px_rgba(0,0,0,.3)]">
+              <p className="text-sm font-black uppercase tracking-wide">HỘ CHIẾU HÀNH TRÌNH</p>
+              <div className={`passport-stamp-hit mx-auto my-4 flex aspect-square w-36 max-w-full flex-col items-center justify-center rounded-full border-[6px] border-double p-3 sm:w-44 ${stamped?'border-red-800 text-red-800':'border-dashed border-[#bca67e] text-[#a28a63]'}`} style={stamped?{transform:'rotate(-10deg)'}:undefined}>
+                <Stamp className="mb-2 h-10 w-10" />
+                <p className="text-xs font-black uppercase">{stamped?'HOÀN THÀNH TRẠM':'CHỜ ĐÓNG DẤU'}</p>
+                <p className="mt-1 text-[11px] font-black">{stamped?station.stamp.nameVi:station.titleVi}</p>
+              </div>
+              <div className="border-t border-[#c7a979] pt-3">
+                <div className="flex items-center justify-center gap-2"><KeyRound className="h-7 w-7 text-[#a87413]"/><span className="text-sm font-black">{giftClaimed?'Đã nhận 1 mảnh chìa khóa':'Phần thưởng: 1 mảnh chìa khóa'}</span></div>
+                <p className="mt-1 text-xs">Đủ 5 mảnh để mở kho báu của khối {station.grade}</p>
+              </div>
+            </div>
+            <button type="button" disabled={!canExchange} onClick={handleJourneyGift} className="rounded-2xl border-2 border-[#fff1b1] bg-gradient-to-b from-[#ffe99a] via-[#ffc84c] to-[#d38a1d] px-4 py-4 text-base font-black text-[#53300c] shadow-[0_7px_0_#8b531d] transition hover:brightness-105 active:translate-y-1 active:shadow-none disabled:opacity-50">
+              <Stamp className="mr-2 inline h-6 w-6" />{stamped?'XEM LẠI BẢN ĐỒ':'ĐÓNG DẤU HOÀN THÀNH'}
             </button>
           </div>
-        )}
+        </div>
+        <div className="mt-4 flex flex-wrap justify-center gap-2">
+          {station.rewards.map(reward => <div key={reward.id} className="flex items-center gap-2 rounded-xl border border-amber-200/50 bg-[#f8e5ba]/95 px-3 py-2 text-xs font-bold text-[#69441e]"><RewardBadge template={reward.template} size="sm" muted={!isReadOnly&&!progress.rewardsCollected.includes(reward.id)}/><span>{reward.nameVi}</span></div>)}
+        </div>
+        {isReadOnly && <p className="mt-3 text-xs font-semibold text-amber-100">Chế độ xem thử: không lưu phần thưởng và con dấu.</p>}
+        {stamped && <div className="mt-4 flex flex-wrap justify-center gap-3">
+          <button type="button" onClick={onReviewJourney} className="inline-flex items-center gap-2 rounded-xl bg-white/90 px-5 py-3 text-sm font-black text-[#274455]"><RotateCcw className="h-4 w-4"/> Học lại</button>
+          <button type="button" onClick={onExploreNext} className="inline-flex items-center gap-2 rounded-xl bg-[#0d6465] px-5 py-3 text-sm font-black text-white"><ArrowRight className="h-4 w-4"/> Khám phá trạm tiếp theo</button>
+        </div>}
       </section>
     </div>
   );

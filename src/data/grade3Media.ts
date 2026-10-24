@@ -207,5 +207,5 @@ export const GRADE3_POINT_PHOTOS:Record<string,(string|null)[]>={
  'g3-station-5':['tho-quang-2024',null,null,'tho-quang-day'],
 };
 export const GRADE3_COVER_PHOTOS:Record<string,string>={
- 'g3-station-1':'my-khe','g3-station-2':'huynh-thuc-khang','g3-station-3':'co-tu-costumes','g3-station-4':'nam-o','g3-station-5':'tho-quang-2024'
+ 'g3-station-1':'my-khe','g3-station-2':'phan-chau-trinh','g3-station-3':'co-tu-costumes','g3-station-4':'nam-o','g3-station-5':'tho-quang-2024'
 };

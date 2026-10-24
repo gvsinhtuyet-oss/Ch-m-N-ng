@@ -5,7 +5,7 @@ export const TRANSLATIONS = {
     appTitle: 'CHẠM ĐÀ NẴNG',
     slogan: 'Hành trình số khám phá quê hương',
     schoolName: 'Trường Tiểu học Trần Đại Nghĩa',
-    authors: 'Trương Sinh Tuyết – Nguyễn Thị Thanh',
+    authors: 'Trương Sinh Tuyết',
     startJourney: 'BẮT ĐẦU HÀNH TRÌNH',
     roleStudent: 'HỌC SINH',
     roleTeacher: 'GIÁO VIÊN',

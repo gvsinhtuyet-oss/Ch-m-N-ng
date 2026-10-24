@@ -96,7 +96,7 @@ export function StationExplorationTools({station,onOpenChange}:{station:Station;
           {tool==='map'&&places.length>0&&<>
             <div className="mb-4 flex flex-wrap gap-2">{places.map((place,index)=><button type="button" key={place} aria-pressed={placeIndex===index} onClick={()=>setPlaceIndex(index)} className={`min-h-11 rounded-xl border-2 px-4 py-2 text-sm font-bold ${placeIndex===index?'border-amber-500 bg-amber-100 text-amber-950':'border-amber-200 bg-white text-sky-950'}`}>{place}</button>)}</div>
             {points.length>0?<InteractiveGeoMap points={points} selected={placeIndex} onSelect={setPlaceIndex}/>:<iframe title={'Bản đồ '+places[placeIndex]} src={`https://maps.google.com/maps?q=${encodeURIComponent(places[placeIndex])}&output=embed`} className="h-[50dvh] min-h-[260px] w-full rounded-2xl border-0"/>}
-            <a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(places[placeIndex])}`} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-xl bg-sky-700 px-4 py-3 text-sm font-bold text-white">Xem vị trí trên Google Maps <ExternalLink className="h-4 w-4"/></a>
+            <p className="mt-4 rounded-xl bg-sky-50 px-4 py-3 text-sm font-semibold text-sky-900">🗺️ Bản đồ hiển thị ngay trong bài học. Em có thể kéo, phóng to và chọn địa điểm khác mà không rời ứng dụng.</p>
             <p className="mt-3 text-xs text-slate-600">Vị trí tham khảo để tìm hiểu bài học; đối chiếu bản đồ trước khi dùng để dẫn đường.</p>
           </>}
         </div>

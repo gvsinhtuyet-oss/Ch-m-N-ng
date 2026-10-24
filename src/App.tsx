@@ -1,22 +1,23 @@
+import { FeatureLoadBoundary } from './components/common/FeatureLoadBoundary';
 import { backgroundMusic } from './services/BackgroundMusic';
 import { AppBackground } from './components/common/AppBackground';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { AppProvider, useApp } from './contexts/AppContext';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
 import { LandingView } from './features/landing/LandingView';
-import { StudentJourneyView } from './features/student/StudentJourneyView';
-import { StudentPassportView } from './features/passport/StudentPassportView';
-import { StudentJourneyMapsView } from './features/student/StudentJourneyMapsView';
-import { StudentMemoriesView } from './features/student/StudentMemoriesView';
-import { StudentProfileView } from './features/student/StudentProfileView';
-import { StationView } from './features/stations/StationView';
-import { TeacherDashboard } from './features/teacher/TeacherDashboard';
-import { AdminDashboard } from './features/admin/AdminDashboard';
-import { AdminDemoDashboard } from './features/admin/AdminDemoDashboard';
-import { ClassroomPresentationMode } from './features/teacher/ClassroomPresentationMode';
+const StudentJourneyView = lazy(() => import('./features/student/StudentJourneyView').then(module => ({ default: module.StudentJourneyView })));
+const StudentPassportView = lazy(() => import('./features/passport/StudentPassportView').then(module => ({ default: module.StudentPassportView })));
+const StudentJourneyMapsView = lazy(() => import('./features/student/StudentJourneyMapsView').then(module => ({ default: module.StudentJourneyMapsView })));
+const StudentMemoriesView = lazy(() => import('./features/student/StudentMemoriesView').then(module => ({ default: module.StudentMemoriesView })));
+const StudentProfileView = lazy(() => import('./features/student/StudentProfileView').then(module => ({ default: module.StudentProfileView })));
+const StationView = lazy(() => import('./features/stations/StationView').then(module => ({ default: module.StationView })));
+const TeacherDashboard = lazy(() => import('./features/teacher/TeacherDashboard').then(module => ({ default: module.TeacherDashboard })));
+const AdminDashboard = lazy(() => import('./features/admin/AdminDashboard').then(module => ({ default: module.AdminDashboard })));
+const AdminDemoDashboard = lazy(() => import('./features/admin/AdminDemoDashboard').then(module => ({ default: module.AdminDemoDashboard })));
+const ClassroomPresentationMode = lazy(() => import('./features/teacher/ClassroomPresentationMode').then(module => ({ default: module.ClassroomPresentationMode })));
 import { WifiOff } from 'lucide-react';
-import { DanangAssistantChat } from './components/common/DanangAssistantChat';
+const DanangAssistantChat = lazy(() => import('./components/common/DanangAssistantChat').then(module => ({ default: module.DanangAssistantChat })));
 
 const AppContent: React.FC = () => {
   const { currentUser, role, currentView, currentStation, currentAssistantHotspot, isOnline, closeStation, exitPresentationMode } = useApp();
@@ -79,7 +80,7 @@ const AppContent: React.FC = () => {
       {currentView !== 'student-journey' && <Footer />}
 
       {role === 'student' && currentUser && currentView !== 'presentation-view' && (
-        <DanangAssistantChat station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} />
+        <Suspense fallback={null}><DanangAssistantChat station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense>
       )}
 
       {storageWarning && (
@@ -104,7 +105,9 @@ export function App() {
   return (
     <AppProvider>
       <AppBackground />
-      <AppContent />
+      <FeatureLoadBoundary><Suspense fallback={<div role="status" className="relative z-10 flex min-h-screen items-center justify-center bg-amber-50 p-6 text-lg font-bold text-sky-900">Đang mở hành trình…</div>}>
+        <AppContent />
+      </Suspense></FeatureLoadBoundary>
     </AppProvider>
   );
 }

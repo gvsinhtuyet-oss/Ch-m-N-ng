@@ -1,3 +1,4 @@
+import {learningThumbnail} from '../../utils/learningThumbnail';
 import {GRADE4_MA_CHAU_EXTENSION} from '../../data/grade4ExtensionContent';
 import {LearningMediaCredit} from '../../components/LearningMediaCredit';
 import {audioService} from '../../services/AudioService';
@@ -229,7 +230,7 @@ export const StudentJourneyView: React.FC = () => {
                     <img
                       loading="lazy"
                       decoding="async"
-                      src={station.coverImage}
+                      src={learningThumbnail(station.coverImage)}
                       alt={station.titleVi}
                       className={`h-full w-full object-cover transition duration-700 ${
                         isDemoReady ? 'group-hover:scale-105' : 'scale-105 grayscale-[15%]'

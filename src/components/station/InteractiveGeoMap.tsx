@@ -40,7 +40,7 @@ export const InteractiveGeoMap:React.FC<Props>=({points,selected,onSelect})=>{
    <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-full text-4xl drop-shadow-lg">📍</div>
    <div className="absolute bottom-3 left-3 right-3 z-10 rounded-xl bg-white/95 p-3 text-center text-sm font-black text-slate-900 shadow">{point.name}{point.accuracy==='approximate'?' • Tọa độ tham khảo':''}</div>
   </div>
-  <div className="flex flex-wrap gap-2 p-3">{points.map((p,i)=><button type="button" key={p.name} onClick={()=>{onSelect(i);setTileFailures(0);setTilesLoaded(0)}} aria-pressed={i===selected} className={`rounded-xl px-3 py-2 text-xs font-bold ${i===selected?'bg-blue-700 text-white':'bg-slate-100 text-slate-800'}`}>📍 {p.name}</button>)}</div>
+  <div className="flex flex-wrap gap-2 p-3">{points.map((p,i)=><button type="button" key={p.name} onClick={()=>{onSelect(i);setTileFailures(0)}} aria-pressed={i===selected} className={`rounded-xl px-3 py-2 text-xs font-bold ${i===selected?'bg-blue-700 text-white':'bg-slate-100 text-slate-800'}`}>📍 {p.name}</button>)}</div>
   <p className="px-3 pb-3 text-[11px] text-slate-500">Nền bản đồ © OpenStreetMap contributors. Phóng to/thu nhỏ bằng +/−. Khi mất mạng, các điểm vẫn được giữ. Tọa độ tham khảo không dùng để dẫn đường.</p>
  </section>;
 };

@@ -1,3 +1,4 @@
+import {learningThumbnail} from '../../utils/learningThumbnail';
 import {GRADE45_TOPIC_DECKS} from '../../data/teacher/grade45TopicDecks';
 import {GRADE3_TOPIC_DECKS} from '../../data/teacher/grade3TopicDecks';
 import {GddpPreparedPresentation} from './GddpPreparedPresentation';
@@ -207,7 +208,8 @@ export const TeacherDashboard: React.FC = () => {
                 >
                   <div className="flex items-start gap-4 flex-1">
                     <img
-                      src={station.coverImage}
+                      loading="lazy" decoding="async"
+                      src={learningThumbnail(station.coverImage)}
                       alt={station.titleVi}
                       className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover shrink-0 shadow-xs"
                       onError={event => {

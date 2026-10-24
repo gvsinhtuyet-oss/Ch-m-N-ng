@@ -265,3 +265,11 @@
   .stage-one-map-surface { padding: 10px; border-radius: 1.25rem; background-position: center top; }
   .stage-one-map-content { padding: 8px; border-radius: 1rem; }
 }
+
+/* Keep touch devices light without changing rewards or lesson controls. */
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .game-content .backdrop-blur-xl, .game-content .backdrop-blur-lg,
+  .game-content .backdrop-blur-md { backdrop-filter: none; }
+  .game-content .animate-pulse, .game-content .animate-pulse-glow,
+  .game-content .animate-bounce, .game-content .animate-ping { animation: none; }
+}

@@ -486,6 +486,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   >
                     <LearningImage
                       key={item.id + item.image}
+                      thumbnail
                       honestFallback={station.grade === 2 || station.grade === 5}
                       src={item.image}
                       alt=""

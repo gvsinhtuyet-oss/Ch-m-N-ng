@@ -24,7 +24,7 @@ class BackgroundMusic {
     if (this.audio || typeof window === 'undefined') return;
     const audio = new Audio(BACKGROUND_MUSIC_URL);
     audio.loop = true;
-    audio.preload = 'auto';
+    audio.preload = 'none';
     audio.volume = this.volume;
     audio.addEventListener('play', () => this.notify());
     audio.addEventListener('pause', () => this.notify());

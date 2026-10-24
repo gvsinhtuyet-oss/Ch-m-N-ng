@@ -24,6 +24,8 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const progress = progressService.getStationProgress(studentId, station.id);
   const isPolishedJourney = DEMO_STATION_IDS.has(station.id);
 
+  const [natureMapOpen, setNatureMapOpen] = useState(false);
+  const [naturePlace, setNaturePlace] = useState<'cham' | 'sontra'>('cham');
   const [downloading, setDownloading] = useState(false);
   const [offlinePkg, setOfflinePkg] = useState(offlineService.getPackage(station.id));
 
@@ -214,6 +216,34 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
             ))}
           </div>
         </div>
+      )}
+
+      {station.id === 'g2-station-2' && currentStage === 1 && (
+        <section className="overflow-hidden rounded-[1.6rem] border border-teal-200 bg-gradient-to-br from-sky-950 via-teal-900 to-emerald-800 shadow-lg">
+          <div className="flex flex-col gap-3 p-4 text-white sm:flex-row sm:items-center sm:justify-between sm:p-6">
+            <div>
+              <span className="text-[11px] font-black tracking-wider text-amber-300">🗺️ BẢN ĐỒ KHÁM PHÁ • TRẠM 4</span>
+              <h3 className="mt-1 text-xl font-black">Cù Lao Chàm ở đâu? Sơn Trà ở đâu?</h3>
+              <p className="mt-1 text-xs text-sky-100">Chạm để khám phá vị trí biển đảo và bán đảo trên bản đồ thật.</p>
+            </div>
+            <button type="button" aria-expanded={natureMapOpen} onClick={() => { audioService.playSfx('click'); setNatureMapOpen(v => !v); }} className="shrink-0 rounded-xl bg-amber-300 px-5 py-3 text-sm font-black text-slate-950 hover:bg-amber-200">{natureMapOpen ? 'Thu gọn bản đồ' : '📍 Khám phá trên bản đồ'}</button>
+          </div>
+          {natureMapOpen && (
+            <div className="space-y-3 bg-white p-4 sm:p-5">
+              <div className="grid grid-cols-2 gap-2">
+                <button type="button" aria-pressed={naturePlace === 'cham'} onClick={() => { audioService.playSfx('click'); setNaturePlace('cham'); }} className={`rounded-xl p-3 text-xs font-black sm:text-sm ${naturePlace === 'cham' ? 'bg-sky-700 text-white' : 'bg-sky-50 text-sky-800'}`}>🏝️ Cù Lao Chàm</button>
+                <button type="button" aria-pressed={naturePlace === 'sontra'} onClick={() => { audioService.playSfx('click'); setNaturePlace('sontra'); }} className={`rounded-xl p-3 text-xs font-black sm:text-sm ${naturePlace === 'sontra' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 text-emerald-800'}`}>🌳 Sơn Trà</button>
+              </div>
+              <iframe key={naturePlace} title={naturePlace === 'cham' ? 'Bản đồ Cù Lao Chàm' : 'Bản đồ Sơn Trà'} loading="lazy" referrerPolicy="no-referrer" className="h-[300px] w-full rounded-2xl border border-sky-100 sm:h-[390px]" src={naturePlace === 'cham' ? 'https://www.openstreetmap.org/export/embed.html?bbox=108.440%2C15.900%2C108.580%2C16.020&layer=mapnik&marker=15.950%2C108.510' : 'https://www.openstreetmap.org/export/embed.html?bbox=108.220%2C16.065%2C108.340%2C16.160&layer=mapnik&marker=16.115%2C108.295'} />
+              <div className="rounded-xl bg-amber-50 p-4 text-sm text-slate-700">
+                <h4 className="font-black text-slate-900">{naturePlace === 'cham' ? '🏝️ Cù Lao Chàm – Hòn Lao là đảo chính' : '🌳 Sơn Trà – rừng gặp biển'}</h4>
+                <p className="mt-2">{naturePlace === 'cham' ? 'Cù Lao Chàm có 8 hòn đảo nhỏ, Hòn Lao là đảo chính. Khu dự trữ sinh quyển Cù Lao Chàm – Hội An được UNESCO công nhận năm 2009.' : 'Bán đảo Sơn Trà có rừng và biển, là nơi sinh sống của nhiều loài sinh vật, trong đó có voọc chà vá chân nâu.'}</p>
+                <button type="button" onClick={() => audioService.speakNarration(naturePlace === 'cham' ? 'Cù Lao Chàm có tám hòn đảo nhỏ. Hòn Lao là đảo chính. Chúng ta hãy bảo vệ biển đảo quê hương.' : 'Bán đảo Sơn Trà có rừng và biển. Đây là nơi sinh sống của voọc chà vá chân nâu. Chúng ta hãy bảo vệ thiên nhiên.', 'vi-VN')} className="mt-3 rounded-xl bg-sky-700 px-4 py-2 text-xs font-black text-white">🔊 Nghe giới thiệu</button>
+              </div>
+              <p className="text-[11px] text-slate-500">© OpenStreetMap contributors · Bản đồ cần kết nối Internet · Hoạt động tự do, không ảnh hưởng tiến trình học.</p>
+            </div>
+          )}
+        </section>
       )}
 
       {/* Stage Views with subtle container transition */}

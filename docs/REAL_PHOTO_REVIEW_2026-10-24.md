@@ -1,3 +1,5 @@
+> Historical checkpoint: follow-up findings and release gates are in [REAL_PHOTO_REVIEW_2026-10-25.md](REAL_PHOTO_REVIEW_2026-10-25.md).
+
 # Real photograph review — 24 October 2026
 
 Status: **INCOMPLETE — do not merge or deploy to production yet.**

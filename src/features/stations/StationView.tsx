@@ -128,82 +128,39 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   return (
     <div ref={fullscreenRef} className={`station-immersive-root ${isLessonFullscreen ? "station-immersive-active" : ""} ${isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}`}>
             {/* Top Station Header bar */}
-      <div className={isPolishedJourney ? "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/94 backdrop-blur-xl px-4 py-3 rounded-[1.5rem] border border-orange-200 shadow-lg shadow-orange-950/5" : "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/96 backdrop-blur-md px-4 py-3.5 sm:px-5 sm:py-4 rounded-[1.6rem] border border-white/80 shadow-[0_10px_32px_rgba(15,23,42,0.08)]"}>
-        <div className="flex items-center gap-3.5">
-          <button
-            onClick={() => {
-              audioService.playSfx('click');
-              onBack();
-            }}
-            className="w-10 h-10 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center transition shadow-2xs shrink-0"
-            title="Quay lại danh sách trạm"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </button>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className={`px-2.5 py-0.5 rounded-md text-[11px] font-black text-white shadow-2xs ${isPolishedJourney ? "bg-gradient-to-r from-orange-500 to-amber-400" : "bg-gradient-to-r from-sky-600 to-sky-700"}`}>
-                Trạm {station.number}
-              </span>
-              <span className="text-xs text-slate-400 font-bold">Khối {station.grade}</span>
-              <span className="text-slate-300">•</span>
-              <span className="text-xs text-amber-700 font-semibold">{station.themeNameVi}</span>
+      <div className="relative z-10 flex flex-col gap-3 rounded-[1.5rem] border border-amber-200/80 bg-white/95 px-3 py-3 shadow-md backdrop-blur-lg lg:flex-row lg:items-center lg:gap-5 lg:px-5">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
+          <button type="button" onClick={() => { audioService.playSfx('click'); onBack(); }} aria-label="Quay lại danh sách trạm" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 hover:bg-slate-200"><ArrowLeft className="h-5 w-5" /></button>
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-bold">
+              <span className="rounded-md bg-orange-500 px-2 py-0.5 font-black text-white">Trạm {station.number}</span>
+              <span className="text-slate-500">Khối {station.grade}</span>
+              <span className="hidden text-slate-300 sm:inline">•</span>
+              <span className="hidden text-amber-700 sm:inline">{station.themeNameVi}</span>
             </div>
-            <h1 className={isPolishedJourney ? "text-xl sm:text-2xl lg:text-[1.7rem] font-black text-slate-950 leading-tight mt-0.5" : "text-[22px] sm:text-[24px] font-black text-slate-950 leading-tight mt-0.5 tracking-tight"}>
-              {station.titleVi}
-            </h1>
+            <h1 className="mt-1 text-lg font-black leading-tight tracking-tight text-slate-950 sm:text-xl xl:text-[1.45rem]">{station.titleVi}</h1>
           </div>
         </div>
-
-        {/* Offline Download button */}
-        <div className="flex flex-col items-start sm:items-end gap-1 shrink-0">
-          {offlinePkg ? (
-            <div className={isPolishedJourney ? "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 text-[10px] font-black border border-emerald-200" : "inline-flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200 shadow-2xs"}>
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              <span>{isPolishedJourney ? 'OFFLINE ĐÃ SẴN SÀNG' : `Demo offline đã lưu cục bộ (${offlinePkg.sizeMb}MB)`}</span>
-            </div>
-          ) : (
-            <button
-              onClick={handleDownload}
-              disabled={downloading}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-2xl bg-sky-50 hover:bg-sky-100 text-sky-800 text-xs font-black border border-sky-200 transition shadow-2xs active:scale-95"
-            >
-              <Download className="w-3.5 h-3.5 text-sky-600" />
-              <span>{downloading ? 'Đang lưu demo...' : 'DEMO TẢI OFFLINE'}</span>
-            </button>
-          )}
-          {!isPolishedJourney && <span className="text-[10px] text-slate-400 font-medium">
-            Phiên bản demo – dữ liệu được lưu cục bộ trên thiết bị, chưa phải gói offline hoàn chỉnh.
-          </span>}
-        </div>
-        <div className="station-header-actions flex flex-wrap items-center gap-2">
-      <nav aria-label="Tiến trình 4 chặng" className="station-mini-progress flex items-center gap-1 rounded-xl bg-slate-50/90 p-1">
-        {stages.map(st => {
-          const active = currentStage === st.num;
-          const done = st.num < highestAccessibleStage || isUnlockedAllStages;
-          const clickable = st.num <= highestAccessibleStage;
-          return <button key={st.num} type="button" disabled={!clickable}
-            title={`Chặng ${st.num}: ${st.name}`} aria-label={`Chặng ${st.num}: ${st.name}`}
-            aria-current={active ? 'step' : undefined}
-            onClick={() => { if (!clickable) return; audioService.playSfx('click'); setCurrentStage(st.num as 1|2|3|4); }}
-            className={`flex h-8 min-w-8 items-center justify-center rounded-lg px-2 text-xs font-black transition ${active ? 'bg-orange-500 text-white shadow-sm' : done ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-slate-200 text-slate-500'} disabled:cursor-not-allowed`}>
-            {done && !active ? <CheckCircle2 className="h-4 w-4" /> : st.num}
-          </button>;
-        })}
-      </nav>
-          <button type="button" onClick={toggleLessonFullscreen} aria-label={isLessonFullscreen ? "Thu nhỏ bài học" : "Mở toàn màn hình bài học"} title={isLessonFullscreen ? "Thu nhỏ bài học" : "Toàn màn hình bài học"} className="rounded-xl bg-sky-700 px-3 py-2 text-xs font-black text-white hover:bg-sky-800"><Maximize2 className="inline h-4 w-4" /> <span className="hidden xl:inline">Toàn màn hình</span></button>
+        <div className="flex min-w-0 flex-1 items-center gap-2 lg:max-w-[650px]">
+          <nav aria-label="Bản đồ hành trình 4 chặng" className="relative grid min-w-0 flex-1 grid-cols-4 gap-1.5 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50 to-emerald-50 px-2 py-2 sm:gap-2">
+            <div aria-hidden="true" className="pointer-events-none absolute left-[12%] right-[12%] top-[21px] border-t-[3px] border-dashed border-amber-400" />
+            {stages.map(st => {
+              const active = currentStage === st.num;
+              const done = st.num < highestAccessibleStage || isUnlockedAllStages;
+              const clickable = st.num <= highestAccessibleStage;
+              return <button key={st.num} type="button" disabled={!clickable} aria-current={active ? 'step' : undefined} aria-label={`Chặng ${st.num}: ${st.name}`} onClick={() => { if (!clickable) return; audioService.playSfx('click'); setCurrentStage(st.num as 1|2|3|4); }} className={`relative z-[1] flex min-w-0 flex-col items-center gap-1 rounded-xl px-1 py-0.5 text-center transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-700 ${active ? 'bg-orange-100' : 'hover:bg-white/70'} disabled:cursor-default`}>
+                <span className={`flex h-8 w-8 items-center justify-center rounded-full border-2 text-sm font-black shadow-sm ${done ? 'border-emerald-500 bg-emerald-500 text-white' : active ? 'border-orange-500 bg-orange-400 text-white' : 'border-amber-300 bg-white text-amber-800'}`}>{done ? <CheckCircle2 className="h-5 w-5" /> : st.num === 4 ? <MapPinned className="h-4 w-4" /> : st.num}</span>
+                <span className={`text-[10px] font-black leading-tight sm:text-xs ${active ? 'text-orange-800' : 'text-amber-950'}`}>Chặng {st.num}</span>
+                <span className="text-[10px] font-bold leading-tight text-slate-700 sm:text-[11px]">{['Khám phá tri thức','Thử thách trò chơi','Check-in cảm xúc','Dấu ấn hành trình'][st.num-1]}</span>
+              </button>;
+            })}
+          </nav>
+          <div className="flex shrink-0 flex-col gap-1">
+            <button type="button" onClick={toggleLessonFullscreen} aria-label={isLessonFullscreen ? 'Thu nhỏ bài học' : 'Toàn màn hình'} title="Toàn màn hình" className="rounded-xl bg-sky-700 p-2.5 text-white hover:bg-sky-800"><Maximize2 className="h-4 w-4" /></button>
+            <button type="button" onClick={handleDownload} disabled={downloading || Boolean(offlinePkg)} title={offlinePkg ? 'Demo offline đã lưu' : 'Tải demo offline'} aria-label="Tải demo offline" className="rounded-xl border border-sky-200 bg-sky-50 p-2.5 text-sky-800 disabled:opacity-50"><Download className="h-4 w-4" /></button>
+          </div>
         </div>
       </div>
-
-      {/* Verification notice if draft */}
-      {!station.isFullyVerified && (
-        <div className={isPolishedJourney ? "px-3 py-2 rounded-xl bg-amber-50/95 border border-amber-200 text-amber-950 text-[10px] font-semibold flex items-center gap-2" : "px-3 py-2 rounded-xl bg-amber-50/95 border border-amber-200 text-amber-950 text-[10px] sm:text-[11px] font-medium flex items-center gap-2"}>
-          <span className="w-2 h-2 rounded-full bg-amber-500 animate-ping shrink-0" />
-          <span>
-            <strong>Lưu ý:</strong> {station.grade>=3?'Học liệu tham khảo theo đề cương dự thảo và nguồn chuyên môn; chờ giáo viên duyệt, chưa gắn kế hoạch tích hợp mới.':'Nội dung đang được hoàn thiện từ nguồn đã kiểm chứng của Sở Giáo dục và Đào tạo TP Đà Nẵng.'}
-          </span>
-        </div>
-      )}
 
       <div ref={lessonPanelRef} className="station-lesson-panel min-h-0 flex-1 overflow-y-auto space-y-3">
       <div className="station-immersive-topbar flex items-center justify-between gap-2 rounded-xl bg-white px-3 py-2 shadow-sm">

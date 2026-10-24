@@ -201,7 +201,7 @@ export function grade3Photo(id:string){const media=GRADE3_MEDIA.find(m=>m.id===i
 // Blank slots deliberately retain pedagogical diagrams: a context photograph cannot prove a process.
 export const GRADE3_POINT_PHOTOS:Record<string,(string|null)[]>={
  'g3-station-1':['my-khe','ban-than','thung-my-khe',null],
- 'g3-station-2':[null,'phan-chau-trinh','tran-quy-cap',null],
+ 'g3-station-2':[null,'phan-chau-trinh',null,null],
  'g3-station-3':[null,'co-tu-costumes',null,null],
  'g3-station-4':['nam-o',null,null,null],
  'g3-station-5':['tho-quang-2024',null,null,'tho-quang-day'],

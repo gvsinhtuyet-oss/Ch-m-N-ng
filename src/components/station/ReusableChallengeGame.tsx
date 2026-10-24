@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { Station } from '../../types';
 import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
+import { GameModeInteraction } from './GameModeInteraction';
+import { MY_KHE_BAN_THAN_TASKS } from './grade3SeaTasks';
 
 export const GAME_MODES = ['pick', 'flip', 'detective', 'classify', 'pair', 'unlock', 'journey', 'treasure'] as const;
 export type GameMode = typeof GAME_MODES[number];
@@ -13,7 +15,7 @@ export interface GameTheme {
   modeOrder?: readonly GameMode[];
 }
 export const DEFAULT_GAME_THEMES: Record<string, GameTheme> = {
-  'g3-station-1': { title: 'Nhà thám hiểm biển xanh' },
+  'g3-station-1': { title: 'Nhà thám hiểm biển xanh', intro: 'Khám phá Mỹ Khê – Bàn Than và vui chơi an toàn nhé!', backgrounds: {intro:'/games/grade3-my-khe-ban-than/intro.svg',playing:'/games/grade3-my-khe-ban-than/playing.svg',victory:'/games/grade3-my-khe-ban-than/victory.svg'} },
   'g3-station-2': { title: 'Giải mã dấu ấn lịch sử' },
   'g3-station-3': { title: 'Sắc màu văn hóa' },
   'g3-station-4': { title: 'Nghệ nhân nhí Nam Ô' },
@@ -49,6 +51,8 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
   const questions = useMemo(() => questionSet.map(q => ({
     ...q, options: [...q.options].sort((a,b) => a.id.localeCompare(b.id)),
   })), [questionSet]);
+  const seaSample = station.id === 'g3-station-1';
+  const sampleTask = seaSample ? MY_KHE_BAN_THAN_TASKS[index] : undefined;
   const question = questions[index];
   const reward = station.rewards.find(r => r.stage === 2) || station.rewards[1];
   const palette = palettes[Math.max(0, station.grade === 3 ? Number(station.id.match(/station-(\d+)/)?.[1] || '1')-1 : (station.grade-3)*2) % palettes.length];
@@ -95,6 +99,13 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
         <div className="mb-4 flex gap-2" aria-label={`Đã đến câu ${index+1} trong ${questions.length} câu`}>{questions.map((q,i)=><span key={q.id} className={`h-2.5 flex-1 rounded-full ${i<index?'bg-emerald-300':i===index?'bg-yellow-300':'bg-white/30'}`}/>)}</div>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2"><span className="rounded-full bg-white/20 px-4 py-2 text-sm font-black">{level(index)}</span><span className="rounded-full bg-white/20 px-4 py-2 text-sm font-black">Câu {index+1}/{questions.length}</span></div>
         <div className="flex-1 rounded-3xl border border-white/50 bg-white/95 p-4 text-slate-900 shadow-2xl sm:p-7">
+          {sampleTask ? <>
+            <div className="mb-3 text-sm font-black text-sky-800">🎮 {sampleTask.type === 'detective' ? 'Thám tử tìm dấu vết' : sampleTask.type === 'classify' ? 'Phân loại thông minh' : sampleTask.type === 'journey' ? 'Chọn đường khám phá' : sampleTask.type === 'flip' ? 'Lật thẻ bí mật' : 'Chọn đáp án'}</div>
+            <h3 className="mb-5 text-lg font-black leading-relaxed sm:text-2xl">{sampleTask.prompt}</h3>
+            <GameModeInteraction key={index} task={sampleTask} locked={locked} incorrect={incorrect}
+              onWrong={(hint) => {setIncorrect(true);setLocked(true);audioService.playSfx('wrong');timeout.current=setTimeout(()=>{setIncorrect(false);setLocked(false);},2000);}}
+              onCorrect={() => {setChoice('correct');setIncorrect(false);setLocked(true);audioService.playSfx('correct');timeout.current=setTimeout(()=>{if(index === 4){if(!isReadOnly) progressService.completeStage2(studentId,station.id,reward?.id);audioService.playSfx('reward');setScreen('victory');}else setIndex(n=>n+1);setChoice(null);setLocked(false);},850);}} />
+          </> : <>
           <div className="mb-3 flex items-center gap-2 text-sm font-black text-sky-800"><span className="text-2xl">{MODE_EMOJI[mode]}</span>{MODE_LABEL[mode]}</div>
           <h3 className="mb-5 text-lg font-black leading-relaxed sm:text-2xl">{question.questionVi}</h3>
           {isRevealMode && <p className="mb-3 text-sm text-slate-600">Chạm mở thẻ, sau đó chọn đáp án em cho là đúng.</p>}
@@ -110,8 +121,9 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
               </button>;
             })}
           </div>
+          </>}
           <div className="mt-5 min-h-16" role="status" aria-live="polite">
-            {incorrect?<div className="rounded-2xl border border-red-300 bg-red-50 p-3 font-bold text-red-800">Chưa đúng! 💡 {question.hintVi || 'Hãy nhớ lại bài học rồi thử tiếp nhé.'} Sau 2 giây em có thể chọn lại.</div>
+            {incorrect?<div className="rounded-2xl border border-red-300 bg-red-50 p-3 font-bold text-red-800">Chưa đúng! 💡 {sampleTask?.hint || question.hintVi || 'Hãy nhớ lại bài học rồi thử tiếp nhé.'} Sau 2 giây em có thể chọn lại.</div>
             :locked&&choice?<div className="rounded-2xl bg-emerald-50 p-3 font-bold text-emerald-800">Chính xác! Giỏi lắm!</div>
             :<p className="text-sm text-slate-500">Chạm vào đáp án phù hợp để tiếp tục hành trình.</p>}
           </div>

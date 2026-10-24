@@ -68,6 +68,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
     <div className="journey-stage stage-three" aria-label="Check-in cảm xúc">
       {!isSubmitted ? (
         <div className="checkin-layout">
+          <p className="checkin-emotion-prompt">Em cảm thấy thế nào sau hành trình khám phá?</p>
           <section aria-label="Cảm xúc của em" className="checkin-emotions">
 
             <div className="grid min-w-0 flex-1 grid-cols-3 gap-1.5 sm:gap-3">

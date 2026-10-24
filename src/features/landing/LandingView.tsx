@@ -54,8 +54,7 @@ export const LandingView: React.FC = () => {
   const [restoreCode,setRestoreCode] = useState('');
   const [restoreBusy,setRestoreBusy] = useState(false);
   const [loginError, setLoginError] = useState<string>('');
-  const [introActive, setIntroActive] = useState(false);
-  const [introDismissed, setIntroDismissed] = useState(false);
+  const [introActive, setIntroActive] = useState(true);
   const [theme, setTheme] = useState(readTheme);
   const [mobileBackground, setMobileBackground] = useState(() => window.matchMedia('(max-width: 767px)').matches);
   const introFrameRef = useRef<HTMLIFrameElement | null>(null);
@@ -147,7 +146,6 @@ export const LandingView: React.FC = () => {
   }, [introActive]);
 
   const stopIntroVideo = () => {
-    setIntroDismissed(true);
     setIntroActive(false);
     try {
       introFrameRef.current?.contentWindow?.postMessage(
@@ -372,11 +370,6 @@ export const LandingView: React.FC = () => {
         </div>
 
         {/* Intro video: ưu tiên tự phát có tiếng; khi bỏ qua/khám phá thì dừng ngay. */}
-        {!introActive && !introDismissed && (
-          <button type="button" onClick={() => setIntroActive(true)} className="mt-4 flex min-h-12 items-center gap-2 rounded-2xl border border-amber-200 bg-slate-950/70 px-6 py-3 font-bold text-white shadow-lg">
-            <Presentation className="h-5 w-5 text-amber-300" /> Xem video giới thiệu
-          </button>
-        )}
         {introActive && (
           <div className="relative w-full max-w-3xl mt-4 sm:mt-5">
             <div className="absolute -inset-1 rounded-[22px] sm:rounded-[26px] bg-gradient-to-r from-sky-500/35 via-white/10 to-amber-400/35 blur-lg pointer-events-none" />

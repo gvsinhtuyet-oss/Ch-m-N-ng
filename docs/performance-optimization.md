@@ -4,7 +4,7 @@
 - PWA installation precaches the HTML/CSS/icon shell and only the initial scripts referenced by HTML, rather than every lesson image and JavaScript chunk.
 - Same-origin scripts cache on demand (80 entries, 30 days); same-origin images use stale-while-revalidate (180 entries, 30 days, quota cleanup). API requests are excluded.
 - Existing lesson photos remain available at their original URLs. Cards and point thumbnails use generated 480px WebP variants; enlarged lesson views use originals. Missing LearningImage thumbnails retry the original image.
-- The introduction video loads only after pressing “Xem video giới thiệu”. VR dialogs already mount their iframe only when opened.
+- The introduction video starts automatically on opening the app, as requested. Browsers may require a first tap to enable sound. VR dialogs mount their iframe only when opened.
 - Background music does not preload before playback. Normal click-to-unlock music and narration behavior remain intact.
 - Mobile devices and reduced-motion settings disable decorative pulses and expensive lesson backdrop blur.
 - Previously unseen screens/media require a connection. This change does not turn the existing simulated “demo offline” button into a complete offline downloader.

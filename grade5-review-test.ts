@@ -38,7 +38,7 @@ test('stage1 questions, 25 applied challenges and all summaries stay aligned and
  for(const h of s.hotspots){assert.ok(h.narrationVi.length>180);assert.ok(h.interaction!.explanationVi);assert.equal(h.interaction!.options.filter(o=>o.isCorrect).length,1);assert.ok(existsSync('public'+h.image));assert.ok(!seen.has(h.interaction!.questionVi));seen.add(h.interaction!.questionVi);assert.equal(s.journeyMap!.summaryNodes.find(n=>n.id==='map-'+h.id)?.textVi,h.keyFactVi);}
  for(const q of s.challenge.questions!){assert.ok(!seen.has(q.questionVi));seen.add(q.questionVi);assert.equal(q.options.length,3);assert.equal(new Set(q.options.map(o=>o.textVi)).size,3);assert.equal(q.options.filter(o=>o.isCorrect).length,1);assert.ok(q.hintVi);}
  const deck=GRADE45_TOPIC_DECKS.find(d=>d.title===s.titleVi)!;assert.equal(deck.slides.length,s.hotspots.length+7);for(const [i,h]of s.hotspots.entries())assert.ok(deck.slides[i+1].points.includes(h.narrationVi));
- for(const path of [s.coverImage,s.journeyMap!.image!]){assert.ok(existsSync('public'+path));assert.match(readFileSync('public'+path,'utf8'),/không phải ảnh tư liệu/);}
+ for(const path of [s.coverImage,s.journeyMap!.image!]){assert.ok(existsSync('public'+path));if(path.endsWith('.svg'))assert.match(readFileSync('public'+path,'utf8'),/không phải ảnh tư liệu/);else assert.equal(readFileSync('public'+path).toString('ascii',8,12),'WEBP');}
  }assert.equal(seen.size,54);
 });
 test('photos are correctly scoped and never confuse Mother Nhu with Mother Thu or ginseng provinces',()=>{

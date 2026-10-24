@@ -1,0 +1,31 @@
+name: Photograph responsive QA
+on:
+  push:
+    branches: [fix/verified-real-photos-20261024]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm run lint && npm run build
+      - run: node --import tsx --test real-photos-test.ts audio-narration-test.ts grade3-content-test.ts grade45-content-test.ts grade4-review-test.ts grade5-review-test.ts narration-review-test.ts
+      - run: npm install --no-save playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Start local application and test actual station components
+        run: |
+          npx vite --host 127.0.0.1 --port 3000 > /tmp/vite.log 2>&1 &
+          for i in {1..30}; do curl -fsS http://127.0.0.1:3000/qa/media.html >/dev/null && break; sleep 1; done
+          node qa/media-browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: photograph-responsive-qa
+          path: qa-results/

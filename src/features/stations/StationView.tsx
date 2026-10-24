@@ -4,6 +4,7 @@ import { useApp } from '../../contexts/AppContext';
 import { progressService } from '../../services/ProgressService';
 import { offlineService } from '../../services/OfflineService';
 import { audioService } from '../../services/AudioService';
+import { InteractiveGeoMap } from '../../components/station/InteractiveGeoMap';
 import { Stage1Exploration } from '../../components/station/Stage1Exploration';
 import { HoiAnStage1Exploration } from '../../components/station/HoiAnStage1Exploration';
 import { Stage2Challenge } from '../../components/station/Stage2Challenge';
@@ -307,6 +308,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
                 <button type="button" aria-pressed={naturePlace === 'cham'} onClick={() => { audioService.playSfx('click'); setNaturePlace('cham'); }} className={`rounded-xl p-3 text-xs font-black sm:text-sm ${naturePlace === 'cham' ? 'bg-sky-700 text-white' : 'bg-sky-50 text-sky-800'}`}>🏝️ Cù Lao Chàm</button>
                 <button type="button" aria-pressed={naturePlace === 'sontra'} onClick={() => { audioService.playSfx('click'); setNaturePlace('sontra'); }} className={`rounded-xl p-3 text-xs font-black sm:text-sm ${naturePlace === 'sontra' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 text-emerald-800'}`}>🌳 Sơn Trà</button>
               </div>
+              <InteractiveGeoMap points={[{name:'Cù Lao Chàm',lat:15.950,lon:108.510,accuracy:'approximate'},{name:'Bán đảo Sơn Trà',lat:16.115,lon:108.295,accuracy:'approximate'}]} selected={naturePlace === 'cham' ? 0 : 1} onSelect={index => setNaturePlace(index === 0 ? 'cham' : 'sontra')} />
               <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[#e5f2f6] shadow-inner">
                 <div className="absolute left-3 top-3 z-10 rounded-xl border border-white bg-white/95 px-3 py-2 text-xs font-black text-slate-800 shadow-lg">🧭 Bản đồ khám phá Đà Nẵng</div>
                 <svg viewBox="0 0 900 470" role="img" aria-label="Bản đồ minh họa phong cách địa lý về đất liền Đà Nẵng, bán đảo Sơn Trà và Cù Lao Chàm, không theo tỉ lệ" className="block h-auto w-full">

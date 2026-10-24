@@ -7,7 +7,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-1",
         "title": "Nơi em ở",
-        "narration": "Quê hương là nơi em sống và gắn bó với những người thân quen. Trong sách, em được gặp phường Hải Châu, phường Hội An, xã Nam Trà My, xã Hiệp Đức và đặc khu Hoàng Sa của thành phố Đà Nẵng. Mỗi nơi có tên gọi và cảnh vật riêng. Em đang sống ở xã hay phường nào? Hãy nhờ người thân cùng em gọi đúng tên nơi mình ở nhé!",
+        "narration": "Quê hương là nơi em sống và gắn bó với những người thân quen. Chúng mình cùng tìm hiểu phường Hải Châu, phường Hội An, xã Nam Trà My, xã Hiệp Đức và đặc khu Hoàng Sa của thành phố Đà Nẵng. Mỗi nơi có tên gọi và cảnh vật riêng. Em đang sống ở xã hay phường nào? Hãy nhờ người thân cùng em gọi đúng tên nơi mình ở nhé!",
         "fact": "Em biết tên xã hoặc phường nơi mình ở và làm quen với một số địa danh của Đà Nẵng.",
         "q": "Theo bài nghe, quê hương là nơi nào?",
         "answers": [
@@ -19,7 +19,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-2",
         "title": "Ngôi trường của em",
-        "narration": "Cùng tìm hiểu ngôi trường của em nhé! Sách giới thiệu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Tranh ở đây chỉ minh họa, không phải ảnh trường của em.",
+        "narration": "Cùng tìm hiểu ngôi trường của em nhé! Chúng mình cùng tìm hiểu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Tranh ở đây chỉ minh họa, không phải ảnh trường của em.",
         "fact": "Biết tên trường và xã hoặc phường giúp em giới thiệu rõ trường mình.",
         "q": "Theo bài nghe, hai trường nào có cùng tên?",
         "answers": [
@@ -132,7 +132,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "tdh-tuong-thanh-hao",
         "title": "Cửa thành, tường thành và hào",
-        "narration": "Ngôi thành được xây bằng gạch, có hai cửa: cửa phía nam là cửa chính và cửa phía đông. Theo sách, tường thành cao hơn năm mét, hào quanh thành sâu ba mét. Hào là phần được đào sâu bao quanh thành. Tường cao và hào sâu giúp ngăn quân tấn công, bảo vệ ngôi thành. Em thử tìm cửa thành, tường thành và hào trong những hình ảnh đã học nhé!",
+        "narration": "Ngôi thành được xây bằng gạch, có hai cửa: cửa phía nam là cửa chính và cửa phía đông. Ở đây, tường thành cao hơn năm mét, hào quanh thành sâu ba mét. Hào là phần được đào sâu bao quanh thành. Tường cao và hào sâu giúp ngăn quân tấn công, bảo vệ ngôi thành. Em thử tìm cửa thành, tường thành và hào trong những hình ảnh đã học nhé!",
         "fact": "Thành có cửa nam, cửa đông, tường gạch và hào bao quanh để góp phần bảo vệ thành.",
         "q": "Hào được giới thiệu ở đâu?",
         "answers": [
@@ -233,7 +233,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-game-1",
         "title": "Những trò chơi quen thuộc",
-        "narration": "Bịt mắt bắt dê, kéo co và nhảy bao bố là những trò chơi dân gian được giới thiệu trong bài. Trò chơi dân gian được mọi người truyền lại và cùng nhau chơi. Có trò cần lắng nghe, có trò cần cả đội góp sức. Cùng chơi giúp em rèn kĩ năng và thêm đoàn kết với bạn. Em đã chơi trò nào, chơi với ai và thích điều gì? Hãy kể một điều em nhớ nhé!",
+        "narration": "Bịt mắt bắt dê, kéo co và nhảy bao bố là những trò chơi dân gian mà chúng mình cùng tìm hiểu. Trò chơi dân gian được mọi người truyền lại và cùng nhau chơi. Có trò cần lắng nghe, có trò cần cả đội góp sức. Cùng chơi giúp em rèn kĩ năng và thêm đoàn kết với bạn. Em đã chơi trò nào, chơi với ai và thích điều gì? Hãy kể một điều em nhớ nhé!",
         "fact": "Trò chơi dân gian giúp em rèn kĩ năng và đoàn kết với bạn.",
         "q": "Đâu là trò chơi dân gian vừa được giới thiệu?",
         "answers": [
@@ -358,7 +358,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-2",
         "title": "Rừng cây bên Suối Tiên",
-        "narration": "Suối Tiên ở xã Quế Sơn Trung. Nơi đây có rừng cây xanh, dòng nước và thác đẹp. Em hãy quan sát màu xanh của lá, hình dáng cây và dòng suối. Ảnh chụp thực tế Suối Tiên ở xã Quế Sơn Trung được giới thiệu trong bài báo của Báo Đà Nẵng; tranh trên màn hình chỉ là hình minh họa. Rừng cây là một phần làm nên vẻ đẹp của Suối Tiên. Em thích rừng cây, dòng nước hay thác nước? Hãy chọn một nét đẹp để kể với người thân nhé!",
+        "narration": "Suối Tiên ở xã Quế Sơn Trung. Nơi đây có rừng cây xanh, dòng nước và thác đẹp. Em hãy quan sát màu xanh của lá, hình dáng cây và dòng suối. Ảnh chụp thực tế Suối Tiên ở xã Quế Sơn Trung mà chúng mình cùng tìm hiểu báo của Báo Đà Nẵng; tranh trên màn hình chỉ là hình minh họa. Rừng cây là một phần làm nên vẻ đẹp của Suối Tiên. Em thích rừng cây, dòng nước hay thác nước? Hãy chọn một nét đẹp để kể với người thân nhé!",
         "fact": "Suối Tiên ở xã Quế Sơn Trung, có rừng cây xanh.",
         "q": "Cảnh vật nào được giới thiệu bên Suối Tiên?",
         "answers": [
@@ -370,7 +370,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-3",
         "title": "Dòng nước và thác ở Suối Tiên",
-        "narration": "Ở Suối Tiên, nước trong và mát. Thác từ trên cao chảy xuống tạo thành hồ. Rừng cây, dòng thác và hồ nước cùng làm nên cảnh đẹp nơi đây. Em thử chỉ trên tranh: đâu là thác, đâu là hồ? Tranh trên màn hình là minh họa, không phải ảnh tư liệu Suối Tiên ở xã Quế Sơn Trung. Em có thể xem ảnh chụp thật trong bài viết của Báo Đà Nẵng. Nếu được tham quan, em đi cùng người lớn và làm theo hướng dẫn. Nước trông trong, đẹp không có nghĩa là an toàn để tự xuống chơi nhé!",
+        "narration": "Ở Suối Tiên, nước trong và mát. Thác từ trên cao chảy xuống tạo thành hồ. Rừng cây, dòng thác và hồ nước cùng làm nên cảnh đẹp nơi đây. Em thử chỉ trên tranh: đâu là thác, đâu là hồ? Tranh trên màn hình là minh họa, không phải ảnh tư liệu Suối Tiên ở xã Quế Sơn Trung. Em có thể xem ảnh chụp thật ở đây viết của Báo Đà Nẵng. Nếu được tham quan, em đi cùng người lớn và làm theo hướng dẫn. Nước trông trong, đẹp không có nghĩa là an toàn để tự xuống chơi nhé!",
         "fact": "Suối Tiên có nước trong, mát và thác trên cao chảy xuống tạo thành hồ.",
         "q": "Theo lời giới thiệu, nước ở Suối Tiên thế nào?",
         "answers": [
@@ -382,13 +382,13 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-4",
         "title": "Giới thiệu cảnh đẹp em yêu",
-        "narration": "Các em ơi! Đà Nẵng của chúng ta có nhiều dòng suối và thác nước rất đẹp. Đây là thác Grăng ở xã Bến Giằng. Còn đây là thác Hòa Phú Thành ở xã Hòa Vang. Khi giới thiệu một cảnh đẹp, chúng mình hãy nhớ nói ba điều: tên địa điểm, nơi có cảnh đẹp và cảnh vật nổi bật. Ví dụ, Suối Tiên ở xã Quế Sơn Trung có rừng cây xanh, dòng nước trong mát và thác nước chảy xuống hồ. Các em hãy cùng yêu quý và giữ gìn những cảnh đẹp của quê hương nhé!",
-        "fact": "Giới thiệu một suối hoặc thác: nói tên, địa điểm và nét đẹp của nơi ấy.",
-        "q": "Khi giới thiệu một cảnh đẹp, chúng mình cần nói những điều gì?",
+        "narration": "Các em ơi! Quê hương Đà Nẵng của chúng ta có nhiều cảnh thiên nhiên tươi đẹp. Thác Grăng ở xã Bến Giằng và thác Hòa Phú Thành ở xã Hòa Vang là những địa điểm để chúng mình cùng tìm hiểu. Các em còn nhớ Suối Tiên không? Suối Tiên nằm ở xã Quế Sơn Trung, có rừng cây xanh, dòng nước trong mát và thác nước chảy xuống hồ. Khi giới thiệu một cảnh đẹp, chúng mình hãy nhớ nói ba điều: Tên cảnh đẹp là gì? Cảnh đẹp ấy ở đâu? Và nơi đó có gì nổi bật? Chúng mình hãy cùng yêu quý và giữ gìn những cảnh đẹp của quê hương nhé!",
+        "fact": "Thác Grăng ở xã Bến Giằng; thác Hòa Phú Thành ở xã Hòa Vang.",
+        "q": "Thác Grăng nằm ở đâu?",
         "answers": [
-          "Tên, địa điểm và một nét đẹp của suối",
-          "Chỉ tên các món ăn",
-          "Một câu chuyện không liên quan"
+          "Xã Bến Giằng",
+          "Xã Hòa Vang",
+          "Xã Quế Sơn Trung"
         ]
       }
     ],
@@ -483,7 +483,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-3",
         "title": "Bày tô mì và thưởng thức",
-        "narration": "Em cùng quan sát cách bày tô mì trong bài nhé! Đầu tiên, cho sợi mì vào tô. Tiếp đến, thêm tôm, thịt, trứng rồi nhờ người lớn chan nước dùng. Sau đó, rắc đậu phụng, hành và ngò lên trên. Rau sống có thể cho vào tô hoặc để riêng ăn kèm. Khi ăn, có thể thêm chanh, bánh tráng nướng, hoa chuối hoặc ớt xanh theo sở thích và phần ăn phù hợp. Người lớn giúp em xử lí nước nóng nhé!",
+        "narration": "Em cùng quan sát cách bày tô mì nhé! Đầu tiên, cho sợi mì vào tô. Tiếp đến, thêm tôm, thịt, trứng rồi nhờ người lớn chan nước dùng. Sau đó, rắc đậu phụng, hành và ngò lên trên. Rau sống có thể cho vào tô hoặc để riêng ăn kèm. Khi ăn, có thể thêm chanh, bánh tráng nướng, hoa chuối hoặc ớt xanh theo sở thích và phần ăn phù hợp. Người lớn giúp em xử lí nước nóng nhé!",
         "fact": "Theo cách bày trong bài: sợi mì trước, rồi tôm, thịt, trứng, tiếp đến nước dùng và các phần ăn kèm.",
         "q": "Đồ ăn kèm nào vừa được giới thiệu?",
         "answers": [

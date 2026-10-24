@@ -123,7 +123,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
+    <div className="station-stage-four max-w-5xl mx-auto space-y-4 animate-fade-in">
       <style>{`
         @keyframes journey-map-reveal {
           from { opacity: 0; transform: translateY(40px) scale(.72) rotate(-4deg); }
@@ -302,7 +302,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
         </div>
       )}
 
-      <section className="rounded-3xl bg-white border border-amber-200 shadow-sm p-5 sm:p-7 space-y-6 text-center">
+      <section className="station-stage-four-card rounded-3xl bg-white border border-amber-200 shadow-sm p-4 sm:p-5 space-y-4 text-center">
         <div>
           <span className="text-xs font-black text-sky-700 uppercase">Chặng 4 · Hộ chiếu hành trình</span>
           <h2 className="mt-1 text-xl sm:text-2xl font-black text-slate-900">{station.titleVi}</h2>

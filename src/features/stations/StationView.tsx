@@ -25,6 +25,8 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const isPolishedJourney = DEMO_STATION_IDS.has(station.id);
 
   const [natureMapOpen, setNatureMapOpen] = useState(false);
+  const [otherMapOpen, setOtherMapOpen] = useState(false);
+  const [otherMapSelected, setOtherMapSelected] = useState(0);
   const [naturePlace, setNaturePlace] = useState<'cham' | 'sontra'>('cham');
   const [downloading, setDownloading] = useState(false);
   const [offlinePkg, setOfflinePkg] = useState(offlineService.getPackage(station.id));
@@ -216,6 +218,51 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
             ))}
           </div>
         </div>
+      )}
+
+      {station.id !== 'g2-station-2' && currentStage === 1 && (
+        <section className="overflow-hidden rounded-[1.6rem] border border-sky-200 bg-gradient-to-br from-sky-950 via-blue-900 to-teal-800 shadow-lg">
+          <div className="flex flex-col gap-3 p-4 text-white sm:flex-row sm:items-center sm:justify-between sm:p-6">
+            <div>
+              <span className="text-[11px] font-black tracking-wider text-amber-300">🗺️ BẢN ĐỒ KHÁM PHÁ • KHỐI {station.grade} • TRẠM {station.number}</span>
+              <h3 className="mt-1 text-xl font-black">{station.titleVi}</h3>
+              <p className="mt-1 text-xs text-sky-100">Khám phá các điểm chạm trong bài học, xem hình ảnh và nghe giới thiệu.</p>
+            </div>
+            <button type="button" aria-expanded={otherMapOpen} onClick={() => { audioService.playSfx('click'); setOtherMapOpen(v => !v); }} className="shrink-0 rounded-xl bg-amber-300 px-5 py-3 text-sm font-black text-slate-950 hover:bg-amber-200">{otherMapOpen ? 'Thu gọn bản đồ' : '📍 Khám phá trên bản đồ'}</button>
+          </div>
+          {otherMapOpen && (
+            <div className="space-y-4 bg-white p-4 sm:p-5">
+              <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[#e9f3ed]">
+                <div className="absolute left-3 top-3 z-10 rounded-xl bg-white/95 px-3 py-2 text-xs font-black text-slate-800 shadow-md">🧭 Bản đồ chủ đề • Minh họa, không phải bản đồ định vị</div>
+                <div className="relative min-h-[260px] overflow-hidden bg-gradient-to-br from-[#c7e9f3] via-[#d4e9d5] to-[#f4edd6] sm:min-h-[330px]">
+                  <div className="absolute -left-12 top-10 h-64 w-64 rotate-[-22deg] rounded-[40%] border-[16px] border-white/75 bg-[#b8d6a4] shadow-inner" />
+                  <div className="absolute -right-16 -top-20 h-64 w-80 rotate-12 rounded-[40%] border-[14px] border-white/70 bg-[#aad9eb]" />
+                  <div className="absolute bottom-6 left-1/3 h-20 w-[70%] rotate-[-12deg] rounded-full border-[10px] border-white/80 bg-[#e8e1c8]" />
+                  <div className="relative z-10 flex min-h-[260px] flex-wrap items-center justify-center gap-3 px-5 pb-8 pt-20 sm:min-h-[330px]">
+                    {station.hotspots.map((point,index) => (
+                      <button key={point.id} type="button" aria-pressed={otherMapSelected === index} onClick={() => { audioService.playSfx('click'); setOtherMapSelected(index); }} className={`max-w-[180px] rounded-2xl border-2 px-3 py-3 text-center text-xs font-black shadow-lg transition hover:-translate-y-1 ${otherMapSelected === index ? 'border-amber-400 bg-white text-sky-900 ring-4 ring-amber-300/40' : 'border-white bg-white/90 text-slate-700'}`}>
+                        <span className="mb-1 block text-2xl">{otherMapSelected === index ? '📍' : '🧭'}</span>
+                        <span className="line-clamp-2">{point.titleVi.replace(/^\d+\.\s*/, '')}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="border-t border-slate-200 bg-white px-3 py-2 text-[11px] font-medium text-slate-500">Các thẻ là điểm học tập, không thể hiện tọa độ địa lý.</div>
+              </div>
+              {station.hotspots[otherMapSelected] && (
+                <div className="grid gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-3 sm:grid-cols-[180px_1fr]">
+                  <img src={station.hotspots[otherMapSelected].image} alt={station.hotspots[otherMapSelected].titleVi} loading="lazy" className="h-36 w-full rounded-xl bg-white object-cover" onError={e => { e.currentTarget.src = '/adventure-background.svg'; }} />
+                  <div className="space-y-2">
+                    <h4 className="text-base font-black text-slate-900">{station.hotspots[otherMapSelected].titleVi}</h4>
+                    <p className="text-sm leading-relaxed text-slate-700">{station.hotspots[otherMapSelected].keyFactVi}</p>
+                    <button type="button" onClick={() => audioService.speakNarration(station.hotspots[otherMapSelected].narrationVi, 'vi-VN')} className="rounded-xl bg-sky-700 px-4 py-2 text-xs font-black text-white hover:bg-sky-800">🔊 Nghe giới thiệu</button>
+                  </div>
+                </div>
+              )}
+              <p className="text-[11px] text-slate-500">Sơ đồ học tập dùng dữ liệu điểm chạm của bài, không gắn vị trí địa lý chưa xác minh. Hoạt động tự do, không ảnh hưởng tiến trình và phần thưởng.</p>
+            </div>
+          )}
+        </section>
       )}
 
       {station.id === 'g2-station-2' && currentStage === 1 && (

@@ -167,3 +167,57 @@
 @media (max-width: 1023px), (max-height: 649px) {
   .station-viewport { height: auto; overflow: visible; }
 }
+
+
+/* Immersive station lesson: only the lesson surface fills the screen. */
+.station-immersive-topbar { display: none; }
+.station-immersive-root:fullscreen,
+.station-immersive-root.station-immersive-active {
+  width: 100vw !important;
+  max-width: none !important;
+  height: 100dvh !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 8px !important;
+  background: #eef8fa;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  gap: 0 !important;
+}
+.station-immersive-root:fullscreen > :not(.station-lesson-panel),
+.station-immersive-root.station-immersive-active > :not(.station-lesson-panel) { display: none !important; }
+.station-immersive-root:fullscreen .station-lesson-panel,
+.station-immersive-root.station-immersive-active .station-lesson-panel {
+  flex: 1 1 auto !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow-y: auto !important;
+  padding: 0 !important;
+}
+.station-immersive-root:fullscreen .station-immersive-topbar,
+.station-immersive-root.station-immersive-active .station-immersive-topbar {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  margin-bottom: 8px;
+}
+@media (min-width: 1024px) {
+  .station-immersive-root:fullscreen .station-lesson-panel > .transition-all,
+  .station-immersive-root.station-immersive-active .station-lesson-panel > .transition-all {
+    min-height: calc(100dvh - 70px);
+  }
+  .station-immersive-root:fullscreen .station-lesson-panel .lg\\:h-\\[calc\\(100dvh-310px\\)\\],
+  .station-immersive-root.station-immersive-active .station-lesson-panel .lg\\:h-\\[calc\\(100dvh-310px\\)\\] {
+    height: calc(100dvh - 110px);
+  }
+}
+.station-lesson-tools { padding: 8px 4px; }
+.station-immersive-root:fullscreen .station-lesson-tools,
+.station-immersive-root.station-immersive-active .station-lesson-tools { justify-content: flex-end; }
+@media (max-width: 767px) {
+  .station-mini-progress { order: 2; }
+  .station-header-actions { width: 100%; justify-content: space-between; }
+}

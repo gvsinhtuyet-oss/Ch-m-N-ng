@@ -440,8 +440,8 @@ export const LandingView: React.FC = () => {
           Chương trình Giáo dục địa phương TP Đà Nẵng
         </div>
         <div className="text-[11px] sm:text-xs">
-          <span>Thiết kế: </span>
-          <span className="font-bold text-amber-300">Trương Sinh Tuyết – Nguyễn Thị Thanh</span>
+          <span>Người phát triển: </span>
+          <span className="font-bold text-amber-300">Trương Sinh Tuyết</span>
         </div>
         <button type="button" onClick={()=>{setAdminLogin(true);setShowTeacherLogin(true);setShowStudentLogin(false);setShowRolePicker(true);setLoginError('');setStaffPassword('');}} className="inline-flex items-center gap-1 text-[10px] text-slate-300/75 hover:text-white transition" aria-label="Đăng nhập quản trị"><Settings className="w-3 h-3" /> Quản trị</button>
       </footer>

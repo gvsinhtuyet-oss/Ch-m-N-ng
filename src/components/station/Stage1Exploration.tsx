@@ -130,7 +130,9 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   };
 
   const handleSelectOption = (optId: string) => {
-    if (answerSubmitted) return;
+    if (answerSubmitted && isCorrect) return;
+    setAnswerSubmitted(false);
+    setIsCorrect(false);
     audioService.playSfx('click');
     setSelectedOptionId(optId);
   };
@@ -140,7 +142,8 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
     const chosen = hotspot.interaction.options.find(o => o.id === selectedOptionId);
     const correct = !!chosen?.isCorrect;
     setIsCorrect(correct);
-    setAnswerSubmitted(true);
+    setAnswerSubmitted(correct);
+    if (!correct) setSelectedOptionId(null);
 
     if (correct) {
       setAnsweredIds(ids=>ids.includes(hotspot.id)?ids:[...ids,hotspot.id]);
@@ -563,7 +566,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
               </div>
 
               {/* Feedback Alert */}
-              {answerSubmitted && (
+              {(answerSubmitted || isCorrect) && (
                 <div
                   className={`p-4 rounded-2xl text-xs leading-relaxed ${
                     isCorrect
@@ -594,20 +597,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                   >
                     Kiểm tra câu trả lời
                   </button>
-                ) : !isCorrect ? (
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => {
-                        setAnswerSubmitted(false);
-                        setSelectedOptionId(null);
-                        setIsCorrect(false);
-                      }}
-                      className="w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs transition"
-                    >
-                      THỬ LẠI
-                    </button>
-                  </div>
-                ) : (
+) : (
                   <button
                     onClick={handleNextHotspot}
                     className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2 active:scale-95"

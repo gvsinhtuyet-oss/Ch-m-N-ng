@@ -64,72 +64,62 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
     selectedActionIds.length > 0;
 
   return (
-    <div className="relative isolate w-full min-h-[560px] lg:h-[calc(100dvh-180px)] lg:min-h-[520px] overflow-hidden rounded-[1.6rem] border-2 border-white/70 bg-gradient-to-br from-sky-200 via-emerald-100 to-amber-100 shadow-xl">
-      {/* Decorative 3D-inspired landscape uses CSS only: no external image, no auth changes. */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_5%,rgba(255,255,255,.9),transparent_42%),radial-gradient(ellipse_at_90%_80%,rgba(16,185,129,.3),transparent_48%)]" />
-      <div className="relative z-10 flex h-full min-h-0 flex-col gap-2 p-2.5 sm:p-3 lg:p-4">
-        <header className="flex shrink-0 items-center justify-between gap-3 rounded-2xl border border-amber-200 bg-amber-50/95 px-3 py-2 shadow-md">
-          <div className="min-w-0">
-            <p className="text-[10px] font-black uppercase tracking-wider text-rose-700">Chặng 3 / 4</p>
-            <h2 className="truncate text-lg font-black text-amber-950 sm:text-xl">❤️ Checkin cảm xúc</h2>
-          </div>
-          <span className="hidden text-xs font-semibold text-amber-900 sm:block">Cảm nhận và hành động sau khám phá</span>
-        </header>
-        {!isSubmitted ? (
-          <>
-            <div className="grid min-h-0 flex-1 grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-3">
-              <section aria-label="Cảm xúc của em" className="flex min-h-0 flex-col gap-2 rounded-2xl border-2 border-white/80 bg-white/92 p-2.5 shadow-lg sm:p-3">
-                <h3 className="shrink-0 text-sm font-black text-rose-800 sm:text-base">💗 Cảm xúc của em</h3>
-                <p className="shrink-0 text-xs font-semibold text-slate-700">Em cảm thấy thế nào sau hành trình?</p>
-                <div className="grid shrink-0 grid-cols-3 gap-1.5">
-                  {checkIn.emotions.map(em => (
-                    <button type="button" key={em.id} aria-pressed={selectedEmotion === em.id}
-                      onClick={() => { audioService.playSfx('click'); setSelectedEmotion(em.id); }}
-                      className={`flex min-h-14 flex-col items-center justify-center rounded-xl border-2 px-1 py-1 text-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600 ${selectedEmotion === em.id ? 'border-rose-500 bg-rose-100 shadow-sm' : 'border-rose-100 bg-white hover:bg-rose-50'}`}>
-                      <span className="text-xl sm:text-2xl">{em.emoji}</span><span className="text-[10px] font-bold leading-tight text-slate-800 sm:text-xs">{em.labelVi}</span>
-                    </button>
-                  ))}
-                </div>
-                <h4 className="shrink-0 text-xs font-black text-sky-900">{checkIn.rememberPromptVi}</h4>
-                <div className="grid min-h-0 flex-1 content-start gap-1.5">
-                  {checkIn.rememberOptions.map(opt => {
-                    const active = selectedRememberIds.includes(opt.id);
-                    return <button type="button" key={opt.id} aria-pressed={active} onClick={() => toggleRemember(opt.id)}
-                      className={`flex min-h-9 items-center justify-between gap-2 rounded-xl border px-2.5 py-1.5 text-left text-xs font-semibold leading-snug sm:text-sm ${active ? 'border-sky-500 bg-sky-100 text-sky-950' : 'border-slate-200 bg-white/95 text-slate-800 hover:bg-sky-50'}`}>
-                      <span>{opt.textVi}</span><span className="shrink-0">{active ? '✓' : '○'}</span>
-                    </button>;
-                  })}
-                </div>
-              </section>
-              <section aria-label="Việc em sẽ làm" className="flex min-h-0 flex-col gap-2 rounded-2xl border-2 border-white/80 bg-white/92 p-2.5 shadow-lg sm:p-3">
-                <h3 className="shrink-0 text-sm font-black text-emerald-800 sm:text-base">🌱 Việc em sẽ làm</h3>
-                <p className="shrink-0 text-xs font-semibold text-slate-700">{checkIn.actionPromptVi}</p>
-                <div className="grid min-h-0 flex-1 content-start gap-2">
-                  {checkIn.actionOptions.map(opt => {
-                    const active = selectedActionIds.includes(opt.id);
-                    return <button type="button" key={opt.id} aria-pressed={active} onClick={() => toggleAction(opt.id)}
-                      className={`flex min-h-12 items-center justify-between gap-2 rounded-xl border-2 px-3 py-2 text-left text-xs font-bold leading-snug sm:text-sm ${active ? 'border-emerald-500 bg-emerald-100 text-emerald-950 shadow-sm' : 'border-emerald-100 bg-white/95 text-slate-800 hover:bg-emerald-50'}`}>
-                      <span>{opt.textVi}</span><span className="shrink-0">{active ? '✓' : '○'}</span>
-                    </button>;
-                  })}
-                </div>
-                <p className="shrink-0 text-[11px] font-semibold text-emerald-900">Chọn ít nhất một việc em muốn thực hiện.</p>
-              </section>
+    <div className="relative isolate mx-auto flex min-h-[530px] w-full flex-col overflow-hidden rounded-[1.4rem] border-2 border-amber-300 bg-[#f4e2b7] shadow-xl lg:h-[calc(100dvh-195px)] lg:min-h-[520px]" style={{ backgroundImage: "url('/images/stage3-checkin-cam-xuc.webp'), url('/images/stage3-checkin-background.svg')", backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat' }}>
+      {!isSubmitted ? (
+        <div className="relative z-10 grid min-h-[530px] flex-1 grid-rows-[minmax(0,1fr)_minmax(0,3fr)_auto] gap-1.5 px-[5%] pb-[3%] pt-[15%] sm:gap-2 sm:px-[6%] sm:pt-[14.7%] lg:min-h-0">
+          <section aria-label="Cảm xúc của em" className="flex min-h-0 items-center justify-center gap-2 overflow-hidden px-1">
+            <span className="hidden shrink-0 rounded-lg bg-amber-50/85 px-2 py-1 text-[11px] font-black text-rose-900 xl:block">Cảm xúc của em</span>
+            <div className="grid min-w-0 flex-1 grid-cols-3 gap-1.5 sm:gap-3">
+              {checkIn.emotions.map(em => (
+                <button type="button" key={em.id} aria-pressed={selectedEmotion === em.id}
+                  onClick={() => { audioService.playSfx('click'); setSelectedEmotion(em.id); }}
+                  className={`flex min-h-9 items-center justify-center gap-1 rounded-xl border-2 px-1 py-1 text-center text-[10px] font-black leading-tight shadow-sm transition sm:min-h-11 sm:text-sm ${selectedEmotion === em.id ? 'border-rose-500 bg-rose-100 text-rose-900 ring-2 ring-rose-400' : 'border-amber-200 bg-white/90 text-amber-950 hover:bg-amber-50'}`}>
+                  <span className="text-base sm:text-2xl">{em.emoji}</span><span>{em.labelVi}</span>
+                </button>
+              ))}
             </div>
-            <button type="button" onClick={handleSubmit} disabled={!isValid}
-              className="flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-rose-500 to-emerald-600 px-4 py-2 text-sm font-black text-white shadow-lg transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-45">
-              <Sparkles className="h-4 w-4" /> Hoàn thành checkin – Nhận dấu ấn
-            </button>
-          </>
-        ) : (
-          <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-4 rounded-2xl border-2 border-white bg-white/90 p-5 text-center">
-            <span className="text-6xl">{checkIn.emotions.find(e => e.id === selectedEmotion)?.emoji || '❤️'}</span>
-            <h3 className="text-xl font-black text-emerald-950">Cảm ơn em đã chia sẻ!</h3>
-            <p className="max-w-lg text-sm text-slate-700">Em đã hoàn thành chặng cảm xúc và chọn một việc ý nghĩa để thực hiện.</p>
-            <button type="button" onClick={onCompleteStage} className="rounded-xl bg-emerald-700 px-6 py-3 text-sm font-black text-white">Sang chặng 4 – Dấu ấn hành trình <ChevronRight className="inline h-4 w-4" /></button>
+          </section>
+          <div className="grid min-h-0 grid-cols-2 gap-[5%]">
+            <section aria-label="Điều em nhớ nhất" className="flex min-h-0 min-w-0 flex-col overflow-hidden px-[3%] pb-1 pt-[10%] sm:pt-[8%]">
+              <h3 className="sr-only">Điều em nhớ nhất</h3>
+              <p className="mb-1 line-clamp-2 shrink-0 rounded-md bg-amber-50/80 px-1 py-1 text-[10px] font-bold text-amber-950 sm:text-xs">{checkIn.rememberPromptVi}</p>
+              <div className="min-h-0 flex-1 space-y-1 overflow-y-auto pr-1 [scrollbar-width:thin]">
+                {checkIn.rememberOptions.map(opt => {
+                  const active = selectedRememberIds.includes(opt.id);
+                  return <button type="button" key={opt.id} aria-pressed={active} onClick={() => toggleRemember(opt.id)}
+                    className={`flex min-h-9 w-full items-center justify-between gap-1 rounded-lg border px-2 py-1 text-left text-[10px] font-bold leading-snug shadow-sm sm:min-h-10 sm:text-xs lg:text-sm ${active ? 'border-orange-600 bg-orange-200/95 text-orange-950' : 'border-orange-200 bg-white/90 text-slate-900 hover:bg-amber-50'}`}>
+                    <span>{opt.textVi}</span><span className="shrink-0 text-base">{active ? '✓' : '○'}</span>
+                  </button>;
+                })}
+              </div>
+            </section>
+            <section aria-label="Việc em sẽ làm" className="flex min-h-0 min-w-0 flex-col overflow-hidden px-[3%] pb-1 pt-[10%] sm:pt-[8%]">
+              <h3 className="sr-only">Việc em sẽ làm</h3>
+              <p className="mb-1 line-clamp-2 shrink-0 rounded-md bg-green-50/80 px-1 py-1 text-[10px] font-bold text-emerald-950 sm:text-xs">{checkIn.actionPromptVi}</p>
+              <div className="min-h-0 flex-1 space-y-1 overflow-y-auto pr-1 [scrollbar-width:thin]">
+                {checkIn.actionOptions.map(opt => {
+                  const active = selectedActionIds.includes(opt.id);
+                  return <button type="button" key={opt.id} aria-pressed={active} onClick={() => toggleAction(opt.id)}
+                    className={`flex min-h-9 w-full items-center justify-between gap-1 rounded-lg border px-2 py-1 text-left text-[10px] font-bold leading-snug shadow-sm sm:min-h-10 sm:text-xs lg:text-sm ${active ? 'border-emerald-600 bg-emerald-200/95 text-emerald-950' : 'border-emerald-200 bg-white/90 text-slate-900 hover:bg-green-50'}`}>
+                    <span>{opt.textVi}</span><span className="shrink-0 text-base">{active ? '✓' : '○'}</span>
+                  </button>;
+                })}
+              </div>
+            </section>
           </div>
-        )}
-      </div>
+          <button type="button" onClick={handleSubmit} disabled={!isValid}
+            className="mx-auto flex min-h-10 w-fit max-w-full shrink-0 items-center justify-center gap-2 rounded-2xl border-2 border-yellow-600 bg-gradient-to-b from-yellow-200 to-amber-500 px-4 py-2 text-xs font-black text-amber-950 shadow-lg transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-55 sm:min-h-11 sm:px-8 sm:text-sm">
+            <Sparkles className="h-4 w-4 shrink-0" /> Hoàn thành check-in – Sang Chặng 4 <ChevronRight className="h-4 w-4 shrink-0" />
+          </button>
+        </div>
+      ) : (
+        <div className="relative z-10 flex min-h-[450px] flex-1 flex-col items-center justify-center gap-4 bg-amber-50/90 p-5 text-center">
+          <span className="text-6xl">{checkIn.emotions.find(e => e.id === selectedEmotion)?.emoji || '❤️'}</span>
+          <h3 className="text-xl font-black text-emerald-950">Cảm ơn em đã chia sẻ!</h3>
+          <p className="max-w-lg text-sm text-slate-700">Em đã hoàn thành chặng cảm xúc và chọn việc ý nghĩa để thực hiện.</p>
+          <button type="button" onClick={onCompleteStage} className="rounded-xl bg-emerald-700 px-6 py-3 text-sm font-black text-white">Sang Chặng 4 – Dấu ấn hành trình <ChevronRight className="inline h-4 w-4" /></button>
+        </div>
+      )}
       {/* Stage 3 Reward Claim Modal */}
       {showRewardModal && (
         <RewardClaimModal

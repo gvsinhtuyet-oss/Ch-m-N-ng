@@ -234,35 +234,46 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
                 <button type="button" aria-pressed={naturePlace === 'cham'} onClick={() => { audioService.playSfx('click'); setNaturePlace('cham'); }} className={`rounded-xl p-3 text-xs font-black sm:text-sm ${naturePlace === 'cham' ? 'bg-sky-700 text-white' : 'bg-sky-50 text-sky-800'}`}>🏝️ Cù Lao Chàm</button>
                 <button type="button" aria-pressed={naturePlace === 'sontra'} onClick={() => { audioService.playSfx('click'); setNaturePlace('sontra'); }} className={`rounded-xl p-3 text-xs font-black sm:text-sm ${naturePlace === 'sontra' ? 'bg-emerald-700 text-white' : 'bg-emerald-50 text-emerald-800'}`}>🌳 Sơn Trà</button>
               </div>
-              <div className="relative overflow-hidden rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-100 via-cyan-100 to-sky-300 p-3 sm:p-5">
-                <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-                  <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-black text-sky-900">🧭 Sơ đồ vị trí tương đối</span>
-                  <span className="text-[11px] font-semibold text-sky-900">Minh họa, không theo tỉ lệ</span>
-                </div>
-                <svg viewBox="0 0 700 380" role="img" aria-label="Sơ đồ minh họa đất liền Đà Nẵng, bán đảo Sơn Trà và quần đảo Cù Lao Chàm" className="h-auto w-full rounded-xl bg-[#b9e8f1]">
+              <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[#e5f2f6] shadow-inner">
+                <div className="absolute left-3 top-3 z-10 rounded-xl border border-white bg-white/95 px-3 py-2 text-xs font-black text-slate-800 shadow-lg">🧭 Bản đồ khám phá Đà Nẵng</div>
+                <svg viewBox="0 0 900 470" role="img" aria-label="Bản đồ minh họa phong cách địa lý về đất liền Đà Nẵng, bán đảo Sơn Trà và Cù Lao Chàm, không theo tỉ lệ" className="block h-auto w-full">
                   <defs>
-                    <linearGradient id="natureSea" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#c5f2f3"/><stop offset="100%" stopColor="#64bfd8"/></linearGradient>
-                    <linearGradient id="natureLand" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#d9eab4"/><stop offset="100%" stopColor="#79b98d"/></linearGradient>
+                    <linearGradient id="g2Sea" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#c7eaf4"/><stop offset="100%" stopColor="#91d0e8"/></linearGradient>
+                    <pattern id="g2Blocks" width="36" height="36" patternUnits="userSpaceOnUse"><path d="M0 18H36M18 0V36" stroke="#fff" strokeWidth="2" opacity=".48"/></pattern>
+                    <filter id="g2Shadow"><feDropShadow dx="0" dy="3" stdDeviation="3" floodOpacity=".22"/></filter>
                   </defs>
-                  <rect width="700" height="380" fill="url(#natureSea)"/>
-                  <path d="M0 0H265Q235 40 250 86T230 158Q255 202 230 246T265 380H0Z" fill="url(#natureLand)" stroke="#e9f7d5" strokeWidth="7"/>
-                  <path d="M250 87Q295 51 344 68Q374 95 355 125Q313 146 255 122Z" fill="#6cad79" stroke="#f3ffe7" strokeWidth="5"/>
-                  <path d="M453 250Q490 215 546 238Q575 273 546 310Q502 337 461 299Z" fill="#70b783" stroke="#f3ffe7" strokeWidth="5"/>
-                  <ellipse cx="600" cy="310" rx="13" ry="7" fill="#6aad80"/><ellipse cx="425" cy="293" rx="11" ry="6" fill="#6aad80"/>
-                  <path d="M350 160Q402 205 458 240" fill="none" stroke="#ffffff" strokeWidth="3" strokeDasharray="8 8" opacity=".7"/>
-                  <text x="72" y="190" fill="#215d43" fontSize="23" fontWeight="bold" textAnchor="middle">ĐẤT LIỀN</text>
-                  <text x="72" y="219" fill="#215d43" fontSize="18" fontWeight="bold" textAnchor="middle">ĐÀ NẴNG</text>
-                  <text x="530" y="100" fill="#18769a" fontSize="23" fontWeight="bold" textAnchor="middle">BIỂN ĐÔNG</text>
-                  <circle cx="308" cy="94" r={naturePlace === 'sontra' ? 19 : 13} fill={naturePlace === 'sontra' ? '#f59e0b' : '#0f766e'} stroke="white" strokeWidth="5"/>
-                  <text x="380" y="53" fill="#064e3b" fontSize="22" fontWeight="bold" textAnchor="middle">Sơn Trà</text>
-                  <path d="M365 61L323 87" stroke="#064e3b" strokeWidth="3"/>
-                  <circle cx="502" cy="271" r={naturePlace === 'cham' ? 19 : 13} fill={naturePlace === 'cham' ? '#f59e0b' : '#0f766e'} stroke="white" strokeWidth="5"/>
-                  <text x="555" y="353" fill="#064e3b" fontSize="22" fontWeight="bold" textAnchor="middle">Cù Lao Chàm</text>
-                  <path d="M532 330L510 292" stroke="#064e3b" strokeWidth="3"/>
+                  <rect width="900" height="470" fill="url(#g2Sea)"/>
+                  <path d="M0 0H338Q345 53 330 94Q320 137 354 180Q377 216 348 263Q322 315 344 356Q361 404 397 470H0Z" fill="#f2f0e6" stroke="#ffffff" strokeWidth="8"/>
+                  <path d="M0 0H220Q253 75 198 122Q150 165 180 220Q224 260 171 319Q130 378 192 470H0Z" fill="#c7e6b8" opacity=".9"/>
+                  <path d="M338 97Q378 65 422 79Q460 98 446 137Q423 160 353 150Z" fill="#b8dba8" stroke="#ffffff" strokeWidth="7"/>
+                  <path d="M338 97Q378 65 422 79Q460 98 446 137Q423 160 353 150Z" fill="url(#g2Blocks)" opacity=".4"/>
+                  <path d="M0 90Q100 117 177 87T328 115M0 243Q102 212 209 238T351 228M0 372Q145 355 215 382T364 391" stroke="#fff" strokeWidth="13" fill="none" opacity=".9"/>
+                  <path d="M80 0Q105 128 72 250T114 470M235 0Q215 115 252 224T272 470" stroke="#fff" strokeWidth="8" fill="none" opacity=".9"/>
+                  <path d="M0 90Q100 117 177 87T328 115M0 243Q102 212 209 238T351 228M0 372Q145 355 215 382T364 391" stroke="#e6d8b5" strokeWidth="2" fill="none"/>
+                  <path d="M235 0Q215 115 252 224T272 470" stroke="#e6d8b5" strokeWidth="2" fill="none"/>
+                  <path d="M602 301Q638 276 680 291Q713 307 710 341Q692 374 647 369Q610 360 602 331Z" fill="#c4dfa9" stroke="#fff" strokeWidth="7"/>
+                  <path d="M745 351Q764 343 776 355Q777 366 757 369Z M561 357Q572 345 582 357Q576 370 562 367Z M709 395Q721 388 727 397Q721 407 710 403Z" fill="#c4dfa9" stroke="#fff" strokeWidth="3"/>
+                  <path d="M625 322Q649 300 682 324M631 346Q664 337 687 352" stroke="#8dbb81" strokeWidth="5" fill="none" opacity=".65"/>
+                  <text x="165" y="175" fontSize="24" fontWeight="800" fill="#52675c" textAnchor="middle">ĐÀ NẴNG</text>
+                  <text x="180" y="206" fontSize="14" fill="#6e8277" textAnchor="middle">Đất liền</text>
+                  <text x="715" y="145" fontSize="27" fontWeight="800" fill="#70a9c3" opacity=".85" textAnchor="middle">BIỂN ĐÔNG</text>
+                  <text x="290" y="423" fontSize="15" fontWeight="700" fill="#758577" textAnchor="middle">Hướng về Hội An ↓</text>
+                  <g opacity={naturePlace === 'sontra' ? 1 : .72} filter="url(#g2Shadow)">
+                    <path d="M399 92C399 69 363 69 363 92C363 109 381 128 381 128S399 109 399 92Z" fill={naturePlace === 'sontra' ? '#ea4335' : '#256b66'} stroke="#fff" strokeWidth="3"/>
+                    <circle cx="381" cy="91" r="6" fill="white"/>
+                  </g>
+                  <rect x="415" y="78" width="160" height="37" rx="12" fill="white" stroke="#e2e8f0" filter="url(#g2Shadow)"/>
+                  <text x="495" y="102" fontSize="18" fontWeight="800" fill="#233c4c" textAnchor="middle">🌳 Sơn Trà</text>
+                  <g opacity={naturePlace === 'cham' ? 1 : .72} filter="url(#g2Shadow)">
+                    <path d="M678 319C678 293 638 293 638 319C638 337 658 360 658 360S678 337 678 319Z" fill={naturePlace === 'cham' ? '#ea4335' : '#256b66'} stroke="#fff" strokeWidth="3"/>
+                    <circle cx="658" cy="317" r="7" fill="white"/>
+                  </g>
+                  <rect x="565" y="380" width="190" height="39" rx="12" fill="white" stroke="#e2e8f0" filter="url(#g2Shadow)"/>
+                  <text x="660" y="405" fontSize="18" fontWeight="800" fill="#233c4c" textAnchor="middle">🏝️ Cù Lao Chàm</text>
                 </svg>
-                <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-xs font-semibold text-sky-950">📍 {naturePlace === 'cham' ? 'Cù Lao Chàm: quần đảo ngoài khơi Hội An' : 'Sơn Trà: bán đảo nối với đất liền Đà Nẵng'}</p>
-                  <a href={naturePlace === 'cham' ? 'https://www.openstreetmap.org/?mlat=15.950&mlon=108.510#map=12/15.950/108.510' : 'https://www.openstreetmap.org/?mlat=16.115&mlon=108.295#map=12/16.115/108.295'} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-sky-700 px-4 py-2 text-xs font-black text-white hover:bg-sky-800">🌐 Xem bản đồ địa lý thực ↗</a>
+                <div className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-200 bg-white p-3">
+                  <p className="text-xs font-semibold text-slate-700">📍 {naturePlace === 'cham' ? 'Cù Lao Chàm: quần đảo ngoài khơi Hội An' : 'Sơn Trà: bán đảo nối với đất liền Đà Nẵng'}</p>
+                  <a href={naturePlace === 'cham' ? 'https://www.google.com/maps/search/?api=1&query=Cu+Lao+Cham+Da+Nang' : 'https://www.google.com/maps/search/?api=1&query=Son+Tra+Peninsula+Da+Nang'} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-black text-white shadow-sm hover:bg-blue-700">📍 Xem vị trí trên Google Maps ↗</a>
                 </div>
               </div>
               <div className="rounded-xl bg-amber-50 p-4 text-sm text-slate-700">
@@ -270,7 +281,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
                 <p className="mt-2">{naturePlace === 'cham' ? 'Cù Lao Chàm có 8 hòn đảo nhỏ, Hòn Lao là đảo chính. Khu dự trữ sinh quyển Cù Lao Chàm – Hội An được UNESCO công nhận năm 2009.' : 'Bán đảo Sơn Trà có rừng và biển, là nơi sinh sống của nhiều loài sinh vật, trong đó có voọc chà vá chân nâu.'}</p>
                 <button type="button" onClick={() => audioService.speakNarration(naturePlace === 'cham' ? 'Cù Lao Chàm có tám hòn đảo nhỏ. Hòn Lao là đảo chính. Chúng ta hãy bảo vệ biển đảo quê hương.' : 'Bán đảo Sơn Trà có rừng và biển. Đây là nơi sinh sống của voọc chà vá chân nâu. Chúng ta hãy bảo vệ thiên nhiên.', 'vi-VN')} className="mt-3 rounded-xl bg-sky-700 px-4 py-2 text-xs font-black text-white">🔊 Nghe giới thiệu</button>
               </div>
-              <p className="text-[11px] text-slate-500">Sơ đồ minh họa hoạt động không cần tải bản đồ bên ngoài. Liên kết bản đồ địa lý thực cần Internet. Không ảnh hưởng tiến trình học.</p>
+              <p className="text-[11px] text-slate-500">Bản đồ minh họa phong cách địa lý, không theo tỉ lệ. Liên kết Google Maps cần Internet. Không ảnh hưởng tiến trình học.</p>
             </div>
           )}
         </section>

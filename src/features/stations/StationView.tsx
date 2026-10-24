@@ -12,7 +12,7 @@ import { Stage3CheckIn } from '../../components/station/Stage3CheckIn';
 import { Stage4Stamp } from '../../components/station/Stage4Stamp';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { unlockedStage,visibleStage } from './stageAccess';
-import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles } from 'lucide-react';
+import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles, Maximize2, Minimize2, MapPinned } from 'lucide-react';
 
 // Curated geographic places. Search links resolve the actual place in Google Maps;
 // never fabricate a coordinate or place a map pin on an illustration.
@@ -55,6 +55,23 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const progress = progressService.getStationProgress(studentId, station.id);
   const isPolishedJourney = DEMO_STATION_IDS.has(station.id);
 
+  const fullscreenRef = useRef<HTMLDivElement>(null);
+  const [isLessonFullscreen, setIsLessonFullscreen] = useState(false);
+  const [showLessonTools, setShowLessonTools] = useState(false);
+  const toggleLessonFullscreen = async () => {
+    const element = fullscreenRef.current;
+    if (!element) return;
+    try {
+      if (document.fullscreenElement === element) await document.exitFullscreen();
+      else if (!document.fullscreenElement && element.requestFullscreen) await element.requestFullscreen();
+      else setIsLessonFullscreen(v => !v);
+    } catch { setIsLessonFullscreen(v => !v); }
+  };
+  useEffect(() => {
+    const sync = () => setIsLessonFullscreen(document.fullscreenElement === fullscreenRef.current);
+    document.addEventListener('fullscreenchange', sync);
+    return () => document.removeEventListener('fullscreenchange', sync);
+  }, []);
   const mapSectionRef = useRef<HTMLElement>(null);
   const lessonPanelRef = useRef<HTMLDivElement>(null);
   const [natureMapOpen, setNatureMapOpen] = useState(false);
@@ -109,7 +126,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   ];
 
   return (
-    <div className={isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}>
+    <div ref={fullscreenRef} className={`station-immersive-root ${isLessonFullscreen ? "station-immersive-active" : ""} ${isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}`}>
             {/* Top Station Header bar */}
       <div className={isPolishedJourney ? "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/94 backdrop-blur-xl px-4 py-3 rounded-[1.5rem] border border-orange-200 shadow-lg shadow-orange-950/5" : "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/96 backdrop-blur-md px-4 py-3.5 sm:px-5 sm:py-4 rounded-[1.6rem] border border-white/80 shadow-[0_10px_32px_rgba(15,23,42,0.08)]"}>
         <div className="flex items-center gap-3.5">
@@ -159,6 +176,23 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
             Phiên bản demo – dữ liệu được lưu cục bộ trên thiết bị, chưa phải gói offline hoàn chỉnh.
           </span>}
         </div>
+        <div className="station-header-actions flex flex-wrap items-center gap-2">
+      <nav aria-label="Tiến trình 4 chặng" className="station-mini-progress flex items-center gap-1 rounded-xl bg-slate-50/90 p-1">
+        {stages.map(st => {
+          const active = currentStage === st.num;
+          const done = st.num < highestAccessibleStage || isUnlockedAllStages;
+          const clickable = st.num <= highestAccessibleStage;
+          return <button key={st.num} type="button" disabled={!clickable}
+            title={`Chặng ${st.num}: ${st.name}`} aria-label={`Chặng ${st.num}: ${st.name}`}
+            aria-current={active ? 'step' : undefined}
+            onClick={() => { if (!clickable) return; audioService.playSfx('click'); setCurrentStage(st.num as 1|2|3|4); }}
+            className={`flex h-8 min-w-8 items-center justify-center rounded-lg px-2 text-xs font-black transition ${active ? 'bg-orange-500 text-white shadow-sm' : done ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-slate-200 text-slate-500'} disabled:cursor-not-allowed`}>
+            {done && !active ? <CheckCircle2 className="h-4 w-4" /> : st.num}
+          </button>;
+        })}
+      </nav>
+          <button type="button" onClick={toggleLessonFullscreen} aria-label={isLessonFullscreen ? "Thu nhỏ bài học" : "Mở toàn màn hình bài học"} title={isLessonFullscreen ? "Thu nhỏ bài học" : "Toàn màn hình bài học"} className="rounded-xl bg-sky-700 px-3 py-2 text-xs font-black text-white hover:bg-sky-800"><Maximize2 className="inline h-4 w-4" /> <span className="hidden xl:inline">Toàn màn hình</span></button>
+        </div>
       </div>
 
       {/* Verification notice if draft */}
@@ -171,106 +205,52 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </div>
       )}
 
-      {/* 4 Stages Navigation */}
-      {isPolishedJourney ? (
-        <div className="rounded-[1.6rem] border border-orange-200 bg-white/92 p-2.5 shadow-lg shadow-orange-950/5 backdrop-blur-xl">
-          <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-            {stages.map((st) => {
-              const Icon = st.icon;
-              const active = currentStage === st.num;
-              const done = st.num < highestAccessibleStage || isUnlockedAllStages;
-              const clickable = st.num <= highestAccessibleStage;
-              return (
-                <button
-                  key={st.num}
-                  type="button"
-                  disabled={!clickable}
-                  onClick={() => {
-                    if (!clickable) return;
-                    audioService.playSfx('click');
-                    setCurrentStage(st.num as 1 | 2 | 3 | 4);
-                  }}
-                  className={`group flex items-center gap-3 rounded-2xl px-3 py-2.5 text-left transition ${
-                    active
-                      ? 'bg-gradient-to-r from-orange-500 to-amber-400 text-white shadow-lg shadow-orange-500/25'
-                      : done
-                        ? 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100'
-                        : 'bg-slate-50 text-slate-400'
-                  } disabled:cursor-not-allowed`}
-                >
-                  <span
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 ${
-                      active
-                        ? 'border-white/70 bg-white/15'
-                        : done
-                          ? 'border-emerald-300 bg-white text-emerald-600'
-                          : 'border-slate-200 bg-white text-slate-400'
-                    }`}
-                  >
-                    {done && !active ? <CheckCircle2 className="h-5 w-5" /> : <Icon className="h-5 w-5" />}
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-[10px] font-black uppercase tracking-wide opacity-80">Chặng {st.num}</span>
-                    <span className="block truncate text-xs font-black sm:text-sm">{st.name}</span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      ) : isUnlockedAllStages ? (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 bg-slate-100/80 p-1.5 rounded-2xl">
-          {stages.map((st) => {
-            const Icon = st.icon;
-            const isActive = currentStage === st.num;
-            return (
-              <button
-                key={st.num}
-                onClick={() => {
-                  audioService.playSfx('click');
-                  setCurrentStage(st.num as 1 | 2 | 3 | 4);
-                }}
-                className={`py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition ${
-                  isActive
-                    ? 'bg-white text-sky-950 shadow-md font-black scale-102'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
-                }`}
-              >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-sky-600' : 'text-slate-400'}`} />
-                <span className="truncate">{st.num}. {st.name}</span>
-              </button>
-            );
-          })}
-        </div>
-      ) : (
-        <div className="bg-white/94 backdrop-blur-md px-3 py-2.5 rounded-2xl border border-white/80 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] sm:text-xs font-bold text-slate-500">
-          <span className="text-slate-700 whitespace-nowrap">Hành trình lần đầu:</span>
-          <div className="flex items-center gap-1.5 overflow-x-auto">
-            {[
-              { num: 1, label: 'Chặng 1: Đánh thức điểm đến' },
-              { num: 2, label: 'Chặng 2: Chinh phục thử thách' },
-              { num: 3, label: 'Chặng 3: Check-in cảm xúc' },
-              { num: 4, label: 'Chặng 4: Hộ chiếu hành trình' },
-            ].map((step) => (
-              <div
-                key={step.num}
-                className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] sm:text-[12px] font-bold whitespace-nowrap transition ${
-                  currentStage === step.num
-                    ? 'bg-sky-600 text-white shadow-xs'
-                    : currentStage > step.num
-                      ? 'bg-emerald-100 text-emerald-800'
-                      : 'bg-slate-100 text-slate-400'
-                }`}
-              >
-                <span>{step.label}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
       <div ref={lessonPanelRef} className="station-lesson-panel min-h-0 flex-1 overflow-y-auto space-y-3">
-      {currentStage === 1 && OFFICIAL_VR_RESOURCES[station.id] && (
+      <div className="station-immersive-topbar flex items-center justify-between gap-2 rounded-xl bg-white px-3 py-2 shadow-sm">
+        <span className="min-w-0 truncate text-sm font-black text-slate-900">{station.titleVi}</span>
+        <div className="flex shrink-0 items-center gap-2">
+          <nav aria-label="Tiến trình học tập" className="flex items-center gap-1">
+            {stages.map(st => <span key={st.num} title={st.name} className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-black ${currentStage === st.num ? 'bg-orange-500 text-white' : st.num < highestAccessibleStage ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-400'}`}>{st.num < currentStage ? '✓' : st.num}</span>)}
+          </nav>
+          <button type="button" onClick={toggleLessonFullscreen} className="rounded-lg bg-slate-100 p-2 text-slate-700" aria-label="Thoát toàn màn hình"><Minimize2 className="h-4 w-4" /></button>
+        </div>
+      </div>
+      {/* Stage Views with subtle container transition */}
+      <div className="transition-all duration-300">
+        {currentStage === 1 && (
+          isPolishedJourney ? (
+            <HoiAnStage1Exploration station={station} onCompleteStage={() => finishStage(1)} />
+          ) : (
+            <Stage1Exploration station={station} onCompleteStage={() => finishStage(1)} />
+          )
+        )}
+
+        {currentStage === 2 && (
+          <Stage2Challenge
+            station={station}
+            onCompleteStage={() => finishStage(2)}
+          />
+        )}
+
+        {currentStage === 3 && (
+          <Stage3CheckIn
+            station={station}
+            onCompleteStage={() => finishStage(3)}
+          />
+        )}
+
+        {currentStage === 4 && (
+          <Stage4Stamp
+            station={station}
+            onReviewJourney={() => setCurrentStage(1)}
+            onExploreNext={onBack}
+          />
+        )}
+      {currentStage === 1 && <div className="station-lesson-tools flex flex-wrap items-center gap-2">
+        {OFFICIAL_VR_RESOURCES[station.id]?.map(item => <a key={item.label} href={item.url} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-violet-100 px-3 py-2 text-xs font-bold text-violet-900">🥽 {item.label} ↗</a>)}
+        <button type="button" onClick={() => setShowLessonTools(v => !v)} className="rounded-xl bg-sky-100 px-3 py-2 text-xs font-bold text-sky-900"><MapPinned className="mr-1 inline h-4 w-4" />{showLessonTools ? 'Ẩn bản đồ' : 'Khám phá bản đồ'}</button>
+      </div>}
+      {currentStage === 1 && showLessonTools && <div className="station-expanded-tools space-y-3">      {false && OFFICIAL_VR_RESOURCES[station.id] && (
         <section className="rounded-[1.6rem] border border-violet-200 bg-gradient-to-br from-violet-50 to-sky-50 p-4 sm:p-5">
           <h3 className="text-lg font-black text-violet-950">🥽 Trải nghiệm thực tế ảo VR360</h3>
           <p className="mt-1 text-xs text-slate-600">Tư liệu VR360 bổ sung từ cổng du lịch Đà Nẵng; không thay thế VR360 đã có trong bài. Cần kết nối Internet.</p>
@@ -406,37 +386,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </section>
       )}
 
-      {/* Stage Views with subtle container transition */}
-      <div className="transition-all duration-300">
-        {currentStage === 1 && (
-          isPolishedJourney ? (
-            <HoiAnStage1Exploration station={station} onCompleteStage={() => finishStage(1)} />
-          ) : (
-            <Stage1Exploration station={station} onCompleteStage={() => finishStage(1)} />
-          )
-        )}
-
-        {currentStage === 2 && (
-          <Stage2Challenge
-            station={station}
-            onCompleteStage={() => finishStage(2)}
-          />
-        )}
-
-        {currentStage === 3 && (
-          <Stage3CheckIn
-            station={station}
-            onCompleteStage={() => finishStage(3)}
-          />
-        )}
-
-        {currentStage === 4 && (
-          <Stage4Stamp
-            station={station}
-            onReviewJourney={() => setCurrentStage(1)}
-            onExploreNext={onBack}
-          />
-        )}
+</div>}
       </div>
       </div>
     </div>

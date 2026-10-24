@@ -29,6 +29,22 @@ import {
 // Only lessons with a curated real-world place map show the geographic map action.
 const GEO_MAP_LESSON_IDS = new Set(["g1-station-4","g2-station-4","g2-station-1","g3-station-1","g3-station-4","g3-station-5","g4-station-2","g4-thu-bon-hon-kem","g4-station-4","g5-ky-anh-me-nhu","g5-station-3","g5-station-4","g5-lua-ma-chau"]);
 
+const GEO_MAP_PLACES: Record<string, string[]> = {
+  'g1-station-4': ['Thành Điện Hải, Đà Nẵng'],
+  'g2-station-4': ['Phố cổ Hội An'],
+  'g2-station-1': ['Làng chiếu Cẩm Nê, Đà Nẵng', 'Làng chiếu Bàn Thạch, Quảng Nam'],
+  'g3-station-1': ['Bãi biển Mỹ Khê, Đà Nẵng', 'Bãi Bàn Than, Tam Hải'],
+  'g3-station-4': ['Làng nước mắm Nam Ô, Đà Nẵng'],
+  'g3-station-5': ['Bán đảo Sơn Trà, Đà Nẵng'],
+  'g4-station-2': ['Thánh địa Mỹ Sơn', 'Bảo tàng Điêu khắc Chăm Đà Nẵng'],
+  'g4-thu-bon-hon-kem': ['Sông Thu Bồn, Quảng Nam', 'Hòn Kẽm Đá Dừng'],
+  'g4-station-4': ['Làng đúc đồng Phước Kiều'],
+  'g5-ky-anh-me-nhu': ['Địa đạo Kỳ Anh, Tam Kỳ', 'Khu lưu niệm Mẹ Nhu, Đà Nẵng'],
+  'g5-station-3': ['Bà Nà Hills, Đà Nẵng', 'Hải Vân Quan'],
+  'g5-station-4': ['Danh thắng Ngũ Hành Sơn, Đà Nẵng'],
+  'g5-lua-ma-chau': ['Làng lụa Mã Châu, Duy Xuyên'],
+};
+
 interface Props {
   station: Station;
   onCompleteStage: () => void;
@@ -529,8 +545,11 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
       {showKnowledgeMap && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/85 p-4" role="dialog" aria-modal="true" aria-label="Bản đồ tri thức">
         <div className="relative max-h-[90vh] w-full max-w-4xl overflow-auto rounded-2xl bg-amber-50 p-5">
           <button type="button" onClick={() => setShowKnowledgeMap(false)} aria-label="Đóng bản đồ" className="absolute right-3 top-3 z-10 rounded-full bg-white p-2 shadow"><X className="h-5 w-5" /></button>
-          <h2 className="mb-3 pr-12 text-xl font-black text-amber-900">Bản đồ tri thức · {station.titleVi}</h2>
-          {station.journeyMap?.image ? <img src={station.journeyMap.image} alt={`Bản đồ tri thức ${station.titleVi}`} className="mx-auto max-h-[75vh] w-full object-contain" /> : <div className="grid gap-3 sm:grid-cols-2">{station.hotspots.map(item => <div key={item.id} className="rounded-xl bg-white p-3"><h3 className="font-black">{item.titleVi}</h3><p className="text-sm">{item.keyFactVi}</p></div>)}</div>}
+          <h2 className="mb-3 pr-12 text-xl font-black text-amber-900">Khám phá địa danh trên bản đồ · {station.titleVi}</h2>
+          <p className="mb-4 text-sm text-slate-600">Chọn địa điểm để xem vị trí trên Google Maps. Kết quả tìm kiếm cần được đối chiếu khi sử dụng để dẫn đường.</p>
+          <div className="grid gap-3 sm:grid-cols-2">{(GEO_MAP_PLACES[station.id] || []).map(place => (
+            <a key={place} href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place)}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between gap-3 rounded-xl border border-sky-200 bg-white p-4 font-bold text-sky-900 hover:bg-sky-50"><span>📍 {place}</span><ExternalLink className="h-4 w-4 shrink-0" /></a>
+          ))}</div>
         </div>
       </div>}
       {showImage && (

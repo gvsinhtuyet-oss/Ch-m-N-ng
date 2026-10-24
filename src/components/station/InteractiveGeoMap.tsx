@@ -19,7 +19,7 @@ export const InteractiveGeoMap:React.FC<Props>=({points,selected,onSelect})=>{
   for(let dy=-2;dy<=2;dy++)for(let dx=-3;dx<=3;dx++){
    const x=cx+dx,y=cy+dy;
    if(y<0||y>=2**zoom)continue;
-   out.push({x:(x+2**zoom)%(2**zoom),y,left:450+(x-center.x)*256-128,top:220+(y-center.y)*256-128});
+   out.push({x:(x+2**zoom)%(2**zoom),y,left:450+(x-center.x)*256,top:220+(y-center.y)*256});
   }
   return out;
  },[point.lat,point.lon,zoom]);

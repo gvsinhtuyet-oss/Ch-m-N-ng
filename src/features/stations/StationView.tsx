@@ -119,10 +119,10 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   };
 
   const stages = [
-    { num: 1, title: 'Chặng 1', name: 'Đánh thức điểm đến', icon: Compass },
-    { num: 2, title: 'Chặng 2', name: 'Chinh phục thử thách', icon: Award },
-    { num: 3, title: 'Chặng 3', name: 'Check-in cảm xúc', icon: Heart },
-    { num: 4, title: 'Chặng 4', name: 'Hộ chiếu hành trình', icon: Sparkles },
+    { num: 1, title: 'Chặng 1', name: 'Đánh dấu điểm đến', icon: Compass },
+    { num: 2, title: 'Chặng 2', name: 'Vượt qua thử thách', icon: Award },
+    { num: 3, title: 'Chặng 3', name: 'Checkin cảm xúc', icon: Heart },
+    { num: 4, title: 'Chặng 4', name: 'Dấu ấn hành trình', icon: Sparkles },
   ];
 
   return (

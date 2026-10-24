@@ -31,6 +31,7 @@ for(const viewport of [{width:1366,height:768},{width:390,height:844}]){
    assert.equal(await primary.evaluate(img=>getComputedStyle(img).objectFit),'contain');
    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+2);
    assert.equal(overflow,false,station.id+' '+point.id+' horizontal overflow');
+   const clipped=await page.locator('.stage-one-map-content').evaluate(el=>[el,...el.querySelectorAll('div,aside,section')].filter(e=>e.clientWidth>0&&e.scrollWidth>e.clientWidth+2&&getComputedStyle(e).overflowX!=='auto').map(e=>({tag:e.tagName,width:e.clientWidth,scroll:e.scrollWidth})));assert.deepEqual(clipped,[],station.id+' '+point.id+' clipped content');
    if(i===0||station.id==='g5-ky-anh-me-nhu'||station.id==='g5-lua-ma-chau')await page.screenshot({path:`qa-results/${viewport.width}-${station.id}-${i+1}.png`,fullPage:true});
    if(point.gallery.length>1){
     await page.getByRole('button',{name:'Phóng to hình ảnh',exact:true}).click();

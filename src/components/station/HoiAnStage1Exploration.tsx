@@ -242,9 +242,9 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   return (
     <div className="stage-one-map-surface min-h-0">
       <section className="stage-one-map-content overflow-hidden rounded-[2rem] border border-orange-200/90 p-3 shadow-[0_18px_55px_rgba(154,52,18,0.16)]">
-        <div className="grid items-start gap-3 lg:grid-cols-[1.55fr_1fr]">
+        <div className="grid min-w-0 grid-cols-1 items-start gap-3 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
           {/* LEFT: immersive visual explorer */}
-          <div className="flex min-h-0 flex-col gap-3">
+          <div className="flex min-h-0 min-w-0 flex-col gap-3">
             <div className="relative min-h-[300px] aspect-[16/10] overflow-hidden rounded-[1.65rem] border-2 border-orange-200 bg-slate-950 shadow-xl">
               <button
                 type="button"
@@ -301,7 +301,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
           </div>
 
           {/* RIGHT: information rail */}
-          <aside className="hoi-an-right-rail flex min-h-0 flex-col gap-3">
+          <aside className="hoi-an-right-rail flex min-h-0 min-w-0 flex-col gap-3">
             <div className="shrink-0 rounded-[1.5rem] border-2 border-amber-300 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-4 shadow-sm">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
@@ -504,7 +504,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
       {showImage && (
         <div className="fixed inset-0 z-[90] flex items-center justify-center bg-slate-950/85 p-3 backdrop-blur-md sm:p-6">
-          <div className="grid h-[92dvh] max-h-[92dvh] min-h-0 w-full max-w-6xl overflow-hidden rounded-[2rem] border border-orange-200 bg-[#fffaf2] shadow-2xl lg:grid-cols-[1.55fr_.75fr]">
+          <div className="grid h-[92dvh] max-h-[92dvh] min-h-0 w-full max-w-6xl grid-rows-[minmax(0,.8fr)_minmax(0,1fr)] overflow-hidden rounded-[2rem] border border-orange-200 bg-[#fffaf2] shadow-2xl lg:grid-cols-[minmax(0,1.55fr)_minmax(0,.75fr)] lg:grid-rows-1">
             <div className="relative min-h-0 bg-slate-950">
               <LearningImage
                 key={previewHotspot.id + previewHotspot.image}

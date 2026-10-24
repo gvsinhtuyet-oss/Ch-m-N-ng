@@ -30,8 +30,14 @@ export async function optimizeImage(file: File, maxWidth = 1920, maxHeight = 192
     const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('Trình duyệt không hỗ trợ nén ảnh.');
     ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-    const webp = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/webp', 0.82));
-    // Keep the original if optimization would make it larger, or WebP is unsupported.
+    // Prefer crisp text on educational maps; fall back to smaller WebP if needed.
+    const encodeWebp = (quality: number) => new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/webp', quality));
+    let webp = await encodeWebp(0.90);
+    if (webp?.type === 'image/webp' && (webp.size > MAX_EMBED || webp.size >= file.size)) {
+      const compact = await encodeWebp(0.82);
+      if (compact?.type === 'image/webp' && compact.size < webp.size) webp = compact;
+    }
+    // Never increase file size; preserve already-efficient original images.
     const chosen = webp?.type === 'image/webp' && webp.size < file.size ? webp : file;
     if (chosen.size > MAX_EMBED)
       throw new Error('Ảnh sau tối ưu vẫn vượt 4 MB. Hãy chọn ảnh khác hoặc dùng đường dẫn HTTPS.');

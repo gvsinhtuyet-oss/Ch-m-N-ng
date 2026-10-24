@@ -3,12 +3,13 @@ import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
 await fs.mkdir('qa-results',{recursive:true});
 const browser=await chromium.launch({headless:true});
-const results=[];let stations;
+const results=[];let stations;let activePage;
+try {
 for(const viewport of [{width:1366,height:768},{width:390,height:844}]){
  const context=await browser.newContext({viewport});
  await context.addInitScript(()=>{window.__qaOscillations=0;const Audio=window.AudioContext;if(Audio)window.AudioContext=class extends Audio{createOscillator(){window.__qaOscillations++;return super.createOscillator();}};});
- const page=await context.newPage();const errors=[];
- page.on('pageerror',e=>errors.push(e.message));
+ const page=await context.newPage();activePage=page;const errors=[];
+ page.on('pageerror',e=>{errors.push(e.message);console.error('PAGE_ERROR',e.message)});
  await page.goto('http://127.0.0.1:3000/qa/media.html');
  await page.locator('#qa-stations').waitFor({state:'attached'});
  stations=JSON.parse(await page.locator('#qa-stations').textContent());
@@ -63,3 +64,5 @@ for(const viewport of [{width:1366,height:768},{width:390,height:844}]){
 }
 await fs.writeFile('qa-results/results.json',JSON.stringify({stations:stations.length,pointChecks:results.length,results},null,2));
 await browser.close();console.log('BROWSER_QA_PASS',stations.length,'stations',results.length,'point/viewport checks');
+
+} catch(error){if(activePage&&!activePage.isClosed()){await activePage.screenshot({path:"qa-results/failure.png",fullPage:true});await fs.writeFile("qa-results/failure.html",await activePage.content());}await browser.close();throw error;}

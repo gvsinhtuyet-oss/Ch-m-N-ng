@@ -25,6 +25,17 @@ const GEO_LESSON_POINTS: Record<string, {name:string;lat:number;lon:number;descr
   'g3-station-5': [{name:'Bán đảo Sơn Trà',lat:16.115,lon:108.295,description:'Khu vực bán đảo Sơn Trà',accuracy:'approximate'}],
 };
 
+// Official destination VR portals. Links open separately and never replace embedded VR experiences.
+const OFFICIAL_VR_RESOURCES: Record<string, {label:string;url:string;detail:string}[]> = {
+  'g1-station-1': [{label:'VR360 toàn cảnh Đà Nẵng',url:'https://vr360.danangfantasticity.com/',detail:'Chọn Tổng quan Đà Nẵng'}],
+  'g2-station-2': [{label:'VR360 bán đảo Sơn Trà',url:'https://vr360.danangfantasticity.com/',detail:'Chọn Bán đảo Sơn Trà'}],
+  'g3-station-1': [{label:'VR360 biển Đà Nẵng',url:'https://vr360.danangfantasticity.com/',detail:'Chọn Biển Đà Nẵng'}],
+  'g3-station-5': [{label:'VR360 bán đảo Sơn Trà',url:'https://vr360.danangfantasticity.com/',detail:'Chọn Bán đảo Sơn Trà'}],
+  'g4-station-1': [{label:'VR360 toàn cảnh Đà Nẵng',url:'https://vr360.danangfantasticity.com/',detail:'Chọn Tổng quan Đà Nẵng'}],
+  'g4-station-2': [{label:'Không gian số Bảo tàng Điêu khắc Chăm',url:'https://danangfantasticity.com/en/thi-diem-trai-nghiem-scan-3d-tai-bao-tang-dieu-khac-cham-da-nang',detail:'Tìm liên kết tham quan 3D trên trang giới thiệu chính thức'}],
+  'g5-station-3': [{label:'VR360 Bà Nà Hills',url:'https://vr360.danangfantasticity.com/',detail:'Chọn khu điểm du lịch / Bà Nà Hills'}],
+  'g5-station-4': [{label:'VR360 Ngũ Hành Sơn',url:'https://vr360.danangfantasticity.com/',detail:'Chọn Danh thắng Ngũ Hành Sơn'}],
+};
 interface Props {
   station: Station;
   onBack: () => void;
@@ -233,6 +244,20 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </div>
       )}
 
+      {currentStage === 1 && OFFICIAL_VR_RESOURCES[station.id] && (
+        <section className="rounded-[1.6rem] border border-violet-200 bg-gradient-to-br from-violet-50 to-sky-50 p-4 sm:p-5">
+          <h3 className="text-lg font-black text-violet-950">🥽 Trải nghiệm thực tế ảo VR360</h3>
+          <p className="mt-1 text-xs text-slate-600">Tư liệu VR360 bổ sung từ cổng du lịch Đà Nẵng; không thay thế VR360 đã có trong bài. Cần kết nối Internet.</p>
+          <div className="mt-3 flex flex-wrap gap-3">
+            {OFFICIAL_VR_RESOURCES[station.id].map(item => (
+              <a key={item.label} href={item.url} target="_blank" rel="noopener noreferrer" className="rounded-xl border border-violet-200 bg-white px-4 py-3 text-sm font-bold text-violet-900 shadow-sm hover:bg-violet-100">
+                <span className="block">🌐 {item.label} ↗</span>
+                <span className="mt-1 block text-[11px] font-normal text-slate-600">{item.detail}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
       {station.id !== 'g2-station-2' && currentStage === 1 && (
         <section className="overflow-hidden rounded-[1.6rem] border border-sky-200 bg-gradient-to-br from-sky-950 via-blue-900 to-teal-800 shadow-lg">
           <div className="flex flex-col gap-3 p-4 text-white sm:flex-row sm:items-center sm:justify-between sm:p-6">

@@ -49,6 +49,8 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [answerSubmitted, setAnswerSubmitted] = useState<boolean>(false);
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
+  const [wrongLocked, setWrongLocked] = useState(false);
+  const wrongTimerRef = useRef<number | null>(null);
   const [showVrModal, setShowVrModal] = useState(false);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [iframeError, setIframeError] = useState(false);
@@ -86,8 +88,14 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
     setSelectedOptionId(null);
     setAnswerSubmitted(false);
     setIsCorrect(false);
+    setWrongLocked(false);
+    if (wrongTimerRef.current !== null) window.clearTimeout(wrongTimerRef.current);
     audioService.stopNarration();
   }, [currentHotspotIdx]);
+
+  useEffect(() => () => {
+    if (wrongTimerRef.current !== null) window.clearTimeout(wrongTimerRef.current);
+  }, []);
 
   // VR timeout handler
   useEffect(() => {
@@ -130,7 +138,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   };
 
   const handleSelectOption = (optId: string) => {
-    if (answerSubmitted && isCorrect) return;
+    if (answerSubmitted || wrongLocked) return;
     setAnswerSubmitted(false);
     setIsCorrect(false);
     audioService.playSfx('click');
@@ -138,12 +146,21 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   };
 
   const handleSubmitAnswer = () => {
-    if (!selectedOptionId || !hotspot.interaction) return;
+    if (!selectedOptionId || !hotspot.interaction || wrongLocked || answerSubmitted) return;
     const chosen = hotspot.interaction.options.find(o => o.id === selectedOptionId);
     const correct = !!chosen?.isCorrect;
     setIsCorrect(correct);
-    setAnswerSubmitted(correct);
-    if (!correct) setSelectedOptionId(null);
+    setAnswerSubmitted(true);
+    if (!correct) {
+      setWrongLocked(true);
+      if (wrongTimerRef.current !== null) window.clearTimeout(wrongTimerRef.current);
+      wrongTimerRef.current = window.setTimeout(() => {
+        setWrongLocked(false);
+        setAnswerSubmitted(false);
+        setSelectedOptionId(null);
+        wrongTimerRef.current = null;
+      }, 2000);
+    }
 
     if (correct) {
       setAnsweredIds(ids=>ids.includes(hotspot.id)?ids:[...ids,hotspot.id]);
@@ -560,7 +577,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                     <button
                       key={opt.id}
                       onClick={() => handleSelectOption(opt.id)}
-                      disabled={answerSubmitted}
+                      disabled={answerSubmitted || wrongLocked}
                       className={`w-full p-3.5 rounded-2xl border text-left text-xs sm:text-sm transition flex items-center justify-between gap-3 ${optClass}`}
                     >
                       <span>{opt.textVi}</span>
@@ -578,7 +595,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                   className={`p-4 rounded-2xl text-xs leading-relaxed ${
                     isCorrect
                       ? 'bg-emerald-50 text-emerald-950 border border-emerald-200'
-                      : 'bg-amber-50 text-amber-950 border border-amber-200'
+                      : 'bg-rose-50 text-rose-900 border border-rose-300'
                   }`}
                 >
                   <p className="font-extrabold text-sm mb-1">
@@ -586,6 +603,9 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                       ? 'Chính xác! Em đã phát hiện thêm một điều thú vị về điểm đến này.'
                       : 'Chưa đúng rồi. Em xem lại hình ảnh hoặc nghe lại thuyết minh nhé!'}
                   </p>
+                  {!isCorrect && (
+                    <p className="text-[12px] font-semibold mt-1">Gợi ý: Em nghe lại lời thuyết minh ngay phía trên nhé. Đợi 2 giây rồi chọn đáp án khác!</p>
+                  )}
                   {isCorrect && (
                     <p className="text-[11px] text-slate-600 leading-relaxed font-medium">
                       {hotspot.interaction.explanationVi}
@@ -599,7 +619,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                 {!answerSubmitted ? (
                   <button
                     onClick={handleSubmitAnswer}
-                    disabled={!selectedOptionId}
+                    disabled={!selectedOptionId || wrongLocked}
                     className="w-full py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-black text-sm shadow-md transition active:scale-98"
                   >
                     Kiểm tra câu trả lời

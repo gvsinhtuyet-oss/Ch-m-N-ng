@@ -13,6 +13,17 @@ import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { unlockedStage,visibleStage } from './stageAccess';
 import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles } from 'lucide-react';
 
+// Curated geographic places. Search links resolve the actual place in Google Maps;
+// never fabricate a coordinate or place a map pin on an illustration.
+const VERIFIED_PLACE_QUERIES: Record<string, {name: string; query: string; note: string}[]> = {
+  'g1-station-4': [{name:'Thành Điện Hải',query:'Thành Điện Hải 24 Trần Phú Đà Nẵng',note:'Di tích tại đường Trần Phú, trung tâm Đà Nẵng'}],
+  'g2-station-4': [{name:'Phố cổ Hội An',query:'Phố cổ Hội An Đà Nẵng',note:'Không gian di sản văn hóa thế giới'}],
+  'g2-station-1': [{name:'Làng chiếu Cẩm Nê',query:'Làng chiếu Cẩm Nê Hòa Tiến Đà Nẵng',note:'Làng nghề truyền thống'}, {name:'Làng chiếu Bàn Thạch',query:'Làng chiếu Bàn Thạch Duy Vinh Đà Nẵng',note:'Làng nghề truyền thống'}],
+  'g3-station-1': [{name:'Bãi biển Mỹ Khê',query:'Bãi biển Mỹ Khê Đà Nẵng',note:'Bãi biển phía đông thành phố'}, {name:'Bãi biển Bàn Than',query:'Bãi biển Bàn Than Tam Hải Đà Nẵng',note:'Bãi biển tại khu vực Tam Hải'}],
+  'g3-station-4': [{name:'Làng nước mắm Nam Ô',query:'Làng nghề nước mắm Nam Ô Đà Nẵng',note:'Làng nghề ven biển Nam Ô'}],
+  'g3-station-5': [{name:'Bán đảo Sơn Trà',query:'Bán đảo Sơn Trà Đà Nẵng',note:'Khu vực nghề thuyền thúng được giới thiệu trong bài'}],
+};
+
 interface Props {
   station: Station;
   onBack: () => void;
@@ -232,6 +243,21 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
           </div>
           {otherMapOpen && (
             <div className="space-y-4 bg-white p-4 sm:p-5">
+              {VERIFIED_PLACE_QUERIES[station.id] && (
+                <div className="rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 to-teal-50 p-4">
+                  <h4 className="text-base font-black text-slate-900">📍 Địa danh trên bản đồ địa lý thực</h4>
+                  <p className="mt-1 text-xs text-slate-600">Chọn địa danh để xem vị trí, đường sá và phóng to trên Google Maps. Liên kết tìm kiếm giúp tránh gắn ghim sai tọa độ.</p>
+                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                    {VERIFIED_PLACE_QUERIES[station.id].map(place => (
+                      <a key={place.name} href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.query)}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between gap-3 rounded-xl border border-blue-100 bg-white p-3 shadow-sm transition hover:border-blue-400 hover:shadow-md">
+                        <span><strong className="block text-sm text-slate-900">📍 {place.name}</strong><span className="mt-1 block text-xs text-slate-600">{place.note}</span></span>
+                        <span className="shrink-0 text-xs font-black text-blue-700">Mở ↗</span>
+                      </a>
+                    ))}
+                  </div>
+                  <p className="mt-3 text-[11px] text-slate-500">Google Maps cần Internet. Nếu nhiều kết quả trùng tên, giáo viên chọn đúng địa danh theo bài học.</p>
+                </div>
+              )}
               <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[#e9f3ed]">
                 <div className="absolute left-3 top-3 z-10 rounded-xl bg-white/95 px-3 py-2 text-xs font-black text-slate-800 shadow-md">🧭 Bản đồ chủ đề • Minh họa, không phải bản đồ định vị</div>
                 <div className="relative min-h-[260px] overflow-hidden bg-gradient-to-br from-[#c7e9f3] via-[#d4e9d5] to-[#f4edd6] sm:min-h-[330px]">

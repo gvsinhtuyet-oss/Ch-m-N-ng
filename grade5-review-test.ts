@@ -1,3 +1,4 @@
+import {REAL_PHOTOS} from './src/data/realPhotos';
 import {GRADE5_PREVIOUS_POINTS} from './src/data/grade5PreviousContent';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
@@ -41,9 +42,9 @@ test('stage1 questions, 25 applied challenges and all summaries stay aligned and
  }assert.equal(seen.size,54);
 });
 test('photos are correctly scoped and never confuse Mother Nhu with Mother Thu or ginseng provinces',()=>{
- assert.ok(stations[0].hotspots.every(h=>h.image.endsWith('.svg')));assert.ok(stations[1].hotspots[3].image.endsWith('hai-van-2024.webp'));
- for(const s of stations)for(const h of s.hotspots.filter(h=>h.image.endsWith('.webp'))){const m=[...GRADE45_MEDIA,...GRADE5_MEDIA].find(m=>m.src===h.image);assert.ok(m);assert.ok(h.mediaCredit?.includes(m.author));assert.ok(m.sourceUrl&&m.licenseUrl);}
- assert.match(stations[4].hotspots[0].mediaCredit!,/Măng Ri.*ngoài Đà Nẵng/);assert.ok(stations[3].hotspots[0].image.endsWith('ma-chau.webp'));
+ assert.ok(stations[0].hotspots.every(h=>REAL_PHOTOS.some(p=>p.src===h.image)));assert.ok(stations[0].hotspots[3].image.endsWith('me-nhu-tuong.webp'));assert.ok(stations[1].hotspots[3].image.endsWith('hai-van-2024.webp'));
+ for(const s of stations)for(const h of s.hotspots.filter(h=>h.image.endsWith('.webp'))){const m=[...GRADE45_MEDIA,...GRADE5_MEDIA,...REAL_PHOTOS].find(m=>m.src===h.image);assert.ok(m);assert.ok(h.mediaCredit?.includes(m.author));assert.ok(m.sourceUrl);assert.ok(m.license);}
+ assert.match(stations[4].hotspots[0].mediaCredit!,/Măng Ri.*ngoài Đà Nẵng/);assert.ok(stations[3].hotspots[0].image.endsWith('ma-chau-xuong.webp'));
 });
 test('legacy default content upgrades purely to all new textbook points, with fresh covers and maps',()=>{
  for(const s of stations.filter(s=>mapping[s.id])){const old=saved(s),snapshot=JSON.stringify(old),out=currentNarrationContent(currentGrade45Content(s,old));assert.equal(JSON.stringify(old),snapshot);assert.equal(out.resources,old.resources);assert.equal(out.contentRevision,GRADE5_CONTENT_REVISION);assert.equal(out.coverImage,s.coverImage);assert.equal(out.mapImage,s.journeyMap!.image);assert.deepEqual(out.hotspots,s.hotspots);assert.equal(currentGrade45Content(s,out),out);}

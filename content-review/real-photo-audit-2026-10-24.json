@@ -1,0 +1,312 @@
+[
+  {
+    "stationId": "g1-station-1",
+    "title": "Quê hương em",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 4,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g1-station-4",
+    "title": "Thành Điện Hải",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 4,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g1-station-2",
+    "title": "Trò chơi dân gian",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 4,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g1-station-3",
+    "title": "Những dòng suối ở thành phố Đà Nẵng",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 4,
+    "remainingSchematicOrRemotePoints": [
+      {
+        "title": "2. Rừng cây bên Suối Tiên",
+        "image": "https://culaochamtour.com/wp-content/uploads/2021/10/suoi-tien-que-son-quang-nam-a-1024x438.jpg"
+      },
+      {
+        "title": "3. Dòng nước và thác ở Suối Tiên",
+        "image": "https://culaochamtour.com/wp-content/uploads/2021/10/suoi-tien-que-son-quang-nam-1024x401.jpg"
+      }
+    ]
+  },
+  {
+    "stationId": "g1-station-5",
+    "title": "Món ăn truyền thống",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 4,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g2-station-4",
+    "title": "Di sản văn hóa thế giới Hội An",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 6,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g2-station-3",
+    "title": "Nhà thờ Nguyễn Văn Thoại – Nhà lưu niệm Huỳnh Thúc Kháng",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 4,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g2-station-5",
+    "title": "Lễ hội truyền thống ở thành phố Đà Nẵng",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 5,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g2-station-2",
+    "title": "Cù Lao Chàm – Khu bảo tồn thiên nhiên Sơn Trà",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 5,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g2-station-1",
+    "title": "Chiếu Cẩm Nê – Chiếu Bàn Thạch",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 5,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g3-station-2",
+    "title": "Hoàng Diệu – Phan Châu Trinh",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 4,
+    "remainingSchematicOrRemotePoints": [
+      {
+        "title": "1. Hoàng Diệu – tấm gương yêu nước",
+        "image": "/learning/grade3/g3-station-2-point-1.svg"
+      },
+      {
+        "title": "4. Ghi nhớ công lao người đi trước",
+        "image": "/learning/grade3/g3-station-2-point-4.svg"
+      }
+    ]
+  },
+  {
+    "stationId": "g3-station-3",
+    "title": "Cộng đồng các dân tộc ở thành phố Đà Nẵng",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 4,
+    "remainingSchematicOrRemotePoints": [
+      {
+        "title": "3. Cây nêu của đồng bào Co",
+        "image": "/learning/grade3/g3-station-3-point-3.svg"
+      }
+    ]
+  },
+  {
+    "stationId": "g3-station-1",
+    "title": "Bãi biển Mỹ Khê – Bãi biển Bàn Than",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 4,
+    "remainingSchematicOrRemotePoints": [
+      {
+        "title": "4. Vui chơi an toàn, giữ biển sạch",
+        "image": "/learning/grade3/g3-station-1-point-4.svg"
+      }
+    ]
+  },
+  {
+    "stationId": "g3-station-4",
+    "title": "Nước mắm Nam Ô",
+    "coverChanged": true,
+    "changedPoints": 4,
+    "totalPoints": 4,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g3-station-5",
+    "title": "Nghề đan thuyền thúng ở Sơn Trà",
+    "coverChanged": true,
+    "changedPoints": 4,
+    "totalPoints": 4,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g4-station-1",
+    "title": "Thiên nhiên và con người Đà Nẵng",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 6,
+    "remainingSchematicOrRemotePoints": [
+      {
+        "title": "1. Đà Nẵng trên bản đồ",
+        "image": "/learning/grade45/g4-station-1-textbook-point-1.svg"
+      },
+      {
+        "title": "3. Khí hậu và những dòng sông",
+        "image": "/learning/grade45/g4-station-1-textbook-point-3.svg"
+      },
+      {
+        "title": "4. Giữ gìn rừng, biển và sinh vật",
+        "image": "/learning/grade45/g4-station-1-textbook-point-4.svg"
+      },
+      {
+        "title": "5. Con người và những nét đẹp quê hương",
+        "image": "/learning/grade45/g4-station-1-textbook-point-5.svg"
+      }
+    ]
+  },
+  {
+    "stationId": "g4-station-3",
+    "title": "Tìm hiểu một số hoạt động kinh tế Đà Nẵng",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 5,
+    "remainingSchematicOrRemotePoints": [
+      {
+        "title": "1. Công nghiệp làm ra sản phẩm",
+        "image": "/learning/grade45/g4-station-3-textbook-point-1.svg"
+      },
+      {
+        "title": "2. Dịch vụ và du lịch",
+        "image": "/learning/grade45/g4-station-3-textbook-point-2.svg"
+      },
+      {
+        "title": "3. Nông nghiệp và cách làm mới",
+        "image": "/learning/grade45/g4-station-3-textbook-point-3.svg"
+      },
+      {
+        "title": "4. Kinh tế biển và sự kết nối",
+        "image": "/learning/grade45/g4-station-3-textbook-point-4.svg"
+      }
+    ]
+  },
+  {
+    "stationId": "g4-station-2",
+    "title": "Khu đền tháp Mỹ Sơn – Bảo tàng Điêu khắc Chăm Đà Nẵng",
+    "coverChanged": true,
+    "changedPoints": 2,
+    "totalPoints": 6,
+    "remainingSchematicOrRemotePoints": [
+      {
+        "title": "3. Kiến trúc và điêu khắc Chăm-pa",
+        "image": "/learning/grade45/g4-station-2-textbook-point-3.svg"
+      },
+      {
+        "title": "5. Từ công trình đến hiện vật",
+        "image": "/learning/grade45/g4-station-2-textbook-point-5.svg"
+      },
+      {
+        "title": "6. Tham quan và gìn giữ di sản",
+        "image": "/learning/grade45/g4-station-2-textbook-point-6.svg"
+      }
+    ]
+  },
+  {
+    "stationId": "g4-thu-bon-hon-kem",
+    "title": "Sông Thu Bồn – Hòn Kẽm Đá Dừng",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 5,
+    "remainingSchematicOrRemotePoints": [
+      {
+        "title": "4. Cảnh đẹp và câu chuyện lịch sử",
+        "image": "/learning/grade45/g4-thu-bon-hon-kem-textbook-point-4.svg"
+      },
+      {
+        "title": "5. Đi thuyền khám phá, giữ sạch dòng sông",
+        "image": "/learning/grade45/g4-thu-bon-hon-kem-textbook-point-5.svg"
+      }
+    ]
+  },
+  {
+    "stationId": "g4-station-4",
+    "title": "Nghề đúc đồng ở Phước Kiều",
+    "coverChanged": true,
+    "changedPoints": 5,
+    "totalPoints": 5,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g5-ky-anh-me-nhu",
+    "title": "Địa đạo Kỳ Anh – Khu lưu niệm Mẹ Nhu và 07 Dũng sĩ Thanh Khê",
+    "coverChanged": true,
+    "changedPoints": 6,
+    "totalPoints": 6,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g5-station-3",
+    "title": "Bà Nà – Hải Vân Quan",
+    "coverChanged": false,
+    "changedPoints": 0,
+    "totalPoints": 6,
+    "remainingSchematicOrRemotePoints": [
+      {
+        "title": "3. Rừng Núi Chúa và bảo tồn thiên nhiên",
+        "image": "/learning/grade45/g5-station-3-textbook-point-3.svg"
+      },
+      {
+        "title": "6. Tu bổ di tích và so sánh hai điểm đến",
+        "image": "/learning/grade45/g5-station-3-textbook-point-6.svg"
+      }
+    ]
+  },
+  {
+    "stationId": "g5-station-4",
+    "title": "Danh thắng Ngũ Hành Sơn",
+    "coverChanged": false,
+    "changedPoints": 5,
+    "totalPoints": 6,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g5-lua-ma-chau",
+    "title": "Lụa Mã Châu",
+    "coverChanged": true,
+    "changedPoints": 5,
+    "totalPoints": 5,
+    "remainingSchematicOrRemotePoints": []
+  },
+  {
+    "stationId": "g5-station-5",
+    "title": "Sâm Ngọc Linh",
+    "coverChanged": false,
+    "changedPoints": 1,
+    "totalPoints": 6,
+    "remainingSchematicOrRemotePoints": [
+      {
+        "title": "3. Tri thức bản địa và nghiên cứu khoa học",
+        "image": "/learning/grade45/g5-station-5-textbook-point-3.svg"
+      },
+      {
+        "title": "4. Giá trị dược liệu và thông tin có căn cứ",
+        "image": "/learning/grade45/g5-station-5-textbook-point-4.svg"
+      },
+      {
+        "title": "5. Người trồng sâm và sinh kế dưới rừng",
+        "image": "/learning/grade45/g5-station-5-textbook-point-5.svg"
+      },
+      {
+        "title": "6. Lễ hội và gian giới thiệu dược liệu",
+        "image": "/learning/grade45/g5-station-5-textbook-point-6.svg"
+      }
+    ]
+  }
+]

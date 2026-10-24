@@ -1,3 +1,4 @@
+import {RealPhotoGallery} from '../RealPhotoGallery';
 import {allHotspotsAnswered} from '../../features/stations/stageAccess';
 import {LearningImage} from '../LearningImage';
 import React, { useEffect, useMemo, useState, useRef } from 'react';
@@ -7,7 +8,6 @@ import { audioService, NarrationState } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import { RewardClaimModal } from '../common/RewardClaimModal';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
-import { LearningMediaCredit } from '../LearningMediaCredit';
 import {
   CheckCircle2,
   ChevronLeft,
@@ -254,10 +254,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               >
                 <LearningImage
                   key={hotspot.id + hotspot.image}
-                  honestFallback={station.grade === 2 || station.grade === 5}
+                  honestFallback
                   src={hotspot.image}
                   alt={hotspot.titleVi}
-                  className={`h-full w-full ${station.grade <= 5 ? 'object-contain' : 'object-cover'} transition duration-700 group-hover:scale-105`}
+                  className={`h-full w-full ${station.grade <= 5 ? 'object-contain' : 'object-cover'}`}
                   onError={event => {
                     const img = event.currentTarget;
                     if (img.dataset.fallback === 'default') return;
@@ -459,7 +459,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                     <LearningImage
                       key={item.id + item.image}
                       thumbnail
-                      honestFallback={station.grade === 2 || station.grade === 5}
+                      honestFallback
                       src={item.image}
                       alt=""
                       className={`h-24 w-full shrink-0 rounded-xl object-cover ${!unlocked && !freeReview ? 'opacity-70' : ''}`}
@@ -508,7 +508,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             <div className="relative min-h-0 bg-slate-950">
               <LearningImage
                 key={previewHotspot.id + previewHotspot.image}
-                honestFallback={station.grade === 2 || station.grade === 5}
+                honestFallback
                 src={previewHotspot.image}
                 alt={previewHotspot.titleVi}
                 className={`h-full w-full ${station.grade <= 5 ? 'object-contain' : 'object-cover'}`}
@@ -556,7 +556,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             </div>
 
             <div className="relative h-full min-h-0 overflow-y-auto overscroll-contain p-5 pb-8 sm:p-7 sm:pb-9">
-              {(station.grade === 1 || !!previewHotspot.mediaCredit) && <div className="mb-3 pr-10 text-xs leading-relaxed text-slate-600"><LearningMediaCredit src={previewHotspot.image} credit={previewHotspot.mediaCredit}/></div>}
+              <RealPhotoGallery stationId={station.id} index={station.hotspots.findIndex(p=>p.id===previewHotspot.id)}/>
               <button
                 type="button"
                 onClick={() => {

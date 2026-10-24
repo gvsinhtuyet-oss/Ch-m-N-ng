@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { progressService } from '../../services/ProgressService';
@@ -55,8 +55,25 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const progress = progressService.getStationProgress(studentId, station.id);
   const isPolishedJourney = DEMO_STATION_IDS.has(station.id);
 
+  const mapSectionRef = useRef<HTMLElement>(null);
+  const lessonPanelRef = useRef<HTMLDivElement>(null);
   const [natureMapOpen, setNatureMapOpen] = useState(false);
   const [otherMapOpen, setOtherMapOpen] = useState(false);
+  useEffect(() => {
+    if (!otherMapOpen && !natureMapOpen) return;
+    const frame = requestAnimationFrame(() => {
+      const panel = lessonPanelRef.current;
+      const map = mapSectionRef.current;
+      if (!panel || !map) return;
+      const panelStyle = getComputedStyle(panel);
+      if (panelStyle.overflowY === 'auto' || panelStyle.overflowY === 'scroll') {
+        panel.scrollTo({top: Math.max(0, map.offsetTop - panel.offsetTop), behavior: 'smooth'});
+      } else {
+        map.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [otherMapOpen, natureMapOpen]);
   const [otherMapSelected, setOtherMapSelected] = useState(0);
   const [geoMapSelected, setGeoMapSelected] = useState(0);
   const [naturePlace, setNaturePlace] = useState<'cham' | 'sontra'>('cham');
@@ -252,6 +269,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </div>
       )}
 
+      <div ref={lessonPanelRef} className="station-lesson-panel min-h-0 flex-1 overflow-y-auto space-y-3">
       {currentStage === 1 && OFFICIAL_VR_RESOURCES[station.id] && (
         <section className="rounded-[1.6rem] border border-violet-200 bg-gradient-to-br from-violet-50 to-sky-50 p-4 sm:p-5">
           <h3 className="text-lg font-black text-violet-950">🥽 Trải nghiệm thực tế ảo VR360</h3>
@@ -267,7 +285,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </section>
       )}
       {station.id !== 'g2-station-2' && currentStage === 1 && (
-        <section className="overflow-hidden rounded-[1.6rem] border border-sky-200 bg-gradient-to-br from-sky-950 via-blue-900 to-teal-800 shadow-lg">
+        <section ref={mapSectionRef} className="overflow-hidden rounded-[1.6rem] border border-sky-200 bg-gradient-to-br from-sky-950 via-blue-900 to-teal-800 shadow-lg">
           <div className="flex flex-col gap-3 p-4 text-white sm:flex-row sm:items-center sm:justify-between sm:p-6">
             <div>
               <span className="text-[11px] font-black tracking-wider text-amber-300">🗺️ BẢN ĐỒ KHÁM PHÁ • KHỐI {station.grade} • TRẠM {station.number}</span>
@@ -319,7 +337,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
       )}
 
       {station.id === 'g2-station-2' && currentStage === 1 && (
-        <section className="overflow-hidden rounded-[1.6rem] border border-teal-200 bg-gradient-to-br from-sky-950 via-teal-900 to-emerald-800 shadow-lg">
+        <section ref={mapSectionRef} className="overflow-hidden rounded-[1.6rem] border border-teal-200 bg-gradient-to-br from-sky-950 via-teal-900 to-emerald-800 shadow-lg">
           <div className="flex flex-col gap-3 p-4 text-white sm:flex-row sm:items-center sm:justify-between sm:p-6">
             <div>
               <span className="text-[11px] font-black tracking-wider text-amber-300">🗺️ BẢN ĐỒ KHÁM PHÁ • TRẠM 4</span>
@@ -419,6 +437,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
             onExploreNext={onBack}
           />
         )}
+      </div>
       </div>
     </div>
   );

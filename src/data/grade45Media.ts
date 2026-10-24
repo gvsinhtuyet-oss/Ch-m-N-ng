@@ -187,7 +187,7 @@ export const grade45PointMedia=(stationId:string,index:number)=>{
  }
  const map:Record<string,Record<number,string>>={
   'g5-ky-anh-me-nhu':{},
-  'g5-station-3':{1:'bana',3:'hai-van-2024'},
+  'g5-station-3':{0:'bana',1:'bana',3:'hai-van-2024',4:'hai-van'},
   'g5-station-4':{0:'ngu-hanh'},
   'g5-lua-ma-chau':{0:'ma-chau'},
   'g5-station-5':{0:'sam'}

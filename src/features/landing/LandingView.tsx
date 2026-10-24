@@ -452,7 +452,7 @@ export const LandingView: React.FC = () => {
           Chương trình Giáo dục địa phương TP Đà Nẵng
         </div>
         <div className="text-[11px] sm:text-xs">
-          <span>Thiết kế: </span>
+          <span>Phát triển bởi: </span>
           <span className="font-bold text-amber-300">Trương Sinh Tuyết</span>
         </div>
       </footer>

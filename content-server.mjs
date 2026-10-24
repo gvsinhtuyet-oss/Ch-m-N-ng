@@ -342,6 +342,157 @@ const server = createServer(async (req,res) => {
       const current = await loadSharedContent();
       return json(res,200,{ schemaVersion:1,...current });
     }
+    if (pathname === '/api/student/class-match' && req.method === 'POST') {
+      if (!cloudStore) return json(res,503,{error:'Danh sách lớp chưa sẵn sàng.'});
+      auth.sameOrigin(req);
+      const data=await body(req);
+      const name=typeof data.name==='string'?data.name.trim().replace(/\\s+/g,' ').normalize('NFC'):'';
+      const className=typeof data.className==='string'?data.className.trim():'';
+      const grade=Number(data.grade);
+      if(!name || name.length>100 || !Number.isInteger(grade) || grade<1 || grade>5 || !new RegExp('^'+grade+'/[1-9][0-9]{0,2}
+      if (!cloudStore) return json(res,503,{error:'Đồng bộ học sinh chưa được cấu hình trên máy chủ.'});
+      auth.sameOrigin(req);
+      const data=await body(req);
+      if (!validStudentProfile(data.profile)) return json(res,400,{error:'Thông tin học sinh chưa hợp lệ.'});
+      let code, key;
+      for(let attempt=0;attempt<6;attempt++){
+        code=newSyncCode(); key=studentSyncKey(code);
+        if (!(await cloudStore.get('cham_student_sync',key))) break;
+        code=undefined;
+      }
+      if(!code || !key) return json(res,503,{error:'Chưa tạo được mã đồng bộ. Vui lòng thử lại.'});
+      const profile={id:data.profile.id,name:data.profile.name.trim(),className:data.profile.className,grade:data.profile.grade};
+      await cloudStore.put('cham_student_sync',key,{profile,progress:{},createdAt:Date.now(),updatedAt:Date.now()},true);
+      return json(res,200,{syncCode:code,profile,progress:{}});
+    }
+    if (pathname === '/api/student/sync/restore' && req.method === 'POST') {
+      if (!cloudStore) return json(res,503,{error:'Đồng bộ học sinh chưa được cấu hình trên máy chủ.'});
+      auth.sameOrigin(req);
+      const data=await body(req), code=cleanSyncCode(data.syncCode);
+      if(code.length!==12) return json(res,400,{error:'Mã đồng bộ chưa đúng.'});
+      const saved=await cloudStore.get('cham_student_sync',studentSyncKey(code));
+      if(!saved?.profile) return json(res,404,{error:'Không tìm thấy mã đồng bộ.'});
+      return json(res,200,{profile:saved.profile,progress:saved.progress || {}});
+    }
+    if (pathname === '/api/student/sync/progress' && req.method === 'PUT') {
+      if (!cloudStore) return json(res,503,{error:'Đồng bộ học sinh chưa được cấu hình trên máy chủ.'});
+      auth.sameOrigin(req);
+      const data=await body(req), code=cleanSyncCode(data.syncCode);
+      if(code.length!==12 || !data.progress || typeof data.progress!=='object' || Array.isArray(data.progress))
+        return json(res,400,{error:'Dữ liệu đồng bộ chưa hợp lệ.'});
+      const key=studentSyncKey(code), saved=await cloudStore.get('cham_student_sync',key);
+      if(!saved?.profile || !validStudentProfile(saved.profile)) return json(res,404,{error:'Không tìm thấy mã đồng bộ.'});
+      const incomingEntries=Object.entries(data.progress);
+      if(incomingEntries.length>30) return json(res,400,{error:'Có quá nhiều bản ghi tiến độ.'});
+      const merged={...(saved.progress || {})};
+      for(const [stationId,record] of incomingEntries){
+        if(!/^[a-zA-Z0-9_-]{1,100}$/.test(stationId)) return json(res,400,{error:'Mã trạm chưa hợp lệ.'});
+        const clean=cleanProgressRecord(record,saved.profile.id,stationId,merged[stationId]);
+        if(!clean) return json(res,400,{error:'Bản ghi tiến độ chưa hợp lệ.'});
+        merged[stationId]=mergeProgressRecord(merged[stationId],clean);
+      }
+      // Firestore payload JSON omits undefined optional fields. Compare that same form.
+      const normalizedProgress = JSON.parse(JSON.stringify(merged));
+      if (isDeepStrictEqual(saved.progress || {}, normalizedProgress))
+        return json(res,200,{saved:true,unchanged:true,progress:merged});
+      await cloudStore.put('cham_student_sync',key,{...saved,progress:merged,updatedAt:Date.now()});
+      return json(res,200,{saved:true,progress:merged});
+    }
+    if (await auth.handle(req,res,pathname,body,json)) return;
+    if (pathname === '/api/content/login') return json(res,410,{ error:'Hãy đăng nhập bằng tài khoản quản trị.' });
+    if (pathname === '/api/theme' && req.method === 'PUT') {
+      auth.sameOrigin(req); await auth.requireAdmin(req);
+      const data = await body(req);
+      const validImage = value => value === '' || (typeof value === 'string' && (/^https:\/\//i.test(value) || /^data:image\/(png|jpeg|webp|gif);base64,/i.test(value)));
+      const legacyDesktop = validImage(data.desktop) ? data.desktop : '';
+      const legacyMobile = validImage(data.mobile) ? data.mobile : '';
+      const pickImage = (value, fallback = '') => validImage(value) ? value : fallback;
+      const clean = {
+        coverDesktop: pickImage(data.coverDesktop, legacyDesktop),
+        coverMobile: pickImage(data.coverMobile, legacyMobile || legacyDesktop),
+        roleDesktop: pickImage(data.roleDesktop, legacyDesktop),
+        roleMobile: pickImage(data.roleMobile, legacyMobile || legacyDesktop),
+        journeyDesktop: pickImage(data.journeyDesktop, legacyDesktop),
+        journeyMobile: pickImage(data.journeyMobile, legacyMobile || legacyDesktop),
+        lightness: data.lightness,
+        blur: data.blur,
+      };
+      if (
+        ![
+          clean.coverDesktop, clean.coverMobile,
+          clean.roleDesktop, clean.roleMobile,
+          clean.journeyDesktop, clean.journeyMobile,
+        ].every(validImage) ||
+        !Number.isFinite(clean.lightness) || clean.lightness < 0 || clean.lightness > .65 ||
+        !Number.isFinite(clean.blur) || clean.blur < 0 || clean.blur > 6
+      ) return json(res,400,{ error:'Invalid theme settings' });
+      const operation = writes.then(async () => {
+        if (durableContent) { await durableContent.saveTheme(clean); invalidateSharedContentCache(); return; }
+        if (process.env.K_SERVICE) throw Object.assign(new Error('Chưa cấu hình kho học liệu lâu dài.'),{status:503});
+        await writeFile(themeFile + '.tmp',JSON.stringify(clean),{ mode:0o600 });
+        await rename(themeFile + '.tmp',themeFile); theme = clean;
+      });
+      writes = operation.catch(() => {});
+      await operation;
+      return json(res,200,{ saved:true });
+    }
+    if (pathname.startsWith('/api/content/') && req.method === 'PUT') {
+      auth.sameOrigin(req); await auth.requireAdmin(req);
+      const id = decodeURIComponent(pathname.slice('/api/content/'.length));
+      const content = await body(req);
+      if (!/^[a-zA-Z0-9_-]{1,100}$/.test(id) ||
+          !validUrl(content.coverImage) || !validUrl(content.mapImage) ||
+          !Array.isArray(content.hotspots) || !content.hotspots.length || content.hotspots.length > 30 ||
+          !content.hotspots.every(h => typeof h.id === 'string' && typeof h.titleVi === 'string' && typeof h.narrationVi === 'string' && typeof h.keyFactVi === 'string' && validUrl(h.image)) ||
+          !Array.isArray(content.resources) || content.resources.length > 50 ||
+          !content.resources.every(r => typeof r.id === 'string' && typeof r.title === 'string' && r.title.trim() && validUrl(r.url) && r.url && ['document','video','audio','image'].includes(r.kind)))
+        return json(res,400,{ error:'Invalid station content' });
+      const clean = { coverImage:content.coverImage,mapImage:content.mapImage,hotspots:content.hotspots,resources:content.resources, ...(typeof content.contentRevision==='string' && /^[a-zA-Z0-9.-]{1,80}$/.test(content.contentRevision)?{contentRevision:content.contentRevision}:{}) };
+      const operation = writes.then(async () => {
+        if (durableContent) { await durableContent.saveStation(id,clean); invalidateSharedContentCache(); return; }
+        if (process.env.K_SERVICE) throw Object.assign(new Error('Chưa cấu hình kho học liệu lâu dài.'),{status:503});
+        const next = { ...stations,[id]:clean };
+        await writeFile(dataFile + '.tmp',JSON.stringify(next),{ mode:0o600 });
+        await rename(dataFile + '.tmp',dataFile);
+        stations = next;
+      });
+      writes = operation.catch(() => {});
+      await operation;
+      return json(res,200,{ saved:true });
+    }
+    if (pathname.startsWith('/api/')) return json(res,404,{ error:'Not found' });
+    if (!['GET','HEAD'].includes(req.method)) return json(res,405,{ error:'Method not allowed' });
+    const root = path.resolve('dist');
+    const filename = path.resolve(root, '.' + decodeURIComponent(pathname));
+    if (filename !== root && !filename.startsWith(root + path.sep)) return json(res,403,{ error:'Forbidden' });
+    let data, served = filename;
+    try { data = await readFile(filename); }
+    catch {
+      if (path.extname(pathname)) return json(res,404,{ error:'Not found' });
+      served = path.join(root,'index.html'); data = await readFile(served);
+    }
+    res.writeHead(200,{ 'Content-Type':types[path.extname(served)] || 'application/octet-stream', 'X-Content-Type-Options':'nosniff' });
+    res.end(req.method === 'HEAD' ? undefined : data);
+  } catch (error) {
+    console.error('Content server error:',error.message);
+    if (error.retryAfterSeconds) res.setHeader('Retry-After', String(error.retryAfterSeconds));
+    json(res,error.status || 500,{ error:error.status ? error.message : 'Could not process request',
+      ...(error.storageCode ? {storageCode:error.storageCode} : {}),
+      ...(error.retryAfterSeconds ? {retryAfterSeconds:error.retryAfterSeconds} : {}),
+    });
+  }
+});
+export { server as apiServer };
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  server.listen(Number(process.env.PORT || 3000),'0.0.0.0',() => console.log('CHAM DA NANG content server started port='+server.address().port));
+}
+).test(className)) return json(res,400,{error:'Họ tên, lớp hoặc khối chưa hợp lệ.'});
+      const norm=v=>String(v||'').trim().replace(/\\s+/g,' ').normalize('NFC').toLocaleLowerCase('vi');
+      const classes=(await cloudStore.list('cham_classes')).filter(c=>c.name===className && c.grade===grade && Array.isArray(c.students));
+      const matches=classes.flatMap(c=>c.students.filter(n=>norm(n)===norm(name)));
+      if(matches.length!==1) return json(res,400,{matched:false,error:matches.length===0?'Chưa tìm thấy họ tên trong danh sách lớp.':'Có nhiều học sinh trùng tên hoặc lớp trùng nhau. Hãy nhờ giáo viên xác nhận.'});
+      return json(res,200,{matched:true});
+    }
     if (pathname === '/api/student/sync/register' && req.method === 'POST') {
       if (!cloudStore) return json(res,503,{error:'Đồng bộ học sinh chưa được cấu hình trên máy chủ.'});
       auth.sameOrigin(req);

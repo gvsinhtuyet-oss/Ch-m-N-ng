@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { progressService } from '../../services/ProgressService';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
@@ -8,6 +8,20 @@ export const StudentProfileView: React.FC = () => {
   const { currentUser, currentGrade, allStationsInCurrentGrade, logout } = useApp();
   const student = currentUser as any;
   const [copied, setCopied] = useState(false);
+  const [online, setOnline] = useState(() => navigator.onLine);
+  const [savedLocally, setSavedLocally] = useState(false);
+  const [storageError, setStorageError] = useState(false);
+  useEffect(() => {
+    const update = () => setOnline(navigator.onLine);
+    const refresh = () => setSavedLocally(Object.keys(progressService.getStudentProgressRecords(student?.id || 'guest')).length > 0);
+    const handleStorageError = () => setStorageError(true);
+    update(); refresh();
+    window.addEventListener('online', update);
+    window.addEventListener('offline', update);
+    window.addEventListener('cham-progress-changed', refresh);
+    window.addEventListener('cham-progress-storage-error', handleStorageError);
+    return () => { window.removeEventListener('online', update); window.removeEventListener('offline', update); window.removeEventListener('cham-progress-changed', refresh); window.removeEventListener('cham-progress-storage-error', handleStorageError); };
+  }, [student?.id]);
   const syncCode = useMemo(() => {
     try {
       const raw = localStorage.getItem('cham_danang_student_profile_v1');
@@ -37,12 +51,16 @@ export const StudentProfileView: React.FC = () => {
               {student?.displayName || student?.name || 'Học sinh khám phá'}
             </h2>
             <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black uppercase tracking-wide">
-              Dữ liệu minh họa
+              {student?.isGuest ? 'Khám phá tự do' : 'Hồ sơ học sinh'}
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
             Mã định danh: {student?.studentCode || 'HS_DEMO_2026'} • Lớp {student?.className || `Khối ${currentGrade}`}
           </p>
+        </div>
+
+        <div role="status" className="rounded-xl border border-sky-100 bg-sky-50 px-4 py-3 text-left text-xs text-sky-950">
+          {storageError ? 'Không thể lưu dữ liệu trên thiết bị. Hãy kiểm tra bộ nhớ và cài đặt trình duyệt.' : student?.isGuest ? 'Chế độ khám phá tự do: không ghi nhận kết quả cá nhân.' : !online ? 'Đang ngoại tuyến. Tiến độ đã ghi trên thiết bị sẽ chờ đồng bộ khi có mạng.' : savedLocally ? 'Tiến độ đã lưu trên thiết bị. Dữ liệu máy chủ được đồng bộ tự động khi kết nối ổn định.' : 'Chưa có hoạt động học tập được ghi nhận trên thiết bị.'}
         </div>
 
         {/* Security and Privacy Notice */}

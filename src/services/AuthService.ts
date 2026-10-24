@@ -5,7 +5,7 @@ export type ManagedClass = Classroom & { students: string[] };
 export interface LearningProposal { id:string;teacherId:string;teacherName:string;stationId:string;stationName:string;grade:number;text:string;status:string;createdAt:string;workspace?:import('./TeacherWorkspaceService').TeacherWorkspace; }
 export interface RealClassProgress {
   className:string; academicYear:string; rosterCount:number; linkedCount:number;
-  students:Array<{name:string;completedStations:number;totalStamps:number;stations:Array<{stationId:string;completed:boolean;stamp:boolean;completedStages:number;lastVisitedAt:string|null}>}>;
+  students:Array<{name:string;completedStations:number;totalStamps:number;stations:Array<{stationId:string;completed:boolean;stamp:boolean;completedStages:number;lastVisitedAt:string|null;checkIn?:{emotionId:string;rememberOptionIds:string[];actionOptionIds:string[];submittedAt:string}|null}>}>;
 }
 export interface AuthHealth {
   status: string;

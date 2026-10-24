@@ -450,7 +450,13 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
         const stations=Object.entries(saved.progress||{}).slice(0,30).map(([stationId,p])=>({
           stationId,completed:!!p.stationCompleted,stamp:!!p.stampReceived,
           completedStages:[p.stage1Completed,p.stage2Completed,p.stage3Completed,p.stage4Completed].filter(Boolean).length,
-          lastVisitedAt:typeof p.lastVisitedAt==='string'?p.lastVisitedAt:null
+          lastVisitedAt:typeof p.lastVisitedAt==='string'?p.lastVisitedAt:null,
+          checkIn: p.stage3Completed && p.checkInResponse && typeof p.checkInResponse === 'object' ? {
+            emotionId: String(p.checkInResponse.emotionId || '').slice(0,100),
+            rememberOptionIds: Array.isArray(p.checkInResponse.rememberOptionIds) ? p.checkInResponse.rememberOptionIds.filter(x=>typeof x==='string').slice(0,20) : [],
+            actionOptionIds: Array.isArray(p.checkInResponse.actionOptionIds) ? p.checkInResponse.actionOptionIds.filter(x=>typeof x==='string').slice(0,20) : [],
+            submittedAt: typeof p.checkInResponse.submittedAt==='string' ? p.checkInResponse.submittedAt : ''
+          } : null
         }));
         results.push({name:classroom.students.find(n=>norm(n)===norm(link.name)),stations,completedStations:stations.filter(x=>x.completed).length,
           totalStamps:stations.filter(x=>x.stamp).length});

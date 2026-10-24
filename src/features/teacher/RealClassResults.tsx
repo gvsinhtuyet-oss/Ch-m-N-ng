@@ -46,6 +46,11 @@ export const RealClassResults: React.FC = () => {
       const details=workbook.addWorksheet('Chi tiết trạm');
       details.addRow(['STT','Họ tên học sinh','Mã trạm','Trạng thái','Chặng hoàn thành','Con dấu','Lần học gần nhất']);
       report.students.forEach((st,i)=>st.stations.forEach(p=>details.addRow([i+1,st.name,p.stationId,p.completed?'Hoàn thành':'Đang học',p.completedStages,p.stamp?'Có':'Chưa có',p.lastVisitedAt?new Date(p.lastVisitedAt).toLocaleString('vi-VN'):'' ])));
+      const checkins=workbook.addWorksheet('Check-in thực tế');
+      checkins.addRow(['Học sinh','Mã trạm','Cảm xúc (mã lựa chọn)','Điều ghi nhớ (mã lựa chọn)','Hành động dự định (mã lựa chọn)','Thời điểm gửi']);
+      report.students.forEach(st=>st.stations.forEach(p=>{if(p.checkIn)checkins.addRow([st.name,p.stationId,p.checkIn.emotionId,p.checkIn.rememberOptionIds.join(', '),p.checkIn.actionOptionIds.join(', '),p.checkIn.submittedAt]);}));
+      checkins.columns=[{width:32},{width:25},{width:25},{width:45},{width:45},{width:26}];
+      checkins.getRow(1).font={bold:true};
       details.columns=[{width:8},{width:32},{width:28},{width:20},{width:23},{width:15},{width:26}];
       details.views=[{state:'frozen',ySplit:1}];
       details.autoFilter={from:'A1',to:`G${Math.max(1,details.rowCount)}`};
@@ -91,6 +96,7 @@ export const RealClassResults: React.FC = () => {
     {message&&<p role="status" className="text-sm rounded-lg bg-slate-100 p-3">{message}</p>}
     {loading&&<p role="status" className="text-sm text-slate-600">Đang tải kết quả từ máy chủ…</p>}
     {report&&<>
+      <div className="rounded-xl bg-rose-50 p-3 text-sm text-rose-950">Check-in thực tế: {report.students.reduce((sum,st)=>sum+st.stations.filter(p=>!!p.checkIn).length,0)} lượt gửi đã đồng bộ. Các lựa chọn thể hiện cảm nhận và dự định của học sinh, không phải bằng chứng đã thực hiện hành động.</div>
       <div className="grid grid-cols-2 gap-3 text-sm">
         <div className="rounded-xl border p-4"><span className="text-slate-600">Danh sách lớp</span><p className="text-2xl font-bold">{report.rosterCount}</p></div>
         <div className="rounded-xl border p-4"><span className="text-slate-600">Học sinh đã liên kết</span><p className="text-2xl font-bold">{report.linkedCount}</p></div>
@@ -101,7 +107,7 @@ export const RealClassResults: React.FC = () => {
           <tbody>{report.students.map((st,i)=><tr key={i} className="border-b align-top">
             <td className="p-2 font-semibold">{st.name}</td><td className="p-2">{st.completedStations}</td><td className="p-2">{st.totalStamps}</td>
             <td className="p-2"><details><summary className="cursor-pointer">Xem {st.stations.length} trạm</summary>
-              {st.stations.map(p=><p key={p.stationId} className="py-1">{p.stationId}: {p.completed?'Hoàn thành':'Đang học'} · {p.completedStages}/4 chặng · {p.stamp?'Có dấu':'Chưa có dấu'}{p.lastVisitedAt?' · '+new Date(p.lastVisitedAt).toLocaleDateString('vi-VN'):''}</p>)}
+              {st.stations.map(p=><p key={p.stationId} className="py-1">{p.stationId}: {p.completed?'Hoàn thành':'Đang học'} · {p.completedStages}/4 chặng · {p.stamp?'Có dấu':'Chưa có dấu'}{p.lastVisitedAt?' · '+new Date(p.lastVisitedAt).toLocaleDateString('vi-VN'):''}{p.checkIn?' · Đã Check-in':''}</p>)}
             </details></td>
           </tr>)}</tbody></table>
       </div>}

@@ -12,7 +12,7 @@ import { Stage3CheckIn } from '../../components/station/Stage3CheckIn';
 import { Stage4Stamp } from '../../components/station/Stage4Stamp';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { unlockedStage,visibleStage } from './stageAccess';
-import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles, Maximize2, Minimize2, MapPinned } from 'lucide-react';
+import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles, Maximize2, Minimize2, MapPinned, LockKeyhole } from 'lucide-react';
 
 // Curated geographic places. Search links resolve the actual place in Google Maps;
 // never fabricate a coordinate or place a map pin on an illustration.
@@ -52,6 +52,12 @@ interface Props {
 export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const { currentUser, currentStage: requestedStage, setCurrentStage } = useApp();
   const studentId = currentUser?.id || 'guest';
+  const [, refreshProgress] = useState(0);
+  useEffect(() => {
+    const refresh = () => refreshProgress(value => value + 1);
+    window.addEventListener('cham-progress-changed', refresh);
+    return () => window.removeEventListener('cham-progress-changed', refresh);
+  }, []);
   const progress = progressService.getStationProgress(studentId, station.id);
   const isPolishedJourney = DEMO_STATION_IDS.has(station.id);
 
@@ -125,6 +131,30 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
     { num: 4, title: 'Chặng 4', name: 'Dấu ấn hành trình', icon: Sparkles },
   ];
 
+  const renderStageTabs = (label: string) => (
+    <nav aria-label={label} className="station-stage-tabs">
+      {stages.map(st => {
+        const active = currentStage === st.num;
+        const done = isUnlockedAllStages || st.num < highestAccessibleStage;
+        const clickable = st.num <= highestAccessibleStage;
+        const status = done ? 'Đã hoàn thành' : clickable ? 'Chưa hoàn thành' : 'Chưa mở';
+        return <button key={st.num} type="button" disabled={!clickable}
+          aria-label={`${st.title}: ${st.name} – ${status}`}
+          aria-current={active ? 'step' : undefined} title={`${st.name} – ${status}`}
+          onClick={() => {
+            audioService.playSfx('click');
+            setCurrentStage(st.num as 1|2|3|4);
+            lessonPanelRef.current?.scrollTo({top: 0});
+          }}
+          className={`station-stage-tab ${active ? 'is-active' : ''} ${done ? 'is-complete' : ''}`}>
+          <span className="station-stage-tab-title">{done ? <CheckCircle2 aria-hidden="true" /> : !clickable ? <LockKeyhole aria-hidden="true" /> : <st.icon aria-hidden="true" />}{st.title}</span>
+          <span className="station-stage-tab-name">{st.name}</span>
+          <span className="station-stage-tab-status">{active ? `Đang xem · ${status}` : status}</span>
+        </button>;
+      })}
+    </nav>
+  );
+
   return (
     <div ref={fullscreenRef} className={`station-immersive-root ${isLessonFullscreen ? "station-immersive-active" : ""} ${isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}`}>
             {/* Top Station Header bar */}
@@ -142,19 +172,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
           </div>
         </div>
         <div className="flex min-w-0 flex-1 items-center gap-2 lg:max-w-[650px]">
-          <nav aria-label="Bản đồ hành trình 4 chặng" className="relative grid min-w-0 flex-1 grid-cols-4 gap-1.5 rounded-2xl bg-gradient-to-r from-amber-50 via-orange-50 to-emerald-50 px-2 py-2 sm:gap-2">
-            <div aria-hidden="true" className="pointer-events-none absolute left-[12%] right-[12%] top-[21px] border-t-[3px] border-dashed border-amber-400" />
-            {stages.map(st => {
-              const active = currentStage === st.num;
-              const done = st.num < highestAccessibleStage || isUnlockedAllStages;
-              const clickable = st.num <= highestAccessibleStage;
-              return <button key={st.num} type="button" disabled={!clickable} aria-current={active ? 'step' : undefined} aria-label={`Chặng ${st.num}: ${st.name}`} onClick={() => { if (!clickable) return; audioService.playSfx('click'); setCurrentStage(st.num as 1|2|3|4); }} className={`relative z-[1] flex min-w-0 flex-col items-center gap-1 rounded-xl px-1 py-0.5 text-center transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-sky-700 ${active ? 'bg-orange-100' : 'hover:bg-white/70'} disabled:cursor-default`}>
-                <span className={`flex h-8 w-8 items-center justify-center rounded-full border-2 text-sm font-black shadow-sm ${done ? 'border-emerald-500 bg-emerald-500 text-white' : active ? 'border-orange-500 bg-orange-400 text-white' : 'border-amber-300 bg-white text-amber-800'}`}>{done ? <CheckCircle2 className="h-5 w-5" /> : st.num === 4 ? <MapPinned className="h-4 w-4" /> : st.num}</span>
-                <span className={`text-[10px] font-black leading-tight sm:text-xs ${active ? 'text-orange-800' : 'text-amber-950'}`}>Chặng {st.num}</span>
-                <span className="text-[10px] font-bold leading-tight text-slate-700 sm:text-[11px]">{['Khám phá tri thức','Thử thách trò chơi','Check-in cảm xúc','Dấu ấn hành trình'][st.num-1]}</span>
-              </button>;
-            })}
-          </nav>
+          {renderStageTabs("Bản đồ hành trình 4 chặng")}
           <div className="flex shrink-0 flex-col gap-1">
             <button type="button" onClick={toggleLessonFullscreen} aria-label={isLessonFullscreen ? 'Thu nhỏ bài học' : 'Toàn màn hình'} title="Toàn màn hình" className="rounded-xl bg-sky-700 p-2.5 text-white hover:bg-sky-800"><Maximize2 className="h-4 w-4" /></button>
             <button type="button" onClick={handleDownload} disabled={downloading || Boolean(offlinePkg)} title={offlinePkg ? 'Demo offline đã lưu' : 'Tải demo offline'} aria-label="Tải demo offline" className="rounded-xl border border-sky-200 bg-sky-50 p-2.5 text-sky-800 disabled:opacity-50"><Download className="h-4 w-4" /></button>
@@ -163,14 +181,11 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
       </div>
 
       <div ref={lessonPanelRef} className="station-lesson-panel min-h-0 flex-1 overflow-y-auto space-y-3">
-      <div className="station-immersive-topbar flex items-center justify-between gap-2 rounded-xl bg-white px-3 py-2 shadow-sm">
-        <span className="min-w-0 truncate text-sm font-black text-slate-900">{station.titleVi}</span>
-        <div className="flex shrink-0 items-center gap-2">
-          <nav aria-label="Tiến trình học tập" className="flex items-center gap-1">
-            {stages.map(st => <span key={st.num} title={st.name} className={`flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-black ${currentStage === st.num ? 'bg-orange-500 text-white' : st.num < highestAccessibleStage ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-400'}`}>{st.num < currentStage ? '✓' : st.num}</span>)}
-          </nav>
-          <button type="button" onClick={toggleLessonFullscreen} className="rounded-lg bg-slate-100 p-2 text-slate-700" aria-label="Thoát toàn màn hình"><Minimize2 className="h-4 w-4" /></button>
-        </div>
+      <div className="station-immersive-topbar">
+        <button type="button" onClick={() => { audioService.playSfx('click'); onBack(); }} className="station-back-button" aria-label="Về danh sách trạm" title="Về danh sách trạm"><ArrowLeft className="h-5 w-5" /></button>
+        <h2 className="station-immersive-title">{station.titleVi}</h2>
+        {renderStageTabs('Chuyển chặng bài học')}
+        <button type="button" onClick={toggleLessonFullscreen} className="station-back-button" aria-label="Thoát toàn màn hình"><Minimize2 className="h-5 w-5" /></button>
       </div>
       {/* Stage Views with subtle container transition */}
       <div className="transition-all duration-300">

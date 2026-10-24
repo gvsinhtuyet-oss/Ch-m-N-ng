@@ -205,9 +205,9 @@ export const GRADE45_CONTENT = [
         "title": "Từ công trình đến hiện vật",
         "narration": "Tòa nhà Bảo tàng Điêu khắc Chăm có kiến trúc riêng, gợi những đường nét của đền tháp Chăm và kiến trúc Pháp đầu thế kỉ XX. Những tác phẩm bằng đá, đất nung và các chất liệu khác cho thấy sự sáng tạo của nghệ nhân xưa. Khi đứng trước hiện vật, em quan sát hình dáng và đọc nhãn để biết tên, chất liệu, niên đại, xuất xứ. Nhãn giúp em hiểu tác phẩm chính xác hơn thay vì chỉ đoán từ hình ảnh.",
         "fact": "Quan sát kết hợp đọc nhãn giúp hiểu tên gọi, chất liệu, niên đại và xuất xứ của hiện vật.",
-        "q": "Theo bài nghe, đọc nhãn hiện vật giúp em biết điều gì?",
+        "q": "Đọc nhãn hiện vật giúp em biết điều gì?",
         "answers": [
-          "Tên, chất liệu, niên đại và xuất xứ",
+          "Xuất xứ",
           "Đoán nơi xuất xứ chỉ từ màu sắc",
           "Lấy tên địa điểm nổi tiếng nhất để ghi"
         ]
@@ -318,9 +318,9 @@ export const GRADE45_CONTENT = [
         "title": "Dịch vụ và du lịch",
         "narration": "Biển, núi rừng, di sản, lễ hội và làng nghề tạo điều kiện cho du lịch Đà Nẵng phát triển. Người làm dịch vụ vận tải, lưu trú, ăn uống hoặc hướng dẫn tham quan đáp ứng nhu cầu của du khách và người dân. Một chuyến đi thuận lợi cần sự phối hợp của nhiều nghề. Giữ cảnh quan sạch đẹp và ứng xử thân thiện cũng góp phần làm điểm đến được yêu mến. Em biết công việc dịch vụ nào ở nơi mình sống?",
         "fact": "Dịch vụ du lịch gắn với vận chuyển, lưu trú, ăn uống và hướng dẫn tham quan.",
-        "q": "Công việc nào thuộc dịch vụ du lịch?",
+        "q": "Đà Nẵng có dịch vụ du lịch nào?",
         "answers": [
-          "Hướng dẫn khách tìm hiểu di sản",
+          "Lưu trú",
           "Đúc một chiếc chuông đồng",
           "Trồng lúa trên đồng ruộng"
         ]
@@ -342,9 +342,9 @@ export const GRADE45_CONTENT = [
         "title": "Kinh tế biển và sự kết nối",
         "narration": "Biển đem đến điều kiện phát triển đánh bắt, chế biến thủy hải sản, du lịch biển và vận tải đường biển. Những cảng như Tiên Sa, Kỳ Hà và Chu Lai giúp kết nối hoạt động vận chuyển hàng hóa. Các dịch vụ hậu cần nghề cá hỗ trợ tàu thuyền và người lao động. Khai thác lợi ích từ biển cần đi cùng bảo vệ nguồn lợi và môi trường. Em có thể nhận ra những nghề khác nhau cùng gắn với biển không?",
         "fact": "Kinh tế biển gồm nhiều hoạt động như thủy sản, du lịch biển, vận tải và dịch vụ hậu cần.",
-        "q": "Nhóm nào gồm các hoạt động kinh tế biển?",
+        "q": "Biển giúp phát triển hoạt động gì?",
         "answers": [
-          "Đánh bắt thủy sản, du lịch biển, vận tải biển",
+          "Du lịch biển",
           "Chỉ trồng lúa và cây ăn quả",
           "Chỉ sản xuất đồ dùng học tập"
         ]
@@ -354,9 +354,9 @@ export const GRADE45_CONTENT = [
         "title": "Làng nghề và công việc của người thân",
         "narration": "Đá mỹ nghệ Non Nước, nước mắm Nam Ô, bánh tráng Túy Loan, đúc đồng Phước Kiều, gốm Thanh Hà và mộc Kim Bồng là những ví dụ về nghề truyền thống. Các nghề tạo việc làm, thu nhập và góp phần gìn giữ văn hóa. Khi gắn với tham quan, làng nghề còn mở thêm cơ hội giới thiệu sản phẩm. Em hãy hỏi người thân về công việc của họ, rồi kể tên nghề, sản phẩm hoặc dịch vụ và điều em trân trọng ở công việc ấy.",
         "fact": "Nghề truyền thống có giá trị kinh tế và văn hóa; mỗi công việc có ích đều đáng được trân trọng.",
-        "q": "Vì sao cần gìn giữ nghề truyền thống?",
+        "q": "Nghề truyền thống nào được nhắc đến?",
         "answers": [
-          "Vì nghề tạo sinh kế và lưu giữ giá trị văn hóa",
+          "Nước mắm Nam Ô",
           "Vì chỉ nghề truyền thống mới có ích",
           "Vì mọi sản phẩm phải giữ nguyên mãi, không được cải tiến"
         ]
@@ -491,9 +491,9 @@ export const GRADE45_CONTENT = [
         "title": "Giữ nghề và giới thiệu làng nghề",
         "narration": "Nghề đúc đồng tạo việc làm, thu nhập và góp phần giữ gìn bản sắc văn hóa. Người thợ truyền lại kinh nghiệm để thế hệ sau tiếp tục học hỏi và sáng tạo. Em có thể viết đoạn văn từ 6 đến 8 câu giới thiệu địa điểm, sản phẩm, công việc và cảm nghĩ về làng nghề. Nếu lập kế hoạch tham quan, hãy cùng thầy cô xác định mục đích, thời gian, nhiệm vụ và cách trình bày kết quả. Luôn giữ khoảng cách an toàn khi quan sát người thợ làm việc.",
         "fact": "Trân trọng người thợ, tìm hiểu và giới thiệu đúng là những cách góp phần gìn giữ nghề truyền thống.",
-        "q": "Kế hoạch tham quan làng nghề cần có nội dung nào?",
+        "q": "Nghề đúc đồng giúp người dân có gì?",
         "answers": [
-          "Mục đích, thời gian, nhiệm vụ và cách trình bày kết quả",
+          "Việc làm, thu nhập",
           "Chỉ tên bạn được chụp ảnh nhiều nhất",
           "Chỉ danh sách đồ muốn mua"
         ]
@@ -879,9 +879,9 @@ export const GRADE45_CONTENT = [
         "title": "Rừng Núi Chúa và bảo tồn thiên nhiên",
         "narration": "Khu du lịch Bà Nà nằm bên cạnh khu rừng đặc dụng Núi Chúa. Rừng có nhiều loài động, thực vật cần được bảo vệ, trong đó có hoa đào chuông. Dưới chân núi còn có Suối Mơ và thác Tóc Tiên. Cảnh đẹp và sự đa dạng sinh học góp phần tạo sức hấp dẫn của vùng núi này. Tham quan có trách nhiệm là giữ rác đúng nơi, không bẻ cành và không làm phiền động vật.",
         "fact": "Bảo vệ rừng và đa dạng sinh học giúp gìn giữ giá trị tự nhiên của vùng Bà Nà – Núi Chúa.",
-        "q": "Việc nào góp phần bảo vệ rừng khi tham quan Bà Nà?",
+        "q": "Khi tham quan rừng, em không được làm gì?",
         "answers": [
-          "Quan sát hoa đào chuông và để hoa trên cây",
+          "Bẻ cành",
           "Bẻ cành mang về làm kỉ niệm",
           "Cho động vật rừng ăn đồ mang theo"
         ]
@@ -1332,9 +1332,9 @@ export const GRADE45_CONTENT = [
         "title": "Lễ hội và gian giới thiệu dược liệu",
         "narration": "Lễ hội sâm Ngọc Linh là dịp giới thiệu cây sâm, công sức người trồng và sản phẩm có nguồn gốc. Em có thể làm một gian trưng bày nhỏ bằng tranh, ảnh và thẻ thông tin về cây, môi trường sống, bảo tồn và sản phẩm được giới thiệu trong tư liệu. Với trà, cao hoặc sản phẩm khác có thành phần sâm, cần đọc nhãn và nguồn gốc, không tự gán công dụng điều trị. Một đoạn giới thiệu ngắn của em có thể kết bằng lời nhắn: giữ rừng để giữ cây quý.",
         "fact": "Giới thiệu sâm có trách nhiệm là dùng thông tin có nguồn, tôn trọng người trồng và nhắc bảo vệ rừng.",
-        "q": "Gian giới thiệu của học sinh nên ưu tiên nội dung nào?",
+        "q": "Lễ hội sâm Ngọc Linh giới thiệu cây gì?",
         "answers": [
-          "Đặc điểm cây, môi trường sống, nguồn gốc và bảo tồn",
+          "Sâm Ngọc Linh",
           "Lời hứa chữa khỏi mọi bệnh cho người mua",
           "Mời các bạn dùng thử dược liệu không rõ nguồn"
         ]

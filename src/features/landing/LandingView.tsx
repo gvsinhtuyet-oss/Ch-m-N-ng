@@ -414,6 +414,8 @@ export const LandingView: React.FC = () => {
           <ArrowRight className="w-5 h-5 transition duration-200 group-hover:translate-x-1" />
         </button>
 
+        <a href="https://vr360.com.vn/projects/danang-virtual-tourists/" target="_blank" rel="noopener noreferrer" aria-label="Khám phá Đà Nẵng 360 độ trong tab mới" className="mt-3 inline-flex items-center justify-center gap-2 rounded-2xl border border-violet-200/60 bg-violet-600/90 px-5 py-3 text-sm font-extrabold text-white shadow-lg transition hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><Globe className="h-5 w-5" /> Khám phá Đà Nẵng 360° <span aria-hidden="true">↗</span></a>
+
         <p className="mt-3 max-w-2xl text-xs sm:text-sm text-slate-200 font-medium leading-relaxed drop-shadow">
           Khám phá Đà Nẵng qua di sản, câu chuyện, nhiệm vụ và trải nghiệm số.
         </p>

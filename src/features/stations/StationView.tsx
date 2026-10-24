@@ -92,7 +92,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   ];
 
   return (
-    <div className={isPolishedJourney ? "mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}>
+    <div className={isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}>
             {/* Top Station Header bar */}
       <div className={isPolishedJourney ? "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/94 backdrop-blur-xl px-4 py-3 rounded-[1.5rem] border border-orange-200 shadow-lg shadow-orange-950/5" : "flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/96 backdrop-blur-md px-4 py-3.5 sm:px-5 sm:py-4 rounded-[1.6rem] border border-white/80 shadow-[0_10px_32px_rgba(15,23,42,0.08)]"}>
         <div className="flex items-center gap-3.5">

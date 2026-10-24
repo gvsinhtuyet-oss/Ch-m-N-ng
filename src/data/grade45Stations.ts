@@ -6,6 +6,17 @@ export const GRADE4_CONTENT_REVISION='3.2.0-grade4-textbook';
 export const GRADE5_CONTENT_REVISION='3.2.0-grade5-textbook';
 export const GRADE45_CONTENT_REVISION='3.0.0-grade45-source';
 function choices(answers:string[],offset:number){const options=answers.map((textVi,i)=>({id:'opt-'+(i+1),textVi,isCorrect:i===0}));return [...options.slice(offset),...options.slice(0,offset)];}
+// Directly referenced editorial photographs; retain publisher attribution and source.
+const STAGE1_EDITORIAL_PHOTOS:Record<string,Record<number,{url:string;credit:string}>>={
+ 'g4-station-4':{
+  0:{url:'https://bqn.1cdn.vn/2023/10/29/baodanang.vn-dataimages-202310-original-_images1716755_8.jpg',credit:'Cồng chiêng Phước Kiều · Ảnh Lâm Quang Bình, Báo Đà Nẵng (2023).'},
+  1:{url:'https://bqn.1cdn.vn/2023/10/29/baodanang.vn-dataimages-202310-original-_images1716747_1.jpg',credit:'Nghệ nhân chuẩn bị khuôn đúc · Ảnh Lâm Quang Bình, Báo Đà Nẵng (2023).'},
+  2:{url:'https://bqn.1cdn.vn/2023/10/29/baodanang.vn-dataimages-202310-original-_images1716750_4.jpg',credit:'Người thợ rót đồng vào khuôn · Ảnh Lâm Quang Bình, Báo Đà Nẵng (2023).'},
+  3:{url:'https://bqn.1cdn.vn/2023/10/29/baodanang.vn-dataimages-202310-original-_images1716751_5.jpg',credit:'Công đoạn mài đánh bóng sản phẩm · Ảnh Lâm Quang Bình, Báo Đà Nẵng (2023).'},
+  4:{url:'https://bqn.1cdn.vn/2023/10/29/baodanang.vn-dataimages-202310-original-_images1716755_8.jpg',credit:'Thành phẩm cồng chiêng Phước Kiều · Ảnh Lâm Quang Bình, Báo Đà Nẵng (2023).'}
+ }
+};
+const stage1EditorialPhoto=(id:string,index:number)=>STAGE1_EDITORIAL_PHOTOS[id]?.[index];
 const VERIFIED_VR_TOURS: Record<string,{url:string;titleVi:string;sourceName:string}> = {
  'g5-station-4': {url:'https://vr360.danangfantasticity.com/',titleVi:'Tham quan Ngũ Hành Sơn 360°',sourceName:'Cổng thông tin du lịch Đà Nẵng – Một chạm đến Đà Nẵng'},
  'g5-station-3': {url:'https://vr360.danangfantasticity.com/',titleVi:'Khám phá Bà Nà 360° (chọn Khu điểm du lịch)',sourceName:'Cổng VR360 Đà Nẵng – Bà Nà và các điểm du lịch'},
@@ -15,7 +26,7 @@ export const GRADE_45_STATIONS:Station[]=GRADE45_CONTENT.map<Station>(lesson=>{
  const source=lesson.grade===4?'Tài liệu GDĐP lớp 4 và biên bản hiệu chỉnh do giáo viên cung cấp ngày 23/10/2026; chưa gắn kế hoạch tích hợp mới':'Tài liệu GDĐP lớp 5 và biên bản góp ý ngày 29/7/2025 do giáo viên cung cấp; chưa xác nhận số tiết và kế hoạch tích hợp';
  const cat=OFFICIAL_25_CATALOG.find(c=>c.id===lesson.id)!;
  const asset=(name:string)=>`/learning/grade45/${lesson.id}-textbook-${name}.svg`;
- const hotspots:ExplorationHotspot[]=lesson.points.map((p,i)=>({id:p.id,stationId:lesson.id,titleVi:`${i+1}. ${p.title}`,subtitleVi:'Quan sát, nghe và chia sẻ',image:grade45PointMedia(lesson.id,i)?.src||(lesson.id==='g4-station-2'&&i===0?'https://commons.wikimedia.org/wiki/Special:FilePath/My%20Son%20Sanctuary%20Vietnam%2001.jpg?width=1280':asset(`point-${i+1}`)),narrationVi:p.narration,keyFactVi:p.fact,interaction:{id:p.id+'-interaction',type:'single-choice',questionVi:p.q,options:choices(p.answers,i%3),explanationVi:p.fact},sources:[source,...lesson.sources],mediaRights:grade45PointMedia(lesson.id,i)?'ALLOWED':'OWNED_BY_SCHOOL',mediaCredit:grade45PointMedia(lesson.id,i)?.credit||'Sơ đồ học tập do app biên soạn; không phải ảnh tư liệu hoặc bản đồ địa lí.'}));
+ const hotspots:ExplorationHotspot[]=lesson.points.map((p,i)=>({id:p.id,stationId:lesson.id,titleVi:`${i+1}. ${p.title}`,subtitleVi:'Quan sát, nghe và chia sẻ',image:stage1EditorialPhoto(lesson.id,i)?.url||grade45PointMedia(lesson.id,i)?.src||(lesson.id==='g4-station-2'&&i===0?'https://commons.wikimedia.org/wiki/Special:FilePath/My%20Son%20Sanctuary%20Vietnam%2001.jpg?width=1280':asset(`point-${i+1}`)),narrationVi:p.narration,keyFactVi:p.fact,interaction:{id:p.id+'-interaction',type:'single-choice',questionVi:p.q,options:choices(p.answers,i%3),explanationVi:p.fact},sources:[source,...lesson.sources],mediaRights:stage1EditorialPhoto(lesson.id,i)?'THIRD_PARTY':grade45PointMedia(lesson.id,i)?'ALLOWED':'OWNED_BY_SCHOOL',mediaCredit:stage1EditorialPhoto(lesson.id,i)?.credit||grade45PointMedia(lesson.id,i)?.credit||'Sơ đồ học tập do app biên soạn; không phải ảnh tư liệu hoặc bản đồ địa lí.'}));
  const questions:ChallengeQuestion[]=lesson.questions.map((q,i)=>({id:`${lesson.id}-challenge-${i+1}`,questionVi:q.text,options:choices(q.answers,i%3),hintVi:q.hint}));
  return {vr360Experience: VERIFIED_VR_TOURS[cat.id] ? {...VERIFIED_VR_TOURS[cat.id],provider:'official_portal' as const,verified:true,embedMode:'direct_link' as const} : undefined,id:cat.id,number:cat.lessonNumber,grade:lesson.grade,themeId:cat.themeId,themeNameVi:cat.themeNameVi,titleVi:cat.titleVi,titleEn:cat.titleEn,subtitleVi:lesson.subtitle,coverImage:({'g4-station-2':'/learning/grade45/photos/cham.webp','g5-station-3':'/learning/grade45/photos/bana.webp','g5-station-4':'/learning/grade45/photos/ngu-hanh.webp','g5-station-5':'/learning/grade45/photos/sam.webp'} as Record<string,string>)[lesson.id]||asset('cover'),openingMessageVi:lesson.opening,totalPeriods:cat.periods,officialCurriculumReference:source+` – Chủ đề ${cat.lessonNumber}: ${cat.titleVi}`,isFullyVerified:false,
  pedagogyGoals:{knowGoalVi:cat.knowGoalVi,understandGoalVi:cat.understandGoalVi,behaviorGoalVi:cat.behaviorGoalVi},hotspots,

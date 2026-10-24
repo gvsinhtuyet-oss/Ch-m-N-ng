@@ -26,6 +26,9 @@ import {
   X,
 } from 'lucide-react';
 
+// Only lessons with a curated real-world place map show the geographic map action.
+const GEO_MAP_LESSON_IDS = new Set(["g1-station-4","g2-station-4","g2-station-1","g3-station-1","g3-station-4","g3-station-5","g4-station-2","g4-thu-bon-hon-kem","g4-station-4","g5-ky-anh-me-nhu","g5-station-3","g5-station-4","g5-lua-ma-chau"]);
+
 interface Props {
   station: Station;
   onCompleteStage: () => void;
@@ -294,10 +297,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               </button>
 
               <button type="button" onClick={() => openImagePreview(index)} aria-label="Phóng to hình ảnh" className="absolute right-3 top-3 z-20 rounded-xl bg-slate-900/75 p-3 text-white shadow-lg"><Maximize2 className="h-5 w-5" /></button>
-            <div className="absolute bottom-3 left-3 right-3 z-20 grid grid-cols-1 gap-2 rounded-2xl bg-slate-950/30 p-2 backdrop-blur-sm sm:grid-cols-3">
+            <div className="absolute bottom-3 left-3 right-3 z-20 flex flex-wrap gap-2 rounded-2xl bg-slate-950/30 p-2 backdrop-blur-sm [&>button]:min-w-[160px] [&>button]:flex-1">
               <button type="button" onClick={() => { if (playing) audioService.pauseNarration(); else if (paused) audioService.resumeNarration(); else speak(); }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-2 py-2 text-xs font-black text-white shadow"><Volume2 className="h-4 w-4 shrink-0" />{playing ? 'Tạm dừng' : paused ? 'Tiếp tục nghe' : 'Nghe thuyết minh'}</button>
-              <button type="button" onClick={() => setShowKnowledgeMap(true)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-sky-200 px-2 py-2 text-xs font-black text-sky-900 shadow"><Map className="h-4 w-4 shrink-0" />Khám phá bản đồ</button>
-              <button type="button" disabled={!station.vr360Experience?.verified || !station.vr360Experience?.url} onClick={() => { audioService.playSfx('click'); if (station.vr360Experience?.embedMode === 'direct_link') { window.open(station.vr360Experience.url, '_blank', 'noopener,noreferrer'); } else { setShowVr(true); } }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-violet-200 px-2 py-2 text-xs font-black text-violet-900 shadow disabled:opacity-50"><Globe className="h-4 w-4 shrink-0" />Xem VR360</button>
+              {GEO_MAP_LESSON_IDS.has(station.id) && <button type="button" onClick={() => setShowKnowledgeMap(true)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-sky-200 px-2 py-2 text-xs font-black text-sky-900 shadow"><Map className="h-4 w-4 shrink-0" />Khám phá bản đồ</button>}
+              {station.vr360Experience?.verified && station.vr360Experience?.url && <button type="button" onClick={() => { audioService.playSfx('click'); if (station.vr360Experience?.embedMode === 'direct_link') { window.open(station.vr360Experience.url, '_blank', 'noopener,noreferrer'); } else { setShowVr(true); } }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-violet-200 px-2 py-2 text-xs font-black text-violet-900 shadow disabled:opacity-50"><Globe className="h-4 w-4 shrink-0" />Xem VR360</button>}
             </div>
             </div>
             {narrationMessage&&<p role="status" className="rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-950">{narrationMessage}</p>}

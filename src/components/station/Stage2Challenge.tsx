@@ -5,6 +5,7 @@ import { audioService } from '../../services/AudioService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
 import { progressService } from '../../services/ProgressService';
 import { ApprovedStationGame } from './ApprovedStationGame';
+import { ReusableChallengeGame } from './ReusableChallengeGame';
 import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle, Gamepad2 } from 'lucide-react';
 
 
@@ -176,6 +177,11 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
         onCompleteStage={onCompleteStage}
       />
     );
+  }
+
+  // Grade 3–5 use the shared challenge game; grade 1–2 keep their approved games.
+  if (station.grade >= 3 && station.grade <= 5) {
+    return <ReusableChallengeGame station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} />;
   }
 
   const handleRetry = () => {

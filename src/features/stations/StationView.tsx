@@ -17,10 +17,10 @@ import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles } fr
 // Curated geographic places. Search links resolve the actual place in Google Maps;
 // never fabricate a coordinate or place a map pin on an illustration.
 const GEO_LESSON_POINTS: Record<string, {name:string;lat:number;lon:number;description:string;accuracy:'approximate'}[]> = {
-  'g1-station-4': [{name:'Thành Điện Hải',lat:16.0758,lon:108.2227,description:'Di tích lịch sử tại trung tâm Đà Nẵng',accuracy:'approximate'}],
+  'g1-station-4': [{name:'Thành Điện Hải',lat:16.0678,lon:108.2212,description:'24 Trần Phú; tọa độ đối chiếu nguồn du lịch, chờ kiểm chứng địa chính',accuracy:'approximate'}],
   'g2-station-4': [{name:'Phố cổ Hội An',lat:15.8801,lon:108.3380,description:'Khu phố cổ Hội An',accuracy:'approximate'}],
   'g2-station-1': [{name:'Làng chiếu Cẩm Nê',lat:15.984,lon:108.162,description:'Khu vực làng nghề Cẩm Nê',accuracy:'approximate'},{name:'Làng chiếu Bàn Thạch',lat:15.825,lon:108.280,description:'Khu vực làng nghề Bàn Thạch',accuracy:'approximate'}],
-  'g3-station-1': [{name:'Bãi biển Mỹ Khê',lat:16.060,lon:108.247,description:'Bãi biển Mỹ Khê',accuracy:'approximate'},{name:'Bãi biển Bàn Than',lat:15.483,lon:108.667,description:'Khu vực Bàn Than – Tam Hải',accuracy:'approximate'}],
+  'g3-station-1': [{name:'Bãi biển Mỹ Khê',lat:16.060,lon:108.247,description:'Bãi biển Mỹ Khê',accuracy:'approximate'},{name:'Bãi biển Bàn Than',lat:15.3833,lon:108.6167,description:'Tâm khu vực Tam Hải theo cổng thông tin địa phương, KHÔNG phải ghim chính xác bãi Bàn Than',accuracy:'approximate'}],
   'g3-station-4': [{name:'Làng nước mắm Nam Ô',lat:16.124,lon:108.126,description:'Khu vực làng nghề Nam Ô',accuracy:'approximate'}],
   'g3-station-5': [{name:'Bán đảo Sơn Trà',lat:16.115,lon:108.295,description:'Khu vực bán đảo Sơn Trà',accuracy:'approximate'}],
 };

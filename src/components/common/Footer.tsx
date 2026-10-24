@@ -17,7 +17,7 @@ export const Footer: React.FC = () => {
         </span>
         <span className="hidden text-slate-300 sm:inline">•</span>
         <span>
-          <span className="text-slate-400">Nhóm tác giả: </span>
+          <span className="text-slate-400">Tác giả – Người tạo ứng dụng: </span>
           <span className="font-semibold text-slate-600">{t.authors}</span>
         </span>
         <span className="inline-flex items-center gap-1 rounded-full bg-white/45 px-2 py-0.5 text-[9px] font-semibold text-sky-700 backdrop-blur-[2px]">

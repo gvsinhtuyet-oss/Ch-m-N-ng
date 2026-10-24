@@ -358,7 +358,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-2",
         "title": "Rừng cây bên Suối Tiên",
-        "narration": "Suối Tiên ở xã Quế Sơn Trung. Nơi đây có rừng cây xanh, dòng nước và thác đẹp. Em hãy quan sát màu xanh của lá, hình dáng cây và dòng suối. Ảnh chụp thực tế Suối Tiên ở xã Quế Sơn Trung mà chúng mình cùng tìm hiểu báo của Báo Đà Nẵng; tranh trên màn hình chỉ là hình minh họa. Rừng cây là một phần làm nên vẻ đẹp của Suối Tiên. Em thích rừng cây, dòng nước hay thác nước? Hãy chọn một nét đẹp để kể với người thân nhé!",
+        "narration": "Suối Tiên ở xã Quế Sơn Trung. Nơi đây có rừng cây xanh, dòng nước và thác đẹp. Em hãy quan sát màu xanh của lá, hình dáng cây và dòng suối. Ảnh trên màn hình cho em quan sát cảnh suối, thác và rừng cây tại Suối Tiên Quế Sơn, theo nguồn Cù Lao Chàm Tour. Rừng cây là một phần làm nên vẻ đẹp của Suối Tiên. Em thích rừng cây, dòng nước hay thác nước? Hãy chọn một nét đẹp để kể với người thân nhé!",
         "fact": "Suối Tiên ở xã Quế Sơn Trung, có rừng cây xanh.",
         "q": "Cảnh vật nào được giới thiệu bên Suối Tiên?",
         "answers": [
@@ -370,7 +370,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-stream-3",
         "title": "Dòng nước và thác ở Suối Tiên",
-        "narration": "Ở Suối Tiên, nước trong và mát. Thác từ trên cao chảy xuống tạo thành hồ. Rừng cây, dòng thác và hồ nước cùng làm nên cảnh đẹp nơi đây. Em thử chỉ trên tranh: đâu là thác, đâu là hồ? Tranh trên màn hình là minh họa, không phải ảnh tư liệu Suối Tiên ở xã Quế Sơn Trung. Em có thể xem ảnh chụp thật ở đây viết của Báo Đà Nẵng. Nếu được tham quan, em đi cùng người lớn và làm theo hướng dẫn. Nước trông trong, đẹp không có nghĩa là an toàn để tự xuống chơi nhé!",
+        "narration": "Ở Suối Tiên, nước trong và mát. Thác từ trên cao chảy xuống tạo thành hồ. Rừng cây, dòng thác và hồ nước cùng làm nên cảnh đẹp nơi đây. Em thử chỉ trên ảnh: đâu là ghềnh đá, đâu là hồ nước? Đây là ảnh giới thiệu Suối Tiên Quế Sơn từ nguồn Cù Lao Chàm Tour. Nếu được tham quan, em đi cùng người lớn và làm theo hướng dẫn. Nước trông trong, đẹp không có nghĩa là an toàn để tự xuống chơi nhé!",
         "fact": "Suối Tiên có nước trong, mát và thác trên cao chảy xuống tạo thành hồ.",
         "q": "Theo lời giới thiệu, nước ở Suối Tiên thế nào?",
         "answers": [

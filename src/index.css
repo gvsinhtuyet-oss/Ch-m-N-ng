@@ -131,3 +131,39 @@
 .hoi-an-right-rail::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(#f97316, #ea580c);
 }
+
+
+/* Station presentation: one viewport on large screens; overflow remains accessible
+   inside the lesson panel, never clipping VR, maps, quizzes or reward dialogs. */
+@media (min-width: 1024px) and (min-height: 650px) {
+  .station-viewport {
+    height: calc(100dvh - 82px);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    overflow: hidden;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .station-viewport > :first-child,
+  .station-viewport > :nth-child(2) { flex-shrink: 0; }
+  .station-viewport > :last-child {
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  .station-stage-four { max-width: 1100px; }
+  .station-stage-four-card { padding: 12px 18px; }
+  .station-stage-four-card > div { margin-top: 0; }
+  .station-stage-four-card .grid.grid-cols-3 { gap: 8px; }
+  .station-stage-four-card .grid.grid-cols-3 > div { padding: 8px; }
+  .station-stage-four-card .grid.grid-cols-3 .mb-2 { margin-bottom: 3px; }
+  .station-stage-four-card .grid.grid-cols-3 img { max-height: 50px; object-fit: contain; }
+}
+@media (max-width: 1023px), (max-height: 649px) {
+  .station-viewport { height: auto; overflow: visible; }
+}

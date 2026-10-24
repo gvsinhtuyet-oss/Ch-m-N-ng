@@ -16,13 +16,13 @@ import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles } fr
 
 // Curated geographic places. Search links resolve the actual place in Google Maps;
 // never fabricate a coordinate or place a map pin on an illustration.
-const VERIFIED_PLACE_QUERIES: Record<string, {name: string; query: string; note: string}[]> = {
-  'g1-station-4': [{name:'Thành Điện Hải',query:'Thành Điện Hải 24 Trần Phú Đà Nẵng',note:'Di tích tại đường Trần Phú, trung tâm Đà Nẵng'}],
-  'g2-station-4': [{name:'Phố cổ Hội An',query:'Phố cổ Hội An Đà Nẵng',note:'Không gian di sản văn hóa thế giới'}],
-  'g2-station-1': [{name:'Làng chiếu Cẩm Nê',query:'Làng chiếu Cẩm Nê Hòa Tiến Đà Nẵng',note:'Làng nghề truyền thống'}, {name:'Làng chiếu Bàn Thạch',query:'Làng chiếu Bàn Thạch Duy Vinh Đà Nẵng',note:'Làng nghề truyền thống'}],
-  'g3-station-1': [{name:'Bãi biển Mỹ Khê',query:'Bãi biển Mỹ Khê Đà Nẵng',note:'Bãi biển phía đông thành phố'}, {name:'Bãi biển Bàn Than',query:'Bãi biển Bàn Than Tam Hải Đà Nẵng',note:'Bãi biển tại khu vực Tam Hải'}],
-  'g3-station-4': [{name:'Làng nước mắm Nam Ô',query:'Làng nghề nước mắm Nam Ô Đà Nẵng',note:'Làng nghề ven biển Nam Ô'}],
-  'g3-station-5': [{name:'Bán đảo Sơn Trà',query:'Bán đảo Sơn Trà Đà Nẵng',note:'Khu vực nghề thuyền thúng được giới thiệu trong bài'}],
+const GEO_LESSON_POINTS: Record<string, {name:string;lat:number;lon:number;description:string;accuracy:'approximate'}[]> = {
+  'g1-station-4': [{name:'Thành Điện Hải',lat:16.0758,lon:108.2227,description:'Di tích lịch sử tại trung tâm Đà Nẵng',accuracy:'approximate'}],
+  'g2-station-4': [{name:'Phố cổ Hội An',lat:15.8801,lon:108.3380,description:'Khu phố cổ Hội An',accuracy:'approximate'}],
+  'g2-station-1': [{name:'Làng chiếu Cẩm Nê',lat:15.984,lon:108.162,description:'Khu vực làng nghề Cẩm Nê',accuracy:'approximate'},{name:'Làng chiếu Bàn Thạch',lat:15.825,lon:108.280,description:'Khu vực làng nghề Bàn Thạch',accuracy:'approximate'}],
+  'g3-station-1': [{name:'Bãi biển Mỹ Khê',lat:16.060,lon:108.247,description:'Bãi biển Mỹ Khê',accuracy:'approximate'},{name:'Bãi biển Bàn Than',lat:15.483,lon:108.667,description:'Khu vực Bàn Than – Tam Hải',accuracy:'approximate'}],
+  'g3-station-4': [{name:'Làng nước mắm Nam Ô',lat:16.124,lon:108.126,description:'Khu vực làng nghề Nam Ô',accuracy:'approximate'}],
+  'g3-station-5': [{name:'Bán đảo Sơn Trà',lat:16.115,lon:108.295,description:'Khu vực bán đảo Sơn Trà',accuracy:'approximate'}],
 };
 
 interface Props {
@@ -39,6 +39,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const [natureMapOpen, setNatureMapOpen] = useState(false);
   const [otherMapOpen, setOtherMapOpen] = useState(false);
   const [otherMapSelected, setOtherMapSelected] = useState(0);
+  const [geoMapSelected, setGeoMapSelected] = useState(0);
   const [naturePlace, setNaturePlace] = useState<'cham' | 'sontra'>('cham');
   const [downloading, setDownloading] = useState(false);
   const [offlinePkg, setOfflinePkg] = useState(offlineService.getPackage(station.id));
@@ -244,19 +245,11 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
           </div>
           {otherMapOpen && (
             <div className="space-y-4 bg-white p-4 sm:p-5">
-              {VERIFIED_PLACE_QUERIES[station.id] && (
-                <div className="rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 to-teal-50 p-4">
-                  <h4 className="text-base font-black text-slate-900">📍 Địa danh trên bản đồ địa lý thực</h4>
-                  <p className="mt-1 text-xs text-slate-600">Chọn địa danh để xem vị trí, đường sá và phóng to trên Google Maps. Liên kết tìm kiếm giúp tránh gắn ghim sai tọa độ.</p>
-                  <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                    {VERIFIED_PLACE_QUERIES[station.id].map(place => (
-                      <a key={place.name} href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.query)}`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between gap-3 rounded-xl border border-blue-100 bg-white p-3 shadow-sm transition hover:border-blue-400 hover:shadow-md">
-                        <span><strong className="block text-sm text-slate-900">📍 {place.name}</strong><span className="mt-1 block text-xs text-slate-600">{place.note}</span></span>
-                        <span className="shrink-0 text-xs font-black text-blue-700">Mở ↗</span>
-                      </a>
-                    ))}
-                  </div>
-                  <p className="mt-3 text-[11px] text-slate-500">Google Maps cần Internet. Nếu nhiều kết quả trùng tên, giáo viên chọn đúng địa danh theo bài học.</p>
+              {GEO_LESSON_POINTS[station.id] && (
+                <div className="space-y-3 rounded-2xl border border-blue-200 bg-blue-50 p-3">
+                  <h4 className="text-base font-black text-slate-900">📍 Địa danh trên bản đồ địa lý</h4>
+                  <p className="text-xs text-slate-600">Chạm vào địa danh để chuyển bản đồ; dùng + / − để thay đổi mức phóng to. Vị trí hiện là tọa độ tham khảo và cần đối chiếu trước khi sử dụng dẫn đường.</p>
+                  <InteractiveGeoMap points={GEO_LESSON_POINTS[station.id]} selected={geoMapSelected} onSelect={setGeoMapSelected} />
                 </div>
               )}
               <div className="relative overflow-hidden rounded-2xl border border-slate-200 bg-[#e9f3ed]">

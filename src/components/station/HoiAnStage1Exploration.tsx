@@ -61,6 +61,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const [showImage, setShowImage] = useState(false);
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const [showVr, setShowVr] = useState(false);
+  const [showBaNaVrChoices, setShowBaNaVrChoices] = useState(false);
   const [showKnowledgeMap, setShowKnowledgeMap] = useState(false);
   const [showReward, setShowReward] = useState(false);
   const [lockMessage, setLockMessage] = useState('');
@@ -300,7 +301,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             <div className="absolute bottom-3 left-3 right-3 z-20 flex flex-wrap gap-2 rounded-2xl bg-slate-950/30 p-2 backdrop-blur-sm [&>button]:min-w-[160px] [&>button]:flex-1">
               <button type="button" onClick={() => { if (playing) audioService.pauseNarration(); else if (paused) audioService.resumeNarration(); else speak(); }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-2 py-2 text-xs font-black text-white shadow"><Volume2 className="h-4 w-4 shrink-0" />{playing ? 'Tạm dừng' : paused ? 'Tiếp tục nghe' : 'Nghe thuyết minh'}</button>
               {GEO_MAP_LESSON_IDS.has(station.id) && <button type="button" onClick={() => setShowKnowledgeMap(true)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-sky-200 px-2 py-2 text-xs font-black text-sky-900 shadow"><Map className="h-4 w-4 shrink-0" />Khám phá bản đồ</button>}
-              {station.vr360Experience?.verified && station.vr360Experience?.url && <button type="button" onClick={() => { audioService.playSfx('click'); if (station.vr360Experience?.embedMode === 'direct_link') { window.open(station.vr360Experience.url, '_blank', 'noopener,noreferrer'); } else { setShowVr(true); } }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-violet-200 px-2 py-2 text-xs font-black text-violet-900 shadow disabled:opacity-50"><Globe className="h-4 w-4 shrink-0" />Xem VR360</button>}
+              {station.vr360Experience?.verified && station.vr360Experience?.url && <button type="button" onClick={() => { audioService.playSfx('click'); if (station.id === 'g5-station-3') { setShowBaNaVrChoices(true); return; } if (station.vr360Experience?.embedMode === 'direct_link') { window.open(station.vr360Experience.url, '_blank', 'noopener,noreferrer'); } else { setShowVr(true); } }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-violet-200 px-2 py-2 text-xs font-black text-violet-900 shadow disabled:opacity-50"><Globe className="h-4 w-4 shrink-0" />Xem VR360</button>}
             </div>
             </div>
             {narrationMessage&&<p role="status" className="rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-950">{narrationMessage}</p>}
@@ -512,6 +513,19 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
         </section>
       </section>
 
+      {showBaNaVrChoices && (
+        <div className="fixed inset-0 z-[110] flex items-center justify-center bg-slate-950/85 p-4" role="dialog" aria-modal="true" aria-label="Chọn địa điểm tham quan 360 độ" onClick={() => setShowBaNaVrChoices(false)}>
+          <div className="w-full max-w-md rounded-3xl border border-violet-200 bg-white p-5 shadow-2xl sm:p-7" onClick={event => event.stopPropagation()}>
+            <div className="flex items-center justify-between gap-3"><h2 className="text-xl font-black text-slate-900">Khám phá Bà Nà – Hải Vân Quan 360°</h2><button type="button" onClick={() => setShowBaNaVrChoices(false)} aria-label="Đóng" className="rounded-xl bg-slate-100 p-2"><X className="h-5 w-5" /></button></div>
+            <p className="mt-2 text-sm text-slate-600">Chọn một địa điểm để tham quan thực tế ảo. Tour mở ở tab mới.</p>
+            <div className="mt-5 grid gap-3">
+              <a href="https://vr360.danangfantasticity.com/" target="_blank" rel="noopener noreferrer" onClick={() => setShowBaNaVrChoices(false)} className="flex items-center justify-between gap-3 rounded-2xl bg-violet-600 px-5 py-4 font-extrabold text-white hover:bg-violet-700"><span>🏰 Khám phá Bà Nà 360°</span><ExternalLink className="h-5 w-5 shrink-0" /></a>
+              <a href="https://vr360.huecit.vn/chanmaylangco/haivanquan/index.html" target="_blank" rel="noopener noreferrer" onClick={() => setShowBaNaVrChoices(false)} className="flex items-center justify-between gap-3 rounded-2xl border-2 border-sky-200 bg-sky-50 px-5 py-4 font-extrabold text-sky-900 hover:bg-sky-100"><span>⛰️ Khám phá Hải Vân Quan 360°</span><ExternalLink className="h-5 w-5 shrink-0" /></a>
+            </div>
+            <p className="mt-3 text-xs text-slate-500">Trong tour Đà Nẵng, chọn mục “Khu điểm du lịch” để xem Bà Nà.</p>
+          </div>
+        </div>
+      )}
       {showKnowledgeMap && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/85 p-4" role="dialog" aria-modal="true" aria-label="Bản đồ tri thức">
         <div className="relative max-h-[90vh] w-full max-w-4xl overflow-auto rounded-2xl bg-amber-50 p-5">
           <button type="button" onClick={() => setShowKnowledgeMap(false)} aria-label="Đóng bản đồ" className="absolute right-3 top-3 z-10 rounded-full bg-white p-2 shadow"><X className="h-5 w-5" /></button>

@@ -54,6 +54,8 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   const [iframeError, setIframeError] = useState(false);
   const [vrTimeoutReached, setVrTimeoutReached] = useState(false);
   const [showRewardModal, setShowRewardModal] = useState(false);
+  const [showGrade2NatureMap, setShowGrade2NatureMap] = useState(false);
+  const [natureMapPoint, setNatureMapPoint] = useState<'cham' | 'sontra'>('cham');
 
   const hotspot: ExplorationHotspot = station.hotspots[currentHotspotIdx] || station.hotspots[0];
 
@@ -212,6 +214,52 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
               {resource.kind === 'document' && <p className="text-xs text-slate-600">Bấm tên học liệu để mở tài liệu.</p>}
             </div>
           ))}
+        </section>
+      )}
+      {/* Optional geographic exploration for grade 2, station 4 only. No progress changes. */}
+      {station.id === 'g2-station-2' && (
+        <section className="overflow-hidden rounded-3xl border border-teal-200 bg-gradient-to-br from-sky-950 via-teal-900 to-emerald-800 text-white shadow-xl">
+          <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7">
+            <div className="space-y-2">
+              <span className="inline-flex rounded-full border border-amber-200/40 bg-amber-300/15 px-3 py-1 text-[11px] font-black tracking-wide text-amber-200">🗺️ BẢN ĐỒ KHÁM PHÁ • TRẠM 4</span>
+              <h3 className="text-xl font-black sm:text-2xl">Cù Lao Chàm ở đâu? Sơn Trà ở đâu?</h3>
+              <p className="max-w-xl text-sm leading-relaxed text-sky-100">Quan sát hai địa danh trên bản đồ thật. Chạm vào từng địa điểm để tìm hiểu biển, đảo và rừng xanh quê hương.</p>
+            </div>
+            <button type="button" onClick={() => { audioService.playSfx('click'); setShowGrade2NatureMap(value => !value); }} aria-expanded={showGrade2NatureMap} className="shrink-0 rounded-2xl bg-amber-300 px-5 py-3 text-sm font-black text-slate-950 shadow-lg transition hover:bg-amber-200">
+              {showGrade2NatureMap ? 'Thu gọn bản đồ' : '📍 Khám phá trên bản đồ'}
+            </button>
+          </div>
+          {showGrade2NatureMap && (
+            <div className="space-y-4 border-t border-white/20 bg-white/95 p-4 text-slate-900 sm:p-6">
+              <div className="grid grid-cols-2 gap-2">
+                <button type="button" onClick={() => { audioService.playSfx('click'); setNatureMapPoint('cham'); }} aria-pressed={natureMapPoint === 'cham'} className={`rounded-xl px-3 py-3 text-xs font-black transition sm:text-sm ${natureMapPoint === 'cham' ? 'bg-sky-700 text-white shadow-md' : 'bg-sky-50 text-sky-900 hover:bg-sky-100'}`}>🏝️ Cù Lao Chàm</button>
+                <button type="button" onClick={() => { audioService.playSfx('click'); setNatureMapPoint('sontra'); }} aria-pressed={natureMapPoint === 'sontra'} className={`rounded-xl px-3 py-3 text-xs font-black transition sm:text-sm ${natureMapPoint === 'sontra' ? 'bg-emerald-700 text-white shadow-md' : 'bg-emerald-50 text-emerald-900 hover:bg-emerald-100'}`}>🌳 Bán đảo Sơn Trà</button>
+              </div>
+              <div className="overflow-hidden rounded-2xl border border-sky-100 bg-sky-50">
+                <iframe
+                  key={natureMapPoint}
+                  title={natureMapPoint === 'cham' ? 'Bản đồ Cù Lao Chàm' : 'Bản đồ bán đảo Sơn Trà'}
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                  className="h-[280px] w-full border-0 sm:h-[380px]"
+                  src={natureMapPoint === 'cham'
+                    ? 'https://www.openstreetmap.org/export/embed.html?bbox=108.440%2C15.900%2C108.580%2C16.020&layer=mapnik&marker=15.950%2C108.510'
+                    : 'https://www.openstreetmap.org/export/embed.html?bbox=108.220%2C16.065%2C108.340%2C16.160&layer=mapnik&marker=16.115%2C108.295'}
+                />
+              </div>
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
+                <h4 className="text-base font-black text-slate-900">{natureMapPoint === 'cham' ? '🏝️ Cù Lao Chàm – Hòn Lao là đảo chính' : '🌳 Bán đảo Sơn Trà – rừng gặp biển'}</h4>
+                <p className="mt-2 text-sm leading-relaxed text-slate-700">{natureMapPoint === 'cham'
+                  ? 'Cù Lao Chàm là một quần đảo gồm 8 hòn đảo nhỏ; Hòn Lao là đảo chính. Khu dự trữ sinh quyển Cù Lao Chàm – Hội An được UNESCO công nhận năm 2009.'
+                  : 'Sơn Trà là bán đảo có rừng và biển, nơi sinh sống của nhiều loài động vật, thực vật; trong đó có voọc chà vá chân nâu cần được bảo vệ.'}</p>
+                <button type="button" onClick={() => audioService.speakNarration(natureMapPoint === 'cham' ? 'Cù Lao Chàm gồm tám hòn đảo nhỏ. Hòn Lao là đảo chính. Hãy cùng bảo vệ biển đảo quê hương.' : 'Sơn Trà là bán đảo có rừng và biển. Đây là nơi sinh sống của voọc chà vá chân nâu. Chúng ta cần bảo vệ thiên nhiên.', 'vi-VN')} className="mt-3 rounded-xl bg-sky-700 px-4 py-2.5 text-xs font-black text-white hover:bg-sky-800">🔊 Nghe giới thiệu</button>
+              </div>
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-600">
+                <span>Bản đồ © OpenStreetMap contributors • Cần kết nối mạng</span>
+                <a href={natureMapPoint === 'cham' ? 'https://www.openstreetmap.org/?mlat=15.950&mlon=108.510#map=12/15.950/108.510' : 'https://www.openstreetmap.org/?mlat=16.115&mlon=108.295#map=12/16.115/108.295'} target="_blank" rel="noopener noreferrer" className="font-bold text-sky-700 underline">Mở bản đồ lớn ↗</a>
+              </div>
+            </div>
+          )}
         </section>
       )}
       {/* Station-level verified VR360 preview */}

@@ -133,6 +133,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
   const choose = (id: string) => {
     if (submitted) return;
+    setCorrect(false);
     audioService.playSfx('click');
     setSelected(id);
   };
@@ -141,7 +142,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
     if (submitted || !selected || !hotspot.interaction) return;
     const ok = !!hotspot.interaction.options.find(option => option.id === selected)?.isCorrect;
     setCorrect(ok);
-    setSubmitted(true);
+    setSubmitted(ok);
+    if (!ok) setSelected(null);
     audioService.playSfx(ok ? 'correct' : 'wrong');
     if (ok) {
       setSessionCompletedHotspotIds(current =>
@@ -537,18 +539,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                     </button>
                   )}
 
-                  {submitted && !correct && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSubmitted(false);
-                        setSelected(null);
-                      }}
-                      className="w-full rounded-xl bg-amber-400 py-3.5 text-sm font-black text-slate-950"
-                    >
-                      THỬ LẠI
-                    </button>
-                  )}
+
                 </div>
               </div>
             ) : (

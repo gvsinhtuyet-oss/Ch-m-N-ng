@@ -1,7 +1,7 @@
 import {allHotspotsAnswered} from '../../features/stations/stageAccess';
 import {LearningMediaCredit} from '../LearningMediaCredit';
 import { contentService } from '../../services/ContentService';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService, NarrationState } from '../../services/AudioService';

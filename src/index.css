@@ -251,3 +251,17 @@
  .station-stage-tab-name { display:none; }
  .station-stage-tab-status { font-size:10px; }
 }
+
+/* Shared decorative Stage 1 map; real lesson images and controls stay intact. */
+.stage-one-map-surface {
+  background: #f8e8c7 url('/images/stage1-treasure-map-background.webp') center top / cover no-repeat;
+  border: 1px solid #d7af70;
+  border-radius: 1.75rem;
+  padding: clamp(12px, 2.5vw, 40px);
+  box-shadow: 0 10px 32px #75451220;
+}
+.stage-one-map-content { background: rgba(255, 247, 223, .32); }
+@media(max-width:767px) {
+  .stage-one-map-surface { padding: 10px; border-radius: 1.25rem; background-position: center top; }
+  .stage-one-map-content { padding: 8px; border-radius: 1rem; }
+}

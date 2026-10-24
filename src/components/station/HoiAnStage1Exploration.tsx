@@ -267,8 +267,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   };
 
   return (
-    <div className="min-h-0">
-      <section className="overflow-hidden rounded-[2rem] border border-orange-200/90 bg-white/92 p-3 shadow-[0_18px_55px_rgba(154,52,18,0.16)] backdrop-blur-xl">
+    <div className="stage-one-map-surface min-h-0">
+      <section className="stage-one-map-content overflow-hidden rounded-[2rem] border border-orange-200/90 p-3 shadow-[0_18px_55px_rgba(154,52,18,0.16)]">
         <div className="grid items-start gap-3 lg:grid-cols-[1.55fr_1fr]">
           {/* LEFT: immersive visual explorer */}
           <div className="flex min-h-0 flex-col gap-3">

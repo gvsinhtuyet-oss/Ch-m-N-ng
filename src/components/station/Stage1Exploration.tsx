@@ -212,7 +212,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   const isPaused = narrationState === 'paused';
 
   return (
-    <div className="space-y-6">
+    <div className="stage-one-map-surface space-y-6">
       {contentService.resources(station.id).length > 0 && (
         <section className="bg-white rounded-3xl p-5 border border-sky-200 space-y-3">
           <h3 className="font-black text-sky-950">Học liệu của trạm</h3>

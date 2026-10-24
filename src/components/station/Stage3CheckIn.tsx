@@ -64,165 +64,72 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => 
     selectedActionIds.length > 0;
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6">
-      {/* Header Banner */}
-      <div className="bg-white rounded-3xl p-6 shadow-sm border border-rose-100 flex items-center justify-between gap-4">
-        <div>
-          <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-rose-100 text-rose-800 mb-2 inline-block">
-            Chặng 3: Check-in cảm xúc
-          </span>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900">Chia sẻ cảm nhận & Lời hứa hành động</h2>
-          <p className="text-xs sm:text-sm text-slate-500 mt-1">
-            Không có câu trả lời đúng hay sai – hãy chia sẻ cảm xúc chân thật nhất của em nhé!
-          </p>
-        </div>
-        <div className="w-12 h-12 rounded-2xl bg-rose-500 text-white flex items-center justify-center shadow-lg shadow-rose-500/30 shrink-0">
-          <Heart className="w-7 h-7 fill-white" />
-        </div>
+    <div className="relative isolate w-full min-h-[560px] lg:h-[calc(100dvh-180px)] lg:min-h-[520px] overflow-hidden rounded-[1.6rem] border-2 border-white/70 bg-gradient-to-br from-sky-200 via-emerald-100 to-amber-100 shadow-xl">
+      {/* Decorative 3D-inspired landscape uses CSS only: no external image, no auth changes. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_15%_5%,rgba(255,255,255,.9),transparent_42%),radial-gradient(ellipse_at_90%_80%,rgba(16,185,129,.3),transparent_48%)]" />
+      <div className="relative z-10 flex h-full min-h-0 flex-col gap-2 p-2.5 sm:p-3 lg:p-4">
+        <header className="flex shrink-0 items-center justify-between gap-3 rounded-2xl border border-amber-200 bg-amber-50/95 px-3 py-2 shadow-md">
+          <div className="min-w-0">
+            <p className="text-[10px] font-black uppercase tracking-wider text-rose-700">Chặng 3 / 4</p>
+            <h2 className="truncate text-lg font-black text-amber-950 sm:text-xl">❤️ Checkin cảm xúc</h2>
+          </div>
+          <span className="hidden text-xs font-semibold text-amber-900 sm:block">Cảm nhận và hành động sau khám phá</span>
+        </header>
+        {!isSubmitted ? (
+          <>
+            <div className="grid min-h-0 flex-1 grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-3">
+              <section aria-label="Cảm xúc của em" className="flex min-h-0 flex-col gap-2 rounded-2xl border-2 border-white/80 bg-white/92 p-2.5 shadow-lg sm:p-3">
+                <h3 className="shrink-0 text-sm font-black text-rose-800 sm:text-base">💗 Cảm xúc của em</h3>
+                <p className="shrink-0 text-xs font-semibold text-slate-700">Em cảm thấy thế nào sau hành trình?</p>
+                <div className="grid shrink-0 grid-cols-3 gap-1.5">
+                  {checkIn.emotions.map(em => (
+                    <button type="button" key={em.id} aria-pressed={selectedEmotion === em.id}
+                      onClick={() => { audioService.playSfx('click'); setSelectedEmotion(em.id); }}
+                      className={`flex min-h-14 flex-col items-center justify-center rounded-xl border-2 px-1 py-1 text-center transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-600 ${selectedEmotion === em.id ? 'border-rose-500 bg-rose-100 shadow-sm' : 'border-rose-100 bg-white hover:bg-rose-50'}`}>
+                      <span className="text-xl sm:text-2xl">{em.emoji}</span><span className="text-[10px] font-bold leading-tight text-slate-800 sm:text-xs">{em.labelVi}</span>
+                    </button>
+                  ))}
+                </div>
+                <h4 className="shrink-0 text-xs font-black text-sky-900">{checkIn.rememberPromptVi}</h4>
+                <div className="grid min-h-0 flex-1 content-start gap-1.5">
+                  {checkIn.rememberOptions.map(opt => {
+                    const active = selectedRememberIds.includes(opt.id);
+                    return <button type="button" key={opt.id} aria-pressed={active} onClick={() => toggleRemember(opt.id)}
+                      className={`flex min-h-9 items-center justify-between gap-2 rounded-xl border px-2.5 py-1.5 text-left text-xs font-semibold leading-snug sm:text-sm ${active ? 'border-sky-500 bg-sky-100 text-sky-950' : 'border-slate-200 bg-white/95 text-slate-800 hover:bg-sky-50'}`}>
+                      <span>{opt.textVi}</span><span className="shrink-0">{active ? '✓' : '○'}</span>
+                    </button>;
+                  })}
+                </div>
+              </section>
+              <section aria-label="Việc em sẽ làm" className="flex min-h-0 flex-col gap-2 rounded-2xl border-2 border-white/80 bg-white/92 p-2.5 shadow-lg sm:p-3">
+                <h3 className="shrink-0 text-sm font-black text-emerald-800 sm:text-base">🌱 Việc em sẽ làm</h3>
+                <p className="shrink-0 text-xs font-semibold text-slate-700">{checkIn.actionPromptVi}</p>
+                <div className="grid min-h-0 flex-1 content-start gap-2">
+                  {checkIn.actionOptions.map(opt => {
+                    const active = selectedActionIds.includes(opt.id);
+                    return <button type="button" key={opt.id} aria-pressed={active} onClick={() => toggleAction(opt.id)}
+                      className={`flex min-h-12 items-center justify-between gap-2 rounded-xl border-2 px-3 py-2 text-left text-xs font-bold leading-snug sm:text-sm ${active ? 'border-emerald-500 bg-emerald-100 text-emerald-950 shadow-sm' : 'border-emerald-100 bg-white/95 text-slate-800 hover:bg-emerald-50'}`}>
+                      <span>{opt.textVi}</span><span className="shrink-0">{active ? '✓' : '○'}</span>
+                    </button>;
+                  })}
+                </div>
+                <p className="shrink-0 text-[11px] font-semibold text-emerald-900">Chọn ít nhất một việc em muốn thực hiện.</p>
+              </section>
+            </div>
+            <button type="button" onClick={handleSubmit} disabled={!isValid}
+              className="flex min-h-11 w-full shrink-0 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-rose-500 to-emerald-600 px-4 py-2 text-sm font-black text-white shadow-lg transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-45">
+              <Sparkles className="h-4 w-4" /> Hoàn thành checkin – Nhận dấu ấn
+            </button>
+          </>
+        ) : (
+          <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-4 rounded-2xl border-2 border-white bg-white/90 p-5 text-center">
+            <span className="text-6xl">{checkIn.emotions.find(e => e.id === selectedEmotion)?.emoji || '❤️'}</span>
+            <h3 className="text-xl font-black text-emerald-950">Cảm ơn em đã chia sẻ!</h3>
+            <p className="max-w-lg text-sm text-slate-700">Em đã hoàn thành chặng cảm xúc và chọn một việc ý nghĩa để thực hiện.</p>
+            <button type="button" onClick={onCompleteStage} className="rounded-xl bg-emerald-700 px-6 py-3 text-sm font-black text-white">Sang chặng 4 – Dấu ấn hành trình <ChevronRight className="inline h-4 w-4" /></button>
+          </div>
+        )}
       </div>
-
-      {!isSubmitted ? (
-        <div className="space-y-6">
-          {/* Step 1: Emotion selection */}
-          <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
-            <h3 className="font-extrabold text-sm sm:text-base text-slate-900 mb-3 flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-xs font-bold">1</span>
-              Cảm xúc của em lúc này về chuyến khám phá?
-            </h3>
-            <div className="grid grid-cols-3 gap-3">
-              {checkIn.emotions.map((em) => {
-                const isSelected = selectedEmotion === em.id;
-                return (
-                  <button
-                    key={em.id}
-                    onClick={() => {
-                      audioService.playSfx('click');
-                      setSelectedEmotion(em.id);
-                    }}
-                    className={`p-4 rounded-2xl border text-center transition flex flex-col items-center gap-2 ${
-                      isSelected
-                        ? 'border-rose-400 bg-rose-50/80 ring-2 ring-rose-300 scale-102 shadow-xs'
-                        : 'border-slate-200 hover:bg-slate-50'
-                    }`}
-                  >
-                    <span className="text-3xl sm:text-4xl">{em.emoji}</span>
-                    <span className={`text-xs font-bold ${isSelected ? 'text-rose-900' : 'text-slate-700'}`}>
-                      {em.labelVi}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Step 2: What I remember most */}
-          <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
-            <h3 className="font-extrabold text-sm sm:text-base text-slate-900 mb-1 flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center text-xs font-bold">2</span>
-              {checkIn.rememberPromptVi}
-            </h3>
-            <p className="text-xs text-slate-400 mb-3">(Em có thể chọn 1 hoặc nhiều điều)</p>
-
-            <div className="space-y-2.5">
-              {checkIn.rememberOptions.map((opt) => {
-                const isChecked = selectedRememberIds.includes(opt.id);
-                return (
-                  <button
-                    key={opt.id}
-                    onClick={() => toggleRemember(opt.id)}
-                    className={`w-full p-3.5 rounded-2xl border text-left text-xs sm:text-sm font-medium transition flex items-center justify-between gap-3 ${
-                      isChecked
-                        ? 'border-sky-500 bg-sky-50 text-sky-950 font-semibold ring-1 ring-sky-300'
-                        : 'border-slate-200 hover:bg-slate-50 text-slate-700'
-                    }`}
-                  >
-                    <span>{opt.textVi}</span>
-                    <div
-                      className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 ${
-                        isChecked ? 'bg-sky-600 border-sky-600 text-white' : 'border-slate-300'
-                      }`}
-                    >
-                      {isChecked && <Check className="w-3.5 h-3.5" />}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Step 3: Action plan */}
-          <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
-            <h3 className="font-extrabold text-sm sm:text-base text-slate-900 mb-1 flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xs font-bold">3</span>
-              {checkIn.actionPromptVi}
-            </h3>
-            <p className="text-xs text-slate-400 mb-3">(Chọn những hành động em muốn thực hiện)</p>
-
-            <div className="space-y-2.5">
-              {checkIn.actionOptions.map((opt) => {
-                const isChecked = selectedActionIds.includes(opt.id);
-                return (
-                  <button
-                    key={opt.id}
-                    onClick={() => toggleAction(opt.id)}
-                    className={`w-full p-3.5 rounded-2xl border text-left text-xs sm:text-sm font-medium transition flex items-center justify-between gap-3 ${
-                      isChecked
-                        ? 'border-emerald-500 bg-emerald-50 text-emerald-950 font-semibold ring-1 ring-emerald-300'
-                        : 'border-slate-200 hover:bg-slate-50 text-slate-700'
-                    }`}
-                  >
-                    <span>{opt.textVi}</span>
-                    <div
-                      className={`w-5 h-5 rounded-md border flex items-center justify-center shrink-0 ${
-                        isChecked ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-slate-300'
-                      }`}
-                    >
-                      {isChecked && <Check className="w-3.5 h-3.5" />}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Submit button */}
-          <div className="text-center pt-2">
-            <button
-              onClick={handleSubmit}
-              disabled={!isValid}
-              className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-rose-500 to-sky-600 hover:from-rose-600 hover:to-sky-700 disabled:opacity-40 text-white font-extrabold text-sm shadow-lg shadow-rose-500/25 transition active:scale-95 inline-flex items-center gap-2"
-            >
-              <Sparkles className="w-4 h-4 text-amber-300" />
-              <span>GỬI CHECK-IN & NHẬN VẬT PHẨM</span>
-            </button>
-          </div>
-        </div>
-      ) : (
-        /* Submitted view */
-        <div className="bg-white rounded-3xl p-8 shadow-sm border border-rose-200 text-center space-y-6">
-          <div className="w-20 h-20 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center mx-auto text-4xl shadow-inner">
-            {checkIn.emotions.find(e => e.id === selectedEmotion)?.emoji || '❤️'}
-          </div>
-
-          <div>
-            <h3 className="text-2xl font-black text-slate-900">Cảm ơn em đã gửi lời cảm nhận!</h3>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto mt-2 leading-relaxed">
-              Những cảm xúc đẹp và cam kết bảo vệ quê hương của em đã được lưu lại trong Hộ chiếu Hành trình số.
-            </p>
-          </div>
-
-          <div>
-            <button
-              onClick={onCompleteStage}
-              className="px-8 py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-sm shadow-lg shadow-sky-600/30 transition active:scale-95 inline-flex items-center gap-2"
-            >
-              <span>Tiến vào Chặng 4: Hộ chiếu hành trình</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      )}
-
       {/* Stage 3 Reward Claim Modal */}
       {showRewardModal && (
         <RewardClaimModal

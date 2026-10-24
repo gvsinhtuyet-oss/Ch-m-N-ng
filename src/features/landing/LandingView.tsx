@@ -453,7 +453,7 @@ export const LandingView: React.FC = () => {
         </div>
         <div className="text-[11px] sm:text-xs">
           <span>Thiết kế: </span>
-          <span className="font-bold text-amber-300">Trương Sinh Tuyết – Nguyễn Thị Thanh</span>
+          <span className="font-bold text-amber-300">Trương Sinh Tuyết</span>
         </div>
       </footer>
 

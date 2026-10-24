@@ -182,6 +182,13 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
     }
   };
 
+  // Đúng: tự chuyển điểm sau một nhịp phản hồi, không cần nút đi tiếp.
+  useEffect(() => {
+    if (!answerSubmitted || !isCorrect || freeReview) return;
+    const timer = window.setTimeout(() => handleNextHotspot(), 950);
+    return () => window.clearTimeout(timer);
+  }, [answerSubmitted, isCorrect, currentHotspotIdx, freeReview]);
+
   const totalHotspots = station.hotspots.length;
   const isLastHotspot = currentHotspotIdx === totalHotspots - 1;
   const isPlaying = narrationState === 'playing';
@@ -602,7 +609,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                     onClick={handleNextHotspot}
                     className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2 active:scale-95"
                   >
-                    <span>{isLastHotspot ? 'Hoàn thành Chặng 1 – Nhận phần thưởng!' : 'Khám phá điểm tiếp theo'}</span>
+                    <span>{isLastHotspot ? 'Hoàn thành Chặng 1 – Nhận phần thưởng!' : 'ĐI TIẾP'}</span>
                     <ChevronRight className="w-5 h-5" />
                   </button>
                 )}

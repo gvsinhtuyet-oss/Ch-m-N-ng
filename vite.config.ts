@@ -1,11 +1,11 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { defineConfig, loadEnv } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
-export default defineConfig(({mode}) => {
+export default defineConfig(({mode, command}) => {
   // Server-only environment values are never injected into browser bundles.
   const serverEnv=loadEnv(mode,process.cwd(),'');
   for(const name of ['GOOGLE_CLIENT_ID','AUTH_FIRESTORE_PROJECT','AUTH_FIRESTORE_DATABASE','AUTH_ADMIN_EMAIL','AUTH_ADMIN_PASSWORD','CONTENT_DATA_DIR','CHAM_ENV','GEMINI_API_KEY']) {
@@ -68,7 +68,11 @@ export default defineConfig(({mode}) => {
           globPatterns: ['index.html', 'registerSW.js', 'assets/*.{js,css}', '*.{ico,png,svg}'],
           // Keep only startup scripts referenced by HTML, never lazy features.
           manifestTransforms: [async entries => {
-            const html = readFileSync(path.resolve('dist/index.html'), 'utf8');
+            const shellPath = path.resolve('dist/index.html');
+            if (command !== 'build' || !existsSync(shellPath)) {
+              return { manifest: entries, warnings: [] };
+            }
+            const html = readFileSync(shellPath, 'utf8');
             const startupScripts = new Set(Array.from(html.matchAll(/(?:src|href)=["']\/([^"']+\.js)["']/g), match => match[1]));
             return {
               manifest: entries.filter(entry => !entry.url.endsWith('.js') || startupScripts.has(entry.url)),
@@ -112,14 +116,14 @@ export default defineConfig(({mode}) => {
           ],
         },
         devOptions: {
-          enabled: true,
+          enabled: false,
           type: 'module',
         },
       }),
     ],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, './src'),
+        '@': path.resolve(process.cwd(), './src'),
       },
     },
     server: {
@@ -128,4 +132,6 @@ export default defineConfig(({mode}) => {
     },
   };
 });
+
+
 

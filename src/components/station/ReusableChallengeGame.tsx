@@ -17,7 +17,7 @@ export interface GameTheme {
   modeOrder?: readonly GameMode[];
 }
 export const DEFAULT_GAME_THEMES: Record<string, GameTheme> = {
-  'g3-station-1': { title: 'Nhà thám hiểm biển xanh', intro: 'Khám phá Mỹ Khê – Bàn Than và vui chơi an toàn nhé!', backgrounds: {intro:'/games/grade3-my-khe-ban-than/intro.svg',playing:'/games/grade3-my-khe-ban-than/playing.svg',victory:'/games/grade3-my-khe-ban-than/victory.svg'} },
+  'g3-station-1': { title: 'Mật mã hai miền biển', intro: 'Vượt qua 5 thử thách tại Mỹ Khê – Bàn Than, truy tìm dấu vết và trở thành người bảo vệ biển xanh!', backgrounds: {intro:'/games/grade3-my-khe-ban-than/intro.svg',playing:'/games/grade3-my-khe-ban-than/playing.svg',victory:'/games/grade3-my-khe-ban-than/victory.svg'} },
   'g3-station-2': { title: 'Giải mã dấu ấn lịch sử' },
   'g3-station-3': { title: 'Sắc màu văn hóa' },
   'g3-station-4': { title: 'Nghệ nhân nhí Nam Ô' },

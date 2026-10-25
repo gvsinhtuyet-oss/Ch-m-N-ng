@@ -38,10 +38,11 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   const [pairs,setPairs]=useState<Record<number,number>>({});
   const [muted,setMuted]=useState(audio.isMuted);
   const completed=useRef(false),clickLocked=useRef(false);
+  const continueTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
   const selectedChoice=useRef<number|null>(null);
   const question=config.questions[state.index];
   const locked=state.result!==null;
-  useEffect(()=>{validateConfig(config);return ()=>audio.stop();},[config]);
+  useEffect(()=>{validateConfig(config);return ()=>{audio.stop();if(continueTimer.current)clearTimeout(continueTimer.current);};},[config]);
   useEffect(()=>{setPairs({});clickLocked.current=false;},[state.index,state.phase,state.reviewing]);
   useEffect(()=>{
     if(state.result===null)return;
@@ -74,7 +75,7 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
           <div className="controls">{question.kind==='match'&&<button className="btn" disabled={locked||Object.keys(pairs).length!==3} onClick={()=>answer(isCorrectMatch(question.solution,pairs),'confirm')}>✓ XÁC NHẬN</button>}</div>
         </>}
         {state.phase==='review'&&<div className="reviewprompt"><h2>🔎 TRUY LẠI DẤU VẾT</h2><p>Em có {state.missed.length} câu cần thử lại. Hãy hoàn thành tất cả thử thách nhé!</p><button className="btn" onClick={()=>act('retry',()=>dispatch({type:'review'}))}>🔍 THỬ LẠI CÂU SAI</button></div>}
-        {victory&&<div className="victory"><Fireworks/><div className="victory-content"><div className="victory-message"><div className="victory-praise">{config.victory.praise}</div><div className="victory-achievement">{config.victory.achievement}</div><div className="victory-reward">{config.victory.reward}</div></div><div className="victory-buttons"><button className="btn replay-btn" onClick={restart}>↻ CHƠI LẠI</button><button className="btn secondary continue-btn" onClick={()=>{if(completed.current)return;completed.current=true;audio.stop();audio.play('unlock');onComplete();}}>➜ TIẾP TỤC HÀNH TRÌNH</button></div></div></div>}
+        {victory&&<div className="victory"><Fireworks/><div className="victory-content"><div className="victory-message"><div className="victory-praise">{config.victory.praise}</div><div className="victory-achievement">{config.victory.achievement}</div><div className="victory-reward">{config.victory.reward}</div></div><div className="victory-buttons"><button className="btn replay-btn" onClick={restart}>↻ CHƠI LẠI</button><button className="btn secondary continue-btn" onClick={()=>{if(completed.current)return;completed.current=true;audio.stop();audio.play('unlock');continueTimer.current=setTimeout(onComplete,240);}}>➜ TIẾP TỤC HÀNH TRÌNH</button></div></div></div>}
       </section>
     </div>
   </main>;

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Maximize2, Minimize2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import type { Station } from '../../types';
 import { audioService } from '../../services/AudioService';
@@ -31,7 +32,7 @@ const MODE_EMOJI: Record<GameMode, string> = {
   pick: '🎯', flip: '🃏', detective: '🔍', classify: '🧺',
   pair: '🧩', unlock: '🔑', journey: '🧭', treasure: '🎁',
 };
-const level = (i: number) => i < 2 ? 'Mức 1 · Dễ' : i < 4 ? 'Mức 2 · Trung bình' : 'Mức 3 · Vận dụng';
+const level = (i: number) => i < 2 ? 'Mức 1 · Nhận biết' : i < 4 ? 'Mức 2 · Thông hiểu' : 'Mức 3 · Vận dụng';
 const palettes = ['from-sky-900 via-cyan-800 to-blue-600', 'from-amber-950 via-orange-800 to-yellow-700', 'from-purple-950 via-fuchsia-800 to-pink-700', 'from-teal-950 via-emerald-800 to-teal-600', 'from-emerald-950 via-green-800 to-lime-700'];
 const getMode = (theme: GameTheme, station: Station, i: number): GameMode => {
   const cycle = theme.modeOrder?.length ? theme.modeOrder : GAME_MODES;
@@ -48,6 +49,10 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
   const [locked, setLocked] = useState(false);
   const [incorrect, setIncorrect] = useState(false);
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const gameRef = useRef<HTMLElement>(null);
+  const [fullscreen, setFullscreen] = useState(false);
+  useEffect(() => { const sync = () => setFullscreen(document.fullscreenElement === gameRef.current); document.addEventListener('fullscreenchange', sync); return () => document.removeEventListener('fullscreenchange', sync); }, []);
+  const toggleFullscreen = async () => { try { if(document.fullscreenElement === gameRef.current) await document.exitFullscreen(); else await gameRef.current?.requestFullscreen(); } catch { /* Remain in responsive embedded view if fullscreen is unavailable. */ } };
   const questionSet = station.challenge.questions || [];
   const questions = useMemo(() => questionSet.map(q => ({
     ...q, options: [...q.options].sort((a,b) => a.id.localeCompare(b.id)),
@@ -92,12 +97,12 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
   // Every game works with tapping: no drag-only controls or small targets.
   const reveal = (id:string) => { if(!locked) {setRevealed(v=>v.includes(id)?v:[...v,id]);audioService.playSfx('click');} };
   const isRevealMode = mode==='flip'||mode==='treasure'||mode==='unlock';
-  return <section className={`relative mx-auto min-h-[600px] w-full max-w-5xl overflow-hidden rounded-3xl bg-gradient-to-br ${palette} text-white shadow-xl`}
+  return <section ref={gameRef} className={`relative mx-auto min-h-[min(600px,100dvh)] w-full max-w-5xl overflow-y-auto rounded-3xl bg-gradient-to-br ${palette} text-white shadow-xl`}
     style={backdrop ? {backgroundImage:`linear-gradient(180deg,rgba(7,21,43,.52),rgba(7,21,43,.72)),url("${backdrop}")`,backgroundSize:'cover',backgroundPosition:'center'} : undefined}>
-    <div className="relative mx-auto flex min-h-[600px] max-w-3xl flex-col p-4 sm:p-8">
+    <div className="relative mx-auto flex min-h-[min(600px,100dvh)] max-w-3xl flex-col p-3 sm:p-8">
       <header className="mb-5 flex items-center justify-between gap-3">
         <div><p className="text-xs font-black tracking-wide text-white/80">CHẶNG 2 · THỬ THÁCH KHÁM PHÁ</p><h2 className="mt-1 text-xl font-black sm:text-3xl">{theme.title}</h2></div>
-        <button onClick={reset} type="button" className="min-h-11 shrink-0 rounded-xl border border-white/40 bg-black/30 px-3 text-sm font-bold">↻ Chơi lại</button>
+        <div className="flex shrink-0 flex-wrap gap-2"><button onClick={toggleFullscreen} type="button" aria-label={fullscreen ? "Thoát toàn màn hình" : "Toàn màn hình"} className="flex min-h-11 items-center gap-1 rounded-xl border border-white/40 bg-black/30 px-3 text-sm font-bold">{fullscreen?<Minimize2 size={18}/>:<Maximize2 size={18}/>}<span className="hidden sm:inline">{fullscreen?"Thu nhỏ":"Toàn màn hình"}</span></button><button onClick={reset} type="button" className="min-h-11 rounded-xl border border-white/40 bg-black/30 px-3 text-sm font-bold">↻ Chơi lại</button></div>
       </header>
       {screen==='intro' && <div className="my-auto rounded-3xl border border-white/40 bg-slate-950/65 p-6 text-center shadow-xl backdrop-blur-sm animate-in fade-in zoom-in-95 duration-500 sm:p-10">
         <div className="mb-3 text-6xl" aria-hidden="true">🗺️</div>
@@ -142,7 +147,7 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
       {screen==='victory' && <div className="my-auto rounded-3xl border border-yellow-200 bg-slate-950/75 p-7 text-center shadow-xl backdrop-blur-sm animate-in zoom-in-95 duration-500 sm:p-12">
         <div className="text-6xl" aria-hidden="true">🎉🏆🎊</div><h3 className="mt-4 text-3xl font-black">CHÚC MỪNG CHIẾN THẮNG!</h3>
         <p className="mt-3 text-lg">Em đã hoàn thành cả {questions.length} thử thách. Thật tuyệt vời!</p>
-        <button type="button" onClick={onCompleteStage} className="mt-7 min-h-14 w-full rounded-2xl bg-yellow-400 px-6 font-black text-slate-950 sm:w-auto">TIẾP TỤC HÀNH TRÌNH →</button>
+        <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row"><button type="button" onClick={reset} className="min-h-14 rounded-2xl border-2 border-white/60 bg-white/20 px-6 font-black text-white">↻ CHƠI LẠI</button><button type="button" onClick={onCompleteStage} className="min-h-14 rounded-2xl bg-yellow-400 px-6 font-black text-slate-950">TIẾP TỤC HÀNH TRÌNH →</button></div>
       </div>}
     </div>
   </section>;

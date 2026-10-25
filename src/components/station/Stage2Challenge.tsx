@@ -7,6 +7,8 @@ import { progressService } from '../../services/ProgressService';
 import { ApprovedStationGame } from './ApprovedStationGame';
 import { ReusableChallengeGame } from './ReusableChallengeGame';
 import { MyKheBanThanV12 } from './MyKheBanThanV12';
+import { SharedStage2 } from '../../games/stage2/SharedStage2';
+import { hoangDieuConfig } from '../../games/stage2/hoangDieu';
 import { HoangDieuPhanChauTrinhV18 } from './HoangDieuPhanChauTrinhV18';
 import { Grade3V12StyleGame, isGrade3V12StyleStation } from './Grade3V12StyleGame';
 import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle, Gamepad2 } from 'lucide-react';
@@ -184,6 +186,9 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
 
   // Approved V12: real Stage 2 completion transitions to the app's Stage 3.
   if (station.id === 'g3-station-2') {
+    if (new URLSearchParams(window.location.search).get('stage2-engine') === 'shared-v1') {
+      return <SharedStage2 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} config={hoangDieuConfig}/>;
+    }
     return <HoangDieuPhanChauTrinhV18 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} />;
   }
   if (station.id === 'g3-station-1') {

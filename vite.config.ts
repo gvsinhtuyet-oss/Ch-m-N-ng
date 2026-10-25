@@ -127,6 +127,7 @@ export default defineConfig(({mode, command}) => {
       },
     },
     server: {
+      allowedHosts: ['terminal.local'],
       hmr: process.env.DISABLE_HMR !== 'true',
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },

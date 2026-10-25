@@ -1,0 +1,3338 @@
+[
+  {
+    "stationId": "g1-station-1",
+    "stationName": "Quê hương em",
+    "grade": 1,
+    "batch": 1,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g1-station-1-challenge-1",
+        "questionVi": "Lan chưa nhớ tên xã hoặc phường của trường. Em khuyên bạn làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Nhờ thầy cô giúp đọc và kiểm tra",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Chọn đại một tên",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Nói giống bạn ở trường khác",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Có thể nhờ thầy cô giúp để nói đúng tên."
+      },
+      {
+        "id": "g1-station-1-challenge-2",
+        "questionVi": "Bạn định dừng giữa đường để vẽ cảnh. Em khuyên bạn thế nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Đứng giữa đường vẽ cho rõ",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Rủ thêm bạn đứng giữa đường cùng vẽ",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Đứng ở nơi an toàn rồi về lớp mới vẽ",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Quan sát từ nơi an toàn cùng người lớn; không đứng giữa đường để vẽ."
+      },
+      {
+        "id": "g1-station-1-challenge-3",
+        "questionVi": "Hai bạn cùng muốn giới thiệu quê hương trước. Nhóm nên làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Để một bạn kể hết phần của nhóm",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Thống nhất lần lượt, ai cũng được nói",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Chỉ cho bạn nói to nhất kể",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Chia lượt giúp các bạn đều có cơ hội chia sẻ về quê hương."
+      },
+      {
+        "id": "g1-station-1-challenge-4",
+        "questionVi": "Bạn mới hỏi về nơi em ở. Cách giới thiệu nào rõ hơn?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Nói tên khu vực và một cảnh vật quen thuộc",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Chỉ nói: Đẹp lắm",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Kể một nơi chưa từng biết như nơi mình ở",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Giới thiệu điều cụ thể em biết; không cần kể địa chỉ nhà riêng."
+      },
+      {
+        "id": "g1-station-1-challenge-5",
+        "questionVi": "Bạn kể đường đến trường khác với em. Em nên làm gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Bắt bạn kể giống mình",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Ngắt lời và không cho bạn nói",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Lắng nghe vì mỗi bạn có thể đi đường khác",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Tôn trọng trải nghiệm của bạn."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g1-station-4",
+    "stationName": "Thành Điện Hải",
+    "grade": 1,
+    "batch": 1,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g1-station-4-challenge-1",
+        "questionVi": "Thấy bạn định trèo lên hiện vật để chụp ảnh, em làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Nhắc bạn xuống và báo người lớn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Trèo lên cùng bạn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Cổ vũ bạn đứng cao hơn",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Giữ an toàn và bảo vệ hiện vật khi tham quan."
+      },
+      {
+        "id": "g1-station-4-challenge-2",
+        "questionVi": "Lớp chuẩn bị tham quan thành. Kế hoạch nào phù hợp?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Đến nơi rồi tự tách nhóm",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ mang đồ chơi để chơi đuổi bắt",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Thống nhất giờ đi, người đi cùng và điều muốn tìm hiểu",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Chuẩn bị chuyến đi cùng thầy cô và người lớn."
+      },
+      {
+        "id": "g1-station-4-challenge-3",
+        "questionVi": "Em muốn biết thêm về một khẩu súng trưng bày ở thành. Nên hỏi câu nào?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Có thể dùng súng làm đồ chơi không?",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Khẩu súng này từng được dùng để làm gì ạ?",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Em có thể giấu súng vào cặp không?",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Đặt câu hỏi về công dụng giúp tìm hiểu hiện vật sâu hơn việc chỉ gọi tên."
+      },
+      {
+        "id": "g1-station-4-challenge-4",
+        "questionVi": "Muốn nhắc bạn nhớ di tích, em chọn lời nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Giữ gìn di tích, biết ơn người có công",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Đến thành cứ viết tên lên tường",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Có thể mang hiện vật về nhà",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Lời nhắc cần thể hiện sự trân trọng di tích."
+      },
+      {
+        "id": "g1-station-4-challenge-5",
+        "questionVi": "Nhóm thấy một tấm biển hướng dẫn chưa hiểu. Nên làm gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Đoán rồi kể như điều chắc chắn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Bỏ nhóm đi tìm chỗ khác",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nhờ thầy cô hoặc người hướng dẫn giải thích",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Hỏi người hướng dẫn khi chưa hiểu."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g1-station-2",
+    "stationName": "Trò chơi dân gian",
+    "grade": 1,
+    "batch": 1,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g1-station-2-challenge-1",
+        "questionVi": "Sân chơi có đá và đồ vật vướng chân. Nhóm nên làm gì trước?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Nhờ người lớn chọn và dọn chỗ chơi an toàn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Bịt mắt chơi ngay",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chạy nhanh qua chỗ vướng",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Chỉ chơi khi có nơi bằng phẳng, đủ rộng và an toàn."
+      },
+      {
+        "id": "g1-station-2-challenge-2",
+        "questionVi": "Người cổ vũ định chỉ hướng cho người bắt dê. Em nhắc gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Nói thật to bạn dê đang ở đâu",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Kéo người bịt mắt đến chỗ bạn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Cổ vũ nhưng không chỉ hướng",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Giữ luật để trò chơi công bằng."
+      },
+      {
+        "id": "g1-station-2-challenge-3",
+        "questionVi": "Một bạn không muốn bị bịt mắt. Nhóm nên làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Ép bạn chơi vì cả nhóm đã chọn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Lắng nghe, cho bạn chọn vai phù hợp",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Trêu bạn nhút nhát",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Tôn trọng cảm xúc và sự tự nguyện của bạn."
+      },
+      {
+        "id": "g1-station-2-challenge-4",
+        "questionVi": "Khi chơi có bạn ngã, nhóm nên làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Dừng chơi và báo người lớn giúp bạn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Tiếp tục để đủ lượt",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Cười rồi bỏ đi",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Sự an toàn của bạn quan trọng hơn thắng thua."
+      },
+      {
+        "id": "g1-station-2-challenge-5",
+        "questionVi": "Chơi xong, hai bạn đều nhận mình thắng. Cả nhóm nên làm gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Cãi nhau đến khi một bạn khóc",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Tự đổi luật để mình thắng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Cùng xem lại luật đã thống nhất và nhờ cô hỗ trợ",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Khi bất đồng kết quả, cần bình tĩnh đối chiếu luật đã thống nhất."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g1-station-3",
+    "stationName": "Những dòng suối ở thành phố Đà Nẵng",
+    "grade": 1,
+    "batch": 1,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g1-station-3-challenge-1",
+        "questionVi": "Thấy nước trong, bạn định tự xuống suối. Em nên làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Nhắc bạn ở nơi an toàn và hỏi người lớn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Xuống theo vì nước nhìn đẹp",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Rủ bạn đi xa hơn khỏi nhóm",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Nước trong không có nghĩa là an toàn để tự xuống."
+      },
+      {
+        "id": "g1-station-3-challenge-2",
+        "questionVi": "Ăn nhẹ xong bên suối, nhóm nên xử lí vỏ hộp thế nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Thả xuống dòng nước",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Giấu dưới một tảng đá",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Mang tới nơi bỏ rác đúng quy định",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Giữ cảnh quan sạch để mọi người cùng thưởng thức."
+      },
+      {
+        "id": "g1-station-3-challenge-3",
+        "questionVi": "Đến giờ về, một bạn vẫn muốn ở lại bên suối. Em làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Tự đi đường khác về trước",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nhắc bạn trở về cùng đoàn theo người lớn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Ở lại với bạn mà không báo ai",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Đi và về cùng đoàn giúp người phụ trách bảo đảm an toàn cho mọi người."
+      },
+      {
+        "id": "g1-station-3-challenge-4",
+        "questionVi": "Trời mưa to trước buổi đi suối. Nhóm nên chọn cách nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Nhờ người lớn đổi kế hoạch, xem tư liệu ở lớp",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Vẫn đi vì đã chuẩn bị đồ ăn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Tự ra suối xem nước rồi mới hỏi cô",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Có thể tìm hiểu cảnh đẹp bằng tư liệu khi điều kiện tham quan không bảo đảm."
+      },
+      {
+        "id": "g1-station-3-challenge-5",
+        "questionVi": "Đoàn đang nghe giới thiệu bên suối nhưng bạn nói chuyện rất to. Em nhắc gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Hét to hơn bạn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Mở nhạc thật lớn để vui hơn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nói nhỏ để cùng nghe và không làm phiền mọi người",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Giữ âm lượng phù hợp giúp mọi người lắng nghe và thưởng thức không gian thiên nhiên."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g1-station-5",
+    "stationName": "Món ăn truyền thống",
+    "grade": 1,
+    "batch": 1,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g1-station-5-challenge-1",
+        "questionVi": "Bạn không ăn được đậu phụng. Trước khi dùng mì, bạn nên làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Báo người lớn để chọn phần ăn phù hợp",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Cố ăn cho giống mọi người",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Giấu rồi không nói với ai",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Mỗi bạn cần phần ăn phù hợp với mình."
+      },
+      {
+        "id": "g1-station-5-challenge-2",
+        "questionVi": "Tô đã có mì, tôm, thịt và trứng. Theo cách trình bày vừa học, bước phù hợp tiếp theo là gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Bỏ tô đi rồi lấy tô khác",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Mang tô chưa xong cất vào cặp",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nhờ người lớn chan nước dùng",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Cùng người lớn thực hiện trình tự; tránh tự cầm nước nóng."
+      },
+      {
+        "id": "g1-station-5-challenge-3",
+        "questionVi": "Bạn thích một món khác em trong buổi giới thiệu ẩm thực. Em nên nói gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ món mình thích mới ngon",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Mỗi bạn có món yêu thích riêng, mình cùng lắng nghe nhé",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Món của bạn không đáng được giới thiệu",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Tôn trọng sở thích khác nhau giúp cùng tìm hiểu sự phong phú của ẩm thực."
+      },
+      {
+        "id": "g1-station-5-challenge-4",
+        "questionVi": "Ở nhà có nồi nước dùng nóng. Việc nào vừa sức với em?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Nhờ người lớn xử lí; em phụ bày khăn hoặc thìa",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Tự bê nồi cho nhanh",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Đùa nghịch cạnh bếp",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Chọn việc an toàn, người lớn xử lí dao và đồ nóng."
+      },
+      {
+        "id": "g1-station-5-challenge-5",
+        "questionVi": "Ăn xong món người thân chuẩn bị, em thể hiện sự trân trọng thế nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Chê món của nhà bạn để khen nhà mình",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Bỏ thừa rồi vứt bừa bãi",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Cảm ơn và phụ dọn việc vừa sức",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Biết ơn người làm món ăn và giữ nơi ăn gọn sạch."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g2-station-3",
+    "stationName": "Nhà thờ Nguyễn Văn Thoại – Nhà lưu niệm Huỳnh Thúc Kháng",
+    "grade": 2,
+    "batch": 2,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "q1",
+        "questionVi": "Lớp có hai điểm tham quan nhưng chỉ đủ thời gian đi một nơi. Nên làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Cùng cô chọn mục tiêu và sắp lịch phù hợp",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Chia nhóm tự đi mà không báo cô",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Vội đi cả hai rồi bỏ qua giờ về",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Một chuyến tìm hiểu di tích cần mục tiêu và lịch trình phù hợp với thời gian."
+      },
+      {
+        "id": "q2",
+        "questionVi": "Làm thẻ giới thiệu Nguyễn Văn Thoại, nhóm nên chọn thông tin nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Ông xây mọi ngôi nhà ở Đà Nẵng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Ông sáng tạo tất cả lễ hội của địa phương",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Ông góp sức lập chợ, xây đình và chùa ở quê hương An Hải",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Tài liệu nêu những đóng góp cụ thể của ông cho quê hương An Hải; không mở rộng thành mọi công trình."
+      },
+      {
+        "id": "q3",
+        "questionVi": "Nhóm có ảnh nhà thờ và nhà lưu niệm nhưng mất chú thích. Nên làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Ghi hai ảnh cùng một tên cho nhanh",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Đối chiếu tài liệu, nhờ cô kiểm tra rồi ghi đúng tên",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Đặt tên theo ảnh mình thích",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Hai di tích gắn với hai nhân vật khác nhau; cần xác định đúng ảnh trước khi giới thiệu."
+      },
+      {
+        "id": "q4",
+        "questionVi": "Tìm hiểu cụ Huỳnh, việc nào giúp em học theo tinh thần ham học?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Đọc thêm điều chưa hiểu và hỏi thầy cô",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Chỉ chép đáp án mà không tìm hiểu",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Bỏ qua mọi câu hỏi khó",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Học hỏi chủ động là việc vừa sức để noi gương tinh thần ham học của cụ."
+      },
+      {
+        "id": "q5",
+        "questionVi": "Nhóm có nhiều điều muốn hỏi về di tích nhưng thời gian ít. Cách nào hiệu quả?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Tất cả cùng hỏi to một lúc",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ hỏi những câu không liên quan bài học",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Chọn câu hỏi rõ nhất, cử bạn hỏi rồi cùng ghi ý chính",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Chuẩn bị câu hỏi và phân công giúp cả nhóm thu được thông tin cần thiết."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g2-station-4",
+    "stationName": "Di sản văn hóa thế giới Hội An",
+    "grade": 2,
+    "batch": 2,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "q1",
+        "questionVi": "Thấy người dân sinh hoạt trong phố cổ, nhóm muốn quay sát vào nhà. Nên làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Tôn trọng không gian riêng, hỏi phép khi cần quay người khác",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Quay mọi nơi vì đây là điểm du lịch",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Tự vào nhà để có hình đẹp",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Phố cổ còn là không gian sống của người dân; tham quan cần tôn trọng đời sống riêng tư."
+      },
+      {
+        "id": "q2",
+        "questionVi": "Em muốn kể về đường phố Hội An. Cách nào có căn cứ?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Khẳng định mọi đường đều thẳng và rộng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Lấy ảnh thành phố khác rồi đổi tên",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Quan sát ảnh có nguồn rồi mô tả nét đường phố nhìn thấy",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Tài liệu giới thiệu những đường dọc ngang và cả đoạn hẹp, uốn lượn; cần mô tả đúng ảnh."
+      },
+      {
+        "id": "q3",
+        "questionVi": "Bạn làm vỡ món đồ khi trải nghiệm gốm. Cách ứng xử nào đúng?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Đổ lỗi cho bạn khác",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Báo ngay người hướng dẫn và làm theo cách xử lí",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Giấu mảnh vỡ dưới bàn",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Khi làm hỏng đồ, cần trung thực báo người phụ trách và tránh tự xử lí mảnh sắc."
+      },
+      {
+        "id": "q4",
+        "questionVi": "Nhóm định mua nhiều đồ lưu niệm hơn số tiền đã thống nhất. Nên làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Chọn món cần thiết trong khoản tiền được người lớn cho phép",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Tự vay tiền người lạ",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Lấy đồ rồi nghĩ cách trả sau",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Mua sắm khi tham quan cần có kế hoạch và theo hướng dẫn của người lớn."
+      },
+      {
+        "id": "q5",
+        "questionVi": "Nhóm muốn lưu kỉ niệm ở một nhà cổ. Nên chọn cách nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Khắc tên lên cửa gỗ",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Bóc một mảnh tường mang về",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Chụp ảnh tại chỗ được phép, giữ nguyên công trình",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Lưu kỉ niệm cần tuân thủ hướng dẫn và bảo vệ công trình di sản."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g2-station-5",
+    "stationName": "Lễ hội truyền thống ở thành phố Đà Nẵng",
+    "grade": 2,
+    "batch": 2,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "q1",
+        "questionVi": "Một bạn không muốn tham gia trò chơi ở hội làng. Nhóm nên làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Cho bạn chọn quan sát hoặc nhiệm vụ khác phù hợp",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Ép bạn chơi cho đủ người",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Trêu bạn trước đám đông",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Tôn trọng sự tự nguyện giúp mọi bạn tham gia sinh hoạt cộng đồng thoải mái."
+      },
+      {
+        "id": "q2",
+        "questionVi": "Em chỉ có ảnh ghi tên Lễ hội Mừng lúa mới. Muốn kể nghi thức cụ thể, nên làm gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Tự đặt một nghi thức rồi kể như thật",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Lấy nghi thức bất kì gán vào lễ hội",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Tìm thêm nguồn hoặc hỏi người am hiểu cùng cô",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Tên và ảnh chưa đủ để xác định nghi thức cụ thể của một cộng đồng; cần tìm hiểu thêm."
+      },
+      {
+        "id": "q3",
+        "questionVi": "Bạn nói mọi lễ hội đều có cùng trò chơi và nghi thức. Em nhận xét thế nào?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Có thể đổi tên mọi lễ hội cho nhau",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Mỗi lễ hội có thể có hoạt động riêng, cần xem đúng tài liệu",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Chỉ cần biết một lễ hội là biết hết",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Các hoạt động được giới thiệu là ví dụ; không mặc định lễ hội nào cũng có tất cả hoạt động đó."
+      },
+      {
+        "id": "q4",
+        "questionVi": "Đi hội, em không nhìn thấy người lớn đi cùng. Việc nên làm là gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Nhờ người phụ trách tại điểm hỗ trợ giúp liên hệ người lớn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Đi theo người lạ rủ đi tìm",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Tự chạy thật xa để tìm nhanh",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Khi lạc người đi cùng, tìm sự hỗ trợ của người có trách nhiệm tại địa điểm tổ chức."
+      },
+      {
+        "id": "q5",
+        "questionVi": "Em muốn hỏi người lớn về một lễ hội ở địa phương. Câu hỏi nào giúp hiểu sâu hơn?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Lễ hội nào cũng giống nhau phải không ạ?",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Con có thể tự đặt tên mới cho lễ hội không?",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Gia đình mình thường chuẩn bị gì trước ngày hội ạ?",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Câu hỏi về trải nghiệm cụ thể giúp tìm hiểu đời sống cộng đồng, thay vì chỉ gọi tên lễ hội."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g2-station-2",
+    "stationName": "Cù Lao Chàm – Khu bảo tồn thiên nhiên Sơn Trà",
+    "grade": 2,
+    "batch": 2,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "q1",
+        "questionVi": "Lớp làm bảng so sánh Cù Lao Chàm và Sơn Trà. Cách làm nào tốt?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Dùng cùng các mục: cảnh quan, sinh vật, điều em muốn tìm hiểu",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Chép một đoạn giống nhau cho cả hai nơi",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ so nơi nào được nhiều bạn thích hơn",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Cùng tiêu chí so sánh giúp tổ chức thông tin rõ ràng mà không biến hai nơi thành giống nhau."
+      },
+      {
+        "id": "q2",
+        "questionVi": "Em muốn làm biển nhắc du khách không lấy sinh vật làm quà. Nên viết gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Mỗi người được lấy một ít san hô",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ bắt con vật nhỏ để mang về",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Ngắm nhìn và để sinh vật ở nơi sống của chúng",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Không lấy sinh vật khỏi nơi sống là cách cụ thể hạn chế tác động của du khách."
+      },
+      {
+        "id": "q3",
+        "questionVi": "Bạn định tự xuống biển ngắm san hô vì thấy nước trong. Em nhắc gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Có thể đi một mình để khỏi làm phiền ai",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Chỉ tham gia khi có người phụ trách và đủ điều kiện an toàn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Nước trong thì luôn an toàn",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Nước trong không chứng minh an toàn; học sinh cần theo người lớn và hướng dẫn chuyên môn."
+      },
+      {
+        "id": "q4",
+        "questionVi": "Thấy voọc ở xa, bạn muốn dùng bánh dụ lại gần. Em nên làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Nhắc bạn không tự cho ăn, quan sát theo hướng dẫn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Đưa thêm bánh cho bạn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Đuổi theo để chụp ảnh",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Không tự cho động vật hoang dã ăn hay đuổi bắt; cần giữ khoảng cách và làm theo hướng dẫn."
+      },
+      {
+        "id": "q5",
+        "questionVi": "Nhóm muốn tặng lớp một món quà sau chuyến đi. Nên chọn gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Một nhánh san hô bẻ từ biển",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Một cây nhổ trong khu bảo tồn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Một bức vẽ có chú thích về cảnh quan đã tìm hiểu",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Vẽ và kể lại điều đã học giúp chia sẻ trải nghiệm mà không lấy tài nguyên khỏi thiên nhiên."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g2-station-1",
+    "stationName": "Chiếu Cẩm Nê – Chiếu Bàn Thạch",
+    "grade": 2,
+    "batch": 2,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "q1",
+        "questionVi": "Nhóm thiết kế chiếu bằng giấy, mỗi bạn làm một việc. Cách phân công nào hợp lí?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Chia việc vẽ, phối màu, giới thiệu rồi cùng kiểm tra",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Một bạn làm hết, các bạn khác không cần tham gia",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Ai xong trước được bỏ phần việc của nhóm",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Hoạt động mô phỏng nghề cần hợp tác và trách nhiệm với sản phẩm chung."
+      },
+      {
+        "id": "q2",
+        "questionVi": "Bạn nói mọi tấm chiếu đều có màu giống hệt nhau. Em giải thích thế nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Mọi tấm chiếu chỉ có một màu",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Màu chiếu không liên quan đến sợi dùng để dệt",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Cói có thể được nhuộm, phối màu nên chiếu có nhiều màu sắc",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Tài liệu giới thiệu cả cói thường và cói nhuộm nhiều màu dùng khi làm chiếu."
+      },
+      {
+        "id": "q3",
+        "questionVi": "Hai người thợ cùng dệt. Điều gì giúp công việc nhịp nhàng?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Liên tục kéo giật sợi của nhau",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Phối hợp thao tác và cùng chú ý việc đang làm",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Mỗi người làm theo một nhịp tùy ý",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Dệt chiếu cần sự phối hợp, khéo léo và kinh nghiệm của người làm nghề."
+      },
+      {
+        "id": "q4",
+        "questionVi": "Nhóm có ảnh chiếu nhưng không rõ làng làm. Nên ghi thế nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Ảnh tham khảo về chiếu, chưa xác định nơi sản xuất",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Chắc chắn là chiếu Cẩm Nê vì em thích tên này",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chắc chắn là chiếu Bàn Thạch vì có nhiều màu",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Hình dáng, màu sắc không đủ xác nhận nơi sản xuất; cần nguồn hoặc thông tin xuất xứ."
+      },
+      {
+        "id": "q5",
+        "questionVi": "Muốn chia sẻ điều học được mà không động vào giàn dệt, em làm gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Tự tháo giàn dệt để xem",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Kéo mạnh các sợi khi thợ đang làm",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Vẽ tấm chiếu và kể công sức người thợ",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Học sinh có thể quan sát, vẽ và giới thiệu nghề bằng hoạt động an toàn, vừa sức."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g3-station-3",
+    "stationName": "Cộng đồng các dân tộc ở thành phố Đà Nẵng",
+    "grade": 3,
+    "batch": 3,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g3-station-3-challenge-1",
+        "questionVi": "Bạn nói tiếng Việt với giọng khác em. Nhóm nên làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Lắng nghe, hỏi lại lịch sự khi chưa rõ",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Cười và nhại giọng bạn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Không cho bạn phát biểu",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Khác biệt giọng nói không làm giảm giá trị ý kiến."
+      },
+      {
+        "id": "g3-station-3-challenge-2",
+        "questionVi": "Thấy một người mặc trang phục khác với ảnh trong sách, bạn nói người đó sai truyền thống. Em góp ý gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Mọi người phải mặc giống một ảnh duy nhất",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ trang phục trong sách mới được dùng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Không kết luận từ một ảnh; trang phục có thể khác theo dịp và hoàn cảnh",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Một ảnh không đại diện cho mọi hoàn cảnh sinh hoạt của một cộng đồng."
+      },
+      {
+        "id": "g3-station-3-challenge-3",
+        "questionVi": "Bạn muốn chia sẻ một lời chào bằng tiếng của gia đình mình. Nhóm nên làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Biến lời chào thành câu trêu đùa",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Lắng nghe, nhờ bạn hướng dẫn rồi thử đọc một cách tôn trọng",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Tự sửa lời chào thành tiếng mình cho dễ",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Học một lời chào với sự hướng dẫn của bạn là cách giao lưu và tôn trọng ngôn ngữ."
+      },
+      {
+        "id": "g3-station-3-challenge-4",
+        "questionVi": "Lớp làm ngày hội giao lưu nhưng có bạn không thể dùng món ăn đã chọn. Nên làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Hỏi nhu cầu và chuẩn bị lựa chọn phù hợp cho bạn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Bắt bạn ăn để giống mọi người",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Không cho bạn tham gia ngày hội",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Tổ chức giao lưu cần quan tâm nhu cầu của từng người để mọi bạn cùng tham gia."
+      },
+      {
+        "id": "g3-station-3-challenge-5",
+        "questionVi": "Hai bạn có thói quen sinh hoạt khác nhau cùng vào nhóm. Em đề xuất gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Bắt một bạn bỏ mọi thói quen của mình",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ cho bạn giống mình tham gia",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Hỏi ý kiến và chọn cách để cả hai cùng tham gia",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Đoàn kết được thể hiện khi mọi người có cơ hội đóng góp."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g3-station-1",
+    "stationName": "Bãi biển Mỹ Khê – Bãi biển Bàn Than",
+    "grade": 3,
+    "batch": 3,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g3-station-1-challenge-1",
+        "questionVi": "Nhóm ghi chép tiếng sóng và điều quan sát được ở biển. Cách nào giúp bài ghi rõ hơn?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Tách điều đã nghe, đã thấy với cảm nghĩ của mình",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Ghi cảm nghĩ thành sự thật của mọi người",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ chép lời khen mà bỏ hết quan sát",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Phân biệt quan sát với cảm nghĩ giúp giới thiệu cảnh biển trung thực, rõ ràng."
+      },
+      {
+        "id": "g3-station-1-challenge-2",
+        "questionVi": "Bạn muốn đứng trên tảng đá ướt sát sóng để có ảnh đẹp. Em chọn cách nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Giữ tay bạn rồi tiến ra mép đá",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Đợi sóng cao mới chụp",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Rủ bạn lùi về nơi an toàn cùng người lớn",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Bức ảnh đẹp không quan trọng bằng sự an toàn."
+      },
+      {
+        "id": "g3-station-1-challenge-3",
+        "questionVi": "Sau buổi dã ngoại, còn túi bánh và chai rỗng. Nhóm em sẽ làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Chôn xuống cát cho gọn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Thu gom và mang đến nơi bỏ rác phù hợp",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Thả ra biển để sóng cuốn đi",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Sóng và cát không phải thùng rác."
+      },
+      {
+        "id": "g3-station-1-challenge-4",
+        "questionVi": "Em muốn dùng ảnh một người bán hàng ven biển trong bài giới thiệu. Cần làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Hỏi phép người trong ảnh và kiểm tra quyền dùng ảnh",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Đăng ngay vì người đó ở nơi công cộng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Tự thêm tên và địa chỉ của người đó",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Tìm hiểu cảnh biển cũng cần tôn trọng người dân và quyền sử dụng hình ảnh."
+      },
+      {
+        "id": "g3-station-1-challenge-5",
+        "questionVi": "Thấy một người gặp nạn dưới nước, học sinh nên chọn việc nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Cùng bạn chưa biết bơi lao xuống",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Đứng quay video để khoe",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Gọi ngay người lớn, cứu hộ; không tự nhảy xuống",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Tìm người có khả năng cứu hộ; không tạo thêm nguy hiểm."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g3-station-4",
+    "stationName": "Nước mắm Nam Ô",
+    "grade": 3,
+    "batch": 3,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g3-station-4-challenge-1",
+        "questionVi": "Nhóm muốn phỏng vấn người làm nước mắm về công việc hằng ngày. Nên hỏi câu nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Khâu nào cần bác kiên nhẫn nhất và vì sao ạ?",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Bác có thể bỏ qua mọi khâu cho nhanh không ạ?",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Có phải nghề nào cũng làm xong trong một phút không ạ?",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Câu hỏi mở giúp tìm hiểu kinh nghiệm và công sức người làm nghề."
+      },
+      {
+        "id": "g3-station-4-challenge-2",
+        "questionVi": "Bạn muốn mở nắp chum để tự nếm. Em chọn cách nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Cùng mở vì chỉ nếm một chút",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Dùng tay khuấy rồi đậy lại",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nhắc bạn dừng lại, hỏi người hướng dẫn",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Tôn trọng quy trình sản xuất và vệ sinh."
+      },
+      {
+        "id": "g3-station-4-challenge-3",
+        "questionVi": "Một chai không có nhãn và không rõ nơi làm được mời cho lớp nếm. Nên làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Nếm thử để đoán chất lượng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nhờ cô, người lớn kiểm tra; chưa tự nếm",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Khẳng định an toàn vì màu đẹp",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Màu sắc không đủ để xác định sản phẩm an toàn."
+      },
+      {
+        "id": "g3-station-4-challenge-4",
+        "questionVi": "Một chai quà giới thiệu nghề có nhãn bị bong mất. Nhóm nên làm gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Nhờ người phụ trách xác định thông tin, không tự bịa nhãn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Tự ghi tên cơ sở bất kì lên chai",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Dùng nhãn của một sản phẩm khác",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Nhãn sản phẩm cần đúng thông tin; không tự gán nguồn gốc cho vật chưa xác định."
+      },
+      {
+        "id": "g3-station-4-challenge-5",
+        "questionVi": "Sau buổi trưng bày nghề Nam Ô, nhóm còn nhiều giấy và vỏ hộp sạch. Nên làm gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Ném tất cả xuống mương",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Đốt ngay trong lớp cho gọn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Thu gom, phân loại và tận dụng phần còn dùng được",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Giới thiệu nghề truyền thống cần đi cùng trách nhiệm với vật liệu và môi trường."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g3-station-5",
+    "stationName": "Nghề đan thuyền thúng ở Sơn Trà",
+    "grade": 3,
+    "batch": 3,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g3-station-5-challenge-1",
+        "questionVi": "Một bạn gọi chiếc thúng đang đan là đồ xấu vì chưa hoàn thành. Em góp ý gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Cần hiểu sản phẩm đang ở công đoạn nào trước khi nhận xét",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Cứ chưa hoàn thành là không có giá trị",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Nên bỏ ngay để làm cái khác",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Sản phẩm dở dang phản ánh một bước lao động; nhận xét cần tôn trọng quá trình làm nghề."
+      },
+      {
+        "id": "g3-station-5-challenge-2",
+        "questionVi": "Bạn đề nghị bỏ khâu chống thấm để làm nhanh. Em giải thích thế nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Thúng chỉ cần có màu đẹp",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Nước không thể lọt qua khe nan",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Các khe đan cần được xử lí để hạn chế nước vào",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Liên hệ công đoạn với công dụng trên nước."
+      },
+      {
+        "id": "g3-station-5-challenge-3",
+        "questionVi": "Đến nơi làm nghề, bạn lấy dao chẻ tre để thử. Em làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Cầm thêm một con dao làm cùng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nhắc bạn đặt xuống và báo người lớn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Mang dao ra mép nước để thử",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Học sinh quan sát, không tự dùng dụng cụ nguy hiểm."
+      },
+      {
+        "id": "g3-station-5-challenge-4",
+        "questionVi": "Em xem ảnh thúng ở Hội An rồi làm chú thích cho trạm Sơn Trà. Cách nào trung thực?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Ghi rõ ảnh tham khảo thúng chai Hội An, chưa coi là ảnh nghề Sơn Trà",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Đổi tên ảnh thành Sơn Trà cho hợp bài",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Bỏ nguồn để không ai hỏi",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Phân biệt tư liệu địa phương với kiến thức chung về cùng một nghề."
+      },
+      {
+        "id": "g3-station-5-challenge-5",
+        "questionVi": "Nhóm muốn biết vì sao người thợ giữ nghề đan thúng. Cách tìm hiểu nào tốt?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Tự viết lời người thợ dù chưa hỏi",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ đếm số người xem video để kết luận",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Chuẩn bị câu hỏi và phỏng vấn khi người thợ đồng ý",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Phỏng vấn có sự đồng ý giúp hiểu trải nghiệm và tình cảm của người làm nghề."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g4-station-1",
+    "stationName": "Thiên nhiên và con người Đà Nẵng",
+    "grade": 4,
+    "batch": 3,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g4-station-1-challenge-1",
+        "questionVi": "Nhóm em làm mô hình quê hương có sườn đồi dốc. Đề xuất nào giúp giữ đất và cảnh quan?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Bố trí cây xanh phù hợp và giữ thảm thực vật trên sườn đồi",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Bỏ hết cây để đất trống quanh năm",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Đổ rác xuống chân đồi cho đầy chỗ trũng",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Cây và thảm thực vật góp phần giữ đất, giữ nước; chọn cách sử dụng địa hình có trách nhiệm."
+      },
+      {
+        "id": "g4-station-1-challenge-2",
+        "questionVi": "Bạn nói: Ai ở ven biển cũng chỉ làm nghề đánh cá. Em giải thích thế nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Đồng ý vì nhìn thấy một thuyền đánh cá",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Kết luận mọi người đều làm du lịch",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Một nơi có nhiều nghề; cần tìm hiểu từng công việc",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Tránh lấy một ví dụ để kết luận về tất cả mọi người."
+      },
+      {
+        "id": "g4-station-1-challenge-3",
+        "questionVi": "Sau mưa lớn, nhóm định ra bờ sông quan sát nước. Em chọn cách nào?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Xuống thử xem nước có sâu không",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Dừng lại, theo hướng dẫn người lớn và tìm hiểu qua tư liệu",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Ra sát bờ nếu có nhiều bạn đi cùng",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Mưa lớn có thể làm nước dâng và bờ sông mất an toàn."
+      },
+      {
+        "id": "g4-station-1-challenge-4",
+        "questionVi": "Em muốn viết thư kể về người tốt quanh mình. Nên chọn nội dung nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Một việc giúp đỡ cụ thể mà em biết, với lời kể trung thực",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Bịa một việc thật lớn cho hấp dẫn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Công khai mọi thông tin riêng của người đó",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Kể việc thật, cụ thể và tôn trọng người được nhắc đến."
+      },
+      {
+        "id": "g4-station-1-challenge-5",
+        "questionVi": "Lớp muốn giữ sân trường xanh, sạch, đẹp. Kế hoạch nào phù hợp?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Hái hoa mang vào lớp để sân đỡ lá",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ chụp ảnh khẩu hiệu mà không thực hiện",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Phân công chăm cây và bỏ rác đúng nơi",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Chọn việc vừa sức và có người cùng thực hiện."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g4-station-3",
+    "stationName": "Tìm hiểu một số hoạt động kinh tế Đà Nẵng",
+    "grade": 4,
+    "batch": 4,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g4-station-3-challenge-1",
+        "questionVi": "Nhóm tìm hiểu một hộ trồng rau kết hợp đón khách trải nghiệm. Nhận xét nào phù hợp?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Nông nghiệp có thể kết nối với du lịch",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Mỗi gia đình chỉ được làm một ngành",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Trồng rau không tạo ra sản phẩm",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Các hoạt động kinh tế có thể liên kết với nhau."
+      },
+      {
+        "id": "g4-station-3-challenge-2",
+        "questionVi": "Một chuyến hàng thủy sản cần vận chuyển đến nơi tiêu thụ. Hoạt động nào giúp kết nối?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Chỉ việc tạo mẫu đồng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ việc trồng thêm hoa",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Dịch vụ vận tải",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Vận tải giúp đưa hàng hóa từ nơi sản xuất đến người dùng."
+      },
+      {
+        "id": "g4-station-3-challenge-3",
+        "questionVi": "Thấy bạn chê công việc của người thân một bạn khác, em nên làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Xếp hạng giá trị con người theo nghề",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nhắc bạn tôn trọng các công việc có ích",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Cùng chê vì công việc ấy ít nổi tiếng",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Mỗi công việc có ích đều góp phần vào đời sống."
+      },
+      {
+        "id": "g4-station-3-challenge-4",
+        "questionVi": "Nhóm giới thiệu kinh tế quê hương bằng một tỉ lệ trên mạng không rõ năm. Nên xử lí thế nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Kiểm tra nguồn và thời điểm trước khi sử dụng",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Ghi ngay vì con số trông chính xác",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Đổi thành con số lớn hơn để gây ấn tượng",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Số liệu phải có nguồn, thời gian và phạm vi rõ ràng."
+      },
+      {
+        "id": "g4-station-3-challenge-5",
+        "questionVi": "Một làng nghề muốn đón khách nhưng vẫn giữ môi trường sạch. Cách nào phù hợp?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Để khách tự đi vào mọi khu vực sản xuất",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Bỏ yêu cầu vệ sinh để đón nhiều khách",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Tổ chức lối tham quan và thu gom rác, tôn trọng người làm nghề",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Phát triển du lịch cần gắn với bảo vệ môi trường và hoạt động của làng nghề."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g4-station-2",
+    "stationName": "Khu đền tháp Mỹ Sơn – Bảo tàng Điêu khắc Chăm Đà Nẵng",
+    "grade": 4,
+    "batch": 4,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g4-station-2-challenge-1",
+        "questionVi": "Bạn ghi Mỹ Sơn và Bảo tàng Điêu khắc Chăm là cùng một địa điểm. Em sửa thế nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Đó là hai địa điểm khác nhau cùng giúp tìm hiểu di sản Chăm-pa",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Đổi mọi chú thích thành một địa chỉ",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Bỏ hết tên địa điểm khỏi bài",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Phân biệt di tích với bảo tàng, dù cùng liên quan một nền văn hóa."
+      },
+      {
+        "id": "g4-station-2-challenge-2",
+        "questionVi": "Một chi tiết gạch ở tháp bị hư hại, bạn muốn lấy về làm kỉ niệm. Em nên làm gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Lấy một mảnh nhỏ vì đã bị hỏng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Đổi chỗ mảnh gạch để chụp ảnh",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Ngăn bạn lấy và báo người phụ trách",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Không tự lấy hay di chuyển vật liệu của di tích."
+      },
+      {
+        "id": "g4-station-2-challenge-3",
+        "questionVi": "Nhóm chọn ảnh một tác phẩm nhưng chưa biết tên và xuất xứ. Cần làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Gán mọi tác phẩm là của Mỹ Sơn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Đọc chú thích hoặc nhờ thầy cô kiểm tra nguồn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Đoán tên từ hình dáng rồi khẳng định",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Giới thiệu hiện vật cần có căn cứ."
+      },
+      {
+        "id": "g4-station-2-challenge-4",
+        "questionVi": "Khi làm sơ đồ tư duy về Mỹ Sơn, nhóm nên chọn các nhánh nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Vị trí, lịch sử, kiến trúc–điêu khắc và gìn giữ di sản",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Chỉ các quán ăn quanh nơi đến",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ màu áo của nhóm tham quan",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Sơ đồ cần giúp người xem hiểu các giá trị chính của di tích."
+      },
+      {
+        "id": "g4-station-2-challenge-5",
+        "questionVi": "Lớp muốn chia sẻ cảm nhận sau khi xem video di sản. Cách nào phù hợp?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Bắt mọi bạn phải thích cùng một hiện vật",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chấm cảm xúc của bạn là sai vì khác mình",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nói điều đã thấy và cảm nghĩ riêng, lắng nghe bạn",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Hiểu biết có căn cứ có thể đi cùng nhiều cảm nhận khác nhau."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g4-thu-bon-hon-kem",
+    "stationName": "Sông Thu Bồn – Hòn Kẽm Đá Dừng",
+    "grade": 4,
+    "batch": 4,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g4-thu-bon-hon-kem-challenge-1",
+        "questionVi": "Nhóm viết Thu Bồn chỉ có một hoạt động là đánh cá. Em bổ sung gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Còn giao thương, đi lại và đua thuyền dịp lễ hội",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Đồng ý vì thấy một ảnh đánh cá",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Bỏ mọi hoạt động của người dân",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Dòng sông gắn với nhiều mặt của đời sống."
+      },
+      {
+        "id": "g4-thu-bon-hon-kem-challenge-2",
+        "questionVi": "Bạn định đứng lên khi thuyền di chuyển để chụp vách núi. Em chọn cách nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Giữ tay bạn để bạn nghiêng xa hơn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Cùng đứng lên cho ảnh cân đối",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nhắc bạn ngồi đúng vị trí và hỏi người phụ trách",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Cảnh đẹp không làm mất nguy cơ trên mặt nước."
+      },
+      {
+        "id": "g4-thu-bon-hon-kem-challenge-3",
+        "questionVi": "Sau buổi tham quan, còn chai rỗng trên thuyền. Nhóm làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Giấu dưới ghế rồi bỏ lại",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Mang đến nơi thu gom rác",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Thả xuống sông cho trôi đi",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Giữ sạch sông là trách nhiệm của người tham quan."
+      },
+      {
+        "id": "g4-thu-bon-hon-kem-challenge-4",
+        "questionVi": "Nghe một giai thoại về Hòn Kẽm, em đưa vào bài giới thiệu thế nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Ghi rõ đó là câu chuyện được kể và kiểm tra tư liệu cùng thầy cô",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Khẳng định mọi chi tiết đều là sự kiện đã được chứng minh",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Tự thêm chi tiết rồi ghi là lịch sử",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Phân biệt giai thoại, quan sát và thông tin đã được kiểm chứng."
+      },
+      {
+        "id": "g4-thu-bon-hon-kem-challenge-5",
+        "questionVi": "Em giới thiệu Thu Bồn và Hòn Kẽm Đá Dừng bằng đoạn văn. Nội dung nào phù hợp?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Chỉ một chuỗi lời khen không có tên địa điểm",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ lịch mua sắm của gia đình",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nguồn sông, nét cảnh quan, hoạt động và việc giữ gìn",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Chọn các thông tin chính đã học và cảm nhận của mình."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g4-station-4",
+    "stationName": "Nghề đúc đồng ở Phước Kiều",
+    "grade": 4,
+    "batch": 4,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g4-station-4-challenge-1",
+        "questionVi": "Nhóm xếp rót đồng trước làm khuôn. Em đề nghị gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Sắp lại: tạo mẫu, làm khuôn, nấu và rót đồng",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Giữ nguyên vì khuôn không cần thiết",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Đánh bóng trước khi có sản phẩm",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Khuôn phải sẵn sàng trước khi rót kim loại."
+      },
+      {
+        "id": "g4-station-4-challenge-2",
+        "questionVi": "Khi tham quan, bạn muốn đến sát lò để nhìn rõ. Em nên làm gì?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Đi cùng bạn vì có hai người sẽ an toàn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chạm thử dụng cụ xem có nóng không",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nhắc bạn đứng ở vị trí được người phụ trách cho phép",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Quan sát làng nghề cần tuân thủ giới hạn an toàn."
+      },
+      {
+        "id": "g4-station-4-challenge-3",
+        "questionVi": "Làng nghề làm thêm tượng và đồ lưu niệm. Nhận xét nào phù hợp?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ một mẫu sản phẩm được phép tồn tại",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Có thể sáng tạo sản phẩm mới và tiếp nối kĩ năng truyền thống",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Làm sản phẩm mới đồng nghĩa phải bỏ mọi nghề cũ",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Giữ nghề có thể đi cùng sáng tạo phù hợp nhu cầu."
+      },
+      {
+        "id": "g4-station-4-challenge-4",
+        "questionVi": "Bài giới thiệu của nhóm chỉ có tên sản phẩm. Nên bổ sung gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Địa điểm, công đoạn, giá trị và cảm nghĩ về người thợ",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Giá bán tự đoán của tất cả sản phẩm",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Tên và địa chỉ riêng của mọi khách tham quan",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Giới thiệu làng nghề cần cả sản phẩm, con người và quá trình lao động."
+      },
+      {
+        "id": "g4-station-4-challenge-5",
+        "questionVi": "Lớp lập kế hoạch tham quan Phước Kiều. Cách phân công nào tốt?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Để các bạn tự tách nhóm đi khắp xưởng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Không cần thống nhất mục đích tìm hiểu",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Có nhóm ghi chép, hỏi theo hướng dẫn và tổng hợp kết quả",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Nhiệm vụ rõ ràng giúp chuyến đi có ý nghĩa và trật tự."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g5-ky-anh-me-nhu",
+    "stationName": "Địa đạo Kỳ Anh – Khu lưu niệm Mẹ Nhu và 07 Dũng sĩ Thanh Khê",
+    "grade": 5,
+    "batch": 4,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g5-ky-anh-me-nhu-challenge-1",
+        "questionVi": "Bạn ghi Mẹ Nhu là Nguyễn Thị Thứ. Em giúp bạn sửa thế nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Đối chiếu bài học: Mẹ Nhu là Lê Thị Dảnh",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Giữ nguyên vì đều được gọi là mẹ",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Bỏ tên nhân vật khỏi bài giới thiệu",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Đọc lại điểm về Mẹ Nhu."
+      },
+      {
+        "id": "g5-ky-anh-me-nhu-challenge-2",
+        "questionVi": "Nhóm em muốn giải thích vì sao địa đạo có nhiều loại hầm. Cách nào phù hợp?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Gọi mọi bộ phận là kho lương thực",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ đọc tên mà bỏ qua công dụng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nối từng bộ phận với công việc mà nó phục vụ",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Đối chiếu hầm cứu thương, hầm chỉ huy và lỗ thông hơi."
+      },
+      {
+        "id": "g5-ky-anh-me-nhu-challenge-3",
+        "questionVi": "Em có ảnh tượng Mẹ Dũng sĩ để giới thiệu khu lưu niệm. Em nên làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Bỏ chú thích vì cùng nói về Mẹ Nhu",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Chú thích đúng là ảnh tượng và phân biệt hai nơi",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Ghi ảnh này là toàn cảnh khu lưu niệm",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Tên và vị trí công trình phải khớp ảnh."
+      },
+      {
+        "id": "g5-ky-anh-me-nhu-challenge-4",
+        "questionVi": "Khi viết lời tri ân, em chọn câu nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Em biết ơn những người đã bảo vệ và che chở chiến sĩ",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Em chỉ quan tâm di tích có nhiều khách hay không",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Em nghĩ dấu tích cũ không cần giữ gìn",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Nghĩ về đóng góp của nhân dân và các chiến sĩ."
+      },
+      {
+        "id": "g5-ky-anh-me-nhu-challenge-5",
+        "questionVi": "Trong chuyến tham quan, bạn rủ tự đi vào đường hầm. Em chọn cách nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Tách đoàn để khám phá cho nhanh",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Đi theo bạn dù chưa được hướng dẫn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Ở cùng đoàn và chỉ vào khu được người phụ trách hướng dẫn",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Tìm hiểu di tích cần tuân theo hướng dẫn của nơi tham quan."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g5-station-3",
+    "stationName": "Bà Nà – Hải Vân Quan",
+    "grade": 5,
+    "batch": 5,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g5-station-3-challenge-1",
+        "questionVi": "Trong bảng so sánh, em xếp “di tích lịch sử – quân sự” vào đâu?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Cột Hải Vân Quan",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Cột Bà Nà",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Cả hai đều chỉ có loại hình này",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Nhớ vai trò cửa quan."
+      },
+      {
+        "id": "g5-station-3-challenge-2",
+        "questionVi": "Bạn nói khí hậu Bà Nà có bốn mùa thực sự trong một ngày. Em góp ý thế nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Đồng ý vì mây xuất hiện bốn lần",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Khẳng định ngày nào cũng có tuyết",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Nói thời tiết có thể thay đổi, còn khí hậu cần được mô tả qua thời gian dài",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Phân biệt thay đổi thời tiết với các mùa khí hậu."
+      },
+      {
+        "id": "g5-station-3-challenge-3",
+        "questionVi": "Em dùng ảnh Hải Vân Quan cũ để làm tờ giới thiệu. Em cần bổ sung gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Lời giới thiệu bỏ hết thông tin về ảnh",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Năm chụp và bối cảnh trước hoặc sau tu bổ",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Dòng chữ khẳng định đây là hiện trạng hôm nay",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Ảnh ghi lại công trình ở một thời điểm."
+      },
+      {
+        "id": "g5-station-3-challenge-4",
+        "questionVi": "Nhóm em thiết kế tour cả hai điểm đến. Nội dung nào nên có?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Giá trị riêng của mỗi nơi và thông điệp giữ gìn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Chỉ tên các trò chơi và giá vé tự đoán",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ khen đẹp mà không tìm hiểu lịch sử",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Bài học yêu cầu nối thiên nhiên với lịch sử."
+      },
+      {
+        "id": "g5-station-3-challenge-5",
+        "questionVi": "Nếu đề xuất phát triển du lịch, em chọn phương án nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Mở lối đi tùy ý xuyên rừng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Cho khách khắc tên lên tường cửa quan",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Có hướng dẫn bảo vệ rừng và giữ nguyên dấu tích được bảo tồn",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Phát triển du lịch đi cùng bảo tồn."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g5-station-4",
+    "stationName": "Danh thắng Ngũ Hành Sơn",
+    "grade": 5,
+    "batch": 5,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g5-station-4-challenge-1",
+        "questionVi": "Bạn đếm Hỏa Sơn là một ngọn duy nhất. Em nhắc bạn điều gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Hỏa Sơn gồm Dương Hỏa Sơn và Âm Hỏa Sơn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Hỏa Sơn không thuộc Ngũ Hành Sơn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Mỗi tên ngũ hành đều gồm hai ngọn",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Phân biệt tên ngũ hành với từng ngọn núi."
+      },
+      {
+        "id": "g5-station-4-challenge-2",
+        "questionVi": "Dòng giới thiệu nào ghi đúng phạm vi ghi danh năm 2022?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Toàn bộ danh thắng là Di sản thiên nhiên thế giới UNESCO",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Mọi sản phẩm đá đều là di sản tư liệu thế giới",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Ma nhai thuộc Chương trình Ký ức Thế giới khu vực châu Á – Thái Bình Dương",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Phạm vi ghi danh gắn với ma nhai."
+      },
+      {
+        "id": "g5-station-4-challenge-3",
+        "questionVi": "Muốn giúp người xem hiểu sản phẩm làng nghề đa dạng, em nên làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ đọc tên làng mà không nêu sản phẩm",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Giới thiệu ví dụ đồ dùng, tượng và trang sức",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Chỉ nói làng nghề làm một loại tượng",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Các nhóm sản phẩm có công dụng khác nhau."
+      },
+      {
+        "id": "g5-station-4-challenge-4",
+        "questionVi": "Bạn đề nghị lấy đá trên núi để lớp làm đồ lưu niệm. Em chọn cách nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Dùng vật liệu học tập phù hợp, giữ nguyên đá tại danh thắng",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Đồng ý nếu chỉ lấy một ít",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Nhờ bạn lấy hộ để mình không trực tiếp lấy",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Bảo vệ danh thắng là một phần giữ nghề."
+      },
+      {
+        "id": "g5-station-4-challenge-5",
+        "questionVi": "Poster của lớp về Ngũ Hành Sơn nên kết nối những nội dung nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Chỉ ghi nơi mua đồ và bỏ mọi giá trị khác",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Khẳng định có thể chạm mọi hiện vật để trải nghiệm",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Cảnh quan, ma nhai và làng nghề cùng lời nhắc gìn giữ",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Bài học có cả giá trị tự nhiên và văn hóa."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g5-lua-ma-chau",
+    "stationName": "Lụa Mã Châu",
+    "grade": 5,
+    "batch": 5,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g5-lua-ma-chau-challenge-1",
+        "questionVi": "Bạn xếp thẻ “dệt lụa” trước “ươm tơ”. Em nên sửa ra sao?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Ươm lấy sợi tơ trước rồi mới dệt thành tấm",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Giữ nguyên vì không cần sợi tơ",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Bỏ cả hai thẻ khỏi quy trình",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Tìm nguyên liệu cần có để dệt."
+      },
+      {
+        "id": "g5-lua-ma-chau-challenge-2",
+        "questionVi": "Trong bài giới thiệu làng nghề, chi tiết nào cần chỉnh?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Ghi làng nghề ở xã Nam Phước",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Ghi người thợ thực hiện nhiều công đoạn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Ghi Mã Châu làm tượng đá Non Nước",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Phân biệt nghề dệt với nghề điêu khắc đá."
+      },
+      {
+        "id": "g5-lua-ma-chau-challenge-3",
+        "questionVi": "Khi tham quan khâu ươm tơ có nước nóng, em chọn cách nào?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Rủ bạn kéo sợi khi người thợ chưa đồng ý",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Quan sát ở vị trí người hướng dẫn cho phép",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Tự nhúng kén thử cho biết",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Đây là công việc cần thao tác của người thợ."
+      },
+      {
+        "id": "g5-lua-ma-chau-challenge-4",
+        "questionVi": "Muốn giới thiệu nét đẹp sản phẩm bằng căn cứ đã học, em nói gì?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Hoa văn và cách phối màu thể hiện sự khéo léo của người thợ",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Mọi loại lụa đều tự có hoa văn, không cần người làm",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ cần biết giá bán là đủ hiểu sản phẩm",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Nhớ khâu dệt và hoàn thiện."
+      },
+      {
+        "id": "g5-lua-ma-chau-challenge-5",
+        "questionVi": "Lớp em làm thẻ quảng bá nghề truyền thống. Bộ thông tin nào phù hợp?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Tên làng cùng công dụng sức khỏe tự đoán",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Chỉ một bức ảnh không ghi nguồn hay tên nghề",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Tên làng, vị trí, quy trình và sản phẩm chính",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Dựa vào bốn gợi ý thực hành của bài."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  },
+  {
+    "stationId": "g5-station-5",
+    "stationName": "Sâm Ngọc Linh",
+    "grade": 5,
+    "batch": 5,
+    "status": "needs-content-and-visual-review",
+    "enabled": false,
+    "sourceQuestions": [
+      {
+        "id": "g5-station-5-challenge-1",
+        "questionVi": "Bạn nói sâm Ngọc Linh chỉ phân bố ở Đà Nẵng. Em góp ý thế nào?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Vùng núi Ngọc Linh còn trải sang địa bàn Quảng Ngãi",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Đồng ý vì tên cây là một địa danh",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Sửa thành cây chỉ sống sát biển",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Đọc lại phạm vi núi Ngọc Linh."
+      },
+      {
+        "id": "g5-station-5-challenge-2",
+        "questionVi": "Nhóm em kể hành trình năm 1973. Cách diễn đạt nào đúng?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Đó là lần đầu tiên bất cứ người nào nhìn thấy cây",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Trước năm đó không có người sống ở vùng núi",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Đó là mốc nghiên cứu, không phủ nhận tri thức bản địa trước đó",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Phân biệt mốc khoa học với hiểu biết của cộng đồng."
+      },
+      {
+        "id": "g5-station-5-challenge-3",
+        "questionVi": "Một quảng cáo nói sản phẩm sâm chữa được mọi bệnh. Em nên làm gì?",
+        "options": [
+          {
+            "id": "opt-3",
+            "textVi": "Rủ bạn dùng để kiểm tra quảng cáo",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Không dùng lời đó làm kết luận; kiểm tra nguồn và hỏi người có chuyên môn",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Chép vào poster vì nghe hấp dẫn",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Nghiên cứu dược liệu không chứng minh mọi lời quảng cáo."
+      },
+      {
+        "id": "g5-station-5-challenge-4",
+        "questionVi": "Em đề xuất gì để người dân phát triển sinh kế bền vững từ sâm?",
+        "options": [
+          {
+            "id": "opt-1",
+            "textVi": "Giữ rừng, bảo tồn giống và giới thiệu sản phẩm có nguồn gốc",
+            "isCorrect": true
+          },
+          {
+            "id": "opt-2",
+            "textVi": "Phá hết cây che bóng để tăng chỗ trồng",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Đào cây nhỏ trong rừng rồi bán hết",
+            "isCorrect": false
+          }
+        ],
+        "hintVi": "Cây sâm gắn với môi trường rừng và nguồn giống."
+      },
+      {
+        "id": "g5-station-5-challenge-5",
+        "questionVi": "Ngày hội khám phá dược liệu của lớp nên tổ chức thế nào?",
+        "options": [
+          {
+            "id": "opt-2",
+            "textVi": "Thi xem bạn nào nếm nhiều dược liệu hơn",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-3",
+            "textVi": "Bán sản phẩm với lời hứa công dụng tự nghĩ",
+            "isCorrect": false
+          },
+          {
+            "id": "opt-1",
+            "textVi": "Trưng bày tư liệu có nguồn, giải thích giá trị và bảo tồn",
+            "isCorrect": true
+          }
+        ],
+        "hintVi": "Đây là hoạt động tìm hiểu cây quý, không phải thử thuốc."
+      }
+    ],
+    "targetKinds": [
+      "image",
+      "choice",
+      "choice",
+      "match",
+      "choice"
+    ],
+    "questions": null,
+    "background": null,
+    "victoryBackground": null,
+    "collectible": null,
+    "checklist": {
+      "fiveQuestions": false,
+      "localImages": false,
+      "twoBackgrounds": false,
+      "audio": false,
+      "devices": false,
+      "teacherApproved": false
+    }
+  }
+]

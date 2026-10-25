@@ -63,7 +63,7 @@ export default defineConfig(({mode, command}) => {
           ],
         },
         workbox: {
-          navigateFallbackDenylist: [/^\/api\//],
+          navigateFallbackDenylist: [/^\/api\//, /^\/nam-o-background-review\.html(?:\?|$)/],
           // Install only the shell. Lesson assets and feature chunks are cached on use.
           globPatterns: ['index.html', 'registerSW.js', 'assets/*.{js,css}', '*.{ico,png,svg}'],
           // Keep only startup scripts referenced by HTML, never lazy features.

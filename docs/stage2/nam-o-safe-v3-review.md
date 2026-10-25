@@ -9,6 +9,8 @@ Chỉ thêm ảnh ứng viên và trang duyệt. Chưa thay cấu hình hoặc �
 - Giữ bố cục cảnh làng nghề, biển, núi, chum và dụng cụ. Ảnh chiến thắng giữ pháo hoa và đúng năm giọt vàng trong rương; xóa chữ phụ trên biển nhỏ và nhãn chai.
 - Ảnh được chỉnh bằng công cụ imagegen tích hợp, sau đó xuất WebP. Không sửa bố cục bằng CSS scale, không kéo méo chữ hay ảnh.
 
+Đường duyệt được loại khỏi fallback điều hướng PWA để service worker không trả trang app thay cho trang ảnh.
+
 Trang `/nam-o-background-review.html` có nút chọn ảnh chơi/chiến thắng và bốn viewport. Trên điện thoại, ảnh giữ tỷ lệ tự nhiên và chỉ crop cảnh rìa: bề ngang ảnh tối đa 2 lần bề ngang viewport, luôn để vùng trung tâm 50% nằm trọn trong khung. Phần dưới chừa nền chuyển màu cho vùng giao diện. Trên máy tính hiển thị toàn chiều ngang ảnh; không dùng cover theo toàn chiều cao điện thoại vì sẽ cắt bảng.
 
 ## Đã kiểm tra

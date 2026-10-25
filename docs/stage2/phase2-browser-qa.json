@@ -1,0 +1,5883 @@
+{
+  "checkedAt": "2026-10-26",
+  "browser": "Chromium cloud browser; iframe viewports, not physical devices",
+  "checks": [
+    {
+      "label": "g3-3-intro",
+      "rows": [
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-3-review",
+      "rows": [
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-3-q1",
+      "rows": [
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "0/5 huy hiệu thổ cẩm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-3-q2",
+      "rows": [
+        {
+          "earned": "1/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "1/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "1/5 huy hiệu thổ cẩm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "1/5 huy hiệu thổ cẩm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "1/5 huy hiệu thổ cẩm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "1/5 huy hiệu thổ cẩm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "1/5 huy hiệu thổ cẩm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "1/5 huy hiệu thổ cẩm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-3-q3",
+      "rows": [
+        {
+          "earned": "2/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "2/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "2/5 huy hiệu thổ cẩm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "2/5 huy hiệu thổ cẩm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "2/5 huy hiệu thổ cẩm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "2/5 huy hiệu thổ cẩm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "2/5 huy hiệu thổ cẩm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "2/5 huy hiệu thổ cẩm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-3-q4",
+      "rows": [
+        {
+          "earned": "3/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "3/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "3/5 huy hiệu thổ cẩm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "3/5 huy hiệu thổ cẩm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "3/5 huy hiệu thổ cẩm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "3/5 huy hiệu thổ cẩm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "3/5 huy hiệu thổ cẩm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "3/5 huy hiệu thổ cẩm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-3-q5",
+      "rows": [
+        {
+          "earned": "4/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "4/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "4/5 huy hiệu thổ cẩm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "4/5 huy hiệu thổ cẩm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "4/5 huy hiệu thổ cẩm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "4/5 huy hiệu thổ cẩm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "4/5 huy hiệu thổ cẩm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "4/5 huy hiệu thổ cẩm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-3-victory",
+      "rows": [
+        {
+          "earned": "5/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "5/5 huy hiệu thổ cẩm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "5/5 huy hiệu thổ cẩm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "5/5 huy hiệu thổ cẩm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "5/5 huy hiệu thổ cẩm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "5/5 huy hiệu thổ cẩm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "5/5 huy hiệu thổ cẩm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "5/5 huy hiệu thổ cẩm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/badge.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-4-intro",
+      "rows": [
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-4-review",
+      "rows": [
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-4-q1",
+      "rows": [
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "0/5 giọt nước mắm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-4-q2",
+      "rows": [
+        {
+          "earned": "1/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "1/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "1/5 giọt nước mắm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "1/5 giọt nước mắm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "1/5 giọt nước mắm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "1/5 giọt nước mắm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "1/5 giọt nước mắm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "1/5 giọt nước mắm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-4-q3",
+      "rows": [
+        {
+          "earned": "2/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "2/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "2/5 giọt nước mắm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "2/5 giọt nước mắm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "2/5 giọt nước mắm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "2/5 giọt nước mắm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "2/5 giọt nước mắm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "2/5 giọt nước mắm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-4-q4",
+      "rows": [
+        {
+          "earned": "3/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "3/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "3/5 giọt nước mắm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "3/5 giọt nước mắm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "3/5 giọt nước mắm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "3/5 giọt nước mắm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "3/5 giọt nước mắm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "3/5 giọt nước mắm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-4-q5",
+      "rows": [
+        {
+          "earned": "4/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "4/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "4/5 giọt nước mắm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "4/5 giọt nước mắm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "4/5 giọt nước mắm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "4/5 giọt nước mắm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "4/5 giọt nước mắm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "4/5 giọt nước mắm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-4-victory",
+      "rows": [
+        {
+          "earned": "5/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "5/5 giọt nước mắm vàng",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "5/5 giọt nước mắm vàng",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "5/5 giọt nước mắm vàng",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "5/5 giọt nước mắm vàng",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "5/5 giọt nước mắm vàng",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "5/5 giọt nước mắm vàng",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "5/5 giọt nước mắm vàng",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/drop.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-5-intro",
+      "rows": [
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-5-review",
+      "rows": [
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-5-q1",
+      "rows": [
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "0/5 thuyền thúng vàng mini",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/images/real-photos/nam-o-loc.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/thung-my-khe.webp"
+            },
+            {
+              "loaded": true,
+              "src": "/learning/grade3/photos/co-tu-costumes.webp"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-5-q2",
+      "rows": [
+        {
+          "earned": "1/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "1/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "1/5 thuyền thúng vàng mini",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "1/5 thuyền thúng vàng mini",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "1/5 thuyền thúng vàng mini",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "1/5 thuyền thúng vàng mini",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "1/5 thuyền thúng vàng mini",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "1/5 thuyền thúng vàng mini",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-5-q3",
+      "rows": [
+        {
+          "earned": "2/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "2/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "2/5 thuyền thúng vàng mini",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "2/5 thuyền thúng vàng mini",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "2/5 thuyền thúng vàng mini",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "2/5 thuyền thúng vàng mini",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "2/5 thuyền thúng vàng mini",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "2/5 thuyền thúng vàng mini",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-5-q4",
+      "rows": [
+        {
+          "earned": "3/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "3/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "3/5 thuyền thúng vàng mini",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "3/5 thuyền thúng vàng mini",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "3/5 thuyền thúng vàng mini",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "3/5 thuyền thúng vàng mini",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "3/5 thuyền thúng vàng mini",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "3/5 thuyền thúng vàng mini",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-5-q5",
+      "rows": [
+        {
+          "earned": "4/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "4/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "4/5 thuyền thúng vàng mini",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "4/5 thuyền thúng vàng mini",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "4/5 thuyền thúng vàng mini",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "4/5 thuyền thúng vàng mini",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "4/5 thuyền thúng vàng mini",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "4/5 thuyền thúng vàng mini",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    },
+    {
+      "label": "g3-5-victory",
+      "rows": [
+        {
+          "earned": "5/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1366
+        },
+        {
+          "earned": "5/5 thuyền thúng vàng mini",
+          "h": 768,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 1024
+        },
+        {
+          "earned": "5/5 thuyền thúng vàng mini",
+          "h": 844,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 390
+        },
+        {
+          "earned": "5/5 thuyền thúng vàng mini",
+          "h": 667,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 375
+        },
+        {
+          "earned": "5/5 thuyền thúng vàng mini",
+          "h": 640,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 320
+        },
+        {
+          "earned": "5/5 thuyền thúng vàng mini",
+          "h": 390,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 844
+        },
+        {
+          "earned": "5/5 thuyền thúng vàng mini",
+          "h": 375,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 667
+        },
+        {
+          "earned": "5/5 thuyền thúng vàng mini",
+          "h": 320,
+          "images": [
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            },
+            {
+              "loaded": true,
+              "src": "/games/shared/v1/grade3/basket.svg"
+            }
+          ],
+          "overflow": [],
+          "w": 640
+        }
+      ]
+    }
+  ],
+  "wrongRuns": [
+    {
+      "station": 3,
+      "feedback": [
+        {
+          "question": 1,
+          "hint": "✕ Chưa đúng! Gợi ý: Hãy quan sát tấm vải có các hoa văn được dệt trên trang phục.",
+          "earned": "0/5 huy hiệu thổ cẩm vàng"
+        },
+        {
+          "question": 2,
+          "hint": "✕ Chưa đúng! Gợi ý: Hãy nhớ hình con chim trang trí trên đỉnh cây nêu trong bài học.",
+          "earned": "0/5 huy hiệu thổ cẩm vàng"
+        },
+        {
+          "question": 3,
+          "hint": "✕ Chưa đúng! Gợi ý: Mỗi cộng đồng có nét riêng, cùng góp phần làm nên vẻ đẹp quê hương.",
+          "earned": "0/5 huy hiệu thổ cẩm vàng"
+        },
+        {
+          "question": 4,
+          "hint": "✕ Chưa đúng! Gợi ý: Nhớ điệu múa Cơ Tu, cây nêu của người Co và tinh thần đoàn kết.",
+          "earned": "0/5 huy hiệu thổ cẩm vàng"
+        },
+        {
+          "question": 5,
+          "hint": "✕ Chưa đúng! Gợi ý: Tôn trọng sự khác biệt là cách giữ gìn tình đoàn kết.",
+          "earned": "0/5 huy hiệu thổ cẩm vàng"
+        }
+      ]
+    },
+    {
+      "station": 4,
+      "feedback": [
+        {
+          "question": 1,
+          "hint": "✕ Chưa đúng! Gợi ý: Quan sát dòng nước mắm chảy qua dụng cụ lọc xuống chum.",
+          "earned": "0/5 giọt nước mắm vàng"
+        },
+        {
+          "question": 2,
+          "hint": "✕ Chưa đúng! Gợi ý: Một nguyên liệu là cá, nguyên liệu còn lại dùng để ướp cá.",
+          "earned": "0/5 giọt nước mắm vàng"
+        },
+        {
+          "question": 3,
+          "hint": "✕ Chưa đúng! Gợi ý: Làm nước mắm cần thời gian ủ và đảo để cá chín đều.",
+          "earned": "0/5 giọt nước mắm vàng"
+        },
+        {
+          "question": 4,
+          "hint": "✕ Chưa đúng! Gợi ý: Phân biệt bước ướp cá, bước lọc và bước ủ tiếp nước mắm sau khi lọc.",
+          "earned": "0/5 giọt nước mắm vàng"
+        },
+        {
+          "question": 5,
+          "hint": "✕ Chưa đúng! Gợi ý: Tôn trọng quy trình sản xuất và giữ vệ sinh khi tham quan.",
+          "earned": "0/5 giọt nước mắm vàng"
+        }
+      ]
+    },
+    {
+      "station": 5,
+      "feedback": [
+        {
+          "question": 1,
+          "hint": "✕ Chưa đúng! Gợi ý: Thuyền thúng có thân tròn, được đan từ những nan tre.",
+          "earned": "0/5 thuyền thúng vàng mini"
+        },
+        {
+          "question": 2,
+          "hint": "✕ Chưa đúng! Gợi ý: Người thợ chẻ và vót cây này thành những nan để đan.",
+          "earned": "0/5 thuyền thúng vàng mini"
+        },
+        {
+          "question": 3,
+          "hint": "✕ Chưa đúng! Gợi ý: Thúng dùng trên nước nên cần hạn chế nước thấm qua thân.",
+          "earned": "0/5 thuyền thúng vàng mini"
+        },
+        {
+          "question": 4,
+          "hint": "✕ Chưa đúng! Gợi ý: Theo dõi từ nan tre đến thân thúng rồi hoàn thiện vành thúng.",
+          "earned": "0/5 thuyền thúng vàng mini"
+        },
+        {
+          "question": 5,
+          "hint": "✕ Chưa đúng! Gợi ý: Dao và nan tre sắc có thể gây nguy hiểm. Hãy nghe hướng dẫn của người lớn.",
+          "earned": "0/5 thuyền thúng vàng mini"
+        }
+      ]
+    }
+  ],
+  "transientToolFailure": "One Input.dispatchMouseEvent timeout during victory resize; state remained responsive and the complete victory matrix passed on rerun."
+}

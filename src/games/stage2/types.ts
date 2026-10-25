@@ -9,8 +9,8 @@ export type Question = ChoiceQuestion | MatchQuestion;
 export interface GameConfig {
   stationId: string; stationName: string; title: string;
   background: string; victoryBackground: string;
-  collectible: {icon: string; name: string};
-  intro: {heading: string; story: string; call: string};
+  collectible: {icon: string; name: string; image?: string};
+  intro: {heading: string; story: string; call: string; readyLabel?: string};
   victory: {praise: string; achievement: string; reward: string};
   questions: Question[];
 }

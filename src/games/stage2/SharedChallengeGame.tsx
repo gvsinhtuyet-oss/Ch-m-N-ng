@@ -60,8 +60,8 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   return <main className={`scene ${victory?'is-victory':''}`} style={{backgroundImage:`url("${victory?config.victoryBackground:config.background}")`}}>
     <h1 className="preview-title">{config.title}</h1>
     <div className={`shell ${victory?'finished':''}`}>
-      <div className="hud"><div className="hud-stage">{state.phase==='intro'?'SẴN SÀNG':victory?'HOÀN THÀNH':state.phase==='review'?'ÔN TẬP':`CÂU ${state.index+1}/5`}<small>{victory?'5/5 câu hỏi':state.reviewing||state.phase==='review'?'Truy lại dấu vết':state.phase==='intro'?'Khám phá lịch sử':question.level}</small></div>
-        <div className="hud-right"><div className="hud-keys" aria-label={`${state.earned.length}/5 ${config.collectible.name}`}>{config.questions.map((q,i)=><span key={q.id} className={`hud-key ${state.earned.includes(i)?'earned':''}`} aria-label={`${config.collectible.name} ${i+1}: ${state.earned.includes(i)?'đã nhận':'chưa nhận'}`}>{config.collectible.icon}</span>)}</div>
+      <div className="hud"><div className="hud-stage">{state.phase==='intro'?'SẴN SÀNG':victory?'HOÀN THÀNH':state.phase==='review'?'ÔN TẬP':`CÂU ${state.index+1}/5`}<small>{victory?'5/5 câu hỏi':state.reviewing||state.phase==='review'?'Truy lại dấu vết':state.phase==='intro'?(config.intro.readyLabel??'Khám phá lịch sử'):question.level}</small></div>
+        <div className="hud-right"><div className="hud-keys" aria-label={`${state.earned.length}/5 ${config.collectible.name}`}>{config.questions.map((q,i)=><span key={q.id} className={`hud-key ${state.earned.includes(i)?'earned':''}`} aria-label={`${config.collectible.name} ${i+1}: ${state.earned.includes(i)?'đã nhận':'chưa nhận'}`}>{config.collectible.image?<img src={config.collectible.image} alt="" style={{width:'1em',height:'1em',display:'block'}}/>:config.collectible.icon}</span>)}</div>
           <button className="music-toggle" aria-label={muted?'Bật âm thanh':'Tắt âm thanh'} aria-pressed={!muted} onClick={()=>{audio.setMuted(!muted);setMuted(!muted);if(muted)audio.play('tap');}}>{muted?'♪̸':'♫'}</button>
         </div>
       </div>

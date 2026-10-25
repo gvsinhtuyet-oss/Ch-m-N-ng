@@ -1,0 +1,53 @@
+[
+  {
+    "file": "public/games/shared/v1/approved-2.mp3",
+    "exitCode": 0,
+    "probe": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "32000",
+          "channels": 1
+        }
+      ],
+      "format": {
+        "duration": "5.328000"
+      }
+    }
+  },
+  {
+    "file": "public/games/shared/v1/approved-4.mp3",
+    "exitCode": 0,
+    "probe": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "32000",
+          "channels": 1
+        }
+      ],
+      "format": {
+        "duration": "1.116000"
+      }
+    }
+  },
+  {
+    "file": "public/games/shared/v1/approved-3.mp3",
+    "exitCode": 0,
+    "probe": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "32000",
+          "channels": 1
+        }
+      ],
+      "format": {
+        "duration": "1.116000"
+      }
+    }
+  }
+]

@@ -31,5 +31,15 @@ export const HoangDieuPhanChauTrinhV18: React.FC<Props> = ({ station, studentId,
     return () => window.removeEventListener('message', handler);
   }, [onContinue]);
 
-  return <iframe ref={frameRef} title="Giải mã dấu ấn lịch sử – Chặng 2" src="/games/grade3-hoang-dieu-phan-chau-trinh/v18/index.html" className="block h-[100dvh] min-h-[500px] w-full rounded-2xl border-0" allow="autoplay; fullscreen" />;
+  const installSharedAudio = () => {
+    const doc = frameRef.current?.contentDocument;
+    if (!doc || doc.getElementById('cham-danang-shared-audio')) return;
+    const script = doc.createElement('script');
+    script.id = 'cham-danang-shared-audio';
+    script.src = '/games/shared/game-audio.js';
+    script.async = false;
+    (doc.head || doc.documentElement).appendChild(script);
+  };
+
+  return <iframe onLoad={installSharedAudio} ref={frameRef} title="Giải mã dấu ấn lịch sử – Chặng 2" src="/games/grade3-hoang-dieu-phan-chau-trinh/v18/index.html" className="block h-[100dvh] min-h-[500px] w-full rounded-2xl border-0" allow="autoplay; fullscreen" />;
 };

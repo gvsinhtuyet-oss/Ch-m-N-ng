@@ -6,6 +6,7 @@ import { backgroundMusic } from '../../services/BackgroundMusic';
 import { progressService } from '../../services/ProgressService';
 import { ApprovedStationGame } from './ApprovedStationGame';
 import { ReusableChallengeGame } from './ReusableChallengeGame';
+import { MyKheBanThanV12 } from './MyKheBanThanV12';
 import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle, Gamepad2 } from 'lucide-react';
 
 
@@ -177,6 +178,11 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
         onCompleteStage={onCompleteStage}
       />
     );
+  }
+
+  // Approved V12: real Stage 2 completion transitions to the app's Stage 3.
+  if (station.id === 'g3-station-1') {
+    return <MyKheBanThanV12 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} />;
   }
 
   // Grade 3–5 use the shared challenge game; grade 1–2 keep their approved games.

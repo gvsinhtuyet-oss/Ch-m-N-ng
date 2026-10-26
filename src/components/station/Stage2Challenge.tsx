@@ -192,6 +192,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
     }
     return <HoangDieuPhanChauTrinhV18 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} />;
   }
+
+  // Approved files are restored in this release, so preserve the reviewed My Khe game.
   if (station.id === 'g3-station-1') {
     return <MyKheBanThanV12 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} />;
   }

@@ -34,3 +34,9 @@ Thêm ?stage2-preview=<mã trạm> vào địa chỉ bản thử. Không cần C
 
 - Khối 4: g4-station-1; g4-station-3; g4-station-2; g4-thu-bon-hon-kem; g4-station-4.
 - Khối 5: g5-ky-anh-me-nhu; g5-station-3; g5-station-4; g5-lua-ma-chau; g5-station-5.
+
+## Chỉnh câu nối theo ảnh duyệt tiếp
+
+Chỉ câu nối của khối 4/5 dùng lớp compact-match: thẻ gọn, chữ tối thiểu 14px trên điện thoại; vùng nút/phản hồi cố định, ẩn nút sau xác nhận; giữ nguyên ba đường nối và tăng thời gian đọc phản hồi (đúng 1,8s, sai 3,5s). Không đổi nội dung, hình nền, vật phẩm hay CSS của câu khác/khối 3.
+
+Kiểm tra bổ sung: 40 bố cục trước xác nhận (10 trạm × 4 cỡ yêu cầu) không tràn chữ/nút; 5 phản hồi sai khối 4 và 5 phản hồi đúng khối 5 tại 320×640 hiện đầy đủ, giữ ba đường nối, nút xác nhận ẩn. Không tuyên bố đã thử cả đúng lẫn sai của mỗi trạm trong lần chỉnh này. Các luồng đầy đủ đã thử ở bản trước; chưa thử lại trên thiết bị vật lý.

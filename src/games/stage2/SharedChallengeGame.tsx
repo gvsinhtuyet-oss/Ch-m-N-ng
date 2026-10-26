@@ -3,6 +3,7 @@ import {createPortal} from 'react-dom';
 import {startFireworks} from './fireworks';
 import approvedCss from './approved-v18.css?raw';
 import safeLayoutCss from './safe-layout.css?raw';
+import compactMatchCss from './compact-match.css?raw';
 import {validateConfig, type GameConfig, type MatchQuestion} from './types';
 import {gameReducer,initialState,connectPair,isCorrectMatch} from './state';
 import {sharedGameAudio as audio, type GameSound} from './audio';
@@ -43,6 +44,7 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   const selectedChoice=useRef<number|null>(null);
   const question=config.questions[state.index];
   const locked=state.result!==null;
+  const compactMatch=/^g[45]-/.test(config.stationId)&&state.phase==='question'&&question.kind==='match';
   useEffect(()=>{
     if(config.layout!=='safe-v1')return;
     // Fetch and decode before the last answer, keeping the decoded image alive.
@@ -56,9 +58,9 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   useEffect(()=>{setPairs({});clickLocked.current=false;},[state.index,state.phase,state.reviewing]);
   useEffect(()=>{
     if(state.result===null)return;
-    const timer=setTimeout(()=>{audio.play('next');clickLocked.current=false;setPairs({});dispatch({type:'advance'});},state.result?1100:2200);
+    const timer=setTimeout(()=>{audio.play('next');clickLocked.current=false;setPairs({});dispatch({type:'advance'});},compactMatch?(state.result?1800:3500):(state.result?1100:2200));
     return ()=>clearTimeout(timer);
-  },[state.result,state.index]);
+  },[state.result,state.index,compactMatch]);
   useEffect(()=>{if(state.phase==='victory'){audio.stop();audio.play('victory');}},[state.phase]);
   const act=(name:GameSound,action:()=>void)=>{audio.unlock();audio.play(name);action();};
   const answer=(correct:boolean,sound:GameSound)=>{
@@ -75,14 +77,16 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
           <button className="music-toggle" aria-label={muted?'Bật âm thanh':'Tắt âm thanh'} aria-pressed={!muted} onClick={()=>{audio.setMuted(!muted);setMuted(!muted);if(muted)audio.play('tap');}}>{muted?'♪̸':'♫'}</button>
         </div>
       </div>
-      <section className="panel" aria-label={config.title}>
+      <section className={`panel ${compactMatch?'compact-match':''} ${locked?'has-result':''}`} aria-label={config.title}>
         {state.phase==='intro'&&<div className="intro-screen"><div className="intro-emblem" aria-hidden="true">🧭</div><h2>{config.intro.heading}</h2><p className="intro-story">{config.intro.story}</p><div className="intro-rules"><span>🧩 5 thử thách</span><span>{config.collectible.icon} Tìm đủ 5 {config.collectible.name}</span><span>🔎 Sai? Truy lại dấu vết!</span></div><p className="intro-call">{config.intro.call}</p><button className="btn intro-start" onClick={()=>{void audio.preload();act('next',()=>dispatch({type:'start'}));}}>🚀 BẮT ĐẦU KHÁM PHÁ</button></div>}
         {state.phase==='question'&&<>
           <h2 className="prompt">{question.prompt}</h2>
-          {question.kind==='match'?<MatchCards key={`${state.index}-${state.result}`} question={question} pairs={pairs} locked={locked} onSelect={()=>audio.play('select')} onConnect={(l,r)=>{audio.play('connect');setPairs(p=>connectPair(p,l,r));}}/>:
+          {question.kind==='match'?<MatchCards key={compactMatch?`${state.index}`:`${state.index}-${state.result}`} question={question} pairs={pairs} locked={locked} onSelect={()=>audio.play('select')} onConnect={(l,r)=>{audio.play('connect');setPairs(p=>connectPair(p,l,r));}}/>:
             <div className="answers">{question.options.map((o,i)=><button key={i} data-choice={i} disabled={locked} className={locked&&state.result!==null&&clickLocked.current&&selectedChoice.current===i?(state.result?'good':'bad'):''} onClick={()=>{if(locked||clickLocked.current)return;selectedChoice.current=i;answer(i===question.answer,'select');}}>{question.kind==='image'?<><img className="choice-photo" src={o.image} alt={`Hình lựa chọn ${'ABC'[i]}`}/><span className="choice-letter">{'ABC'[i]}</span></>:o.text}</button>)}</div>}
+          <div className={compactMatch?'match-footer':'question-footer'}>
           <div className={`feedback ${state.result?'ok':''}`} role="status" aria-live="polite">{state.result===null?'':state.result?`✓ Chính xác! Nhận một ${config.collectible.name}!`:`✕ Chưa đúng! Gợi ý: ${question.hint}`}</div>
           <div className="controls">{question.kind==='match'&&<button className="btn" disabled={locked||Object.keys(pairs).length!==3} onClick={()=>answer(isCorrectMatch(question.solution,pairs),'confirm')}>✓ XÁC NHẬN</button>}</div>
+          </div>
         </>}
         {state.phase==='review'&&<div className="reviewprompt"><h2>🔎 TRUY LẠI DẤU VẾT</h2><p>Em có {state.missed.length} câu cần thử lại. Hãy hoàn thành tất cả thử thách nhé!</p><button className="btn" onClick={()=>act('retry',()=>dispatch({type:'review'}))}>🔍 THỬ LẠI CÂU SAI</button></div>}
         {victory&&<div className="victory"><Fireworks lightweight={config.layout==='safe-v1'}/><div className="victory-content"><div className="victory-message"><div className="victory-praise">{config.victory.praise}</div><div className="victory-achievement">{config.victory.achievement}</div><div className="victory-reward">{config.victory.reward}</div></div><div className="victory-buttons"><button className="btn replay-btn" onClick={restart}>↻ CHƠI LẠI</button><button className="btn secondary continue-btn" onClick={()=>{if(completed.current)return;completed.current=true;audio.stop();audio.play('unlock');continueTimer.current=setTimeout(onComplete,240);}}>➜ TIẾP TỤC HÀNH TRÌNH</button></div></div></div>}
@@ -95,5 +99,5 @@ export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void
   const host=useRef<HTMLDivElement>(null);
   const [root,setRoot]=useState<ShadowRoot|null>(null);
   useLayoutEffect(()=>{if(host.current)setRoot(host.current.shadowRoot||host.current.attachShadow({mode:'open'}));},[]);
-  return <div ref={host} data-shared-stage2="v1">{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
+  return <div ref={host} data-shared-stage2="v1">{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss+'\n'+compactMatchCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
 }

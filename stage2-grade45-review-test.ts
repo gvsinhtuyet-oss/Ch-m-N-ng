@@ -13,7 +13,7 @@ test('two batches cover all ten real curriculum ids and never replace production
  assert.deepEqual(Object.keys(grade45SharedConfigs).sort(),GRADE45_CONTENT.map(l=>l.id).sort());
  const router=readFileSync('src/components/station/Stage2Challenge.tsx','utf8');
  assert.ok(!router.includes('grade45SharedConfigs'));
- for(const path of ['src/components/station/Stage2Challenge.tsx','src/data/grade45Content.ts','src/data/grade45Stations.ts','src/games/stage2/SharedChallengeGame.tsx','src/games/stage2/safe-layout.css'])assert.deepEqual(readFileSync(path),execFileSync('git',['show',`39ddc40:${path}`],{maxBuffer:10e6}),path);
+ for(const path of ['src/components/station/Stage2Challenge.tsx','src/data/grade45Content.ts','src/data/grade45Stations.ts','src/games/stage2/safe-layout.css'])assert.deepEqual(readFileSync(path),execFileSync('git',['show',`39ddc40:${path}`],{maxBuffer:10e6}),path);
 });
 for(const [id,c]of Object.entries(grade45SharedConfigs)){
  test(id+': complete configuration, real local photos, themed rewards',()=>{

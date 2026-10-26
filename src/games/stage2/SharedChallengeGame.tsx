@@ -2,7 +2,7 @@ import React, {useEffect, useLayoutEffect, useReducer, useRef, useState} from 'r
 import {createPortal} from 'react-dom';
 import {startFireworks} from './fireworks';
 import approvedCss from './approved-v18.css?raw';
-import namOCss from './nam-o-safe.css?raw';
+import safeLayoutCss from './safe-layout.css?raw';
 import {validateConfig, type GameConfig, type MatchQuestion} from './types';
 import {gameReducer,initialState,connectPair,isCorrectMatch} from './state';
 import {sharedGameAudio as audio, type GameSound} from './audio';
@@ -44,7 +44,7 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   const question=config.questions[state.index];
   const locked=state.result!==null;
   useEffect(()=>{
-    if(config.stationId!=='g3-station-4')return;
+    if(config.layout!=='safe-v1')return;
     // Fetch and decode before the last answer, keeping the decoded image alive.
     const images=[config.background,config.victoryBackground].map(src=>{
       const img=new Image();img.decoding='async';img.src=src;
@@ -67,7 +67,7 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   };
   const restart=()=>{audio.stop();completed.current=false;clickLocked.current=false;setPairs({});act('retry',()=>dispatch({type:'restart'}));};
   const victory=state.phase==='victory';
-  return <main className={`scene ${config.stationId==='g3-station-4'?'nam-o-safe':''} ${victory?'is-victory':''}`} style={{backgroundImage:`url("${victory?config.victoryBackground:config.background}")`}}>
+  return <main className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${victory?'is-victory':''}`} style={{backgroundImage:`url("${victory?config.victoryBackground:config.background}")`}}>
     <h1 className="preview-title">{config.title}</h1>
     <div className={`shell ${victory?'finished':''}`}>
       <div className="hud"><div className="hud-stage">{state.phase==='intro'?'SẴN SÀNG':victory?'HOÀN THÀNH':state.phase==='review'?'ÔN TẬP':`CÂU ${state.index+1}/5`}<small>{victory?'5/5 câu hỏi':state.reviewing||state.phase==='review'?'Truy lại dấu vết':state.phase==='intro'?(config.intro.readyLabel??'Khám phá lịch sử'):question.level}</small></div>
@@ -85,7 +85,7 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
           <div className="controls">{question.kind==='match'&&<button className="btn" disabled={locked||Object.keys(pairs).length!==3} onClick={()=>answer(isCorrectMatch(question.solution,pairs),'confirm')}>✓ XÁC NHẬN</button>}</div>
         </>}
         {state.phase==='review'&&<div className="reviewprompt"><h2>🔎 TRUY LẠI DẤU VẾT</h2><p>Em có {state.missed.length} câu cần thử lại. Hãy hoàn thành tất cả thử thách nhé!</p><button className="btn" onClick={()=>act('retry',()=>dispatch({type:'review'}))}>🔍 THỬ LẠI CÂU SAI</button></div>}
-        {victory&&<div className="victory"><Fireworks lightweight={config.stationId==='g3-station-4'}/><div className="victory-content"><div className="victory-message"><div className="victory-praise">{config.victory.praise}</div><div className="victory-achievement">{config.victory.achievement}</div><div className="victory-reward">{config.victory.reward}</div></div><div className="victory-buttons"><button className="btn replay-btn" onClick={restart}>↻ CHƠI LẠI</button><button className="btn secondary continue-btn" onClick={()=>{if(completed.current)return;completed.current=true;audio.stop();audio.play('unlock');continueTimer.current=setTimeout(onComplete,240);}}>➜ TIẾP TỤC HÀNH TRÌNH</button></div></div></div>}
+        {victory&&<div className="victory"><Fireworks lightweight={config.layout==='safe-v1'}/><div className="victory-content"><div className="victory-message"><div className="victory-praise">{config.victory.praise}</div><div className="victory-achievement">{config.victory.achievement}</div><div className="victory-reward">{config.victory.reward}</div></div><div className="victory-buttons"><button className="btn replay-btn" onClick={restart}>↻ CHƠI LẠI</button><button className="btn secondary continue-btn" onClick={()=>{if(completed.current)return;completed.current=true;audio.stop();audio.play('unlock');continueTimer.current=setTimeout(onComplete,240);}}>➜ TIẾP TỤC HÀNH TRÌNH</button></div></div></div>}
       </section>
     </div>
   </main>;
@@ -95,5 +95,5 @@ export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void
   const host=useRef<HTMLDivElement>(null);
   const [root,setRoot]=useState<ShadowRoot|null>(null);
   useLayoutEffect(()=>{if(host.current)setRoot(host.current.shadowRoot||host.current.attachShadow({mode:'open'}));},[]);
-  return <div ref={host} data-shared-stage2="v1">{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+namOCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
+  return <div ref={host} data-shared-stage2="v1">{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
 }

@@ -1,10 +1,11 @@
 import type {GameConfig} from '../types';
 export const station5Config = {
   "stationId": "g3-station-5",
+  "layout": "safe-v1",
   "stationName": "Nghề đan thuyền thúng ở Sơn Trà",
   "title": "Xưởng thuyền thúng tí hon",
-  "background": "/games/shared/v1/grade3/g3-5-play.webp",
-  "victoryBackground": "/games/shared/v1/grade3/g3-5-victory.webp",
+  "background": "/games/shared/v1/grade3/review/basket-play-safe-v1.webp",
+  "victoryBackground": "/games/shared/v1/grade3/review/basket-victory-safe-v1.webp",
   "collectible": {
     "icon": "🛶",
     "image": "/games/shared/v1/grade3/basket.svg",

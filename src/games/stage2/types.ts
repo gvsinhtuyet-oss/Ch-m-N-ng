@@ -8,6 +8,8 @@ export interface MatchQuestion extends QuestionBase {
 export type Question = ChoiceQuestion | MatchQuestion;
 export interface GameConfig {
   stationId: string; stationName: string; title: string;
+  /** Opt-in only; approved legacy presentation remains the default. */
+  layout?: 'safe-v1';
   background: string; victoryBackground: string;
   collectible: {icon: string; name: string; image?: string};
   intro: {heading: string; story: string; call: string; readyLabel?: string};

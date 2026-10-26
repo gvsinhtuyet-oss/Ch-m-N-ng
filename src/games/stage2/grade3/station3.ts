@@ -1,10 +1,11 @@
 import type {GameConfig} from '../types';
 export const station3Config = {
   "stationId": "g3-station-3",
+  "layout": "safe-v1",
   "stationName": "Cộng đồng các dân tộc Đà Nẵng",
   "title": "Bí mật sắc màu quê hương",
-  "background": "/games/shared/v1/grade3/g3-3-play.webp",
-  "victoryBackground": "/games/shared/v1/grade3/g3-3-victory.webp",
+  "background": "/games/shared/v1/grade3/review/community-play-safe-v1.webp",
+  "victoryBackground": "/games/shared/v1/grade3/review/community-victory-safe-v1.webp",
   "collectible": {
     "icon": "🪡",
     "image": "/games/shared/v1/grade3/badge.svg",

@@ -1,6 +1,7 @@
 import type {GameConfig} from '../types';
 export const station4Config = {
   "stationId": "g3-station-4",
+  "layout": "safe-v1",
   "stationName": "Nghề làm nước mắm Nam Ô",
   "title": "Truy tìm bí quyết Nam Ô",
   "background": "/games/shared/v1/grade3/review/nam-o-play-safe-v3.webp",

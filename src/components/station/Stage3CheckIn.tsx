@@ -10,11 +10,12 @@ import { RewardClaimModal } from '../common/RewardClaimModal';
 interface Props {
   station: Station;
   onCompleteStage: () => void;
+  readOnly?: boolean;
 }
 
-export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage }) => {
+export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage, readOnly = false }) => {
   const { currentUser, role } = useApp();
-  const isReadOnly = role !== 'student';
+  const isReadOnly = readOnly || role !== 'student';
   const checkIn = station.checkIn;
 
   const [selectedEmotion, setSelectedEmotion] = useState<string>('');

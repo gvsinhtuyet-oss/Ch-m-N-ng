@@ -1,0 +1,1272 @@
+[
+  {
+    "stationId": "g4-station-1",
+    "stationName": "Thiên nhiên và con người Đà Nẵng",
+    "title": "LA BÀN XANH ĐÀ NẴNG",
+    "layout": "safe-v1",
+    "background": "/games/shared/v1/grade45/g4-nature-play.webp",
+    "victoryBackground": "/games/shared/v1/grade45/g4-nature-victory.webp",
+    "collectible": {
+      "icon": "🌿",
+      "image": "/games/shared/v1/grade45/g4-nature-item.svg",
+      "name": "huy hiệu lá xanh vàng"
+    },
+    "intro": {
+      "heading": "LA BÀN XANH ĐÀ NẴNG",
+      "story": "Chúng mình cùng tìm hiểu từ cảnh quan đến cuộc sống quê hương. Em hãy quan sát hình, nghe câu chuyện và thử giải thích bằng điều mình tìm được nhé!",
+      "call": "Quan sát thật tinh, hoàn thành năm thử thách và trân trọng quê hương nhé!",
+      "readyLabel": "Khám phá quê hương"
+    },
+    "victory": {
+      "praise": "🌟 NHÀ KHÁM PHÁ QUÊ HƯƠNG!",
+      "achievement": "Em đã chinh phục 5 thử thách!",
+      "reward": "Em đã sưu tầm đủ 5 huy hiệu lá xanh vàng!"
+    },
+    "questions": [
+      {
+        "id": "q1",
+        "kind": "image",
+        "level": "Nhận biết",
+        "prompt": "Ảnh nào cho thấy cảnh quan biển của quê hương?",
+        "hint": "Quan sát bờ cát, sóng nước và không gian ven biển.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Hình A",
+            "image": "/learning/grade3/photos/my-khe.webp"
+          },
+          {
+            "text": "Hình B",
+            "image": "/images/real-photos/phuoc-kieu-khuon.webp"
+          },
+          {
+            "text": "Hình C",
+            "image": "/images/real-photos/ma-chau-ken.webp"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "kind": "choice",
+        "level": "Nhận biết",
+        "prompt": "Cặp nào nêu hai mùa khí hậu được giới thiệu trong bài?",
+        "hint": "Nhớ sự thay đổi lượng mưa trong năm.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Mùa thu hoạch và mùa gieo hạt"
+          },
+          {
+            "text": "Mùa mưa và mùa khô"
+          },
+          {
+            "text": "Mùa tuyết và mùa băng"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "kind": "choice",
+        "level": "Thông hiểu",
+        "prompt": "Nhóm em làm mô hình quê hương có sườn đồi dốc. Đề xuất nào giúp giữ đất và cảnh quan?",
+        "hint": "Cây và thảm thực vật góp phần giữ đất, giữ nước; chọn cách sử dụng địa hình có trách nhiệm.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Bố trí cây xanh phù hợp và giữ thảm thực vật trên sườn đồi"
+          },
+          {
+            "text": "Bỏ hết cây để đất trống quanh năm"
+          },
+          {
+            "text": "Đổ rác xuống chân đồi cho đầy chỗ trũng"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "kind": "match",
+        "level": "Thông hiểu",
+        "prompt": "Nối mỗi nội dung với ý phù hợp.",
+        "hint": "Nhớ các đặc điểm và mối liên hệ được giới thiệu trong bài.",
+        "left": [
+          "Rừng và biển",
+          "Sông ngòi",
+          "Con người quê hương"
+        ],
+        "right": [
+          "Gắn với đời sống và sản xuất",
+          "Cần cù, chân thật, nghĩa tình",
+          "Môi trường sống của sinh vật"
+        ],
+        "solution": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "q5",
+        "kind": "choice",
+        "level": "Vận dụng",
+        "prompt": "Lớp muốn giữ sân trường xanh, sạch, đẹp. Kế hoạch nào phù hợp?",
+        "hint": "Chọn việc vừa sức và có người cùng thực hiện.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Chỉ chụp ảnh khẩu hiệu mà không thực hiện"
+          },
+          {
+            "text": "Phân công chăm cây và bỏ rác đúng nơi"
+          },
+          {
+            "text": "Hái hoa mang vào lớp để sân đỡ lá"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stationId": "g4-station-3",
+    "stationName": "Tìm hiểu một số hoạt động kinh tế Đà Nẵng",
+    "title": "NHỊP SỐNG THÀNH PHỐ",
+    "layout": "safe-v1",
+    "background": "/games/shared/v1/grade45/g4-economy-play.webp",
+    "victoryBackground": "/games/shared/v1/grade45/g4-economy-victory.webp",
+    "collectible": {
+      "icon": "⚙️",
+      "image": "/games/shared/v1/grade45/g4-economy-item.svg",
+      "name": "bánh răng vàng"
+    },
+    "intro": {
+      "heading": "NHỊP SỐNG THÀNH PHỐ",
+      "story": "Cùng tìm hiểu công nghiệp, dịch vụ, nông nghiệp, kinh tế biển và nghề truyền thống qua những công việc gần gũi nhé!",
+      "call": "Quan sát thật tinh, hoàn thành năm thử thách và trân trọng quê hương nhé!",
+      "readyLabel": "Khám phá quê hương"
+    },
+    "victory": {
+      "praise": "🌟 NHÀ KHÁM PHÁ QUÊ HƯƠNG!",
+      "achievement": "Em đã chinh phục 5 thử thách!",
+      "reward": "Em đã sưu tầm đủ 5 bánh răng vàng!"
+    },
+    "questions": [
+      {
+        "id": "q1",
+        "kind": "image",
+        "level": "Nhận biết",
+        "prompt": "Ảnh nào thể hiện hoạt động vận tải biển?",
+        "hint": "Quan sát tàu hàng, container và thiết bị bốc dỡ ở cảng.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Hình A",
+            "image": "/images/real-photos/ma-chau-ken.webp"
+          },
+          {
+            "text": "Hình B",
+            "image": "/images/real-photos/tien-sa-9.webp"
+          },
+          {
+            "text": "Hình C",
+            "image": "/images/real-photos/phuoc-kieu-khuon.webp"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "kind": "choice",
+        "level": "Nhận biết",
+        "prompt": "Hoạt động nào trực tiếp tạo ra lương thực, thực phẩm?",
+        "hint": "Nghĩ đến việc trồng trọt và chăn nuôi.",
+        "answer": 2,
+        "options": [
+          {
+            "text": "Hướng dẫn tham quan"
+          },
+          {
+            "text": "Vận chuyển hành khách"
+          },
+          {
+            "text": "Nông nghiệp"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "kind": "choice",
+        "level": "Thông hiểu",
+        "prompt": "Nhóm tìm hiểu một hộ trồng rau kết hợp đón khách trải nghiệm. Nhận xét nào phù hợp?",
+        "hint": "Các hoạt động kinh tế có thể liên kết với nhau.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Trồng rau không tạo ra sản phẩm"
+          },
+          {
+            "text": "Nông nghiệp có thể kết nối với du lịch"
+          },
+          {
+            "text": "Mỗi gia đình chỉ được làm một ngành"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "kind": "match",
+        "level": "Thông hiểu",
+        "prompt": "Nối mỗi nội dung với ý phù hợp.",
+        "hint": "Nhớ các đặc điểm và mối liên hệ được giới thiệu trong bài.",
+        "left": [
+          "Công nghiệp",
+          "Dịch vụ du lịch",
+          "Nông nghiệp"
+        ],
+        "right": [
+          "Vận chuyển, lưu trú, hướng dẫn",
+          "Làm ra lương thực, thực phẩm",
+          "Chế biến, sản xuất, lắp ráp"
+        ],
+        "solution": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "q5",
+        "kind": "choice",
+        "level": "Vận dụng",
+        "prompt": "Một làng nghề muốn đón khách nhưng vẫn giữ môi trường sạch. Cách nào phù hợp?",
+        "hint": "Phát triển du lịch cần gắn với bảo vệ môi trường và hoạt động của làng nghề.",
+        "answer": 2,
+        "options": [
+          {
+            "text": "Để khách tự đi vào mọi khu vực sản xuất"
+          },
+          {
+            "text": "Bỏ yêu cầu vệ sinh để đón nhiều khách"
+          },
+          {
+            "text": "Tổ chức lối tham quan và thu gom rác, tôn trọng người làm nghề"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stationId": "g4-station-2",
+    "stationName": "Khu đền tháp Mỹ Sơn – Bảo tàng Điêu khắc Chăm Đà Nẵng",
+    "title": "GIẢI MÃ DI SẢN CHĂM",
+    "layout": "safe-v1",
+    "background": "/games/shared/v1/grade45/g4-cham-play.webp",
+    "victoryBackground": "/games/shared/v1/grade45/g4-cham-victory.webp",
+    "collectible": {
+      "icon": "🪷",
+      "image": "/games/shared/v1/grade45/g4-cham-item.svg",
+      "name": "huy hiệu sen vàng"
+    },
+    "intro": {
+      "heading": "GIẢI MÃ DI SẢN CHĂM",
+      "story": "Cùng khám phá khu đền tháp Mỹ Sơn và Bảo tàng Điêu khắc Chăm để hiểu, trân trọng và gìn giữ di sản quê hương.",
+      "call": "Quan sát thật tinh, hoàn thành năm thử thách và trân trọng quê hương nhé!",
+      "readyLabel": "Khám phá quê hương"
+    },
+    "victory": {
+      "praise": "🌟 NHÀ KHÁM PHÁ QUÊ HƯƠNG!",
+      "achievement": "Em đã chinh phục 5 thử thách!",
+      "reward": "Em đã sưu tầm đủ 5 huy hiệu sen vàng!"
+    },
+    "questions": [
+      {
+        "id": "q1",
+        "kind": "image",
+        "level": "Nhận biết",
+        "prompt": "Ảnh nào là khu đền tháp Mỹ Sơn?",
+        "hint": "Nhớ hình dạng các tháp gạch được giới thiệu trong bài.",
+        "answer": 2,
+        "options": [
+          {
+            "text": "Hình A",
+            "image": "/images/real-photos/phuoc-kieu-khuon.webp"
+          },
+          {
+            "text": "Hình B",
+            "image": "/images/real-photos/ma-chau-ken.webp"
+          },
+          {
+            "text": "Hình C",
+            "image": "/images/real-photos/my-son.webp"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "kind": "choice",
+        "level": "Nhận biết",
+        "prompt": "Muốn biết tên, chất liệu và xuất xứ hiện vật, em cần làm gì?",
+        "hint": "Bên cạnh hiện vật thường có thông tin giúp người xem tìm hiểu.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Quan sát và đọc nhãn giới thiệu"
+          },
+          {
+            "text": "Đoán từ màu sắc rồi khẳng định"
+          },
+          {
+            "text": "Gọi tất cả hiện vật cùng một tên"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "kind": "choice",
+        "level": "Thông hiểu",
+        "prompt": "Bạn ghi Mỹ Sơn và Bảo tàng Điêu khắc Chăm là cùng một địa điểm. Em sửa thế nào?",
+        "hint": "Phân biệt di tích với bảo tàng, dù cùng liên quan một nền văn hóa.",
+        "answer": 2,
+        "options": [
+          {
+            "text": "Đổi mọi chú thích thành một địa chỉ"
+          },
+          {
+            "text": "Bỏ hết tên địa điểm khỏi bài"
+          },
+          {
+            "text": "Đó là hai địa điểm khác nhau cùng giúp tìm hiểu di sản Chăm-pa"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "kind": "match",
+        "level": "Thông hiểu",
+        "prompt": "Nối mỗi nội dung với ý phù hợp.",
+        "hint": "Nhớ các đặc điểm và mối liên hệ được giới thiệu trong bài.",
+        "left": [
+          "Mỹ Sơn",
+          "Bảo tàng Điêu khắc Chăm",
+          "Nhãn hiện vật"
+        ],
+        "right": [
+          "Nơi gìn giữ hiện vật điêu khắc",
+          "Giúp tìm hiểu tên và xuất xứ",
+          "Khu đền tháp trong thung lũng"
+        ],
+        "solution": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "q5",
+        "kind": "choice",
+        "level": "Vận dụng",
+        "prompt": "Lớp muốn chia sẻ cảm nhận sau khi xem video di sản. Cách nào phù hợp?",
+        "hint": "Hiểu biết có căn cứ có thể đi cùng nhiều cảm nhận khác nhau.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Nói điều đã thấy và cảm nghĩ riêng, lắng nghe bạn"
+          },
+          {
+            "text": "Bắt mọi bạn phải thích cùng một hiện vật"
+          },
+          {
+            "text": "Chấm cảm xúc của bạn là sai vì khác mình"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stationId": "g4-thu-bon-hon-kem",
+    "stationName": "Sông Thu Bồn – Hòn Kẽm Đá Dừng",
+    "title": "THEO DÒNG THU BỒN",
+    "layout": "safe-v1",
+    "background": "/games/shared/v1/grade45/g4-river-play.webp",
+    "victoryBackground": "/games/shared/v1/grade45/g4-river-victory.webp",
+    "collectible": {
+      "icon": "⛵",
+      "image": "/games/shared/v1/grade45/g4-river-item.svg",
+      "name": "thuyền sông vàng"
+    },
+    "intro": {
+      "heading": "THEO DÒNG THU BỒN",
+      "story": "Cùng theo dòng Thu Bồn, tìm hiểu đời sống ven sông và vẻ đẹp Hòn Kẽm Đá Dừng nhé!",
+      "call": "Quan sát thật tinh, hoàn thành năm thử thách và trân trọng quê hương nhé!",
+      "readyLabel": "Khám phá quê hương"
+    },
+    "victory": {
+      "praise": "🌟 NHÀ KHÁM PHÁ QUÊ HƯƠNG!",
+      "achievement": "Em đã chinh phục 5 thử thách!",
+      "reward": "Em đã sưu tầm đủ 5 thuyền sông vàng!"
+    },
+    "questions": [
+      {
+        "id": "q1",
+        "kind": "image",
+        "level": "Nhận biết",
+        "prompt": "Ảnh nào có dòng sông giữa vách núi Hòn Kẽm Đá Dừng?",
+        "hint": "Quan sát dòng nước và các vách núi đá hai bên.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Hình A",
+            "image": "/learning/grade45/photos/hon-kem.webp"
+          },
+          {
+            "text": "Hình B",
+            "image": "/images/real-photos/phuoc-kieu-khuon.webp"
+          },
+          {
+            "text": "Hình C",
+            "image": "/images/real-photos/ma-chau-ken.webp"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "kind": "choice",
+        "level": "Nhận biết",
+        "prompt": "Hành trình nào mô tả đúng dòng Thu Bồn theo bài học?",
+        "hint": "Nhớ điểm bắt nguồn và cửa biển được giới thiệu trong bài.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Chỉ chảy trong một hồ kín"
+          },
+          {
+            "text": "Từ vùng núi Ngọc Linh, phần lớn ra biển qua Cửa Đại"
+          },
+          {
+            "text": "Từ Cửa Đại chảy ngược lên đỉnh núi"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "kind": "choice",
+        "level": "Thông hiểu",
+        "prompt": "Nhóm viết Thu Bồn chỉ có một hoạt động là đánh cá. Em bổ sung gì?",
+        "hint": "Dòng sông gắn với nhiều mặt của đời sống.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Còn giao thương, đi lại và đua thuyền dịp lễ hội"
+          },
+          {
+            "text": "Đồng ý vì thấy một ảnh đánh cá"
+          },
+          {
+            "text": "Bỏ mọi hoạt động của người dân"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "kind": "match",
+        "level": "Thông hiểu",
+        "prompt": "Nối mỗi nội dung với ý phù hợp.",
+        "hint": "Nhớ các đặc điểm và mối liên hệ được giới thiệu trong bài.",
+        "left": [
+          "Núi Ngọc Linh",
+          "Cửa Đại",
+          "Hòn Kẽm Đá Dừng"
+        ],
+        "right": [
+          "Nơi phần lớn nước sông ra biển",
+          "Vách núi đá bên dòng sông",
+          "Vùng bắt nguồn sông Thu Bồn"
+        ],
+        "solution": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "q5",
+        "kind": "choice",
+        "level": "Vận dụng",
+        "prompt": "Em giới thiệu Thu Bồn và Hòn Kẽm Đá Dừng bằng đoạn văn. Nội dung nào phù hợp?",
+        "hint": "Chọn các thông tin chính đã học và cảm nhận của mình.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Chỉ lịch mua sắm của gia đình"
+          },
+          {
+            "text": "Nguồn sông, nét cảnh quan, hoạt động và việc giữ gìn"
+          },
+          {
+            "text": "Chỉ một chuỗi lời khen không có tên địa điểm"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stationId": "g4-station-4",
+    "stationName": "Nghề đúc đồng ở Phước Kiều",
+    "title": "ÂM VANG PHƯỚC KIỀU",
+    "layout": "safe-v1",
+    "background": "/games/shared/v1/grade45/g4-bronze-play.webp",
+    "victoryBackground": "/games/shared/v1/grade45/g4-bronze-victory.webp",
+    "collectible": {
+      "icon": "🔔",
+      "image": "/games/shared/v1/grade45/g4-bronze-item.svg",
+      "name": "chiêng đồng vàng"
+    },
+    "intro": {
+      "heading": "ÂM VANG PHƯỚC KIỀU",
+      "story": "Cùng đến với Phước Kiều, tìm hiểu sản phẩm và công sức của người thợ qua các công đoạn đúc đồng.",
+      "call": "Quan sát thật tinh, hoàn thành năm thử thách và trân trọng quê hương nhé!",
+      "readyLabel": "Khám phá quê hương"
+    },
+    "victory": {
+      "praise": "🌟 NHÀ KHÁM PHÁ QUÊ HƯƠNG!",
+      "achievement": "Em đã chinh phục 5 thử thách!",
+      "reward": "Em đã sưu tầm đủ 5 chiêng đồng vàng!"
+    },
+    "questions": [
+      {
+        "id": "q1",
+        "kind": "image",
+        "level": "Nhận biết",
+        "prompt": "Ảnh nào có sản phẩm của nghề đúc đồng?",
+        "hint": "Quan sát chất liệu và những sản phẩm cồng, chiêng được giới thiệu.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Hình A",
+            "image": "/images/real-photos/ma-chau-ken.webp"
+          },
+          {
+            "text": "Hình B",
+            "image": "/images/real-photos/phuoc-kieu-san-pham.webp"
+          },
+          {
+            "text": "Hình C",
+            "image": "/images/real-photos/phuoc-kieu-khuon.webp"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "kind": "choice",
+        "level": "Nhận biết",
+        "prompt": "Nhóm nào gồm sản phẩm truyền thống của Phước Kiều?",
+        "hint": "Nhớ những sản phẩm có thể tạo âm thanh được giới thiệu trong bài.",
+        "answer": 2,
+        "options": [
+          {
+            "text": "Kén tằm và tấm lụa"
+          },
+          {
+            "text": "Nan tre và thuyền thúng"
+          },
+          {
+            "text": "Cồng, chiêng và chuông"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "kind": "choice",
+        "level": "Thông hiểu",
+        "prompt": "Làng nghề làm thêm tượng và đồ lưu niệm. Nhận xét nào phù hợp?",
+        "hint": "Giữ nghề có thể đi cùng sáng tạo phù hợp nhu cầu.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Có thể sáng tạo sản phẩm mới và tiếp nối kĩ năng truyền thống"
+          },
+          {
+            "text": "Làm sản phẩm mới đồng nghĩa phải bỏ mọi nghề cũ"
+          },
+          {
+            "text": "Chỉ một mẫu sản phẩm được phép tồn tại"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "kind": "match",
+        "level": "Thông hiểu",
+        "prompt": "Nối mỗi nội dung với ý phù hợp.",
+        "hint": "Nhớ các đặc điểm và mối liên hệ được giới thiệu trong bài.",
+        "left": [
+          "Tạo mẫu, làm khuôn",
+          "Nấu và rót đồng",
+          "Làm nguội, hoàn thiện"
+        ],
+        "right": [
+          "Thực hiện khi khuôn đã sẵn sàng",
+          "Thực hiện sau công đoạn rót",
+          "Các công đoạn đầu"
+        ],
+        "solution": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "q5",
+        "kind": "choice",
+        "level": "Vận dụng",
+        "prompt": "Lớp lập kế hoạch tham quan Phước Kiều. Cách phân công nào tốt?",
+        "hint": "Nhiệm vụ rõ ràng giúp chuyến đi có ý nghĩa và trật tự.",
+        "answer": 2,
+        "options": [
+          {
+            "text": "Để các bạn tự tách nhóm đi khắp xưởng"
+          },
+          {
+            "text": "Không cần thống nhất mục đích tìm hiểu"
+          },
+          {
+            "text": "Có nhóm ghi chép, hỏi theo hướng dẫn và tổng hợp kết quả"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stationId": "g5-ky-anh-me-nhu",
+    "stationName": "Địa đạo Kỳ Anh – Khu lưu niệm Mẹ Nhu và 07 Dũng sĩ Thanh Khê",
+    "title": "THEO DẤU LÒNG DŨNG CẢM",
+    "layout": "safe-v1",
+    "background": "/games/shared/v1/grade45/g5-heroes-play.webp",
+    "victoryBackground": "/games/shared/v1/grade45/g5-heroes-victory.webp",
+    "collectible": {
+      "icon": "⭐",
+      "image": "/games/shared/v1/grade45/g5-heroes-item.svg",
+      "name": "huy hiệu sao vàng"
+    },
+    "intro": {
+      "heading": "THEO DẤU LÒNG DŨNG CẢM",
+      "story": "Một đường hầm dưới lòng đất và một khu lưu niệm kể cho chúng mình câu chuyện gì? Em cùng tìm hiểu sự bền bỉ của người dân Kỳ Anh, lòng dũng cảm của Mẹ Nhu và 7 Dũng sĩ Thanh Khê nhé!",
+      "call": "Quan sát thật tinh, hoàn thành năm thử thách và trân trọng quê hương nhé!",
+      "readyLabel": "Khám phá quê hương"
+    },
+    "victory": {
+      "praise": "🌟 NHÀ KHÁM PHÁ QUÊ HƯƠNG!",
+      "achievement": "Em đã chinh phục 5 thử thách!",
+      "reward": "Em đã sưu tầm đủ 5 huy hiệu sao vàng!"
+    },
+    "questions": [
+      {
+        "id": "q1",
+        "kind": "image",
+        "level": "Nhận biết",
+        "prompt": "Ảnh nào cho thấy không gian bên trong địa đạo Kỳ Anh?",
+        "hint": "Quan sát đường hầm hẹp dưới mặt đất.",
+        "answer": 2,
+        "options": [
+          {
+            "text": "Hình A",
+            "image": "/images/real-photos/phuoc-kieu-khuon.webp"
+          },
+          {
+            "text": "Hình B",
+            "image": "/images/real-photos/ma-chau-ken.webp"
+          },
+          {
+            "text": "Hình C",
+            "image": "/images/real-photos/ky-anh-duong-ham.webp"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "kind": "choice",
+        "level": "Nhận biết",
+        "prompt": "Khoảng thời gian nào gắn với việc đào địa đạo Kỳ Anh?",
+        "hint": "Đối chiếu mốc thời gian ở điểm đầu của bài học.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Từ năm 1965 đến cuối năm 1967"
+          },
+          {
+            "text": "Từ năm 1915 đến năm 1919"
+          },
+          {
+            "text": "Từ năm 1826 đến năm 1828"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "kind": "choice",
+        "level": "Thông hiểu",
+        "prompt": "Bạn ghi Mẹ Nhu là Nguyễn Thị Thứ. Em giúp bạn sửa thế nào?",
+        "hint": "Đọc lại điểm về Mẹ Nhu.",
+        "answer": 2,
+        "options": [
+          {
+            "text": "Giữ nguyên vì đều được gọi là mẹ"
+          },
+          {
+            "text": "Bỏ tên nhân vật khỏi bài giới thiệu"
+          },
+          {
+            "text": "Đối chiếu bài học: Mẹ Nhu là Lê Thị Dảnh"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "kind": "match",
+        "level": "Thông hiểu",
+        "prompt": "Nối mỗi nội dung với ý phù hợp.",
+        "hint": "Nhớ các đặc điểm và mối liên hệ được giới thiệu trong bài.",
+        "left": [
+          "Hầm chỉ huy",
+          "Hầm cứu thương",
+          "Lỗ thông hơi"
+        ],
+        "right": [
+          "Chăm sóc người bị thương",
+          "Giúp không khí lưu thông",
+          "Phục vụ công việc chỉ huy"
+        ],
+        "solution": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "q5",
+        "kind": "choice",
+        "level": "Vận dụng",
+        "prompt": "Trong chuyến tham quan, bạn rủ tự đi vào đường hầm. Em chọn cách nào?",
+        "hint": "Tìm hiểu di tích cần tuân theo hướng dẫn của nơi tham quan.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Ở cùng đoàn và chỉ vào khu được người phụ trách hướng dẫn"
+          },
+          {
+            "text": "Tách đoàn để khám phá cho nhanh"
+          },
+          {
+            "text": "Đi theo bạn dù chưa được hướng dẫn"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stationId": "g5-station-3",
+    "stationName": "Bà Nà – Hải Vân Quan",
+    "title": "HÀNH TRÌNH MÂY VÀ CỬA QUAN",
+    "layout": "safe-v1",
+    "background": "/games/shared/v1/grade45/g5-clouds-play.webp",
+    "victoryBackground": "/games/shared/v1/grade45/g5-clouds-victory.webp",
+    "collectible": {
+      "icon": "🧭",
+      "image": "/games/shared/v1/grade45/g5-clouds-item.svg",
+      "name": "la bàn vàng"
+    },
+    "intro": {
+      "heading": "HÀNH TRÌNH MÂY VÀ CỬA QUAN",
+      "story": "Một nơi có núi rừng mát lành, một nơi lưu dấu cửa quan xưa. Em cùng so sánh Bà Nà và Hải Vân Quan để thiết kế một hành trình vừa khám phá thiên nhiên vừa tìm hiểu lịch sử nhé!",
+      "call": "Quan sát thật tinh, hoàn thành năm thử thách và trân trọng quê hương nhé!",
+      "readyLabel": "Khám phá quê hương"
+    },
+    "victory": {
+      "praise": "🌟 NHÀ KHÁM PHÁ QUÊ HƯƠNG!",
+      "achievement": "Em đã chinh phục 5 thử thách!",
+      "reward": "Em đã sưu tầm đủ 5 la bàn vàng!"
+    },
+    "questions": [
+      {
+        "id": "q1",
+        "kind": "image",
+        "level": "Nhận biết",
+        "prompt": "Ảnh tư liệu nào có cửa Hải Vân Quan?",
+        "hint": "Nhớ hình dáng cửa quan trên đỉnh đèo trong ảnh tư liệu.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Hình A",
+            "image": "/learning/grade45/photos/hai-van.webp"
+          },
+          {
+            "text": "Hình B",
+            "image": "/images/real-photos/phuoc-kieu-khuon.webp"
+          },
+          {
+            "text": "Hình C",
+            "image": "/images/real-photos/ma-chau-ken.webp"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "kind": "choice",
+        "level": "Nhận biết",
+        "prompt": "Hải Vân Quan từng đảm nhiệm vai trò nào?",
+        "hint": "Nhớ vai trò lịch sử của cửa quan.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Nơi ươm giống sâm"
+          },
+          {
+            "text": "Công trình phòng thủ ở vị trí quan trọng trên đèo"
+          },
+          {
+            "text": "Xưởng dệt lụa"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "kind": "choice",
+        "level": "Thông hiểu",
+        "prompt": "Bạn nói khí hậu Bà Nà có bốn mùa thực sự trong một ngày. Em góp ý thế nào?",
+        "hint": "Phân biệt thay đổi thời tiết với các mùa khí hậu.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Khẳng định ngày nào cũng có tuyết"
+          },
+          {
+            "text": "Nói thời tiết có thể thay đổi, còn khí hậu cần được mô tả qua thời gian dài"
+          },
+          {
+            "text": "Đồng ý vì mây xuất hiện bốn lần"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "kind": "match",
+        "level": "Thông hiểu",
+        "prompt": "Nối mỗi nội dung với ý phù hợp.",
+        "hint": "Nhớ các đặc điểm và mối liên hệ được giới thiệu trong bài.",
+        "left": [
+          "Bà Nà – Núi Chúa",
+          "Hải Vân Quan",
+          "Bảo vệ rừng"
+        ],
+        "right": [
+          "Dấu tích lịch sử và kiến trúc",
+          "Gìn giữ đa dạng sinh học",
+          "Núi rừng và khí hậu mát mẻ"
+        ],
+        "solution": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "q5",
+        "kind": "choice",
+        "level": "Vận dụng",
+        "prompt": "Nếu đề xuất phát triển du lịch, em chọn phương án nào?",
+        "hint": "Phát triển du lịch đi cùng bảo tồn.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Cho khách khắc tên lên tường cửa quan"
+          },
+          {
+            "text": "Có hướng dẫn bảo vệ rừng và giữ nguyên dấu tích được bảo tồn"
+          },
+          {
+            "text": "Mở lối đi tùy ý xuyên rừng"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stationId": "g5-station-4",
+    "stationName": "Danh thắng Ngũ Hành Sơn",
+    "title": "KHÁM PHÁ NGŨ HÀNH SƠN",
+    "layout": "safe-v1",
+    "background": "/games/shared/v1/grade45/g5-mountains-play.webp",
+    "victoryBackground": "/games/shared/v1/grade45/g5-mountains-victory.webp",
+    "collectible": {
+      "icon": "🪷",
+      "image": "/games/shared/v1/grade45/g5-mountains-item.svg",
+      "name": "đóa sen đá vàng"
+    },
+    "intro": {
+      "heading": "KHÁM PHÁ NGŨ HÀNH SƠN",
+      "story": "Ngũ Hành Sơn có những gì ngoài các ngọn núi? Em cùng tìm những câu chuyện trong hang động, chữ khắc trên đá và sản phẩm của làng nghề Non Nước nhé!",
+      "call": "Quan sát thật tinh, hoàn thành năm thử thách và trân trọng quê hương nhé!",
+      "readyLabel": "Khám phá quê hương"
+    },
+    "victory": {
+      "praise": "🌟 NHÀ KHÁM PHÁ QUÊ HƯƠNG!",
+      "achievement": "Em đã chinh phục 5 thử thách!",
+      "reward": "Em đã sưu tầm đủ 5 đóa sen đá vàng!"
+    },
+    "questions": [
+      {
+        "id": "q1",
+        "kind": "image",
+        "level": "Nhận biết",
+        "prompt": "Ảnh nào có cảnh quan Ngũ Hành Sơn?",
+        "hint": "Nhớ quần thể núi đá và cảnh quan được giới thiệu trong bài.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Hình A",
+            "image": "/images/real-photos/ma-chau-ken.webp"
+          },
+          {
+            "text": "Hình B",
+            "image": "/learning/grade45/photos/ngu-hanh.webp"
+          },
+          {
+            "text": "Hình C",
+            "image": "/images/real-photos/phuoc-kieu-khuon.webp"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "kind": "choice",
+        "level": "Nhận biết",
+        "prompt": "Vì sao năm tên ngũ hành không có nghĩa chỉ có năm ngọn núi?",
+        "hint": "Phân biệt tên ngũ hành với các ngọn của Hỏa Sơn.",
+        "answer": 2,
+        "options": [
+          {
+            "text": "Vì mỗi ngọn đều đổi tên mỗi ngày"
+          },
+          {
+            "text": "Vì Thủy Sơn không thuộc danh thắng"
+          },
+          {
+            "text": "Hỏa Sơn gồm Dương Hỏa Sơn và Âm Hỏa Sơn"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "kind": "choice",
+        "level": "Thông hiểu",
+        "prompt": "Muốn giúp người xem hiểu sản phẩm làng nghề đa dạng, em nên làm gì?",
+        "hint": "Các nhóm sản phẩm có công dụng khác nhau.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Giới thiệu ví dụ đồ dùng, tượng và trang sức"
+          },
+          {
+            "text": "Chỉ nói làng nghề làm một loại tượng"
+          },
+          {
+            "text": "Chỉ đọc tên làng mà không nêu sản phẩm"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "kind": "match",
+        "level": "Thông hiểu",
+        "prompt": "Nối mỗi nội dung với ý phù hợp.",
+        "hint": "Nhớ các đặc điểm và mối liên hệ được giới thiệu trong bài.",
+        "left": [
+          "Ma nhai",
+          "Non Nước",
+          "Hỏa Sơn"
+        ],
+        "right": [
+          "Làng nghề điêu khắc đá",
+          "Gồm hai ngọn núi",
+          "Chữ khắc lưu giữ ký ức"
+        ],
+        "solution": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "q5",
+        "kind": "choice",
+        "level": "Vận dụng",
+        "prompt": "Poster của lớp về Ngũ Hành Sơn nên kết nối những nội dung nào?",
+        "hint": "Bài học có cả giá trị tự nhiên và văn hóa.",
+        "answer": 2,
+        "options": [
+          {
+            "text": "Chỉ ghi nơi mua đồ và bỏ mọi giá trị khác"
+          },
+          {
+            "text": "Khẳng định có thể chạm mọi hiện vật để trải nghiệm"
+          },
+          {
+            "text": "Cảnh quan, ma nhai và làng nghề cùng lời nhắc gìn giữ"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stationId": "g5-lua-ma-chau",
+    "stationName": "Lụa Mã Châu",
+    "title": "DỆT SẮC LỤA MÃ CHÂU",
+    "layout": "safe-v1",
+    "background": "/games/shared/v1/grade45/g5-silk-play.webp",
+    "victoryBackground": "/games/shared/v1/grade45/g5-silk-victory.webp",
+    "collectible": {
+      "icon": "🧵",
+      "image": "/games/shared/v1/grade45/g5-silk-item.svg",
+      "name": "ống tơ vàng"
+    },
+    "intro": {
+      "heading": "DỆT SẮC LỤA MÃ CHÂU",
+      "story": "Một chiếc khăn lụa bắt đầu từ đâu? Em cùng theo dấu lá dâu, con tằm và bàn tay người thợ để khám phá làng dệt lụa Mã Châu nhé!",
+      "call": "Quan sát thật tinh, hoàn thành năm thử thách và trân trọng quê hương nhé!",
+      "readyLabel": "Khám phá quê hương"
+    },
+    "victory": {
+      "praise": "🌟 NHÀ KHÁM PHÁ QUÊ HƯƠNG!",
+      "achievement": "Em đã chinh phục 5 thử thách!",
+      "reward": "Em đã sưu tầm đủ 5 ống tơ vàng!"
+    },
+    "questions": [
+      {
+        "id": "q1",
+        "kind": "image",
+        "level": "Nhận biết",
+        "prompt": "Ảnh nào cho thấy công đoạn dệt lụa?",
+        "hint": "Quan sát khung dệt và các sợi được dệt thành tấm.",
+        "answer": 2,
+        "options": [
+          {
+            "text": "Hình A",
+            "image": "/images/real-photos/phuoc-kieu-khuon.webp"
+          },
+          {
+            "text": "Hình B",
+            "image": "/images/real-photos/ma-chau-ken.webp"
+          },
+          {
+            "text": "Hình C",
+            "image": "/images/real-photos/ma-chau-det.webp"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "kind": "choice",
+        "level": "Nhận biết",
+        "prompt": "Trong nghề lụa, tằm ăn loại lá nào để lớn lên?",
+        "hint": "Nhớ tên cây gắn với công đoạn nuôi tằm.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Lá dâu"
+          },
+          {
+            "text": "Lá thông"
+          },
+          {
+            "text": "Lá dừa"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "kind": "choice",
+        "level": "Thông hiểu",
+        "prompt": "Bạn xếp thẻ “dệt lụa” trước “ươm tơ”. Em nên sửa ra sao?",
+        "hint": "Tìm nguyên liệu cần có để dệt.",
+        "answer": 2,
+        "options": [
+          {
+            "text": "Giữ nguyên vì không cần sợi tơ"
+          },
+          {
+            "text": "Bỏ cả hai thẻ khỏi quy trình"
+          },
+          {
+            "text": "Ươm lấy sợi tơ trước rồi mới dệt thành tấm"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "kind": "match",
+        "level": "Thông hiểu",
+        "prompt": "Nối mỗi nội dung với ý phù hợp.",
+        "hint": "Nhớ các đặc điểm và mối liên hệ được giới thiệu trong bài.",
+        "left": [
+          "Nuôi tằm",
+          "Ươm tơ",
+          "Dệt lụa"
+        ],
+        "right": [
+          "Lấy sợi tơ từ kén",
+          "Dệt sợi thành tấm lụa",
+          "Tằm ăn lá dâu rồi tạo kén"
+        ],
+        "solution": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "q5",
+        "kind": "choice",
+        "level": "Vận dụng",
+        "prompt": "Lớp em làm thẻ quảng bá nghề truyền thống. Bộ thông tin nào phù hợp?",
+        "hint": "Dựa vào bốn gợi ý thực hành của bài.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Tên làng, vị trí, quy trình và sản phẩm chính"
+          },
+          {
+            "text": "Tên làng cùng công dụng sức khỏe tự đoán"
+          },
+          {
+            "text": "Chỉ một bức ảnh không ghi nguồn hay tên nghề"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stationId": "g5-station-5",
+    "stationName": "Sâm Ngọc Linh",
+    "title": "BÁU VẬT RỪNG NGỌC LINH",
+    "layout": "safe-v1",
+    "background": "/games/shared/v1/grade45/g5-ginseng-play.webp",
+    "victoryBackground": "/games/shared/v1/grade45/g5-ginseng-victory.webp",
+    "collectible": {
+      "icon": "🌿",
+      "image": "/games/shared/v1/grade45/g5-ginseng-item.svg",
+      "name": "huy hiệu lá sâm vàng"
+    },
+    "intro": {
+      "heading": "BÁU VẬT RỪNG NGỌC LINH",
+      "story": "Vì sao một cây nhỏ sống dưới tán rừng lại được gọi là dược liệu quý? Em cùng tìm hiểu sâm Ngọc Linh, công sức người trồng và cách bảo vệ môi trường sống của cây nhé!",
+      "call": "Quan sát thật tinh, hoàn thành năm thử thách và trân trọng quê hương nhé!",
+      "readyLabel": "Khám phá quê hương"
+    },
+    "victory": {
+      "praise": "🌟 NHÀ KHÁM PHÁ QUÊ HƯƠNG!",
+      "achievement": "Em đã chinh phục 5 thử thách!",
+      "reward": "Em đã sưu tầm đủ 5 huy hiệu lá sâm vàng!"
+    },
+    "questions": [
+      {
+        "id": "q1",
+        "kind": "image",
+        "level": "Nhận biết",
+        "prompt": "Ảnh nào là cây sâm Ngọc Linh?",
+        "hint": "Đối chiếu hình dáng lá và thân cây với ảnh trong bài học.",
+        "answer": 0,
+        "options": [
+          {
+            "text": "Hình A",
+            "image": "/learning/grade45/photos/sam.webp"
+          },
+          {
+            "text": "Hình B",
+            "image": "/images/real-photos/phuoc-kieu-khuon.webp"
+          },
+          {
+            "text": "Hình C",
+            "image": "/images/real-photos/ma-chau-ken.webp"
+          }
+        ]
+      },
+      {
+        "id": "q2",
+        "kind": "choice",
+        "level": "Nhận biết",
+        "prompt": "Môi trường nào phù hợp với sâm Ngọc Linh theo bài học?",
+        "hint": "Nhớ điều kiện sống gắn với rừng ở vùng núi cao.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Nền bê tông không có cây che bóng"
+          },
+          {
+            "text": "Dưới tán rừng núi cao, ẩm và mát"
+          },
+          {
+            "text": "Bãi cát khô sát biển"
+          }
+        ]
+      },
+      {
+        "id": "q3",
+        "kind": "choice",
+        "level": "Thông hiểu",
+        "prompt": "Nhóm em kể hành trình năm 1973. Cách diễn đạt nào đúng?",
+        "hint": "Phân biệt mốc khoa học với hiểu biết của cộng đồng.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Trước năm đó không có người sống ở vùng núi"
+          },
+          {
+            "text": "Đó là mốc nghiên cứu, không phủ nhận tri thức bản địa trước đó"
+          },
+          {
+            "text": "Đó là lần đầu tiên bất cứ người nào nhìn thấy cây"
+          }
+        ]
+      },
+      {
+        "id": "q4",
+        "kind": "match",
+        "level": "Thông hiểu",
+        "prompt": "Nối mỗi nội dung với ý phù hợp.",
+        "hint": "Nhớ các đặc điểm và mối liên hệ được giới thiệu trong bài.",
+        "left": [
+          "Tri thức bản địa",
+          "Mốc năm 1973",
+          "Giữ rừng và nguồn giống"
+        ],
+        "right": [
+          "Gắn với hành trình nghiên cứu",
+          "Góp phần phát triển bền vững",
+          "Cộng đồng biết cây từ trước"
+        ],
+        "solution": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "id": "q5",
+        "kind": "choice",
+        "level": "Vận dụng",
+        "prompt": "Ngày hội khám phá dược liệu của lớp nên tổ chức thế nào?",
+        "hint": "Đây là hoạt động tìm hiểu cây quý, không phải thử thuốc.",
+        "answer": 1,
+        "options": [
+          {
+            "text": "Bán sản phẩm với lời hứa công dụng tự nghĩ"
+          },
+          {
+            "text": "Trưng bày tư liệu có nguồn, giải thích giá trị và bảo tồn"
+          },
+          {
+            "text": "Thi xem bạn nào nếm nhiều dược liệu hơn"
+          }
+        ]
+      }
+    ]
+  }
+]

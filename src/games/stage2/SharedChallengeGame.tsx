@@ -44,7 +44,8 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   const selectedChoice=useRef<number|null>(null);
   const question=config.questions[state.index];
   const locked=state.result!==null;
-  const compactMatch=/^g[45]-/.test(config.stationId)&&state.phase==='question'&&question.kind==='match';
+  const grade45Question=/^g[45]-/.test(config.stationId)&&state.phase==='question';
+  const compactMatch=grade45Question&&question.kind==='match';
   useEffect(()=>{
     if(config.layout!=='safe-v1')return;
     // Fetch and decode before the last answer, keeping the decoded image alive.
@@ -69,7 +70,7 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   };
   const restart=()=>{audio.stop();completed.current=false;clickLocked.current=false;setPairs({});act('retry',()=>dispatch({type:'restart'}));};
   const victory=state.phase==='victory';
-  return <main className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${victory?'is-victory':''}`} style={{backgroundImage:`url("${victory?config.victoryBackground:config.background}")`}}>
+  return <main className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${victory?'is-victory':''} ${grade45Question?'grade45-question':''}`} style={{backgroundImage:`url("${victory?config.victoryBackground:config.background}")`}}>
     <h1 className="preview-title">{config.title}</h1>
     <div className={`shell ${victory?'finished':''}`}>
       <div className="hud"><div className="hud-stage">{state.phase==='intro'?'SẴN SÀNG':victory?'HOÀN THÀNH':state.phase==='review'?'ÔN TẬP':`CÂU ${state.index+1}/5`}<small>{victory?'5/5 câu hỏi':state.reviewing||state.phase==='review'?'Truy lại dấu vết':state.phase==='intro'?(config.intro.readyLabel??'Khám phá lịch sử'):question.level}</small></div>

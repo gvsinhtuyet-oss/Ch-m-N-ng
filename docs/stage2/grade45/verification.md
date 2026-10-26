@@ -46,3 +46,9 @@ Kiểm tra bổ sung: 40 bố cục trước xác nhận (10 trạm × 4 cỡ y�
 Ảnh gửi tiếp vẫn có nút xác nhận cùng dòng gợi ý, khác với DOM bản sửa. Chưa xác minh được cache trên máy người dùng nên không khẳng định nguyên nhân. Bổ sung: loại nút xác nhận khỏi DOM sau khi chấm câu nối, không chỉ ẩn bằng CSS. Tạo một trang mở bản thử mới tại /api/stage2-match-review-v2.html (đường dẫn đã được PWA cũ loại khỏi navigation fallback); dùng chính HTML và module có hash của bản dựng hiện tại, không nhân bản trò chơi và không đăng ký thêm service worker. Không xóa cache dữ liệu học sinh.
 
 Kiểm tra lại đúng trạm kinh tế ở 320×640: sau nối sai có 0 nút xác nhận trong DOM, đủ 3 đường nối, gợi ý nằm trong màn hình (mép dưới khoảng 598px), không tràn chữ. 41 kiểm thử, TypeScript, bản dựng đạt. Chưa xác minh trên trình duyệt/thiết bị của người dùng; trang riêng tư yêu cầu chủ sở hữu đăng nhập.
+
+## Đưa toàn bộ câu hỏi lên gần tiêu đề
+
+Theo yêu cầu tiếp theo: 50 câu khối 4/5 neo trên ngay dưới bảng tên thay vì căn giữa dọc. Trên điện thoại giảm khoảng dành cho HUD từ 84 xuống 66px, vẫn cách HUD; câu ảnh có đệm dưới cho nhãn A/B/C. Không đổi ảnh nền, dữ liệu, màn mở đầu, chiến thắng hay khối 3.
+
+Đã đo lại 200 trường hợp (50 câu × 4 kích thước yêu cầu): khung panel không có cuộn nội bộ, nội dung chữ câu hỏi/lựa chọn không tràn. 20 trường hợp câu ảnh khối 4 ban đầu phát hiện nhãn A/B/C nhô ra gây thanh cuộn, đã thêm đệm và đo lại đạt; không tính lượt đầu lỗi là đạt. 5 phản hồi sai câu nối khối 5 tại 320×640 không cuộn, gợi ý kết thúc khoảng 560px. Một thao tác chờ chọn câu 5 báo timeout, quan sát lại xác nhận cả năm game đã sang câu 5 và đo hoàn tất. Chưa thử trên thiết bị vật lý hoặc trình duyệt của người dùng.

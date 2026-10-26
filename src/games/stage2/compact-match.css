@@ -22,3 +22,11 @@
  .scene .compact-match .match button{min-height:38px!important;font-size:13px!important;padding:4px!important}
  .compact-match .match-footer{min-height:64px}
 }
+/* Anchor every grade 4/5 question below the artwork title instead of vertically centering. */
+.scene.safe-layout.grade45-question .shell{justify-content:flex-start!important}
+.scene.safe-layout.grade45-question .panel{flex:0 0 auto!important;justify-content:flex-start!important}
+@media(max-width:650px) and (orientation:portrait){
+ .scene.safe-layout.grade45-question .shell{padding-top:calc(var(--banner-bottom) + 66px)!important}
+ .scene.safe-layout.grade45-question .panel{max-height:calc(100dvh - var(--banner-bottom) - 76px)!important}
+}
+.scene.safe-layout.grade45-question .panel:has(.choice-photo){padding-bottom:24px!important}

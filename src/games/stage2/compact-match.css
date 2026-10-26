@@ -42,3 +42,7 @@
  .scene.safe-layout.grade45-question .panel{width:98vw!important;padding:0 5px!important}
  .scene.safe-layout.grade45-question .panel .match button{font-size:14px!important;line-height:1.3!important}
 }
+
+/* The confirm control is a compact button; response uses its own centered box. */
+.scene .compact-match .controls{width:fit-content!important;max-width:100%!important;padding:0!important;background:transparent!important;justify-self:center!important}
+.scene .compact-match .controls .btn{width:auto!important;min-width:0!important;padding:8px 20px!important;flex:none!important}

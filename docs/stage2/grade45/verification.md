@@ -64,3 +64,13 @@ Kiểm tra thực hiện bằng thao tác thật trên UI: 200 cấu hình (50 c
 Ảnh giáo viên gửi cho thấy bảng tên và câu hỏi vẫn cách nhau đáng kể. Cách tính cũ lấy mốc 19,125% bề ngang ảnh, trong khi mép bảng gỗ của trạm Kinh tế ở khoảng 15,9% bề ngang ảnh. Đổi mốc lên 16,5% bề ngang thực tế của ảnh, cộng 5px; trên điện thoại dùng cùng tỉ lệ theo ảnh được hiển thị. Không sửa ảnh nguồn hoặc thay đổi nội dung các câu.
 
 Đối chiếu trực quan trước/sau tại trạm Kinh tế: trên màn hình trình duyệt rộng 1363px, khoảng cách từ bảng gỗ đến câu hỏi giảm khoảng 58px xuống khoảng 15px. Đã nhìn trực quan câu 2 và câu 4 trên máy tính, câu 2 và câu 4 trong khung điện thoại 390×844. Đo câu 4 ở 320×640, 375×667, 390×844, 1366×768: nút xác nhận nằm trong viewport, khung không cuộn, chữ trong thẻ không tràn. Chưa kiểm tra thực tế trên thiết bị của giáo viên hoặc từng câu của 9 trạm còn lại sau thay đổi V4; các trạm dùng cùng bố cục và ảnh nền vẫn riêng biệt. Tạo link V4 riêng để giảm khả năng mở lại HTML cũ đã lưu.
+
+## V5: nút xác nhận và âm thanh
+
+Gỡ nền kéo dài của vùng controls, thu nút xác nhận theo chữ; đo trực tiếp ở 320×640, 375×667, 390×844, 1366×768 cho thấy nền controls trong suốt và rộng đúng bằng nút (khoảng 136 CSS px), nút nằm trong màn hình. Vị trí câu hỏi và ảnh nền giữ nguyên.
+
+Phân tích âm thanh: bộ phát mặc định xếp các hiệu ứng nối tiếp; một lần chọn có thể nối select, right/wrong và key, nên nhiều lần chạm nhanh làm phản hồi bị chậm hoặc bị stop khi chuyển màn. Tiếng tổng hợp dự phòng có biên độ khoảng 0,03, nhỏ hơn đáng kể so với mẫu MP3 được chuẩn hóa. Không thể từ mã nguồn xác định chắc chắn nguyên nhân trên thiết bị của giáo viên hoặc loại trừ trạng thái tắt âm, chính sách trình duyệt hay loa.
+
+Bổ sung chế độ phản hồi nhanh tùy chọn trong cùng SharedGameAudio dành riêng cho 10 game thử khối 4/5; chế độ mặc định của game khối 3 giữ cách hoạt động cũ. Với khối 4/5, âm mới ngắt hàng chờ cũ, lựa chọn câu phát trực tiếp đúng hoặc sai thay cho chuỗi select–kết quả–key; fallback tăng âm lượng, mẫu kết quả phát tối đa 0,8s và chỉ giảm cuối đoạn. Bấm thẻ nối, bắt đầu, xem lại, chơi lại, tiếp tục, nút bật/tắt đều có cue khi âm thanh đang bật; nút đang bị vô hiệu hóa hoặc âm đã tắt thì không phát. Mở lại âm thanh đồng bộ tùy chọn lưu giữa hai chế độ; bấm tắt có một tiếng ngắn trước khi tắt.
+
+Đã kiểm tra tự động chế độ cũ vẫn tuần tự, chế độ mới ngắt hàng chờ và phát đúng/sai ngay, mẫu MP3 và âm dự phòng, tắt/bật và đồng bộ tùy chọn. Chromium đã bấm chuỗi chơi, chọn nối sai, xác nhận, bật/tắt và kiểm tra bố cục. Không kiểm tra được nghe thực tế qua loa, iOS/Android vật lý, hoặc chính thiết bị của giáo viên; browser Web Audio có thể bị hạn chế bởi chế độ im lặng/quyền hệ thống. Các trò đã duyệt chưa được cập nhật chính thức; PR vẫn nháp.

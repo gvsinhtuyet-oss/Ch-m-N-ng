@@ -47,3 +47,25 @@ test('shared audio mute stops every source, persisted preference and cues serial
  assert.equal(started.length,count);assert.ok(stopped>=count);assert.equal(storage.get('cham_danang_sound_enabled'),'false');assert.equal(new SharedGameAudio().isMuted(),true);
  a.setMuted(false);a.play('victory');assert.ok(started.length>count);a.stop();
 });
+
+test('responsive shared cues interrupt backlog and keep mute preference in sync',async()=>{
+ const storage=new Map<string,string>();const starts:number[]=[];let stops=0;let maxVolume=0;
+ class Source {onended:()=>void=()=>{};frequency={value:0};type='sine';connect(){}disconnect(){}start(t:number){starts.push(t);}stop(){stops++;}}
+ class Gain {disconnect(){}gain={value:1,setValueAtTime(){},exponentialRampToValueAtTime(v:number){maxVolume=Math.max(v,maxVolume);},linearRampToValueAtTime(){}};connect(){}}
+ class Context {state='running';currentTime=10;destination={};createGain(){return new Gain();}createOscillator(){return new Source();}resume(){return Promise.resolve();}}
+ Object.assign(globalThis,{window:{AudioContext:Context},localStorage:{getItem:(k:string)=>storage.get(k)??null,setItem:(k:string,v:string)=>storage.set(k,v)}});
+ const {SharedGameAudio}=await import('./src/games/stage2/audio');const a=new SharedGameAudio(true);
+ a.play('select');const before=starts.length;a.play('right');assert.ok(stops>=before);assert.equal(starts[before],10.005);assert.ok(maxVolume>.1);
+ a.play('wrong');assert.equal(starts[starts.length-2],10.005);a.setMuted(true);const mutedCount=starts.length;a.play('tap');assert.equal(starts.length,mutedCount);
+ const b=new SharedGameAudio(true);assert.equal(b.isMuted(),true);a.setMuted(false);assert.equal(b.syncPreference(),false);b.play('tap');assert.ok(starts.length>mutedCount);
+});
+
+test('responsive correct/wrong samples start promptly and retain their audible portion',async()=>{
+ let starts:{at:number;duration:number}[]=[];let fades:number[]=[];let storage=new Map<string,string>();
+ class Source {buffer:unknown;onended:()=>void=()=>{};frequency={value:0};type='sine';connect(){}disconnect(){}start(at:number,_offset?:number,duration?:number){starts.push({at,duration:duration??0});}stop(){}}
+ class Gain {gain={value:1,setValueAtTime(_value:number,at:number){fades.push(at);},linearRampToValueAtTime(){},exponentialRampToValueAtTime(){}};connect(){}disconnect(){}}
+ class Context {state='running';currentTime=4;destination={};createGain(){return new Gain();}createBufferSource(){return new Source();}createOscillator(){return new Source();}resume(){return Promise.resolve();}decodeAudioData(){return Promise.resolve({duration:1.1,numberOfChannels:1,getChannelData(){return new Float32Array([.25,-.25]);}});}}
+ Object.assign(globalThis,{window:{AudioContext:Context},localStorage:{getItem:(k:string)=>storage.get(k)??null,setItem:(k:string,v:string)=>storage.set(k,v)},fetch:async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(1)})});
+ const {SharedGameAudio}=await import('./src/games/stage2/audio');const a=new SharedGameAudio(true);await a.preload();a.play('right');a.play('wrong');
+ assert.deepEqual(starts,[{at:4.005,duration:.8},{at:4.005,duration:.8}]);assert.ok(fades.some(t=>t>4.7));a.stop();
+});

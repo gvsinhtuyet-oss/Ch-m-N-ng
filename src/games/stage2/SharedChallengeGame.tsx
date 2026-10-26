@@ -6,7 +6,7 @@ import safeLayoutCss from './safe-layout.css?raw';
 import compactMatchCss from './compact-match.css?raw';
 import {validateConfig, type GameConfig, type MatchQuestion} from './types';
 import {gameReducer,initialState,connectPair,isCorrectMatch} from './state';
-import {sharedGameAudio as audio, type GameSound} from './audio';
+import {sharedGameAudio, responsiveSharedGameAudio, type GameSound} from './audio';
 const colors=['#19ad5e','#1684eb','#f09a22'];
 const fixes=`:host{display:block;font-family:system-ui,'Segoe UI',Arial,sans-serif;color:#18324b}button:disabled{cursor:default}button:focus-visible{outline:4px solid #ffab26;outline-offset:3px}.hud-key.earned{filter:sepia(1) saturate(6) hue-rotate(4deg);animation:reward-pop .45s ease-out}@keyframes reward-pop{50%{transform:scale(1.4)}}.preview-title{position:absolute;top:8px;left:50%;transform:translateX(-50%);margin:0;font-size:1px;opacity:0;pointer-events:none}.answers button.good{background:#c8ffd8!important;border-color:#1aa85a!important}.answers button.bad{background:#ffe0dc!important;border-color:#e74a43!important}.match button.selected{background:#fff1b5!important}.match button.linked{border-color:var(--c)!important;box-shadow:inset 0 0 0 2px var(--c)!important}.music-toggle{min-width:44px;min-height:44px}.controls:empty{display:none!important}@media(max-width:650px) and (orientation:portrait){.hud{top:calc(56.3vw + 8px)!important}}@media(max-height:450px){.scene:not(.is-victory) .shell{padding:0!important}.scene:not(.is-victory) .intro-screen{padding:6px!important}.scene:not(.is-victory) .panel{margin-top:60px!important;gap:3px!important;max-height:calc(100dvh - 70px)!important}.scene:not(.is-victory) .answers:not(:has(.choice-photo)) button{min-height:36px!important;padding:5px 12px!important;font-size:13px!important}.scene:not(.is-victory) .match button{min-height:38px!important;font-size:12px!important;padding:5px!important}.scene:not(.is-victory) .prompt{font-size:14px!important;padding:5px 12px!important}.intro-screen{padding:6px!important}.intro-emblem,.intro-rules,.intro-call{display:none!important}.intro-story{font-size:13px!important;line-height:1.25!important}.intro-screen h2{font-size:17px!important}.scene:not(.is-victory) .feedback{margin-top:3px!important;font-size:12px!important}.scene:not(.is-victory) .controls{padding:2px!important;margin:2px auto!important}}`;
 
@@ -36,11 +36,14 @@ function Fireworks({lightweight=false}:{lightweight?:boolean}) {
   return <canvas className="firecanvas" ref={canvas} aria-hidden="true"/>;
 }
 function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}) {
+  const responsiveAudio=/^g[45]-/.test(config.stationId);
+  const audio=responsiveAudio?responsiveSharedGameAudio:sharedGameAudio;
   const [state,dispatch]=useReducer(gameReducer,undefined,initialState);
   const [pairs,setPairs]=useState<Record<number,number>>({});
-  const [muted,setMuted]=useState(audio.isMuted);
+  const [muted,setMuted]=useState(audio.syncPreference);
   const completed=useRef(false),clickLocked=useRef(false);
   const continueTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
+  const muteTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
   const selectedChoice=useRef<number|null>(null);
   const question=config.questions[state.index];
   const locked=state.result!==null;
@@ -66,7 +69,9 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   const act=(name:GameSound,action:()=>void)=>{audio.unlock();audio.play(name);action();};
   const answer=(correct:boolean,sound:GameSound)=>{
     if(clickLocked.current||locked)return;clickLocked.current=true;
-    audio.play(sound);audio.play(correct?'right':'wrong');if(correct)audio.play('key');dispatch({type:'answer',correct});
+    if(responsiveAudio){audio.play(correct?'right':'wrong');}
+    else {audio.play(sound);audio.play(correct?'right':'wrong');if(correct)audio.play('key');}
+    dispatch({type:'answer',correct});
   };
   const restart=()=>{audio.stop();completed.current=false;clickLocked.current=false;setPairs({});act('retry',()=>dispatch({type:'restart'}));};
   const victory=state.phase==='victory';
@@ -75,7 +80,7 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
     <div className={`shell ${victory?'finished':''}`}>
       <div className="hud"><div className="hud-stage">{state.phase==='intro'?'SẴN SÀNG':victory?'HOÀN THÀNH':state.phase==='review'?'ÔN TẬP':`CÂU ${state.index+1}/5`}<small>{victory?'5/5 câu hỏi':state.reviewing||state.phase==='review'?'Truy lại dấu vết':state.phase==='intro'?(config.intro.readyLabel??'Khám phá lịch sử'):question.level}</small></div>
         <div className="hud-right"><div className="hud-keys" aria-label={`${state.earned.length}/5 ${config.collectible.name}`}>{config.questions.map((q,i)=><span key={q.id} className={`hud-key ${state.earned.includes(i)?'earned':''}`} aria-label={`${config.collectible.name} ${i+1}: ${state.earned.includes(i)?'đã nhận':'chưa nhận'}`}>{config.collectible.image?<img src={config.collectible.image} alt="" style={{width:'1em',height:'1em',display:'block'}}/>:config.collectible.icon}</span>)}</div>
-          <button className="music-toggle" aria-label={muted?'Bật âm thanh':'Tắt âm thanh'} aria-pressed={!muted} onClick={()=>{audio.setMuted(!muted);setMuted(!muted);if(muted)audio.play('tap');}}>{muted?'♪̸':'♫'}</button>
+          <button className="music-toggle" aria-label={muted?'Bật âm thanh':'Tắt âm thanh'} aria-pressed={!muted} onClick={()=>{if(muteTimer.current)clearTimeout(muteTimer.current);if(responsiveAudio&&!muted){audio.play('tap');setMuted(true);muteTimer.current=setTimeout(()=>{audio.setMuted(true);muteTimer.current=null;},100);}else{audio.setMuted(!muted);setMuted(!muted);if(muted)audio.play('tap');}}}>{muted?'♪̸':'♫'}</button>
         </div>
       </div>
       <section className={`panel ${compactMatch?'compact-match':''} ${locked?'has-result':''}`} aria-label={config.title}>

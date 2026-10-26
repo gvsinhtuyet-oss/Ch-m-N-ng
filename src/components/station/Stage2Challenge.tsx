@@ -196,7 +196,8 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
     return <MyKheBanThanV12 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} />;
   }
 
-  if (/^g3-station-[3-5]$/.test(station.id) && new URLSearchParams(window.location.search).get('stage2-engine') === 'shared-v1') {
+  // Teacher-approved React games are now the default for these three stations.
+  if (/^g3-station-[3-5]$/.test(station.id)) {
     return <SharedStage2 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} config={grade3SharedConfigs[station.id]}/>;
   }
 

@@ -52,3 +52,9 @@ Kiểm tra lại đúng trạm kinh tế ở 320×640: sau nối sai có 0 nút 
 Theo yêu cầu tiếp theo: 50 câu khối 4/5 neo trên ngay dưới bảng tên thay vì căn giữa dọc. Trên điện thoại giảm khoảng dành cho HUD từ 84 xuống 66px, vẫn cách HUD; câu ảnh có đệm dưới cho nhãn A/B/C. Không đổi ảnh nền, dữ liệu, màn mở đầu, chiến thắng hay khối 3.
 
 Đã đo lại 200 trường hợp (50 câu × 4 kích thước yêu cầu): khung panel không có cuộn nội bộ, nội dung chữ câu hỏi/lựa chọn không tràn. 20 trường hợp câu ảnh khối 4 ban đầu phát hiện nhãn A/B/C nhô ra gây thanh cuộn, đã thêm đệm và đo lại đạt; không tính lượt đầu lỗi là đạt. 5 phản hồi sai câu nối khối 5 tại 320×640 không cuộn, gợi ý kết thúc khoảng 560px. Một thao tác chờ chọn câu 5 báo timeout, quan sát lại xác nhận cả năm game đã sang câu 5 và đo hoàn tất. Chưa thử trên thiết bị vật lý hoặc trình duyệt của người dùng.
+
+## Bản duyệt bố cục sát bảng tên (v3)
+
+Thay vùng panel cuộn cũ bằng vùng chơi có vị trí trên/dưới rõ trong viewport cho 50 câu khối 4/5. Câu hỏi neo cách mép bảng tên 12px; điện thoại đưa HUD về hai góc với giới hạn 23vw mỗi bên. Ba hàng nối có chiều cao theo phần màn hình còn lại; chừa vùng xác nhận/phản hồi. Không đổi câu chữ, ảnh nền, âm thanh, phần thưởng, mở đầu/chiến thắng hoặc các trò đã duyệt khối 3.
+
+Kiểm tra thực hiện bằng thao tác thật trên UI: 200 cấu hình (50 câu × 390×844, 375×667, 320×640, 1366×768) đều không tràn panel, không cắt phần tử câu hỏi/đáp án/nút và không tràn chữ. Khối 4 thử xác nhận nối sai ở 320×640: đủ gợi ý, mép dưới khoảng 501px, không tràn panel; khối 5 thử xác nhận đúng ở 1366×768: hiện phản hồi và không tràn. Chưa thử lại tất cả đúng/sai ở mọi kích thước hoặc trên thiết bị thật. Trang mới /api/stage2-title-fit-v3.html dùng cùng mã nguồn và tránh trang HTML cũ đã cache. Các bản trước đã báo đạt nhưng ảnh người dùng vẫn cho thấy cuộn; kết quả v3 chỉ khẳng định trong môi trường kiểm thử đã nêu, chưa xác minh trên máy người dùng.

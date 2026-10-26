@@ -22,11 +22,22 @@
  .scene .compact-match .match button{min-height:38px!important;font-size:13px!important;padding:4px!important}
  .compact-match .match-footer{min-height:64px}
 }
-/* Anchor every grade 4/5 question below the artwork title instead of vertically centering. */
-.scene.safe-layout.grade45-question .shell{justify-content:flex-start!important}
-.scene.safe-layout.grade45-question .panel{flex:0 0 auto!important;justify-content:flex-start!important}
+/* A bounded play area: title, prompt, answers and response never form a scroll panel. */
+.scene.safe-layout.grade45-question{--question-top:calc(var(--banner-bottom) + 12px)}
+.scene.safe-layout.grade45-question .shell{position:static!important;height:100%!important;padding:0!important;justify-content:flex-start!important}
+.scene.safe-layout.grade45-question .panel{position:absolute!important;top:var(--question-top)!important;bottom:12px!important;left:50%!important;transform:translateX(-50%)!important;width:min(860px,78vw)!important;max-width:none!important;height:auto!important;max-height:none!important;margin:0!important;display:flex!important;justify-content:flex-start!important;overflow:visible!important;padding:0 10px!important;gap:8px!important}
+.scene.safe-layout.grade45-question .panel>*{flex-shrink:0!important}
+.scene.safe-layout.grade45-question .panel:has(.choice-photo){padding-bottom:16px!important}
+.scene.safe-layout.grade45-question .panel .match{flex:0 1 auto!important;height:min(214px,calc(100dvh - var(--question-top) - 170px))!important;min-height:144px!important;max-height:214px!important;align-items:stretch!important}
+.scene.safe-layout.grade45-question .panel .matchcol{grid-template-rows:repeat(3,minmax(0,1fr))!important;height:100%!important;min-height:0!important}
+.scene.safe-layout.grade45-question .panel .match button{min-height:44px!important;height:100%!important;padding:6px 8px!important}
+.scene.safe-layout.grade45-question .panel .match-footer{min-height:88px!important;padding:4px 0!important}
 @media(max-width:650px) and (orientation:portrait){
- .scene.safe-layout.grade45-question .shell{padding-top:calc(var(--banner-bottom) + 66px)!important}
- .scene.safe-layout.grade45-question .panel{max-height:calc(100dvh - var(--banner-bottom) - 76px)!important}
+ .scene.safe-layout.grade45-question .hud{top:8px!important}
+ .scene.safe-layout.grade45-question .hud-stage{min-width:0!important;max-width:23vw!important;padding:5px!important;font-size:11px!important}
+ .scene.safe-layout.grade45-question .hud-right{max-width:23vw!important;gap:3px!important}
+ .scene.safe-layout.grade45-question .hud-keys{max-width:23vw!important;padding:4px!important;gap:1px!important}
+ .scene.safe-layout.grade45-question .hud-key{font-size:12px!important}
+ .scene.safe-layout.grade45-question .panel{width:98vw!important;padding:0 5px!important}
+ .scene.safe-layout.grade45-question .panel .match button{font-size:14px!important;line-height:1.3!important}
 }
-.scene.safe-layout.grade45-question .panel:has(.choice-photo){padding-bottom:24px!important}

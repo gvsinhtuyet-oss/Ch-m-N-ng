@@ -3,4 +3,4 @@
 import {readFileSync,mkdirSync,writeFileSync} from 'node:fs';
 const html=readFileSync('dist/index.html','utf8').replace(/<script[^>]*src="\/registerSW.js"[^>]*><\/script>/g,'');
 mkdirSync('dist/api',{recursive:true});
-writeFileSync('dist/api/stage2-match-review-v2.html',html);
+for(const name of ['stage2-match-review-v2.html','stage2-title-fit-v3.html'])writeFileSync('dist/api/'+name,html);

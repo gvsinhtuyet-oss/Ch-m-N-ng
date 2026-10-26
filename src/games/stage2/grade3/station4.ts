@@ -3,8 +3,8 @@ export const station4Config = {
   "stationId": "g3-station-4",
   "stationName": "Nghề làm nước mắm Nam Ô",
   "title": "Truy tìm bí quyết Nam Ô",
-  "background": "/games/shared/v1/grade3/g3-4-play.webp",
-  "victoryBackground": "/games/shared/v1/grade3/g3-4-victory.webp",
+  "background": "/games/shared/v1/grade3/review/nam-o-play-safe-v3.webp",
+  "victoryBackground": "/games/shared/v1/grade3/review/nam-o-victory-safe-v3.webp",
   "collectible": {
     "icon": "💧",
     "image": "/games/shared/v1/grade3/drop.svg",

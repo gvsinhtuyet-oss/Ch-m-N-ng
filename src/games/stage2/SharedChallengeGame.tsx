@@ -85,7 +85,7 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
             <div className="answers">{question.options.map((o,i)=><button key={i} data-choice={i} disabled={locked} className={locked&&state.result!==null&&clickLocked.current&&selectedChoice.current===i?(state.result?'good':'bad'):''} onClick={()=>{if(locked||clickLocked.current)return;selectedChoice.current=i;answer(i===question.answer,'select');}}>{question.kind==='image'?<><img className="choice-photo" src={o.image} alt={`Hình lựa chọn ${'ABC'[i]}`}/><span className="choice-letter">{'ABC'[i]}</span></>:o.text}</button>)}</div>}
           <div className={compactMatch?'match-footer':'question-footer'}>
           <div className={`feedback ${state.result?'ok':''}`} role="status" aria-live="polite">{state.result===null?'':state.result?`✓ Chính xác! Nhận một ${config.collectible.name}!`:`✕ Chưa đúng! Gợi ý: ${question.hint}`}</div>
-          <div className="controls">{question.kind==='match'&&<button className="btn" disabled={locked||Object.keys(pairs).length!==3} onClick={()=>answer(isCorrectMatch(question.solution,pairs),'confirm')}>✓ XÁC NHẬN</button>}</div>
+          <div className="controls">{question.kind==='match'&&!(compactMatch&&locked)&&<button className="btn" disabled={locked||Object.keys(pairs).length!==3} onClick={()=>answer(isCorrectMatch(question.solution,pairs),'confirm')}>✓ XÁC NHẬN</button>}</div>
           </div>
         </>}
         {state.phase==='review'&&<div className="reviewprompt"><h2>🔎 TRUY LẠI DẤU VẾT</h2><p>Em có {state.missed.length} câu cần thử lại. Hãy hoàn thành tất cả thử thách nhé!</p><button className="btn" onClick={()=>act('retry',()=>dispatch({type:'review'}))}>🔍 THỬ LẠI CÂU SAI</button></div>}

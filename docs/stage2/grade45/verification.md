@@ -40,3 +40,9 @@ Thêm ?stage2-preview=<mã trạm> vào địa chỉ bản thử. Không cần C
 Chỉ câu nối của khối 4/5 dùng lớp compact-match: thẻ gọn, chữ tối thiểu 14px trên điện thoại; vùng nút/phản hồi cố định, ẩn nút sau xác nhận; giữ nguyên ba đường nối và tăng thời gian đọc phản hồi (đúng 1,8s, sai 3,5s). Không đổi nội dung, hình nền, vật phẩm hay CSS của câu khác/khối 3.
 
 Kiểm tra bổ sung: 40 bố cục trước xác nhận (10 trạm × 4 cỡ yêu cầu) không tràn chữ/nút; 5 phản hồi sai khối 4 và 5 phản hồi đúng khối 5 tại 320×640 hiện đầy đủ, giữ ba đường nối, nút xác nhận ẩn. Không tuyên bố đã thử cả đúng lẫn sai của mỗi trạm trong lần chỉnh này. Các luồng đầy đủ đã thử ở bản trước; chưa thử lại trên thiết bị vật lý.
+
+### Phản hồi ảnh lỗi lần hai
+
+Ảnh gửi tiếp vẫn có nút xác nhận cùng dòng gợi ý, khác với DOM bản sửa. Chưa xác minh được cache trên máy người dùng nên không khẳng định nguyên nhân. Bổ sung: loại nút xác nhận khỏi DOM sau khi chấm câu nối, không chỉ ẩn bằng CSS. Tạo một trang mở bản thử mới tại /api/stage2-match-review-v2.html (đường dẫn đã được PWA cũ loại khỏi navigation fallback); dùng chính HTML và module có hash của bản dựng hiện tại, không nhân bản trò chơi và không đăng ký thêm service worker. Không xóa cache dữ liệu học sinh.
+
+Kiểm tra lại đúng trạm kinh tế ở 320×640: sau nối sai có 0 nút xác nhận trong DOM, đủ 3 đường nối, gợi ý nằm trong màn hình (mép dưới khoảng 598px), không tràn chữ. 41 kiểm thử, TypeScript, bản dựng đạt. Chưa xác minh trên trình duyệt/thiết bị của người dùng; trang riêng tư yêu cầu chủ sở hữu đăng nhập.

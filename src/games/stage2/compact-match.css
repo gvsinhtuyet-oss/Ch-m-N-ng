@@ -23,7 +23,7 @@
  .compact-match .match-footer{min-height:64px}
 }
 /* A bounded play area: title, prompt, answers and response never form a scroll panel. */
-.scene.safe-layout.grade45-question{--question-top:calc(var(--banner-bottom) + 12px)}
+.scene.safe-layout.grade45-question{--question-top:calc(16.5vw + 5px)}
 .scene.safe-layout.grade45-question .shell{position:static!important;height:100%!important;padding:0!important;justify-content:flex-start!important}
 .scene.safe-layout.grade45-question .panel{position:absolute!important;top:var(--question-top)!important;bottom:12px!important;left:50%!important;transform:translateX(-50%)!important;width:min(860px,78vw)!important;max-width:none!important;height:auto!important;max-height:none!important;margin:0!important;display:flex!important;justify-content:flex-start!important;overflow:visible!important;padding:0 10px!important;gap:8px!important}
 .scene.safe-layout.grade45-question .panel>*{flex-shrink:0!important}
@@ -33,6 +33,7 @@
 .scene.safe-layout.grade45-question .panel .match button{min-height:44px!important;height:100%!important;padding:6px 8px!important}
 .scene.safe-layout.grade45-question .panel .match-footer{min-height:88px!important;padding:4px 0!important}
 @media(max-width:650px) and (orientation:portrait){
+ .scene.safe-layout.grade45-question{--question-top:calc(min(16.1334dvh,33vw) + 5px)}
  .scene.safe-layout.grade45-question .hud{top:8px!important}
  .scene.safe-layout.grade45-question .hud-stage{min-width:0!important;max-width:23vw!important;padding:5px!important;font-size:11px!important}
  .scene.safe-layout.grade45-question .hud-right{max-width:23vw!important;gap:3px!important}

@@ -1,0 +1,158 @@
+[
+  {
+    "board": {
+      "bottom": 149.175,
+      "left": 15.600000000000025,
+      "right": 374.4,
+      "top": 0
+    },
+    "boardVisible": true,
+    "chest": null,
+    "chestVisible": true,
+    "height": 844,
+    "imageLoaded": true,
+    "ratio": 1.7777777777777777,
+    "scene": "scene play",
+    "src": "/games/shared/v1/grade3/review/nam-o-play-safe-v3.webp",
+    "width": 390
+  },
+  {
+    "board": {
+      "bottom": 124.726875,
+      "left": 37.50046875000001,
+      "right": 337.49953124999996,
+      "top": 0
+    },
+    "boardVisible": true,
+    "chest": null,
+    "chestVisible": true,
+    "height": 667,
+    "imageLoaded": true,
+    "ratio": 1.777791975466394,
+    "scene": "scene play",
+    "src": "/games/shared/v1/grade3/review/nam-o-play-safe-v3.webp",
+    "width": 375
+  },
+  {
+    "board": {
+      "bottom": 119.6746875,
+      "left": 16.07390625000002,
+      "right": 303.92609375,
+      "top": 0
+    },
+    "boardVisible": true,
+    "chest": null,
+    "chestVisible": true,
+    "height": 640,
+    "imageLoaded": true,
+    "ratio": 1.7778221689528122,
+    "scene": "scene play",
+    "src": "/games/shared/v1/grade3/review/nam-o-play-safe-v3.webp",
+    "width": 320
+  },
+  {
+    "board": {
+      "bottom": 261.2475,
+      "left": 368.8200000000001,
+      "right": 997.18,
+      "top": 0
+    },
+    "boardVisible": true,
+    "chest": null,
+    "chestVisible": true,
+    "height": 768,
+    "imageLoaded": true,
+    "ratio": 1.7777777777777777,
+    "scene": "scene play",
+    "src": "/games/shared/v1/grade3/review/nam-o-play-safe-v3.webp",
+    "width": 1366
+  },
+  {
+    "board": {
+      "bottom": 149.175,
+      "left": 0,
+      "right": 390,
+      "top": 0
+    },
+    "boardVisible": true,
+    "chest": {
+      "bottom": 438.31125,
+      "left": 62.400000000000034,
+      "right": 327.6,
+      "top": 280.8
+    },
+    "chestVisible": true,
+    "height": 844,
+    "imageLoaded": true,
+    "ratio": 1.7777777777777777,
+    "scene": "scene victory",
+    "src": "/games/shared/v1/grade3/review/nam-o-victory-safe-v3.webp",
+    "width": 390
+  },
+  {
+    "board": {
+      "bottom": 124.726875,
+      "left": 24.45703125,
+      "right": 350.54296875,
+      "top": 0
+    },
+    "boardVisible": true,
+    "chest": {
+      "bottom": 366.47690625,
+      "left": 76.63078125000001,
+      "right": 298.36921875,
+      "top": 234.78
+    },
+    "chestVisible": true,
+    "height": 667,
+    "imageLoaded": true,
+    "ratio": 1.777791975466394,
+    "scene": "scene victory",
+    "src": "/games/shared/v1/grade3/review/nam-o-victory-safe-v3.webp",
+    "width": 375
+  },
+  {
+    "board": {
+      "bottom": 119.6746875,
+      "left": 3.55859375,
+      "right": 316.44140625,
+      "top": 0
+    },
+    "boardVisible": true,
+    "chest": {
+      "bottom": 351.632390625,
+      "left": 53.61984375,
+      "right": 266.38015625,
+      "top": 225.27
+    },
+    "chestVisible": true,
+    "height": 640,
+    "imageLoaded": true,
+    "ratio": 1.7778221689528122,
+    "scene": "scene victory",
+    "src": "/games/shared/v1/grade3/review/nam-o-victory-safe-v3.webp",
+    "width": 320
+  },
+  {
+    "board": {
+      "bottom": 261.2475,
+      "left": 341.5,
+      "right": 1024.5,
+      "top": 0
+    },
+    "boardVisible": true,
+    "chest": {
+      "bottom": 767.606625,
+      "left": 450.78,
+      "right": 915.22,
+      "top": 491.76
+    },
+    "chestVisible": true,
+    "height": 768,
+    "imageLoaded": true,
+    "ratio": 1.7777777777777777,
+    "scene": "scene victory",
+    "src": "/games/shared/v1/grade3/review/nam-o-victory-safe-v3.webp",
+    "width": 1366
+  }
+]

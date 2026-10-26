@@ -1,0 +1,16 @@
+[
+  {
+    "asset": "play",
+    "mode": "built-in imagegen edit",
+    "original": "public/games/shared/v1/grade3/g3-4-play.webp",
+    "output": "public/games/shared/v1/grade3/review/nam-o-play-safe-v3.webp",
+    "prompt": "Precise edit of this supplied image: ONLY edit the lettering and compact wooden sign at the top. User feedback: the challenge name is too tiny. Make the CHALLENGE NAME much bigger and the clear visual priority. Use three lines: small \"THỬ THÁCH:\" above, then large bold \"TRUY TÌM BÍ QUYẾT\" and equally large \"NAM Ô\". The two name lines must be about 1.7 times the current small name lettering. It is fine to rearrange the words over those two lines for mobile readability. The complete sign and ornaments may occupy x=31% to 69% (38% canvas width) and y=2% to 23%. All letters and ornaments must stay inside central x=25%-75%. Do not enlarge the small generic word THỬ THÁCH at the expense of the name. Keep exact 16:9 canvas, all scenery, camera, lighting, colors, jars, bottles, sea, mountains and decorative illustration unchanged. Keep the filtering basket and amber droplets at both sides unchanged. Do not add labels or letters to any object or collectible. Never expand the sign outside the central 50% source-image safe region. Make the name genuinely readable on a phone; use broad simple bold Vietnamese letters, correct accents, generous spacing. Do not add any UI."
+  },
+  {
+    "asset": "victory",
+    "mode": "built-in imagegen edit",
+    "original": "public/games/shared/v1/grade3/g3-4-victory.webp",
+    "output": "public/games/shared/v1/grade3/review/nam-o-victory-safe-v3.webp",
+    "prompt": "Precise edit of this supplied image: ONLY edit the lettering and compact wooden sign at the top. User feedback: the challenge name is too tiny. Make the CHALLENGE NAME \"TRUY TÌM BÍ QUYẾT NAM Ô\" 45-60 percent bigger than its current lettering and use strong bold high-contrast dark brown lettering on light wood. Reduce the upper congratulation lettering if necessary so the challenge name is the visual priority, while keeping EXACTLY these three lines: \"CHÚC MỪNG\", \"HOÀN THÀNH THỬ THÁCH\", \"TRUY TÌM BÍ QUYẾT NAM Ô\". Keep the last line all on one line. Widen the complete board modestly if needed, but every ornament and letter must fit within x=28%-72% (44% canvas width MAXIMUM) and y=2%-24%. No other text anywhere. Keep exact 16:9 canvas, all scenery, camera, lighting, colors, jars, bottles, sea, mountains and decorative illustration unchanged. Keep the treasure chest with EXACTLY FIVE golden drops and all fireworks exactly as they are. Do not add labels or letters to any object or collectible. Never expand the sign outside the central 50% source-image safe region. Make the name genuinely readable on a phone; use broad simple bold Vietnamese letters, correct accents, generous spacing. Do not add any UI."
+  }
+]

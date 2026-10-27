@@ -52,7 +52,11 @@
  .station-stage1-compact .station-stage-tab.is-active{border-radius:16px}
  .station-stage1-compact .station-stage-tab-status{display:none}
  .station-stage1-compact .station-stage-tab + .station-stage-tab{margin:0}
- .station-stage1-compact .station-immersive-topbar{display:none!important}
+ .station-stage1-compact .station-immersive-topbar{display:none}
+ .station-stage1-compact:fullscreen .station-immersive-topbar,
+ .station-stage1-compact.station-immersive-active .station-immersive-topbar{display:flex!important;flex:0 0 auto;min-height:44px;padding:4px 8px;gap:8px;align-items:center}
+ .station-stage1-compact:fullscreen > .relative.z-10,
+ .station-stage1-compact.station-immersive-active > .relative.z-10{display:none!important}
  .station-stage1-compact .station-lesson-panel{overflow:hidden!important}
  .station-stage1-compact .station-lesson-panel > .station-exploration-layout,
  .station-stage1-compact .station-lesson-panel > div:has(> .station-exploration-layout){height:100%;min-height:0}

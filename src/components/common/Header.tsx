@@ -24,9 +24,9 @@ export const Header: React.FC = () => {
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-white shadow-md shadow-orange-200/60"><Compass className="h-6 w-6" /></span>
         <span className="hidden min-w-0 sm:block"><span className="block whitespace-nowrap text-base font-black tracking-tight text-orange-600 lg:text-lg">CHẠM ĐÀ NẴNG</span><span className="block truncate text-[10px] font-medium text-slate-500">{t.schoolName}</span></span>
       </button>
-      {student && <nav aria-label="Điều hướng học sinh" className="hidden min-w-0 items-center gap-1 rounded-2xl bg-orange-50/70 p-1 xl:flex">{nav.map(item => {
+      {student && <nav aria-label="Điều hướng học sinh" className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto rounded-2xl bg-orange-50/70 p-1 lg:flex">{nav.map(item => {
         const Icon = item.icon; const active = currentView === item.view || (item.view === 'student-journey' && currentView === 'station-view');
-        return <button type="button" key={item.view} onClick={() => setCurrentView(item.view)} className={`flex items-center gap-1.5 rounded-xl px-2.5 py-2 text-xs font-bold transition ${active ? 'bg-white text-orange-700 shadow-sm' : 'text-slate-600 hover:bg-white'}`}><Icon className="h-4 w-4" />{item.label}</button>;
+        return <button type="button" key={item.view} onClick={() => setCurrentView(item.view)} className={`flex shrink-0 items-center gap-1 rounded-xl px-2 py-2 text-[11px] font-bold transition ${active ? 'bg-white text-orange-700 shadow-sm' : 'text-slate-600 hover:bg-white'}`}><Icon className="h-4 w-4" />{item.label}</button>;
       })}</nav>}
       <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
         <span title={isOnline ? t.online : t.offline} className={`hidden items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold md:flex ${isOnline ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-100 text-amber-800'}`}>{isOnline ? <Wifi className="h-3 w-3" /> : <WifiOff className="h-3 w-3" />}<span className="hidden lg:inline">{isOnline ? t.online : t.offline}</span></span>

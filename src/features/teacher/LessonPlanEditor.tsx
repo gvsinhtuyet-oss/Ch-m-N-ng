@@ -2,7 +2,7 @@ import {useApp} from '../../contexts/AppContext';
 import React,{useState} from 'react';
 import type {GddpRecord} from '../../services/GddpService';
 import {createLessonPlan,restoreLessonPlan,lessonPlanBlob,totalMinutes,LessonPlan} from '../../services/LessonPlanService';
-export function LessonPlanEditor({record,sourceLabel,storageVariant,integrationMinutes=5,selectedResources=[]}:{record:GddpRecord;sourceLabel?:string;storageVariant?:string;integrationMinutes?:5|10;selectedResources?:{stationTitle:string;hotspotTitle:string}[]}){
+export function LessonPlanEditor({record,sourceLabel,storageVariant,integrationMinutes=5,selectedResources=[]}:{record:GddpRecord;sourceLabel?:string;storageVariant?:string;integrationMinutes?:5|10;selectedResources?:{stationTitle:string;hotspotTitle:string;narration:string}[]}){
   const {currentUser}=useApp();
   const [plan,setPlan]=useState<LessonPlan>(()=>({...createLessonPlan(record),school:(currentUser as any)?.schoolName||'',teacher:currentUser?.name||'',...(sourceLabel?{source:sourceLabel}:{})}));
   const [opened,setOpened]=useState(false);
@@ -32,11 +32,29 @@ export function LessonPlanEditor({record,sourceLabel,storageVariant,integrationM
   };
   const [linkQuestions,setLinkQuestions]=useState<string[]>([]);
   const [questionsEdited,setQuestionsEdited]=useState(false);
+  const [questionOrigin,setQuestionOrigin]=useState<'sample'|'ai'>('sample');
   const resourceNames=selectedResources.map(r=>r.hotspotTitle);
   const questionContext=resourceNames.join(', ');
   const draftQuestions=integrationMinutes===5
     ? [`Qua nội dung ${questionContext||record.lesson}, em học được điều gì về quê hương Đà Nẵng?`]
     : [`Em hãy nêu một điều em biết về ${questionContext||record.lesson}.`,`Em có thể làm gì để giữ gìn hoặc giới thiệu giá trị của ${questionContext||'địa phương mình'}?`];
+  const [questionBusy,setQuestionBusy]=useState(false);
+  const suggestQuestions=async()=>{
+    if(!selectedResources.length){setError('Hãy chọn ít nhất một điểm kiến thức trước khi gợi ý câu hỏi.');return;}
+    if(currentUser?.id==='teacher-demo'){setError('Chế độ trải nghiệm sử dụng câu hỏi mẫu miễn phí; đăng nhập Google để yêu cầu AI.');return;}
+    setQuestionBusy(true);setError('');
+    try{
+      const response=await fetch('/api/teacher/gddp/lesson-suggestion',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+        id:record.id,mode:'link-questions',minutes:integrationMinutes,
+        resources:selectedResources.slice(0,3).map(r=>({title:r.hotspotTitle,narration:r.narration.slice(0,2400)}))
+      })});
+      const data=await response.json();
+      if(!response.ok)throw new Error(data.error||'Chưa thể gợi ý bằng AI.');
+      if(!Array.isArray(data.questions)||data.questions.length!==(integrationMinutes===5?1:2)||data.questions.some((q:unknown)=>typeof q!=='string'||q.length>500))throw new Error('AI trả về câu hỏi không hợp lệ.');
+      setLinkQuestions(data.questions);setQuestionsEdited(true);setQuestionOrigin('ai');setReviewed(false);
+    }catch(e){setError(e instanceof Error?e.message:'Không kết nối được AI. Hãy sử dụng câu hỏi mẫu.');}
+    finally{setQuestionBusy(false);}
+  };
   const insertIntegration=()=>{
     if(!selectedResources.length){setError('Hãy chọn ít nhất một điểm kiến thức đã đối chiếu trước khi đưa vào giáo án.');return;}
     const questions=questionsEdited?linkQuestions:draftQuestions;
@@ -44,6 +62,18 @@ export function LessonPlanEditor({record,sourceLabel,storageVariant,integrationM
     setPlan(p=>({...p,integration:p.integration+'\\n\\n'+block,activities:p.activities.map((a,i)=>i===1?{...a,teacher:a.teacher+'\\n\\n'+block}:a)}));
     setReviewed(false);setSaved('Đã thêm nội dung vào bản nháp. Kiểm tra thời lượng và câu hỏi trước khi xuất Word.');setError('');
   };
+  useEffect(()=>{
+    if(!currentUser?.id||currentUser.id==='teacher-demo')return;
+    try{
+      const demoKey=`cham-khbd-v2:teacher-demo:${record.id}${storageVariant?':'+storageVariant:''}`;
+      const guest=localStorage.getItem(demoKey);
+      if(guest&&!localStorage.getItem(key)){
+        const validated=restoreLessonPlan(guest,record);
+        localStorage.setItem(key,JSON.stringify(validated));
+        setSaved('Đã tìm thấy bản nháp từ chế độ trải nghiệm. Nhấn “Mở bản nháp đã lưu” để tiếp tục.');
+      }
+    }catch{setError('Có bản nháp trải nghiệm nhưng không thể chuyển tự động. Vui lòng kiểm tra dữ liệu trên thiết bị.');}
+  },[currentUser?.id,record.id,key,storageVariant]);
   const save=()=>{try{localStorage.setItem(key,JSON.stringify(plan));setSaved('Đã lưu bản nháp trên trình duyệt này.');setError('');}catch{setError('Không lưu được bản nháp. Hãy xuất Word để giữ nội dung.');}};
   const restore=()=>{try{const raw=localStorage.getItem(key);if(!raw)throw new Error('Chưa có bản nháp đã lưu cho bài này.');const p=restoreLessonPlan(raw,record);setPlan(p);setReviewed(false);setSaved('Đã mở bản nháp của bài này.');setError('');}catch(e){setError(e instanceof Error?e.message:'Không mở được bản nháp.');}};
   if(!opened)return <button type="button" onClick={()=>setOpened(true)} className="rounded-lg bg-sky-700 px-5 py-3 font-bold text-white">Tạo hoặc mở KHBD của bài này</button>;
@@ -52,7 +82,9 @@ export function LessonPlanEditor({record,sourceLabel,storageVariant,integrationM
       <h5 className="font-bold text-emerald-900">Nội dung tích hợp đã chọn · {integrationMinutes} phút</h5>
       <p className="text-sm">{resourceNames.length?resourceNames.join(' · '):'Chưa chọn điểm kiến thức Chặng 1 ở phía trên.'}</p>
       <p className="text-xs text-slate-700">Câu hỏi liên hệ mẫu được tạo ngay trên thiết bị, không tốn lượt AI. Giáo viên chỉnh sửa để phù hợp SGK; AI chỉ nên gọi khi thực sự cần.</p>
-      {(questionsEdited?linkQuestions:draftQuestions).map((q,i)=><label key={i} className="block text-sm font-semibold">Câu hỏi {i+1}<textarea rows={2} maxLength={1000} className="mt-1 w-full rounded-lg border bg-white p-2 font-normal" value={q} onChange={e=>{const next=[...(questionsEdited?linkQuestions:draftQuestions)];next[i]=e.target.value;setLinkQuestions(next);setQuestionsEdited(true);setReviewed(false);}}/></label>)}
+      {(questionsEdited?linkQuestions:draftQuestions).map((q,i)=><label key={i} className="block text-sm font-semibold">Câu hỏi {i+1}<textarea rows={2} maxLength={1000} className="mt-1 w-full rounded-lg border bg-white p-2 font-normal" value={q} onChange={e=>{const next=[...(questionsEdited?linkQuestions:draftQuestions)];next[i]=e.target.value;setLinkQuestions(next);setQuestionsEdited(true);setQuestionOrigin('sample');setReviewed(false);}}/></label>)}
+      <div className="flex flex-wrap gap-2"><button type="button" disabled={!selectedResources.length||questionBusy||busy} onClick={()=>void suggestQuestions()} className="rounded-lg border border-sky-300 bg-white px-4 py-2 text-sm font-bold text-sky-900 disabled:opacity-50">{questionBusy?'AI đang gợi ý…':'✨ AI gợi ý câu hỏi liên hệ'}</button><button type="button" onClick={()=>{setLinkQuestions([]);setQuestionsEdited(false);setQuestionOrigin('sample');}} className="rounded-lg border bg-white px-3 py-2 text-sm">Dùng câu hỏi mẫu miễn phí</button></div>
+      {questionOrigin==='ai'&&<p className="text-xs text-amber-900">Câu hỏi AI cần được giáo viên đối chiếu với nội dung khám phá và SGK trước khi sử dụng.</p>}
       <button type="button" disabled={!selectedResources.length} onClick={insertIntegration} className="rounded-lg bg-emerald-700 px-4 py-2 font-bold text-white disabled:opacity-50">Đưa nội dung và câu hỏi vào KHBD</button>
     </section>
     <div className="rounded-lg border border-sky-200 bg-sky-50 p-3 space-y-2">

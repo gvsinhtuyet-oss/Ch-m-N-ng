@@ -55,7 +55,6 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const selected = filtered.find(x => x.id === selectedId) || null;
   const preparedDeck = useMemo(()=>selected?getGddpLessonDeck(selected):null,[selected]);
   const teachingRecord=selected?getGddpTeachingRecord(selected):null;
-  useEffect(()=>{setPreparedOpen(false);},[selected]);
   const matchedResources = useMemo(()=>{
     if(!selected)return [];
     const links=selected.resourceLinks?.length?selected.resourceLinks:preparedDeck?.resourceLinks;
@@ -155,7 +154,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
         <p className="text-xs text-slate-600">Các điểm đã chọn sẽ được dùng làm ngữ cảnh soạn câu hỏi liên hệ. Chỉ sử dụng câu hỏi AI sau khi giáo viên kiểm tra và duyệt; không tự lấy câu hỏi trò chơi không liên quan.</p>
       </section>
       <LessonPlanEditor key={selected.id+(preparedDeck?.teachingContent?'-edited':'')} integrationMinutes={integrationMinutes} selectedResources={selectedResources.map(({station,hotspot})=>({stationTitle:station.titleVi,hotspotTitle:hotspot.titleVi,narration:hotspot.narrationVi}))} record={teachingRecord || selected} storageVariant={preparedDeck?.teachingContent?'source-corrected-2025-v1':undefined} sourceLabel={privateRecords?privateSource:preparedDeck?.mappingReview?`Bản tham khảo từ bảng ${preparedDeck.mappingReview.sourceYear}; chưa xác nhận địa chỉ năm học hiện hành.\n${preparedDeck.sources.join('\n')}`:undefined} />
-      </div>
+      </div>}
 
       {showPreparation&&<div className="space-y-3 rounded-xl border border-emerald-200 bg-white p-3">
         <h4 className="font-bold">Học liệu bổ sung từ các trạm</h4>

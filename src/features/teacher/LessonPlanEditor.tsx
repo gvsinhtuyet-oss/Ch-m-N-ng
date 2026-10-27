@@ -41,6 +41,12 @@ export function LessonPlanEditor({record,sourceLabel,storageVariant,integrationM
   const [questionOrigin,setQuestionOrigin]=useState<'sample'|'ai'>('sample');
   const resourceNames=selectedResources.map(r=>r.hotspotTitle);
   const questionContext=resourceNames.join(', ');
+  useEffect(()=>{
+    setLinkQuestions([]);
+    setQuestionsEdited(false);
+    setQuestionOrigin('sample');
+  },[integrationMinutes,questionContext]);
+
   const draftQuestions=integrationMinutes===5
     ? [`Qua nội dung ${questionContext||record.lesson}, em học được điều gì về quê hương Đà Nẵng?`]
     : [`Em hãy nêu một điều em biết về ${questionContext||record.lesson}.`,`Em có thể làm gì để giữ gìn hoặc giới thiệu giá trị của ${questionContext||'địa phương mình'}?`];

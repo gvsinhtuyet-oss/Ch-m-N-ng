@@ -66,6 +66,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   // Suggest the first verified match automatically, but keep teacher control.
   useEffect(()=>{
     if(!selected||!matchedResources.length)return;
+    if(matchedResources[0].reason.includes('cần duyệt'))return;
     setSelectedHotspots(previous=>previous.length?previous:[matchedResources[0].station.id+':'+matchedResources[0].hotspot.id]);
   },[selected?.id,matchedResources]);
   const manualResources=useMemo(()=>stations.filter(station=>station.grade===grade).flatMap(station=>station.hotspots.filter(h=>Boolean(h.titleVi?.trim()&&h.image?.trim()&&h.narrationVi?.trim())&&!/đang được hoàn thiện|đang cập nhật|giới thiệu bài học/i.test(h.narrationVi)).map(hotspot=>({station,hotspot,reason:'Giáo viên tự chọn; cần đối chiếu với bài học'}))),[stations,grade]);

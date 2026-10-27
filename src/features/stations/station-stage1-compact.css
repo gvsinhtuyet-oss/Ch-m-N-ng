@@ -63,8 +63,8 @@
  .station-stage1-compact .stage-one-map-surface{height:100%;min-height:0}
  .station-stage1-compact .stage-one-map-content{height:100%;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:7px;padding:8px!important;border-radius:22px}
  .station-stage1-compact .stage-one-map-content > .grid{min-height:0;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:9px}
- .station-stage1-compact .stage-one-map-content > .grid > .flex{min-height:0;overflow:hidden;gap:5px}
- .station-stage1-compact .stage-one-map-content > .grid > .flex > .relative{min-height:0;height:100%;aspect-ratio:auto;border-radius:18px}
+ .station-stage1-compact .stage-one-map-content > .grid > .flex{min-height:0;overflow:visible;gap:5px}
+ .station-stage1-compact .stage-one-map-content > .grid > .flex > .relative{min-height:260px;height:100%;aspect-ratio:16/10;border-radius:18px}
  .station-stage1-compact .hoi-an-right-rail{height:100%;min-height:0;overflow-y:auto;overscroll-behavior:contain;gap:7px;scrollbar-width:thin}
  .station-stage1-compact .hoi-an-right-rail > div{padding:10px!important;border-radius:17px}
  .station-stage1-compact .hoi-an-right-rail p{line-height:1.35}
@@ -85,4 +85,12 @@
  .station-stage1-compact .stage-one-map-content{padding:8px!important}
  .station-stage1-compact .stage-one-map-content > section > .grid{display:flex;overflow-x:auto;gap:8px}
  .station-stage1-compact .stage-one-map-content > section > .grid > button{min-width:135px;max-width:185px}
+}
+
+/* Protect the photo from collapsing when its flex parent has no definite height. */
+@media(min-width:1100px){
+ .station-stage1-compact .stage-one-map-content > .grid{grid-template-rows:minmax(260px,1fr)}
+ .station-stage1-compact .stage-one-map-content > .grid > .flex:first-child{min-height:260px;height:100%}
+ .station-stage1-compact .stage-one-map-content > .grid > .flex:first-child > .relative{flex:1 1 auto;min-height:260px;max-height:100%;height:auto;aspect-ratio:auto;overflow:hidden}
+ .station-stage1-compact .stage-one-map-content > .grid > .flex:first-child > .relative img{display:block;width:100%;height:100%;object-fit:contain}
 }

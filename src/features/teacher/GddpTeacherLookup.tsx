@@ -24,7 +24,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const [selectedHotspots,setSelectedHotspots] = useState<string[]>([]);
   const [preparedOpen,setPreparedOpen] = useState(false);
   const [projected,setProjected] = useState<MatchedLessonResource|null>(null);
-  useEffect(()=>{setGrade(currentGrade);setSubject('');setWeek('');setSelectedId('');setProjected(null);},[currentGrade]);
+  useEffect(()=>{setGrade(currentGrade);setSubject('');setWeek('');setSelectedId('');setSelectedHotspots([]);setProjected(null);},[currentGrade]);
   useEffect(() => {
     let active = true;
     if(privateRecords){setRecords(privateRecords);setLoading(false);setPublished(false);setOfflineSource(false);return;}
@@ -125,7 +125,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
         })}
         <p className="text-xs text-slate-600">Các điểm đã chọn sẽ được dùng làm ngữ cảnh soạn câu hỏi liên hệ. Chỉ sử dụng câu hỏi AI sau khi giáo viên kiểm tra và duyệt; không tự lấy câu hỏi trò chơi không liên quan.</p>
       </section>
-      <LessonPlanEditor key={selected.id+(preparedDeck?.teachingContent?'-edited':'')} record={teachingRecord || selected} storageVariant={preparedDeck?.teachingContent?'source-corrected-2025-v1':undefined} sourceLabel={privateRecords?privateSource:preparedDeck?.mappingReview?`Bản tham khảo từ bảng ${preparedDeck.mappingReview.sourceYear}; chưa xác nhận địa chỉ năm học hiện hành.\n${preparedDeck.sources.join('\n')}`:undefined} />
+      <LessonPlanEditor key={selected.id+(preparedDeck?.teachingContent?'-edited':'')} integrationMinutes={integrationMinutes} selectedResources={matchedResources.filter(({station,hotspot})=>selectedHotspots.includes(station.id+':'+hotspot.id)).map(({station,hotspot})=>({stationTitle:station.titleVi,hotspotTitle:hotspot.titleVi}))} record={teachingRecord || selected} storageVariant={preparedDeck?.teachingContent?'source-corrected-2025-v1':undefined} sourceLabel={privateRecords?privateSource:preparedDeck?.mappingReview?`Bản tham khảo từ bảng ${preparedDeck.mappingReview.sourceYear}; chưa xác nhận địa chỉ năm học hiện hành.\n${preparedDeck.sources.join('\n')}`:undefined} />
       {preparedDeck && <section className="space-y-3 rounded-2xl border border-emerald-200 bg-white p-4">
         <div><h4 className="font-black text-emerald-900">Bộ trình chiếu riêng cho bài này</h4><p className="mt-1 text-sm text-slate-600">{preparedDeck.title} · {preparedDeck.slides.length} trang · Nội dung, câu hỏi, gợi ý trả lời và ghi chú giáo viên.</p></div>
         {preparedDeck.mappingReview&&!preparedDeck.mappingReview.currentYearConfirmed&&<p className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-bold text-amber-900">Nguồn địa chỉ tích hợp: {preparedDeck.mappingReview.sourceYear}. {preparedDeck.mappingReview.note}</p>}

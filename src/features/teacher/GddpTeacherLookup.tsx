@@ -68,7 +68,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
     if(!selected||!matchedResources.length)return;
     setSelectedHotspots(previous=>previous.length?previous:[matchedResources[0].station.id+':'+matchedResources[0].hotspot.id]);
   },[selected?.id,matchedResources]);
-  const manualResources=useMemo(()=>stations.filter(station=>station.grade===grade&&station.isFullyVerified).flatMap(station=>station.hotspots.filter(h=>Boolean(h.titleVi?.trim()&&h.image?.trim()&&h.narrationVi?.trim())&&!/đang được hoàn thiện|đang cập nhật|giới thiệu bài học/i.test(h.narrationVi)).map(hotspot=>({station,hotspot,reason:'Giáo viên tự chọn; cần đối chiếu với bài học'}))),[stations,grade]);
+  const manualResources=useMemo(()=>stations.filter(station=>station.grade===grade).flatMap(station=>station.hotspots.filter(h=>Boolean(h.titleVi?.trim()&&h.image?.trim()&&h.narrationVi?.trim())&&!/đang được hoàn thiện|đang cập nhật|giới thiệu bài học/i.test(h.narrationVi)).map(hotspot=>({station,hotspot,reason:'Giáo viên tự chọn; cần đối chiếu với bài học'}))),[stations,grade]);
   const availableResources=manualChoice?manualResources:matchedResources;
   const selectedResources=availableResources.filter(({station,hotspot})=>selectedHotspots.includes(station.id+':'+hotspot.id));
   const copy = async (text:string) => {

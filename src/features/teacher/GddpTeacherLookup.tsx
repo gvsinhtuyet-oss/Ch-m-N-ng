@@ -6,7 +6,6 @@ import {matchGddpResources,MatchedLessonResource} from '../../services/GddpResou
 import {LessonPlanEditor} from './LessonPlanEditor';
 import {GddpLessonPresentation} from './GddpLessonPresentation';
 import {getGddpLessonDeck,getGddpTeachingRecord} from '../../services/GddpLessonDeckService';
-import {GddpPreparedPresentation} from './GddpPreparedPresentation';
 
 interface Props {onOpenStudentStage1?: (station:Station)=>void; stations: Station[]; currentGrade: number; onGradeChange: (grade: number) => void; privateRecords?:GddpRecord[]; privateYear?:string; privateSource?:string;}
 export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGradeChange,privateRecords,privateYear,privateSource,onOpenStudentStage1}) => {
@@ -158,26 +157,18 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       </section>
       <LessonPlanEditor key={selected.id+(preparedDeck?.teachingContent?'-edited':'')} integrationMinutes={integrationMinutes} selectedResources={selectedResources.map(({station,hotspot})=>({stationTitle:station.titleVi,hotspotTitle:hotspot.titleVi,narration:hotspot.narrationVi}))} record={teachingRecord || selected} storageVariant={preparedDeck?.teachingContent?'source-corrected-2025-v1':undefined} sourceLabel={privateRecords?privateSource:preparedDeck?.mappingReview?`Bản tham khảo từ bảng ${preparedDeck.mappingReview.sourceYear}; chưa xác nhận địa chỉ năm học hiện hành.\n${preparedDeck.sources.join('\n')}`:undefined} />
       </div>
-      {showPreparation && preparedDeck && <section className="space-y-3 rounded-2xl border border-emerald-200 bg-white p-4">
-        <div><h4 className="font-black text-emerald-900">Slide tham khảo (không phải Chặng 1 của học sinh)</h4><p className="mt-1 text-sm text-slate-600">{preparedDeck.title} · {preparedDeck.slides.length} trang · Nội dung, câu hỏi, gợi ý trả lời và ghi chú giáo viên.</p></div>
-        {preparedDeck.mappingReview&&!preparedDeck.mappingReview.currentYearConfirmed&&<p className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-bold text-amber-900">Nguồn địa chỉ tích hợp: {preparedDeck.mappingReview.sourceYear}. {preparedDeck.mappingReview.note}</p>}
-        <p className="text-xs text-slate-500">Bản biên soạn đối chiếu tài liệu nguồn. Giáo viên đọc và duyệt trước khi sử dụng chính thức; không thay thế toàn bộ bài học trong sách.</p>
-        {preparedDeck.reviewNotes.length>0 && <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900"><p className="font-bold">Lưu ý cần duyệt</p><ul className="mt-1 list-disc space-y-1 pl-4">{preparedDeck.reviewNotes.map(note=><li key={note}>{note}</li>)}</ul></div>}
-        <button type="button" onClick={()=>setPreparedOpen(true)} className="rounded-xl bg-emerald-700 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-800">{preparedDeck.mappingReview&&!preparedDeck.mappingReview.currentYearConfirmed?'Xem trình chiếu tham khảo':'Xem slide tham khảo'}</button>
-        <details className="text-xs text-slate-600"><summary className="cursor-pointer font-bold">Nguồn và mục tiêu của bộ trình chiếu</summary><ul className="mt-2 list-disc space-y-1 pl-4">{preparedDeck.sources.map(source=><li key={source} className="break-words [overflow-wrap:anywhere]">{source}</li>)}</ul><p className="mt-2">Hình và sơ đồ minh hoạ được biên soạn cho bài; không phải ảnh tư liệu. Không gọi AI hoặc ghi dữ liệu khi mở trình chiếu.</p></details>
-      </section>}
+
       {showPreparation&&<div className="space-y-3 rounded-xl border border-emerald-200 bg-white p-3">
         <h4 className="font-bold">Học liệu bổ sung từ các trạm</h4>
         <p className="text-xs text-slate-600">Chỉ hiện từng điểm học liệu trùng khớp với bài; không mở trọn trạm hoặc 4 chặng học sinh.</p>
         {!matchedResources.length && !preparedDeck && <p role="status" className="rounded-lg bg-amber-50 p-3 text-sm text-amber-900">Chưa tìm được học liệu có độ khớp đủ tin cậy. Không tự hiển thị nội dung trạm không liên quan; Admin có thể liên kết chính xác từng điểm học liệu.</p>}
         {matchedResources.map(({station,hotspot,reason})=><div key={station.id+':'+hotspot.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 p-3">
           <div><p className="font-bold text-slate-900">{hotspot.titleVi}</p><p className="text-xs text-slate-500">{privateRecords?'Giáo viên đã xác nhận liên kết':reason} · {station.titleVi}</p></div>
-          <button type="button" className="rounded-lg bg-sky-700 px-4 py-2 text-sm font-bold text-white" onClick={()=>setProjected({station,hotspot,reason})}>Trình chiếu riêng nội dung này</button>
+          <button type="button" className="rounded-lg bg-sky-700 px-4 py-2 text-sm font-bold text-white" onClick={()=>onOpenStudentStage1?onOpenStudentStage1(station):setProjected({station,hotspot,reason})}>Mở Chặng 1 của học sinh</button>
         </div>)}
       </div>}
       <p className="text-xs text-slate-500">Nội dung nguồn cần được giáo viên đối chiếu với bài dạy và tài liệu chính thức trước khi sử dụng. KHBD Demo là bản nháp để chỉnh sửa, không thay đổi dữ liệu trường.</p>
     </article>}
-    {selected && preparedDeck && preparedOpen && <GddpPreparedPresentation key={selected.id} record={selected} deck={preparedDeck} onExit={()=>setPreparedOpen(false)} />}
     {selected && projected && <GddpLessonPresentation record={selected} resource={projected} onExit={()=>setProjected(null)} />}
   </section>;
 };

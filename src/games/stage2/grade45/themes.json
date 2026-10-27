@@ -1,0 +1,362 @@
+[
+  {
+    "key": "g4-nature",
+    "id": "g4-station-1",
+    "grade": 4,
+    "n": 1,
+    "title": "LA BÀN XANH ĐÀ NẴNG",
+    "reward": "golden leaf medallions",
+    "scene": "Da Nang natural landscape with forested mountains at left, river crossing a fertile plain in middle and turquoise coastline at right, small schoolchildren caring for trees along outer edges. No map borders or geographic labels.",
+    "item": "huy hiệu lá xanh vàng",
+    "icon": "🌿",
+    "photo": "/learning/grade3/photos/my-khe.webp",
+    "ask": "Ảnh nào cho thấy cảnh quan biển của quê hương?",
+    "q2": "Cặp nào nêu hai mùa khí hậu được giới thiệu trong bài?",
+    "a": [
+      "Mùa mưa và mùa khô",
+      "Mùa tuyết và mùa băng",
+      "Mùa thu hoạch và mùa gieo hạt"
+    ],
+    "hint": "Nhớ sự thay đổi lượng mưa trong năm.",
+    "pairs": [
+      [
+        "Rừng và biển",
+        "Môi trường sống của sinh vật"
+      ],
+      [
+        "Sông ngòi",
+        "Gắn với đời sống và sản xuất"
+      ],
+      [
+        "Con người quê hương",
+        "Cần cù, chân thật, nghĩa tình"
+      ]
+    ],
+    "source": 0,
+    "photoHint": "Quan sát bờ cát, sóng nước và không gian ven biển."
+  },
+  {
+    "key": "g4-economy",
+    "id": "g4-station-3",
+    "grade": 4,
+    "n": 2,
+    "title": "NHỊP SỐNG THÀNH PHỐ",
+    "reward": "golden cogwheel medallions",
+    "scene": "Da Nang economic life: clean container port and cargo crane at one outer side, small vegetable farm and weaving workshop at other side, distant coastal city. Cheerful workers, no factory smoke.",
+    "item": "bánh răng vàng",
+    "icon": "⚙️",
+    "photo": "/images/real-photos/tien-sa-9.webp",
+    "ask": "Ảnh nào thể hiện hoạt động vận tải biển?",
+    "q2": "Hoạt động nào trực tiếp tạo ra lương thực, thực phẩm?",
+    "a": [
+      "Nông nghiệp",
+      "Hướng dẫn tham quan",
+      "Vận chuyển hành khách"
+    ],
+    "hint": "Nghĩ đến việc trồng trọt và chăn nuôi.",
+    "pairs": [
+      [
+        "Công nghiệp",
+        "Chế biến, sản xuất, lắp ráp"
+      ],
+      [
+        "Dịch vụ du lịch",
+        "Vận chuyển, lưu trú, hướng dẫn"
+      ],
+      [
+        "Nông nghiệp",
+        "Làm ra lương thực, thực phẩm"
+      ]
+    ],
+    "source": 0,
+    "photoHint": "Quan sát tàu hàng, container và thiết bị bốc dỡ ở cảng."
+  },
+  {
+    "key": "g4-cham",
+    "id": "g4-station-2",
+    "grade": 4,
+    "n": 3,
+    "title": "GIẢI MÃ DI SẢN CHĂM",
+    "reward": "golden lotus medallions",
+    "scene": "Respectful educational scene: red brick My Son Cham sanctuary towers at left and yellow facade of Da Nang Cham Sculpture Museum at right, carved stone artifacts near sides. Green valley, warm sunlight. No invented inscriptions on monuments.",
+    "item": "huy hiệu sen vàng",
+    "icon": "🪷",
+    "photo": "/images/real-photos/my-son.webp",
+    "ask": "Ảnh nào là khu đền tháp Mỹ Sơn?",
+    "q2": "Muốn biết tên, chất liệu và xuất xứ hiện vật, em cần làm gì?",
+    "a": [
+      "Quan sát và đọc nhãn giới thiệu",
+      "Đoán từ màu sắc rồi khẳng định",
+      "Gọi tất cả hiện vật cùng một tên"
+    ],
+    "hint": "Bên cạnh hiện vật thường có thông tin giúp người xem tìm hiểu.",
+    "pairs": [
+      [
+        "Mỹ Sơn",
+        "Khu đền tháp trong thung lũng"
+      ],
+      [
+        "Bảo tàng Điêu khắc Chăm",
+        "Nơi gìn giữ hiện vật điêu khắc"
+      ],
+      [
+        "Nhãn hiện vật",
+        "Giúp tìm hiểu tên và xuất xứ"
+      ]
+    ],
+    "source": 0,
+    "photoHint": "Nhớ hình dạng các tháp gạch được giới thiệu trong bài."
+  },
+  {
+    "key": "g4-river",
+    "id": "g4-thu-bon-hon-kem",
+    "grade": 4,
+    "n": 4,
+    "title": "THEO DÒNG THU BỒN",
+    "reward": "golden miniature wooden river boats",
+    "scene": "Thu Bon river between towering rocky Hon Kem Da Dung cliffs, lush riverbanks, small wooden boats and distant village. Calm river and dramatic green limestone/rock valley, no bridges or ocean.",
+    "item": "thuyền sông vàng",
+    "icon": "⛵",
+    "photo": "/learning/grade45/photos/hon-kem.webp",
+    "ask": "Ảnh nào có dòng sông giữa vách núi Hòn Kẽm Đá Dừng?",
+    "q2": "Hành trình nào mô tả đúng dòng Thu Bồn theo bài học?",
+    "a": [
+      "Từ vùng núi Ngọc Linh, phần lớn ra biển qua Cửa Đại",
+      "Từ Cửa Đại chảy ngược lên đỉnh núi",
+      "Chỉ chảy trong một hồ kín"
+    ],
+    "hint": "Nhớ điểm bắt nguồn và cửa biển được giới thiệu trong bài.",
+    "pairs": [
+      [
+        "Núi Ngọc Linh",
+        "Vùng bắt nguồn sông Thu Bồn"
+      ],
+      [
+        "Cửa Đại",
+        "Nơi phần lớn nước sông ra biển"
+      ],
+      [
+        "Hòn Kẽm Đá Dừng",
+        "Vách núi đá bên dòng sông"
+      ]
+    ],
+    "source": 0,
+    "photoHint": "Quan sát dòng nước và các vách núi đá hai bên."
+  },
+  {
+    "key": "g4-bronze",
+    "id": "g4-station-4",
+    "grade": 4,
+    "n": 5,
+    "title": "ÂM VANG PHƯỚC KIỀU",
+    "reward": "golden miniature bronze gongs",
+    "scene": "Traditional Phuoc Kieu bronze casting workshop, elderly artisan near clay casting molds, polished bronze gongs and bells at outer sides, safe warm forge off to side, traditional Vietnamese village.",
+    "item": "chiêng đồng vàng",
+    "icon": "🔔",
+    "photo": "/images/real-photos/phuoc-kieu-san-pham.webp",
+    "ask": "Ảnh nào có sản phẩm của nghề đúc đồng?",
+    "q2": "Nhóm nào gồm sản phẩm truyền thống của Phước Kiều?",
+    "a": [
+      "Cồng, chiêng và chuông",
+      "Kén tằm và tấm lụa",
+      "Nan tre và thuyền thúng"
+    ],
+    "hint": "Nhớ những sản phẩm có thể tạo âm thanh được giới thiệu trong bài.",
+    "pairs": [
+      [
+        "Tạo mẫu, làm khuôn",
+        "Các công đoạn đầu"
+      ],
+      [
+        "Nấu và rót đồng",
+        "Thực hiện khi khuôn đã sẵn sàng"
+      ],
+      [
+        "Làm nguội, hoàn thiện",
+        "Thực hiện sau công đoạn rót"
+      ]
+    ],
+    "source": 2,
+    "photoHint": "Quan sát chất liệu và những sản phẩm cồng, chiêng được giới thiệu."
+  },
+  {
+    "key": "g5-heroes",
+    "id": "g5-ky-anh-me-nhu",
+    "grade": 5,
+    "n": 1,
+    "title": "THEO DẤU LÒNG DŨNG CẢM",
+    "reward": "golden five-point star badges",
+    "scene": "Respectful peaceful Vietnamese memorial landscape, shaded earthen Ky Anh tunnel entrance at left with banyan tree and old village communal house, simple quiet memorial courtyard and flowers at right. No invented portrait or statue of Me Nhu; no weapons, explosions or battle.",
+    "item": "huy hiệu sao vàng",
+    "icon": "⭐",
+    "photo": "/images/real-photos/ky-anh-duong-ham.webp",
+    "ask": "Ảnh nào cho thấy không gian bên trong địa đạo Kỳ Anh?",
+    "q2": "Khoảng thời gian nào gắn với việc đào địa đạo Kỳ Anh?",
+    "a": [
+      "Từ năm 1965 đến cuối năm 1967",
+      "Từ năm 1915 đến năm 1919",
+      "Từ năm 1826 đến năm 1828"
+    ],
+    "hint": "Đối chiếu mốc thời gian ở điểm đầu của bài học.",
+    "pairs": [
+      [
+        "Hầm chỉ huy",
+        "Phục vụ công việc chỉ huy"
+      ],
+      [
+        "Hầm cứu thương",
+        "Chăm sóc người bị thương"
+      ],
+      [
+        "Lỗ thông hơi",
+        "Giúp không khí lưu thông"
+      ]
+    ],
+    "source": 0,
+    "photoHint": "Quan sát đường hầm hẹp dưới mặt đất."
+  },
+  {
+    "key": "g5-clouds",
+    "id": "g5-station-3",
+    "grade": 5,
+    "n": 2,
+    "title": "HÀNH TRÌNH MÂY VÀ CỬA QUAN",
+    "reward": "golden compass medallions",
+    "scene": "Ba Na forested mountains in clouds, recognizable Golden Bridge with two giant stone hands toward left middle, Hai Van Quan brick gate at right ridge overlooking mountain pass and sea. Do not conflate the gate with a medieval castle.",
+    "item": "la bàn vàng",
+    "icon": "🧭",
+    "photo": "/learning/grade45/photos/hai-van.webp",
+    "ask": "Ảnh tư liệu nào có cửa Hải Vân Quan?",
+    "q2": "Hải Vân Quan từng đảm nhiệm vai trò nào?",
+    "a": [
+      "Công trình phòng thủ ở vị trí quan trọng trên đèo",
+      "Xưởng dệt lụa",
+      "Nơi ươm giống sâm"
+    ],
+    "hint": "Nhớ vai trò lịch sử của cửa quan.",
+    "pairs": [
+      [
+        "Bà Nà – Núi Chúa",
+        "Núi rừng và khí hậu mát mẻ"
+      ],
+      [
+        "Hải Vân Quan",
+        "Dấu tích lịch sử và kiến trúc"
+      ],
+      [
+        "Bảo vệ rừng",
+        "Gìn giữ đa dạng sinh học"
+      ]
+    ],
+    "source": 1,
+    "photoHint": "Nhớ hình dáng cửa quan trên đỉnh đèo trong ảnh tư liệu."
+  },
+  {
+    "key": "g5-mountains",
+    "id": "g5-station-4",
+    "grade": 5,
+    "n": 3,
+    "title": "KHÁM PHÁ NGŨ HÀNH SƠN",
+    "reward": "golden stone-lotus miniatures",
+    "scene": "Marble Mountains Ngu Hanh Son, green limestone peaks, sacred cave entrance and old pagoda at edges, respectful Non Nuoc stone artisan workshop at lower outer edge. No writing on cave walls, no invented inscriptions, no worship figures as rewards.",
+    "item": "đóa sen đá vàng",
+    "icon": "🪷",
+    "photo": "/learning/grade45/photos/ngu-hanh.webp",
+    "ask": "Ảnh nào có cảnh quan Ngũ Hành Sơn?",
+    "q2": "Vì sao năm tên ngũ hành không có nghĩa chỉ có năm ngọn núi?",
+    "a": [
+      "Hỏa Sơn gồm Dương Hỏa Sơn và Âm Hỏa Sơn",
+      "Vì mỗi ngọn đều đổi tên mỗi ngày",
+      "Vì Thủy Sơn không thuộc danh thắng"
+    ],
+    "hint": "Phân biệt tên ngũ hành với các ngọn của Hỏa Sơn.",
+    "pairs": [
+      [
+        "Ma nhai",
+        "Chữ khắc lưu giữ ký ức"
+      ],
+      [
+        "Non Nước",
+        "Làng nghề điêu khắc đá"
+      ],
+      [
+        "Hỏa Sơn",
+        "Gồm hai ngọn núi"
+      ]
+    ],
+    "source": 2,
+    "photoHint": "Nhớ quần thể núi đá và cảnh quan được giới thiệu trong bài."
+  },
+  {
+    "key": "g5-silk",
+    "id": "g5-lua-ma-chau",
+    "grade": 5,
+    "n": 4,
+    "title": "DỆT SẮC LỤA MÃ CHÂU",
+    "reward": "golden miniature silk spools",
+    "scene": "Ma Chau silk village: traditional wooden weaving loom with colorful silk cloth at one edge, mulberry leaves and trays of white silk cocoons at other side, artisan weaving, peaceful Vietnamese riverside village. Silk shimmer, no printed letters.",
+    "item": "ống tơ vàng",
+    "icon": "🧵",
+    "photo": "/images/real-photos/ma-chau-det.webp",
+    "ask": "Ảnh nào cho thấy công đoạn dệt lụa?",
+    "q2": "Trong nghề lụa, tằm ăn loại lá nào để lớn lên?",
+    "a": [
+      "Lá dâu",
+      "Lá thông",
+      "Lá dừa"
+    ],
+    "hint": "Nhớ tên cây gắn với công đoạn nuôi tằm.",
+    "pairs": [
+      [
+        "Nuôi tằm",
+        "Tằm ăn lá dâu rồi tạo kén"
+      ],
+      [
+        "Ươm tơ",
+        "Lấy sợi tơ từ kén"
+      ],
+      [
+        "Dệt lụa",
+        "Dệt sợi thành tấm lụa"
+      ]
+    ],
+    "source": 0,
+    "photoHint": "Quan sát khung dệt và các sợi được dệt thành tấm."
+  },
+  {
+    "key": "g5-ginseng",
+    "id": "g5-station-5",
+    "grade": 5,
+    "n": 5,
+    "title": "BÁU VẬT RỪNG NGỌC LINH",
+    "reward": "golden ginseng-leaf medallions",
+    "scene": "Misty high mountain forest of Ngoc Linh, shaded ginseng beds under broad forest canopy, palmate leaf clusters and small red berry clusters, careful local growers at far side, rich moss and ferns. No medicines, pills, claims or people tasting plants.",
+    "item": "huy hiệu lá sâm vàng",
+    "icon": "🌿",
+    "photo": "/learning/grade45/photos/sam.webp",
+    "ask": "Ảnh nào là cây sâm Ngọc Linh?",
+    "q2": "Môi trường nào phù hợp với sâm Ngọc Linh theo bài học?",
+    "a": [
+      "Dưới tán rừng núi cao, ẩm và mát",
+      "Bãi cát khô sát biển",
+      "Nền bê tông không có cây che bóng"
+    ],
+    "hint": "Nhớ điều kiện sống gắn với rừng ở vùng núi cao.",
+    "pairs": [
+      [
+        "Tri thức bản địa",
+        "Cộng đồng biết cây từ trước"
+      ],
+      [
+        "Mốc năm 1973",
+        "Gắn với hành trình nghiên cứu"
+      ],
+      [
+        "Giữ rừng và nguồn giống",
+        "Góp phần phát triển bền vững"
+      ]
+    ],
+    "source": 1,
+    "photoHint": "Đối chiếu hình dáng lá và thân cây với ảnh trong bài học."
+  }
+]

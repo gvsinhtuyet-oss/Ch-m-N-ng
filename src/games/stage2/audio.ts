@@ -11,8 +11,13 @@ export class SharedGameAudio {
   private levels = new Map<string,number>();
   private nextAt = 0;
   private muted = false;
-  constructor() { try {this.muted=localStorage.getItem(storageKey)==='false';} catch {} }
+  constructor(private readonly responsive=false) { try {this.muted=localStorage.getItem(storageKey)==='false';} catch {} }
   isMuted = () => this.muted;
+  /** Synchronize the shared preference when switching between approved and preview games. */
+  syncPreference = () => {
+    try {const value=localStorage.getItem(storageKey);if(value!==null){this.muted=value==='false';if(this.muted)this.stop();if(this.master)this.master.gain.value=this.muted?0:0.65;}} catch {}
+    return this.muted;
+  };
   unlock = () => {
     try {
       const AC=window.AudioContext || (window as unknown as {webkitAudioContext:typeof AudioContext}).webkitAudioContext;
@@ -40,23 +45,26 @@ export class SharedGameAudio {
   play = (name:GameSound) => {
     if(this.muted) return;
     this.unlock();const c=this.ctx,master=this.master;if(!c||!master)return;
-    const start=Math.max(c.currentTime+.005,this.nextAt);
+    // Preview grade 4/5: the latest action must never wait behind earlier taps.
+    if(this.responsive)this.stop();
+    const start=this.responsive?c.currentTime+.005:Math.max(c.currentTime+.005,this.nextAt);
     const buffer=this.buffers.get(name);
     if(buffer) {
       const source=c.createBufferSource();source.buffer=buffer;
       const gain=c.createGain();gain.gain.value=this.levels.get(name)??0.28;source.connect(gain);gain.connect(master);
       // Short cues never delay the next question; preserve the full approved victory music.
-      const duration=name==='victory'?buffer.duration:Math.min(buffer.duration,.42);
-      gain.gain.setValueAtTime(gain.gain.value,start);gain.gain.linearRampToValueAtTime(0,start+duration);
+      const duration=name==='victory'?buffer.duration:Math.min(buffer.duration,this.responsive?.8:.42);
+      gain.gain.setValueAtTime(gain.gain.value,start);if(this.responsive)gain.gain.setValueAtTime(gain.gain.value,start+Math.max(0,duration-.04));gain.gain.linearRampToValueAtTime(0,start+duration);
       this.track(source,gain);source.start(start,0,duration);this.nextAt=start+duration+.02;return;
     }
     const p=patterns[name==='unlock'?'next':name]||patterns.tap;
     for(const [freq,offset,duration,type,volume] of p) {
       const osc=c.createOscillator(),gain=c.createGain();osc.type=type;osc.frequency.value=freq;
-      const t=start+offset;gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(volume,t+.012);gain.gain.exponentialRampToValueAtTime(.0001,t+duration);
+      const t=start+offset;gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(this.responsive?Math.min(volume*3.5,.2):volume,t+.012);gain.gain.exponentialRampToValueAtTime(.0001,t+duration);
       osc.connect(gain);gain.connect(master);this.track(osc,gain);osc.start(t);osc.stop(t+duration+.015);
     }
     this.nextAt=start+Math.max(...p.map(n=>n[1]+n[2]))+.02;
   };
 }
 export const sharedGameAudio = new SharedGameAudio();
+export const responsiveSharedGameAudio = new SharedGameAudio(true);

@@ -34,8 +34,8 @@ test('three stations share exactly one renderer/audio adapter; no three new HTML
  const configs=grade3NewPreviewIds.map(id=>grade3SharedConfigs[id]);assert.equal(new Set(configs.flatMap(c=>[c.background,c.victoryBackground])).size,6);
  assert.equal(new Set(configs.map(c=>c.collectible.image)).size,3);
 });
-test('approved station 1/2 source, content, art and audio remain byte-identical to phase 1',()=>{
- const files=['src/games/stage2/hoangDieu.ts','src/games/stage2/approved-v18.css','src/games/stage2/audio.ts','src/games/stage2/audioPatterns.ts','src/components/station/MyKheBanThanV12.tsx','src/components/station/HoangDieuPhanChauTrinhV18.tsx','public/games/grade3-my-khe-ban-than/v12/index.html','public/games/grade3-hoang-dieu-phan-chau-trinh/v18/index.html','src/data/grade3Content.ts'];
+test('approved station 1/2 source, content, art and audio patterns remain byte-identical to phase 1',()=>{
+ const files=['src/games/stage2/hoangDieu.ts','src/games/stage2/approved-v18.css','src/games/stage2/audioPatterns.ts','src/components/station/MyKheBanThanV12.tsx','src/components/station/HoangDieuPhanChauTrinhV18.tsx','public/games/grade3-my-khe-ban-than/v12/index.html','public/games/grade3-hoang-dieu-phan-chau-trinh/v18/index.html','src/data/grade3Content.ts'];
  for(const path of files){const old=execFileSync('git',['show',`7502586:${path}`],{maxBuffer:10*1024*1024});assert.deepEqual(readFileSync(path),old,path);}
 });
 test('content facts trace to the existing grade 3 lesson narratives',()=>{

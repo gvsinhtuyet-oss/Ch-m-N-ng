@@ -3,9 +3,10 @@ import {createPortal} from 'react-dom';
 import {startFireworks} from './fireworks';
 import approvedCss from './approved-v18.css?raw';
 import safeLayoutCss from './safe-layout.css?raw';
+import compactMatchCss from './compact-match.css?raw';
 import {validateConfig, type GameConfig, type MatchQuestion} from './types';
 import {gameReducer,initialState,connectPair,isCorrectMatch} from './state';
-import {sharedGameAudio as audio, type GameSound} from './audio';
+import {sharedGameAudio, responsiveSharedGameAudio, type GameSound} from './audio';
 const colors=['#19ad5e','#1684eb','#f09a22'];
 const fixes=`:host{display:block;font-family:system-ui,'Segoe UI',Arial,sans-serif;color:#18324b}button:disabled{cursor:default}button:focus-visible{outline:4px solid #ffab26;outline-offset:3px}.hud-key.earned{filter:sepia(1) saturate(6) hue-rotate(4deg);animation:reward-pop .45s ease-out}@keyframes reward-pop{50%{transform:scale(1.4)}}.preview-title{position:absolute;top:8px;left:50%;transform:translateX(-50%);margin:0;font-size:1px;opacity:0;pointer-events:none}.answers button.good{background:#c8ffd8!important;border-color:#1aa85a!important}.answers button.bad{background:#ffe0dc!important;border-color:#e74a43!important}.match button.selected{background:#fff1b5!important}.match button.linked{border-color:var(--c)!important;box-shadow:inset 0 0 0 2px var(--c)!important}.music-toggle{min-width:44px;min-height:44px}.controls:empty{display:none!important}@media(max-width:650px) and (orientation:portrait){.hud{top:calc(56.3vw + 8px)!important}}@media(max-height:450px){.scene:not(.is-victory) .shell{padding:0!important}.scene:not(.is-victory) .intro-screen{padding:6px!important}.scene:not(.is-victory) .panel{margin-top:60px!important;gap:3px!important;max-height:calc(100dvh - 70px)!important}.scene:not(.is-victory) .answers:not(:has(.choice-photo)) button{min-height:36px!important;padding:5px 12px!important;font-size:13px!important}.scene:not(.is-victory) .match button{min-height:38px!important;font-size:12px!important;padding:5px!important}.scene:not(.is-victory) .prompt{font-size:14px!important;padding:5px 12px!important}.intro-screen{padding:6px!important}.intro-emblem,.intro-rules,.intro-call{display:none!important}.intro-story{font-size:13px!important;line-height:1.25!important}.intro-screen h2{font-size:17px!important}.scene:not(.is-victory) .feedback{margin-top:3px!important;font-size:12px!important}.scene:not(.is-victory) .controls{padding:2px!important;margin:2px auto!important}}`;
 
@@ -34,15 +35,21 @@ function Fireworks({lightweight=false}:{lightweight?:boolean}) {
   useEffect(()=>{if(!canvas.current)return;return startFireworks(canvas.current,lightweight);},[lightweight]);
   return <canvas className="firecanvas" ref={canvas} aria-hidden="true"/>;
 }
-function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}) {
+function GameSurface({config,onComplete,embedded=false}:{config:GameConfig;onComplete:()=>void;embedded?:boolean}) {
+  const sceneRef=useRef<HTMLElement>(null);
+  const responsiveAudio=/^g[45]-/.test(config.stationId);
+  const audio=responsiveAudio?responsiveSharedGameAudio:sharedGameAudio;
   const [state,dispatch]=useReducer(gameReducer,undefined,initialState);
   const [pairs,setPairs]=useState<Record<number,number>>({});
-  const [muted,setMuted]=useState(audio.isMuted);
+  const [muted,setMuted]=useState(audio.syncPreference);
   const completed=useRef(false),clickLocked=useRef(false);
   const continueTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
+  const muteTimer=useRef<ReturnType<typeof setTimeout>|null>(null);
   const selectedChoice=useRef<number|null>(null);
   const question=config.questions[state.index];
   const locked=state.result!==null;
+  const grade45Question=/^g[45]-/.test(config.stationId)&&state.phase==='question';
+  const compactMatch=grade45Question&&question.kind==='match';
   useEffect(()=>{
     if(config.layout!=='safe-v1')return;
     // Fetch and decode before the last answer, keeping the decoded image alive.
@@ -56,33 +63,42 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   useEffect(()=>{setPairs({});clickLocked.current=false;},[state.index,state.phase,state.reviewing]);
   useEffect(()=>{
     if(state.result===null)return;
-    const timer=setTimeout(()=>{audio.play('next');clickLocked.current=false;setPairs({});dispatch({type:'advance'});},state.result?1100:2200);
+    const timer=setTimeout(()=>{audio.play('next');clickLocked.current=false;setPairs({});dispatch({type:'advance'});},compactMatch?(state.result?1800:3500):(state.result?1100:2200));
     return ()=>clearTimeout(timer);
-  },[state.result,state.index]);
+  },[state.result,state.index,compactMatch]);
   useEffect(()=>{if(state.phase==='victory'){audio.stop();audio.play('victory');}},[state.phase]);
   const act=(name:GameSound,action:()=>void)=>{audio.unlock();audio.play(name);action();};
   const answer=(correct:boolean,sound:GameSound)=>{
     if(clickLocked.current||locked)return;clickLocked.current=true;
-    audio.play(sound);audio.play(correct?'right':'wrong');if(correct)audio.play('key');dispatch({type:'answer',correct});
+    if(responsiveAudio){audio.play(correct?'right':'wrong');}
+    else {audio.play(sound);audio.play(correct?'right':'wrong');if(correct)audio.play('key');}
+    dispatch({type:'answer',correct});
   };
   const restart=()=>{audio.stop();completed.current=false;clickLocked.current=false;setPairs({});act('retry',()=>dispatch({type:'restart'}));};
   const victory=state.phase==='victory';
-  return <main className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${victory?'is-victory':''}`} style={{backgroundImage:`url("${victory?config.victoryBackground:config.background}")`}}>
+  useLayoutEffect(()=>{
+    if(!embedded || !victory || window.innerWidth>=1024 || !sceneRef.current)return;
+    const root=sceneRef.current.getRootNode();
+    if(root instanceof ShadowRoot)root.host.closest<HTMLElement>('.station-lesson-panel')?.scrollIntoView({block:'start',behavior:'instant'});
+  },[embedded,victory]);
+  return <main ref={sceneRef} className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${victory?'is-victory':''} ${grade45Question?'grade45-question':''}`} style={{backgroundImage:`url("${victory?config.victoryBackground:config.background}")`}}>
     <h1 className="preview-title">{config.title}</h1>
     <div className={`shell ${victory?'finished':''}`}>
       <div className="hud"><div className="hud-stage">{state.phase==='intro'?'SẴN SÀNG':victory?'HOÀN THÀNH':state.phase==='review'?'ÔN TẬP':`CÂU ${state.index+1}/5`}<small>{victory?'5/5 câu hỏi':state.reviewing||state.phase==='review'?'Truy lại dấu vết':state.phase==='intro'?(config.intro.readyLabel??'Khám phá lịch sử'):question.level}</small></div>
         <div className="hud-right"><div className="hud-keys" aria-label={`${state.earned.length}/5 ${config.collectible.name}`}>{config.questions.map((q,i)=><span key={q.id} className={`hud-key ${state.earned.includes(i)?'earned':''}`} aria-label={`${config.collectible.name} ${i+1}: ${state.earned.includes(i)?'đã nhận':'chưa nhận'}`}>{config.collectible.image?<img src={config.collectible.image} alt="" style={{width:'1em',height:'1em',display:'block'}}/>:config.collectible.icon}</span>)}</div>
-          <button className="music-toggle" aria-label={muted?'Bật âm thanh':'Tắt âm thanh'} aria-pressed={!muted} onClick={()=>{audio.setMuted(!muted);setMuted(!muted);if(muted)audio.play('tap');}}>{muted?'♪̸':'♫'}</button>
+          <button className="music-toggle" aria-label={muted?'Bật âm thanh':'Tắt âm thanh'} aria-pressed={!muted} onClick={()=>{if(muteTimer.current)clearTimeout(muteTimer.current);if(responsiveAudio&&!muted){audio.play('tap');setMuted(true);muteTimer.current=setTimeout(()=>{audio.setMuted(true);muteTimer.current=null;},100);}else{audio.setMuted(!muted);setMuted(!muted);if(muted)audio.play('tap');}}}>{muted?'♪̸':'♫'}</button>
         </div>
       </div>
-      <section className="panel" aria-label={config.title}>
+      <section className={`panel ${compactMatch?'compact-match':''} ${locked?'has-result':''}`} aria-label={config.title}>
         {state.phase==='intro'&&<div className="intro-screen"><div className="intro-emblem" aria-hidden="true">🧭</div><h2>{config.intro.heading}</h2><p className="intro-story">{config.intro.story}</p><div className="intro-rules"><span>🧩 5 thử thách</span><span>{config.collectible.icon} Tìm đủ 5 {config.collectible.name}</span><span>🔎 Sai? Truy lại dấu vết!</span></div><p className="intro-call">{config.intro.call}</p><button className="btn intro-start" onClick={()=>{void audio.preload();act('next',()=>dispatch({type:'start'}));}}>🚀 BẮT ĐẦU KHÁM PHÁ</button></div>}
         {state.phase==='question'&&<>
           <h2 className="prompt">{question.prompt}</h2>
-          {question.kind==='match'?<MatchCards key={`${state.index}-${state.result}`} question={question} pairs={pairs} locked={locked} onSelect={()=>audio.play('select')} onConnect={(l,r)=>{audio.play('connect');setPairs(p=>connectPair(p,l,r));}}/>:
+          {question.kind==='match'?<MatchCards key={compactMatch?`${state.index}`:`${state.index}-${state.result}`} question={question} pairs={pairs} locked={locked} onSelect={()=>audio.play('select')} onConnect={(l,r)=>{audio.play('connect');setPairs(p=>connectPair(p,l,r));}}/>:
             <div className="answers">{question.options.map((o,i)=><button key={i} data-choice={i} disabled={locked} className={locked&&state.result!==null&&clickLocked.current&&selectedChoice.current===i?(state.result?'good':'bad'):''} onClick={()=>{if(locked||clickLocked.current)return;selectedChoice.current=i;answer(i===question.answer,'select');}}>{question.kind==='image'?<><img className="choice-photo" src={o.image} alt={`Hình lựa chọn ${'ABC'[i]}`}/><span className="choice-letter">{'ABC'[i]}</span></>:o.text}</button>)}</div>}
+          <div className={compactMatch?'match-footer':'question-footer'}>
           <div className={`feedback ${state.result?'ok':''}`} role="status" aria-live="polite">{state.result===null?'':state.result?`✓ Chính xác! Nhận một ${config.collectible.name}!`:`✕ Chưa đúng! Gợi ý: ${question.hint}`}</div>
-          <div className="controls">{question.kind==='match'&&<button className="btn" disabled={locked||Object.keys(pairs).length!==3} onClick={()=>answer(isCorrectMatch(question.solution,pairs),'confirm')}>✓ XÁC NHẬN</button>}</div>
+          <div className="controls">{question.kind==='match'&&!(compactMatch&&locked)&&<button className="btn" disabled={locked||Object.keys(pairs).length!==3} onClick={()=>answer(isCorrectMatch(question.solution,pairs),'confirm')}>✓ XÁC NHẬN</button>}</div>
+          </div>
         </>}
         {state.phase==='review'&&<div className="reviewprompt"><h2>🔎 TRUY LẠI DẤU VẾT</h2><p>Em có {state.missed.length} câu cần thử lại. Hãy hoàn thành tất cả thử thách nhé!</p><button className="btn" onClick={()=>act('retry',()=>dispatch({type:'review'}))}>🔍 THỬ LẠI CÂU SAI</button></div>}
         {victory&&<div className="victory"><Fireworks lightweight={config.layout==='safe-v1'}/><div className="victory-content"><div className="victory-message"><div className="victory-praise">{config.victory.praise}</div><div className="victory-achievement">{config.victory.achievement}</div><div className="victory-reward">{config.victory.reward}</div></div><div className="victory-buttons"><button className="btn replay-btn" onClick={restart}>↻ CHƠI LẠI</button><button className="btn secondary continue-btn" onClick={()=>{if(completed.current)return;completed.current=true;audio.stop();audio.play('unlock');continueTimer.current=setTimeout(onComplete,240);}}>➜ TIẾP TỤC HÀNH TRÌNH</button></div></div></div>}
@@ -91,9 +107,18 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   </main>;
 }
 /** The approved stylesheet stays isolated from the existing app and other approved games. */
-export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void}) {
+export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void;embedded?:boolean}) {
   const host=useRef<HTMLDivElement>(null);
   const [root,setRoot]=useState<ShadowRoot|null>(null);
   useLayoutEffect(()=>{if(host.current)setRoot(host.current.shadowRoot||host.current.attachShadow({mode:'open'}));},[]);
-  return <div ref={host} data-shared-stage2="v1">{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
+  useLayoutEffect(()=>{
+    if(!props.embedded||!host.current)return;
+    const element=host.current, panel=element.closest<HTMLElement>('.station-lesson-panel');
+    if(!panel)return;
+    const update=()=>{const header=window.innerWidth<1024?document.querySelector('header')?.getBoundingClientRect().height||0:0;const height=window.innerWidth<1024?Math.max(400,window.innerHeight-header):Math.min(window.innerHeight,Math.max(400,panel.clientHeight));element.style.setProperty('--embedded-height', `${height}px`);};
+    update();const observer=new ResizeObserver(update);observer.observe(panel);window.addEventListener('resize',update);
+    return ()=>{observer.disconnect();window.removeEventListener('resize',update);};
+  },[props.embedded]);
+  const embeddedCss=`:host([data-embedded]) .scene{height:var(--embedded-height,100dvh)!important;min-height:0!important}:host([data-embedded]) .scene .shell{height:100%!important;min-height:0!important}:host([data-embedded]) .scene.safe-layout.is-victory .panel,:host([data-embedded]) .scene.safe-layout.is-victory .victory{height:100%!important;min-height:0!important}`;
+  return <div ref={host} data-shared-stage2="v1" data-embedded={props.embedded?'':undefined}>{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss+'\n'+compactMatchCss+'\n'+embeddedCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
 }

@@ -20,7 +20,7 @@ import { WifiOff } from 'lucide-react';
 const DanangAssistantChat = lazy(() => import('./components/common/DanangAssistantChat').then(module => ({ default: module.DanangAssistantChat })));
 
 const AppContent: React.FC = () => {
-  const { currentUser, role, currentView, currentStation, currentAssistantHotspot, isOnline, closeStation, exitPresentationMode } = useApp();
+  const { currentUser, role, currentView, currentStation, currentAssistantHotspot, currentStage, isOnline, closeStation, exitPresentationMode } = useApp();
 
   useEffect(() => {
     const unlock = () => { void backgroundMusic.unlock(); };
@@ -80,7 +80,7 @@ const AppContent: React.FC = () => {
       {currentView !== 'student-journey' && <Footer />}
 
       {role === 'student' && currentUser && currentView !== 'presentation-view' && (
-        <Suspense fallback={null}><DanangAssistantChat station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense>
+        <Suspense fallback={null}><DanangAssistantChat compactGame={currentView === 'station-view' && currentStage === 2 && (currentStation?.grade === 4 || currentStation?.grade === 5)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense>
       )}
 
       {storageWarning && (

@@ -307,8 +307,8 @@ const server = createServer(async (req,res) => {
           'Chỉ trả về JSON dạng {"questions":["..."]}. Không thêm đáp án hay văn bản khác.',
           'BÀI HỌC: '+row.lesson+'; MÔN: '+row.subject,
           'NỘI DUNG GDĐP ĐÃ CUNG CẤP: '+row.content.slice(0,2000),
-          ...resources.map((r,i)=>'--- ĐIỂM '+(i+1)+' ---\\n'+r.title+'\\n'+r.narration+'\\n--- HẾT ĐIỂM ---')
-        ].join('\\n');
+          ...resources.map((r,i)=>'--- ĐIỂM '+(i+1)+' ---\n'+r.title+'\n'+r.narration+'\n--- HẾT ĐIỂM ---')
+        ].join('\n');
         const {GoogleGenAI}=await import('@google/genai');
         const ai=new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY});
         const result=await ai.models.generateContent({model:'gemini-2.5-flash-lite',contents:prompt,

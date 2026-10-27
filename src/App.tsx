@@ -80,7 +80,7 @@ const AppContent: React.FC = () => {
       {currentView !== 'student-journey' && <Footer />}
 
       {role === 'student' && currentUser && currentView !== 'presentation-view' && (
-        <Suspense fallback={null}><DanangAssistantChat compactGame={currentView === 'station-view' && currentStage === 2 && (currentStation?.grade === 4 || currentStation?.grade === 5)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense>
+        <Suspense fallback={null}><DanangAssistantChat compactGame={currentView === 'station-view' && currentStage === 2 && (currentStation?.grade === 2 || currentStation?.grade === 4 || currentStation?.grade === 5)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense>
       )}
 
       {storageWarning && (

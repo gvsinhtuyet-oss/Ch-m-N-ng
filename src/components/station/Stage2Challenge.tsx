@@ -10,6 +10,7 @@ import { MyKheBanThanV12 } from './MyKheBanThanV12';
 import { SharedStage2 } from '../../games/stage2/SharedStage2';
 import { grade3SharedConfigs } from '../../games/stage2/grade3';
 import { grade45SharedConfigs } from '../../games/stage2/grade45';
+import { grade2SharedConfigs } from '../../games/stage2/grade2';
 import { hoangDieuConfig } from '../../games/stage2/hoangDieu';
 import { HoangDieuPhanChauTrinhV18 } from './HoangDieuPhanChauTrinhV18';
 import { Grade3V12StyleGame, isGrade3V12StyleStation } from './Grade3V12StyleGame';
@@ -175,6 +176,11 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
     !q.options.some(option => option.isCorrect && option.id === selectedAnswers[q.id]),
   );
 
+  // The reviewed grade 2 games use the shared renderer for their exact station IDs.
+  if (station.grade === 2 && grade2SharedConfigs[station.id]) {
+    return <SharedStage2 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} config={grade2SharedConfigs[station.id]} embedded/>;
+  }
+
   if (station.id === 'g1-station-3' || station.id === 'g1-station-5' || station.id === 'g1-station-4' || station.id === 'g1-station-2' || station.id === 'g1-station-1' || station.id === 'g2-station-1' || station.id === 'g2-station-4' || station.id === 'g2-station-3' || station.id === 'g2-station-2' || station.id === 'g2-station-5') {
     return (
       <ApprovedStationGame
@@ -213,7 +219,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
     return <Grade3V12StyleGame station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} />;
   }
 
-  // Grade 3–5 use the shared challenge game; grade 1–2 keep their approved games.
+  // The remaining grade 3–5 stations use their existing renderer; grade 1 is unchanged.
   if (station.grade >= 3 && station.grade <= 5) {
     return <ReusableChallengeGame station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} />;
   }

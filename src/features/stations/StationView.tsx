@@ -59,9 +59,9 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const highestAccessibleStage=Math.max(sessionUnlockedStage,unlockedStage(progress));
   const currentStage=visibleStage(requestedStage,progress,sessionUnlockedStage);
   // The lesson panel can retain a scroll position from Stage 1. Start the new
-  // grade 4/5 games at the top so the artwork title and controls are visible.
+  // grade 2, 4 and 5 games at the top so the artwork title and controls are visible.
   useLayoutEffect(() => {
-    if (currentStage === 2 && (station.grade === 4 || station.grade === 5)) {
+    if (currentStage === 2 && (station.grade === 2 || station.grade === 4 || station.grade === 5)) {
       if (lessonPanelRef.current) {
         lessonPanelRef.current.scrollTop = 0;
         if (window.innerWidth < 1024) {

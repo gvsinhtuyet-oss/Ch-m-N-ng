@@ -37,7 +37,7 @@ function Fireworks({lightweight=false}:{lightweight?:boolean}) {
 }
 function GameSurface({config,onComplete,embedded=false}:{config:GameConfig;onComplete:()=>void;embedded?:boolean}) {
   const sceneRef=useRef<HTMLElement>(null);
-  const responsiveAudio=/^g[45]-/.test(config.stationId);
+  const responsiveAudio=/^g[245]-/.test(config.stationId);
   const audio=responsiveAudio?responsiveSharedGameAudio:sharedGameAudio;
   const [state,dispatch]=useReducer(gameReducer,undefined,initialState);
   const [pairs,setPairs]=useState<Record<number,number>>({});
@@ -48,7 +48,7 @@ function GameSurface({config,onComplete,embedded=false}:{config:GameConfig;onCom
   const selectedChoice=useRef<number|null>(null);
   const question=config.questions[state.index];
   const locked=state.result!==null;
-  const grade45Question=/^g[45]-/.test(config.stationId)&&state.phase==='question';
+  const grade45Question=/^g[245]-/.test(config.stationId)&&state.phase==='question';
   const compactMatch=grade45Question&&question.kind==='match';
   useEffect(()=>{
     if(config.layout!=='safe-v1')return;
@@ -81,7 +81,7 @@ function GameSurface({config,onComplete,embedded=false}:{config:GameConfig;onCom
     const root=sceneRef.current.getRootNode();
     if(root instanceof ShadowRoot)root.host.closest<HTMLElement>('.station-lesson-panel')?.scrollIntoView({block:'start',behavior:'instant'});
   },[embedded,victory]);
-  return <main ref={sceneRef} className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${victory?'is-victory':''} ${grade45Question?'grade45-question':''}`} style={{backgroundImage:`url("${victory?config.victoryBackground:config.background}")`}}>
+  return <main ref={sceneRef} className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${victory?'is-victory':''} ${grade45Question?'grade45-question':''} ${config.stationId.startsWith('g2-')?'grade2-game':''}`} style={{backgroundImage:`url("${victory?config.victoryBackground:config.background}")`}}>
     <h1 className="preview-title">{config.title}</h1>
     <div className={`shell ${victory?'finished':''}`}>
       <div className="hud"><div className="hud-stage">{state.phase==='intro'?'SẴN SÀNG':victory?'HOÀN THÀNH':state.phase==='review'?'ÔN TẬP':`CÂU ${state.index+1}/5`}<small>{victory?'5/5 câu hỏi':state.reviewing||state.phase==='review'?'Truy lại dấu vết':state.phase==='intro'?(config.intro.readyLabel??'Khám phá lịch sử'):question.level}</small></div>
@@ -119,6 +119,7 @@ export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void
     update();const observer=new ResizeObserver(update);observer.observe(panel);window.addEventListener('resize',update);
     return ()=>{observer.disconnect();window.removeEventListener('resize',update);};
   },[props.embedded]);
+  const grade2Css=`@media(max-width:650px) and (orientation:portrait){.scene.safe-layout.grade2-game:not(.is-victory){--art-width:140vw;--banner-bottom:26.8vw}}`;
   const embeddedCss=`:host([data-embedded]) .scene{height:var(--embedded-height,100dvh)!important;min-height:0!important}:host([data-embedded]) .scene .shell{height:100%!important;min-height:0!important}:host([data-embedded]) .scene.safe-layout.is-victory .panel,:host([data-embedded]) .scene.safe-layout.is-victory .victory{height:100%!important;min-height:0!important}`;
-  return <div ref={host} data-shared-stage2="v1" data-embedded={props.embedded?'':undefined}>{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss+'\n'+compactMatchCss+'\n'+embeddedCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
+  return <div ref={host} data-shared-stage2="v1" data-embedded={props.embedded?'':undefined}>{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss+'\n'+compactMatchCss+'\n'+grade2Css+'\n'+embeddedCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
 }

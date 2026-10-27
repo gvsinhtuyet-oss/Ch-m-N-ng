@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import { RewardClaimModal } from '../common/RewardClaimModal';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
+import { gradeOneNarration } from './gradeOneNarration';
 
 
 // Shuffle a copy so option IDs and correctness stay unchanged.
@@ -120,6 +121,8 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   // Audio Playback Controls
   const handlePlayAudio = () => {
+    const recorded = gradeOneNarration(station, hotspot, language);
+    if (recorded) { audioService.playRecordedNarration(recorded); return; }
     const textToSpeak = language === 'en' && hotspot.narrationEn ? hotspot.narrationEn : hotspot.narrationVi;
     audioService.speakNarration(textToSpeak, language === 'en' && hotspot.narrationEn ? 'en-US' : 'vi-VN');
   };

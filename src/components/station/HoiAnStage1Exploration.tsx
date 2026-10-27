@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService, NarrationState } from '../../services/AudioService';
+import { gradeOneNarration } from './gradeOneNarration';
 import { progressService } from '../../services/ProgressService';
 import { RewardClaimModal } from '../common/RewardClaimModal';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
@@ -114,6 +115,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
         : hotspot.narrationVi;
     setNarrationCompleted(false);
     setNarrationMessage('');
+    const recorded = gradeOneNarration(station, hotspot, language);
+    if (recorded) { audioService.playRecordedNarration(recorded, () => setNarrationCompleted(true), narrationError); return; }
     audioService.speakNarration(
       text,
       language === 'en' && hotspot.narrationEn ? 'en-US' : 'vi-VN',
@@ -128,6 +131,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
         ? previewHotspot.narrationEn
         : previewHotspot.narrationVi;
     setNarrationMessage('');
+    const recorded = gradeOneNarration(station, previewHotspot, language);
+    if (recorded) { audioService.playRecordedNarration(recorded, undefined, narrationError); return; }
     audioService.speakNarration(text, language === 'en' && previewHotspot.narrationEn ? 'en-US' : 'vi-VN',undefined,narrationError);
   };
 

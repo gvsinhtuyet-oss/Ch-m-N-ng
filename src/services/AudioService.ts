@@ -10,6 +10,7 @@ class AudioService {
   private soundEnabled: boolean = true;
   private effectsVolume: number = 0.8;
   private currentUtterance: SpeechSynthesisUtterance | null = null;
+  private recordedNarration: HTMLAudioElement | null = null;
   private stateChangeListeners: Set<(state: NarrationState) => void> = new Set();
   private currentState: NarrationState = 'idle';
   private narrationGeneration = 0;
@@ -262,7 +263,25 @@ class AudioService {
     }
   }
 
+  public playRecordedNarration(src: string, onEnd?: () => void, onError?: (reason:NarrationError)=>void) {
+    this.stopNarration();
+    if (!this.soundEnabled) { onError?.('muted'); return; }
+    const generation = this.narrationGeneration;
+    const player = new Audio(src);
+    player.preload = 'auto';
+    player.volume = this.effectsVolume;
+    this.recordedNarration = player;
+    const active = () => this.recordedNarration === player && generation === this.narrationGeneration;
+    const fail = () => { if (!active()) return; this.recordedNarration = null; backgroundMusic.setForegroundSource('narration',false); this.notifyState('idle'); onError?.('playback-failed'); };
+    player.onplaying = () => { if (active()) { backgroundMusic.setForegroundSource('narration',true); this.notifyState('playing'); } };
+    player.onpause = () => { if (active() && !player.ended) { backgroundMusic.setForegroundSource('narration',false); this.notifyState('paused'); } };
+    player.onended = () => { if (active()) { this.recordedNarration = null; backgroundMusic.setForegroundSource('narration',false); this.notifyState('idle'); onEnd?.(); } };
+    player.onerror = fail;
+    void player.play().catch(fail);
+  }
+
   public pauseNarration() {
+    if (this.recordedNarration) { this.recordedNarration.pause(); return; }
     if (typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.speaking) {
       window.speechSynthesis.pause();
       backgroundMusic.setForegroundSource('narration', false);
@@ -271,6 +290,7 @@ class AudioService {
   }
 
   public resumeNarration() {
+    if (this.recordedNarration) { const player=this.recordedNarration; void player.play().catch(() => { if(this.recordedNarration===player) this.stopNarration(); }); return; }
     if (typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.paused) {
       window.speechSynthesis.resume();
       this.notifyState('playing');
@@ -279,6 +299,8 @@ class AudioService {
 
   public stopNarration() {
     this.narrationGeneration++;
+    const player=this.recordedNarration; this.recordedNarration=null;
+    if (player) { player.pause(); player.removeAttribute('src'); player.load(); }
     this.clearPendingNarration?.();this.clearPendingNarration=null;
     this.currentUtterance=null;
     if(typeof window!=='undefined'&&'speechSynthesis' in window)window.speechSynthesis.cancel();
@@ -287,6 +309,7 @@ class AudioService {
   }
 
   public getNarrationState(): NarrationState {
+    if (this.recordedNarration) return this.recordedNarration.paused ? 'paused' : 'playing';
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       if (window.speechSynthesis.paused) return 'paused';
       if (window.speechSynthesis.speaking) return 'playing';
@@ -295,6 +318,7 @@ class AudioService {
   }
 
   public isSpeaking(): boolean {
+    if (this.recordedNarration) return !this.recordedNarration.paused;
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       return window.speechSynthesis.speaking && !window.speechSynthesis.paused;
     }

@@ -8,12 +8,14 @@ import {grade45SharedConfigs,grade45Batches} from './src/games/stage2/grade45';
 import {GRADE45_CONTENT} from './src/data/grade45Content';
 import {validateConfig} from './src/games/stage2/types';
 import {gameReducer,initialState,isCorrectMatch} from './src/games/stage2/state';
-test('two batches cover all ten real curriculum ids and never replace production games',()=>{
+test('two batches cover all ten real curriculum ids and use reviewed official routes',()=>{
  assert.deepEqual(grade45Batches.map(b=>b.length),[5,5]);
  assert.deepEqual(Object.keys(grade45SharedConfigs).sort(),GRADE45_CONTENT.map(l=>l.id).sort());
  const router=readFileSync('src/components/station/Stage2Challenge.tsx','utf8');
- assert.ok(!router.includes('grade45SharedConfigs'));
- for(const path of ['src/components/station/Stage2Challenge.tsx','src/data/grade45Content.ts','src/data/grade45Stations.ts','src/games/stage2/safe-layout.css'])assert.deepEqual(readFileSync(path),execFileSync('git',['show',`39ddc40:${path}`],{maxBuffer:10e6}),path);
+ assert.ok(router.includes('grade45SharedConfigs[station.id]'));
+ assert.ok(router.includes('(station.grade === 4 || station.grade === 5)'));
+ assert.ok(router.indexOf('grade45SharedConfigs[station.id]') < router.indexOf('isGrade3V12StyleStation(station.id)'));
+ for(const path of ['src/data/grade45Content.ts','src/data/grade45Stations.ts','src/games/stage2/safe-layout.css'])assert.deepEqual(readFileSync(path),execFileSync('git',['show',`39ddc40:${path}`],{maxBuffer:10e6}),path);
 });
 for(const [id,c]of Object.entries(grade45SharedConfigs)){
  test(id+': complete configuration, real local photos, themed rewards',()=>{

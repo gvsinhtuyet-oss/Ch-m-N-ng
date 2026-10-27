@@ -11,6 +11,7 @@ import {
 interface Props {
   station?: Station | null;
   hotspot?: ExplorationHotspot | null;
+  compactGame?: boolean;
 }
 
 interface ChatMessage {
@@ -38,7 +39,7 @@ const SimpleBold: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null }) => {
+export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false }) => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -50,6 +51,20 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     constrainAssistantPosition({x: 16, y: window.innerHeight - 182}, window.innerWidth, window.innerHeight));
   const drag = useRef<{pointerId:number;startX:number;startY:number;origin:AssistantPosition} | null>(null);
   const suppressClick = useRef(false);
+  const previousPosition = useRef<AssistantPosition|null>(null);
+  useEffect(() => {
+    if (compactGame) {
+      setLauncherPosition(position => {
+        previousPosition.current = position;
+        return window.innerWidth < 1024
+          ? {x: 64, y: 10}
+          : {x: Math.max(4,(window.innerWidth - 48) / 2), y: Math.max(4,window.innerHeight - 56)};
+      });
+    } else if (previousPosition.current) {
+      setLauncherPosition(previousPosition.current);
+      previousPosition.current = null;
+    }
+  }, [compactGame]);
 
   useEffect(() => {
     const resize = () => {
@@ -119,9 +134,9 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
   return (
     <>
-      <div className="fixed z-[58] flex h-[122px] w-[156px] flex-col items-center gap-2 select-none"
+      <div className={`fixed z-[58] flex flex-col items-center select-none ${compactGame ? 'h-12 w-12' : 'h-[122px] w-[156px] gap-2'}`}
         style={{left: launcherPosition.x, top: launcherPosition.y}}>
-        <span className="pointer-events-none whitespace-nowrap rounded-full border-2 border-amber-300 bg-white px-3 py-1.5 text-[13px] font-black leading-tight text-sky-950 shadow-lg">Trợ lý khám phá</span>
+        <span className={`${compactGame ? 'sr-only' : 'pointer-events-none whitespace-nowrap rounded-full border-2 border-amber-300 bg-white px-3 py-1.5 text-[13px] font-black leading-tight text-sky-950 shadow-lg'} `}>Trợ lý khám phá</span>
         <button
           type="button"
           onPointerDown={event => {
@@ -150,7 +165,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             if (event.detail !== 0 && suppressClick.current) { suppressClick.current = false; return; }
             setOpen(value => !value);
           }}
-          style={{touchAction:'none'}}
+          style={{touchAction:'none', ...(compactGame ? {width:48,height:48} : {})}}
           className="relative inline-flex h-[72px] w-[72px] shrink-0 cursor-grab items-center justify-center rounded-full border-[3px] border-white bg-gradient-to-br from-sky-600 via-cyan-500 to-teal-500 text-white shadow-[0_8px_24px_rgba(3,105,161,.45)] ring-[3px] ring-amber-300 transition-shadow hover:shadow-[0_10px_30px_rgba(3,105,161,.6)] focus-visible:outline focus-visible:outline-4 focus-visible:outline-sky-900 active:cursor-grabbing"
           aria-label={open ? 'Đóng Trợ lý khám phá Đà Nẵng' : 'Mở Trợ lý khám phá Đà Nẵng'}
           aria-expanded={open}

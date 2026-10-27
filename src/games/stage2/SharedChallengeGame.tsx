@@ -35,7 +35,8 @@ function Fireworks({lightweight=false}:{lightweight?:boolean}) {
   useEffect(()=>{if(!canvas.current)return;return startFireworks(canvas.current,lightweight);},[lightweight]);
   return <canvas className="firecanvas" ref={canvas} aria-hidden="true"/>;
 }
-function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}) {
+function GameSurface({config,onComplete,embedded=false}:{config:GameConfig;onComplete:()=>void;embedded?:boolean}) {
+  const sceneRef=useRef<HTMLElement>(null);
   const responsiveAudio=/^g[45]-/.test(config.stationId);
   const audio=responsiveAudio?responsiveSharedGameAudio:sharedGameAudio;
   const [state,dispatch]=useReducer(gameReducer,undefined,initialState);
@@ -75,7 +76,12 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   };
   const restart=()=>{audio.stop();completed.current=false;clickLocked.current=false;setPairs({});act('retry',()=>dispatch({type:'restart'}));};
   const victory=state.phase==='victory';
-  return <main className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${victory?'is-victory':''} ${grade45Question?'grade45-question':''}`} style={{backgroundImage:`url("${victory?config.victoryBackground:config.background}")`}}>
+  useLayoutEffect(()=>{
+    if(!embedded || !victory || window.innerWidth>=1024 || !sceneRef.current)return;
+    const root=sceneRef.current.getRootNode();
+    if(root instanceof ShadowRoot)root.host.closest<HTMLElement>('.station-lesson-panel')?.scrollIntoView({block:'start',behavior:'instant'});
+  },[embedded,victory]);
+  return <main ref={sceneRef} className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${victory?'is-victory':''} ${grade45Question?'grade45-question':''}`} style={{backgroundImage:`url("${victory?config.victoryBackground:config.background}")`}}>
     <h1 className="preview-title">{config.title}</h1>
     <div className={`shell ${victory?'finished':''}`}>
       <div className="hud"><div className="hud-stage">{state.phase==='intro'?'SẴN SÀNG':victory?'HOÀN THÀNH':state.phase==='review'?'ÔN TẬP':`CÂU ${state.index+1}/5`}<small>{victory?'5/5 câu hỏi':state.reviewing||state.phase==='review'?'Truy lại dấu vết':state.phase==='intro'?(config.intro.readyLabel??'Khám phá lịch sử'):question.level}</small></div>
@@ -101,9 +107,18 @@ function GameSurface({config,onComplete}:{config:GameConfig;onComplete:()=>void}
   </main>;
 }
 /** The approved stylesheet stays isolated from the existing app and other approved games. */
-export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void}) {
+export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void;embedded?:boolean}) {
   const host=useRef<HTMLDivElement>(null);
   const [root,setRoot]=useState<ShadowRoot|null>(null);
   useLayoutEffect(()=>{if(host.current)setRoot(host.current.shadowRoot||host.current.attachShadow({mode:'open'}));},[]);
-  return <div ref={host} data-shared-stage2="v1">{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss+'\n'+compactMatchCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
+  useLayoutEffect(()=>{
+    if(!props.embedded||!host.current)return;
+    const element=host.current, panel=element.closest<HTMLElement>('.station-lesson-panel');
+    if(!panel)return;
+    const update=()=>{const header=window.innerWidth<1024?document.querySelector('header')?.getBoundingClientRect().height||0:0;const height=window.innerWidth<1024?Math.max(400,window.innerHeight-header):Math.min(window.innerHeight,Math.max(400,panel.clientHeight));element.style.setProperty('--embedded-height', `${height}px`);};
+    update();const observer=new ResizeObserver(update);observer.observe(panel);window.addEventListener('resize',update);
+    return ()=>{observer.disconnect();window.removeEventListener('resize',update);};
+  },[props.embedded]);
+  const embeddedCss=`:host([data-embedded]) .scene{height:var(--embedded-height,100dvh)!important;min-height:0!important}:host([data-embedded]) .scene .shell{height:100%!important;min-height:0!important}:host([data-embedded]) .scene.safe-layout.is-victory .panel,:host([data-embedded]) .scene.safe-layout.is-victory .victory{height:100%!important;min-height:0!important}`;
+  return <div ref={host} data-shared-stage2="v1" data-embedded={props.embedded?'':undefined}>{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss+'\n'+compactMatchCss+'\n'+embeddedCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
 }

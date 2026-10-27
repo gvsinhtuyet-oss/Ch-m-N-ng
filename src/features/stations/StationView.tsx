@@ -1,5 +1,5 @@
 import '../../components/station/station-exploration-tools.css';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { progressService } from '../../services/ProgressService';
@@ -58,6 +58,20 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const [sessionUnlockedStage,setSessionUnlockedStage]=useState(()=>unlockedStage(progress));
   const highestAccessibleStage=Math.max(sessionUnlockedStage,unlockedStage(progress));
   const currentStage=visibleStage(requestedStage,progress,sessionUnlockedStage);
+  // The lesson panel can retain a scroll position from Stage 1. Start the new
+  // grade 4/5 games at the top so the artwork title and controls are visible.
+  useLayoutEffect(() => {
+    if (currentStage === 2 && (station.grade === 4 || station.grade === 5)) {
+      if (lessonPanelRef.current) {
+        lessonPanelRef.current.scrollTop = 0;
+        if (window.innerWidth < 1024) {
+          const headerHeight = document.querySelector('header')?.getBoundingClientRect().height || 0;
+          lessonPanelRef.current.style.scrollMarginTop = `${headerHeight}px`;
+          lessonPanelRef.current.scrollIntoView({block:'start',behavior:'instant'});
+        }
+      }
+    }
+  }, [currentStage, station.id, station.grade]);
   const isUnlockedAllStages=progress.stationCompleted||progress.stampReceived;
   const finishStage=(stage:1|2|3)=>{
     if(stage>highestAccessibleStage)return;

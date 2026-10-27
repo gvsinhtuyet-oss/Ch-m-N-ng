@@ -8,11 +8,35 @@ export function TeacherWorkspace(){
  const {currentUser,currentGrade,allStationsInCurrentGrade,setCurrentGrade}=useApp();const demo=currentUser?.id==='teacher-demo';
  const [plan,setPlan]=useState<Workspace>({school:'',book:'',year:'2026-2027',grade:currentGrade,records:[]});const [error,setError]=useState('');const [busy,setBusy]=useState(false);const [loaded,setLoaded]=useState(demo);const [saved,setSaved]=useState(false);const [confirmed,setConfirmed]=useState(false);const [review,setReview]=useState(false);const [proposed,setProposed]=useState(false);
  useEffect(()=>{let active=true;if(!demo){workspaceRequest().then(w=>{if(active){if(w){setPlan(w);setCurrentGrade(w.grade);}setLoaded(true);}}).catch(e=>{if(active)setError(e.message);});}return()=>{active=false;};},[currentUser?.id]);
+ useEffect(()=>{
+   if(!demo)return;
+   try{
+     const raw=localStorage.getItem('cham-teacher-demo-workspace-v1');
+     if(raw){const p=JSON.parse(raw);if(p&&Number.isInteger(p.grade)&&p.grade>=1&&p.grade<=5&&Array.isArray(p.records)&&p.records.length<=100){setPlan(p);setCurrentGrade(p.grade);}}
+   }catch{setError('Không thể mở bản nháp trải nghiệm đã lưu trên thiết bị.');}
+ },[demo]);
+ useEffect(()=>{
+   if(!demo)return;
+   try{localStorage.setItem('cham-teacher-demo-workspace-v1',JSON.stringify(plan));}catch{}
+ },[demo,plan]);
+ useEffect(()=>{
+   if(demo||!loaded)return;
+   try{
+     const raw=localStorage.getItem('cham-teacher-demo-workspace-v1');
+     if(!raw)return;
+     const p=JSON.parse(raw);
+     if(p&&Array.isArray(p.records)&&p.records.length>0&&p.records.length<=100){
+       setError('Có kế hoạch từ chế độ trải nghiệm trên thiết bị. Bạn có thể tiếp tục với kế hoạch đó; hãy kiểm tra trước khi lưu lên tài khoản.');
+       // Never overwrite an existing server workspace.
+       if(!plan.records.length){setPlan(p);setCurrentGrade(p.grade);}
+     }
+   }catch{}
+ },[demo,loaded,currentUser?.id]);
  useEffect(()=>{if(loaded&&currentGrade!==plan.grade)setCurrentGrade(plan.grade);},[loaded,currentGrade,plan.grade]);
  function change(p:Partial<Workspace>){setPlan(v=>({...v,...p}));setSaved(false);setConfirmed(false);setProposed(false);setReview(false);}
  const input='w-full rounded-xl border border-slate-300 bg-white p-3';
  return <section className="space-y-4 rounded-2xl bg-white p-4 sm:p-6"><h2 className="text-xl font-black">Kế hoạch tích hợp của tôi</h2><p className="text-sm text-slate-600">Kế hoạch riêng theo trường, bộ sách và năm học. Kho học liệu chung được liên kết, không sao chép ảnh hoặc âm thanh. Mỗi tài khoản lưu một kế hoạch đang dùng; hãy tải bản sao trước khi thay kế hoạch.</p>
- {demo&&<p className="text-amber-800">Chế độ trải nghiệm: có thể nhập và xem thử; đăng nhập để lưu hoặc gửi đề xuất.</p>}
+ {demo&&<p className="text-amber-800">Chế độ trải nghiệm: bản nháp được giữ trên thiết bị này; đăng nhập Google để lưu vào tài khoản. Không nhập thông tin học sinh nhạy cảm.</p>}
  {error&&<p role="alert" className="text-rose-700">{error}</p>}
  <fieldset disabled={busy||!loaded} className="space-y-4 disabled:opacity-60"><div className="grid gap-3 sm:grid-cols-2">
  {(['school','book','year'] as const).map((key,i)=><label key={key}>{['Trường','Bộ sách','Năm học'][i]}<input className={input} value={plan[key]} maxLength={key==='year'?9:200} onChange={e=>change({[key]:e.target.value})}/></label>)}

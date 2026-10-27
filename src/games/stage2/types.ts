@@ -1,6 +1,6 @@
 export interface QuestionBase { id: string; level: string; prompt: string; hint: string }
 export interface ChoiceQuestion extends QuestionBase {
-  kind: 'choice' | 'image'; options: {text: string; image?: string}[]; answer: number;
+  kind: 'choice' | 'image'; answers?: number[]; options: {text: string; image?: string}[]; answer: number;
 }
 export interface MatchQuestion extends QuestionBase {
   kind: 'match'; left: string[]; right: string[]; solution: number[];
@@ -17,13 +17,15 @@ export interface GameConfig {
   questions: Question[];
 }
 export function validateConfig(c: GameConfig): void {
-  if (c.questions.length !== 5) throw new Error('Cần đúng 5 câu hỏi');
-  if (new Set(c.questions.map(q=>q.id)).size !== 5) throw new Error('Trùng mã câu hỏi');
-  if (c.questions.map(q=>q.kind).join(',') !== 'image,choice,choice,match,choice') throw new Error('Sai thứ tự loại câu hỏi');
+  const count=c.stationId.startsWith('g1-')?4:5;
+  if (c.questions.length !== count) throw new Error('Sai số câu hỏi');
+  if (new Set(c.questions.map(q=>q.id)).size !== count) throw new Error('Trùng mã câu hỏi');
+  const kinds=count===4?'image,choice,match,choice':'image,choice,choice,match,choice';
+  if (c.questions.map(q=>q.kind).join(',') !== kinds) throw new Error('Sai thứ tự loại câu hỏi');
   for (const q of c.questions) {
     if (!q.prompt || !q.hint) throw new Error('Thiếu câu hỏi hoặc gợi ý');
     if(q.kind === 'match') {
-      if(q.left.length!==3 || q.right.length!==3 || q.solution.length!==3 || new Set(q.solution).size!==3 || q.solution.some(i=>!Number.isInteger(i)||i<0||i>2)) throw new Error('Cần ba cặp một-một');
-    } else if(q.options.length!==3 || !Number.isInteger(q.answer) || q.answer<0 || q.answer>2 || (q.kind==='image' && q.options.some(o=>!o.image))) throw new Error('Lựa chọn không hợp lệ');
+      const n=c.stationId.startsWith('g1-')?2:3; if(q.left.length!==n || q.right.length!==n || q.solution.length!==n || new Set(q.solution).size!==n || q.solution.some(i=>!Number.isInteger(i)||i<0||i>=n)) throw new Error('Số cặp nối không hợp lệ');
+    } else if((c.stationId.startsWith('g1-') && q.id==='q2'?q.options.length!==2:q.options.length!==3) || !Number.isInteger(q.answer) || q.answer<0 || q.answer>=q.options.length || (q.kind==='image' && q.options.some(o=>!o.image))) throw new Error('Lựa chọn không hợp lệ');
   }
 }

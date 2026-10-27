@@ -11,6 +11,7 @@ import { SharedStage2 } from '../../games/stage2/SharedStage2';
 import { grade3SharedConfigs } from '../../games/stage2/grade3';
 import { grade45SharedConfigs } from '../../games/stage2/grade45';
 import { grade2SharedConfigs } from '../../games/stage2/grade2';
+import { grade1SharedConfigs } from '../../games/stage2/grade1';
 import { hoangDieuConfig } from '../../games/stage2/hoangDieu';
 import { HoangDieuPhanChauTrinhV18 } from './HoangDieuPhanChauTrinhV18';
 import { Grade3V12StyleGame, isGrade3V12StyleStation } from './Grade3V12StyleGame';
@@ -175,6 +176,11 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const wrongQuestions = questions.filter(q =>
     !q.options.some(option => option.isCorrect && option.id === selectedAnswers[q.id]),
   );
+
+  // Grade-one games keep their previously approved files available for rollback.
+  if (station.grade === 1 && grade1SharedConfigs[station.id]) {
+    return <SharedStage2 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} config={grade1SharedConfigs[station.id]} embedded/>;
+  }
 
   // The reviewed grade 2 games use the shared renderer for their exact station IDs.
   if (station.grade === 2 && grade2SharedConfigs[station.id]) {

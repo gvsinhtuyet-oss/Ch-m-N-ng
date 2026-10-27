@@ -24,7 +24,6 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const [manualChoice,setManualChoice] = useState(false);
   const [showLessonDetails,setShowLessonDetails]=useState(false);
   const [showPreparation,setShowPreparation]=useState(false);
-  const [preparedOpen,setPreparedOpen] = useState(false);
   const [projected,setProjected] = useState<MatchedLessonResource|null>(null);
   useEffect(()=>{setGrade(currentGrade);setSubject('');setWeek('');setSelectedId('');setSelectedHotspots([]);setManualChoice(false);setProjected(null);},[currentGrade]);
   useEffect(() => {

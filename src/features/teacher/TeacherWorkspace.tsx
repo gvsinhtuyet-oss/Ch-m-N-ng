@@ -6,15 +6,8 @@ import {matchGddpResources} from '../../services/GddpResourceMatcher';
 import {authService} from '../../services/AuthService';
 export function TeacherWorkspace(){
  const {currentUser,currentGrade,allStationsInCurrentGrade,setCurrentGrade}=useApp();const demo=currentUser?.id==='teacher-demo';
- const [plan,setPlan]=useState<Workspace>({school:'',book:'',year:'2026-2027',grade:currentGrade,records:[]});const [error,setError]=useState('');const [busy,setBusy]=useState(false);const [loaded,setLoaded]=useState(demo);const [saved,setSaved]=useState(false);const [confirmed,setConfirmed]=useState(false);const [review,setReview]=useState(false);const [proposed,setProposed]=useState(false);
+ const [plan,setPlan]=useState<Workspace>(()=>{if(demo){try{const raw=localStorage.getItem('cham-teacher-demo-workspace-v1');if(raw){const p=JSON.parse(raw);if(p&&Number.isInteger(p.grade)&&p.grade>=1&&p.grade<=5&&Array.isArray(p.records)&&p.records.length<=100)return p;}}catch{}}return {school:'',book:'',year:'2026-2027',grade:currentGrade,records:[]};});const [error,setError]=useState('');const [busy,setBusy]=useState(false);const [loaded,setLoaded]=useState(demo);const [saved,setSaved]=useState(false);const [confirmed,setConfirmed]=useState(false);const [review,setReview]=useState(false);const [proposed,setProposed]=useState(false);
  useEffect(()=>{let active=true;if(!demo){workspaceRequest().then(w=>{if(active){if(w){setPlan(w);setCurrentGrade(w.grade);}setLoaded(true);}}).catch(e=>{if(active)setError(e.message);});}return()=>{active=false;};},[currentUser?.id]);
- useEffect(()=>{
-   if(!demo)return;
-   try{
-     const raw=localStorage.getItem('cham-teacher-demo-workspace-v1');
-     if(raw){const p=JSON.parse(raw);if(p&&Number.isInteger(p.grade)&&p.grade>=1&&p.grade<=5&&Array.isArray(p.records)&&p.records.length<=100){setPlan(p);setCurrentGrade(p.grade);}}
-   }catch{setError('Không thể mở bản nháp trải nghiệm đã lưu trên thiết bị.');}
- },[demo]);
  useEffect(()=>{
    if(!demo)return;
    try{localStorage.setItem('cham-teacher-demo-workspace-v1',JSON.stringify(plan));}catch{}

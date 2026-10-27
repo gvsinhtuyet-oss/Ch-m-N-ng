@@ -1,4 +1,5 @@
 import '../../components/station/station-exploration-tools.css';
+import './station-stage1-compact.css';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
@@ -92,7 +93,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const stages = [
     { num: 1, title: 'Chặng 1', name: 'Đánh dấu điểm đến', icon: Compass },
     { num: 2, title: 'Chặng 2', name: 'Vượt qua thử thách', icon: Award },
-    { num: 3, title: 'Chặng 3', name: 'Checkin cảm xúc', icon: Heart },
+    { num: 3, title: 'Chặng 3', name: 'Check-in cảm xúc', icon: Heart },
     { num: 4, title: 'Chặng 4', name: 'Dấu ấn hành trình', icon: Sparkles },
   ];
 
@@ -121,7 +122,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   );
 
   return (
-    <div ref={fullscreenRef} className={`station-immersive-root ${isLessonFullscreen ? "station-immersive-active" : ""} ${isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}`}>
+    <div ref={fullscreenRef} className={`station-immersive-root ${currentStage === 1 ? "station-stage1-compact" : ""} ${isLessonFullscreen ? "station-immersive-active" : ""} ${isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}`}>
             {/* Top Station Header bar */}
       <div className="relative z-10 flex flex-col gap-3 rounded-[1.5rem] border border-amber-200/80 bg-white/95 px-3 py-3 shadow-md backdrop-blur-lg lg:flex-row lg:items-center lg:gap-5 lg:px-5">
         <div className="flex min-w-0 flex-1 items-center gap-3">
@@ -136,6 +137,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
             <h1 className="mt-1 text-lg font-black leading-tight tracking-tight text-slate-950 sm:text-xl xl:text-[1.45rem]">{station.titleVi}</h1>
           </div>
         </div>
+        {currentStage === 1 && stationHasExplorationTools(station) && <div className="station-header-map"><StationExplorationTools station={station} onOpenChange={setToolsOpen} /></div>}
         <div className="flex min-w-0 flex-1 items-center gap-2 lg:max-w-[650px]">
           {renderStageTabs("Bản đồ hành trình 4 chặng")}
           <div className="flex shrink-0 flex-col gap-1">
@@ -153,7 +155,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         <button type="button" onClick={toggleLessonFullscreen} className="station-back-button" aria-label="Thoát toàn màn hình"><Minimize2 className="h-5 w-5" /></button>
       </div>
       <div className={currentStage === 1 && stationHasExplorationTools(station) ? 'station-exploration-layout' : ''}>
-        {currentStage === 1 && <StationExplorationTools station={station} onOpenChange={setToolsOpen} />}
+
       {/* Keep the lesson mounted so dismissing a tool preserves its point and answer. */}
       <div className="transition-all duration-300" inert={toolsOpen || undefined}>
         {currentStage === 1 && (

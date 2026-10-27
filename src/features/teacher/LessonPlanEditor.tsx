@@ -1,5 +1,5 @@
 import {useApp} from '../../contexts/AppContext';
-import React,{useState} from 'react';
+import React,{useEffect,useState} from 'react';
 import type {GddpRecord} from '../../services/GddpService';
 import {createLessonPlan,restoreLessonPlan,lessonPlanBlob,totalMinutes,LessonPlan} from '../../services/LessonPlanService';
 export function LessonPlanEditor({record,sourceLabel,storageVariant,integrationMinutes=5,selectedResources=[]}:{record:GddpRecord;sourceLabel?:string;storageVariant?:string;integrationMinutes?:5|10;selectedResources?:{stationTitle:string;hotspotTitle:string;narration:string}[]}){
@@ -27,7 +27,7 @@ export function LessonPlanEditor({record,sourceLabel,storageVariant,integrationM
   const applySuggestion=()=>{
     if(!aiSuggestion)return;
     setPlan(p=>({...p,objectives:aiSuggestion.outcomes,
-      activities:p.activities.map((a,i)=>i===1?{...a,teacher:a.teacher+'\\nGợi ý AI (giáo viên kiểm chứng):\\n'+aiSuggestion.teachingSuggestion}:a)}));
+      activities:p.activities.map((a,i)=>i===1?{...a,teacher:a.teacher+'\nGợi ý AI (giáo viên kiểm chứng):\n'+aiSuggestion.teachingSuggestion}:a)}));
     setAiSuggestion(null);setReviewed(false);setSaved('Đã đưa gợi ý vào KHBD. Vui lòng kiểm tra và chỉnh sửa trước khi xuất Word.');
   };
   const [linkQuestions,setLinkQuestions]=useState<string[]>([]);
@@ -58,8 +58,8 @@ export function LessonPlanEditor({record,sourceLabel,storageVariant,integrationM
   const insertIntegration=()=>{
     if(!selectedResources.length){setError('Hãy chọn ít nhất một điểm kiến thức đã đối chiếu trước khi đưa vào giáo án.');return;}
     const questions=questionsEdited?linkQuestions:draftQuestions;
-    const block=`TÍCH HỢP GDĐP (${integrationMinutes} PHÚT)\\nĐiểm khám phá: ${selectedResources.map(r=>r.stationTitle+' – '+r.hotspotTitle).join('; ')}\\nCâu hỏi liên hệ (giáo viên duyệt):\\n${questions.map((q,i)=>(i+1)+'. '+q).join('\\n')}`;
-    setPlan(p=>({...p,integration:p.integration+'\\n\\n'+block,activities:p.activities.map((a,i)=>i===1?{...a,teacher:a.teacher+'\\n\\n'+block}:a)}));
+    const block=`TÍCH HỢP GDĐP (${integrationMinutes} PHÚT)\nĐiểm khám phá: ${selectedResources.map(r=>r.stationTitle+' – '+r.hotspotTitle).join('; ')}\nCâu hỏi liên hệ (giáo viên duyệt):\n${questions.map((q,i)=>(i+1)+'. '+q).join('\n')}`;
+    setPlan(p=>({...p,integration:p.integration+'\n\n'+block,activities:p.activities.map((a,i)=>i===1?{...a,teacher:a.teacher+'\n\n'+block}:a)}));
     setReviewed(false);setSaved('Đã thêm nội dung vào bản nháp. Kiểm tra thời lượng và câu hỏi trước khi xuất Word.');setError('');
   };
   useEffect(()=>{
@@ -74,6 +74,10 @@ export function LessonPlanEditor({record,sourceLabel,storageVariant,integrationM
       }
     }catch{setError('Có bản nháp trải nghiệm nhưng không thể chuyển tự động. Vui lòng kiểm tra dữ liệu trên thiết bị.');}
   },[currentUser?.id,record.id,key,storageVariant]);
+  useEffect(()=>{
+    if(currentUser?.id!=='teacher-demo')return;
+    try{localStorage.setItem(key,JSON.stringify(plan));}catch{/* Storage may be unavailable; manual Word export remains possible. */}
+  },[plan,key,currentUser?.id]);
   const save=()=>{try{localStorage.setItem(key,JSON.stringify(plan));setSaved('Đã lưu bản nháp trên trình duyệt này.');setError('');}catch{setError('Không lưu được bản nháp. Hãy xuất Word để giữ nội dung.');}};
   const restore=()=>{try{const raw=localStorage.getItem(key);if(!raw)throw new Error('Chưa có bản nháp đã lưu cho bài này.');const p=restoreLessonPlan(raw,record);setPlan(p);setReviewed(false);setSaved('Đã mở bản nháp của bài này.');setError('');}catch(e){setError(e instanceof Error?e.message:'Không mở được bản nháp.');}};
   if(!opened)return <button type="button" onClick={()=>setOpened(true)} className="rounded-lg bg-sky-700 px-5 py-3 font-bold text-white">Tạo hoặc mở KHBD của bài này</button>;

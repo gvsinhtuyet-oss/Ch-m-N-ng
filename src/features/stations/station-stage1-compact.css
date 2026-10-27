@@ -22,23 +22,24 @@
 .station-stage1-compact .stage-one-hotspot-ribbon>.grid{display:flex!important;flex-wrap:nowrap!important;gap:7px;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin}
 .station-stage1-compact .stage-one-hotspot-ribbon>.grid>button{flex:0 0 clamp(120px,12vw,180px);min-width:0;padding:4px;border-radius:11px}
 .station-stage1-compact .stage-one-hotspot-ribbon>.grid>button img{height:clamp(45px,7vh,74px)}
+/* Safety-first: content must remain visible even if the parent viewport
+   does not provide a definite height (AI Studio preview / browser fullscreen). */
 @media(min-width:1100px) and (min-height:680px){
- .station-stage1-compact.station-viewport{height:calc(100dvh - 98px);display:flex;flex-direction:column;overflow:hidden;gap:6px;padding-top:5px;padding-bottom:5px}
- .station-stage1-compact>.relative.z-10{flex:0 0 auto;min-height:62px;padding:5px 10px;gap:7px;flex-wrap:nowrap}
+ .station-stage1-compact.station-viewport{height:auto;min-height:0;display:block;overflow:visible;padding-top:5px;padding-bottom:8px}
+ .station-stage1-compact>.relative.z-10{min-height:62px;padding:5px 10px;gap:7px;flex-wrap:nowrap}
  .station-stage1-compact>.relative.z-10>.flex:first-child{flex:1 1 33%;min-width:0;gap:7px}
  .station-stage1-compact>.relative.z-10>.flex:first-child h1{font-size:clamp(14px,1.1vw,20px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
  .station-stage1-compact>.relative.z-10>.flex:last-child{flex:1 1 47%;min-width:0;max-width:none;gap:5px}
- .station-stage1-compact>.station-lesson-panel{flex:1 1 auto;min-height:0;overflow:hidden}
+ .station-stage1-compact>.station-lesson-panel{display:block;min-height:0;overflow:visible}
  .station-stage1-compact .station-immersive-topbar{display:none}
  .station-stage1-compact .station-lesson-panel>.station-exploration-layout,
  .station-stage1-compact .station-lesson-panel>.station-exploration-layout>div,
  .station-stage1-compact .stage-one-map-surface,
- .station-stage1-compact .stage-one-map-content{height:100%;min-height:0}
- .station-stage1-compact .stage-one-map-content>.grid{height:100%;min-height:0;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)}
- .station-stage1-compact .stage-one-map-content>.grid>.flex{height:100%;min-height:0;overflow:hidden}
- .station-stage1-compact .stage-one-map-content>.grid>.flex>.relative{flex:1 1 auto;min-height:0;height:auto;aspect-ratio:auto}
- .station-stage1-compact .hoi-an-right-rail{height:100%;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
- .station-stage1-compact .stage-one-hotspot-ribbon{flex:0 0 auto}
+ .station-stage1-compact .stage-one-map-content{height:auto;min-height:0;overflow:visible}
+ .station-stage1-compact .stage-one-map-content>.grid{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);align-items:start}
+ .station-stage1-compact .stage-one-map-content>.grid>.flex{overflow:visible}
+ .station-stage1-compact .stage-one-map-content>.grid>.flex>.relative{min-height:300px;height:clamp(320px,52vh,650px);aspect-ratio:auto}
+ .station-stage1-compact .hoi-an-right-rail{height:auto;min-height:0;overflow:visible}
 }
 @media(max-width:1099px){
  .station-stage1-compact .station-stage-tabs{overflow-x:auto;scrollbar-width:thin}

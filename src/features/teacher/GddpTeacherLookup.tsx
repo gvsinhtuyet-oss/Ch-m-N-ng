@@ -20,6 +20,8 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const [offlineSource,setOfflineSource]=useState(false);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
+  const [integrationMinutes,setIntegrationMinutes] = useState<5|10>(5);
+  const [selectedHotspots,setSelectedHotspots] = useState<string[]>([]);
   const [preparedOpen,setPreparedOpen] = useState(false);
   const [projected,setProjected] = useState<MatchedLessonResource|null>(null);
   useEffect(()=>{setGrade(currentGrade);setSubject('');setWeek('');setSelectedId('');setProjected(null);},[currentGrade]);
@@ -92,7 +94,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
     </div>
     {!loading && !filtered.length && <p className="rounded-xl bg-amber-50 p-4 text-sm text-amber-900">Chưa có địa chỉ tích hợp phù hợp với bộ lọc đang chọn. Vui lòng liên hệ Admin nếu cần bổ sung.</p>}
     {!!filtered.length && <div className="grid gap-2">
-      {filtered.map(x=><button key={x.id} type="button" onClick={()=>{setSelectedId(x.id);setProjected(null);setCopied(false)}} className={`w-full rounded-xl border p-3 text-left text-sm transition ${selectedId===x.id?'border-emerald-600 bg-emerald-50':'border-slate-200 hover:bg-slate-50'}`}>
+      {filtered.map(x=><button key={x.id} type="button" onClick={()=>{setSelectedId(x.id);setSelectedHotspots([]);setProjected(null);setCopied(false)}} className={`w-full rounded-xl border p-3 text-left text-sm transition ${selectedId===x.id?'border-emerald-600 bg-emerald-50':'border-slate-200 hover:bg-slate-50'}`}>
         <span className="font-bold">{x.lesson}</span><span className="mt-1 block text-xs text-slate-500">{x.subject} · {x.week ? 'Tuần '+x.week : 'Chưa ghi tuần'}</span>
       </button>)}
     </div>}
@@ -105,6 +107,24 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       {selected.outcomes && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Yêu cầu cần đạt bổ sung:</strong>{'\n'}{selected.outcomes}</div>}
       {selected.teachingSuggestion && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Gợi ý tổ chức tích hợp:</strong>{'\n'}{selected.teachingSuggestion}</div>}
       <button type="button" onClick={()=>void copy(`LỚP ${selected.grade} · ${selected.subject} · ${selected.week}\nBài: ${selected.lesson}\nĐịa chỉ tích hợp: ${selected.activity}\nHình thức: ${selected.integrationType}\nNội dung GDĐP: ${teachingRecord?.content || selected.content}\nYêu cầu cần đạt bổ sung: ${selected.outcomes || ''}\nGợi ý tổ chức tích hợp: ${selected.teachingSuggestion || ''}`)} className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700">{copied?'Đã sao chép':'Sao chép vào KHBD'}</button>
+      <section className="rounded-xl border border-emerald-200 bg-white p-4 space-y-3" aria-label="Chuẩn bị nội dung tích hợp">
+        <h4 className="font-bold text-emerald-900">Chuẩn bị nội dung tích hợp</h4>
+        <fieldset className="flex flex-wrap gap-2">
+          <legend className="mb-2 text-sm font-semibold">Thời lượng</legend>
+          {([5,10] as const).map(minutes=><button type="button" key={minutes} aria-pressed={integrationMinutes===minutes} onClick={()=>setIntegrationMinutes(minutes)} className={`rounded-xl border px-5 py-2 text-sm font-bold ${integrationMinutes===minutes?'bg-emerald-700 text-white':'bg-white text-slate-800'}`}>{minutes} phút</button>)}
+        </fieldset>
+        <p className="text-sm text-slate-600">{integrationMinutes===5?'Gợi ý chọn một điểm khám phá và một câu hỏi liên hệ.':'Gợi ý chọn một đến hai điểm khám phá và hai câu hỏi liên hệ.'} Giáo viên có thể điều chỉnh.</p>
+        <h5 className="text-sm font-semibold">Chọn điểm kiến thức Chặng 1</h5>
+        {matchedResources.length===0?<p className="text-sm text-amber-800">Chưa có điểm kiến thức được đối chiếu đủ tin cậy với bài này. Không tự gán nội dung khác.</p>:matchedResources.map(({station,hotspot,reason})=>{
+          const id=station.id+':'+hotspot.id;
+          return <label key={id} className="flex items-center gap-3 rounded-lg border p-3 text-sm">
+            <input type="checkbox" className="h-4 w-4" checked={selectedHotspots.includes(id)} onChange={e=>setSelectedHotspots(prev=>e.target.checked?[...prev,id]:prev.filter(x=>x!==id))}/>
+            <span className="flex-1"><strong>{hotspot.titleVi}</strong><span className="block text-xs text-slate-500">{station.titleVi} · {reason}</span></span>
+            <button type="button" className="rounded-lg border px-3 py-2 font-semibold text-sky-800" onClick={()=>setProjected({station,hotspot,reason})}>Xem</button>
+          </label>;
+        })}
+        <p className="text-xs text-slate-600">Các điểm đã chọn sẽ được dùng làm ngữ cảnh soạn câu hỏi liên hệ. Chỉ sử dụng câu hỏi AI sau khi giáo viên kiểm tra và duyệt; không tự lấy câu hỏi trò chơi không liên quan.</p>
+      </section>
       <LessonPlanEditor key={selected.id+(preparedDeck?.teachingContent?'-edited':'')} record={teachingRecord || selected} storageVariant={preparedDeck?.teachingContent?'source-corrected-2025-v1':undefined} sourceLabel={privateRecords?privateSource:preparedDeck?.mappingReview?`Bản tham khảo từ bảng ${preparedDeck.mappingReview.sourceYear}; chưa xác nhận địa chỉ năm học hiện hành.\n${preparedDeck.sources.join('\n')}`:undefined} />
       {preparedDeck && <section className="space-y-3 rounded-2xl border border-emerald-200 bg-white p-4">
         <div><h4 className="font-black text-emerald-900">Bộ trình chiếu riêng cho bài này</h4><p className="mt-1 text-sm text-slate-600">{preparedDeck.title} · {preparedDeck.slides.length} trang · Nội dung, câu hỏi, gợi ý trả lời và ghi chú giáo viên.</p></div>

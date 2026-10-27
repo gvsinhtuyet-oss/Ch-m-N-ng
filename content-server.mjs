@@ -42,6 +42,9 @@ let healthCacheAt = 0;
 const CONTENT_CACHE_MS = 5 * 60 * 1000;
 const HEALTH_OK_CACHE_MS = 30 * 60 * 1000;
 const HEALTH_ERROR_CACHE_MS = 30 * 1000;
+const questionAiCache=new Map();
+const questionAiUsage=new Map(); // Per-instance guard; shared quota requires durable store for citywide scale.
+
 const invalidateSharedContentCache = () => {
   sharedContentCache = null;
   sharedContentCacheAt = 0;
@@ -281,7 +284,7 @@ const server = createServer(async (req,res) => {
     }
     if (pathname === '/api/teacher/gddp/lesson-suggestion' && req.method === 'POST') {
       auth.sameOrigin(req);
-      await auth.requireTeacher(req);
+      const teacherUser=await auth.requireTeacher(req);
       if (!process.env.GEMINI_API_KEY) return json(res,503,{error:'Máy chủ chưa cấu hình Gemini API. Giáo viên vẫn có thể chỉnh sửa KHBD thủ công.'});
       const input=await body(req);
       const id=String(input?.id||'');
@@ -309,6 +312,15 @@ const server = createServer(async (req,res) => {
           'NỘI DUNG GDĐP ĐÃ CUNG CẤP: '+row.content.slice(0,2000),
           ...resources.map((r,i)=>'--- ĐIỂM '+(i+1)+' ---\n'+r.title+'\n'+r.narration+'\n--- HẾT ĐIỂM ---')
         ].join('\n');
+        const cacheKey=createHash('sha256').update(JSON.stringify({id,minutes,resources})).digest('hex');
+        const cached=questionAiCache.get(cacheKey);
+        if(cached&&Date.now()-cached.at<24*60*60*1000)return json(res,200,{questions:cached.questions,reviewRequired:true,cached:true});
+        const usageKey=teacherUser.id+':'+new Date().toISOString().slice(0,10);
+        const used=questionAiUsage.get(usageKey)||0;
+        if(used>=10)return json(res,429,{error:'Đã đạt giới hạn 10 lượt gợi ý AI/ngày. Hãy sử dụng câu hỏi mẫu miễn phí.'});
+        questionAiUsage.set(usageKey,used+1);
+        if(questionAiCache.size>500)questionAiCache.clear();
+        if(questionAiUsage.size>10000)questionAiUsage.clear();
         const {GoogleGenAI}=await import('@google/genai');
         const ai=new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY});
         const result=await ai.models.generateContent({model:'gemini-2.5-flash-lite',contents:prompt,
@@ -318,6 +330,7 @@ const server = createServer(async (req,res) => {
         const questions=parsed?.questions;
         if(!Array.isArray(questions)||questions.length!==count||questions.some(q=>typeof q!=='string'||q.length>500||!q.trim()))
           return json(res,502,{error:'Câu hỏi AI chưa đạt định dạng yêu cầu.'});
+        questionAiCache.set(cacheKey,{questions,at:Date.now()});
         return json(res,200,{questions,reviewRequired:true});
       }
       const {GoogleGenAI}=await import('@google/genai');

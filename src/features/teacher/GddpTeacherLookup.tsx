@@ -23,6 +23,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const [integrationMinutes,setIntegrationMinutes] = useState<5|10>(5);
   const [selectedHotspots,setSelectedHotspots] = useState<string[]>([]);
   const [manualChoice,setManualChoice] = useState(false);
+  const [showLessonDetails,setShowLessonDetails]=useState(false);
   const [preparedOpen,setPreparedOpen] = useState(false);
   const [projected,setProjected] = useState<MatchedLessonResource|null>(null);
   useEffect(()=>{setGrade(currentGrade);setSubject('');setWeek('');setSelectedId('');setSelectedHotspots([]);setManualChoice(false);setProjected(null);},[currentGrade]);
@@ -104,12 +105,23 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
     </div>
     {!loading && !filtered.length && <p className="rounded-xl bg-amber-50 p-4 text-sm text-amber-900">Chưa có địa chỉ tích hợp phù hợp với bộ lọc đang chọn. Vui lòng liên hệ Admin nếu cần bổ sung.</p>}
     {!!filtered.length && <div className="grid gap-2">
-      {filtered.map(x=><button key={x.id} type="button" onClick={()=>{setSelectedId(x.id);setSelectedHotspots([]);setManualChoice(false);setProjected(null);setCopied(false)}} className={`w-full rounded-xl border p-3 text-left text-sm transition ${selectedId===x.id?'border-emerald-600 bg-emerald-50':'border-slate-200 hover:bg-slate-50'}`}>
+      {filtered.map(x=><button key={x.id} type="button" onClick={()=>{setSelectedId(x.id);setSelectedHotspots([]);setManualChoice(false);setShowLessonDetails(false);setProjected(null);setCopied(false)}} className={`w-full rounded-xl border p-3 text-left text-sm transition ${selectedId===x.id?'border-emerald-600 bg-emerald-50':'border-slate-200 hover:bg-slate-50'}`}>
         <span className="font-bold">{x.lesson}</span><span className="mt-1 block text-xs text-slate-500">{x.subject} · {x.week ? 'Tuần '+x.week : 'Chưa ghi tuần'}</span>
       </button>)}
     </div>}
     {selected && <article className="space-y-4 rounded-2xl border border-sky-200 bg-sky-50/40 p-4">
       <div><p className="text-xs font-bold uppercase text-sky-800">Địa chỉ tích hợp từ tài liệu nguồn</p><h3 className="font-black text-slate-900">{selected.lesson}</h3></div>
+      <div className="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-4 space-y-3">
+        <h4 className="text-lg font-black text-emerald-950">Dạy ngay với Chặng 1 của học sinh</h4>
+        <p className="text-sm text-slate-700">{matchedResources.length?'Chọn một điểm khám phá được gợi ý, xem nội dung rồi trình chiếu.':'Bài này chưa có điểm được đối chiếu. Chọn từ các trạm cùng khối và tự xác nhận nội dung phù hợp.'}</p>
+        <div className="flex flex-wrap gap-2">
+          {matchedResources.slice(0,4).map(resource=><button key={resource.station.id+resource.hotspot.id} type="button" onClick={()=>setProjected(resource)} className="rounded-xl bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800">▶ {resource.hotspot.titleVi}</button>)}
+          <button type="button" onClick={()=>{setManualChoice(true);setSelectedHotspots([]);document.getElementById('teacher-chang1-chooser')?.scrollIntoView({behavior:'smooth',block:'start'});}} className="rounded-xl border border-emerald-700 bg-white px-4 py-3 text-sm font-bold text-emerald-900">Tìm điểm Chặng 1 khác</button>
+        </div>
+        <p className="text-xs text-amber-900">Điểm gợi ý theo chủ đề chưa được xác nhận theo từng bài SGK. Giáo viên cần xem nội dung trước khi dạy.</p>
+      </div>
+      <button type="button" className="text-sm font-semibold text-sky-800 underline" onClick={()=>setShowLessonDetails(x=>!x)} aria-expanded={showLessonDetails}>{showLessonDetails?'Ẩn thông tin địa chỉ tích hợp':'Xem thông tin địa chỉ tích hợp và nguồn'}</button>
+      {showLessonDetails&&<div className="space-y-3">
       <p className="text-sm"><strong>Hình thức:</strong> {selected.integrationType || 'Theo tài liệu gốc'}</p>
       <p className="text-sm"><strong>Vị trí:</strong> {selected.activity || 'Chưa ghi vị trí cụ thể'}</p>
       <div className="whitespace-pre-wrap rounded-xl bg-white p-3 text-sm text-slate-800"><strong>{preparedDeck?.teachingContent?'Nguyên văn nguồn cũ — xem bản hiệu đính phía dưới:':'Nội dung GDĐP:'}</strong>{'\n'}{selected.content}</div>
@@ -117,7 +129,8 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       {selected.outcomes && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Yêu cầu cần đạt bổ sung:</strong>{'\n'}{selected.outcomes}</div>}
       {selected.teachingSuggestion && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Gợi ý tổ chức tích hợp:</strong>{'\n'}{selected.teachingSuggestion}</div>}
       <button type="button" onClick={()=>void copy(`LỚP ${selected.grade} · ${selected.subject} · ${selected.week}\nBài: ${selected.lesson}\nĐịa chỉ tích hợp: ${selected.activity}\nHình thức: ${selected.integrationType}\nNội dung GDĐP: ${teachingRecord?.content || selected.content}\nYêu cầu cần đạt bổ sung: ${selected.outcomes || ''}\nGợi ý tổ chức tích hợp: ${selected.teachingSuggestion || ''}`)} className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700">{copied?'Đã sao chép':'Sao chép vào KHBD'}</button>
-      <section className="rounded-xl border border-emerald-200 bg-white p-4 space-y-3" aria-label="Chuẩn bị nội dung tích hợp">
+      </div>
+      <section id="teacher-chang1-chooser" className="rounded-xl border border-emerald-200 bg-white p-4 space-y-3" aria-label="Chuẩn bị nội dung tích hợp">
         <h4 className="font-bold text-emerald-900">Chuẩn bị nội dung tích hợp</h4>
         <fieldset className="flex flex-wrap gap-2">
           <legend className="mb-2 text-sm font-semibold">Thời lượng</legend>

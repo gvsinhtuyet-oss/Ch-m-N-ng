@@ -62,6 +62,11 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
     return matchGddpResources(record,stations).filter(m=>!privateRecords||selected.resourceLinks?.some(l=>l.stationId===m.station.id&&l.hotspotId===m.hotspot.id))
       .map(m=>preparedDeck?.resourceLinks?.some(l=>l.stationId===m.station.id&&l.hotspotId===m.hotspot.id)?{...m,reason:'Liên kết theo bản đối chiếu học liệu'}:m);
   },[selected,stations,privateRecords,preparedDeck]);
+  // Suggest the first verified match automatically, but keep teacher control.
+  useEffect(()=>{
+    if(!selected||!matchedResources.length)return;
+    setSelectedHotspots(previous=>previous.length?previous:[matchedResources[0].station.id+':'+matchedResources[0].hotspot.id]);
+  },[selected?.id,matchedResources]);
   const copy = async (text:string) => {
     try { await navigator.clipboard.writeText(text); setCopied(true); }
     catch { setError('Trình duyệt không cho phép sao chép. Hãy chọn nội dung và sao chép thủ công.'); }
@@ -114,24 +119,25 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
           {([5,10] as const).map(minutes=><button type="button" key={minutes} aria-pressed={integrationMinutes===minutes} onClick={()=>setIntegrationMinutes(minutes)} className={`rounded-xl border px-5 py-2 text-sm font-bold ${integrationMinutes===minutes?'bg-emerald-700 text-white':'bg-white text-slate-800'}`}>{minutes} phút</button>)}
         </fieldset>
         <p className="text-sm text-slate-600">{integrationMinutes===5?'Gợi ý chọn một điểm khám phá và một câu hỏi liên hệ.':'Gợi ý chọn một đến hai điểm khám phá và hai câu hỏi liên hệ.'} Giáo viên có thể điều chỉnh.</p>
-        <h5 className="text-sm font-semibold">Chọn điểm kiến thức Chặng 1</h5>
+        <h5 className="text-sm font-semibold">Bước 1 · Chọn điểm khám phá Chặng 1 (đã gợi ý sẵn nếu có liên kết)</h5>
         {matchedResources.length===0?<p className="text-sm text-amber-800">Chưa có điểm kiến thức được đối chiếu đủ tin cậy với bài này. Không tự gán nội dung khác.</p>:matchedResources.map(({station,hotspot,reason})=>{
           const id=station.id+':'+hotspot.id;
           return <label key={id} className="flex items-center gap-3 rounded-lg border p-3 text-sm">
             <input type="checkbox" className="h-4 w-4" checked={selectedHotspots.includes(id)} onChange={e=>setSelectedHotspots(prev=>e.target.checked?[...prev,id]:prev.filter(x=>x!==id))}/>
             <span className="flex-1"><strong>{hotspot.titleVi}</strong><span className="block text-xs text-slate-500">{station.titleVi} · {reason}</span></span>
-            <button type="button" className="rounded-lg border px-3 py-2 font-semibold text-sky-800" onClick={()=>setProjected({station,hotspot,reason})}>Xem</button>
+            <button type="button" className="rounded-lg bg-sky-700 px-3 py-2 font-semibold text-white" onClick={()=>setProjected({station,hotspot,reason})}>▶ Mở nội dung Chặng 1</button>
           </label>;
         })}
+        <p className="text-sm font-semibold text-emerald-800">Bước 2 · Mở nội dung Chặng 1 để dạy; bước 3 · Duyệt câu hỏi và đưa vào KHBD bên dưới.</p>
         <p className="text-xs text-slate-600">Các điểm đã chọn sẽ được dùng làm ngữ cảnh soạn câu hỏi liên hệ. Chỉ sử dụng câu hỏi AI sau khi giáo viên kiểm tra và duyệt; không tự lấy câu hỏi trò chơi không liên quan.</p>
       </section>
       <LessonPlanEditor key={selected.id+(preparedDeck?.teachingContent?'-edited':'')} integrationMinutes={integrationMinutes} selectedResources={matchedResources.filter(({station,hotspot})=>selectedHotspots.includes(station.id+':'+hotspot.id)).map(({station,hotspot})=>({stationTitle:station.titleVi,hotspotTitle:hotspot.titleVi,narration:hotspot.narrationVi}))} record={teachingRecord || selected} storageVariant={preparedDeck?.teachingContent?'source-corrected-2025-v1':undefined} sourceLabel={privateRecords?privateSource:preparedDeck?.mappingReview?`Bản tham khảo từ bảng ${preparedDeck.mappingReview.sourceYear}; chưa xác nhận địa chỉ năm học hiện hành.\n${preparedDeck.sources.join('\n')}`:undefined} />
       {preparedDeck && <section className="space-y-3 rounded-2xl border border-emerald-200 bg-white p-4">
-        <div><h4 className="font-black text-emerald-900">Bộ trình chiếu riêng cho bài này</h4><p className="mt-1 text-sm text-slate-600">{preparedDeck.title} · {preparedDeck.slides.length} trang · Nội dung, câu hỏi, gợi ý trả lời và ghi chú giáo viên.</p></div>
+        <div><h4 className="font-black text-emerald-900">Slide tham khảo (không phải Chặng 1 của học sinh)</h4><p className="mt-1 text-sm text-slate-600">{preparedDeck.title} · {preparedDeck.slides.length} trang · Nội dung, câu hỏi, gợi ý trả lời và ghi chú giáo viên.</p></div>
         {preparedDeck.mappingReview&&!preparedDeck.mappingReview.currentYearConfirmed&&<p className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm font-bold text-amber-900">Nguồn địa chỉ tích hợp: {preparedDeck.mappingReview.sourceYear}. {preparedDeck.mappingReview.note}</p>}
         <p className="text-xs text-slate-500">Bản biên soạn đối chiếu tài liệu nguồn. Giáo viên đọc và duyệt trước khi sử dụng chính thức; không thay thế toàn bộ bài học trong sách.</p>
         {preparedDeck.reviewNotes.length>0 && <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900"><p className="font-bold">Lưu ý cần duyệt</p><ul className="mt-1 list-disc space-y-1 pl-4">{preparedDeck.reviewNotes.map(note=><li key={note}>{note}</li>)}</ul></div>}
-        <button type="button" onClick={()=>setPreparedOpen(true)} className="rounded-xl bg-emerald-700 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-800">{preparedDeck.mappingReview&&!preparedDeck.mappingReview.currentYearConfirmed?'Xem trình chiếu tham khảo':'Trình chiếu bài này'}</button>
+        <button type="button" onClick={()=>setPreparedOpen(true)} className="rounded-xl bg-emerald-700 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-800">{preparedDeck.mappingReview&&!preparedDeck.mappingReview.currentYearConfirmed?'Xem trình chiếu tham khảo':'Xem slide tham khảo'}</button>
         <details className="text-xs text-slate-600"><summary className="cursor-pointer font-bold">Nguồn và mục tiêu của bộ trình chiếu</summary><ul className="mt-2 list-disc space-y-1 pl-4">{preparedDeck.sources.map(source=><li key={source} className="break-words [overflow-wrap:anywhere]">{source}</li>)}</ul><p className="mt-2">Hình và sơ đồ minh hoạ được biên soạn cho bài; không phải ảnh tư liệu. Không gọi AI hoặc ghi dữ liệu khi mở trình chiếu.</p></details>
       </section>}
       <div className="space-y-3 rounded-xl border border-emerald-200 bg-white p-3">

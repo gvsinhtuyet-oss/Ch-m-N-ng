@@ -43,3 +43,24 @@
  .station-stage1-compact .station-header-map .station-tool-badge{min-height:44px}
  .station-stage1-compact .stage-one-map-content>.grid>.flex>.relative{min-height:200px}
 }
+
+/* Fit the entire station exploration within the available desktop viewport.
+   Target the actual component DOM: section > grid + aside + hotspot section. */
+@media(min-width:1100px) and (min-height:680px){
+ .station-stage1-compact .station-lesson-panel>.station-exploration-layout{height:100%;min-height:0}
+ .station-stage1-compact .station-lesson-panel>.station-exploration-layout>div{height:100%;min-height:0}
+ .station-stage1-compact .stage-one-map-surface{height:100%;min-height:0}
+ .station-stage1-compact .stage-one-map-content{height:100%;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:7px}
+ .station-stage1-compact .stage-one-map-content>.grid{min-height:0;height:100%;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);align-items:stretch}
+ .station-stage1-compact .stage-one-map-content>.grid>.flex{min-height:0;height:100%;overflow:hidden}
+ .station-stage1-compact .stage-one-map-content>.grid>.flex>.relative{flex:1 1 auto;height:100%;min-height:0;aspect-ratio:auto}
+ .station-stage1-compact .hoi-an-right-rail{height:100%;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+ .station-stage1-compact .stage-one-map-content>section{min-height:0;margin-top:0!important}
+ .station-stage1-compact .stage-one-map-content>section>.grid{display:flex!important;flex-wrap:nowrap!important;grid-template-columns:none!important;overflow-x:auto;overflow-y:hidden;gap:7px}
+ .station-stage1-compact .stage-one-map-content>section>.grid>button{flex:0 0 clamp(116px,12vw,190px);min-width:0}
+ .station-stage1-compact .stage-one-map-content>section>.grid>button img{height:clamp(42px,7vh,64px)}
+}
+@media(min-width:1100px) and (max-height:760px){
+ .station-stage1-compact .stage-one-map-content>section>.grid>button img{height:42px}
+ .station-stage1-compact .stage-one-map-content>section>h2{font-size:12px;margin-bottom:3px}
+}

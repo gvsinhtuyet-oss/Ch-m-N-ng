@@ -116,7 +116,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
         <p className="text-sm text-slate-700">{matchedResources.length?'Chọn một điểm khám phá được gợi ý, xem nội dung rồi trình chiếu.':'Bài này chưa có điểm được đối chiếu. Chọn từ các trạm cùng khối và tự xác nhận nội dung phù hợp.'}</p>
         <div className="flex flex-wrap gap-2">
           {matchedResources.slice(0,4).map(resource=><button key={resource.station.id+resource.hotspot.id} type="button" onClick={()=>onOpenStudentStage1?onOpenStudentStage1(resource.station):setProjected(resource)} className="rounded-xl bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800">▶ {resource.hotspot.titleVi}</button>)}
-          <button type="button" onClick={()=>{setManualChoice(true);setSelectedHotspots([]);document.getElementById('teacher-chang1-chooser')?.scrollIntoView({behavior:'smooth',block:'start'});}} className="rounded-xl border border-emerald-700 bg-white px-4 py-3 text-sm font-bold text-emerald-900">Tìm điểm Chặng 1 khác</button>
+          <button type="button" onClick={()=>{setManualChoice(true);setSelectedHotspots([]);setShowPreparation(true);requestAnimationFrame(()=>document.getElementById('teacher-chang1-chooser')?.scrollIntoView({behavior:'smooth',block:'start'}));}} className="rounded-xl border border-emerald-700 bg-white px-4 py-3 text-sm font-bold text-emerald-900">Tìm điểm Chặng 1 khác</button>
         </div>
         <p className="text-xs text-amber-900">Điểm gợi ý theo chủ đề chưa được xác nhận theo từng bài SGK. Giáo viên cần xem nội dung trước khi dạy.</p>
       </div>
@@ -129,7 +129,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       {selected.outcomes && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Yêu cầu cần đạt bổ sung:</strong>{'\n'}{selected.outcomes}</div>}
       {selected.teachingSuggestion && <div className="whitespace-pre-wrap rounded-xl border border-emerald-100 bg-white p-3 text-sm"><strong>Gợi ý tổ chức tích hợp:</strong>{'\n'}{selected.teachingSuggestion}</div>}
       <button type="button" onClick={()=>void copy(`LỚP ${selected.grade} · ${selected.subject} · ${selected.week}\nBài: ${selected.lesson}\nĐịa chỉ tích hợp: ${selected.activity}\nHình thức: ${selected.integrationType}\nNội dung GDĐP: ${teachingRecord?.content || selected.content}\nYêu cầu cần đạt bổ sung: ${selected.outcomes || ''}\nGợi ý tổ chức tích hợp: ${selected.teachingSuggestion || ''}`)} className="rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700">{copied?'Đã sao chép':'Sao chép vào KHBD'}</button>
-      </div>
+      </div>}
       <button type="button" className="w-full rounded-xl border border-sky-300 bg-white px-4 py-3 text-left text-sm font-bold text-sky-900" onClick={()=>setShowPreparation(x=>!x)} aria-expanded={showPreparation}>{showPreparation?'Ẩn soạn giáo án và lựa chọn nâng cao':'Soạn câu hỏi, chọn 5–10 phút và đưa vào KHBD (tùy chọn)'}</button>
       {showPreparation&&<div className="space-y-4">
       <section id="teacher-chang1-chooser" className="rounded-xl border border-emerald-200 bg-white p-4 space-y-3" aria-label="Chuẩn bị nội dung tích hợp">

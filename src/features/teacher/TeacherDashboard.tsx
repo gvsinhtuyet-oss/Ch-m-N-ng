@@ -79,15 +79,15 @@ export const TeacherDashboard: React.FC = () => {
   if(topicDeck)return <GddpPreparedPresentation record={topicDeck.sourceRecord} deck={topicDeck} onExit={()=>setTopicDeckId(null)}/>;
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8 space-y-8">
-      {currentGrade>=4 && <aside className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Học liệu lớp {currentGrade} theo chủ đề – chờ kế hoạch tích hợp mới.</strong> Đã rà lời thuyết minh, câu hỏi, đáp án theo nguồn; chưa có xác nhận phê duyệt của tổ chuyên môn. Chưa gắn tuần/bài SGK. Ảnh tư liệu có chú thích nơi chụp, thời điểm và giấy phép. Ảnh Phước Kiều chưa rõ quyền tái sử dụng chỉ được dẫn tại nguồn, chưa nhúng vào app. <a className="underline" href="https://danang.gov.vn/vi/w/ghe-tham-lang-nghe-duc-dong-phuoc-kieu" target="_blank" rel="noopener noreferrer">Xem tư liệu Phước Kiều tại nguồn</a></aside>}
-      {currentGrade === 3 && <aside className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Học liệu lớp 3 theo chủ đề – chờ duyệt tích hợp.</strong> Đủ 5 trạm tham khảo theo đề cương; chưa xác nhận tuần, bài và bộ sách của kế hoạch mới. Bảng tích hợp cũ ghi Hoàng Diệu – Phan Châu Trinh, khác đề cương Huỳnh Thúc Kháng – Phan Châu Trinh. Tư liệu nghề thúng chai Hội An chỉ dùng tham khảo chung, chưa thay cho quy trình riêng của Sơn Trà.</aside>}
-      {currentUser?.id === 'teacher-demo' && <p className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">Chế độ giáo viên trải nghiệm dành cho giám khảo. Bạn có thể xem học liệu và trình chiếu bài học; đăng ảnh, tài liệu chung cần đăng nhập quản trị.</p>}
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 space-y-4">
+      {activeTab!=='gddp' && currentGrade>=4 && <aside className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Học liệu lớp {currentGrade} theo chủ đề – chờ kế hoạch tích hợp mới.</strong> Đã rà lời thuyết minh, câu hỏi, đáp án theo nguồn; chưa có xác nhận phê duyệt của tổ chuyên môn. Chưa gắn tuần/bài SGK. Ảnh tư liệu có chú thích nơi chụp, thời điểm và giấy phép. Ảnh Phước Kiều chưa rõ quyền tái sử dụng chỉ được dẫn tại nguồn, chưa nhúng vào app. <a className="underline" href="https://danang.gov.vn/vi/w/ghe-tham-lang-nghe-duc-dong-phuoc-kieu" target="_blank" rel="noopener noreferrer">Xem tư liệu Phước Kiều tại nguồn</a></aside>}
+      {activeTab!=='gddp' && currentGrade === 3 && <aside className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Học liệu lớp 3 theo chủ đề – chờ duyệt tích hợp.</strong> Đủ 5 trạm tham khảo theo đề cương; chưa xác nhận tuần, bài và bộ sách của kế hoạch mới. Bảng tích hợp cũ ghi Hoàng Diệu – Phan Châu Trinh, khác đề cương Huỳnh Thúc Kháng – Phan Châu Trinh. Tư liệu nghề thúng chai Hội An chỉ dùng tham khảo chung, chưa thay cho quy trình riêng của Sơn Trà.</aside>}
+      {activeTab!=='gddp' && currentUser?.id === 'teacher-demo' && <p className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">Chế độ giáo viên trải nghiệm dành cho giám khảo. Bạn có thể xem học liệu và trình chiếu bài học; đăng ảnh, tài liệu chung cần đăng nhập quản trị.</p>}
       {workflowError&&<p role="alert" className="rounded-xl bg-rose-50 p-3 text-rose-700">{workflowError}</p>}
       {/* Teacher Profile Banner */}
-      <div className="bg-gradient-to-r from-emerald-600 via-teal-700 to-sky-800 text-white rounded-3xl p-6 sm:p-8 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="bg-gradient-to-r from-emerald-600 via-teal-700 to-sky-800 text-white rounded-2xl p-3 sm:p-4 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
-          <div className="flex items-center gap-2 mb-2">
+          <div className="hidden md:flex items-center gap-2 mb-2">
             <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-amber-300 font-bold text-xs uppercase tracking-wider">
               Không Gian Dạy Học – Giáo Viên
             </span>
@@ -96,16 +96,16 @@ export const TeacherDashboard: React.FC = () => {
             </span>
             <span className="text-xs text-emerald-200">{teacher?.schoolName || 'Chọn trường trong kế hoạch của tôi'}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black">
+          <h1 className="text-base sm:text-xl font-black">
             Chào mừng {teacher?.name || 'Cô Trương Sinh Tuyết'}!
           </h1>
-          <p className="text-xs sm:text-sm text-emerald-100 mt-1 max-w-xl">
+          <p className="hidden md:block text-xs sm:text-sm text-emerald-100 mt-1 max-w-xl">
             Hỗ trợ giáo viên tổ chức bài học demo, trình chiếu nội dung, theo dõi tiến độ và ghi nhận triển khai.
           </p>
           <button
             type="button"
             onClick={() => setCurrentView('student-maps')}
-            className="mt-3 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/15 text-xs font-black transition"
+            className="hidden md:inline-flex mt-3 items-center gap-2 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/15 text-xs font-black transition"
           >
             <MapIcon className="w-4 h-4 text-amber-300" />
             <span>XEM TRƯỚC BẢN ĐỒ & RƯƠNG KHO BÁU</span>

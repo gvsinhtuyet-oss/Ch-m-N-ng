@@ -2,7 +2,7 @@ import {useApp} from '../../contexts/AppContext';
 import React,{useState} from 'react';
 import type {GddpRecord} from '../../services/GddpService';
 import {createLessonPlan,restoreLessonPlan,lessonPlanBlob,totalMinutes,LessonPlan} from '../../services/LessonPlanService';
-export function LessonPlanEditor({record,sourceLabel,storageVariant}:{record:GddpRecord;sourceLabel?:string;storageVariant?:string}){
+export function LessonPlanEditor({record,sourceLabel,storageVariant,integrationMinutes=5,selectedResources=[]}:{record:GddpRecord;sourceLabel?:string;storageVariant?:string;integrationMinutes?:5|10;selectedResources?:{stationTitle:string;hotspotTitle:string}[]}){
   const {currentUser}=useApp();
   const [plan,setPlan]=useState<LessonPlan>(()=>({...createLessonPlan(record),school:(currentUser as any)?.schoolName||'',teacher:currentUser?.name||'',...(sourceLabel?{source:sourceLabel}:{})}));
   const [opened,setOpened]=useState(false);
@@ -30,10 +30,31 @@ export function LessonPlanEditor({record,sourceLabel,storageVariant}:{record:Gdd
       activities:p.activities.map((a,i)=>i===1?{...a,teacher:a.teacher+'\\nGợi ý AI (giáo viên kiểm chứng):\\n'+aiSuggestion.teachingSuggestion}:a)}));
     setAiSuggestion(null);setReviewed(false);setSaved('Đã đưa gợi ý vào KHBD. Vui lòng kiểm tra và chỉnh sửa trước khi xuất Word.');
   };
+  const [linkQuestions,setLinkQuestions]=useState<string[]>([]);
+  const [questionsEdited,setQuestionsEdited]=useState(false);
+  const resourceNames=selectedResources.map(r=>r.hotspotTitle);
+  const questionContext=resourceNames.join(', ');
+  const draftQuestions=integrationMinutes===5
+    ? [`Qua nội dung ${questionContext||record.lesson}, em học được điều gì về quê hương Đà Nẵng?`]
+    : [`Em hãy nêu một điều em biết về ${questionContext||record.lesson}.`,`Em có thể làm gì để giữ gìn hoặc giới thiệu giá trị của ${questionContext||'địa phương mình'}?`];
+  const insertIntegration=()=>{
+    if(!selectedResources.length){setError('Hãy chọn ít nhất một điểm kiến thức đã đối chiếu trước khi đưa vào giáo án.');return;}
+    const questions=questionsEdited?linkQuestions:draftQuestions;
+    const block=`TÍCH HỢP GDĐP (${integrationMinutes} PHÚT)\\nĐiểm khám phá: ${selectedResources.map(r=>r.stationTitle+' – '+r.hotspotTitle).join('; ')}\\nCâu hỏi liên hệ (giáo viên duyệt):\\n${questions.map((q,i)=>(i+1)+'. '+q).join('\\n')}`;
+    setPlan(p=>({...p,integration:p.integration+'\\n\\n'+block,activities:p.activities.map((a,i)=>i===1?{...a,teacher:a.teacher+'\\n\\n'+block}:a)}));
+    setReviewed(false);setSaved('Đã thêm nội dung vào bản nháp. Kiểm tra thời lượng và câu hỏi trước khi xuất Word.');setError('');
+  };
   const save=()=>{try{localStorage.setItem(key,JSON.stringify(plan));setSaved('Đã lưu bản nháp trên trình duyệt này.');setError('');}catch{setError('Không lưu được bản nháp. Hãy xuất Word để giữ nội dung.');}};
   const restore=()=>{try{const raw=localStorage.getItem(key);if(!raw)throw new Error('Chưa có bản nháp đã lưu cho bài này.');const p=restoreLessonPlan(raw,record);setPlan(p);setReviewed(false);setSaved('Đã mở bản nháp của bài này.');setError('');}catch(e){setError(e instanceof Error?e.message:'Không mở được bản nháp.');}};
   if(!opened)return <button type="button" onClick={()=>setOpened(true)} className="rounded-lg bg-sky-700 px-5 py-3 font-bold text-white">Tạo hoặc mở KHBD của bài này</button>;
   return <div className="space-y-4 rounded-xl border bg-white p-4"><h4 className="text-lg font-bold">Soạn kế hoạch bài dạy</h4><p className="text-sm text-slate-600">Bản dự thảo theo cấu trúc tiết học, dùng nội dung GDĐP của bài đã chọn. Cô bổ sung mục tiêu, nhiệm vụ và bài tập theo SGK, rồi duyệt trước khi sử dụng. Bản nháp lưu trên trình duyệt này.</p>
+    <section className="rounded-xl border border-emerald-200 bg-emerald-50 p-3 space-y-3">
+      <h5 className="font-bold text-emerald-900">Nội dung tích hợp đã chọn · {integrationMinutes} phút</h5>
+      <p className="text-sm">{resourceNames.length?resourceNames.join(' · '):'Chưa chọn điểm kiến thức Chặng 1 ở phía trên.'}</p>
+      <p className="text-xs text-slate-700">Câu hỏi liên hệ mẫu được tạo ngay trên thiết bị, không tốn lượt AI. Giáo viên chỉnh sửa để phù hợp SGK; AI chỉ nên gọi khi thực sự cần.</p>
+      {(questionsEdited?linkQuestions:draftQuestions).map((q,i)=><label key={i} className="block text-sm font-semibold">Câu hỏi {i+1}<textarea rows={2} maxLength={1000} className="mt-1 w-full rounded-lg border bg-white p-2 font-normal" value={q} onChange={e=>{const next=[...(questionsEdited?linkQuestions:draftQuestions)];next[i]=e.target.value;setLinkQuestions(next);setQuestionsEdited(true);setReviewed(false);}}/></label>)}
+      <button type="button" disabled={!selectedResources.length} onClick={insertIntegration} className="rounded-lg bg-emerald-700 px-4 py-2 font-bold text-white disabled:opacity-50">Đưa nội dung và câu hỏi vào KHBD</button>
+    </section>
     <div className="rounded-lg border border-sky-200 bg-sky-50 p-3 space-y-2">
       <button type="button" disabled={busy} onClick={()=>void suggest()} className="rounded-lg bg-sky-700 px-4 py-2 font-bold text-white disabled:opacity-50">{busy?'AI đang gợi ý…':'✨ ✨ AI soạn hoạt động tích hợp 5 phút'}</button>
       <p className="text-xs text-slate-600">AI đề xuất kịch bản tích hợp 5 phút (2 phút khám phá, 2 phút tương tác, 1 phút vận dụng) từ địa chỉ GDĐP đang có: lời dẫn, câu hỏi, trả lời dự kiến và lời chốt. Tên bài/tuần trong bảng chưa chứng minh đã đối chiếu toàn văn SGK hiện hành; không tự nhận có trang SGK hoặc học liệu chưa xác minh. Giáo viên cần duyệt trước khi sử dụng.</p>

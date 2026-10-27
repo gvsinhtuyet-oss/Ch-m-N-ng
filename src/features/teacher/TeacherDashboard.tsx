@@ -1,7 +1,4 @@
 import {learningThumbnail} from '../../utils/learningThumbnail';
-import {GRADE45_TOPIC_DECKS} from '../../data/teacher/grade45TopicDecks';
-import {GRADE3_TOPIC_DECKS} from '../../data/teacher/grade3TopicDecks';
-import {GddpPreparedPresentation} from './GddpPreparedPresentation';
 import {TeacherWorkspace} from './TeacherWorkspace';
 import { ClassRoster } from './ClassRoster';
 import { RealClassResults } from './RealClassResults';
@@ -38,8 +35,6 @@ export const TeacherDashboard: React.FC = () => {
     setCurrentView,
   } = useApp();
 
-  const [topicDeckId,setTopicDeckId]=useState<string|null>(null);
-  const topicDeck=[...GRADE3_TOPIC_DECKS,...GRADE45_TOPIC_DECKS].find(d=>d.recordId===topicDeckId);
   const [activeTab, setActiveTab] = useState<'teaching' | 'classrooms' | 'results' | 'resources' | 'gddp' | 'workspace'>('gddp');
   const [selectedStationForImp, setSelectedStationForImp] = useState<Station | null>(null);
   const [selectedClassId, setSelectedClassId] = useState<string>('class-2-24');
@@ -76,7 +71,6 @@ export const TeacherDashboard: React.FC = () => {
   );
   const participatingStudents = demoStudentSummaries.filter(summary => summary.completedStations > 0).length;
 
-  if(topicDeck)return <GddpPreparedPresentation record={topicDeck.sourceRecord} deck={topicDeck} onExit={()=>setTopicDeckId(null)}/>;
 
   return (
     <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 space-y-4">
@@ -230,7 +224,7 @@ export const TeacherDashboard: React.FC = () => {
                           MỞ BÀI
                         </button>
 
-                        {station.grade>=3 && <button onClick={()=>setTopicDeckId('topic-'+station.id)} className="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-extrabold text-xs">SLIDE CHỦ ĐỀ</button>}
+                        
                         <button
                           onClick={() => enterPresentationMode(station)}
                           className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-sm transition flex items-center gap-1.5 active:scale-95"

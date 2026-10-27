@@ -52,6 +52,9 @@ jobs:
       - name: GDĐP catalog validation tests
         run: node --test gddp-catalog-test.mjs gddp-ai-test.mjs
 
+      - name: Every integration address can reach a student Chặng 1 point
+        run: node --import tsx --test gddp-teacher-routing-test.ts
+
       - name: Five-grade teacher lesson isolation tests
         run: npx tsx --test gddp-teacher-five-grades-test.ts
 

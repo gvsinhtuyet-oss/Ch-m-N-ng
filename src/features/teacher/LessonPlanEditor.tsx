@@ -4,7 +4,13 @@ import type {GddpRecord} from '../../services/GddpService';
 import {createLessonPlan,restoreLessonPlan,lessonPlanBlob,totalMinutes,LessonPlan} from '../../services/LessonPlanService';
 export function LessonPlanEditor({record,sourceLabel,storageVariant,integrationMinutes=5,selectedResources=[]}:{record:GddpRecord;sourceLabel?:string;storageVariant?:string;integrationMinutes?:5|10;selectedResources?:{stationTitle:string;hotspotTitle:string;narration:string}[]}){
   const {currentUser}=useApp();
-  const [plan,setPlan]=useState<LessonPlan>(()=>({...createLessonPlan(record),school:(currentUser as any)?.schoolName||'',teacher:currentUser?.name||'',...(sourceLabel?{source:sourceLabel}:{})}));
+  const [plan,setPlan]=useState<LessonPlan>(()=>{
+    const fresh={...createLessonPlan(record),school:(currentUser as any)?.schoolName||'',teacher:currentUser?.name||'',...(sourceLabel?{source:sourceLabel}:{})};
+    if(currentUser?.id==='teacher-demo'){
+      try{const raw=localStorage.getItem(`cham-khbd-v2:teacher-demo:${record.id}${storageVariant?':'+storageVariant:''}`);if(raw)return restoreLessonPlan(raw,record);}catch{}
+    }
+    return fresh;
+  });
   const [opened,setOpened]=useState(false);
   const [aiSuggestion,setAiSuggestion]=useState<{outcomes:string;teachingSuggestion:string;topicLink?:{stationId:string;stationTitle:string}|null;textbook?:{status:string;note:string}}|null>(null);
   const [error,setError]=useState('');const [busy,setBusy]=useState(false);const [reviewed,setReviewed]=useState(false);const [saved,setSaved]=useState('');

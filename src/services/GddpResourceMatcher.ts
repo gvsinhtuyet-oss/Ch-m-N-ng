@@ -71,5 +71,8 @@ export function matchGddpResources(row:GddpRecord, stations:Station[]):MatchedLe
         matched.push({station,hotspot,reason:explicitlyLinked?'Được Admin liên kết':curatedStation?'Gợi ý theo chủ đề; giáo viên cần duyệt':'Khớp chủ đề học liệu'});
     }
   }
-  return matched;
+  return matched.sort((a,b)=>{
+    const score=(x:MatchedLessonResource)=>x.reason==='Được Admin liên kết'?0:x.reason==='Khớp chủ đề học liệu'?1:2;
+    return score(a)-score(b);
+  });
 }

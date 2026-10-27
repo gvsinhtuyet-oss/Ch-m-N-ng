@@ -8,8 +8,8 @@ import {GddpLessonPresentation} from './GddpLessonPresentation';
 import {getGddpLessonDeck,getGddpTeachingRecord} from '../../services/GddpLessonDeckService';
 import {GddpPreparedPresentation} from './GddpPreparedPresentation';
 
-interface Props {stations: Station[]; currentGrade: number; onGradeChange: (grade: number) => void; privateRecords?:GddpRecord[]; privateYear?:string; privateSource?:string;}
-export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGradeChange,privateRecords,privateYear,privateSource}) => {
+interface Props {onOpenStudentStage1?: (station:Station)=>void; stations: Station[]; currentGrade: number; onGradeChange: (grade: number) => void; privateRecords?:GddpRecord[]; privateYear?:string; privateSource?:string;}
+export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGradeChange,privateRecords,privateYear,privateSource,onOpenStudentStage1}) => {
   const [records, setRecords] = useState<GddpRecord[]>([]);
   const [grade, setGrade] = useState(currentGrade);
   const [subject, setSubject] = useState('');
@@ -116,7 +116,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
         <h4 className="text-lg font-black text-emerald-950">Dạy ngay với Chặng 1 của học sinh</h4>
         <p className="text-sm text-slate-700">{matchedResources.length?'Chọn một điểm khám phá được gợi ý, xem nội dung rồi trình chiếu.':'Bài này chưa có điểm được đối chiếu. Chọn từ các trạm cùng khối và tự xác nhận nội dung phù hợp.'}</p>
         <div className="flex flex-wrap gap-2">
-          {matchedResources.slice(0,4).map(resource=><button key={resource.station.id+resource.hotspot.id} type="button" onClick={()=>setProjected(resource)} className="rounded-xl bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800">▶ {resource.hotspot.titleVi}</button>)}
+          {matchedResources.slice(0,4).map(resource=><button key={resource.station.id+resource.hotspot.id} type="button" onClick={()=>onOpenStudentStage1?onOpenStudentStage1(resource.station):setProjected(resource)} className="rounded-xl bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800">▶ {resource.hotspot.titleVi}</button>)}
           <button type="button" onClick={()=>{setManualChoice(true);setSelectedHotspots([]);document.getElementById('teacher-chang1-chooser')?.scrollIntoView({behavior:'smooth',block:'start'});}} className="rounded-xl border border-emerald-700 bg-white px-4 py-3 text-sm font-bold text-emerald-900">Tìm điểm Chặng 1 khác</button>
         </div>
         <p className="text-xs text-amber-900">Điểm gợi ý theo chủ đề chưa được xác nhận theo từng bài SGK. Giáo viên cần xem nội dung trước khi dạy.</p>
@@ -150,7 +150,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
           return <label key={id} className="flex items-center gap-3 rounded-lg border p-3 text-sm">
             <input type="checkbox" className="h-4 w-4" checked={selectedHotspots.includes(id)} onChange={e=>setSelectedHotspots(prev=>e.target.checked?[...prev,id]:prev.filter(x=>x!==id))}/>
             <span className="flex-1"><strong>{hotspot.titleVi}</strong><span className="block text-xs text-slate-500">{station.titleVi} · {reason}</span></span>
-            <button type="button" className="rounded-lg bg-sky-700 px-3 py-2 font-semibold text-white" onClick={()=>setProjected({station,hotspot,reason})}>▶ Mở nội dung Chặng 1</button>
+            <button type="button" className="rounded-lg bg-sky-700 px-3 py-2 font-semibold text-white" onClick={()=>onOpenStudentStage1?onOpenStudentStage1(station):setProjected({station,hotspot,reason})}>▶ Mở nội dung Chặng 1</button>
           </label>;
         })}
         <p className="text-sm font-semibold text-emerald-800">Bước 2 · Mở nội dung Chặng 1 để dạy; bước 3 · Duyệt câu hỏi và đưa vào KHBD bên dưới.</p>

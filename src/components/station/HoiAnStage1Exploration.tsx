@@ -292,6 +292,82 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
             </div>
             </div>
+        <section className="stage-one-hotspot-ribbon mt-1 shrink-0 rounded-[1.5rem] border-2 border-amber-300 bg-gradient-to-r from-amber-50 via-white to-orange-50 p-3 shadow-md">
+          <h2 className="mb-3 text-base font-black text-amber-900">📍 CÁC ĐIỂM CHẠM KHÁM PHÁ</h2>
+                      {/* hotspot shortcut cards */}
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+              {station.hotspots.map((item, itemIndex) => {
+                const done = completedHotspotIds.has(item.id);
+                const active = itemIndex === index;
+                const unlocked = canAccessHotspot(itemIndex);
+                const isCurrentOpen = !done && unlocked;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => {
+                      if (freeReview) {
+                        go(itemIndex);
+                      } else {
+                        audioService.playSfx('click');
+                        openImagePreview(itemIndex);
+                      }
+                    }}
+                    aria-disabled={false}
+                    className={`group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border p-1.5 text-center transition ${
+                      active
+                        ? 'border-orange-500 bg-orange-50 shadow-lg ring-2 ring-orange-300'
+                        : done
+                          ? 'border-emerald-300 bg-emerald-50 shadow-sm hover:bg-emerald-100'
+                          : isCurrentOpen
+                            ? 'border-sky-400 bg-sky-50 shadow-sm hover:bg-sky-100'
+                            : 'border-slate-300 bg-slate-100/95 text-slate-500 hover:border-orange-300 hover:bg-orange-50/70'
+                    }`}
+                  >
+                    <LearningImage
+                      key={item.id + item.image}
+                      thumbnail
+                      honestFallback
+                      src={item.image}
+                      alt=""
+                      className={`h-24 w-full shrink-0 rounded-xl object-cover ${!unlocked && !freeReview ? 'opacity-70' : ''}`}
+                      onError={event => {
+                        const img = event.currentTarget;
+                        img.onerror = null;
+                        img.src = station.coverImage || DEFAULT_APP_BACKGROUND_DATA_URL;
+                      }}
+                    />
+                    <span className="min-w-0">
+                      <span className={`flex items-center gap-1 text-[9px] font-black uppercase ${
+                        done ? 'text-emerald-700' : isCurrentOpen ? 'text-sky-700' : 'text-slate-400'
+                      }`}>
+                        Điểm {itemIndex + 1}
+                        {done ? (
+                          <CheckCircle2 className="h-3 w-3 text-emerald-600" />
+                        ) : !unlocked ? (
+                          <LockKeyhole className="h-3 w-3" />
+                        ) : (
+                          <Play className="h-3 w-3 fill-current" />
+                        )}
+                      </span>
+                      <span className={`mt-0.5 line-clamp-2 block text-xs font-black leading-4 ${
+                        !unlocked ? 'text-slate-400' : 'text-slate-800'
+                      }`}>
+                        {item.titleVi}
+                      </span>
+                      <span className={`mt-0.5 block text-[9px] font-bold ${
+                        done ? 'text-emerald-600' : isCurrentOpen ? 'text-sky-600' : 'text-slate-400'
+                      }`}>
+                        {done ? 'Hoàn thành' : isCurrentOpen ? 'Đang khám phá' : freeReview ? 'Sẵn sàng' : 'Xem ảnh trước'}
+                      </span>
+                    </span>
+                    {!unlocked && freeReview && <span className="absolute inset-0 bg-white/15" />}
+                  </button>
+                );
+              })}
+            </div>
+
+        </section>
             {narrationMessage&&<p role="status" className="rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-950">{narrationMessage}</p>}
             {lockMessage && (
               <div className="shrink-0 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-[11px] font-bold text-amber-800 shadow-sm">
@@ -424,82 +500,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
           </aside>
         </div>
-        <section className="mt-3 rounded-[1.5rem] border-2 border-amber-300 bg-gradient-to-r from-amber-50 via-white to-orange-50 p-3 shadow-md">
-          <h2 className="mb-3 text-base font-black text-amber-900">📍 CÁC ĐIỂM CHẠM KHÁM PHÁ</h2>
-                      {/* hotspot shortcut cards */}
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-              {station.hotspots.map((item, itemIndex) => {
-                const done = completedHotspotIds.has(item.id);
-                const active = itemIndex === index;
-                const unlocked = canAccessHotspot(itemIndex);
-                const isCurrentOpen = !done && unlocked;
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => {
-                      if (freeReview) {
-                        go(itemIndex);
-                      } else {
-                        audioService.playSfx('click');
-                        openImagePreview(itemIndex);
-                      }
-                    }}
-                    aria-disabled={false}
-                    className={`group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border p-1.5 text-center transition ${
-                      active
-                        ? 'border-orange-500 bg-orange-50 shadow-lg ring-2 ring-orange-300'
-                        : done
-                          ? 'border-emerald-300 bg-emerald-50 shadow-sm hover:bg-emerald-100'
-                          : isCurrentOpen
-                            ? 'border-sky-400 bg-sky-50 shadow-sm hover:bg-sky-100'
-                            : 'border-slate-300 bg-slate-100/95 text-slate-500 hover:border-orange-300 hover:bg-orange-50/70'
-                    }`}
-                  >
-                    <LearningImage
-                      key={item.id + item.image}
-                      thumbnail
-                      honestFallback
-                      src={item.image}
-                      alt=""
-                      className={`h-24 w-full shrink-0 rounded-xl object-cover ${!unlocked && !freeReview ? 'opacity-70' : ''}`}
-                      onError={event => {
-                        const img = event.currentTarget;
-                        img.onerror = null;
-                        img.src = station.coverImage || DEFAULT_APP_BACKGROUND_DATA_URL;
-                      }}
-                    />
-                    <span className="min-w-0">
-                      <span className={`flex items-center gap-1 text-[9px] font-black uppercase ${
-                        done ? 'text-emerald-700' : isCurrentOpen ? 'text-sky-700' : 'text-slate-400'
-                      }`}>
-                        Điểm {itemIndex + 1}
-                        {done ? (
-                          <CheckCircle2 className="h-3 w-3 text-emerald-600" />
-                        ) : !unlocked ? (
-                          <LockKeyhole className="h-3 w-3" />
-                        ) : (
-                          <Play className="h-3 w-3 fill-current" />
-                        )}
-                      </span>
-                      <span className={`mt-0.5 line-clamp-2 block text-xs font-black leading-4 ${
-                        !unlocked ? 'text-slate-400' : 'text-slate-800'
-                      }`}>
-                        {item.titleVi}
-                      </span>
-                      <span className={`mt-0.5 block text-[9px] font-bold ${
-                        done ? 'text-emerald-600' : isCurrentOpen ? 'text-sky-600' : 'text-slate-400'
-                      }`}>
-                        {done ? 'Hoàn thành' : isCurrentOpen ? 'Đang khám phá' : freeReview ? 'Sẵn sàng' : 'Xem ảnh trước'}
-                      </span>
-                    </span>
-                    {!unlocked && freeReview && <span className="absolute inset-0 bg-white/15" />}
-                  </button>
-                );
-              })}
-            </div>
 
-        </section>
       </section>
 
       {showImage && (

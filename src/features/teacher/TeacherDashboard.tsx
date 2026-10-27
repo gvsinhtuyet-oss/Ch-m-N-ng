@@ -40,7 +40,7 @@ export const TeacherDashboard: React.FC = () => {
 
   const [topicDeckId,setTopicDeckId]=useState<string|null>(null);
   const topicDeck=[...GRADE3_TOPIC_DECKS,...GRADE45_TOPIC_DECKS].find(d=>d.recordId===topicDeckId);
-  const [activeTab, setActiveTab] = useState<'teaching' | 'classrooms' | 'results' | 'resources' | 'gddp' | 'workspace'>('teaching');
+  const [activeTab, setActiveTab] = useState<'teaching' | 'classrooms' | 'results' | 'resources' | 'gddp' | 'workspace'>('gddp');
   const [selectedStationForImp, setSelectedStationForImp] = useState<Station | null>(null);
   const [selectedClassId, setSelectedClassId] = useState<string>('class-2-24');
   const [proposalStation, setProposalStation] = useState<Station | null>(null);
@@ -112,50 +112,17 @@ export const TeacherDashboard: React.FC = () => {
           </button>
         </div>
 
-        {/* Tab Navigation Buttons */}
-        <div className="flex flex-wrap gap-2 bg-black/20 p-1.5 rounded-2xl backdrop-blur-md border border-white/10 shrink-0">
-          <button
-            onClick={() => setActiveTab('teaching')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-              activeTab === 'teaching' ? 'bg-white text-slate-950 shadow-md' : 'text-white hover:bg-white/10'
-            }`}
-          >
-            <Presentation className="w-3.5 h-3.5" />
-            <span>DẠY HỌC</span>
-          </button>
-          <button type="button" onClick={()=>setActiveTab('workspace')} className="rounded-xl bg-white/15 px-4 py-2 text-xs font-bold">KẾ HOẠCH CỦA TÔI</button>
-          <button type="button" onClick={() => setActiveTab('gddp')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${activeTab === 'gddp' ? 'bg-white text-slate-950 shadow-md' : 'text-white hover:bg-white/10'}`}>
-            <BookOpen className="w-3.5 h-3.5" /><span>TÍCH HỢP GDĐP</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('classrooms')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-              activeTab === 'classrooms' ? 'bg-white text-slate-950 shadow-md' : 'text-white hover:bg-white/10'
-            }`}
-          >
-            <Users className="w-3.5 h-3.5" />
-            <span>LỚP HỌC</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('results')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-              activeTab === 'results' ? 'bg-white text-slate-950 shadow-md' : 'text-white hover:bg-white/10'
-            }`}
-          >
-            <BarChart3 className="w-3.5 h-3.5" />
-            <span>KẾT QUẢ</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('resources')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
-              activeTab === 'resources' ? 'bg-white text-slate-950 shadow-md' : 'text-white hover:bg-white/10'
-            }`}
-          >
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>HỌC LIỆU</span>
-          </button>
-        </div>
+        {/* Four clear entry points; keep existing features in their original tabs. */}
+        <nav aria-label="Không gian giáo viên" className="grid grid-cols-2 gap-2 w-full md:w-auto md:min-w-[360px]">
+          {([
+            {id:'gddp',label:'Dạy học ngay',Icon:Presentation},
+            {id:'workspace',label:'Kế hoạch bài dạy',Icon:FileEdit},
+            {id:'resources',label:'Kho học liệu',Icon:BookOpen},
+            {id:'classrooms',label:'Lớp học của tôi',Icon:Users},
+          ] as const).map(({id,label,Icon})=><button key={id} type="button" onClick={()=>setActiveTab(id)} aria-current={activeTab===id?'page':undefined} className={`flex items-center justify-center gap-2 rounded-xl px-3 py-3 text-sm font-bold transition ${activeTab===id?'bg-white text-slate-900 shadow':'bg-white/15 text-white hover:bg-white/25'}`}><Icon className="h-4 w-4 shrink-0"/>{label}</button>)}
+          <button type="button" onClick={()=>setActiveTab('teaching')} className="col-span-2 text-xs text-white/90 underline underline-offset-2">Xem danh mục trạm và trình chiếu đầy đủ</button>
+          {activeTab==='classrooms'&&<button type="button" onClick={()=>setActiveTab('results')} className="col-span-2 rounded-lg bg-white/15 px-3 py-2 text-sm font-bold text-white">Xem kết quả học sinh</button>}
+        </nav>
       </div>
 
       {activeTab === 'workspace' && <TeacherWorkspace />}

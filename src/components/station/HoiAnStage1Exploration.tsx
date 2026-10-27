@@ -67,7 +67,15 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const previewHotspot: ExplorationHotspot =
     station.hotspots[previewIndex ?? index] || hotspot;
   const progress = progressService.getStationProgress(studentId, station.id);
-  const options = useMemo(() => shuffle(hotspot.interaction?.options || []), [hotspot]);
+  // Keep one correct answer and one distractor; never mutate the source questions.
+  // Prefer a stable selection for each hotspot so retries do not swap answers.
+  const options = useMemo(() => {
+    const source = hotspot.interaction?.options || [];
+    const correctOption = source.find(option => option.isCorrect);
+    const distractor = source.find(option => !option.isCorrect);
+    if (!correctOption || !distractor) return shuffle(source);
+    return shuffle([correctOption, distractor]);
+  }, [hotspot]);
   const completedHotspotIds = new Set([
     ...progress.exploredHotspotIds,
     ...sessionCompletedHotspotIds,
@@ -437,7 +445,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   {hotspot.interaction.questionVi}
                 </p>
 
-                <div className="mt-3 grid grid-cols-1 gap-2 xl:grid-cols-2">
+                <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {options.map(option => {
                     const active = selected === option.id;
                     let className =

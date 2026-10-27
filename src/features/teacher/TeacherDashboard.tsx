@@ -126,7 +126,7 @@ export const TeacherDashboard: React.FC = () => {
       </div>
 
       {activeTab === 'workspace' && <TeacherWorkspace />}
-      {activeTab === 'gddp' && <GddpTeacherLookup stations={allStationsInCurrentGrade} currentGrade={currentGrade} onGradeChange={setCurrentGrade} />}
+      {activeTab === 'gddp' && <GddpTeacherLookup stations={allStationsInCurrentGrade} currentGrade={currentGrade} onGradeChange={setCurrentGrade} onOpenStudentStage1={station=>openStation(station,1)} />}
 
       {/* TAB 1: DẠY HỌC */}
       {activeTab === 'teaching' && (

@@ -408,11 +408,12 @@ export const LandingView: React.FC = () => {
         )}
 
         <div className="landing-cover-actions">
+          <p className="landing-cover-invitation">Mỗi điểm chạm,<br /><strong>một điều kỳ diệu</strong></p>
           <button onClick={handleStartJourney} className="group flex items-center gap-2 rounded-[22px] border-b-[6px] border-amber-700 bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 px-5 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg font-black text-slate-950 shadow-[0_8px_25px_rgba(0,0,0,.35)] transition hover:scale-105 active:translate-y-1 active:border-b-2">
             <Compass className="h-6 w-6 text-blue-900 group-hover:rotate-45 transition-transform"/> CHẠM ĐỂ KHÁM PHÁ <ArrowRight className="h-5 w-5"/>
           </button>
-          <a href="https://vr360.com.vn/projects/danang-virtual-tourists/" target="_blank" rel="noopener noreferrer" title="Khám phá Đà Nẵng 360°" aria-label="Khám phá Đà Nẵng 360 độ" className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border-2 border-violet-200 bg-gradient-to-br from-indigo-500 via-violet-600 to-purple-900 shadow-[0_5px_20px_rgba(110,50,255,.55)] transition hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
-            <Globe className="h-6 w-6 text-white"/><span className="sr-only">VR360°</span>
+          <a href="https://vr360.com.vn/projects/danang-virtual-tourists/" target="_blank" rel="noopener noreferrer" title="Khám phá Đà Nẵng 360°" aria-label="Khám phá Đà Nẵng 360 độ" className="landing-cover-vr">
+            <Globe className="h-5 w-5"/><span>Khám phá Đà Nẵng 360°</span>
           </a>
         </div>
         <div className="landing-cover-features">

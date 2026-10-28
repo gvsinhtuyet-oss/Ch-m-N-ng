@@ -34,6 +34,9 @@ jobs:
       - name: TypeScript check
         run: npm run lint
 
+      - name: Journey maps, two-option checkpoints and reward persistence
+        run: node --import tsx --test journey-maps-test.ts
+
       - name: Server syntax check
         run: node --check auth-server.mjs && node --check content-server.mjs && node --check content-storage.mjs
 

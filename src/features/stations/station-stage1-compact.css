@@ -49,3 +49,46 @@
 @media(max-width:650px){
  .station-stage1-compact .stage-one-map-content>.grid>.flex>.relative{min-height:200px}
 }
+
+/* Shared lesson: natural document flow, including short desktop viewports. */
+.station-stage1-compact.station-viewport{height:auto;min-height:0;max-width:1600px;overflow:visible;padding:8px}
+.station-stage1-compact>.station-lesson-panel,
+.station-stage1-compact .station-exploration-layout,
+.station-stage1-compact .station-exploration-layout>div,
+.station-stage1-compact .stage-one-map-surface,
+.station-stage1-compact .stage-one-map-content{height:auto;min-height:0;overflow:visible}
+.station-stage1-compact .stage-one-map-content>.grid{grid-template-columns:minmax(0,3fr) minmax(0,2fr);align-items:start;gap:16px}
+.station-stage1-compact .stage-one-map-content>.grid>.flex>.relative{min-height:0;height:auto;aspect-ratio:16/10;background:#eef3f5}
+.station-stage1-compact .stage-one-map-content>.grid>.flex>.relative img{object-fit:contain}
+.station-stage1-compact .hoi-an-right-rail{height:auto;overflow:visible}
+.station-stage1-compact .hoi-an-right-rail>div{padding:14px!important}
+.station-stage1-compact .hoi-an-right-rail p{line-height:1.6;overflow-wrap:anywhere}
+.station-stage1-compact .hoi-an-right-rail h2{font-size:clamp(18px,1.5vw,24px)}
+.station-stage1-compact .stage-one-hotspot-ribbon{min-width:0;width:100%}
+.station-stage1-compact .stage-one-hotspot-ribbon>.grid{overscroll-behavior-x:contain;padding:3px 2px 8px;scroll-snap-type:x proximity}
+.station-stage1-compact .stage-one-hotspot-ribbon>.grid>button{flex:0 0 140px;scroll-snap-align:start;min-height:120px}
+.station-stage1-compact .stage-one-hotspot-ribbon>.grid>button img{height:74px;object-fit:contain;background:#fff}
+.station-stage1-compact .station-stage-tab.is-complete{color:#047857!important}
+.station-stage1-compact .station-stage-tab:disabled{opacity:.45}
+.station-stage1-compact .station-stage-tab.is-active{box-shadow:inset 0 -3px #f97316!important}
+.station-stage1-compact .station-stage-tabs{width:100%;overflow:visible}
+.station-stage1-compact .station-stage-tab{flex:1 1 0}
+.station-stage1-compact .station-stage-tab-title{font-size:12px;white-space:nowrap}
+.station-stage1-compact .station-stage-tab-title svg{width:16px;height:16px}
+.station-stage1-compact .stage-one-answer-options button{min-height:48px;overflow-wrap:anywhere}
+@media(max-width:900px){
+ .station-stage1-compact .stage-one-map-content>.grid{grid-template-columns:minmax(0,1fr);gap:12px}
+ .station-stage1-compact>.relative.z-10{padding:8px;gap:8px}
+ .station-stage1-compact>.relative.z-10>.flex{min-width:0}
+ .station-stage1-compact>.relative.z-10 h1{font-size:18px;line-height:1.3;overflow-wrap:anywhere}
+ .station-stage1-compact>.relative.z-10>.flex:last-child{flex-basis:100%;max-width:none}
+ .station-stage1-compact .station-stage-tab-name{display:none}
+ .station-stage1-compact .station-header-map .station-tool-badge{min-height:44px;min-width:52px}
+ .station-stage1-compact .station-header-map .station-tool-art{width:30px;height:24px}
+ .station-stage1-compact .stage-one-hotspot-ribbon>.grid>button{flex-basis:126px}
+}
+@media(max-width:380px){
+ .station-stage1-compact .station-stage-tab-title{font-size:10px;gap:2px}
+ .station-stage1-compact .station-stage-tab-title svg{width:13px;height:13px}
+ .station-stage1-compact .stage-one-map-content{padding:6px!important}
+}

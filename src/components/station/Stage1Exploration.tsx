@@ -1,3 +1,4 @@
+import {stage1Options} from '../../features/stations/stage1Options';
 import {RealPhotoGallery} from '../RealPhotoGallery';
 import {allHotspotsAnswered} from '../../features/stations/stageAccess';
 import { contentService } from '../../services/ContentService';
@@ -63,7 +64,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   const hotspot: ExplorationHotspot = station.hotspots[currentHotspotIdx] || station.hotspots[0];
 
   const displayedOptions = useMemo(
-    () => shuffleOptions(hotspot.interaction?.options || []),
+    () => shuffleOptions(stage1Options(hotspot.interaction)),
     [hotspot],
   );
 

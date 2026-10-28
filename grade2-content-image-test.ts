@@ -79,7 +79,7 @@ test('all grade-2 images and five maps are packaged, traceable to supplied sourc
  assert.equal(GRADE2_MEDIA.length,25);assert.equal(new Set(GRADE2_MEDIA.map(m=>m.src)).size,25);
  for(const s of getStationsForGrade(2)){
   assert.equal(s.version.version,GRADE2_MEDIA_REVISION);assert.match(s.coverImage,/^\/learning\/grade2\/media\//);
-  assert.match(s.journeyMap!.image!,/^\/learning\/grade2\/.*-map\.svg$/);assert.ok(existsSync('public'+s.journeyMap!.image));assert.match(readFileSync('public'+s.journeyMap!.image,'utf8'),/Không phải bản đồ địa lý/);
+  assert.match(s.journeyMap!.image!,/^\/images\/maps\/.*\.webp$/);assert.ok(existsSync('public'+s.journeyMap!.image));assert.equal(readFileSync('public'+s.journeyMap!.image).toString('ascii',8,12),'WEBP');
   for(const h of s.hotspots){const m=GRADE2_MEDIA.find(m=>m.id===h.id)!;assert.ok(m);assert.equal(h.image,m.src);const bytes=readFileSync('public'+h.image);assert.equal(createHash('sha256').update(bytes).digest('hex'),m.assetSha256);assert.ok(m.figure&&m.document&&m.sourceSha256);assert.equal(h.mediaRights,'UNKNOWN');assert.ok(h.mediaCredit);}
  }
 });

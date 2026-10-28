@@ -1,3 +1,4 @@
+import { journeyMapImage } from '../data/journeyMapAssets';
 import {currentRealPhotos} from './RealPhotoPolicy';
 import {currentNarrationContent} from './NarrationReviewPolicy';
 import {currentGrade2Content} from './Grade2ContentPolicy';
@@ -51,13 +52,16 @@ const isLegacyPlaceholderCover = (url: string) =>
 
 export const contentService = {
   get(station: Station): StationContent {
-    return records[station.id] ? currentRealPhotos(station,currentNarrationContent(currentGrade45Content(station,currentGrade3Content(station,currentGrade2Content(station,currentGrade1Content(station,records[station.id])))))) : {
+    const content = records[station.id] ? currentRealPhotos(station,currentNarrationContent(currentGrade45Content(station,currentGrade3Content(station,currentGrade2Content(station,currentGrade1Content(station,records[station.id])))))) : {
       contentRevision:station.version.version,
       coverImage: station.coverImage, mapImage: station.journeyMap?.image || '',
       hotspots: station.hotspots, resources: [],
     };
+    return {...content, mapImage: journeyMapImage(station.id) || content.mapImage};
   },
   apply(station: Station) {
+    const bundledMap = journeyMapImage(station.id);
+    if (bundledMap && station.journeyMap) station.journeyMap = {...station.journeyMap, image: bundledMap};
     const saved = records[station.id];
     if (!saved) return;
     const content=currentRealPhotos(station,currentNarrationContent(currentGrade45Content(station,currentGrade3Content(station,currentGrade2Content(station,currentGrade1Content(station,saved))))));
@@ -67,10 +71,10 @@ export const contentService = {
       station.coverImage = content.coverImage;
     }
     station.hotspots = content.hotspots;
-    if (station.journeyMap) station.journeyMap = { ...station.journeyMap, image: content.mapImage };
+    if (station.journeyMap) station.journeyMap = { ...station.journeyMap, image: bundledMap || content.mapImage };
     else if (content.mapImage) station.journeyMap = {
       id: 'map-' + station.id, stationId: station.id, grade: station.grade,
-      titleVi: 'Bản đồ hành trình ' + station.titleVi, image: content.mapImage,
+      titleVi: 'Bản đồ hành trình ' + station.titleVi, image: bundledMap || content.mapImage,
       summaryNodes: content.hotspots.map(h => ({ id: h.id, titleVi: h.titleVi, textVi: h.keyFactVi })),
       knowVi: station.pedagogyGoals.knowGoalVi,
       understandVi: station.pedagogyGoals.understandGoalVi,

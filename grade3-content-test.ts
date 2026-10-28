@@ -50,7 +50,7 @@ test('teacher-authored text, custom media and questions survive the upgrade',()=
  const before=JSON.stringify(content),result=currentGrade3Content(s,content);assert.deepEqual(result.hotspots,content.hotspots);assert.equal(result.coverImage,content.coverImage);assert.equal(result.mapImage,content.mapImage);assert.equal(JSON.stringify(content),before);
 });
 test('local learning media are available and schematic assets are explicitly labelled',()=>{
- for(const s of GRADE_3_STATIONS)for(const src of [s.coverImage,s.journeyMap!.image!,...s.hotspots.map(h=>h.image)]){assert.ok(existsSync('public'+src),src);if(!grade3MediaBySrc(src)&&!REAL_PHOTOS.some(p=>p.src===src)){const xml=readFileSync('public'+src,'utf8');assert.match(xml,/không phải ảnh tư liệu/);assert.doesNotMatch(xml,/<script|<image|foreignObject|onload|href=/);}}
+ for(const s of GRADE_3_STATIONS)for(const src of [s.coverImage,s.journeyMap!.image!,...s.hotspots.map(h=>h.image)]){assert.ok(existsSync('public'+src),src);if(src.startsWith('/images/maps/')){assert.equal(readFileSync('public'+src).toString('ascii',8,12),'WEBP');continue;}if(!grade3MediaBySrc(src)&&!REAL_PHOTOS.some(p=>p.src===src)){const xml=readFileSync('public'+src,'utf8');assert.match(xml,/không phải ảnh tư liệu/);assert.doesNotMatch(xml,/<script|<image|foreignObject|onload|href=/);}}
  const integrity=JSON.parse(readFileSync('content-review/grade3-media-integrity.json','utf8'));
  for(const media of GRADE3_MEDIA){const bytes=readFileSync('public'+media.src),record=integrity.find((r:{id:string})=>r.id===media.id);assert.ok(record);assert.equal(createHash('sha256').update(bytes).digest('hex'),record.sha256);}
 });

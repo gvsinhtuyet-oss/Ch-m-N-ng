@@ -1,3 +1,4 @@
+import './landing-cover.css';
 import {GoogleTeacherLogin} from '../../components/auth/GoogleTeacherLogin';
 import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
@@ -57,7 +58,7 @@ export const LandingView: React.FC = () => {
   const [loginError, setLoginError] = useState<string>('');
   const [introActive, setIntroActive] = useState(true);
   const [theme, setTheme] = useState(readTheme);
-  const [mobileBackground, setMobileBackground] = useState(() => window.matchMedia('(max-width: 767px)').matches);
+  const [mobileBackground, setMobileBackground] = useState(() => window.matchMedia('(max-width: 1023px) and (orientation: portrait)').matches);
   const introFrameRef = useRef<HTMLIFrameElement | null>(null);
 
   const STUDENT_PROFILE_KEY = 'cham_danang_student_profile_v1';
@@ -65,7 +66,7 @@ export const LandingView: React.FC = () => {
   useEffect(() => {
     const refresh = () => setTheme(readTheme());
     const refreshStorage = () => setTheme(readTheme(true));
-    const query = window.matchMedia('(max-width: 767px)');
+    const query = window.matchMedia('(max-width: 1023px) and (orientation: portrait)');
     const resize = () => setMobileBackground(query.matches);
     window.addEventListener('cham-theme-changed', refresh);
     window.addEventListener('storage', refreshStorage);
@@ -81,7 +82,7 @@ export const LandingView: React.FC = () => {
     mobileBackground
       ? theme.coverMobile || theme.coverDesktop
       : theme.coverDesktop || theme.coverMobile
-  ) || DEFAULT_APP_BACKGROUND_DATA_URL;
+  ) || (mobileBackground ? '/images/landing/science-mobile.webp' : '/images/landing/science-desktop.webp');
 
   const roleBackground = (
     mobileBackground
@@ -299,18 +300,19 @@ export const LandingView: React.FC = () => {
   };
 
   return (
-    <div className="relative h-[100dvh] w-full flex flex-col justify-between overflow-hidden bg-sky-800 text-white select-none">
+    <div className="landing-art-shell text-white select-none">
+      <div className="landing-art-scene">
       {/* Nền trang bìa do Quản trị cài riêng. */}
       <img
         src={coverBackground}
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover"
-        style={{ filter: 'blur(' + theme.blur + 'px)', transform: 'scale(1.025)' }}
+        className="landing-cover-background absolute inset-0 h-full w-full object-cover"
+        style={{ filter: 'blur(' + theme.blur + 'px)' }}
       />
       <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/65 via-slate-950/28 to-slate-950/72 pointer-events-none" />
-      <div className="absolute inset-0 bg-radial from-transparent via-slate-950/10 to-slate-950/45 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/15 via-transparent to-slate-950/15 pointer-events-none" />
+      <div className="absolute inset-0 bg-radial from-transparent via-transparent to-slate-950/15 pointer-events-none" />
 
       {/* Top Bar on Cover Page */}
       <header className="relative z-20 w-full max-w-[1600px] mx-auto px-3 sm:px-6 pt-1 sm:pt-2 pb-1 flex items-center justify-between gap-2">
@@ -360,9 +362,9 @@ export const LandingView: React.FC = () => {
       </header>
 
       {/* Compact cinematic cover: app identity → intro video → explore */}
-      <main className="relative z-20 w-full max-w-[1500px] min-h-0 flex-1 mx-auto px-3 sm:px-6 py-1 flex flex-col lg:flex-row-reverse items-center justify-center gap-2 lg:gap-6 text-center overflow-hidden">
-        <div className="flex flex-col items-center justify-center gap-0.5 lg:w-[48%] shrink-0">
-          <h1 className="text-[clamp(1.45rem,4vw,3.6rem)] font-black tracking-tight text-amber-300 leading-tight [text-shadow:3px_4px_0_#07549c,5px_7px_8px_rgba(0,0,0,.65)]">
+      <main data-intro-active={introActive} className="landing-cover-main relative z-20 w-full min-h-0 flex-1 mx-auto text-center">
+        <div className="landing-cover-identity">
+          <h1 className="landing-cover-title">
             CHẠM ĐÀ NẴNG
           </h1>
           <p className="text-xs sm:text-lg xl:text-2xl font-extrabold text-white tracking-tight drop-shadow-md">
@@ -372,9 +374,9 @@ export const LandingView: React.FC = () => {
 
         {/* Video giới thiệu giữ nguyên nguồn gốc và tự phát khi trình duyệt cho phép. */}
         {introActive && (
-          <div className="relative w-full max-w-[620px] lg:w-[52%] min-w-0 shrink min-h-0">
+          <div className="landing-cover-video relative min-w-0">
             <div className="absolute -inset-1 rounded-[22px] sm:rounded-[26px] bg-gradient-to-r from-sky-500/35 via-white/10 to-amber-400/35 blur-lg pointer-events-none" />
-            <div className="relative aspect-video max-h-[33dvh] lg:max-h-[49dvh] overflow-hidden rounded-2xl sm:rounded-3xl border-[3px] border-white/80 bg-black shadow-2xl shadow-slate-950/60">
+            <div className="landing-cover-player relative overflow-hidden rounded-2xl sm:rounded-3xl border-[3px] border-white/80 bg-black shadow-2xl shadow-slate-950/60">
               <iframe
                 ref={introFrameRef}
                 className="absolute inset-0 h-full w-full"
@@ -406,15 +408,15 @@ export const LandingView: React.FC = () => {
           </div>
         )}
 
-        <div className="flex flex-row lg:flex-col items-center justify-center gap-2 lg:absolute lg:top-[66%] lg:right-[4%] lg:w-[42%] lg:-translate-y-1/4 shrink-0">
+        <div className="landing-cover-actions">
           <button onClick={handleStartJourney} className="group flex items-center gap-2 rounded-[22px] border-b-[6px] border-amber-700 bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 px-5 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg font-black text-slate-950 shadow-[0_8px_25px_rgba(0,0,0,.35)] transition hover:scale-105 active:translate-y-1 active:border-b-2">
             <Compass className="h-6 w-6 text-blue-900 group-hover:rotate-45 transition-transform"/> CHẠM ĐỂ KHÁM PHÁ <ArrowRight className="h-5 w-5"/>
           </button>
-          <a href="https://vr360.com.vn/projects/danang-virtual-tourists/" target="_blank" rel="noopener noreferrer" title="Khám phá Đà Nẵng 360°" aria-label="Khám phá Đà Nẵng 360 độ" className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border-2 border-violet-200 bg-gradient-to-br from-indigo-500 via-violet-600 to-purple-900 shadow-[0_5px_20px_rgba(110,50,255,.55)] transition hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
-            <Globe className="h-6 w-6 text-white"/><span className="sr-only">VR360°</span>
+          <a href="https://vr360.com.vn/projects/danang-virtual-tourists/" target="_blank" rel="noopener noreferrer" title="Khám phá Đà Nẵng 360°" aria-label="Khám phá Đà Nẵng 360 độ" className="landing-cover-vr">
+            <Globe className="h-5 w-5"/><span>Khám phá Đà Nẵng 360°</span>
           </a>
         </div>
-        <div className="hidden xl:flex absolute bottom-0 left-1/2 -translate-x-1/2 flex-wrap items-center justify-center gap-4 rounded-2xl bg-slate-950/60 px-5 py-2 text-xs font-bold text-white backdrop-blur-sm">
+        <div className="landing-cover-features">
           <span>5 khối lớp</span><span>25 trạm khám phá</span><span>VR360°</span><span>Hộ chiếu số</span><span>Audio & Quiz</span>
         </div>
       </main>
@@ -434,6 +436,8 @@ export const LandingView: React.FC = () => {
         </div>
         <button type="button" onClick={()=>{setAdminLogin(true);setShowTeacherLogin(true);setShowStudentLogin(false);setShowRolePicker(true);setLoginError('');setStaffPassword('');}} className="inline-flex items-center gap-1 text-[10px] text-slate-300/75 hover:text-white transition" aria-label="Đăng nhập quản trị"><Settings className="w-3 h-3" /> Quản trị</button>
       </footer>
+
+      </div>
 
       {/* Role Picker Modal */}
       {showRolePicker && (

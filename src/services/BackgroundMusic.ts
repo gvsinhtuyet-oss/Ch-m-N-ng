@@ -5,7 +5,7 @@ class BackgroundMusic {
   private sceneAllowed = true;
   private unlocked = false;
   private enabled = true;
-  private volume = .28;
+  private volume = .18;
   private foregroundLocks = 0;
   private foregroundSources = new Set<string>();
   private listeners = new Set<() => void>();
@@ -65,7 +65,7 @@ class BackgroundMusic {
 
   private effectiveVolume() {
     const hasForegroundAudio = this.foregroundLocks > 0 || this.foregroundSources.size > 0;
-    return this.volume * (hasForegroundAudio ? 0.24 : 1);
+    return this.volume * (hasForegroundAudio ? 0.5 : 1);
   }
 
   private applyVolume() {

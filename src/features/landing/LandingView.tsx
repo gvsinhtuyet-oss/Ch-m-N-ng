@@ -21,6 +21,7 @@ import {
   Layers,
   Award,
   BookOpen,
+  Play,
   X,
 } from 'lucide-react';
 
@@ -298,7 +299,7 @@ export const LandingView: React.FC = () => {
   };
 
   return (
-    <div className="relative min-h-screen w-full flex flex-col justify-between overflow-x-hidden bg-transparent text-white select-none">
+    <div className="relative h-[100dvh] w-full flex flex-col justify-between overflow-hidden bg-sky-800 text-white select-none">
       {/* Nền trang bìa do Quản trị cài riêng. */}
       <img
         src={coverBackground}
@@ -312,7 +313,7 @@ export const LandingView: React.FC = () => {
       <div className="absolute inset-0 bg-radial from-transparent via-slate-950/10 to-slate-950/45 pointer-events-none" />
 
       {/* Top Bar on Cover Page */}
-      <header className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 pt-5 pb-3 flex items-center justify-between gap-4">
+      <header className="relative z-20 w-full max-w-[1600px] mx-auto px-3 sm:px-6 pt-2 sm:pt-4 pb-1 flex items-center justify-between gap-2">
         {/* Brand identity */}
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-sky-500 to-amber-400 p-0.5 shadow-lg shadow-sky-500/20">
@@ -359,21 +360,22 @@ export const LandingView: React.FC = () => {
       </header>
 
       {/* Compact cinematic cover: app identity → intro video → explore */}
-      <main className="relative z-20 w-full max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-5 flex flex-col items-center text-center my-auto">
-        <div className="space-y-1.5 sm:space-y-2">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white drop-shadow-xl leading-none">
+      <main className="relative z-20 w-full max-w-[1500px] min-h-0 mx-auto px-3 sm:px-6 py-1 flex flex-col lg:flex-row-reverse items-center justify-center gap-3 lg:gap-8 my-auto text-center">
+        <div className="flex flex-col items-center justify-center gap-2 lg:w-[48%] shrink-0">
+          <h1 className="text-[clamp(1.7rem,5vw,4.6rem)] font-black tracking-tight text-amber-300 leading-tight [text-shadow:3px_4px_0_#07549c,5px_7px_8px_rgba(0,0,0,.65)]">
             CHẠM ĐÀ NẴNG
           </h1>
-          <p className="text-lg sm:text-2xl md:text-3xl font-extrabold text-amber-300 tracking-tight drop-shadow-md">
+          <p className="text-xs sm:text-lg xl:text-2xl font-extrabold text-white tracking-tight drop-shadow-md">
             Hành trình số khám phá quê hương
           </p>
         </div>
 
-        {/* Intro video: ưu tiên tự phát có tiếng; khi bỏ qua/khám phá thì dừng ngay. */}
+        </div>
+        {/* Video giới thiệu giữ nguyên nguồn gốc và tự phát khi trình duyệt cho phép. */}
         {introActive && (
-          <div className="relative w-full max-w-3xl mt-4 sm:mt-5">
+          <div className="relative w-full max-w-[680px] lg:w-[52%] min-w-0">
             <div className="absolute -inset-1 rounded-[22px] sm:rounded-[26px] bg-gradient-to-r from-sky-500/35 via-white/10 to-amber-400/35 blur-lg pointer-events-none" />
-            <div className="relative aspect-video overflow-hidden rounded-2xl sm:rounded-3xl border border-white/20 bg-black shadow-2xl shadow-slate-950/60">
+            <div className="relative aspect-video max-h-[38dvh] lg:max-h-[55dvh] overflow-hidden rounded-2xl sm:rounded-3xl border-[3px] border-white/80 bg-black shadow-2xl shadow-slate-950/60">
               <iframe
                 ref={introFrameRef}
                 className="absolute inset-0 h-full w-full"
@@ -405,45 +407,31 @@ export const LandingView: React.FC = () => {
           </div>
         )}
 
-        <button
-          onClick={handleStartJourney}
-          className="group mt-4 sm:mt-5 inline-flex items-center gap-2.5 rounded-2xl bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 px-8 sm:px-11 py-3.5 sm:py-4 text-sm sm:text-base font-black text-slate-950 shadow-2xl shadow-amber-400/30 transition-all duration-200 hover:scale-[1.03] active:scale-95"
-        >
-          <Compass className="w-5 h-5 transition duration-300 group-hover:rotate-45" />
-          <span>CHẠM ĐỂ KHÁM PHÁ</span>
-          <ArrowRight className="w-5 h-5 transition duration-200 group-hover:translate-x-1" />
-        </button>
-
-        <a href="https://vr360.com.vn/projects/danang-virtual-tourists/" target="_blank" rel="noopener noreferrer" aria-label="Khám phá Đà Nẵng 360 độ trong tab mới" className="mt-3 inline-flex items-center justify-center gap-2 rounded-2xl border border-violet-200/60 bg-violet-600/90 px-5 py-3 text-sm font-extrabold text-white shadow-lg transition hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"><Globe className="h-5 w-5" /> Khám phá Đà Nẵng 360° <span aria-hidden="true">↗</span></a>
-
-        <p className="mt-3 max-w-2xl text-xs sm:text-sm text-slate-200 font-medium leading-relaxed drop-shadow">
-          Khám phá Đà Nẵng qua di sản, câu chuyện, nhiệm vụ và trải nghiệm số.
-        </p>
-
-        {/* Compact feature strip */}
-        <div className="mt-3 sm:mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 rounded-2xl border border-white/10 bg-slate-950/45 px-4 py-2.5 backdrop-blur-md text-[10px] sm:text-xs font-bold text-slate-200">
-          <span className="inline-flex items-center gap-1.5"><Layers className="w-3.5 h-3.5 text-sky-300" />5 khối lớp</span>
-          <span className="hidden sm:inline text-white/25">•</span>
-          <span className="inline-flex items-center gap-1.5"><Globe className="w-3.5 h-3.5 text-amber-300" />VR360°</span>
-          <span className="hidden sm:inline text-white/25">•</span>
-          <span className="inline-flex items-center gap-1.5"><Award className="w-3.5 h-3.5 text-emerald-300" />Hộ chiếu số</span>
-          <span className="hidden sm:inline text-white/25">•</span>
-          <span className="inline-flex items-center gap-1.5"><BookOpen className="w-3.5 h-3.5 text-violet-300" />Audio & Quiz</span>
+        <div className="flex flex-col items-center gap-2 lg:absolute lg:top-[65%] lg:right-[4%] lg:w-[42%] lg:-translate-y-1/4">
+          <button onClick={handleStartJourney} className="group flex items-center gap-2 rounded-[22px] border-b-[6px] border-amber-700 bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 px-5 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg font-black text-slate-950 shadow-[0_8px_25px_rgba(0,0,0,.35)] transition hover:scale-105 active:translate-y-1 active:border-b-2">
+            <Compass className="h-6 w-6 text-blue-900 group-hover:rotate-45 transition-transform"/> CHẠM ĐỂ KHÁM PHÁ <ArrowRight className="h-5 w-5"/>
+          </button>
+          <a href="https://vr360.com.vn/projects/danang-virtual-tourists/" target="_blank" rel="noopener noreferrer" title="Khám phá Đà Nẵng 360°" aria-label="Khám phá Đà Nẵng 360 độ" className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border-2 border-violet-200 bg-gradient-to-br from-indigo-500 via-violet-600 to-purple-900 shadow-[0_5px_20px_rgba(110,50,255,.55)] transition hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+            <Globe className="h-7 w-7 text-white"/><span className="sr-only">VR360°</span>
+          </a>
+        </div>
+        <div className="hidden lg:flex absolute bottom-0 left-1/2 -translate-x-1/2 flex-wrap items-center justify-center gap-4 rounded-2xl bg-slate-950/60 px-5 py-2 text-xs font-bold text-white backdrop-blur-sm">
+          <span>5 khối lớp</span><span>25 trạm khám phá</span><span>VR360°</span><span>Hộ chiếu số</span><span>Audio & Quiz</span>
         </div>
       </main>
 
       {/* Dignified Unit and Authors Credits Footer */}
-      <footer className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 border-t border-white/10 text-xs text-slate-300/90 font-medium">
-        <div className="flex items-center gap-2">
+      <footer className="relative z-20 w-full max-w-7xl mx-auto px-3 sm:px-6 py-1 flex items-center justify-between gap-2 border-t border-white/10 text-[9px] sm:text-xs text-white font-medium">
+        <div className="hidden sm:flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-amber-400" />
           <span className="font-semibold text-white">Trường Tiểu học Trần Đại Nghĩa</span>
         </div>
-        <div className="text-[11px] sm:text-xs text-slate-400">
+        <div className="hidden lg:block text-[11px] sm:text-xs text-slate-100">
           Chương trình Giáo dục địa phương TP Đà Nẵng
         </div>
         <div className="text-[11px] sm:text-xs">
-          <span>Người phát triển: </span>
-          <span className="font-bold text-amber-300">Trương Sinh Tuyết</span>
+          <span>Người thực hiện: </span>
+          <span className="font-black text-amber-300 [text-shadow:1px_1px_2px_#613d00]">TRƯƠNG SINH TUYẾT</span><span className="hidden sm:inline"> · Trường Tiểu học Trần Đại Nghĩa</span>
         </div>
         <button type="button" onClick={()=>{setAdminLogin(true);setShowTeacherLogin(true);setShowStudentLogin(false);setShowRolePicker(true);setLoginError('');setStaffPassword('');}} className="inline-flex items-center gap-1 text-[10px] text-slate-300/75 hover:text-white transition" aria-label="Đăng nhập quản trị"><Settings className="w-3 h-3" /> Quản trị</button>
       </footer>

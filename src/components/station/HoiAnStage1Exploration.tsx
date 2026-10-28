@@ -1,3 +1,4 @@
+import {stage1Options} from '../../features/stations/stage1Options';
 import {RealPhotoGallery} from '../RealPhotoGallery';
 import {allHotspotsAnswered} from '../../features/stations/stageAccess';
 import {LearningImage} from '../LearningImage';
@@ -55,6 +56,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const [correct, setCorrect] = useState(false);
   const [wrongLocked, setWrongLocked] = useState(false);
   const wrongTimerRef = useRef<number | null>(null);
+  const advanceTimerRef = useRef<number | null>(null);
   const [showImage, setShowImage] = useState(false);
   const [previewIndex, setPreviewIndex] = useState<number | null>(null);
   const [showReward, setShowReward] = useState(false);
@@ -67,15 +69,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const previewHotspot: ExplorationHotspot =
     station.hotspots[previewIndex ?? index] || hotspot;
   const progress = progressService.getStationProgress(studentId, station.id);
-  // Keep one correct answer and one distractor; never mutate the source questions.
-  // Prefer a stable selection for each hotspot so retries do not swap answers.
-  const options = useMemo(() => {
-    const source = hotspot.interaction?.options || [];
-    const correctOption = source.find(option => option.isCorrect);
-    const distractor = source.find(option => !option.isCorrect);
-    if (!correctOption || !distractor) return shuffle(source);
-    return shuffle([correctOption, distractor]);
-  }, [hotspot]);
+  const options = useMemo(() => shuffle(stage1Options(hotspot.interaction)), [hotspot]);
   const completedHotspotIds = new Set([
     ...progress.exploredHotspotIds,
     ...sessionCompletedHotspotIds,
@@ -100,6 +94,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
 
   useEffect(() => {
+    if (advanceTimerRef.current !== null) window.clearTimeout(advanceTimerRef.current);
     setSelected(null);
     setSubmitted(false);
     setCorrect(false);
@@ -146,6 +141,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
   useEffect(() => () => {
     if (wrongTimerRef.current !== null) window.clearTimeout(wrongTimerRef.current);
+    if (advanceTimerRef.current !== null) window.clearTimeout(advanceTimerRef.current);
   }, []);
 
   const choose = (id: string) => {
@@ -156,7 +152,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   };
 
   const check = () => {
-    if (submitted || wrongLocked || !selected || !hotspot.interaction) return;
+    if (submitted || wrongLocked || options.length !== 2 || !selected || !hotspot.interaction) return;
     const ok = !!hotspot.interaction.options.find(option => option.id === selected)?.isCorrect;
     setCorrect(ok);
     setSubmitted(true);
@@ -180,7 +176,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
       }
 
       if (!freeReview) {
-        window.setTimeout(() => {
+        advanceTimerRef.current = window.setTimeout(() => {
           if (index < station.hotspots.length - 1) {
             setIndex(index + 1);
           } else if (allHotspotsAnswered(station.hotspots,[...sessionCompletedHotspotIds,hotspot.id])) {
@@ -283,27 +279,11 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                     img.src = DEFAULT_APP_BACKGROUND_DATA_URL;
                   }}
                 />
-                <span className="absolute inset-0 bg-gradient-to-t from-slate-950/62 via-transparent to-slate-950/10" />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => openImagePreview(index)}
-                className="absolute left-3 top-3 z-20 max-w-[72%] rounded-xl border border-white/80 bg-white/95 px-3 py-2 text-left shadow-lg"
-                aria-label={`Khám phá bức tranh ${station.titleVi} ở chế độ ảnh lớn`}
-              >
-                <div className="flex items-center gap-2 text-orange-600">
-                  <MapPin className="h-4 w-4 shrink-0" />
-                  <span className="truncate text-sm font-black">Điểm chạm {index + 1}/{station.hotspots.length} · {hotspot.titleVi}</span>
-                </div>
 
               </button>
 
               <button type="button" onClick={() => openImagePreview(index)} aria-label="Phóng to hình ảnh" className="absolute right-3 top-3 z-20 rounded-xl bg-slate-900/75 p-3 text-white shadow-lg"><Maximize2 className="h-5 w-5" /></button>
-            <div className="absolute bottom-3 left-3 z-20 inline-flex max-w-[calc(100%-1.5rem)] rounded-2xl bg-slate-950/30 p-1.5">
-              <button type="button" onClick={() => { if (playing) audioService.pauseNarration(); else if (paused) audioService.resumeNarration(); else speak(); }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-2 py-2 text-xs font-black text-white shadow"><Volume2 className="h-4 w-4 shrink-0" />{playing ? 'Tạm dừng' : paused ? 'Tiếp tục nghe' : 'Nghe thuyết minh'}</button>
 
-            </div>
             </div>
         <section className="stage-one-hotspot-ribbon mt-1 shrink-0 rounded-[1.5rem] border-2 border-amber-300 bg-gradient-to-r from-amber-50 via-white to-orange-50 p-3 shadow-md">
           <h2 className="mb-3 text-base font-black text-amber-900">📍 CÁC ĐIỂM CHẠM KHÁM PHÁ</h2>
@@ -318,15 +298,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() => {
-                      if (freeReview) {
-                        go(itemIndex);
-                      } else {
-                        audioService.playSfx('click');
-                        openImagePreview(itemIndex);
-                      }
-                    }}
-                    aria-disabled={false}
+                    onClick={() => go(itemIndex)}
+                    aria-current={active ? 'step' : undefined}
+                    aria-label={`Điểm ${itemIndex + 1}: ${item.titleVi} – ${done ? 'Đã khám phá' : unlocked ? 'Đang mở' : 'Chưa mở'}`}
+                    aria-disabled={!unlocked}
                     className={`group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border p-1.5 text-center transition ${
                       active
                         ? 'border-orange-500 bg-orange-50 shadow-lg ring-2 ring-orange-300'
@@ -371,7 +346,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       <span className={`mt-0.5 block text-[9px] font-bold ${
                         done ? 'text-emerald-600' : isCurrentOpen ? 'text-sky-600' : 'text-slate-400'
                       }`}>
-                        {done ? 'Hoàn thành' : isCurrentOpen ? 'Đang khám phá' : freeReview ? 'Sẵn sàng' : 'Xem ảnh trước'}
+                        {done ? 'Hoàn thành' : isCurrentOpen ? 'Đang khám phá' : freeReview ? 'Sẵn sàng' : 'Chưa mở'}
                       </span>
                     </span>
                     {!unlocked && freeReview && <span className="absolute inset-0 bg-white/15" />}
@@ -416,6 +391,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 </div>
               </div>
 
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button type="button" onClick={() => { if (playing) audioService.pauseNarration(); else if (paused) audioService.resumeNarration(); else speak(); }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-2 py-2 text-xs font-black text-white shadow"><Volume2 className="h-4 w-4 shrink-0" />{playing ? 'Tạm dừng' : paused ? 'Tiếp tục nghe' : 'Nghe thuyết minh'}</button>
+              <button type="button" onClick={speak} aria-label="Nghe lại lời dẫn" className="min-h-11 rounded-xl border border-orange-200 px-3 py-2 text-sm font-bold text-orange-800"><RotateCcw className="mr-1 inline h-4 w-4" />Nghe lại</button>
+            </div>
               <p className="mt-3 pr-1 text-[13px] font-semibold leading-6 text-slate-700 sm:text-[14px]">
                 {hotspot.narrationVi}
               </p>
@@ -445,7 +424,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   {hotspot.interaction.questionVi}
                 </p>
 
-                <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <div className="stage-one-answer-options mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {options.map(option => {
                     const active = selected === option.id;
                     let className =
@@ -475,6 +454,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   })}
                 </div>
 
+                {options.length !== 2 && <p role="alert" className="text-sm text-rose-700">Câu hỏi chưa đủ đáp án hợp lệ. Em hãy báo thầy cô để cập nhật nội dung.</p>}
                 {submitted && (
                   <p
                     className={`mt-2 rounded-xl p-3 text-[13px] font-bold leading-5 sm:text-[14px] ${correct
@@ -493,7 +473,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   {!submitted && (
                     <button
                       type="button"
-                      disabled={!selected || wrongLocked}
+                      disabled={options.length !== 2 || !selected || wrongLocked}
                       onClick={check}
                       className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 py-3.5 text-sm font-black !text-white shadow-md shadow-orange-200/70 transition hover:from-orange-600 hover:to-amber-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
                     >
@@ -509,7 +489,10 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             <div className="flex items-center gap-1.5 rounded-xl bg-emerald-50 px-3 py-2" aria-label="Tiến độ điểm chạm">
               {station.hotspots.map((item, itemIndex) => <span key={item.id} className={`h-2 flex-1 rounded-full ${itemIndex === index ? 'bg-orange-500' : completedHotspotIds.has(item.id) ? 'bg-emerald-400' : 'bg-slate-200'}`} />)}
             </div>
-            {submitted && correct && freeReview && <button type="button" onClick={next} className="rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-4 py-3 text-sm font-black text-white">{index === station.hotspots.length - 1 ? 'HOÀN THÀNH CHẶNG 1' : 'KHÁM PHÁ ĐIỂM TIẾP THEO'} <ChevronRight className="inline h-4 w-4" /></button>}
+            <div className="flex gap-2" aria-label="Chuyển điểm khám phá">
+              <button type="button" onClick={() => go(index - 1)} disabled={index === 0} className="min-h-11 flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold disabled:opacity-40"><ChevronLeft className="inline h-4 w-4" />Trước</button>
+              <button type="button" onClick={next} disabled={!freeReview && !explored} className="min-h-11 flex-1 rounded-xl bg-orange-500 px-3 py-2 text-sm font-bold text-white disabled:opacity-40">{index === station.hotspots.length - 1 ? 'Hoàn thành' : 'Tiếp theo'}<ChevronRight className="inline h-4 w-4" /></button>
+            </div>
 
           </aside>
         </div>

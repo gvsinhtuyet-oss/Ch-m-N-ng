@@ -1,7 +1,8 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,readFileSync} from 'node:fs';
-import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import phase1Baseline from './docs/stage2/phase1-source-hashes.json';
 import {grade3SharedConfigs,grade3NewPreviewIds} from './src/games/stage2/grade3';
 import {validateConfig} from './src/games/stage2/types';
 import {initialState,gameReducer,isCorrectMatch} from './src/games/stage2/state';
@@ -35,8 +36,9 @@ test('three stations share exactly one renderer/audio adapter; no three new HTML
  assert.equal(new Set(configs.map(c=>c.collectible.image)).size,3);
 });
 test('approved station 1/2 source, content, art and audio patterns remain byte-identical to phase 1',()=>{
- const files=['src/games/stage2/hoangDieu.ts','src/games/stage2/approved-v18.css','src/games/stage2/audioPatterns.ts','src/components/station/MyKheBanThanV12.tsx','src/components/station/HoangDieuPhanChauTrinhV18.tsx','public/games/grade3-my-khe-ban-than/v12/index.html','public/games/grade3-hoang-dieu-phan-chau-trinh/v18/index.html','src/data/grade3Content.ts'];
- for(const path of files){const old=execFileSync('git',['show',`7502586:${path}`],{maxBuffer:10*1024*1024});assert.deepEqual(readFileSync(path),old,path);}
+ // Frozen from the actual phase-1 commit in this repository. The old
+ // 7502586 ref is absent; hashes also work in GitHub's shallow CI checkout.
+ for(const [path,expected] of Object.entries(phase1Baseline.files))assert.equal(createHash('sha256').update(readFileSync(path)).digest('hex'),expected,path);
 });
 test('content facts trace to the existing grade 3 lesson narratives',()=>{
  const lesson=(id:string)=>GRADE3_CONTENT.find(l=>l.id===id)!.points.map(p=>p.narration).join(' ');

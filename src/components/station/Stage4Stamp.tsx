@@ -1,10 +1,11 @@
+import {JourneyMapDialog} from '../common/JourneyMapDialog';
 import React, { useState, useEffect, useRef } from 'react';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import confetti from 'canvas-confetti';
-import { RotateCcw, ArrowRight, KeyRound, ZoomIn, X, Stamp } from 'lucide-react';
+import { RotateCcw, ArrowRight, KeyRound, ZoomIn, Stamp } from 'lucide-react';
 import './journey-stages.css';
 
 interface Props {
@@ -159,12 +160,8 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
           <button type="button" onClick={() => { audioService.playSfx('click'); onExploreNext(); }} className="journey-control-next"><ArrowRight className="h-5 w-5 shrink-0" />Khám phá thêm</button>
         </div>
         {isReadOnly && <p className="journey-preview-note">Chế độ xem thử: không lưu phần thưởng.</p>}
-        {mapZoomed && (
-          <div role="dialog" aria-modal="true" aria-label="Bản đồ tri thức phóng to" onKeyDown={event => { if (event.key === 'Escape') setMapZoomed(false); }} className="fixed inset-0 z-[80] flex items-center justify-center bg-slate-950/95 p-3" onClick={() => setMapZoomed(false)}>
-            <button autoFocus type="button" onClick={() => setMapZoomed(false)} aria-label="Đóng bản đồ" className="absolute right-4 top-4 z-10 rounded-xl bg-white p-2 text-slate-900"><X className="h-6 w-6" /></button>
-            <div className="max-h-full max-w-full overflow-auto" onClick={event => event.stopPropagation()}>{station.journeyMap?.image && !mapImageFailed ? <img src={station.journeyMap.image} alt={"Bản đồ tri thức " + station.titleVi + " phóng to"} className="max-h-[90vh] max-w-full object-contain" /> : <div className="journey-map-fallback journey-map-fallback-zoom"><h3>BẢN ĐỒ TRI THỨC</h3><strong>{station.titleVi}</strong>{(station.journeyMap?.summaryNodes || []).map((node,index)=><p key={node.id || index}><b>{node.titleVi}: </b>{node.textVi}</p>)}</div>}</div>
-          </div>
-        )}
+        {mapZoomed && station.journeyMap?.image && <JourneyMapDialog image={station.journeyMap.image} title={'Bản đồ tri thức ' + station.titleVi} onClose={() => setMapZoomed(false)} />}
+
       </div>
     );
 };

@@ -35,7 +35,8 @@ test('all 20 learning points use local reviewed photographs with source metadata
    assert.ok(m);assert.ok(!('kind' in m)||m.kind==='photo');assert.ok('sourceUrl' in m&&m.sourceUrl&&m.author);
   }
   for(const h of station.hotspots){assert.ok(h.mediaCredit&&h.sources?.length);}
-  assert.match(readFileSync('public'+station.journeyMap!.image,'utf8'),/không phải ảnh tư liệu/);
+  assert.match(station.journeyMap!.image!,/^\/images\/maps\/.*\.webp$/);
+  assert.equal(readFileSync('public'+station.journeyMap!.image).toString('ascii',8,12),'WEBP');
  }
  const stream=GRADE_1_STATIONS.find(s=>s.id==='g1-station-3')!;assert.ok(stream.hotspots.every(h=>REAL_PHOTOS.some(m=>m.src===h.image&&m.sourceUrl.includes('vietnamtourism.vn'))));
 });

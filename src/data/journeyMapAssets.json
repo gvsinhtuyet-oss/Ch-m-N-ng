@@ -1,0 +1,202 @@
+[
+  {
+    "stationId": "g5-station-3",
+    "source": "Bà Nà - Hải Quan Vân.png",
+    "image": "/images/maps/g5-station-3.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 681464
+  },
+  {
+    "stationId": "g2-station-4",
+    "source": "Bản Đồ Tri Thức Hội An.png",
+    "image": "/images/maps/g2-station-4.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 672150
+  },
+  {
+    "stationId": "g4-thu-bon-hon-kem",
+    "source": "Bản Đồ Tri Thức Sông Thu Bồn.png",
+    "image": "/images/maps/g4-thu-bon-hon-kem.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 657090
+  },
+  {
+    "stationId": "g1-station-5",
+    "source": "Bản Đồ Ẩm Thực Đà Nẵng.png",
+    "image": "/images/maps/g1-station-5.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 620878
+  },
+  {
+    "stationId": "g1-station-4",
+    "source": "Bản đồ khám phá Thành Điện Hải.png",
+    "image": "/images/maps/g1-station-4.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 546158
+  },
+  {
+    "stationId": "g2-station-2",
+    "source": "Bản đồ khám phá thiên nhiên Đà Nẵng.png",
+    "image": "/images/maps/g2-station-2.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 666688
+  },
+  {
+    "stationId": "g4-station-3",
+    "source": "Bản đồ kinh tế Đà Nẵng rực rỡ.png",
+    "image": "/images/maps/g4-station-3.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 657062
+  },
+  {
+    "stationId": "g2-station-5",
+    "source": "Bản đồ lễ hội truyền thống Đà Nẵng.png",
+    "image": "/images/maps/g2-station-5.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 664546
+  },
+  {
+    "stationId": "g5-lua-ma-chau",
+    "source": "Bản đồ tri thức Lụa Mã Châu.png",
+    "image": "/images/maps/g5-lua-ma-chau.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 680742
+  },
+  {
+    "stationId": "g4-station-2",
+    "source": "Bản đồ tri thức Mỹ Sơn – Điêu khắc Chăm.png",
+    "image": "/images/maps/g4-station-2.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 688008
+  },
+  {
+    "stationId": "g5-station-4",
+    "source": "Bản đồ tri thức Ngũ Hành Sơn.png",
+    "image": "/images/maps/g5-station-4.webp",
+    "width": 1671,
+    "height": 941,
+    "bytes": 672846
+  },
+  {
+    "stationId": "g3-station-4",
+    "source": "Bản đồ tri thức Nước mắm Nam Ô.png",
+    "image": "/images/maps/g3-station-4.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 637452
+  },
+  {
+    "stationId": "g5-station-5",
+    "source": "Bản đồ tri thức Sâm Ngọc Linh.png",
+    "image": "/images/maps/g5-station-5.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 654232
+  },
+  {
+    "stationId": "g3-station-1",
+    "source": "Bản đồ tri thức biển Đà Nẵng (2).png",
+    "image": "/images/maps/g3-station-1.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 667604
+  },
+  {
+    "stationId": "g2-station-3",
+    "source": "Bản đồ tri thức di sản Đà Nẵng.png",
+    "image": "/images/maps/g2-station-3.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 644466
+  },
+  {
+    "stationId": "g3-station-5",
+    "source": "Bản đồ tri thức nghề đan thuyền thúng.png",
+    "image": "/images/maps/g3-station-5.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 684000
+  },
+  {
+    "stationId": "g4-station-4",
+    "source": "Bản đồ tri thức nghề đúc đồng Phước Kiều.png",
+    "image": "/images/maps/g4-station-4.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 635974
+  },
+  {
+    "stationId": "g3-station-3",
+    "source": "Bản đồ tri thức văn hóa Đà Nẵng.png",
+    "image": "/images/maps/g3-station-3.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 661260
+  },
+  {
+    "stationId": "g1-station-1",
+    "source": "Bản đồ tri thức Đà Nẵng cho em.png",
+    "image": "/images/maps/g1-station-1.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 594222
+  },
+  {
+    "stationId": "g1-station-3",
+    "source": "Bản đồ tri thức_ Những dòng suối Đà Nẵng.png",
+    "image": "/images/maps/g1-station-3.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 643532
+  },
+  {
+    "stationId": "g1-station-2",
+    "source": "Bản đồ trò chơi dân gian Đà Nẵng.png",
+    "image": "/images/maps/g1-station-2.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 571492
+  },
+  {
+    "stationId": "g2-station-1",
+    "source": "Khám phá nghề dệt chiếu Đà Nẵng.png",
+    "image": "/images/maps/g2-station-1.webp",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 689518
+  },
+  {
+    "stationId": "g5-ky-anh-me-nhu",
+    "source": "Mẹ Nhu.png",
+    "image": "/images/maps/g5-ky-anh-me-nhu.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 693276
+  },
+  {
+    "stationId": "g4-station-1",
+    "source": "Thiên nhiên con người ĐN.png",
+    "image": "/images/maps/g4-station-1.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 680730
+  },
+  {
+    "stationId": "g3-station-2",
+    "source": "Đà Nẵng_ Bản đồ tri thức yêu nước.png",
+    "image": "/images/maps/g3-station-2.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 597030
+  }
+]

@@ -23,7 +23,7 @@ export interface GradeTreasureProgress {
   explorerCertificateUnlocked: boolean;
 }
 
-class ProgressService {
+export class ProgressService {
   private memoryCache: Map<string, StudentStationProgress> = new Map();
 
   constructor() {

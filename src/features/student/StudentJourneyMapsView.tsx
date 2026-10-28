@@ -1,3 +1,4 @@
+import {JourneyMapDialog} from '../../components/common/JourneyMapDialog';
 import React, { useMemo, useState } from 'react';
 import confetti from 'canvas-confetti';
 import {
@@ -168,7 +169,7 @@ export const StudentJourneyMapsView: React.FC = () => {
       </section>
 
       <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs sm:text-sm text-amber-950 leading-relaxed">
-        <strong>Phiên bản demo:</strong> hiện mở 1/5 bài của mỗi khối. Rương Kho báu chỉ được mở thật khi học sinh hoàn thành đủ 5 bài,
+        <strong>Hành trình của em:</strong> mỗi khối có 5 trạm. Rương Kho báu được mở khi học sinh hoàn thành đủ 5 bài,
         nhận đủ 5 Bản đồ hành trình và 5 Mảnh chìa khóa. Nút xem trước bên dưới chỉ minh họa thiết kế phần thưởng cuối khối.
       </div>
 
@@ -245,7 +246,7 @@ export const StudentJourneyMapsView: React.FC = () => {
                     <div className="text-amber-700 text-xs font-black">XEM THỬ BẢN ĐỒ DEMO</div>
                   ) : (
                     <div className="text-slate-500 text-xs font-bold">
-                      Hoàn thành bài và Đổi quà để mở
+                      Hoàn thành ba chặng và đóng dấu ở Chặng 4 để mở
                     </div>
                   )}
                 </div>
@@ -300,28 +301,7 @@ export const StudentJourneyMapsView: React.FC = () => {
         </div>
       </section>
 
-      {selectedStation && mapZoomed && (
-        <div className="fixed inset-0 z-[70] bg-slate-950/95 p-3 sm:p-6 flex items-center justify-center" onClick={() => setMapZoomed(false)}>
-          <button
-            type="button"
-            onClick={() => setMapZoomed(false)}
-            className="absolute top-4 right-4 z-10 h-11 w-11 rounded-xl bg-white/15 text-white flex items-center justify-center hover:bg-white/25"
-            aria-label="Đóng ảnh phóng to"
-          >
-            <X className="h-6 w-6" />
-          </button>
-          <img
-            src={selectedStation.journeyMap?.image || selectedStation.coverImage}
-            alt={'Bản đồ hành trình phóng to ' + selectedStation.titleVi}
-            className="max-h-full max-w-full object-contain rounded-xl shadow-2xl"
-            onClick={event => event.stopPropagation()}
-            onError={event => {
-              const img = event.currentTarget;
-              if (img.src !== selectedStation.coverImage) img.src = selectedStation.coverImage;
-            }}
-          />
-        </div>
-      )}
+      {selectedStation && mapZoomed && selectedStation.journeyMap?.image && <JourneyMapDialog image={selectedStation.journeyMap.image} title={'Bản đồ hành trình ' + selectedStation.titleVi} onClose={() => setMapZoomed(false)} />}
 
       {selectedStation && (
         <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md p-3 sm:p-6 overflow-y-auto">

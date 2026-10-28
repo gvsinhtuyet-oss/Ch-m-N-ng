@@ -52,6 +52,8 @@
 
 /* Shared lesson: natural document flow, including short desktop viewports. */
 .station-stage1-compact.station-viewport{height:auto;min-height:0;max-width:1600px;overflow:visible;padding:8px}
+/* Tools now live in the header; the lesson is the sole grid child. */
+.station-stage1-compact .station-exploration-layout{grid-template-columns:minmax(0,1fr)}
 .station-stage1-compact>.station-lesson-panel,
 .station-stage1-compact .station-exploration-layout,
 .station-stage1-compact .station-exploration-layout>div,

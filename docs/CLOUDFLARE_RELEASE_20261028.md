@@ -18,7 +18,8 @@ CHƯA triển khai/CHƯA nghiệm thu Cloudflare. Không coi bản build là m�
 ## Cấu hình Pages dự kiến (chưa thực hiện trên tài khoản)
 
 - Kết nối đúng repository `gvsinhtuyet-oss/Ch-m-N-ng`; chỉ cấp quyền repository này nếu UI hỗ trợ.
-- Build: `npm run lint && npm run build`; output: `dist`; root: repository root; Node.js 22.
+- Build: `npm ci --no-audit --no-fund && npm run lint && npm run build`; output: `dist`; root: repository root; `NODE_VERSION=22`, `SKIP_DEPENDENCY_INSTALL=true`.
+- Cloudflare mặc định chọn bun.lock cũ và lỗi frozen lockfile (esbuild ^0.25.0 → ^0.28.0). Dùng npm ci với package-lock đã kiểm thử; không xóa tệp nguồn hoặc đổi gói thanh toán.
 - `functions/` ở repository root, không bỏ qua Functions hoặc chỉ kéo-thả `dist`.
 - Không cần bí mật mới trên Pages: gateway dùng backend công khai hiện có.
 - Tạo preview nhánh triển khai, kiểm tra API/login/lưu học liệu và học sinh trước khi gộp main và kích hoạt main production auto-deploy.
@@ -45,6 +46,8 @@ CHƯA triển khai/CHƯA nghiệm thu Cloudflare. Không coi bản build là m�
 - Cloudflare đang ở màn hình đăng nhập tài khoản đã lưu; người dùng cần hoàn tất đăng nhập/điều khoản trong giao diện bảo mật, không gửi bí mật trong chat.
 - Wrangler 4.154.0 biên dịch Pages Function thành công. Local `pages dev` bị lỗi môi trường `uv_interface_addresses`, nên chưa tuyên bố chạy thành công trong runtime Workers. API gateway đã chạy qua Node HTTP integration, nhưng vẫn cần nghiệm thu trên preview Cloudflare thật.
 - Bộ TS/TSX đạt 200/201 ở clone nông; bài còn lại thiếu lịch sử `39ddc40`. Sau `git fetch --unshallow`, bài grade45 được chạy lại và cả 22 kiểm thử của tệp đều đạt. Đây là thiếu lịch sử clone, không phải lỗi ứng dụng.
+- 28/10: Cloudflare đã build và tạo deployment `becdd547-5d32-4f81-96ae-27b779201a24` từ 056028b. Preview công khai mở được và /api/health qua gateway báo Firestore đọc/ghi connected, Admin ready. Chưa có đăng nhập Admin trên domain mới.
+- Kiểm tra thực tế desktop 1366×900 phát hiện lỗi từ bố cục PR20: `station-exploration-layout` vẫn dành cột 100px cho công cụ đã chuyển lên header, làm bài học bị bó chiều ngang. Sửa grid ngoài thành một cột đầy đủ; grid bài học bên trong vẫn 60/40. Chưa nghiệm thu bản sửa cho đến khi deployment mới lên.
 - 30 kiểm thử server/auth/storage/sync cũ đạt; 3 gateway security tests, 3 HTTP integration scenarios và 2 kiểm thử đường dẫn Admin mới đạt. TypeScript và production build đạt; 666 tệp/82.337.211 byte, tệp lớn nhất 1.563.485 byte.
 
 Nguồn: https://developers.cloudflare.com/pages/platform/limits/

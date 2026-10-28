@@ -4,8 +4,9 @@ import {mkdtemp,writeFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {spawn} from 'node:child_process';
+import {proxyApi} from './functions/api/[[path]].js';
 
-for (const runtime of ['production','vite']) test(runtime+' HTTP server: Admin, Teacher, GDĐP, one learner sync and class report', {timeout:40000},async()=>{
+for (const runtime of ['production','vite','pages-gateway']) test(runtime+' HTTP server: Admin, Teacher, GDĐP, one learner sync and class report', {timeout:40000},async()=>{
  const dir=await mkdtemp(join(tmpdir(),'cham-api-test-'));
  const preload=join(dir,'mock-firestore.mjs');
  // No credentials or live Firestore are used. Exercise the production REST adapter with a deterministic store.
@@ -28,9 +29,26 @@ for (const runtime of ['production','vite']) test(runtime+' HTTP server: Admin, 
  child.stdout.on('data',x=>{output+=x.toString().replace(/\x1b\[[0-9;]*m/g,'');const match=output.match(runtime==='vite'?/127\.0\.0\.1:(\d+)/:/started port=(\d+)/);if(match){clearTimeout(timer);resolve(match[1]);}});
  child.once('exit',code=>{clearTimeout(timer);reject(new Error('Server exited '+code+' '+logs));});child.once('error',reject);});
  const base='http://127.0.0.1:'+port;
- const call=async(path,method='GET',data,cookie='')=>{const r=await fetch(base+path,{method,headers:{Origin:base,...(data?{'Content-Type':'application/json'}:{}),...(cookie?{Cookie:cookie}:{})},...(data?{body:JSON.stringify(data)}:{})});return {status:r.status,data:await r.json(),cookie:r.headers.get('set-cookie')?.split(';')[0]};};
+ const call=async(path,method='GET',data,cookie='')=>{
+   const frontend=runtime==='pages-gateway'?'https://synthetic-contest.pages.dev':base;
+   const request=new Request(frontend+path,{method,headers:{Origin:frontend,...(data?{'Content-Type':'application/json'}:{}),...(cookie?{Cookie:cookie}:{})},...(data?{body:JSON.stringify(data)}:{})});
+   const r=runtime==='pages-gateway'?await proxyApi(request,async(url,options)=>{
+     // Route only this test's upstream to its isolated local Firestore mock.
+     const parsed=new URL(url);const headers=new Headers(options.headers);
+     if(headers.has('origin'))headers.set('origin',base);
+     return fetch(base+parsed.pathname+parsed.search,{...options,headers});
+   }):await fetch(request);
+   return {status:r.status,data:await r.json(),cookie:r.headers.get('set-cookie')?.split(';')[0]};
+ };
  assert.equal((await call('/api/health')).data.auth.ready,true);
  const admin=await call('/api/auth/login','POST',{email:'owner@example.com',password:'Synthetic-owner-password-42'});assert.equal(admin.status,200);
+ const material={coverImage:'https://synthetic-contest.pages.dev/learning/grade1/media/han-river-bridge.webp',
+   mapImage:'https://synthetic-contest.pages.dev/images/maps/g1-station-1.webp',
+   hotspots:[{id:'test-point',titleVi:'Điểm thử',narrationVi:'Lời dẫn thử',keyFactVi:'Kiến thức thử',image:'https://synthetic-contest.pages.dev/images/real-photos/my-khe-31.webp'}],
+   resources:[{id:'trial',title:'Học liệu kiểm thử',kind:'image',url:'https://synthetic-contest.pages.dev/images/maps/g1-station-1.webp'}]};
+ assert.equal((await call('/api/content/g1-station-1','PUT',material)).status,401);
+ assert.equal((await call('/api/content/g1-station-1','PUT',material,admin.cookie)).status,200);
+ assert.deepEqual((await call('/api/content')).data.stations['g1-station-1'].resources,material.resources);
  assert.equal((await call('/api/admin/users','POST',{email:'teacher@example.com',name:'GV thử nghiệm',password:'Synthetic-teacher-password-42'},admin.cookie)).status,200);
  const teacher=await call('/api/auth/login','POST',{email:'teacher@example.com',password:'Synthetic-teacher-password-42'});assert.equal(teacher.data.user.role,'teacher');
  assert.equal((await call('/api/admin/gddp/catalog','GET',undefined,teacher.cookie)).status,403);

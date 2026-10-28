@@ -58,7 +58,7 @@ export const LandingView: React.FC = () => {
   const [loginError, setLoginError] = useState<string>('');
   const [introActive, setIntroActive] = useState(true);
   const [theme, setTheme] = useState(readTheme);
-  const [mobileBackground, setMobileBackground] = useState(() => window.matchMedia('(max-width: 767px)').matches);
+  const [mobileBackground, setMobileBackground] = useState(() => window.matchMedia('(max-width: 1023px) and (orientation: portrait)').matches);
   const introFrameRef = useRef<HTMLIFrameElement | null>(null);
 
   const STUDENT_PROFILE_KEY = 'cham_danang_student_profile_v1';
@@ -66,7 +66,7 @@ export const LandingView: React.FC = () => {
   useEffect(() => {
     const refresh = () => setTheme(readTheme());
     const refreshStorage = () => setTheme(readTheme(true));
-    const query = window.matchMedia('(max-width: 767px)');
+    const query = window.matchMedia('(max-width: 1023px) and (orientation: portrait)');
     const resize = () => setMobileBackground(query.matches);
     window.addEventListener('cham-theme-changed', refresh);
     window.addEventListener('storage', refreshStorage);
@@ -82,7 +82,7 @@ export const LandingView: React.FC = () => {
     mobileBackground
       ? theme.coverMobile || theme.coverDesktop
       : theme.coverDesktop || theme.coverMobile
-  ) || (mobileBackground ? '/images/landing/danang-hoian-mobile.webp' : '/images/landing/danang-hoian-desktop.webp');
+  ) || (mobileBackground ? '/images/landing/science-mobile.webp' : '/images/landing/science-desktop.webp');
 
   const roleBackground = (
     mobileBackground
@@ -300,17 +300,18 @@ export const LandingView: React.FC = () => {
   };
 
   return (
-    <div className="relative h-[100dvh] w-full flex flex-col justify-between overflow-hidden bg-sky-800 text-white select-none">
+    <div className="landing-art-shell text-white select-none">
+      <div className="landing-art-scene">
       {/* Nền trang bìa do Quản trị cài riêng. */}
       <img
         src={coverBackground}
         alt=""
         aria-hidden="true"
         className="landing-cover-background absolute inset-0 h-full w-full object-cover"
-        style={{ filter: 'blur(' + theme.blur + 'px)', transform: 'scale(1.025)' }}
+        style={{ filter: 'blur(' + theme.blur + 'px)' }}
       />
       <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/35 via-slate-950/5 to-slate-950/40 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/15 via-transparent to-slate-950/15 pointer-events-none" />
       <div className="absolute inset-0 bg-radial from-transparent via-transparent to-slate-950/15 pointer-events-none" />
 
       {/* Top Bar on Cover Page */}
@@ -408,7 +409,6 @@ export const LandingView: React.FC = () => {
         )}
 
         <div className="landing-cover-actions">
-          <p className="landing-cover-invitation">Mỗi điểm chạm,<br /><strong>một điều kỳ diệu</strong></p>
           <button onClick={handleStartJourney} className="group flex items-center gap-2 rounded-[22px] border-b-[6px] border-amber-700 bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 px-5 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg font-black text-slate-950 shadow-[0_8px_25px_rgba(0,0,0,.35)] transition hover:scale-105 active:translate-y-1 active:border-b-2">
             <Compass className="h-6 w-6 text-blue-900 group-hover:rotate-45 transition-transform"/> CHẠM ĐỂ KHÁM PHÁ <ArrowRight className="h-5 w-5"/>
           </button>
@@ -436,6 +436,8 @@ export const LandingView: React.FC = () => {
         </div>
         <button type="button" onClick={()=>{setAdminLogin(true);setShowTeacherLogin(true);setShowStudentLogin(false);setShowRolePicker(true);setLoginError('');setStaffPassword('');}} className="inline-flex items-center gap-1 text-[10px] text-slate-300/75 hover:text-white transition" aria-label="Đăng nhập quản trị"><Settings className="w-3 h-3" /> Quản trị</button>
       </footer>
+
+      </div>
 
       {/* Role Picker Modal */}
       {showRolePicker && (

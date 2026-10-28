@@ -91,12 +91,13 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   };
 
   const stages = [
-    { num: 1, title: 'Chặng 1', name: 'Đánh dấu điểm đến', icon: Compass },
+    { num: 1, title: 'Chặng 1', name: 'Khám phá điểm đến', icon: Compass },
     { num: 2, title: 'Chặng 2', name: 'Vượt qua thử thách', icon: Award },
     { num: 3, title: 'Chặng 3', name: 'Check-in cảm xúc', icon: Heart },
     { num: 4, title: 'Chặng 4', name: 'Dấu ấn hành trình', icon: Sparkles },
   ];
 
+  const shortNames = ['Khám phá', 'Thử thách', 'Cảm xúc', 'Dấu ấn'];
   const renderStageTabs = (label: string) => (
     <nav aria-label={label} className="station-stage-tabs">
       {stages.map(st => {
@@ -113,9 +114,8 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
             lessonPanelRef.current?.scrollTo({top: 0});
           }}
           className={`station-stage-tab ${active ? 'is-active' : ''} ${done ? 'is-complete' : ''}`}>
-          <span className="station-stage-tab-title">{done ? <CheckCircle2 aria-hidden="true" /> : !clickable ? <LockKeyhole aria-hidden="true" /> : <st.icon aria-hidden="true" />}{st.title}</span>
-          <span className="station-stage-tab-name">{st.name}</span>
-          <span className="station-stage-tab-status">{active ? `Đang xem · ${status}` : status}</span>
+          <span className="station-stage-tab-title">{!clickable ? <LockKeyhole aria-hidden="true" /> : <st.icon aria-hidden="true" />}{done && <CheckCircle2 className="station-stage-complete-mark" aria-hidden="true" />}</span>
+          <span className="station-stage-tab-name">{shortNames[st.num - 1]}</span>
         </button>;
       })}
     </nav>
@@ -124,26 +124,14 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   return (
     <div ref={fullscreenRef} className={`station-immersive-root ${currentStage === 1 ? "station-stage1-compact" : ""} ${isLessonFullscreen ? "station-immersive-active" : ""} ${isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}`}>
             {/* Top Station Header bar */}
-      <div className="relative z-10 flex flex-col gap-3 rounded-[1.5rem] border border-amber-200/80 bg-white/95 px-3 py-3 shadow-md backdrop-blur-lg lg:flex-row lg:items-center lg:gap-5 lg:px-5">
-        <div className="flex min-w-0 flex-1 items-center gap-3">
-          <button type="button" onClick={() => { audioService.playSfx('click'); onBack(); }} aria-label="Quay lại danh sách trạm" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-700 hover:bg-slate-200"><ArrowLeft className="h-5 w-5" /></button>
-          <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] font-bold">
-              <span className="rounded-md bg-orange-500 px-2 py-0.5 font-black text-white">Trạm {station.number}</span>
-              <span className="text-slate-500">Khối {station.grade}</span>
-              <span className="hidden text-slate-300 sm:inline">•</span>
-              <span className="hidden text-amber-700 sm:inline">{station.themeNameVi}</span>
-            </div>
-            <h1 className="mt-1 text-lg font-black leading-tight tracking-tight text-slate-950 sm:text-xl xl:text-[1.45rem]">{station.titleVi}</h1>
-          </div>
-        </div>
+      <div className="station-compact-header relative z-10">
+        <button type="button" onClick={() => { audioService.playSfx('click'); onBack(); }} aria-label="Quay lại danh sách trạm" className="station-compact-back"><ArrowLeft aria-hidden="true" /></button>
+        <h1 className="station-compact-title" title={station.titleVi}>{station.titleVi}</h1>
+        {renderStageTabs("Bốn chặng hành trình")}
         {currentStage === 1 && stationHasExplorationTools(station) && <div className="station-header-map"><StationExplorationTools station={station} onOpenChange={setToolsOpen} /></div>}
-        <div className="flex min-w-0 flex-1 items-center gap-2 lg:max-w-[650px]">
-          {renderStageTabs("Bản đồ hành trình 4 chặng")}
-          <div className="flex shrink-0 flex-col gap-1">
-            <button type="button" onClick={toggleLessonFullscreen} aria-label={isLessonFullscreen ? 'Thu nhỏ bài học' : 'Toàn màn hình'} title="Toàn màn hình" className="rounded-xl bg-sky-700 p-2.5 text-white hover:bg-sky-800"><Maximize2 className="h-4 w-4" /></button>
-            <button type="button" onClick={handleDownload} disabled={downloading || Boolean(offlinePkg)} title={offlinePkg ? 'Demo offline đã lưu' : 'Tải demo offline'} aria-label="Tải demo offline" className="rounded-xl border border-sky-200 bg-sky-50 p-2.5 text-sky-800 disabled:opacity-50"><Download className="h-4 w-4" /></button>
-          </div>
+        <div className="station-compact-actions">
+          <button type="button" onClick={toggleLessonFullscreen} aria-label={isLessonFullscreen ? 'Thu nhỏ bài học' : 'Toàn màn hình'} title="Toàn màn hình" className="station-compact-action"><Maximize2 aria-hidden="true" /></button>
+          <button type="button" onClick={handleDownload} disabled={downloading || Boolean(offlinePkg)} title={offlinePkg ? 'Demo offline đã lưu' : 'Tải demo offline'} aria-label="Tải demo offline" className="station-compact-action"><Download aria-hidden="true" /></button>
         </div>
       </div>
 

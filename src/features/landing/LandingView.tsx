@@ -1,3 +1,4 @@
+import './landing-cover.css';
 import {GoogleTeacherLogin} from '../../components/auth/GoogleTeacherLogin';
 import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
@@ -81,7 +82,7 @@ export const LandingView: React.FC = () => {
     mobileBackground
       ? theme.coverMobile || theme.coverDesktop
       : theme.coverDesktop || theme.coverMobile
-  ) || DEFAULT_APP_BACKGROUND_DATA_URL;
+  ) || '/learning/grade1/media/dragon-bridge.webp';
 
   const roleBackground = (
     mobileBackground
@@ -305,7 +306,7 @@ export const LandingView: React.FC = () => {
         src={coverBackground}
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="landing-cover-background absolute inset-0 h-full w-full object-cover"
         style={{ filter: 'blur(' + theme.blur + 'px)', transform: 'scale(1.025)' }}
       />
       <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
@@ -360,9 +361,9 @@ export const LandingView: React.FC = () => {
       </header>
 
       {/* Compact cinematic cover: app identity → intro video → explore */}
-      <main className="relative z-20 w-full max-w-[1500px] min-h-0 flex-1 mx-auto px-3 sm:px-6 py-1 flex flex-col lg:flex-row-reverse items-center justify-center gap-2 lg:gap-6 text-center overflow-hidden">
-        <div className="flex flex-col items-center justify-center gap-0.5 lg:w-[48%] shrink-0">
-          <h1 className="text-[clamp(1.45rem,4vw,3.6rem)] font-black tracking-tight text-amber-300 leading-tight [text-shadow:3px_4px_0_#07549c,5px_7px_8px_rgba(0,0,0,.65)]">
+      <main data-intro-active={introActive} className="landing-cover-main relative z-20 w-full min-h-0 flex-1 mx-auto text-center">
+        <div className="landing-cover-identity">
+          <h1 className="landing-cover-title">
             CHẠM ĐÀ NẴNG
           </h1>
           <p className="text-xs sm:text-lg xl:text-2xl font-extrabold text-white tracking-tight drop-shadow-md">
@@ -372,9 +373,9 @@ export const LandingView: React.FC = () => {
 
         {/* Video giới thiệu giữ nguyên nguồn gốc và tự phát khi trình duyệt cho phép. */}
         {introActive && (
-          <div className="relative w-full max-w-[620px] lg:w-[52%] min-w-0 shrink min-h-0">
+          <div className="landing-cover-video relative min-w-0">
             <div className="absolute -inset-1 rounded-[22px] sm:rounded-[26px] bg-gradient-to-r from-sky-500/35 via-white/10 to-amber-400/35 blur-lg pointer-events-none" />
-            <div className="relative aspect-video max-h-[33dvh] lg:max-h-[49dvh] overflow-hidden rounded-2xl sm:rounded-3xl border-[3px] border-white/80 bg-black shadow-2xl shadow-slate-950/60">
+            <div className="landing-cover-player relative overflow-hidden rounded-2xl sm:rounded-3xl border-[3px] border-white/80 bg-black shadow-2xl shadow-slate-950/60">
               <iframe
                 ref={introFrameRef}
                 className="absolute inset-0 h-full w-full"
@@ -406,7 +407,7 @@ export const LandingView: React.FC = () => {
           </div>
         )}
 
-        <div className="flex flex-row lg:flex-col items-center justify-center gap-2 lg:absolute lg:top-[66%] lg:right-[4%] lg:w-[42%] lg:-translate-y-1/4 shrink-0">
+        <div className="landing-cover-actions">
           <button onClick={handleStartJourney} className="group flex items-center gap-2 rounded-[22px] border-b-[6px] border-amber-700 bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 px-5 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg font-black text-slate-950 shadow-[0_8px_25px_rgba(0,0,0,.35)] transition hover:scale-105 active:translate-y-1 active:border-b-2">
             <Compass className="h-6 w-6 text-blue-900 group-hover:rotate-45 transition-transform"/> CHẠM ĐỂ KHÁM PHÁ <ArrowRight className="h-5 w-5"/>
           </button>
@@ -414,7 +415,7 @@ export const LandingView: React.FC = () => {
             <Globe className="h-6 w-6 text-white"/><span className="sr-only">VR360°</span>
           </a>
         </div>
-        <div className="hidden xl:flex absolute bottom-0 left-1/2 -translate-x-1/2 flex-wrap items-center justify-center gap-4 rounded-2xl bg-slate-950/60 px-5 py-2 text-xs font-bold text-white backdrop-blur-sm">
+        <div className="landing-cover-features">
           <span>5 khối lớp</span><span>25 trạm khám phá</span><span>VR360°</span><span>Hộ chiếu số</span><span>Audio & Quiz</span>
         </div>
       </main>

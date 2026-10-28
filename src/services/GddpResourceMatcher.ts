@@ -67,7 +67,7 @@ export function matchGddpResources(row:GddpRecord, stations:Station[]):MatchedLe
       const automatic=links.length===0 && titleTokens.length>=2 && overlap.length>=2 &&
         overlap.length >= Math.ceil(titleTokens.length*0.8) &&
         (topic.includes(norm(cleanTitle)) || overlap.length>=3);
-      if(explicitlyLinked || automatic || curatedStation)
+      if(explicitlyLinked || automatic || (links.length===0 && curatedStation))
         matched.push({station,hotspot,reason:explicitlyLinked?'Được Admin liên kết':curatedStation?'Gợi ý theo chủ đề; giáo viên cần duyệt':'Khớp chủ đề học liệu'});
     }
   }

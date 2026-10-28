@@ -82,7 +82,7 @@ export const LandingView: React.FC = () => {
     mobileBackground
       ? theme.coverMobile || theme.coverDesktop
       : theme.coverDesktop || theme.coverMobile
-  ) || '/learning/grade1/media/dragon-bridge.webp';
+  ) || (mobileBackground ? '/images/landing/danang-hoian-mobile.webp' : '/images/landing/danang-hoian-desktop.webp');
 
   const roleBackground = (
     mobileBackground

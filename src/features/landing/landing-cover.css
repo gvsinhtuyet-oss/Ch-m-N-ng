@@ -3,7 +3,7 @@
 .landing-art-shell { width: 100%; height: 100dvh; overflow: hidden; display: grid; place-items: center; background: #063952; }
 .landing-art-scene { position: relative; width: min(100vw, calc(100dvh * 1672 / 941)); height: min(100dvh, calc(100vw * 941 / 1672)); container-type: size; }
 .landing-cover-background { object-fit: fill; }
-.landing-art-scene > header { position: absolute; inset: 0 0 auto; max-width: none; padding: 8px 16px; }
+.landing-art-scene > header { z-index: 30; position: absolute; inset: 0 0 auto; max-width: none; padding: 8px 16px; }
 .landing-cover-main { position: absolute; inset: 0; max-width: none; margin: 0; padding: 0; }
 .landing-cover-identity { position: absolute; top: 9%; left: 5%; width: 90%; text-align: center; }
 .landing-cover-title { margin: 0 0 4px; font-size: clamp(26px, 5.2cqw, 88px); font-weight: 950; line-height: 1.12; letter-spacing: -.035em; color: #ffe563; text-shadow: 0 2px 0 #9b6406, 0 4px 0 #075489, 0 5px 16px #004b74; }
@@ -19,7 +19,7 @@
 .landing-cover-vr:hover { background: #07535e; }
 .landing-cover-vr:focus-visible { outline: 3px solid white; outline-offset: 3px; }
 .landing-cover-features { position: absolute; bottom: 8%; left: 0; width: 100%; display: flex; justify-content: center; gap: 20px; font-size: clamp(10px, .85cqw, 14px); font-weight: 700; text-shadow: 0 1px 4px #002f49; }
-.landing-art-scene > footer { position: absolute; bottom: 0; left: 0; width: 100%; max-width: none; padding: 5px 12px; background: #033552b3; }
+.landing-art-scene > footer { z-index: 30; position: absolute; bottom: 0; left: 0; width: 100%; max-width: none; padding: 5px 12px; background: #033552b3; }
 @media (max-width: 1023px) and (orientation: portrait) {
   .landing-art-scene { width: min(100vw, calc(100dvh * 853 / 1844)); height: min(100dvh, calc(100vw * 1844 / 853)); }
   .landing-art-scene > header { padding: 6px 8px; gap: 4px; }

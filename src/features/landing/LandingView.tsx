@@ -313,7 +313,7 @@ export const LandingView: React.FC = () => {
       <div className="absolute inset-0 bg-radial from-transparent via-slate-950/10 to-slate-950/45 pointer-events-none" />
 
       {/* Top Bar on Cover Page */}
-      <header className="relative z-20 w-full max-w-[1600px] mx-auto px-3 sm:px-6 pt-2 sm:pt-4 pb-1 flex items-center justify-between gap-2">
+      <header className="relative z-20 w-full max-w-[1600px] mx-auto px-3 sm:px-6 pt-1 sm:pt-2 pb-1 flex items-center justify-between gap-2">
         {/* Brand identity */}
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-sky-500 to-amber-400 p-0.5 shadow-lg shadow-sky-500/20">
@@ -360,9 +360,9 @@ export const LandingView: React.FC = () => {
       </header>
 
       {/* Compact cinematic cover: app identity → intro video → explore */}
-      <main className="relative z-20 w-full max-w-[1500px] min-h-0 mx-auto px-3 sm:px-6 py-1 flex flex-col lg:flex-row-reverse items-center justify-center gap-3 lg:gap-8 my-auto text-center">
-        <div className="flex flex-col items-center justify-center gap-2 lg:w-[48%] shrink-0">
-          <h1 className="text-[clamp(1.7rem,5vw,4.6rem)] font-black tracking-tight text-amber-300 leading-tight [text-shadow:3px_4px_0_#07549c,5px_7px_8px_rgba(0,0,0,.65)]">
+      <main className="relative z-20 w-full max-w-[1500px] min-h-0 flex-1 mx-auto px-3 sm:px-6 py-1 flex flex-col lg:flex-row-reverse items-center justify-center gap-2 lg:gap-6 text-center overflow-hidden">
+        <div className="flex flex-col items-center justify-center gap-0.5 lg:w-[48%] shrink-0">
+          <h1 className="text-[clamp(1.45rem,4vw,3.6rem)] font-black tracking-tight text-amber-300 leading-tight [text-shadow:3px_4px_0_#07549c,5px_7px_8px_rgba(0,0,0,.65)]">
             CHẠM ĐÀ NẴNG
           </h1>
           <p className="text-xs sm:text-lg xl:text-2xl font-extrabold text-white tracking-tight drop-shadow-md">
@@ -370,12 +370,11 @@ export const LandingView: React.FC = () => {
           </p>
         </div>
 
-        </div>
         {/* Video giới thiệu giữ nguyên nguồn gốc và tự phát khi trình duyệt cho phép. */}
         {introActive && (
-          <div className="relative w-full max-w-[680px] lg:w-[52%] min-w-0">
+          <div className="relative w-full max-w-[620px] lg:w-[52%] min-w-0 shrink min-h-0">
             <div className="absolute -inset-1 rounded-[22px] sm:rounded-[26px] bg-gradient-to-r from-sky-500/35 via-white/10 to-amber-400/35 blur-lg pointer-events-none" />
-            <div className="relative aspect-video max-h-[38dvh] lg:max-h-[55dvh] overflow-hidden rounded-2xl sm:rounded-3xl border-[3px] border-white/80 bg-black shadow-2xl shadow-slate-950/60">
+            <div className="relative aspect-video max-h-[33dvh] lg:max-h-[49dvh] overflow-hidden rounded-2xl sm:rounded-3xl border-[3px] border-white/80 bg-black shadow-2xl shadow-slate-950/60">
               <iframe
                 ref={introFrameRef}
                 className="absolute inset-0 h-full w-full"
@@ -407,15 +406,15 @@ export const LandingView: React.FC = () => {
           </div>
         )}
 
-        <div className="flex flex-col items-center gap-2 lg:absolute lg:top-[65%] lg:right-[4%] lg:w-[42%] lg:-translate-y-1/4">
+        <div className="flex flex-row lg:flex-col items-center justify-center gap-2 lg:absolute lg:top-[66%] lg:right-[4%] lg:w-[42%] lg:-translate-y-1/4 shrink-0">
           <button onClick={handleStartJourney} className="group flex items-center gap-2 rounded-[22px] border-b-[6px] border-amber-700 bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 px-5 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg font-black text-slate-950 shadow-[0_8px_25px_rgba(0,0,0,.35)] transition hover:scale-105 active:translate-y-1 active:border-b-2">
             <Compass className="h-6 w-6 text-blue-900 group-hover:rotate-45 transition-transform"/> CHẠM ĐỂ KHÁM PHÁ <ArrowRight className="h-5 w-5"/>
           </button>
-          <a href="https://vr360.com.vn/projects/danang-virtual-tourists/" target="_blank" rel="noopener noreferrer" title="Khám phá Đà Nẵng 360°" aria-label="Khám phá Đà Nẵng 360 độ" className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border-2 border-violet-200 bg-gradient-to-br from-indigo-500 via-violet-600 to-purple-900 shadow-[0_5px_20px_rgba(110,50,255,.55)] transition hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
-            <Globe className="h-7 w-7 text-white"/><span className="sr-only">VR360°</span>
+          <a href="https://vr360.com.vn/projects/danang-virtual-tourists/" target="_blank" rel="noopener noreferrer" title="Khám phá Đà Nẵng 360°" aria-label="Khám phá Đà Nẵng 360 độ" className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border-2 border-violet-200 bg-gradient-to-br from-indigo-500 via-violet-600 to-purple-900 shadow-[0_5px_20px_rgba(110,50,255,.55)] transition hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
+            <Globe className="h-6 w-6 text-white"/><span className="sr-only">VR360°</span>
           </a>
         </div>
-        <div className="hidden lg:flex absolute bottom-0 left-1/2 -translate-x-1/2 flex-wrap items-center justify-center gap-4 rounded-2xl bg-slate-950/60 px-5 py-2 text-xs font-bold text-white backdrop-blur-sm">
+        <div className="hidden xl:flex absolute bottom-0 left-1/2 -translate-x-1/2 flex-wrap items-center justify-center gap-4 rounded-2xl bg-slate-950/60 px-5 py-2 text-xs font-bold text-white backdrop-blur-sm">
           <span>5 khối lớp</span><span>25 trạm khám phá</span><span>VR360°</span><span>Hộ chiếu số</span><span>Audio & Quiz</span>
         </div>
       </main>

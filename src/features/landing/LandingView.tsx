@@ -310,8 +310,8 @@ export const LandingView: React.FC = () => {
         style={{ filter: 'blur(' + theme.blur + 'px)', transform: 'scale(1.025)' }}
       />
       <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/65 via-slate-950/28 to-slate-950/72 pointer-events-none" />
-      <div className="absolute inset-0 bg-radial from-transparent via-slate-950/10 to-slate-950/45 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/35 via-slate-950/5 to-slate-950/40 pointer-events-none" />
+      <div className="absolute inset-0 bg-radial from-transparent via-transparent to-slate-950/15 pointer-events-none" />
 
       {/* Top Bar on Cover Page */}
       <header className="relative z-20 w-full max-w-[1600px] mx-auto px-3 sm:px-6 pt-1 sm:pt-2 pb-1 flex items-center justify-between gap-2">

@@ -117,8 +117,8 @@ export const StudentJourneyMapsView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-5 py-3 space-y-1">
-      <section className="rounded-3xl bg-gradient-to-r from-sky-700 via-indigo-800 to-slate-900 text-white px-4 py-3 sm:px-5 sm:py-4 shadow-xl relative overflow-hidden">
+    <div className="journey-maps-page max-w-7xl mx-auto px-3 sm:px-5 py-3 space-y-1">
+      <section className="journey-maps-hero rounded-3xl bg-gradient-to-r from-sky-700 via-indigo-800 to-slate-900 text-white px-4 py-3 sm:px-5 sm:py-4 shadow-xl relative overflow-hidden">
         <div className="absolute -top-20 -right-10 w-80 h-80 rounded-full bg-amber-300/10 blur-3xl" />
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           <div className="space-y-1">
@@ -133,7 +133,7 @@ export const StudentJourneyMapsView: React.FC = () => {
             </p>
           </div>
 
-          <div className="rounded-2xl bg-white/10 border border-white/15 p-2 min-w-[130px]">
+          <div className="journey-maps-progress rounded-2xl bg-white/10 border border-white/15 p-2 min-w-[130px]">
             <div className="text-xs text-sky-100 font-semibold">Tiến độ Khối {currentGrade}</div>
             <div className="text-xl font-black text-amber-300 mt-0.5">{gradeSummary.totalJourneyMaps}/5</div>
             <div className="text-xs text-sky-100">Bản đồ đã thu thập</div>
@@ -168,11 +168,6 @@ export const StudentJourneyMapsView: React.FC = () => {
         </div>}
       </section>
 
-      <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs sm:text-sm text-amber-950 leading-relaxed">
-        <strong>Hành trình của em:</strong> mỗi khối có 5 trạm. Rương Kho báu được mở khi học sinh hoàn thành đủ 5 bài,
-        nhận đủ 5 Bản đồ hành trình và 5 Mảnh chìa khóa. Nút xem trước bên dưới chỉ minh họa thiết kế phần thưởng cuối khối.
-      </div>
-
       <section className="space-y-2">
         <div className="flex items-center justify-between gap-3">
           <h2 className="font-black text-base text-slate-900">Bản đồ Khối {currentGrade}</h2>
@@ -182,7 +177,7 @@ export const StudentJourneyMapsView: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="journey-maps-grid grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
           {stations.map(station => {
             const progress = progressService.getStationProgress(studentId, station.id);
             const isDemo = DEMO_STATION_IDS.has(station.id);
@@ -201,7 +196,7 @@ export const StudentJourneyMapsView: React.FC = () => {
                     : 'bg-slate-100 border-slate-200 opacity-75 cursor-not-allowed'
                 }`}
               >
-                <div className="aspect-[16/8] sm:aspect-[4/3] lg:aspect-[4/3] relative overflow-hidden bg-slate-200">
+                <div className="journey-map-card-image aspect-[16/8] sm:aspect-[4/3] lg:aspect-[4/3] relative overflow-hidden bg-slate-200">
                   <img
                     loading="lazy"
                     decoding="async"
@@ -256,7 +251,7 @@ export const StudentJourneyMapsView: React.FC = () => {
         </div>
       </section>
 
-      <section className="rounded-xl border-2 border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-3 sm:p-4 shadow-sm">
+      <section className="journey-maps-treasure rounded-xl border border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-3 sm:p-4 shadow-sm">
         <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
           <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-300 to-orange-500 shadow-xl flex items-center justify-center text-3xl shrink-0">
             {treasureProgress.chestOpened ? '✨' : '🧰'}
@@ -423,8 +418,8 @@ export const StudentJourneyMapsView: React.FC = () => {
 
             <div className="p-6 sm:p-8 space-y-6">
               {!treasureProgress.chestOpened && (
-                <div className="rounded-2xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-900 font-semibold text-center">
-                  Đây là bản xem trước của phiên bản demo, không làm thay đổi tiến độ hay phần thưởng của học sinh.
+                <div className="text-xs text-slate-500 text-center">
+                  Xem trước phần thưởng · Không thay đổi tiến độ.
                 </div>
               )}
 

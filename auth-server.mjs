@@ -385,7 +385,7 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       const data=await body(req);
       if(!isImplementation && req.method==='PUT') {
         await requireAdmin(req);
-        if(typeof data.id!=='string'||!/^[a-f0-9]{32}$/.test(data.id)||!['accepted','rejected'].includes(data.status))throw fail(400,'Quyết định không hợp lệ.');
+        if(typeof data.id!=='string'||!/^(?:[a-f0-9]{32}|[a-f0-9]{64})$/.test(data.id)||!['accepted','rejected'].includes(data.status))throw fail(400,'Quyết định không hợp lệ.');
         const old=await store.get(collection,data.id);if(!old)throw fail(404,'Không tìm thấy đề xuất.');
         await store.put(collection,data.id,{...old,status:data.status,reviewedAt:new Date().toISOString()});json(res,200,{ok:true});return true;
       }
@@ -511,5 +511,5 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
     if(user.role!=='teacher' && user.role!=='admin') throw fail(403,'Chức năng chỉ dành cho giáo viên và quản trị viên.');
     return user;
   }
-  return { handle, requireAdmin, requireTeacher, sameOrigin };
+  return { handle, requireAdmin, requireTeacher, sameOrigin, userFor };
 }

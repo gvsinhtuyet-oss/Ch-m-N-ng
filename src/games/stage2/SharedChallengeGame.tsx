@@ -201,7 +201,31 @@ export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void
 .scene.grade1-game .match-voice.match-voice:hover,.scene.grade1-game .match-voice.match-voice:focus-visible{opacity:1!important;filter:none!important}
 `;
   const trueFalseCss=`.scene.grade1-game:not(.is-victory) .answers.true-false{display:flex!important;flex-direction:row!important;justify-content:center!important;gap:clamp(12px,3vw,24px)!important;width:min(100%,540px)!important}.scene.grade1-game:not(.is-victory) .answers.true-false .answer-wrap{width:calc(50% - 8px)!important;max-width:230px!important}.scene.grade1-game:not(.is-victory) .answers.true-false .answer-wrap>button[data-choice]{display:flex!important;flex-direction:column!important;gap:4px!important;justify-content:center!important;align-items:center!important;padding:12px 8px!important;min-height:130px!important;border-radius:20px!important;font-weight:900!important;font-size:clamp(17px,3vw,24px)!important}.scene.grade1-game:not(.is-victory) .answers.true-false .answer-wrap:first-child>button{background:#e7ffeb!important;color:#126833!important;border:3px solid #35a95c!important}.scene.grade1-game:not(.is-victory) .answers.true-false .answer-wrap:nth-child(2)>button{background:#fff0ee!important;color:#a72b28!important;border:3px solid #e1635d!important}.scene.grade1-game .true-false .tf-symbol{font-size:clamp(42px,8vw,64px)!important;line-height:1!important;font-weight:900!important}@media(max-width:650px){.scene.grade1-game:not(.is-victory) .answers.true-false .answer-wrap>button[data-choice]{min-height:105px!important;font-size:19px!important}.scene.grade1-game .true-false .tf-symbol{font-size:48px!important}}`;
+  const questionEmphasisCss=`
+/* Uniform orange question plaque across all shared Stage 2 games. */
+.scene:not(.is-victory) .panel .prompt {
+ box-sizing:border-box!important;max-width:100%!important;min-width:0!important;
+ background:linear-gradient(180deg,#fb923c,#ea580c)!important;color:#fff!important;
+ border:2px solid #fed7aa!important;border-radius:18px!important;
+ box-shadow:0 5px 0 #9a3412,0 8px 16px #43140777!important;
+ text-shadow:0 1px 2px #7c2d12!important;
+ font-size:clamp(16px,2.2vw,29px)!important;line-height:1.25!important;
+ padding:9px 16px!important;white-space:normal!important;overflow-wrap:anywhere!important;
+ height:auto!important;min-height:0!important;
+}
+.scene:not(.is-victory) .panel .prompt span {color:#fff!important;white-space:normal!important;overflow-wrap:anywhere!important}
+.scene:not(.is-victory) .answers button[data-choice],
+.scene:not(.is-victory) .match button {white-space:normal!important;overflow-wrap:anywhere!important;line-height:1.2!important}
+@media(max-width:650px) and (orientation:portrait){
+ :host([data-embedded]){display:block!important;min-height:100%!important;overflow:visible!important}
+ :host([data-embedded]) .scene:not(.is-victory){height:auto!important;min-height:var(--embedded-height,100dvh)!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+ :host([data-embedded]) .scene:not(.is-victory) .shell{height:auto!important;min-height:100%!important;overflow:visible!important}
+ :host([data-embedded]) .scene:not(.is-victory) .panel{max-height:none!important;height:auto!important;overflow:visible!important;padding-bottom:24px!important}
+ .scene:not(.is-victory) .panel .prompt{font-size:clamp(15px,4.1vw,20px)!important;padding:8px 12px!important}
+ .scene:not(.is-victory) .answers button[data-choice],.scene:not(.is-victory) .match button{height:auto!important;min-height:48px!important;max-height:none!important}
+}
+`;
   const grade2Css=`@media(max-width:650px) and (orientation:portrait){.scene.safe-layout.grade2-game:not(.is-victory){--art-width:140vw;--banner-bottom:26.8vw}}`;
   const embeddedCss=`:host([data-embedded]) .scene .intro-screen{padding:14px 20px!important;gap:6px!important;max-width:560px!important}:host([data-embedded]) .scene .intro-emblem{font-size:26px!important}:host([data-embedded]) .scene .intro-screen h2{font-size:clamp(18px,2vw,26px)!important;margin:0!important}:host([data-embedded]) .scene .intro-story{font-size:clamp(14px,1.5vw,17px)!important;line-height:1.4!important;margin:4px 0!important}:host([data-embedded]) .scene .intro-call{font-size:14px!important;margin:4px 0!important}:host([data-embedded]) .scene .intro-start{min-height:44px!important;padding:9px 18px!important;font-size:16px!important}:host([data-embedded]) .scene{height:var(--embedded-height,100dvh)!important;min-height:0!important}:host([data-embedded]) .scene .shell{height:100%!important;min-height:0!important}:host([data-embedded]) .scene.safe-layout.is-victory .panel,:host([data-embedded]) .scene.safe-layout.is-victory .victory{height:100%!important;min-height:0!important}`;
-  return <div ref={host} data-shared-stage2="v1" data-embedded={props.embedded?'':undefined}>{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss+'\n'+compactMatchCss+'\n'+voiceCss+'\n'+trueFalseCss+'\n'+compactVoiceCss+'\n'+grade2Css+'\n'+embeddedCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
+  return <div ref={host} data-shared-stage2="v1" data-embedded={props.embedded?'':undefined}>{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss+'\n'+compactMatchCss+'\n'+voiceCss+'\n'+trueFalseCss+'\n'+compactVoiceCss+'\n'+grade2Css+'\n'+embeddedCss+'\n'+questionEmphasisCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
 }

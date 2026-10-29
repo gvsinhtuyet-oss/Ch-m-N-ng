@@ -309,6 +309,9 @@ export interface StudentCheckInResponse {
   rememberOptionIds: string[];
   actionOptionIds: string[];
   submittedAt: string;
+  otherEmotionText?: string;
+  otherRememberText?: string;
+  otherActionText?: string;
 }
 
 export interface StudentStationProgress {

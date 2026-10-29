@@ -1,11 +1,10 @@
-import {JourneyMapDialog} from '../common/JourneyMapDialog';
 import React, { useState, useEffect, useRef } from 'react';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import confetti from 'canvas-confetti';
-import { RotateCcw, ArrowRight, KeyRound, ZoomIn, Stamp } from 'lucide-react';
+import { RotateCcw, ArrowRight, KeyRound, Stamp } from 'lucide-react';
 import './journey-stages.css';
 
 interface Props {
@@ -24,9 +23,8 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
   const [giftClaimed, setGiftClaimed] = useState<boolean>(
     progress.journeyMapReceived && progress.keyFragmentReceived
   );
-  const [mapZoomed, setMapZoomed] = useState(false);
   const [keyVisible, setKeyVisible] = useState(false);
-  const [mapImageFailed, setMapImageFailed] = useState(false);
+  const [photoFailed, setPhotoFailed] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
 
   const canExchange = isReadOnly || (
@@ -113,23 +111,10 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
         `}</style>
 
         <div className="stamp-layout">
-          <section aria-label="Bản đồ tri thức" className="journey-map-panel">
-            <div className="journey-map-surface">
-              {station.journeyMap?.image && !mapImageFailed ? (
-                <>
-                  <div aria-hidden="true" className="journey-map-blur" style={{ backgroundImage: `url("${station.journeyMap.image}")` }} />
-                  <img src={station.journeyMap.image} alt={"Bản đồ tri thức " + station.titleVi} onError={() => setMapImageFailed(true)} className="journey-map-main" />
-                </>
-              ) : (
-                <div className="journey-map-fallback">
-                  <h3>BẢN ĐỒ TRI THỨC</h3>
-                  <strong>{station.titleVi}</strong>
-                  <div className="journey-map-nodes">
-                    {(station.journeyMap?.summaryNodes || []).map((node, index) => <div key={node.id || index}><b>{node.titleVi}</b><span>{node.textVi}</span></div>)}
-                  </div>
-                </div>
-              )}
-              <button type="button" className="journey-map-zoom" onClick={() => { audioService.playSfx('click'); setMapZoomed(true); }}><ZoomIn className="h-4 w-4" /> Phóng to</button>
+          <section aria-label="Ảnh điểm đến" className="journey-map-panel journey-photo-panel">
+            <div className="journey-map-surface journey-photo-surface">
+              {station.coverImage && !photoFailed ? <img src={station.coverImage} alt={`Ảnh điểm đến ${station.titleVi}`} onError={() => setPhotoFailed(true)} className="journey-photo-main" decoding="async" /> :
+                <div className="journey-map-fallback"><h3>ĐIỂM ĐẾN CỦA EM</h3><strong>{station.titleVi}</strong></div>}
             </div>
           </section>
           <section aria-label="Hộ chiếu hành trình" className="journey-passport-panel">
@@ -161,7 +146,6 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
           <button type="button" onClick={() => { audioService.playSfx('click'); onExploreNext(); }} className="journey-control-next"><ArrowRight className="h-5 w-5 shrink-0" />Khám phá thêm</button>
         </div>
         {isReadOnly && <p className="journey-preview-note">Chế độ xem thử: không lưu phần thưởng.</p>}
-        {mapZoomed && station.journeyMap?.image && <JourneyMapDialog image={station.journeyMap.image} title={'Bản đồ tri thức ' + station.titleVi} onClose={() => setMapZoomed(false)} />}
 
       </div>
     );

@@ -4,7 +4,7 @@ import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import confetti from 'canvas-confetti';
-import { RotateCcw, ArrowRight, KeyRound, Stamp } from 'lucide-react';
+import { RotateCcw, ArrowRight, KeyRound, Stamp, Star, Heart, X } from 'lucide-react';
 import './journey-stages.css';
 
 interface Props {
@@ -26,6 +26,23 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
   const [keyVisible, setKeyVisible] = useState(false);
   const [photoFailed, setPhotoFailed] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+  const [showRating, setShowRating] = useState(false);
+  const [ratings, setRatings] = useState<[number,number,number]>([0,0,0]);
+  const [ratingNote, setRatingNote] = useState('');
+  const [showRatingNote, setShowRatingNote] = useState(false);
+  const ratingStorageKey = `cham_danang_journey_rating_v1:${studentId}:${station.id}`;
+  const saveRating = () => {
+    if (ratings.some(score => score === 0)) return;
+    try {
+      localStorage.setItem(ratingStorageKey, JSON.stringify({ stationId: station.id, grade: station.grade,
+        knowledge: ratings[0], games: ratings[1], exploreMore: ratings[2], note: ratingNote.trim().slice(0,240),
+        updatedAt: new Date().toISOString() }));
+      audioService.playSfx('reward');
+      setShowRating(false);
+    } catch {
+      setSaveMessage('Không thể lưu cảm nhận trên máy này. Em vẫn có thể khám phá tiếp.');
+    }
+  };
 
   const canExchange = isReadOnly || (
     progress.stage1Completed &&
@@ -79,6 +96,9 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
   const collectKey = () => {
     if (!stamped || giftClaimed) return;
     setGiftClaimed(true);
+    try {
+      if (!localStorage.getItem(ratingStorageKey)) setShowRating(true);
+    } catch { setShowRating(true); }
     audioService.playSfx('treasure');
     try {
       confetti({
@@ -145,6 +165,27 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
           <button type="button" disabled={!canExchange || stamped} onClick={saveMapAndStamp} className="journey-control-stamp"><Stamp className="h-5 w-5 shrink-0" />{stamped ? '✓ Đã đóng dấu' : 'Đóng dấu hành trình'}</button>
           <button type="button" onClick={() => { audioService.playSfx('click'); onExploreNext(); }} className="journey-control-next"><ArrowRight className="h-5 w-5 shrink-0" />Khám phá thêm</button>
         </div>
+        {showRating && <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#20180d]/55 p-3 backdrop-blur-[3px]" role="presentation">
+          <section role="dialog" aria-modal="true" aria-label="Đánh giá hành trình" className="relative w-full max-w-[370px] max-h-[92dvh] overflow-y-auto rounded-[24px] border-[3px] border-amber-300 bg-gradient-to-b from-[#fff9e7] via-[#ffedc7] to-[#ffe1a2] p-3.5 shadow-[0_20px_70px_#27140890]">
+            <div className="absolute -top-12 right-5 h-28 w-28 rounded-full bg-amber-300/40 blur-2xl" aria-hidden="true" />
+            <button type="button" onClick={() => setShowRating(false)} aria-label="Để lần sau" className="absolute right-2 top-2 rounded-full bg-white/70 p-1.5 text-amber-950"><X className="h-4 w-4" /></button>
+            <div className="relative mb-3 pr-5 text-center"><Heart className="mx-auto h-6 w-6 fill-rose-500 text-rose-500" /><h3 className="text-base font-black text-amber-950">Em thấy hành trình thế nào?</h3><p className="text-[11px] text-amber-800">Cảm nhận của em giúp hành trình thú vị hơn!</p></div>
+            <div className="space-y-2">
+              {(['Kiến thức thú vị','Trò chơi hấp dẫn','Muốn khám phá tiếp'] as const).map((label,index) => (
+                <div key={label} className="flex items-center justify-between gap-2 rounded-xl border border-amber-200 bg-white/75 px-2 py-2">
+                  <span className="min-w-0 text-[11px] font-bold text-amber-950 sm:text-xs">{label}</span>
+                  <div className="flex shrink-0 gap-0.5" role="group" aria-label={label}>
+                    {[1,2,3,4,5].map(score => <button key={score} type="button" aria-label={`${label}: ${score} sao`} aria-pressed={ratings[index]===score} onClick={() => {audioService.playSfx('click');setRatings(prev=>prev.map((v,i)=>i===index?score:v) as [number,number,number]);}} className="rounded p-0.5"><Star className={`h-[19px] w-[19px] ${score <= ratings[index] ? 'fill-amber-400 text-amber-500' : 'text-amber-300'}`} /></button>)}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button type="button" onClick={() => setShowRatingNote(v=>!v)} className="mt-2 w-full text-left text-[11px] font-bold text-amber-800">{showRatingNote?'▴ Ẩn lời nhắn':'▾ Thêm lời nhắn (không bắt buộc)'}</button>
+            {showRatingNote && <textarea aria-label="Lời nhắn của em" rows={2} maxLength={240} value={ratingNote} onChange={e=>setRatingNote(e.target.value)} placeholder="Em thích nhất…" className="mt-1 w-full rounded-xl border border-amber-300 bg-white p-2 text-sm text-amber-950" />}
+            <div className="mt-3 grid grid-cols-2 gap-2"><button type="button" onClick={() => setShowRating(false)} className="min-h-10 rounded-xl border border-amber-300 bg-white text-xs font-bold text-amber-900">Để lần sau</button><button type="button" disabled={ratings.some(v=>v===0)} onClick={saveRating} className="min-h-10 rounded-xl bg-gradient-to-b from-orange-400 to-orange-600 text-xs font-black text-white shadow-[0_3px_0_#9a3412] disabled:opacity-55">Gửi cảm nhận ★</button></div>
+            <p className="mt-2 text-center text-[10px] text-amber-800">Cảm nhận lưu trên thiết bị này; chưa gửi tới giáo viên.</p>
+          </section>
+        </div>}
         {isReadOnly && <p className="journey-preview-note">Chế độ xem thử: không lưu phần thưởng.</p>}
 
       </div>

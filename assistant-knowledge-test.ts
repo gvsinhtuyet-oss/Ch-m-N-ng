@@ -4,7 +4,7 @@ import knowledge from './src/data/assistantKnowledge.json';
 import guides from './src/data/assistantStationGuides.json';
 import {ALL_25_STATIONS} from './src/data/allStations';
 import {DANANG_ASSISTANT_LEXICON} from './src/data/danangAssistantLexicon';
-import {retrieveDanangAssistantAnswer as ask} from './src/services/DanangAssistantRetrievalService';
+import {retrieveDanangAssistantAnswer as ask, getDanangAssistantQuickPrompts} from './src/services/DanangAssistantRetrievalService';
 
 test('46 sourced expansions have unique identities, verified HTTPS attribution, and teaching examples',()=>{
  assert.equal(knowledge.length,46);
@@ -75,4 +75,11 @@ test('adversarial questions do not receive incidental quiz answers or noun colli
 test('direct local-language and causal FAQs answer the requested fact with sources',()=>{
  const r=ask('Chùa Cầu ở mô?');assert.match(r.answer,/nối đường Trần Phú/);assert.ok(r.answer.length<170);assert.doesNotMatch(r.answer,/Mô.*nghĩa/);assert.ok(r.sources?.[0].url);
  const rain=ask('Vì sao trời mưa?',{audience:'teacher'});assert.match(rain.answer,/ngưng tụ/);assert.ok(rain.sources?.[0].url?.includes('noaa.gov'));
+});
+
+test('student challenge quick prompts invite learning rather than asking for blocked quiz facts',()=>{
+ const station=ALL_25_STATIONS.find(s=>s.id==='g2-station-4')!;
+ const p=getDanangAssistantQuickPrompts({station,stage:2,audience:'student'});
+ assert.equal(p.length,3);assert.ok(p.every(q=>!/UNESCO|năm nào|đáp án/i.test(q)));
+ assert.ok(getDanangAssistantQuickPrompts({station,stage:2,audience:'teacher'}).some(q=>/UNESCO/.test(q)));
 });

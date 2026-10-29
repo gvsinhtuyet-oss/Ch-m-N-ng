@@ -412,6 +412,7 @@ export function retrieveDanangAssistantAnswer(rawQuery: string, context: Assista
 }
 
 export function getDanangAssistantQuickPrompts(context: AssistantRetrievalContext = {}): string[] {
+  if(context.audience !== 'teacher' && context.stage === 2) return ['Em nên quan sát gì?', 'Em ôn lại bài ở đâu?', 'Nếu phân vân thì làm gì?'];
   if(context.audience === 'teacher' && !context.station) return ['Di sản văn hóa phi vật thể là gì?', 'San hô là động vật hay thực vật?', 'Vòng tuần hoàn nước là gì?'];
   const hotspot = context.hotspot;
   if (hotspot) {

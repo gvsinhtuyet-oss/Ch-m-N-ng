@@ -19,7 +19,7 @@
 
 ## Kiểm thử trước xuất bản
 
-- 37/37 kiểm thử trợ lý: gồm câu hỏi phương ngữ theo ngữ cảnh của cả 121 điểm, mốc 2009/2022, phân biệt động vật/thực vật, câu ngoài kho, giáo viên/học sinh và bảo vệ đáp án.
+- 38/38 kiểm thử trợ lý: gồm câu hỏi phương ngữ theo ngữ cảnh của cả 121 điểm, mốc 2009/2022, phân biệt động vật/thực vật, câu ngoài kho, giáo viên/học sinh và bảo vệ đáp án.
 - 15/15 kiểm thử hồi quy audio manifest, quyền chặng, luồng giáo viên/nhập kế hoạch. TypeScript và build đạt; 4/4 kiểm thử tải và cache đạt.
 - Chưa chứng nhận chatbot hiểu mọi câu diễn đạt hoặc biết mọi kiến thức ngoài bài. Đây là truy hồi theo từ/cụm và nội dung biên soạn, không phải mô hình hội thoại tổng quát.
 - Khối từ điển chuyên sâu tăng thêm khoảng 16KB gzip trong chunk trợ lý; không thêm MP3/ảnh hoặc mô hình AI nặng.
@@ -100,3 +100,9 @@ Dữ liệu: `src/data/assistantKnowledge.json`, `src/data/assistantStationGuide
 - Học sinh demo: chọn Khối 2, mở trợ lý, câu hỏi phương ngữ không bị trả lời bằng định nghĩa từ địa phương.
 - Chrome 390×844: dialog rộng 366px, nằm trong x=12..378, đáy <832; ô nhập vẫn thấy; document không tràn ngang. Chưa kiểm tra bàn phím thật trên iPhone hoặc đăng nhập bằng tài khoản thật.
 - Giữ các sửa lỗi vào khối lớp, trang chủ iPhone và phản hồi lỗi thực tế từ production `9c779b7`, không thay về bản main cũ.
+
+## Kiểm tra Chặng 2 qua giao diện
+
+- Hoàn thành sáu điểm Hội An ở tài khoản học sinh demo, nhận vật phẩm và chuyển Chặng 2 thành công.
+- Hỏi “Hội An được UNESCO công nhận năm nào?” trong Chặng 2: chỉ gợi hướng ôn bài, không trả số năm; các nút hỏi nhanh đổi sang hướng dẫn quan sát/ôn bài.
+- Bản ứng dụng commit `77efb0a` đã được Cloudflare triển khai production thành công ở deployment `7ef720ff-f9f0-45c5-9def-ef36b6f4ddf6` (32 giây). Thay đổi cuối điều chỉnh riêng các gợi ý nhanh Chặng 2, giữ nguyên 46 mục tri thức.

@@ -176,3 +176,26 @@ body:has(.station-screen-fixed){overflow:hidden;overscroll-behavior:none}
 .station-viewport:fullscreen .station-lesson-panel,.station-viewport.station-immersive-active .station-lesson-panel{overflow:hidden!important}
 .stage1-image-tools .is-map{order:0}
 .stage1-image-tools .is-vr{order:1}
+
+/* High-contrast completed milestone: visible against the compact blue toolbar. */
+.station-compact-header .station-stage-tab-title .station-stage-complete-mark,
+.station-stage1-compact .station-compact-header .station-stage-tab-title .station-stage-complete-mark {
+ position:absolute!important;top:0!important;right:8%!important;
+ width:17px!important;height:17px!important;min-width:17px!important;
+ border:2px solid #dcfce7;border-radius:50%;padding:1px;
+ color:#fff!important;background:#15803d!important;
+ box-shadow:0 0 0 1px #166534,0 2px 7px #052e16a8!important;
+ z-index:5;stroke-width:3.5;
+}
+.station-compact-header .station-stage-tab.is-complete .station-stage-tab-title{position:relative}
+@media(max-width:540px){
+ .station-compact-header .station-stage-tab-title .station-stage-complete-mark,
+ .station-stage1-compact .station-compact-header .station-stage-tab-title .station-stage-complete-mark{
+  width:15px!important;height:15px!important;min-width:15px!important;right:0!important;
+ }
+}
+/* Let Stage 2 question content scroll on compact phones, never truncate the answer. */
+@media(max-width:767px){
+ .station-viewport[data-stage="2"] .station-lesson-panel{overflow-y:auto!important;overscroll-behavior:contain!important}
+ .station-viewport[data-stage="2"] [data-shared-stage2]{min-height:0!important;height:100%!important}
+}

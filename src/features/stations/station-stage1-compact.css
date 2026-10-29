@@ -19,7 +19,7 @@
 .station-stage1-compact .hoi-an-right-rail p{line-height:1.4}
 .station-stage1-compact .stage-one-hotspot-ribbon{padding:7px!important;border-radius:16px}
 .station-stage1-compact .stage-one-hotspot-ribbon>h2{font-size:12px;margin-bottom:5px}
-.station-stage1-compact .stage-one-hotspot-ribbon>.grid{display:flex!important;flex-wrap:nowrap!important;gap:7px;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin}
+.station-stage1-compact .stage-one-hotspot-ribbon>.grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:7px;overflow:visible}
 .station-stage1-compact .stage-one-hotspot-ribbon>.grid>button{flex:0 0 clamp(120px,12vw,180px);min-width:0;padding:4px;border-radius:11px}
 .station-stage1-compact .stage-one-hotspot-ribbon>.grid>button img{height:clamp(45px,7vh,74px)}
 /* Safety-first: content must remain visible even if the parent viewport

@@ -7,7 +7,8 @@ import { AppProvider, useApp } from './contexts/AppContext';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
 import { LandingView } from './features/landing/LandingView';
-const StudentJourneyView = lazy(() => import('./features/student/StudentJourneyView').then(module => ({ default: module.StudentJourneyView })));
+import { StudentJourneyView } from './features/student/StudentJourneyView';
+
 const StudentPassportView = lazy(() => import('./features/passport/StudentPassportView').then(module => ({ default: module.StudentPassportView })));
 const StudentJourneyMapsView = lazy(() => import('./features/student/StudentJourneyMapsView').then(module => ({ default: module.StudentJourneyMapsView })));
 const StudentMemoriesView = lazy(() => import('./features/student/StudentMemoriesView').then(module => ({ default: module.StudentMemoriesView })));

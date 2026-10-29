@@ -260,3 +260,52 @@
 @media (max-width:1023px) and (orientation:portrait) {
  .landing-cover-main { padding-top:12px; }
 }
+
+/* 2026-10-30 Mobile + iPad portrait cover: one-line heading, full-width video, actions below. */
+@media (max-width:1023px) and (orientation:portrait) {
+  .landing-art-shell { min-height:100dvh; height:auto; overflow-x:hidden; overflow-y:auto; }
+  .landing-art-scene { min-height:100dvh; height:auto; grid-template-rows:auto 1fr auto; }
+  .landing-art-scene > header { position:relative; width:100%; padding:8px 12px; gap:7px; }
+  .landing-art-scene > header > div:first-child { min-width:0; flex:0 1 auto; }
+  .landing-art-scene > header > div:first-child > div:last-child { display:none; }
+  .landing-top-actions { flex:0 0 auto; gap:5px!important; }
+  .landing-top-actions button { padding:5px!important; min-height:34px!important; width:34px; justify-content:center; }
+  .landing-top-actions button > span { display:none!important; }
+  .landing-top-actions .landing-cover-vr { position:static!important; width:38px!important; height:38px!important; min-height:38px!important; padding:2px!important; font-size:9px; }
+  .landing-top-actions .landing-cover-vr svg { width:17px;height:17px; }
+  .landing-cover-main {
+    display:flex!important; flex-direction:column; align-items:center; justify-content:flex-start;
+    width:100%; gap:clamp(12px,2.1dvh,24px)!important;
+    padding:clamp(12px,3dvh,26px) 14px 24px!important;
+  }
+  .landing-cover-identity { width:100%; transform:none!important; text-align:center; flex:0 0 auto; }
+  .landing-cover-title {
+    font-size:clamp(28px,7.8vw,70px)!important; white-space:nowrap!important;
+    letter-spacing:-.045em; line-height:1.15!important; margin-bottom:5px!important;
+  }
+  .landing-cover-identity > p { font-size:clamp(12px,2.5vw,20px)!important; }
+  .landing-cover-video {
+    width:100%!important; max-width:850px; height:auto!important; aspect-ratio:16/9!important;
+    flex:0 0 auto; display:block!important; margin:0 auto!important; container-type:normal!important;
+  }
+  .landing-cover-player { width:100%!important; height:auto!important; aspect-ratio:16/9!important; }
+  .landing-cover-actions {
+    width:100%!important; max-width:850px; align-self:center!important; justify-self:center!important;
+    margin:0!important; padding:0!important; gap:12px!important; align-items:center; flex:0 0 auto;
+  }
+  .landing-action-invitation { text-align:center!important; line-height:1.18!important; font-size:clamp(22px,5.5vw,38px)!important; }
+  .landing-action-invitation br { display:none; }
+  .landing-cover-actions > button { width:min(100%,400px)!important; min-height:52px; margin:0 auto; }
+  .landing-feature-pills { max-width:420px!important; width:100%!important; flex-wrap:wrap!important; }
+  .landing-art-scene > .landing-review-footer { position:relative!important; }
+}
+@media (min-width:600px) and (max-width:1023px) and (orientation:portrait) {
+  .landing-cover-main { padding-inline:clamp(20px,5vw,56px)!important; }
+  .landing-cover-title { font-size:clamp(42px,7.5vw,76px)!important; }
+  .landing-cover-video { max-width:900px; }
+}
+@media (max-width:380px) and (orientation:portrait) {
+  .landing-art-scene > header { padding-inline:7px; }
+  .landing-cover-title { font-size:7.4vw!important; }
+  .landing-top-actions .landing-cover-vr { width:32px!important; }
+}

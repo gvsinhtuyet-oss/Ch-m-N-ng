@@ -1,3 +1,4 @@
+import {isBundledAssetUrl} from '../../services/contentAssetUrls';
 import { optimizeImage, describeOptimization } from '../../services/ImageOptimizationService';
 
 import React, { useState } from 'react';
@@ -26,7 +27,7 @@ export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = fals
   const [resourceUrl, setResourceUrl] = useState('');
   const [resourceKind, setResourceKind] = useState<LearningResource['kind']>('document');
   const fieldClass = 'w-full rounded-xl border border-slate-300 bg-white p-3 text-sm text-slate-900';
-  const validLink = (value: string) => !value || /^\/learning\/(?:grade[13]|grade45)\/[a-z0-9-]+\.svg$/.test(value) || /^\/learning\/grade45\/photos\/[a-z0-9-]+\.webp$/.test(value) || /^https:\/\//i.test(value) || /^data:(image\/|application\/pdf|audio\/|video\/)/i.test(value);
+  const validLink = (value: string) => !value || isBundledAssetUrl(value) || /^https:\/\//i.test(value) || /^data:(image\/|application\/pdf|audio\/|video\/)/i.test(value);
 
   const upload = async (file: File | undefined, target: 'cover' | 'map' | number) => {
     if (!file) return;
@@ -47,7 +48,7 @@ export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = fals
   };
   const validate = () => {
     if (![draft.coverImage, draft.mapImage, ...draft.hotspots.map(h => h.image), ...draft.resources.map(r => r.url)].every(validLink))
-      throw new Error('Dùng đường dẫn HTTPS hoặc hình minh họa khối 1 đi kèm app.');
+      throw new Error('Dùng đường dẫn HTTPS, tệp tải lên hoặc học liệu đóng gói trong app.');
     if (draft.resources.some(r => !r.title.trim() || !r.url)) throw new Error('Học liệu cần có tên và đường dẫn.');
   };
   const save = async (publish: boolean) => {

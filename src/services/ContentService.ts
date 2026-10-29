@@ -1,3 +1,4 @@
+import {contentForServer} from './contentAssetUrls';
 import { journeyMapImage } from '../data/journeyMapAssets';
 import {currentRealPhotos} from './RealPhotoPolicy';
 import {currentNarrationContent} from './NarrationReviewPolicy';
@@ -129,7 +130,7 @@ export const contentService = {
     const response = await fetchWithTimeout('/api/content/' + encodeURIComponent(station.id), {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json',  },
-      body: JSON.stringify(content),
+      body: JSON.stringify(contentForServer(content, window.location.origin)),
     }, 120000);
     if (!response.ok) {
       const result = await response.json().catch(() => ({}));

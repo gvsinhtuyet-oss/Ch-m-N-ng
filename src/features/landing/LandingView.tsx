@@ -1,3 +1,4 @@
+import './landing-cover.css';
 import {GoogleTeacherLogin} from '../../components/auth/GoogleTeacherLogin';
 import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
@@ -19,8 +20,8 @@ import {
   Volume2,
   VolumeX,
   Layers,
+  CircleHelp,
   Award,
-  BookOpen,
   Play,
   X,
 } from 'lucide-react';
@@ -57,7 +58,7 @@ export const LandingView: React.FC = () => {
   const [loginError, setLoginError] = useState<string>('');
   const [introActive, setIntroActive] = useState(true);
   const [theme, setTheme] = useState(readTheme);
-  const [mobileBackground, setMobileBackground] = useState(() => window.matchMedia('(max-width: 767px)').matches);
+  const [mobileBackground, setMobileBackground] = useState(() => window.matchMedia('(max-width: 1023px) and (orientation: portrait)').matches);
   const introFrameRef = useRef<HTMLIFrameElement | null>(null);
 
   const STUDENT_PROFILE_KEY = 'cham_danang_student_profile_v1';
@@ -65,7 +66,7 @@ export const LandingView: React.FC = () => {
   useEffect(() => {
     const refresh = () => setTheme(readTheme());
     const refreshStorage = () => setTheme(readTheme(true));
-    const query = window.matchMedia('(max-width: 767px)');
+    const query = window.matchMedia('(max-width: 1023px) and (orientation: portrait)');
     const resize = () => setMobileBackground(query.matches);
     window.addEventListener('cham-theme-changed', refresh);
     window.addEventListener('storage', refreshStorage);
@@ -81,7 +82,7 @@ export const LandingView: React.FC = () => {
     mobileBackground
       ? theme.coverMobile || theme.coverDesktop
       : theme.coverDesktop || theme.coverMobile
-  ) || DEFAULT_APP_BACKGROUND_DATA_URL;
+  ) || (mobileBackground ? '/images/landing/river-mobile.webp' : '/images/landing/river-desktop.webp');
 
   const roleBackground = (
     mobileBackground
@@ -299,18 +300,19 @@ export const LandingView: React.FC = () => {
   };
 
   return (
-    <div className="relative h-[100dvh] w-full flex flex-col justify-between overflow-hidden bg-sky-800 text-white select-none">
+    <div className="landing-art-shell text-white select-none">
+      <div className="landing-art-scene">
       {/* Nền trang bìa do Quản trị cài riêng. */}
       <img
         src={coverBackground}
         alt=""
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover"
-        style={{ filter: 'blur(' + theme.blur + 'px)', transform: 'scale(1.025)' }}
+        className="landing-cover-background absolute inset-0 h-full w-full object-cover"
+        style={{ filter: 'blur(' + theme.blur + 'px)' }}
       />
       <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/65 via-slate-950/28 to-slate-950/72 pointer-events-none" />
-      <div className="absolute inset-0 bg-radial from-transparent via-slate-950/10 to-slate-950/45 pointer-events-none" />
+      <div className="landing-cover-shade absolute inset-0 pointer-events-none" />
+      <div className="absolute inset-0 bg-radial from-transparent via-transparent to-slate-950/15 pointer-events-none" />
 
       {/* Top Bar on Cover Page */}
       <header className="relative z-20 w-full max-w-[1600px] mx-auto px-3 sm:px-6 pt-1 sm:pt-2 pb-1 flex items-center justify-between gap-2">
@@ -334,8 +336,12 @@ export const LandingView: React.FC = () => {
           </div>
         </div>
 
+
         {/* Top actions */}
-        <div className="flex items-center gap-2.5">
+        <div className="landing-top-actions flex items-center gap-2.5">
+          <a href="https://vr360.com.vn/projects/danang-virtual-tourists/" target="_blank" rel="noopener noreferrer" title="Khám phá Đà Nẵng 360°" aria-label="Khám phá Đà Nẵng 360 độ" className="landing-cover-vr">
+            <Globe aria-hidden="true" className="h-5 w-5"/><span>360°</span>
+          </a>
           <button
             onClick={toggleSound}
             className="p-2 sm:px-3 sm:py-1.5 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-xs font-semibold border border-white/15 transition flex items-center gap-1.5"
@@ -356,13 +362,14 @@ export const LandingView: React.FC = () => {
             <Presentation className="w-3.5 h-3.5 text-amber-300" />
             <span>Đổi vai trò</span>
           </button>
+        <button type="button" onClick={()=>{setAdminLogin(true);setShowTeacherLogin(true);setShowStudentLogin(false);setShowRolePicker(true);setLoginError('');setStaffPassword('');}} className="landing-review-admin" aria-label="Đăng nhập quản trị"><Settings className="w-4 h-4" /></button>
         </div>
       </header>
 
       {/* Compact cinematic cover: app identity → intro video → explore */}
-      <main className="relative z-20 w-full max-w-[1500px] min-h-0 flex-1 mx-auto px-3 sm:px-6 py-1 flex flex-col lg:flex-row-reverse items-center justify-center gap-2 lg:gap-6 text-center overflow-hidden">
-        <div className="flex flex-col items-center justify-center gap-0.5 lg:w-[48%] shrink-0">
-          <h1 className="text-[clamp(1.45rem,4vw,3.6rem)] font-black tracking-tight text-amber-300 leading-tight [text-shadow:3px_4px_0_#07549c,5px_7px_8px_rgba(0,0,0,.65)]">
+      <main data-intro-active={introActive} className="landing-cover-main relative z-20 w-full min-h-0 flex-1 mx-auto text-center">
+        <div className="landing-cover-identity">
+          <h1 className="landing-cover-title">
             CHẠM ĐÀ NẴNG
           </h1>
           <p className="text-xs sm:text-lg xl:text-2xl font-extrabold text-white tracking-tight drop-shadow-md">
@@ -372,68 +379,44 @@ export const LandingView: React.FC = () => {
 
         {/* Video giới thiệu giữ nguyên nguồn gốc và tự phát khi trình duyệt cho phép. */}
         {introActive && (
-          <div className="relative w-full max-w-[620px] lg:w-[52%] min-w-0 shrink min-h-0">
+          <div className="landing-cover-video relative min-w-0">
             <div className="absolute -inset-1 rounded-[22px] sm:rounded-[26px] bg-gradient-to-r from-sky-500/35 via-white/10 to-amber-400/35 blur-lg pointer-events-none" />
-            <div className="relative aspect-video max-h-[33dvh] lg:max-h-[49dvh] overflow-hidden rounded-2xl sm:rounded-3xl border-[3px] border-white/80 bg-black shadow-2xl shadow-slate-950/60">
+            <div className="landing-cover-player relative overflow-hidden rounded-2xl sm:rounded-3xl border-[3px] border-white/80 bg-black shadow-2xl shadow-slate-950/60">
               <iframe
                 ref={introFrameRef}
                 className="absolute inset-0 h-full w-full"
-                src="https://www.youtube-nocookie.com/embed/Ud2uUxz9Lw4?autoplay=1&mute=0&playsinline=1&rel=0&modestbranding=1&controls=1&enablejsapi=1"
+                src="https://www.youtube-nocookie.com/embed/Ud2uUxz9Lw4?autoplay=1&mute=1&playsinline=1&rel=0&controls=1&enablejsapi=1"
                 title="Video giới thiệu CHẠM ĐÀ NẴNG"
                 allow="autoplay; encrypted-media; picture-in-picture"
                 allowFullScreen
-                onLoad={() => {
-                  try {
-                    introFrameRef.current?.contentWindow?.postMessage(
-                      JSON.stringify({ event: 'command', func: 'unMute', args: [] }),
-                      '*'
-                    );
-                    introFrameRef.current?.contentWindow?.postMessage(
-                      JSON.stringify({ event: 'command', func: 'playVideo', args: [] }),
-                      '*'
-                    );
-                  } catch {}
-                }}
               />
-              <button
-                type="button"
-                onClick={handleStartJourney}
-                className="absolute right-2.5 top-2.5 sm:right-3 sm:top-3 rounded-xl border border-white/20 bg-slate-950/75 px-3 py-1.5 text-[10px] sm:text-xs font-bold text-white backdrop-blur-md hover:bg-slate-900 transition"
-              >
-                Bỏ qua
-              </button>
+
             </div>
           </div>
         )}
 
-        <div className="flex flex-row lg:flex-col items-center justify-center gap-2 lg:absolute lg:top-[66%] lg:right-[4%] lg:w-[42%] lg:-translate-y-1/4 shrink-0">
+        <div className="landing-cover-actions">
+          <p className="landing-action-invitation">Mỗi điểm đến,<br /><strong>một điều kỳ diệu</strong></p>
           <button onClick={handleStartJourney} className="group flex items-center gap-2 rounded-[22px] border-b-[6px] border-amber-700 bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 px-5 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg font-black text-slate-950 shadow-[0_8px_25px_rgba(0,0,0,.35)] transition hover:scale-105 active:translate-y-1 active:border-b-2">
             <Compass className="h-6 w-6 text-blue-900 group-hover:rotate-45 transition-transform"/> CHẠM ĐỂ KHÁM PHÁ <ArrowRight className="h-5 w-5"/>
           </button>
-          <a href="https://vr360.com.vn/projects/danang-virtual-tourists/" target="_blank" rel="noopener noreferrer" title="Khám phá Đà Nẵng 360°" aria-label="Khám phá Đà Nẵng 360 độ" className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border-2 border-violet-200 bg-gradient-to-br from-indigo-500 via-violet-600 to-purple-900 shadow-[0_5px_20px_rgba(110,50,255,.55)] transition hover:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
-            <Globe className="h-6 w-6 text-white"/><span className="sr-only">VR360°</span>
-          </a>
+          <div className="landing-feature-pills">
+            <span><Layers aria-hidden="true" />5 khối tiểu học</span>
+            <span><Globe aria-hidden="true" />VR360°</span>
+            <span><CircleHelp aria-hidden="true" />Quiz</span>
+            <span><Award aria-hidden="true" />Hộ chiếu số</span>
+          </div>
         </div>
-        <div className="hidden xl:flex absolute bottom-0 left-1/2 -translate-x-1/2 flex-wrap items-center justify-center gap-4 rounded-2xl bg-slate-950/60 px-5 py-2 text-xs font-bold text-white backdrop-blur-sm">
-          <span>5 khối lớp</span><span>25 trạm khám phá</span><span>VR360°</span><span>Hộ chiếu số</span><span>Audio & Quiz</span>
-        </div>
+
       </main>
 
-      {/* Dignified Unit and Authors Credits Footer */}
-      <footer className="relative z-20 w-full max-w-7xl mx-auto px-3 sm:px-6 py-1 flex items-center justify-between gap-2 border-t border-white/10 text-[9px] sm:text-xs text-white font-medium">
-        <div className="hidden sm:flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-amber-400" />
-          <span className="font-semibold text-white">Trường Tiểu học Trần Đại Nghĩa</span>
-        </div>
-        <div className="hidden lg:block text-[11px] sm:text-xs text-slate-100">
-          Chương trình Giáo dục địa phương TP Đà Nẵng
-        </div>
-        <div className="text-[11px] sm:text-xs">
-          <span>Người thực hiện: </span>
-          <span className="font-black text-amber-300 [text-shadow:1px_1px_2px_#613d00]">TRƯƠNG SINH TUYẾT</span><span className="hidden sm:inline"> · Trường Tiểu học Trần Đại Nghĩa</span>
-        </div>
-        <button type="button" onClick={()=>{setAdminLogin(true);setShowTeacherLogin(true);setShowStudentLogin(false);setShowRolePicker(true);setLoginError('');setStaffPassword('');}} className="inline-flex items-center gap-1 text-[10px] text-slate-300/75 hover:text-white transition" aria-label="Đăng nhập quản trị"><Settings className="w-3 h-3" /> Quản trị</button>
+      <footer className="landing-review-footer relative z-20">
+        <span>Tài liệu giáo dục địa phương TP Đà Nẵng</span>
+
+        <span>Người phát triển: <strong>TRƯƠNG SINH TUYẾT</strong></span>
       </footer>
+
+      </div>
 
       {/* Role Picker Modal */}
       {showRolePicker && (
@@ -459,6 +442,7 @@ export const LandingView: React.FC = () => {
               <button
                 onClick={() => {
                   setShowRolePicker(false);
+                  setIntroActive(true);
                   setShowStudentLogin(false);
                   setShowTeacherLogin(false);
                   setLoginError('');

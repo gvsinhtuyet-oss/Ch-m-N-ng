@@ -19,7 +19,7 @@
 .station-stage1-compact .hoi-an-right-rail p{line-height:1.4}
 .station-stage1-compact .stage-one-hotspot-ribbon{padding:7px!important;border-radius:16px}
 .station-stage1-compact .stage-one-hotspot-ribbon>h2{font-size:12px;margin-bottom:5px}
-.station-stage1-compact .stage-one-hotspot-ribbon>.grid{display:flex!important;flex-wrap:nowrap!important;gap:7px;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin}
+.station-stage1-compact .stage-one-hotspot-ribbon>.grid{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:7px;overflow:visible}
 .station-stage1-compact .stage-one-hotspot-ribbon>.grid>button{flex:0 0 clamp(120px,12vw,180px);min-width:0;padding:4px;border-radius:11px}
 .station-stage1-compact .stage-one-hotspot-ribbon>.grid>button img{height:clamp(45px,7vh,74px)}
 /* Safety-first: content must remain visible even if the parent viewport
@@ -91,4 +91,18 @@
  .station-stage1-compact .station-stage-tab-title{font-size:10px;gap:2px}
  .station-stage1-compact .station-stage-tab-title svg{width:13px;height:13px}
  .station-stage1-compact .stage-one-map-content{padding:6px!important}
+}
+
+.station-stage1-compact .station-exploration-layout{grid-template-columns:minmax(0,1fr)}
+
+/* Point title and one audio control stay above the corresponding image. */
+.station-stage1-compact .stage1-visual-column>.stage1-point-heading{height:auto;aspect-ratio:auto;min-height:0}
+.station-stage1-compact .stage-one-hotspot-ribbon>.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));overflow:visible;scroll-snap-type:none}
+.station-stage1-compact .stage-one-hotspot-ribbon>.grid>button{min-width:0;width:100%}
+@media(max-width:900px){
+ .station-stage1-compact .stage1-visual-column{display:contents}
+ .station-stage1-compact .stage1-point-heading{order:0}
+ .station-stage1-compact .stage1-visual-column>.relative{order:1}
+ .station-stage1-compact .hoi-an-right-rail{order:2}
+ .station-stage1-compact .stage-one-hotspot-ribbon{order:3}
 }

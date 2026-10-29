@@ -7,3 +7,13 @@ const {audioService}=await import('./src/services/AudioService');
 test('recorded audio play pause resume complete and stale completion',async()=>{
  let completed=0;audioService.playRecordedNarration('/a.mp3',()=>completed++);const first=Player.last;assert.equal(audioService.getNarrationState(),'playing');audioService.pauseNarration();assert.equal(audioService.getNarrationState(),'paused');audioService.resumeNarration();assert.equal(audioService.getNarrationState(),'playing');audioService.playRecordedNarration('/b.mp3',()=>completed++);first.onended?.();assert.equal(completed,0);Player.last.onended?.();assert.equal(completed,1);assert.equal(audioService.getNarrationState(),'idle');
 });
+
+test('failed media reports a recoverable error, never completes and ignores stale failures',()=>{
+ let completed=0,errors=0;
+ audioService.playRecordedNarration('/missing.mp3',()=>completed++,()=>errors++);
+ const failed=Player.last; failed.onerror?.();
+ assert.equal(errors,1);assert.equal(completed,0);assert.equal(audioService.getNarrationState(),'idle');assert.equal(failed.paused,true);
+ audioService.playRecordedNarration('/working.mp3'); failed.onerror?.();
+ assert.equal(audioService.getNarrationState(),'playing');assert.equal(errors,1);
+ audioService.stopNarration();assert.equal(Player.last.paused,true);
+});

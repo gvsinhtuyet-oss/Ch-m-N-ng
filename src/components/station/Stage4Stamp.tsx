@@ -66,7 +66,6 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     if (!canExchange || stamped || exchanging.current) return;
     exchanging.current = true;
     setSaveMessage('');
-    setKeyVisible(true);
 
     if (isReadOnly) {
       setStamped(true);

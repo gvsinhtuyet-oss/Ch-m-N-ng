@@ -1,57 +1,56 @@
 import React from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { progressService } from '../../services/ProgressService';
-import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { Heart, Sparkles, MessageCircle, Calendar } from 'lucide-react';
 import { RewardBadge } from '../../components/common/RewardBadge';
 
 export const StudentMemoriesView: React.FC = () => {
   const { currentUser, allStationsInCurrentGrade } = useApp();
   const studentId = currentUser?.id || 'guest';
-  const stations = allStationsInCurrentGrade.filter(station => DEMO_STATION_IDS.has(station.id));
+  const stations = allStationsInCurrentGrade;
 
   return (
-    <div className="max-w-5xl mx-auto px-3 sm:px-6 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-3 sm:px-5 py-3 space-y-3">
       {/* Header */}
-      <div className="bg-gradient-to-r from-rose-500 via-pink-600 to-amber-500 text-white rounded-2xl p-4 sm:p-6 shadow-xl">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center">
-            <Heart className="w-6 h-6 fill-white" />
+      <div className="bg-gradient-to-r from-rose-500 via-pink-600 to-amber-500 text-white rounded-2xl px-4 py-3 sm:px-5 sm:py-3 shadow-xl">
+        <div className="flex items-center gap-2 mb-1">
+          <div className="w-7 h-7 rounded-xl bg-white/20 flex items-center justify-center">
+            <Heart className="w-4 h-4 fill-white" />
           </div>
           <span className="font-extrabold text-xs uppercase tracking-wider text-rose-100">
             KỈ NIỆM HÀNH TRÌNH
           </span>
         </div>
-        <h1 className="text-xl sm:text-2xl font-black">Nhật Ký Cảm Xúc & Kỉ Niệm Quê Hương</h1>
-        <p className="text-xs sm:text-sm text-rose-100 mt-1 max-w-xl">
+        <h1 className="text-lg sm:text-xl font-black">Nhật Ký Cảm Xúc & Kỉ Niệm Quê Hương</h1>
+        <p className="hidden sm:block text-xs text-rose-100 mt-1 max-w-xl">
           Nơi lưu giữ những vật phẩm danh giá và những lời hứa hành động đẹp mà em đã gửi gắm sau mỗi chuyến thám hiểm.
         </p>
       </div>
 
       {/* Rewards Collected */}
-      <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
-        <h2 className="text-lg font-black text-slate-900 flex items-center gap-2">
+      <div className="bg-white/90 rounded-2xl p-3 sm:p-4 shadow-sm border border-slate-200 space-y-2">
+        <h2 className="text-base font-black text-slate-900 flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-amber-500" />
           <span>Kho Báu Kỉ Niệm Đã Thu Thập</span>
         </h2>
 
-        <div className="space-y-3">
+        <div className="space-y-1.5">
           {stations.map((st, stationIndex) => {
             const prog = progressService.getStationProgress(studentId, st.id);
             return (
-              <section key={st.id} className="rounded-2xl border border-amber-300 bg-amber-50/90 p-2.5 sm:p-4">
-                <h3 className="mb-2 text-xs font-black text-amber-950 sm:text-sm">
+              <section key={st.id} className="rounded-xl border border-amber-300 bg-amber-50/90 px-2 py-1.5 sm:px-3 sm:py-2">
+                <h3 className="mb-1 text-xs font-black text-amber-950 sm:text-sm">
                   Trạm {stationIndex + 1} · {st.titleVi}
                 </h3>
-                <div className="grid grid-cols-4 gap-1.5 sm:gap-3">
+                <div className="grid grid-cols-3 gap-1 sm:gap-2">
                   {st.rewards.map(rw => {
                     const collected = prog.rewardsCollected.includes(rw.id);
                     return (
-                      <div key={rw.id} title={rw.nameVi} className={`min-w-0 rounded-xl border p-1.5 text-center ${collected ? 'border-amber-400 bg-white' : 'border-amber-200 bg-white/70 opacity-65'}`}>
-                        <div className="mx-auto flex h-12 items-center justify-center sm:h-16">
+                      <div key={rw.id} title={rw.nameVi} className={`min-w-0 rounded-lg border px-1 py-0.5 text-center ${collected ? 'border-amber-400 bg-white' : 'border-amber-200 bg-white/70 opacity-65'}`}>
+                        <div className="mx-auto flex h-8 items-center justify-center sm:h-9">
                           <RewardBadge template={rw.template} size="sm" muted={!collected} />
                         </div>
-                        <p className="line-clamp-2 text-[10px] font-bold leading-tight text-amber-950 sm:text-xs">{rw.nameVi}</p>
+                        <p className="line-clamp-1 text-[10px] font-bold leading-tight text-amber-950 sm:text-xs">{rw.nameVi}</p>
                         <span className="text-[9px] text-slate-600">{collected ? '✓ Đã nhận' : 'Chưa nhận'}</span>
                       </div>
                     );

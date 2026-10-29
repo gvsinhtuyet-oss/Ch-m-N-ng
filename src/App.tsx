@@ -69,7 +69,7 @@ const AppContent: React.FC = () => {
 
   // If in Presentation Mode, render full-screen projection without header/footer
   if (currentView === 'presentation-view' && currentStation && (role === 'teacher' || role === 'admin')) {
-    return <ClassroomPresentationMode key={currentStation.id} station={currentStation} onExit={exitPresentationMode} />;
+    return <><ClassroomPresentationMode key={currentStation.id} station={currentStation} onExit={exitPresentationMode} /><Suspense fallback={null}><DanangAssistantChat audience="teacher" station={currentStation} hotspot={currentAssistantHotspot} /></Suspense></>;
   }
 
   // If on Landing Cover Page, render full-screen immersive cover
@@ -96,8 +96,8 @@ const AppContent: React.FC = () => {
 
       {currentView !== 'student-journey' && currentView !== 'station-view' && <Footer />}
 
-      {role === 'student' && currentUser && currentView !== 'presentation-view' && (
-        <Suspense fallback={null}><DanangAssistantChat docked={currentView === 'student-journey'} compactGame={currentView === 'station-view' && (currentStage === 1 || (currentStage === 2 && (currentStation?.grade === 2 || currentStation?.grade === 4 || currentStation?.grade === 5)))} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense>
+      {(role === 'student' || role === 'teacher' || role === 'admin') && currentUser && currentView !== 'presentation-view' && (
+        <Suspense fallback={null}><DanangAssistantChat docked={currentView === 'student-journey'} audience={role === 'student' ? 'student' : 'teacher'} stage={currentView === 'station-view' ? currentStage : undefined} compactGame={currentView === 'station-view' && (currentStage === 1 || (currentStage === 2 && (currentStation?.grade === 2 || currentStation?.grade === 4 || currentStation?.grade === 5)))} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense>
       )}
 
       {storageWarning && (

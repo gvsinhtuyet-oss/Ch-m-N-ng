@@ -14,6 +14,8 @@ interface Props {
   hotspot?: ExplorationHotspot | null;
   compactGame?: boolean;
   docked?: boolean;
+  audience?: 'student' | 'teacher';
+  stage?: number;
 }
 
 interface ChatMessage {
@@ -21,6 +23,9 @@ interface ChatMessage {
   role: 'assistant' | 'student';
   text: string;
   relatedStationTitle?: string;
+  sources?: {label:string;url?:string}[];
+  teachingExample?: string;
+  followUp?: string;
 }
 
 const WELCOME =
@@ -41,12 +46,14 @@ const SimpleBold: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false }) => {
+export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage }) => {
+  const isTeacher = audience === 'teacher';
+  const welcome = isTeacher ? 'Thầy cô muốn giải thích từ khó hay mở rộng kiến thức nào? Tôi có thể tìm trong 25 bài học và kho kiến thức có nguồn, kèm ví dụ để giảng cho học sinh.' : WELCOME;
   const [open, setOpen] = useState(false);
   const [tapPulse, setTapPulse] = useState(0);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { id: 'welcome', role: 'assistant', text: WELCOME },
+    { id: 'welcome', role: 'assistant', text: welcome },
   ]);
   const endRef = useRef<HTMLDivElement | null>(null);
   const [viewport, setViewport] = useState(() => ({width: window.innerWidth, height: window.innerHeight}));
@@ -105,16 +112,16 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
 
   useEffect(() => {
-    setMessages([{ id: 'welcome', role: 'assistant', text: WELCOME }]);
+    setMessages([{ id: 'welcome', role: 'assistant', text: welcome }]);
     setInput('');
-  }, [station?.id]);
+  }, [station?.id, welcome]);
 
   useEffect(() => {
     if (open) endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [messages, open]);
 
-  const context = useMemo(() => ({ station, hotspot, stations: ALL_25_STATIONS }), [station, hotspot]);
-  const quickPrompts = useMemo(() => getDanangAssistantQuickPrompts(context), [station?.id, hotspot?.id]);
+  const context = useMemo(() => ({ station, hotspot, stations: ALL_25_STATIONS, audience, stage }), [station, hotspot, audience, stage]);
+  const quickPrompts = useMemo(() => getDanangAssistantQuickPrompts(context), [context]);
 
   const append = (message: ChatMessage) => {
     setMessages(current => [...current, message].slice(-MAX_VISIBLE_MESSAGES));
@@ -132,6 +139,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         role: 'assistant',
         text: result.answer,
         relatedStationTitle: result.relatedStationTitle,
+        sources: result.sources, teachingExample: result.teachingExample, followUp: result.followUp,
       });
     } catch {
       append({ id: `error-${Date.now()}`, role: 'assistant', text: 'Mình chưa đọc được nội dung này. Bạn thử hỏi lại hoặc chọn một câu hỏi gợi ý nhé!' });
@@ -215,9 +223,9 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                   <Bot className="h-6 w-6" />
                 </div>
                 <div>
-                  <h2 className="font-black leading-tight">Trợ lý khám phá Đà Nẵng</h2>
+                  <h2 className="font-black leading-tight">{isTeacher ? 'Trợ lý giảng dạy Đà Nẵng' : 'Trợ lý khám phá Đà Nẵng'}</h2>
                   <p className="mt-0.5 text-[11px] font-medium text-sky-100">
-                    Kho tri thức đã kiểm duyệt • Không giới hạn lượt hỏi
+                    {isTeacher ? 'Hỗ trợ giảng dạy • Kiến thức có nguồn' : 'Học cùng bài • Không giới hạn lượt hỏi'}
                   </p>
                 </div>
               </div>
@@ -262,6 +270,9 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                       </span>
                     )}
                     <p className="whitespace-pre-wrap"><SimpleBold text={message.text} /></p>
+                    {message.teachingExample && <p className="mt-2 border-t border-sky-100 pt-2"><strong>Gợi ý giảng dễ hiểu: </strong>{message.teachingExample}</p>}
+                    {message.followUp && <p className="mt-2"><strong>Hỏi thêm học sinh: </strong>{message.followUp}</p>}
+                    {message.sources?.map(source => <p key={source.label} className="mt-2 text-[11px] leading-4 text-sky-800">{source.url ? <a href={source.url} target="_blank" rel="noopener noreferrer" className="underline">Nguồn: {source.label}</a> : source.label}</p>)}
                     {message.role === 'assistant' && message.relatedStationTitle && (
                       <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-bold text-amber-800 ring-1 ring-amber-200">
                         <MapPin className="h-3 w-3" />
@@ -303,7 +314,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             <div className="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-2 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100">
               <textarea
                 value={input}
-                onChange={event => setInput(event.target.value.slice(0, 220))}
+                onChange={event => setInput(event.target.value.slice(0, isTeacher ? 600 : 220))}
                 onKeyDown={event => {
                   if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
                     event.preventDefault();
@@ -325,7 +336,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
               </button>
             </div>
             <p className="mt-1.5 text-center text-[9px] text-slate-400">
-              Trợ lý chỉ trả lời từ kho kiến thức đã kiểm duyệt và sẽ không tự đoán khi chưa có dữ liệu.
+              Tra cứu từ học liệu và kho mở rộng có nguồn. Chưa có dữ liệu sẽ nói rõ; không tự tìm Internet.
             </p>
           </form>
         </section>

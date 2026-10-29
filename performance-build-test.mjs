@@ -4,7 +4,7 @@ import {readFileSync,statSync,readdirSync} from 'node:fs';
 import vm from 'node:vm';
 let precache=[],routes=[];
 const strategy=class {constructor(options){this.options=options;}};
-const workbox={clientsClaim(){},precacheAndRoute(entries){precache=entries;},cleanupOutdatedCaches(){},registerRoute(...route){routes.push(route);},NavigationRoute:strategy,createHandlerBoundToURL(){},CacheFirst:strategy,StaleWhileRevalidate:strategy,ExpirationPlugin:strategy,CacheableResponsePlugin:strategy};
+const workbox={clientsClaim(){},precacheAndRoute(entries){precache=entries;},cleanupOutdatedCaches(){},registerRoute(...route){routes.push(route);},NavigationRoute:strategy,createHandlerBoundToURL(){},CacheFirst:strategy,NetworkFirst:strategy,StaleWhileRevalidate:strategy,ExpirationPlugin:strategy,CacheableResponsePlugin:strategy};
 const self={define(){},skipWaiting(){},location:{origin:'https://example.test'}};
 vm.runInNewContext(readFileSync('dist/sw.js','utf8'),{self,define:(deps,callback)=>callback(workbox)});
 test('install caches shell, never eagerly downloads lesson media or lazy feature scripts',()=>{

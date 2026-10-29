@@ -168,6 +168,10 @@ export const DANANG_ASSISTANT_LEXICON: AssistantLexiconEntry[] = [
 
 export const DANANG_DIALECT_NORMALIZATION: Record<string, string> = {
   'ở mô': 'ở đâu',
+  'nơi ni': 'nơi này',
+  'chỗ ni': 'chỗ này',
+  'nơi nớ': 'nơi đó',
+  'chỗ nớ': 'chỗ đó',
   'mô': 'đâu',
   'đằng tê': 'đằng kia',
   'bên tê': 'bên kia',

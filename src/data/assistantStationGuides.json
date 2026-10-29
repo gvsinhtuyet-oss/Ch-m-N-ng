@@ -1,0 +1,686 @@
+[
+  {
+    "stationId": "g1-station-1",
+    "title": "Quê hương em",
+    "points": [
+      {
+        "pointId": "g1-home-1",
+        "title": "1. Nơi em ở"
+      },
+      {
+        "pointId": "g1-home-2",
+        "title": "2. Ngôi trường của em"
+      },
+      {
+        "pointId": "g1-home-3",
+        "title": "3. Từ nhà đến trường"
+      },
+      {
+        "pointId": "g1-home-4",
+        "title": "4. Cùng yêu nơi mình sống"
+      }
+    ],
+    "teachingActivity": "Cho học sinh vẽ đường từ nhà đến trường bằng các ký hiệu đơn giản, không yêu cầu cung cấp địa chỉ nhà cụ thể.",
+    "followUp": "Trên đường đi, em nhận ra nơi nào giúp mình định hướng?"
+  },
+  {
+    "stationId": "g1-station-4",
+    "title": "Thành Điện Hải",
+    "points": [
+      {
+        "pointId": "tdh-thanh-co",
+        "title": "1. Thành Điện Hải – di tích lịch sử"
+      },
+      {
+        "pointId": "tdh-tuong-thanh-hao",
+        "title": "2. Cửa thành, tường thành và hào"
+      },
+      {
+        "pointId": "tdh-dai-bac",
+        "title": "3. Súng thần công và câu chuyện giữ thành"
+      },
+      {
+        "pointId": "tdh-nguyen-tri-phuong",
+        "title": "4. Nhớ người có công"
+      }
+    ],
+    "teachingActivity": "Dùng sơ đồ mặt cắt để phân biệt tường thành, cửa thành và hào; sau đó chỉ từng phần trên ảnh Điện Hải.",
+    "followUp": "Nếu thiếu tường hoặc hào, việc bảo vệ thành sẽ thay đổi thế nào?"
+  },
+  {
+    "stationId": "g1-station-2",
+    "title": "Trò chơi dân gian",
+    "points": [
+      {
+        "pointId": "g1-game-1",
+        "title": "1. Những trò chơi quen thuộc"
+      },
+      {
+        "pointId": "g1-game-2",
+        "title": "2. Ai là người bắt dê?"
+      },
+      {
+        "pointId": "g1-game-3",
+        "title": "3. Phạm vi và lượt chơi"
+      },
+      {
+        "pointId": "g1-game-4",
+        "title": "4. Chơi cùng bạn và gia đình"
+      }
+    ],
+    "teachingActivity": "Cho lớp nêu luật của một trò chơi quen thuộc rồi phân vai, khoanh vùng chơi an toàn và thỏa thuận lượt chơi.",
+    "followUp": "Luật chơi nào giúp mọi bạn được tham gia công bằng?"
+  },
+  {
+    "stationId": "g1-station-3",
+    "title": "Những dòng suối ở thành phố Đà Nẵng",
+    "points": [
+      {
+        "pointId": "g1-stream-1",
+        "title": "1. Gọi tên suối, thác"
+      },
+      {
+        "pointId": "g1-stream-2",
+        "title": "2. Rừng cây bên Suối Tiên"
+      },
+      {
+        "pointId": "g1-stream-3",
+        "title": "3. Dòng nước và thác ở Suối Tiên"
+      },
+      {
+        "pointId": "g1-stream-4",
+        "title": "4. Giới thiệu cảnh đẹp em yêu"
+      }
+    ],
+    "teachingActivity": "Dùng chuỗi tranh rừng, dòng suối và thác; yêu cầu học sinh chỉ nơi nước chảy, không đồng nhất mọi suối với thác.",
+    "followUp": "Khi giới thiệu cảnh đẹp, em nên nói điều nhìn thấy hay đoán thêm?"
+  },
+  {
+    "stationId": "g1-station-5",
+    "title": "Món ăn truyền thống",
+    "points": [
+      {
+        "pointId": "g1-food-1",
+        "title": "1. Món ngon quê hương"
+      },
+      {
+        "pointId": "g1-food-2",
+        "title": "2. Nguyên liệu món mì Quảng"
+      },
+      {
+        "pointId": "g1-food-3",
+        "title": "3. Bày tô mì và thưởng thức"
+      },
+      {
+        "pointId": "g1-food-4",
+        "title": "4. Đầu bếp siêu hạng"
+      }
+    ],
+    "teachingActivity": "Xếp thẻ nguyên liệu và thành phẩm món ăn; cho học sinh kể cách ăn, cách bày theo gia đình và tôn trọng sự khác nhau.",
+    "followUp": "Cùng tên món ăn, các gia đình có thể chế biến khác nhau không?"
+  },
+  {
+    "stationId": "g2-station-4",
+    "title": "Di sản văn hóa thế giới Hội An",
+    "points": [
+      {
+        "pointId": "hoi-an-pho-co",
+        "title": "1. Phố cổ Hội An"
+      },
+      {
+        "pointId": "hoi-an-duong-pho",
+        "title": "2. Những con đường ở phố cổ"
+      },
+      {
+        "pointId": "hoi-an-cong-trinh",
+        "title": "3. Những công trình cổ kính"
+      },
+      {
+        "pointId": "hoi-an-hoat-dong",
+        "title": "4. Hoạt động văn hóa nghệ thuật"
+      },
+      {
+        "pointId": "hoi-an-thanh-ha",
+        "title": "5. Làng gốm Thanh Hà"
+      },
+      {
+        "pointId": "hoi-an-tra-que",
+        "title": "6. Làng rau Trà Quế"
+      }
+    ],
+    "teachingActivity": "So sánh ảnh đường phố, nhà cổ, Chùa Cầu và làng nghề; yêu cầu mỗi nhóm chọn một chi tiết có căn cứ để giới thiệu Hội An.",
+    "followUp": "Vì sao giữ di sản cần cả gìn giữ công trình lẫn đời sống cộng đồng?"
+  },
+  {
+    "stationId": "g2-station-3",
+    "title": "Nhà thờ Nguyễn Văn Thoại – Nhà lưu niệm Huỳnh Thúc Kháng",
+    "points": [
+      {
+        "pointId": "g2s3-thoai",
+        "title": "1. Danh tướng Nguyễn Văn Thoại"
+      },
+      {
+        "pointId": "g2s3-nha-tho",
+        "title": "2. Nhà thờ Tiền hiền làng An Hải và Thoại Ngọc Hầu"
+      },
+      {
+        "pointId": "g2s3-huynh",
+        "title": "3. Cụ Huỳnh Thúc Kháng"
+      },
+      {
+        "pointId": "g2s3-luu-niem",
+        "title": "4. Nhà lưu niệm Huỳnh Thúc Kháng"
+      }
+    ],
+    "teachingActivity": "Dùng hai thẻ nhân vật Nguyễn Văn Thoại và Huỳnh Thúc Kháng, nối mỗi người với đúng nơi tưởng niệm và đóng góp trong bài.",
+    "followUp": "Vì sao cần ghi đúng tên người và đọc kỹ nhãn tư liệu?"
+  },
+  {
+    "stationId": "g2-station-5",
+    "title": "Lễ hội truyền thống ở thành phố Đà Nẵng",
+    "points": [
+      {
+        "pointId": "g2s5-le-hoi",
+        "title": "1. Những lễ hội quen thuộc"
+      },
+      {
+        "pointId": "g2s5-phan-le",
+        "title": "2. Phần lễ"
+      },
+      {
+        "pointId": "g2s5-phan-hoi",
+        "title": "3. Phần hội"
+      },
+      {
+        "pointId": "g2s5-y-nghia",
+        "title": "4. Ý nghĩa của lễ hội"
+      },
+      {
+        "pointId": "g2s5-ung-xu",
+        "title": "5. Em đi hội văn minh"
+      }
+    ],
+    "teachingActivity": "Chia bảng thành phần lễ và phần hội, xếp hoạt động từ bài học vào hai cột rồi thảo luận cách ứng xử.",
+    "followUp": "Hoạt động nào thể hiện tưởng nhớ, hoạt động nào giúp cộng đồng vui chơi?"
+  },
+  {
+    "stationId": "g2-station-2",
+    "title": "Cù Lao Chàm – Khu bảo tồn thiên nhiên Sơn Trà",
+    "points": [
+      {
+        "pointId": "g2s2-tong-quan",
+        "title": "1. Cù Lao Chàm – Hòn Lao là đảo chính"
+      },
+      {
+        "pointId": "g2s2-cu-lao",
+        "title": "2. Những nét đặc sắc của Cù Lao Chàm"
+      },
+      {
+        "pointId": "g2s2-hoat-dong",
+        "title": "3. Hoạt động khi tham quan Cù Lao Chàm"
+      },
+      {
+        "pointId": "g2s2-son-tra",
+        "title": "4. Sinh vật ở Khu bảo tồn thiên nhiên Sơn Trà"
+      },
+      {
+        "pointId": "g2s2-bao-ve",
+        "title": "5. Em bảo vệ Cù Lao Chàm và Sơn Trà"
+      }
+    ],
+    "teachingActivity": "Lập hai cột biển đảo Cù Lao Chàm và rừng Sơn Trà; chỉ sinh vật, môi trường sống và việc bảo vệ phù hợp từng nơi.",
+    "followUp": "Vì sao không cho động vật hoang dã ăn và không bẻ san hô?"
+  },
+  {
+    "stationId": "g2-station-1",
+    "title": "Chiếu Cẩm Nê – Chiếu Bàn Thạch",
+    "points": [
+      {
+        "pointId": "g2s1-lang-chieu",
+        "title": "1. Hai làng chiếu truyền thống"
+      },
+      {
+        "pointId": "g2s1-nguyen-lieu",
+        "title": "2. Nguyên liệu làm chiếu"
+      },
+      {
+        "pointId": "g2s1-cac-buoc",
+        "title": "3. Chuẩn bị và dệt chiếu"
+      },
+      {
+        "pointId": "g2s1-gian-det",
+        "title": "4. Dụng cụ của người thợ"
+      },
+      {
+        "pointId": "g2s1-tham-quan",
+        "title": "5. Em đến làng nghề"
+      }
+    ],
+    "teachingActivity": "Dùng dải giấy mô phỏng các sợi đan xen thành chiếu, rồi đối chiếu ảnh cói, dụng cụ và quy trình người thợ.",
+    "followUp": "Nguyên liệu và dụng cụ khác nhau ở điểm nào?"
+  },
+  {
+    "stationId": "g3-station-2",
+    "title": "Hoàng Diệu – Phan Châu Trinh",
+    "points": [
+      {
+        "pointId": "dn3-huynh-thuc-khang",
+        "title": "1. Hoàng Diệu – tấm gương yêu nước"
+      },
+      {
+        "pointId": "dn3-phan-chau-trinh",
+        "title": "2. Phan Châu Trinh – người mong đất nước đổi mới"
+      },
+      {
+        "pointId": "dn3-phong-trao-duy-tan",
+        "title": "3. Phong trào Duy Tân – học để tiến bộ"
+      },
+      {
+        "pointId": "dn3-dau-chan-hom-nay",
+        "title": "4. Ghi nhớ công lao người đi trước"
+      }
+    ],
+    "teachingActivity": "Lập bảng riêng Hoàng Diệu và Phan Châu Trinh, ghép đúng việc làm và lý tưởng theo học liệu, tránh nhập hai nhân vật làm một.",
+    "followUp": "Em học được phẩm chất nào từ mỗi người và có thể thực hiện ra sao?"
+  },
+  {
+    "stationId": "g3-station-3",
+    "title": "Cộng đồng các dân tộc ở thành phố Đà Nẵng",
+    "points": [
+      {
+        "pointId": "g3-3-point-1",
+        "title": "1. Các cộng đồng cùng chung sống"
+      },
+      {
+        "pointId": "g3-3-point-2",
+        "title": "2. Nét văn hóa của đồng bào Cơ Tu"
+      },
+      {
+        "pointId": "g3-3-point-3",
+        "title": "3. Cây nêu của đồng bào Co"
+      },
+      {
+        "pointId": "g3-3-point-4",
+        "title": "4. Cùng giữ gìn nét đẹp văn hóa"
+      }
+    ],
+    "teachingActivity": "Mời học sinh nhận xét một nét văn hóa qua ảnh và thông tin của bài; tránh gán một trang phục, tập tục cho mọi dân tộc.",
+    "followUp": "Làm thế nào để tìm hiểu sự khác biệt với thái độ tôn trọng?"
+  },
+  {
+    "stationId": "g3-station-1",
+    "title": "Bãi biển Mỹ Khê – Bãi biển Bàn Than",
+    "points": [
+      {
+        "pointId": "g3-1-point-1",
+        "title": "1. Mỹ Khê – bờ cát dài và phẳng"
+      },
+      {
+        "pointId": "g3-1-point-2",
+        "title": "2. Bàn Than – đá đen và rêu xanh"
+      },
+      {
+        "pointId": "g3-1-point-3",
+        "title": "3. Nhận biết hệ thống cứu hộ Mỹ Khê"
+      },
+      {
+        "pointId": "g3-1-point-4",
+        "title": "4. Vui chơi an toàn, giữ biển sạch"
+      }
+    ],
+    "teachingActivity": "So sánh ảnh bãi cát Mỹ Khê và bãi đá Bàn Than; thêm thẻ biển báo, cứu hộ và các tình huống an toàn khi đi biển.",
+    "followUp": "Khi thấy biển báo nguy hiểm, em nên làm gì?"
+  },
+  {
+    "stationId": "g3-station-4",
+    "title": "Nước mắm Nam Ô",
+    "points": [
+      {
+        "pointId": "g3-4-point-1",
+        "title": "1. Nam Ô – làng nghề bên cửa sông"
+      },
+      {
+        "pointId": "g3-4-point-2",
+        "title": "2. Cá cơm than và muối biển"
+      },
+      {
+        "pointId": "g3-4-point-3",
+        "title": "3. Bốn bước làm nước mắm"
+      },
+      {
+        "pointId": "g3-4-point-4",
+        "title": "4. Quý đặc sản, gìn giữ làng nghề"
+      }
+    ],
+    "teachingActivity": "Sắp xếp thẻ cá, muối, ủ và lọc theo bài; chỉ quan sát quy trình, không tổ chức nếm nguyên liệu chưa bảo đảm vệ sinh.",
+    "followUp": "Vì sao nguyên liệu tốt chưa đủ nếu bỏ qua kỹ năng người thợ?"
+  },
+  {
+    "stationId": "g3-station-5",
+    "title": "Nghề đan thuyền thúng ở Sơn Trà",
+    "points": [
+      {
+        "pointId": "g3-5-point-1",
+        "title": "1. Nghề thúng chai bên biển"
+      },
+      {
+        "pointId": "g3-5-point-2",
+        "title": "2. Từ cây tre đến thân thúng"
+      },
+      {
+        "pointId": "g3-5-point-3",
+        "title": "3. Nẹp vành, ép vành, chống thấm"
+      },
+      {
+        "pointId": "g3-5-point-4",
+        "title": "4. Công dụng và giá trị của thuyền thúng"
+      }
+    ],
+    "teachingActivity": "Cho lớp xem ảnh nan tre, thân thúng, vành thúng và chống thấm rồi sắp xếp công đoạn; không sử dụng dao hoặc vật liệu nóng.",
+    "followUp": "Vì sao thúng cần vành chắc và lớp chống thấm?"
+  },
+  {
+    "stationId": "g4-station-1",
+    "title": "Thiên nhiên và con người Đà Nẵng",
+    "points": [
+      {
+        "pointId": "g4-station-1-textbook-point-1",
+        "title": "1. Đà Nẵng trên bản đồ"
+      },
+      {
+        "pointId": "g4-station-1-textbook-point-2",
+        "title": "2. Núi, trung du và đồng bằng ven biển"
+      },
+      {
+        "pointId": "g4-station-1-textbook-point-3",
+        "title": "3. Khí hậu và những dòng sông"
+      },
+      {
+        "pointId": "g4-station-1-textbook-point-4",
+        "title": "4. Giữ gìn rừng, biển và sinh vật"
+      },
+      {
+        "pointId": "g4-station-1-textbook-point-5",
+        "title": "5. Con người và những nét đẹp quê hương"
+      },
+      {
+        "pointId": "g4-station-1-textbook-point-6",
+        "title": "6. Em giới thiệu và chăm sóc quê hương"
+      }
+    ],
+    "teachingActivity": "Dùng bản đồ của bài để nhận diện vùng núi, trung du, đồng bằng ven biển rồi nối mỗi vùng với một hoạt động sống phù hợp.",
+    "followUp": "Một vùng đất có thể vừa có núi vừa có biển không?"
+  },
+  {
+    "stationId": "g4-station-3",
+    "title": "Tìm hiểu một số hoạt động kinh tế Đà Nẵng",
+    "points": [
+      {
+        "pointId": "g4-station-3-textbook-point-1",
+        "title": "1. Công nghiệp làm ra sản phẩm"
+      },
+      {
+        "pointId": "g4-station-3-textbook-point-2",
+        "title": "2. Dịch vụ và du lịch"
+      },
+      {
+        "pointId": "g4-station-3-textbook-point-3",
+        "title": "3. Nông nghiệp và cách làm mới"
+      },
+      {
+        "pointId": "g4-station-3-textbook-point-4",
+        "title": "4. Kinh tế biển và sự kết nối"
+      },
+      {
+        "pointId": "g4-station-3-textbook-point-5",
+        "title": "5. Làng nghề và công việc của người thân"
+      }
+    ],
+    "teachingActivity": "Cho học sinh kể một công việc trong gia đình và phân biệt làm ra sản phẩm, cung cấp dịch vụ hoặc sản xuất nông nghiệp.",
+    "followUp": "Những công việc khác nhau hỗ trợ nhau như thế nào?"
+  },
+  {
+    "stationId": "g4-station-2",
+    "title": "Khu đền tháp Mỹ Sơn – Bảo tàng Điêu khắc Chăm Đà Nẵng",
+    "points": [
+      {
+        "pointId": "g4-station-2-textbook-point-1",
+        "title": "1. Mỹ Sơn trong thung lũng"
+      },
+      {
+        "pointId": "g4-station-2-textbook-point-2",
+        "title": "2. Dấu ấn nhiều thế kỉ"
+      },
+      {
+        "pointId": "g4-station-2-textbook-point-3",
+        "title": "3. Kiến trúc và điêu khắc Chăm-pa"
+      },
+      {
+        "pointId": "g4-station-2-textbook-point-4",
+        "title": "4. Bảo tàng Điêu khắc Chăm Đà Nẵng"
+      },
+      {
+        "pointId": "g4-station-2-textbook-point-5",
+        "title": "5. Từ công trình đến hiện vật"
+      },
+      {
+        "pointId": "g4-station-2-textbook-point-6",
+        "title": "6. Tham quan và gìn giữ di sản"
+      }
+    ],
+    "teachingActivity": "So sánh ảnh công trình tại Mỹ Sơn và hiện vật trong bảo tàng; đọc nhãn trước khi nói chất liệu hoặc niên đại.",
+    "followUp": "Vì sao cùng tìm hiểu văn hóa Chăm nhưng cách trưng bày và bảo vệ khác nhau?"
+  },
+  {
+    "stationId": "g4-thu-bon-hon-kem",
+    "title": "Sông Thu Bồn – Hòn Kẽm Đá Dừng",
+    "points": [
+      {
+        "pointId": "g4-thu-bon-hon-kem-textbook-point-1",
+        "title": "1. Từ núi Ngọc Linh đến Cửa Đại"
+      },
+      {
+        "pointId": "g4-thu-bon-hon-kem-textbook-point-2",
+        "title": "2. Cuộc sống trên dòng Thu Bồn"
+      },
+      {
+        "pointId": "g4-thu-bon-hon-kem-textbook-point-3",
+        "title": "3. Hòn Kẽm Đá Dừng – sông núi hữu tình"
+      },
+      {
+        "pointId": "g4-thu-bon-hon-kem-textbook-point-4",
+        "title": "4. Cảnh đẹp và câu chuyện lịch sử"
+      },
+      {
+        "pointId": "g4-thu-bon-hon-kem-textbook-point-5",
+        "title": "5. Đi thuyền khám phá, giữ sạch dòng sông"
+      }
+    ],
+    "teachingActivity": "Lần theo mũi tên dòng Thu Bồn trên bản đồ rồi liên hệ Hòn Kẽm Đá Dừng bằng ảnh; không dùng sơ đồ minh họa để dẫn đường thực tế.",
+    "followUp": "Con sông có những vai trò nào đối với cộng đồng ven sông?"
+  },
+  {
+    "stationId": "g4-station-4",
+    "title": "Nghề đúc đồng ở Phước Kiều",
+    "points": [
+      {
+        "pointId": "g4-station-4-textbook-point-1",
+        "title": "1. Phước Kiều – làng nghề hơn 400 năm"
+      },
+      {
+        "pointId": "g4-station-4-textbook-point-2",
+        "title": "2. Tạo mẫu và làm khuôn"
+      },
+      {
+        "pointId": "g4-station-4-textbook-point-3",
+        "title": "3. Nấu, rót đồng và hoàn thiện"
+      },
+      {
+        "pointId": "g4-station-4-textbook-point-4",
+        "title": "4. Sản phẩm truyền thống và sản phẩm mới"
+      },
+      {
+        "pointId": "g4-station-4-textbook-point-5",
+        "title": "5. Giữ nghề và giới thiệu làng nghề"
+      }
+    ],
+    "teachingActivity": "Xếp thẻ tạo mẫu, làm khuôn, nấu, rót và hoàn thiện theo học liệu; chỉ dùng ảnh để giới thiệu các công đoạn có nhiệt độ cao.",
+    "followUp": "Vì sao làm khuôn và hoàn thiện đều đòi hỏi sự tỉ mỉ?"
+  },
+  {
+    "stationId": "g5-ky-anh-me-nhu",
+    "title": "Địa đạo Kỳ Anh – Khu lưu niệm Mẹ Nhu và 07 Dũng sĩ Thanh Khê",
+    "points": [
+      {
+        "pointId": "g5-ky-anh-me-nhu-textbook-point-1",
+        "title": "1. Địa đạo Kỳ Anh ở đâu?"
+      },
+      {
+        "pointId": "g5-ky-anh-me-nhu-textbook-point-2",
+        "title": "2. Mạng đường hầm và các bộ phận"
+      },
+      {
+        "pointId": "g5-ky-anh-me-nhu-textbook-point-3",
+        "title": "3. Đình Thạch Tân và vai trò địa đạo"
+      },
+      {
+        "pointId": "g5-ky-anh-me-nhu-textbook-point-4",
+        "title": "4. Mẹ Nhu và ngày 26 tháng 12 năm 1968"
+      },
+      {
+        "pointId": "g5-ky-anh-me-nhu-textbook-point-5",
+        "title": "5. Khu lưu niệm và tượng Mẹ Dũng sĩ"
+      },
+      {
+        "pointId": "g5-ky-anh-me-nhu-textbook-point-6",
+        "title": "6. Giới thiệu một di tích bằng lòng biết ơn"
+      }
+    ],
+    "teachingActivity": "Tách hai nhóm tư liệu Địa đạo Kỳ Anh và Mẹ Nhu–bảy dũng sĩ Thanh Khê, phân biệt địa điểm, nhân vật và sự kiện.",
+    "followUp": "Nói về di tích bằng lòng biết ơn khác với chỉ kể số liệu như thế nào?"
+  },
+  {
+    "stationId": "g5-station-3",
+    "title": "Bà Nà – Hải Vân Quan",
+    "points": [
+      {
+        "pointId": "g5-station-3-textbook-point-1",
+        "title": "1. Núi cao và khí hậu Bà Nà"
+      },
+      {
+        "pointId": "g5-station-3-textbook-point-2",
+        "title": "2. Từ khu nghỉ mát đến điểm du lịch"
+      },
+      {
+        "pointId": "g5-station-3-textbook-point-3",
+        "title": "3. Rừng Núi Chúa và bảo tồn thiên nhiên"
+      },
+      {
+        "pointId": "g5-station-3-textbook-point-4",
+        "title": "4. Hải Vân Quan trên đỉnh đèo"
+      },
+      {
+        "pointId": "g5-station-3-textbook-point-5",
+        "title": "5. Hai dòng chữ trên cửa quan"
+      },
+      {
+        "pointId": "g5-station-3-textbook-point-6",
+        "title": "6. Tu bổ di tích và so sánh hai điểm đến"
+      }
+    ],
+    "teachingActivity": "Lập bảng so sánh Bà Nà và Hải Vân Quan theo cảnh quan, lịch sử và việc bảo vệ; không đồng nhất công trình du lịch mới với di tích cổ.",
+    "followUp": "Khi giới thiệu một điểm đến, em phân biệt cảnh tự nhiên và công trình do người tạo ra ra sao?"
+  },
+  {
+    "stationId": "g5-station-4",
+    "title": "Danh thắng Ngũ Hành Sơn",
+    "points": [
+      {
+        "pointId": "nghs-quan-the",
+        "title": "1. Quần thể núi Ngũ Hành Sơn"
+      },
+      {
+        "pointId": "nghs-hang-dong-chua",
+        "title": "2. Hang động, chùa cổ và bảo tàng"
+      },
+      {
+        "pointId": "nghs-ma-nhai",
+        "title": "3. Ma nhai: chữ khắc lưu giữ ký ức"
+      },
+      {
+        "pointId": "g5-station-4-textbook-point-4",
+        "title": "4. Làng đá Non Nước và lịch sử nghề"
+      },
+      {
+        "pointId": "g5-station-4-textbook-point-5",
+        "title": "5. Sản phẩm đa dạng và bảo vệ núi đá"
+      },
+      {
+        "pointId": "nghs-lang-da",
+        "title": "6. Giữ gìn cảnh quan và di sản"
+      }
+    ],
+    "teachingActivity": "Cho học sinh tìm núi, hang động, ma nhai và làng nghề trên ảnh; tách danh thắng, di tích và di sản tư liệu khi giải thích danh hiệu.",
+    "followUp": "Một điểm đến có thể có nhiều loại giá trị cần gìn giữ không?"
+  },
+  {
+    "stationId": "g5-lua-ma-chau",
+    "title": "Lụa Mã Châu",
+    "points": [
+      {
+        "pointId": "g5-lua-ma-chau-textbook-point-1",
+        "title": "1. Làng lụa ở Nam Phước"
+      },
+      {
+        "pointId": "g5-lua-ma-chau-textbook-point-2",
+        "title": "2. Trồng dâu và nuôi tằm"
+      },
+      {
+        "pointId": "g5-lua-ma-chau-textbook-point-3",
+        "title": "3. Bủa kén và ươm tơ"
+      },
+      {
+        "pointId": "g5-lua-ma-chau-textbook-point-4",
+        "title": "4. Dệt và hoàn thiện tấm lụa"
+      },
+      {
+        "pointId": "g5-lua-ma-chau-textbook-point-5",
+        "title": "5. Sản phẩm và cách giữ nghề"
+      }
+    ],
+    "teachingActivity": "Dùng chuỗi tranh dâu, tằm, kén, ươm tơ và dệt; phân biệt nguyên liệu tơ với tấm lụa đã hoàn thiện.",
+    "followUp": "Vì sao mỗi công đoạn đều góp phần tạo nên chất lượng tấm lụa?"
+  },
+  {
+    "stationId": "g5-station-5",
+    "title": "Sâm Ngọc Linh",
+    "points": [
+      {
+        "pointId": "g5-station-5-textbook-point-1",
+        "title": "1. Sâm Việt Nam dưới tán rừng"
+      },
+      {
+        "pointId": "g5-station-5-textbook-point-2",
+        "title": "2. Môi trường sống ở núi Ngọc Linh"
+      },
+      {
+        "pointId": "g5-station-5-textbook-point-3",
+        "title": "3. Tri thức bản địa và nghiên cứu khoa học"
+      },
+      {
+        "pointId": "g5-station-5-textbook-point-4",
+        "title": "4. Giá trị dược liệu và thông tin có căn cứ"
+      },
+      {
+        "pointId": "g5-station-5-textbook-point-5",
+        "title": "5. Người trồng sâm và sinh kế dưới rừng"
+      },
+      {
+        "pointId": "g5-station-5-textbook-point-6",
+        "title": "6. Lễ hội và gian giới thiệu dược liệu"
+      }
+    ],
+    "teachingActivity": "Phân loại câu mô tả nơi sống, bảo tồn, sinh kế và quảng cáo công dụng; không biến bài học dược liệu thành hướng dẫn tự dùng thuốc.",
+    "followUp": "Khi nghe một lời quảng cáo về dược liệu, em nên kiểm tra điều gì?"
+  }
+]

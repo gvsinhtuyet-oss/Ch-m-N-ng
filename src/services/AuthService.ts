@@ -2,7 +2,7 @@ import { Admin, Teacher, Classroom, ImplementationRecord } from '../types';
 import { fetchWithTimeout } from './NetworkService';
 export type StaffUser = (Admin | Teacher) & { email: string };
 export type ManagedClass = Classroom & { students: string[] };
-export interface LearningProposal { id:string;teacherId:string;teacherName:string;stationId:string;stationName:string;grade:number;text:string;status:string;createdAt:string;workspace?:import('./TeacherWorkspaceService').TeacherWorkspace; }
+export interface LearningProposal { id:string;teacherId:string;teacherName:string;stationId:string;stationName:string;grade:number;text:string;status:string;createdAt:string;category?:string;source?:string;actorKind?:string;workspace?:import('./TeacherWorkspaceService').TeacherWorkspace; }
 export interface RealClassProgress {
   className:string; academicYear:string; rosterCount:number; linkedCount:number;
   students:Array<{name:string;completedStations:number;totalStamps:number;stations:Array<{stationId:string;completed:boolean;stamp:boolean;completedStages:number;lastVisitedAt:string|null}>}>;

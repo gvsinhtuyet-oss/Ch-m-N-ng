@@ -100,7 +100,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const panelWidth = Math.min(390, viewport.width - 24);
   const panelLeft = Math.max(12, Math.min(launcherPosition.x, viewport.width - panelWidth - 12));
   const panelTop = Math.max(12, Math.min(
-    launcherPosition.y > viewport.height / 2 ? launcherPosition.y - panelHeight - 12 : launcherPosition.y + 122,
+    launcherPosition.y > viewport.height / 2 ? launcherPosition.y - panelHeight - 20 : launcherPosition.y + (compactGame ? 58 : 122),
     viewport.height - panelHeight - 12));
 
 
@@ -175,7 +175,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             setOpen(value => !value);
           }}
           style={{touchAction:'none', ...(compactGame ? {width:48,height:48} : {})}}
-          className="discovery-assistant-button relative inline-flex h-[72px] w-[72px] shrink-0 cursor-grab items-center justify-center rounded-full border-[3px] border-white bg-gradient-to-br from-sky-600 via-cyan-500 to-teal-500 text-white shadow-[0_8px_24px_rgba(3,105,161,.45)] ring-[3px] ring-amber-300 transition-shadow hover:shadow-[0_10px_30px_rgba(3,105,161,.6)] focus-visible:outline focus-visible:outline-4 focus-visible:outline-sky-900 active:cursor-grabbing"
+          className="discovery-assistant-button relative inline-flex h-[72px] w-[72px] shrink-0 cursor-grab items-center justify-center rounded-none border-0 bg-transparent text-white shadow-none ring-0 transition-shadow hover:shadow-[0_10px_30px_rgba(3,105,161,.6)] focus-visible:outline focus-visible:outline-4 focus-visible:outline-sky-900 active:cursor-grabbing"
           aria-label={open ? 'Đóng Trợ lý khám phá Đà Nẵng' : 'Mở Trợ lý khám phá Đà Nẵng'}
           aria-expanded={open}
           aria-controls="danang-assistant-panel"
@@ -194,7 +194,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             <path d="M44 51Q50 55 56 51" fill="none" stroke="#91ffff" strokeWidth="2" strokeLinecap="round"/>
             <circle cx="50" cy="77" r="5" fill="#ffcd57"/><path d="M47 77h6M50 74v6" stroke="#fff" strokeWidth="2"/>
           </svg>
-          <span aria-hidden="true" className="absolute -bottom-1 -right-1 rounded-full border-2 border-white bg-amber-300 p-1.5 text-sky-950"><MessageCircle className="h-4 w-4" /></span>
+          <span aria-hidden="true" className="absolute -right-6 top-1 rounded-2xl border-2 border-amber-300 bg-white px-2 py-1 text-sky-950 shadow-md"><MessageCircle className="h-5 w-5" /></span>
         </button>
         <span id="assistant-drag-hint" className="sr-only">Giữ và kéo biểu tượng để tránh che nội dung.</span>
       </div>
@@ -205,7 +205,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
           role="dialog"
           aria-label="Trợ lý khám phá Đà Nẵng"
           style={{left:panelLeft, top:panelTop, width:panelWidth, maxHeight:panelHeight}}
-          className="fixed z-[60] flex flex-col overflow-hidden rounded-[1.75rem] border border-sky-200 bg-white shadow-2xl"
+          className="discovery-chat-bubble fixed z-[60] flex flex-col overflow-hidden rounded-[1.75rem] border-2 border-sky-200 bg-white shadow-2xl"
         >
           <header className="relative overflow-hidden bg-gradient-to-r from-sky-800 via-sky-700 to-cyan-600 px-4 py-4 text-white">
             <div className="absolute -right-7 -top-8 h-24 w-24 rounded-full bg-white/10" />

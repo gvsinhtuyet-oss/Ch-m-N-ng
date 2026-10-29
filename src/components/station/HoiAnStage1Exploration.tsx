@@ -6,7 +6,8 @@ import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService, NarrationState } from '../../services/AudioService';
-import { gradeOneNarration } from './gradeOneNarration';
+import { stage1Narration } from './stage1Narration';
+import { NarrationButton } from './NarrationButton';
 import { progressService } from '../../services/ProgressService';
 import { RewardClaimModal } from '../common/RewardClaimModal';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
@@ -104,9 +105,11 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
     setNarrationCompleted(false);
     setNarrationMessage('');
     audioService.stopNarration();
-  }, [index]);
+  }, [station.id, hotspot.id, language]);
 
   const openImagePreview = (itemIndex: number) => {
+    audioService.stopNarration();
+    setNarrationMessage('');
     setPreviewIndex(itemIndex);
     setShowImage(true);
   };
@@ -118,7 +121,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
         : hotspot.narrationVi;
     setNarrationCompleted(false);
     setNarrationMessage('');
-    const recorded = gradeOneNarration(station, hotspot, language);
+    const recorded = stage1Narration(station, hotspot, language);
     if (recorded) { audioService.playRecordedNarration(recorded, () => setNarrationCompleted(true), narrationError); return; }
     audioService.speakNarration(
       text,
@@ -128,13 +131,15 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
     );
   };
 
+  useEffect(() => { audioService.stopNarration(); setNarrationMessage(''); }, [previewIndex, showImage]);
+
   const speakPreview = () => {
     const text =
       language === 'en' && previewHotspot.narrationEn
         ? previewHotspot.narrationEn
         : previewHotspot.narrationVi;
     setNarrationMessage('');
-    const recorded = gradeOneNarration(station, previewHotspot, language);
+    const recorded = stage1Narration(station, previewHotspot, language);
     if (recorded) { audioService.playRecordedNarration(recorded, undefined, narrationError); return; }
     audioService.speakNarration(text, language === 'en' && previewHotspot.narrationEn ? 'en-US' : 'vi-VN',undefined,narrationError);
   };
@@ -250,10 +255,41 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
   return (
     <div className="stage-one-map-surface min-h-0">
-      <section className="stage-one-map-content overflow-hidden rounded-[2rem] border border-orange-200/90 p-3 shadow-[0_18px_55px_rgba(154,52,18,0.16)]">
+      <section inert={showImage || undefined} aria-hidden={showImage || undefined} className="stage-one-map-content overflow-hidden rounded-[2rem] border border-orange-200/90 p-3 shadow-[0_18px_55px_rgba(154,52,18,0.16)]">
         <div className="grid min-w-0 grid-cols-1 items-start gap-3 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
           {/* LEFT: immersive visual explorer */}
-          <div className="flex min-h-0 min-w-0 flex-col gap-3">
+          <div className="stage1-visual-column flex min-h-0 min-w-0 flex-col gap-3">
+            <div className="stage1-point-heading rounded-2xl bg-white/95 p-4 shadow-sm">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="rounded-full bg-orange-500 px-3 py-1 text-[9px] font-black uppercase tracking-wide text-white">
+                      Điểm chạm {index + 1}
+                    </span>
+                    {explored && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-[9px] font-black text-emerald-700">
+                        <CheckCircle2 className="h-3 w-3" />
+                        ĐÃ KHÁM PHÁ
+                      </span>
+                    )}
+                  </div>
+                  <h2 className="mt-2 text-xl font-black leading-tight text-slate-950">
+                    {hotspot.titleVi}
+                  </h2>
+                  {hotspot.subtitleVi && (
+                    <p className="mt-1 text-xs font-bold text-orange-700">
+                      {hotspot.subtitleVi}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-3">
+                <NarrationButton state={narrationState} onClick={() => { if (playing) audioService.pauseNarration(); else if (paused) audioService.resumeNarration(); else speak(); }} />
+              </div>
+              {narrationMessage && <p role="status" className="mt-2 text-sm text-amber-900">{narrationMessage}</p>}
+            </div>
+
             <div className="relative min-h-[300px] aspect-[16/10] overflow-hidden rounded-[1.65rem] border-2 border-orange-200 bg-slate-950 shadow-xl">
               <button
                 type="button"
@@ -356,7 +392,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             </div>
 
         </section>
-            {narrationMessage&&<p role="status" className="rounded-xl bg-amber-50 px-3 py-2 text-xs text-amber-950">{narrationMessage}</p>}
+
             {lockMessage && (
               <div className="shrink-0 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-[11px] font-bold text-amber-800 shadow-sm">
                 {lockMessage}
@@ -367,34 +403,6 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
           {/* RIGHT: information rail */}
           <aside className="hoi-an-right-rail flex min-h-0 min-w-0 flex-col gap-3">
             <div className="shrink-0 rounded-[1.5rem] border-2 border-amber-300 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-4 shadow-sm">
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-full bg-orange-500 px-3 py-1 text-[9px] font-black uppercase tracking-wide text-white">
-                      Điểm chạm {index + 1}
-                    </span>
-                    {explored && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-[9px] font-black text-emerald-700">
-                        <CheckCircle2 className="h-3 w-3" />
-                        ĐÃ KHÁM PHÁ
-                      </span>
-                    )}
-                  </div>
-                  <h2 className="mt-2 text-xl font-black leading-tight text-slate-950">
-                    {hotspot.titleVi}
-                  </h2>
-                  {hotspot.subtitleVi && (
-                    <p className="mt-1 text-xs font-bold text-orange-700">
-                      {hotspot.subtitleVi}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-            <div className="mt-3 flex flex-wrap gap-2">
-              <button type="button" onClick={() => { if (playing) audioService.pauseNarration(); else if (paused) audioService.resumeNarration(); else speak(); }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-400 px-2 py-2 text-xs font-black text-white shadow"><Volume2 className="h-4 w-4 shrink-0" />{playing ? 'Tạm dừng' : paused ? 'Tiếp tục nghe' : 'Nghe thuyết minh'}</button>
-              <button type="button" onClick={speak} aria-label="Nghe lại lời dẫn" className="min-h-11 rounded-xl border border-orange-200 px-3 py-2 text-sm font-bold text-orange-800"><RotateCcw className="mr-1 inline h-4 w-4" />Nghe lại</button>
-            </div>
               <p className="mt-3 pr-1 text-[13px] font-semibold leading-6 text-slate-700 sm:text-[14px]">
                 {hotspot.narrationVi}
               </p>
@@ -502,13 +510,17 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
       {showImage && (
         <div className="fixed inset-0 z-[90] flex items-center justify-center bg-slate-950/85 p-3 backdrop-blur-md sm:p-6">
           <div className="grid h-[92dvh] max-h-[92dvh] min-h-0 w-full max-w-6xl grid-rows-[minmax(0,.8fr)_minmax(0,1fr)] overflow-hidden rounded-[2rem] border border-orange-200 bg-[#fffaf2] shadow-2xl lg:grid-cols-[minmax(0,1.55fr)_minmax(0,.75fr)] lg:grid-rows-1">
-            <div className="relative min-h-0 bg-slate-950">
+            <div className="relative flex min-h-0 flex-col bg-white">
+              <div className="shrink-0 p-4">
+                <h3 className="mb-3 pr-10 text-xl font-black text-slate-950">{previewHotspot.titleVi}</h3>
+                <NarrationButton state={narrationState} onClick={() => { if (playing) audioService.pauseNarration(); else if (paused) audioService.resumeNarration(); else speakPreview(); }} />
+              </div>
               <LearningImage
                 key={previewHotspot.id + previewHotspot.image}
                 honestFallback
                 src={previewHotspot.image}
                 alt={previewHotspot.titleVi}
-                className={`h-full w-full ${station.grade <= 5 ? 'object-contain' : 'object-cover'}`}
+                className="min-h-0 w-full flex-1 object-contain"
                 onError={event => {
                   const img = event.currentTarget;
                   if (img.dataset.fallback === 'default') return;
@@ -521,7 +533,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   img.src = DEFAULT_APP_BACKGROUND_DATA_URL;
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/50 via-transparent to-transparent" />
+
               {freeReview && (
                 <div className="absolute bottom-5 left-5 right-5 flex justify-between">
                   <button
@@ -529,6 +541,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                     disabled={(previewIndex ?? index) === 0}
                     onClick={() => {
                       const nextPreview = Math.max(0, (previewIndex ?? index) - 1);
+                      audioService.stopNarration();
                       setPreviewIndex(nextPreview);
                     }}
                     className="inline-flex items-center gap-1 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-slate-700 shadow disabled:opacity-40"
@@ -541,6 +554,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                     disabled={(previewIndex ?? index) === station.hotspots.length - 1}
                     onClick={() => {
                       const nextPreview = Math.min(station.hotspots.length - 1, (previewIndex ?? index) + 1);
+                      audioService.stopNarration();
                       setPreviewIndex(nextPreview);
                     }}
                     className="inline-flex items-center gap-1 rounded-full bg-white/95 px-4 py-2 text-xs font-black text-orange-700 shadow disabled:opacity-40"
@@ -553,7 +567,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             </div>
 
             <div className="relative h-full min-h-0 overflow-y-auto overscroll-contain p-5 pb-8 sm:p-7 sm:pb-9">
-              <RealPhotoGallery stationId={station.id} index={station.hotspots.findIndex(p=>p.id===previewHotspot.id)}/>
+
               <button
                 type="button"
                 onClick={() => {
@@ -566,21 +580,6 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               >
                 <X className="h-5 w-5" />
               </button>
-
-              <div className="pr-10">
-                <span className="inline-flex items-center gap-2 rounded-full bg-orange-100 px-3 py-1.5 text-[10px] font-black uppercase text-orange-700">
-                  <MapPin className="h-3.5 w-3.5" />
-                  Điểm nổi bật
-                </span>
-                <h3 className="mt-4 text-2xl font-black leading-tight text-slate-950 sm:text-[28px]">
-                  {previewHotspot.titleVi}
-                </h3>
-                {previewHotspot.subtitleVi && (
-                  <p className="mt-1 text-sm font-bold text-orange-700">
-                    {previewHotspot.subtitleVi}
-                  </p>
-                )}
-              </div>
 
               <div className="mt-5 rounded-2xl border border-orange-100 bg-white p-4">
                 <p className="text-sm font-semibold leading-6 text-slate-700">
@@ -600,16 +599,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               )}
 
               {narrationMessage&&<p role="status" className="mt-3 text-sm text-amber-950">{narrationMessage}</p>}
-              <div className="sticky bottom-0 mt-5 bg-gradient-to-t from-[#fffaf2] via-[#fffaf2]/95 to-transparent pt-3">
-                <button
-                  type="button"
-                  onClick={speakPreview}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-400 px-5 py-3.5 text-sm font-black !text-white shadow-lg shadow-orange-200/60"
-                >
-                  <Volume2 className="h-4 w-4" />
-                  NGHE THUYẾT MINH
-                </button>
-              </div>
+
             </div>
           </div>
         </div>

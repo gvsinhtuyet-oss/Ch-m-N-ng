@@ -1,0 +1,202 @@
+[
+  {
+    "file": "g2-1-1.mp3",
+    "old_start": 2.656,
+    "new_start": 2.4517100000000003,
+    "end": 12.174999999999999,
+    "silence_start": 2.23475,
+    "silence_end": 2.66867
+  },
+  {
+    "file": "g2-1-2.mp3",
+    "old_start": 14.895999999999999,
+    "new_start": 14.7918,
+    "end": 25.955000000000002,
+    "silence_start": 14.6005,
+    "silence_end": 14.9831
+  },
+  {
+    "file": "g2-1-3.mp3",
+    "old_start": 28.636,
+    "new_start": 28.52995,
+    "end": 40.636,
+    "silence_start": 28.3392,
+    "silence_end": 28.7207
+  },
+  {
+    "file": "g2-1-4.mp3",
+    "old_start": 43.376,
+    "new_start": 43.2421,
+    "end": 59.996,
+    "silence_start": 43.0475,
+    "silence_end": 43.4367
+  },
+  {
+    "file": "g2-1-5.mp3",
+    "old_start": 62.715999999999994,
+    "new_start": 62.584450000000004,
+    "end": 73.556,
+    "silence_start": 62.3641,
+    "silence_end": 62.8048
+  },
+  {
+    "file": "g2-2-1.mp3",
+    "old_start": 76.21600000000001,
+    "new_start": 76.11525,
+    "end": 89.536,
+    "silence_start": 75.9001,
+    "silence_end": 76.3304
+  },
+  {
+    "file": "g2-2-2.mp3",
+    "old_start": 92.41600000000001,
+    "new_start": 92.30584999999999,
+    "end": 111.79599999999999,
+    "silence_start": 92.0941,
+    "silence_end": 92.5176
+  },
+  {
+    "file": "g2-2-3.mp3",
+    "old_start": 114.656,
+    "new_start": 114.533,
+    "end": 127.29599999999999,
+    "silence_start": 114.313,
+    "silence_end": 114.753
+  },
+  {
+    "file": "g2-2-4.mp3",
+    "old_start": 130.156,
+    "new_start": 130.037,
+    "end": 145.33599999999998,
+    "silence_start": 129.823,
+    "silence_end": 130.251
+  },
+  {
+    "file": "g2-2-5.mp3",
+    "old_start": 148.196,
+    "new_start": 148.05849999999998,
+    "end": 167.196,
+    "silence_start": 147.861,
+    "silence_end": 148.256
+  },
+  {
+    "file": "g2-3-1.mp3",
+    "old_start": 169.876,
+    "new_start": 169.696,
+    "end": 181.976,
+    "silence_start": 169.501,
+    "silence_end": 169.891
+  },
+  {
+    "file": "g2-3-2.mp3",
+    "old_start": 184.836,
+    "new_start": 184.7255,
+    "end": 194.99599999999998,
+    "silence_start": 184.507,
+    "silence_end": 184.944
+  },
+  {
+    "file": "g2-3-3.mp3",
+    "old_start": 197.796,
+    "new_start": 197.69799999999998,
+    "end": 209.876,
+    "silence_start": 197.487,
+    "silence_end": 197.909
+  },
+  {
+    "file": "g2-3-4.mp3",
+    "old_start": 212.67600000000002,
+    "new_start": 212.571,
+    "end": 223.576,
+    "silence_start": 212.381,
+    "silence_end": 212.761
+  },
+  {
+    "file": "g2-4-1.mp3",
+    "old_start": 226.216,
+    "new_start": 226.106,
+    "end": 236.05599999999998,
+    "silence_start": 225.89,
+    "silence_end": 226.322
+  },
+  {
+    "file": "g2-4-2.mp3",
+    "old_start": 238.916,
+    "new_start": 238.7825,
+    "end": 249.876,
+    "silence_start": 238.591,
+    "silence_end": 238.974
+  },
+  {
+    "file": "g2-4-3.mp3",
+    "old_start": 252.776,
+    "new_start": 252.579,
+    "end": 265.23600000000005,
+    "silence_start": 252.369,
+    "silence_end": 252.789
+  },
+  {
+    "file": "g2-4-4.mp3",
+    "old_start": 268.076,
+    "new_start": 267.9655,
+    "end": 278.976,
+    "silence_start": 267.755,
+    "silence_end": 268.176
+  },
+  {
+    "file": "g2-4-5.mp3",
+    "old_start": 281.856,
+    "new_start": 281.6635,
+    "end": 298.356,
+    "silence_start": 281.455,
+    "silence_end": 281.872
+  },
+  {
+    "file": "g2-4-6.mp3",
+    "old_start": 301.236,
+    "new_start": 301.082,
+    "end": 312.70000000000005,
+    "silence_start": 300.886,
+    "silence_end": 301.278
+  },
+  {
+    "file": "g2-5-1.mp3",
+    "old_start": 315.44,
+    "new_start": 315.225,
+    "end": 324.04,
+    "silence_start": 315.008,
+    "silence_end": 315.442
+  },
+  {
+    "file": "g2-5-2.mp3",
+    "old_start": 326.88,
+    "new_start": 326.76300000000003,
+    "end": 336.8,
+    "silence_start": 326.55,
+    "silence_end": 326.976
+  },
+  {
+    "file": "g2-5-3.mp3",
+    "old_start": 339.6,
+    "new_start": 339.4845,
+    "end": 348.92,
+    "silence_start": 339.278,
+    "silence_end": 339.691
+  },
+  {
+    "file": "g2-5-4.mp3",
+    "old_start": 351.74,
+    "new_start": 351.591,
+    "end": 364.0,
+    "silence_start": 351.399,
+    "silence_end": 351.783
+  },
+  {
+    "file": "g2-5-5.mp3",
+    "old_start": 366.82,
+    "new_start": 366.68,
+    "end": 377.952,
+    "silence_start": 366.463,
+    "silence_end": 366.897
+  }
+]

@@ -92,3 +92,17 @@
  .station-stage1-compact .station-stage-tab-title svg{width:13px;height:13px}
  .station-stage1-compact .stage-one-map-content{padding:6px!important}
 }
+
+.station-stage1-compact .station-exploration-layout{grid-template-columns:minmax(0,1fr)}
+
+/* Point title and one audio control stay above the corresponding image. */
+.station-stage1-compact .stage1-visual-column>.stage1-point-heading{height:auto;aspect-ratio:auto;min-height:0}
+.station-stage1-compact .stage-one-hotspot-ribbon>.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));overflow:visible;scroll-snap-type:none}
+.station-stage1-compact .stage-one-hotspot-ribbon>.grid>button{min-width:0;width:100%}
+@media(max-width:900px){
+ .station-stage1-compact .stage1-visual-column{display:contents}
+ .station-stage1-compact .stage1-point-heading{order:0}
+ .station-stage1-compact .stage1-visual-column>.relative{order:1}
+ .station-stage1-compact .hoi-an-right-rail{order:2}
+ .station-stage1-compact .stage-one-hotspot-ribbon{order:3}
+}

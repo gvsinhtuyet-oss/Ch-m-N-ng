@@ -1,0 +1,187 @@
+{
+  "source": "Khối-3.mp3",
+  "method": "Descript SRT timestamp; exclude spoken marker; FFmpeg 24kHz mono 64kbps",
+  "review": "Timed transcription reviewed for 20 marker labels; human listening still recommended",
+  "segments": [
+    {
+      "station": 1,
+      "point": 1,
+      "file": "g3-1-1.mp3",
+      "start": 2.346,
+      "end": 26.346,
+      "duration": 24.048,
+      "bytes": 192723
+    },
+    {
+      "station": 1,
+      "point": 2,
+      "file": "g3-1-2.mp3",
+      "start": 28.866,
+      "end": 50.486,
+      "duration": 21.672,
+      "bytes": 173715
+    },
+    {
+      "station": 1,
+      "point": 3,
+      "file": "g3-1-3.mp3",
+      "start": 52.966,
+      "end": 73.866,
+      "duration": 20.952,
+      "bytes": 167955
+    },
+    {
+      "station": 1,
+      "point": 4,
+      "file": "g3-1-4.mp3",
+      "start": 76.366,
+      "end": 99.089,
+      "duration": 22.776,
+      "bytes": 182547
+    },
+    {
+      "station": 2,
+      "point": 1,
+      "file": "g3-2-1.mp3",
+      "start": 101.65,
+      "end": 129.27,
+      "duration": 27.672,
+      "bytes": 221715
+    },
+    {
+      "station": 2,
+      "point": 2,
+      "file": "g3-2-2.mp3",
+      "start": 131.93,
+      "end": 153.65,
+      "duration": 21.768,
+      "bytes": 174483
+    },
+    {
+      "station": 2,
+      "point": 3,
+      "file": "g3-2-3.mp3",
+      "start": 156.348,
+      "end": 181.49,
+      "duration": 25.2,
+      "bytes": 201939
+    },
+    {
+      "station": 2,
+      "point": 4,
+      "file": "g3-2-4.mp3",
+      "start": 184.11,
+      "end": 208.798,
+      "duration": 24.744,
+      "bytes": 198291
+    },
+    {
+      "station": 3,
+      "point": 1,
+      "file": "g3-3-1.mp3",
+      "start": 211.278,
+      "end": 229.717,
+      "duration": 18.504,
+      "bytes": 148371
+    },
+    {
+      "station": 3,
+      "point": 2,
+      "file": "g3-3-2.mp3",
+      "start": 232.338,
+      "end": 250.978,
+      "duration": 18.696,
+      "bytes": 149907
+    },
+    {
+      "station": 3,
+      "point": 3,
+      "file": "g3-3-3.mp3",
+      "start": 253.657,
+      "end": 278.338,
+      "duration": 24.744,
+      "bytes": 198291
+    },
+    {
+      "station": 3,
+      "point": 4,
+      "file": "g3-3-4.mp3",
+      "start": 280.938,
+      "end": 301.578,
+      "duration": 20.688,
+      "bytes": 165843
+    },
+    {
+      "station": 4,
+      "point": 1,
+      "file": "g3-4-1.mp3",
+      "start": 304.098,
+      "end": 326.618,
+      "duration": 22.584,
+      "bytes": 181011
+    },
+    {
+      "station": 4,
+      "point": 2,
+      "file": "g3-4-2.mp3",
+      "start": 329.338,
+      "end": 350.758,
+      "duration": 21.48,
+      "bytes": 172179
+    },
+    {
+      "station": 4,
+      "point": 3,
+      "file": "g3-4-3.mp3",
+      "start": 353.338,
+      "end": 377.638,
+      "duration": 24.36,
+      "bytes": 195219
+    },
+    {
+      "station": 4,
+      "point": 4,
+      "file": "g3-4-4.mp3",
+      "start": 380.318,
+      "end": 405.182,
+      "duration": 24.912,
+      "bytes": 199635
+    },
+    {
+      "station": 5,
+      "point": 1,
+      "file": "g3-5-1.mp3",
+      "start": 407.662,
+      "end": 427.302,
+      "duration": 19.704,
+      "bytes": 157971
+    },
+    {
+      "station": 5,
+      "point": 2,
+      "file": "g3-5-2.mp3",
+      "start": 429.922,
+      "end": 450.962,
+      "duration": 21.096,
+      "bytes": 169107
+    },
+    {
+      "station": 5,
+      "point": 3,
+      "file": "g3-5-3.mp3",
+      "start": 453.622,
+      "end": 476.462,
+      "duration": 22.896,
+      "bytes": 183507
+    },
+    {
+      "station": 5,
+      "point": 4,
+      "file": "g3-5-4.mp3",
+      "start": 479.102,
+      "end": 500.664,
+      "duration": 21.576,
+      "bytes": 172947
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { FeatureLoadBoundary } from './components/common/FeatureLoadBoundary';
 import { backgroundMusic } from './services/BackgroundMusic';
+import { audioService } from './services/AudioService';
 import { AppBackground } from './components/common/AppBackground';
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { AppProvider, useApp } from './contexts/AppContext';
@@ -40,6 +41,22 @@ const AppContent: React.FC = () => {
     // Nhạc nền là một lớp độc lập: tiếp tục xuyên suốt mọi màn hình.
     backgroundMusic.setScene(true);
   }, [currentView]);
+
+  // Feedback for standard UI controls. Stage 2 games have their own audio engine.
+  useEffect(() => {
+    const soundOnActivation = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const control = target.closest('button, [role="button"], a[href]');
+      if (!control || control.matches(':disabled, [aria-disabled="true"]')) return;
+      if (control.closest('[data-shared-stage2], .stage-two, [data-stage="2"]')) return;
+      // Respect mute controls: do not play a click after the user disables sound.
+      if (control.matches('[aria-label*="âm thanh"], [aria-label*="sound"]')) return;
+      audioService.playSfx('click');
+    };
+    document.addEventListener('click', soundOnActivation);
+    return () => document.removeEventListener('click', soundOnActivation);
+  }, []);
 
   const [storageWarning, setStorageWarning] = useState(false);
   useEffect(() => {

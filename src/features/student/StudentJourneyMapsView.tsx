@@ -182,7 +182,7 @@ export const StudentJourneyMapsView: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-5">
           {stations.map(station => {
             const progress = progressService.getStationProgress(studentId, station.id);
             const isDemo = DEMO_STATION_IDS.has(station.id);
@@ -201,7 +201,7 @@ export const StudentJourneyMapsView: React.FC = () => {
                     : 'bg-slate-100 border-slate-200 opacity-75 cursor-not-allowed'
                 }`}
               >
-                <div className="aspect-[4/3] relative overflow-hidden bg-slate-200">
+                <div className="aspect-[16/8] sm:aspect-[4/3] relative overflow-hidden bg-slate-200">
                   <img
                     loading="lazy"
                     decoding="async"

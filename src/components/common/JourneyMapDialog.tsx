@@ -23,7 +23,7 @@ export function JourneyMapDialog({image, title, onClose}: {image: string; title:
       else if (!event.shiftKey && document.activeElement === last) {event.preventDefault(); first.focus();}
     }
   }}>
-    <div className="mb-2 flex shrink-0 flex-wrap items-center justify-between gap-2 rounded-xl border border-sky-300/40 bg-sky-950 p-2 text-white shadow-lg">
+    <div className="journey-map-viewer-toolbar mb-2 flex shrink-0 flex-wrap items-center justify-between gap-2 rounded-xl border border-sky-300/40 bg-sky-950 p-2 text-white shadow-lg">
       <h2 className="min-w-0 flex-1 text-sm font-bold">{title}</h2>
       <div className="flex flex-wrap items-center gap-2">
         <button type="button" disabled={zoom <= 1} onClick={() => setZoom(value => Math.max(1, value - .5))} aria-label="Thu nhỏ bản đồ" className="h-11 w-11 rounded-xl bg-sky-700 text-white disabled:opacity-40"><Minus className="mx-auto h-5 w-5" /></button>

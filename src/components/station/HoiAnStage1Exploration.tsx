@@ -48,6 +48,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const readOnly = role !== 'student';
 
   const [index, setIndex] = useState(0);
+  const [compactPanel, setCompactPanel] = useState<'observe' | 'quiz'>('observe');
+  useEffect(() => { setCompactPanel('observe'); }, [index, station.id]);
   const [narrationState, setNarrationState] = useState<NarrationState>('idle');
   const [narrationCompleted, setNarrationCompleted] = useState(false);
   const [narrationMessage,setNarrationMessage]=useState('');
@@ -254,7 +256,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   };
 
   return (
-    <div className="stage-one-map-surface min-h-0">
+    <div className="stage-one-map-surface min-h-0" data-compact-panel={compactPanel}>
       <section inert={showImage || undefined} aria-hidden={showImage || undefined} className="stage-one-map-content overflow-hidden rounded-[2rem] border border-orange-200/90 p-3 shadow-[0_18px_55px_rgba(154,52,18,0.16)]">
         <div className="grid min-w-0 grid-cols-1 items-start gap-3 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
           {/* LEFT: immersive visual explorer */}
@@ -400,9 +402,14 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             )}
           </div>
 
+          {/* On small screens, switch panels instead of shrinking the lesson text. */}
+          <div className="stage1-panel-switch" role="group" aria-label="Nội dung điểm khám phá">
+            <button type="button" aria-pressed={compactPanel === 'observe'} onClick={() => setCompactPanel('observe')}>Ảnh & kiến thức</button>
+            <button type="button" aria-pressed={compactPanel === 'quiz'} onClick={() => setCompactPanel('quiz')}>Thử tài quan sát</button>
+          </div>
           {/* RIGHT: information rail */}
           <aside className="hoi-an-right-rail flex min-h-0 min-w-0 flex-col gap-3">
-            <div className="shrink-0 rounded-[1.5rem] border-2 border-amber-300 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-4 shadow-sm">
+            <div className="stage1-reading shrink-0 rounded-[1.5rem] border-2 border-amber-300 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-4 shadow-sm">
               <p className="mt-3 pr-1 text-[13px] font-semibold leading-6 text-slate-700 sm:text-[14px]">
                 {hotspot.narrationVi}
               </p>
@@ -420,7 +427,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             </div>
 
             {hotspot.interaction ? (
-              <div className="shrink-0 rounded-[1.5rem] border-2 border-sky-200 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-4 shadow-sm">
+              <div className="stage1-quiz shrink-0 rounded-[1.5rem] border-2 border-sky-200 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-4 shadow-sm">
                 <div className="mb-2 flex items-center gap-2">
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-600 text-xs font-black text-white shadow-sm shadow-sky-300/60">
                     ?

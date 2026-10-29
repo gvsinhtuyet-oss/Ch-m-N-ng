@@ -25,6 +25,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
   );
   const [keyVisible, setKeyVisible] = useState(false);
   const [photoFailed, setPhotoFailed] = useState(false);
+  const [mapAspectRatio, setMapAspectRatio] = useState<string>('3 / 2');
   const [saveMessage, setSaveMessage] = useState('');
   const [showRating, setShowRating] = useState(false);
   const [ratings, setRatings] = useState<[number,number,number]>([0,0,0]);
@@ -132,8 +133,8 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
 
         <div className="stamp-layout">
           <section aria-label="Bản đồ hành trình" className="journey-map-panel journey-photo-panel">
-            <div className="journey-map-surface journey-photo-surface">
-              {(station.journeyMap?.image || station.coverImage) && !photoFailed ? <><img aria-hidden="true" src={station.journeyMap?.image || station.coverImage} className="journey-photo-blur" decoding="async" /><img src={station.journeyMap?.image || station.coverImage} alt={`Bản đồ hành trình ${station.titleVi}`} onError={() => setPhotoFailed(true)} className="journey-photo-main" decoding="async" /></> :
+            <div className="journey-map-surface journey-photo-surface" style={{ aspectRatio: mapAspectRatio }}>
+              {(station.journeyMap?.image || station.coverImage) && !photoFailed ? <><img src={station.journeyMap?.image || station.coverImage} alt={`Bản đồ hành trình ${station.titleVi}`} onError={() => setPhotoFailed(true)} className="journey-photo-main" onLoad={event => { const { naturalWidth, naturalHeight } = event.currentTarget; if(naturalWidth > 0 && naturalHeight > 0) setMapAspectRatio(`${naturalWidth} / ${naturalHeight}`); }} decoding="async" /></> :
                 <div className="journey-map-fallback"><h3>ĐIỂM ĐẾN CỦA EM</h3><strong>{station.titleVi}</strong></div>}
             </div>
           </section>

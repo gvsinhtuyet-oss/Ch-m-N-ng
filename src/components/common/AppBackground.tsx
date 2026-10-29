@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { readTheme } from '../../services/ThemeService';
-import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 
 export const AppBackground: React.FC = () => {
   const [theme, setTheme] = useState(readTheme);
@@ -22,7 +21,7 @@ export const AppBackground: React.FC = () => {
       theme.coverMobile ||
       theme.roleDesktop ||
       theme.roleMobile;
-  const source = customSource || DEFAULT_APP_BACKGROUND_DATA_URL;
+  const source = customSource || '/images/chamdanang-journey-orange.webp';
 
   useEffect(() => { setImageFailed(false); }, [source]);
   useEffect(() => {

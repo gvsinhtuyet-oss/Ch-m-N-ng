@@ -117,27 +117,27 @@ export const StudentJourneyMapsView: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-8 space-y-8">
-      <section className="rounded-3xl bg-gradient-to-r from-sky-700 via-indigo-800 to-slate-900 text-white p-6 sm:p-8 shadow-xl relative overflow-hidden">
+    <div className="max-w-7xl mx-auto px-3 sm:px-5 py-3 space-y-1">
+      <section className="rounded-3xl bg-gradient-to-r from-sky-700 via-indigo-800 to-slate-900 text-white px-4 py-3 sm:px-5 sm:py-4 shadow-xl relative overflow-hidden">
         <div className="absolute -top-20 -right-10 w-80 h-80 rounded-full bg-amber-300/10 blur-3xl" />
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-          <div className="space-y-3">
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+          <div className="space-y-1">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-amber-300 text-xs font-black">
               <MapIcon className="w-4 h-4" />
               <span>BỘ SƯU TẬP HÀNH TRÌNH</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-black">Bản đồ hành trình</h1>
-            <p className="max-w-2xl text-sm text-sky-100 leading-relaxed">
+            <h1 className="text-xl sm:text-2xl font-black">Bản đồ hành trình</h1>
+            <p className="max-w-2xl text-xs text-sky-100 leading-snug">
               Mỗi bài hoàn thành mở khóa một Bản đồ hành trình và một Mảnh chìa khóa.
               Thu thập đủ 5 bản đồ của một khối để mở Rương Kho báu.
             </p>
           </div>
 
-          <div className="rounded-2xl bg-white/10 border border-white/15 p-4 min-w-[220px]">
+          <div className="rounded-2xl bg-white/10 border border-white/15 p-2 min-w-[130px]">
             <div className="text-xs text-sky-100 font-semibold">Tiến độ Khối {currentGrade}</div>
-            <div className="text-3xl font-black text-amber-300 mt-1">{gradeSummary.totalJourneyMaps}/5</div>
+            <div className="text-xl font-black text-amber-300 mt-0.5">{gradeSummary.totalJourneyMaps}/5</div>
             <div className="text-xs text-sky-100">Bản đồ đã thu thập</div>
-            <div className="mt-3 h-2 rounded-full bg-white/15 overflow-hidden">
+            <div className="mt-1 h-1.5 rounded-full bg-white/15 overflow-hidden">
               <div
                 className="h-full rounded-full bg-amber-300 transition-all"
                 style={{ width: `${Math.min(100, (gradeSummary.totalJourneyMaps / 5) * 100)}%` }}
@@ -146,7 +146,7 @@ export const StudentJourneyMapsView: React.FC = () => {
           </div>
         </div>
 
-        {role !== 'student' && <div className="relative z-10 mt-6 pt-5 border-t border-white/10 flex items-center gap-2 overflow-x-auto">
+        {role !== 'student' && <div className="relative z-10 mt-2 pt-2 border-t border-white/10 flex items-center gap-2 overflow-x-auto">
           <span className="text-xs text-sky-200 font-semibold mr-1 shrink-0">Chọn khối:</span>
           {[1, 2, 3, 4, 5].map(grade => (
             <button
@@ -168,21 +168,21 @@ export const StudentJourneyMapsView: React.FC = () => {
         </div>}
       </section>
 
-      <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-xs sm:text-sm text-amber-950 leading-relaxed">
+      <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs sm:text-sm text-amber-950 leading-relaxed">
         <strong>Hành trình của em:</strong> mỗi khối có 5 trạm. Rương Kho báu được mở khi học sinh hoàn thành đủ 5 bài,
         nhận đủ 5 Bản đồ hành trình và 5 Mảnh chìa khóa. Nút xem trước bên dưới chỉ minh họa thiết kế phần thưởng cuối khối.
       </div>
 
-      <section className="space-y-4">
+      <section className="space-y-2">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="font-black text-xl text-slate-900">Bản đồ Khối {currentGrade}</h2>
+          <h2 className="font-black text-base text-slate-900">Bản đồ Khối {currentGrade}</h2>
           <div className="inline-flex items-center gap-2 text-xs font-bold text-slate-600">
             <KeyRound className="w-4 h-4 text-amber-600" />
             <span>{gradeSummary.totalKeyFragments}/5 Mảnh chìa khóa</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-5">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
           {stations.map(station => {
             const progress = progressService.getStationProgress(studentId, station.id);
             const isDemo = DEMO_STATION_IDS.has(station.id);
@@ -195,13 +195,13 @@ export const StudentJourneyMapsView: React.FC = () => {
                 key={station.id}
                 onClick={() => openMap(station)}
                 disabled={!unlocked}
-                className={`text-left rounded-3xl overflow-hidden border transition relative ${
+                className={`text-left rounded-xl overflow-hidden border transition relative ${
                   unlocked
                     ? 'bg-white border-sky-200 shadow-sm hover:shadow-lg hover:-translate-y-0.5'
                     : 'bg-slate-100 border-slate-200 opacity-75 cursor-not-allowed'
                 }`}
               >
-                <div className="aspect-[16/8] sm:aspect-[4/3] relative overflow-hidden bg-slate-200">
+                <div className="aspect-[16/8] sm:aspect-[4/3] lg:aspect-[4/3] relative overflow-hidden bg-slate-200">
                   <img
                     loading="lazy"
                     decoding="async"
@@ -221,11 +221,11 @@ export const StudentJourneyMapsView: React.FC = () => {
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
-                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-xl bg-white/90 text-slate-900 text-[10px] font-black">
+                  <span className="absolute top-1 left-1 px-2.5 py-1 rounded-xl bg-white/90 text-slate-900 text-[10px] font-black">
                     BẢN ĐỒ {station.number}
                   </span>
-                  <div className="absolute bottom-3 left-3 right-3 text-white">
-                    <div className="font-black text-sm leading-tight">{station.titleVi}</div>
+                  <div className="absolute bottom-1 left-2 right-2 text-white">
+                    <div className="font-black text-[11px] leading-tight line-clamp-2">{station.titleVi}</div>
                   </div>
                   {!unlocked && (
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -236,7 +236,7 @@ export const StudentJourneyMapsView: React.FC = () => {
                   )}
                 </div>
 
-                <div className="p-4">
+                <div className="px-2 py-1.5">
                   {progress.journeyMapReceived ? (
                     <div className="flex items-center gap-1.5 text-emerald-700 text-xs font-black">
                       <CheckCircle2 className="w-4 h-4" />
@@ -256,14 +256,14 @@ export const StudentJourneyMapsView: React.FC = () => {
         </div>
       </section>
 
-      <section className="rounded-3xl border-2 border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-6 sm:p-8 shadow-sm">
-        <div className="flex flex-col lg:flex-row items-center gap-6">
-          <div className="w-28 h-28 rounded-3xl bg-gradient-to-br from-amber-300 to-orange-500 shadow-xl flex items-center justify-center text-6xl shrink-0">
+      <section className="rounded-xl border-2 border-amber-200 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-3 sm:p-4 shadow-sm">
+        <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-300 to-orange-500 shadow-xl flex items-center justify-center text-3xl shrink-0">
             {treasureProgress.chestOpened ? '✨' : '🧰'}
           </div>
           <div className="flex-1 text-center lg:text-left space-y-2">
             <div className="text-xs font-black uppercase tracking-wider text-amber-700">Thử thách cuối khối</div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">Rương Kho báu Khối {currentGrade}</h2>
+            <h2 className="text-base sm:text-lg font-black text-slate-900">Rương Kho báu Khối {currentGrade}</h2>
             <p className="text-sm text-slate-600">
               {gradeSummary.treasureChestEligible
                 ? 'Em đã đủ điều kiện! 5 mảnh chìa khóa đã sẵn sàng ghép thành Chìa khóa Kho báu.'
@@ -276,7 +276,7 @@ export const StudentJourneyMapsView: React.FC = () => {
               <button
                 type="button"
                 onClick={handleOpenTreasure}
-                className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-black text-sm shadow-lg hover:scale-103 active:scale-95 transition inline-flex items-center justify-center gap-2"
+                className="px-3 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 font-black text-sm shadow-lg hover:scale-103 active:scale-95 transition inline-flex items-center justify-center gap-2"
               >
                 <KeyRound className="w-5 h-5" />
                 <span>{treasureProgress.chestOpened ? 'XEM LẠI KHO BÁU' : 'MỞ RƯƠNG KHO BÁU'}</span>
@@ -321,7 +321,7 @@ export const StudentJourneyMapsView: React.FC = () => {
                   <MapIcon className="w-4 h-4" />
                   <span>BẢN ĐỒ HÀNH TRÌNH • KHỐI {selectedStation.grade}</span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-black mt-4">{selectedStation.titleVi}</h2>
+                <h2 className="text-xl sm:text-2xl font-black mt-4">{selectedStation.titleVi}</h2>
                 <p className="text-sm text-sky-100 mt-2 max-w-2xl mx-auto">{selectedStation.subtitleVi}</p>
                 {isReadOnly && (
                   <div className="mt-4 inline-block px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold">
@@ -445,7 +445,7 @@ export const StudentJourneyMapsView: React.FC = () => {
                   <span className="font-black tracking-widest text-xs">CHẠM ĐÀ NẴNG</span>
                   <Star className="w-5 h-5" />
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mt-4">CHỨNG NHẬN NHÀ KHÁM PHÁ</h3>
+                <h3 className="text-base sm:text-lg font-black text-slate-900 mt-4">CHỨNG NHẬN NHÀ KHÁM PHÁ</h3>
                 <p className="text-sm sm:text-base text-slate-700 mt-4 leading-relaxed">
                   Bạn đã hoàn thành hành trình khám phá quê hương lớp {currentGrade} trong <strong>CHẠM ĐÀ NẴNG</strong>.
                 </p>

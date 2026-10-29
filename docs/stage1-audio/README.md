@@ -1,6 +1,6 @@
 # Chặng 1 — Báo cáo kiểm tra âm thanh và giao diện (29/10/2026)
 
-**Trạng thái: 121 MP3 đã tích hợp, 121/121 điểm đã kiểm tra phát trên bản thử. Đang phát hành cùng main mới nhất `76c9a94`, giữ nguyên trang chủ đã duyệt.**
+**Trạng thái: đã tích hợp và xuất bản 121 MP3, giữ nguyên trang chủ đã duyệt từ main `76c9a94`. 121/121 điểm đã kiểm tra phát trên bản thử; kiểm tra sau xuất bản nêu riêng bên dưới.**
 
 Bản thử âm thanh: https://work-stage1-narration-121.chamdanang-gddp.pages.dev/
 
@@ -120,3 +120,13 @@ Desktop (1366×900):
 ![Giao diện gọn desktop 1366×768](stage1-compact-desktop.jpg)
 
 ![Giao diện gọn mobile 390×844](stage1-compact-mobile.jpg)
+
+## Kết quả xuất bản 29/10/2026
+
+- Main mã nguồn đã kiểm thử: `0827b21381cfc429cc9af1e087ac38dcd8a341ff`.
+- Commit triển khai: `2ab78d8dc6d6e50719d9b2ee650ab59735c52cd3`; tree ứng dụng giống hệt main: `62ca0c2e0241ad4e1b2072edc6bbd8f5249da40d`.
+- Đúng dự án Pages `chamdanang-gddp`, giữ nhánh xuất bản hiện có `deploy/cloudflare-preserve-api-20261028`, không sửa cấu hình dịch vụ. Deployment `11c69874-8646-49fa-b6f9-a1ae5030f77e` báo success; build và deploy 30 giây.
+- Website chính: https://chamdanang-gddp.pages.dev/ .
+- Sau xuất bản: xác nhận trang chủ/video/credit còn nguyên; API health báo Firestore read/write connected, Admin ready. Mở Khối 1/Quê hương em/Điểm 1 trên website chính; phát→tạm dừng→tiếp tục đạt; đúng 1 nút âm thanh, 0 nút nghe lại. Bundle đang chạy `index-D5kEzdxS.js`, khớp build mới.
+- Quan sát cache: tab mở trước khi deploy đã nạp shell cũ ở lần điều hướng đầu; tải lại sau khi service worker cập nhật đã chuyển sang bundle mới. Người đang giữ tab cũ cần tải lại trang một lần. Các MP3 mới dùng URL có SHA riêng nên ứng dụng mới không dùng URL MP3 Khối 1 cũ. Không xóa dữ liệu trình duyệt hay tiến độ để xử lý cache.
+- Kiểm tra sau xuất bản là kiểm tra mẫu nêu trên; không tuyên bố đã nghe lại toàn bộ 121 đoạn trên production.

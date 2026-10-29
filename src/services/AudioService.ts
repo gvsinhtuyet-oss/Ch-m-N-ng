@@ -11,6 +11,7 @@ class AudioService {
   private effectsVolume: number = 0.8;
   private currentUtterance: SpeechSynthesisUtterance | null = null;
   private recordedNarration: HTMLAudioElement | null = null;
+  private recordedNarrationFailure: (() => void) | null = null;
   private stateChangeListeners: Set<(state: NarrationState) => void> = new Set();
   private currentState: NarrationState = 'idle';
   private narrationGeneration = 0;
@@ -272,10 +273,11 @@ class AudioService {
     player.volume = this.effectsVolume;
     this.recordedNarration = player;
     const active = () => this.recordedNarration === player && generation === this.narrationGeneration;
-    const fail = () => { if (!active()) return; this.recordedNarration = null; backgroundMusic.setForegroundSource('narration',false); this.notifyState('idle'); onError?.('playback-failed'); };
+    const fail = () => { if (!active()) return; this.recordedNarration = null; this.recordedNarrationFailure = null; player.pause(); player.removeAttribute('src'); player.load(); backgroundMusic.setForegroundSource('narration',false); this.notifyState('idle'); onError?.('playback-failed'); };
+    this.recordedNarrationFailure = fail;
     player.onplaying = () => { if (active()) { backgroundMusic.setForegroundSource('narration',true); this.notifyState('playing'); } };
     player.onpause = () => { if (active() && !player.ended) { backgroundMusic.setForegroundSource('narration',false); this.notifyState('paused'); } };
-    player.onended = () => { if (active()) { this.recordedNarration = null; backgroundMusic.setForegroundSource('narration',false); this.notifyState('idle'); onEnd?.(); } };
+    player.onended = () => { if (active()) { this.recordedNarration = null; this.recordedNarrationFailure = null; backgroundMusic.setForegroundSource('narration',false); this.notifyState('idle'); onEnd?.(); } };
     player.onerror = fail;
     void player.play().catch(fail);
   }
@@ -290,7 +292,7 @@ class AudioService {
   }
 
   public resumeNarration() {
-    if (this.recordedNarration) { const player=this.recordedNarration; void player.play().catch(() => { if(this.recordedNarration===player) this.stopNarration(); }); return; }
+    if (this.recordedNarration) { const player=this.recordedNarration; void player.play().catch(() => { if(this.recordedNarration===player) this.recordedNarrationFailure?.(); }); return; }
     if (typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.paused) {
       window.speechSynthesis.resume();
       this.notifyState('playing');
@@ -299,7 +301,7 @@ class AudioService {
 
   public stopNarration() {
     this.narrationGeneration++;
-    const player=this.recordedNarration; this.recordedNarration=null;
+    const player=this.recordedNarration; this.recordedNarration=null; this.recordedNarrationFailure=null;
     if (player) { player.pause(); player.removeAttribute('src'); player.load(); }
     this.clearPendingNarration?.();this.clearPendingNarration=null;
     this.currentUtterance=null;

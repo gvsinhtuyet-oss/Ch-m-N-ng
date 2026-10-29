@@ -567,6 +567,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             </div>
 
             <div className="relative h-full min-h-0 overflow-y-auto overscroll-contain p-5 pb-8 sm:p-7 sm:pb-9">
+              <RealPhotoGallery stationId={station.id} index={station.hotspots.findIndex(p=>p.id===previewHotspot.id)}/>
 
               <button
                 type="button"

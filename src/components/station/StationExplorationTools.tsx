@@ -102,6 +102,6 @@ export function StationExplorationTools({station,onOpenChange}:{station:Station;
           </>}
         </div>
       </div>
-    </div>,document.body)}
+    </div>,document.fullscreenElement || document.body)}
   </>;
 }

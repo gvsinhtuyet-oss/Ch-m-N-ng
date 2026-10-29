@@ -50,7 +50,6 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
     if (!canExchange || stamped || exchanging.current) return;
     exchanging.current = true;
     setSaveMessage('');
-    audioService.playSfx('stamp');
     setKeyVisible(true);
 
     if (isReadOnly) {
@@ -73,6 +72,8 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
       setSaveMessage('✓ Bản đồ đã lưu • Đã nhận 1 mảnh chìa khóa • Hộ chiếu đã được đóng dấu.');
     }
 
+    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    audioService.playSfx('stamp', reducedMotion ? 0 : .455);
     exchanging.current = false;
     /* The key is revealed after stamping; the collection animation runs on tap. */
   };

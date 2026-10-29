@@ -1,3 +1,4 @@
+import {LessonOverlay} from '../common/LessonOverlay';
 import {StationExplorationTools} from './StationExplorationTools';
 import {stage1Options} from '../../features/stations/stage1Options';
 import {RealPhotoGallery} from '../RealPhotoGallery';
@@ -518,7 +519,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
       </section>
 
       {showImage && (
-        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-slate-950/85 p-3 backdrop-blur-md sm:p-6">
+        <LessonOverlay><div className="fixed inset-0 z-[200] flex items-center justify-center bg-slate-950/85 p-3 backdrop-blur-md sm:p-6">
           <div className="grid h-[92dvh] max-h-[92dvh] min-h-0 w-full max-w-6xl grid-rows-[minmax(0,.8fr)_minmax(0,1fr)] overflow-hidden rounded-[2rem] border border-orange-200 bg-[#fffaf2] shadow-2xl lg:grid-cols-[minmax(0,1.55fr)_minmax(0,.75fr)] lg:grid-rows-1">
             <div className="relative flex min-h-0 flex-col bg-white">
               <div className="shrink-0 p-4">
@@ -613,7 +614,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
             </div>
           </div>
-        </div>
+        </div></LessonOverlay>
       )}
 
       {showReward && (

@@ -309,3 +309,16 @@
   .landing-cover-title { font-size:7.4vw!important; }
   .landing-top-actions .landing-cover-vr { width:32px!important; }
 }
+
+/* Small iPhone/iPad portrait refinement: ensure hero and navigation never overlap. */
+@media (max-width:1023px) and (orientation:portrait) {
+ .landing-cover-main { grid-template-columns:minmax(0,1fr)!important; grid-template-areas:none!important; }
+ .landing-cover-identity,.landing-cover-video,.landing-cover-actions { grid-area:auto!important; }
+ .landing-cover-title { display:block; width:100%; max-width:100%; white-space:nowrap!important; font-size:clamp(26px,7vw,64px)!important; letter-spacing:-.065em; }
+ .landing-top-actions > button:nth-of-type(2) { width:36px!important; }
+ .landing-cover-video { aspect-ratio:16/9!important; }
+ .landing-cover-actions { align-self:center!important; }
+ .landing-action-invitation { max-width:100%; white-space:normal; }
+ .landing-feature-pills { display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px!important; }
+ .landing-feature-pills > span { border:0!important; font-size:10px!important; justify-content:center; padding:4px!important; }
+}

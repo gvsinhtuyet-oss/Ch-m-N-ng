@@ -1,6 +1,6 @@
 import { FeatureLoadBoundary } from './components/common/FeatureLoadBoundary';
 import { backgroundMusic } from './services/BackgroundMusic';
-import { AppBackground } from './components/common/AppBackground';
+const AppBackground = React.lazy(() => import('./components/common/AppBackground').then(m => ({ default: m.AppBackground })));
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { AppProvider, useApp } from './contexts/AppContext';
 import { Header } from './components/common/Header';
@@ -18,6 +18,12 @@ const AdminDemoDashboard = lazy(() => import('./features/admin/AdminDemoDashboar
 const ClassroomPresentationMode = lazy(() => import('./features/teacher/ClassroomPresentationMode').then(module => ({ default: module.ClassroomPresentationMode })));
 import { WifiOff } from 'lucide-react';
 const DanangAssistantChat = lazy(() => import('./components/common/DanangAssistantChat').then(module => ({ default: module.DanangAssistantChat })));
+
+const JourneyBackground: React.FC = () => {
+  const { currentView } = useApp();
+  if (currentView === 'landing') return null;
+  return <Suspense fallback={null}><AppBackground /></Suspense>;
+};
 
 const AppContent: React.FC = () => {
   const { currentUser, role, currentView, currentStation, currentAssistantHotspot, currentStage, isOnline, closeStation, exitPresentationMode } = useApp();
@@ -104,7 +110,7 @@ const AppContent: React.FC = () => {
 export function App() {
   return (
     <AppProvider>
-      <AppBackground />
+      <JourneyBackground />
       <FeatureLoadBoundary><Suspense fallback={<div role="status" className="relative z-10 flex min-h-screen items-center justify-center bg-amber-50 p-6 text-lg font-bold text-sky-900">Đang mở hành trình…</div>}>
         <AppContent />
       </Suspense></FeatureLoadBoundary>

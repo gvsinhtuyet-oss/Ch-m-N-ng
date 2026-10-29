@@ -420,7 +420,7 @@ export const LandingView: React.FC = () => {
 
       {/* Role Picker Modal */}
       {showRolePicker && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 overflow-hidden">
           <img
             src={roleBackground}
             alt=""
@@ -430,13 +430,13 @@ export const LandingView: React.FC = () => {
           />
           <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
           <div className="absolute inset-0 bg-slate-950/38 backdrop-blur-[2px] pointer-events-none" />
-          <div role="dialog" aria-modal="true" aria-label="Chọn vai trò và đăng nhập" className={`relative z-10 w-full max-h-[90dvh] overflow-y-auto rounded-[30px] border border-white/30 p-5 text-slate-800 shadow-[0_28px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:p-7 space-y-5 ${showTeacherLogin || showStudentLogin ? 'max-w-[460px] bg-[#fffdf9]/95' : 'max-w-[920px] bg-gradient-to-br from-[#102b45]/95 via-[#123a53]/95 to-[#064e52]/95'}`}>
+          <div role="dialog" aria-modal="true" aria-label="Chọn vai trò và đăng nhập" className={`relative z-10 w-full max-h-[94dvh] overflow-y-auto rounded-[22px] border border-white/30 p-3 text-slate-800 shadow-[0_28px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:p-5 space-y-3 ${showTeacherLogin || showStudentLogin ? 'max-w-[460px] bg-[#fffdf9]/95' : 'max-w-[780px] bg-gradient-to-br from-[#102b45]/95 via-[#123a53]/95 to-[#064e52]/95'}`}>
             <div className="flex items-center justify-between">
               <div>
                 <span className={`px-3 py-1 rounded-full text-[11px] font-bold tracking-widest ${!showStudentLogin && !showTeacherLogin ? 'bg-amber-300/15 text-amber-200 ring-1 ring-amber-200/25' : 'bg-sky-100 text-sky-800'}`}>
                   CHẠM ĐÀ NẴNG
                 </span>
-                <h3 className={`mt-3 font-black tracking-tight ${!showStudentLogin && !showTeacherLogin ? 'text-2xl sm:text-3xl text-white' : 'text-xl text-slate-900'}`}>{showTeacherLogin ? (adminLogin ? 'Không gian quản trị' : 'Không gian giáo viên') : showStudentLogin ? 'Chào Nhà phiêu lưu!' : 'Bạn muốn bắt đầu hành trình nào?'}</h3>
+                <h3 className={`mt-1.5 font-black tracking-tight ${!showStudentLogin && !showTeacherLogin ? 'text-lg sm:text-2xl text-white' : 'text-xl text-slate-900'}`}>{showTeacherLogin ? (adminLogin ? 'Không gian quản trị' : 'Không gian giáo viên') : showStudentLogin ? 'Chào Nhà phiêu lưu!' : 'Bạn muốn bắt đầu hành trình nào?'}</h3>
                 {!showStudentLogin && !showTeacherLogin && <p className="mt-2 text-sm text-sky-100/85">Mỗi hành trình là một cách chạm vào di sản quê hương</p>}
               </div>
               <button

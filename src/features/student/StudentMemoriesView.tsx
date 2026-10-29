@@ -13,7 +13,7 @@ export const StudentMemoriesView: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto px-3 sm:px-6 py-8 space-y-8">
       {/* Header */}
-      <div className="bg-gradient-to-r from-rose-500 via-pink-600 to-amber-500 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+      <div className="bg-gradient-to-r from-rose-500 via-pink-600 to-amber-500 text-white rounded-2xl p-4 sm:p-6 shadow-xl">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center">
             <Heart className="w-6 h-6 fill-white" />
@@ -22,7 +22,7 @@ export const StudentMemoriesView: React.FC = () => {
             KỈ NIỆM HÀNH TRÌNH
           </span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-black">Nhật Ký Cảm Xúc & Kỉ Niệm Quê Hương</h1>
+        <h1 className="text-xl sm:text-2xl font-black">Nhật Ký Cảm Xúc & Kỉ Niệm Quê Hương</h1>
         <p className="text-xs sm:text-sm text-rose-100 mt-1 max-w-xl">
           Nơi lưu giữ những vật phẩm danh giá và những lời hứa hành động đẹp mà em đã gửi gắm sau mỗi chuyến thám hiểm.
         </p>
@@ -35,7 +35,7 @@ export const StudentMemoriesView: React.FC = () => {
           <span>Kho Báu Kỉ Niệm Đã Thu Thập</span>
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-3">
           {stations.map((st) => {
             const prog = progressService.getStationProgress(studentId, st.id);
             return st.rewards.map((rw) => {

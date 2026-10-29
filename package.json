@@ -10,7 +10,7 @@
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit",
     "start": "node content-server.mjs",
-    "test:assistant": "tsx --test danang-assistant-retrieval-test.ts"
+    "test:assistant": "node --import tsx --test danang-assistant-retrieval-test.ts assistant-knowledge-test.ts assistant-launcher-test.tsx"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

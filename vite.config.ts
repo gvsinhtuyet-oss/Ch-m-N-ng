@@ -83,9 +83,10 @@ export default defineConfig(({mode, command}) => {
           runtimeCaching: [
             {
               urlPattern: ({url, request}) => url.origin === self.location.origin && request.destination === 'script',
-              handler: 'CacheFirst',
+              handler: 'NetworkFirst',
               options: {
-                cacheName: 'cham-feature-scripts-v1',
+                networkTimeoutSeconds: 4,
+                cacheName: 'cham-feature-scripts-v2',
                 expiration: {maxEntries: 80, maxAgeSeconds: 60 * 60 * 24 * 30},
                 cacheableResponse: {statuses: [200]},
               },

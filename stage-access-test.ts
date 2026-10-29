@@ -24,3 +24,13 @@ test('each of all 105 questions is required before first completion; last-point 
  for(const s of ALL_25_STATIONS){const ids=s.hotspots.map(h=>h.id);assert.ok(allHotspotsAnswered(s.hotspots,ids));assert.ok(!allHotspotsAnswered(s.hotspots,[]));assert.ok(!allHotspotsAnswered(s.hotspots,[ids.at(-1)!]));for(const missing of ids)assert.ok(!allHotspotsAnswered(s.hotspots,ids.filter(id=>id!==missing)),s.id+missing);assert.ok(!allHotspotsAnswered(s.hotspots,Array(ids.length).fill(ids[0])));}
  assert.equal(allHotspotsAnswered([],[]),false);
 });
+
+
+test('teacher preview opens all stages without granting learner completion',()=>{
+ const fresh={stationCompleted:false,stampReceived:false,stage1Completed:false,stage2Completed:false,stage3Completed:false};
+ assert.equal(unlockedStage(fresh),1);
+ assert.equal(unlockedStage(fresh,true),4);
+ for(let stage=1;stage<=4;stage++)assert.equal(visibleStage(stage,fresh,unlockedStage(fresh,true)),stage);
+ assert.equal(visibleStage(4,fresh),1);
+ assert.equal(fresh.stampReceived,false);assert.equal(fresh.stationCompleted,false);
+});

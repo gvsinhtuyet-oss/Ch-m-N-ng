@@ -131,9 +131,9 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
         `}</style>
 
         <div className="stamp-layout">
-          <section aria-label="Ảnh điểm đến" className="journey-map-panel journey-photo-panel">
+          <section aria-label="Bản đồ hành trình" className="journey-map-panel journey-photo-panel">
             <div className="journey-map-surface journey-photo-surface">
-              {station.coverImage && !photoFailed ? <img src={station.coverImage} alt={`Ảnh điểm đến ${station.titleVi}`} onError={() => setPhotoFailed(true)} className="journey-photo-main" decoding="async" /> :
+              {(station.journeyMap?.image || station.coverImage) && !photoFailed ? <><img aria-hidden="true" src={station.journeyMap?.image || station.coverImage} className="journey-photo-blur" decoding="async" /><img src={station.journeyMap?.image || station.coverImage} alt={`Bản đồ hành trình ${station.titleVi}`} onError={() => setPhotoFailed(true)} className="journey-photo-main" decoding="async" /></> :
                 <div className="journey-map-fallback"><h3>ĐIỂM ĐẾN CỦA EM</h3><strong>{station.titleVi}</strong></div>}
             </div>
           </section>

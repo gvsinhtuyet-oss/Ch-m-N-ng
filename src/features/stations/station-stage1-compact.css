@@ -173,3 +173,6 @@ body:has(.station-screen-fixed){overflow:hidden;overscroll-behavior:none}
  .station-compact-header .station-stage-tab-name,.station-stage1-compact .station-compact-header .station-stage-tab-name{white-space:normal;font-size:8px!important;line-height:1.05;max-width:58px}
  .station-compact-header .station-stage-tab-title svg{width:14px;height:14px}
 }
+.station-viewport:fullscreen .station-lesson-panel,.station-viewport.station-immersive-active .station-lesson-panel{overflow:hidden!important}
+.stage1-image-tools .is-map{order:0}
+.stage1-image-tools .is-vr{order:1}

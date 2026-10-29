@@ -11,7 +11,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Quê hương là nơi em sống và gắn bó với những người thân quen. Chúng mình cùng tìm hiểu phường Hải Châu, phường Hội An, xã Nam Trà My, xã Hiệp Đức và đặc khu Hoàng Sa của thành phố Đà Nẵng. Mỗi nơi có tên gọi và cảnh vật riêng. Em đang sống ở xã hay phường nào? Hãy nhờ người thân cùng em gọi đúng tên nơi mình ở nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 19.48,
+    "peak": 0.56342,
+    "rms": 0.09944,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -25,7 +33,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Cùng tìm hiểu ngôi trường của em nhé. Chúng mình cùng tìm hiểu trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu, một ở phường Liên Chiểu, một ở phường Hòa Khánh. Tên trường có thể giống nhau nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường rồi nói tên trường và nơi có trường mình. Ảnh ở đây giúp em quan sát một môi trường. Em hãy liên hệ với trường mình.",
-    "text_similarity": 0.978
+    "text_similarity": 0.978,
+    "duration_seconds": 25.586,
+    "peak": 0.66709,
+    "rms": 0.10283,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -39,7 +55,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Mỗi ngày đến trường, em đi qua những cảnh vật nào? Có thể là hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn ở một nơi nên đường đến trường cũng có thể khác nhau. Em hãy nhớ lại một địa điểm mình đã nhìn thấy rồi kể với thầy cô và các bạn. Sau đó, em vẽ quang cảnh từ nhà đến trường. Hãy vẽ những điều quen thuộc trên đường của chính em nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 22.1,
+    "peak": 0.65629,
+    "rms": 0.10006,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -53,7 +77,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Em hãy giới thiệu nơi mình ở bằng lời kể hoặc tranh vẽ. Trước hết, nói tên xã hoặc phường. Tiếp theo, kể một cảnh vật quen thuộc mà em yêu thích. Em cũng có thể kể tên một xã hoặc phường khác của Đà Nẵng mà mình đã đến. Cùng trồng cây, giữ sân sạch và bỏ rác đúng chỗ là những việc nhỏ em có thể làm để yêu quý nơi mình sống.",
-    "text_similarity": 0.987
+    "text_similarity": 0.987,
+    "duration_seconds": 19.84,
+    "peak": 0.61315,
+    "rms": 0.09357,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -67,7 +99,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Bịt mắt bắt dê, kéo co và nhảy bao bố là những trò chơi dân gian mà chúng mình cùng tìm hiểu. Trò chơi dân gian được mọi người truyền lại và cùng nhau chơi. Có trò cần lắng nghe, có trò cần cả đội góp sức. Cùng chơi giúp em rèn kỹ năng và thêm đoàn kết với bạn. Em đã chơi trò nào? Chơi với ai và thích điều gì? Hãy kể một điều em nhớ nhé.",
-    "text_similarity": 0.987
+    "text_similarity": 0.987,
+    "duration_seconds": 21.301,
+    "peak": 0.668,
+    "rms": 0.10073,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -81,7 +121,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Trong trò bịt mắt bắt dê, một bạn làm người bắt dê và được bịt kín mắt bằng khăn. Các bạn còn lại làm dê, vừa tạo tiếng động vừa di chuyển trong phạm vi chơi. Không nhìn thấy các bạn, người bắt dê phải lắng nghe tiếng động để tìm. Vì thế, người cổ vũ không được chỉ chỗ cho bạn bắt dê nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 18.36,
+    "peak": 0.73952,
+    "rms": 0.10133,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -95,7 +143,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Trước khi chơi, cả nhóm cùng chọn và thống nhất phạm vi chơi. Đó là khu vực các bạn được di chuyển. Các bạn làm dê không chạy ra ngoài khu vực ấy. Người cổ vũ chỉ cổ vũ, không nhắc hướng tìm dê. Khi bắt được một bạn làm dê, người bắt thắng lượt đó, bạn vừa bị bắt sẽ bịt mắt để làm người bắt dê ở lượt tiếp theo. Cùng giữ luật để ai cũng được chơi công bằng nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 23.179,
+    "peak": 0.67121,
+    "rms": 0.09742,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -109,7 +165,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Em hãy cùng nhóm chọn một trò chơi dân gian yêu thích. Trước khi chơi, các bạn cùng nói lại cách chơi và luật chơi rồi thực hiện theo hướng dẫn của thầy cô. Cùng hợp tác và giữ luật sẽ giúp cuộc chơi vui hơn. Em cũng có thể kể tên và cách chơi một trò dân gian khác mà mình biết. Về nhà, hãy mời người thân cùng chơi một trò phù hợp nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 20.4,
+    "peak": 0.60574,
+    "rms": 0.09984,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 5e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -123,7 +187,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Cùng làm quen với những tên suối, thác trong sách nhé. Suối Tiên ở xã Quế Sơn Trung, suối Lương ở phường Hải Vân. Hai nơi cùng mang tên Suối Mơ, một ở xã Hà Nha, một ở xã Bà Nà. Ngoài ra còn có thác Ồ Ồ ở xã Sơn Cẩm Hà và thác ở Hố Giang Thơm, xã Tam Mỹ. Em không cần nhớ hết ngay. Hãy chọn một nơi em thích, nghe lại tên và nơi có suối hoặc thác ấy nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 24.761,
+    "peak": 0.76192,
+    "rms": 0.09898,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -137,7 +209,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Suối Tiên ở xã Quế Sơn Trung. Nơi đây có rừng cây xanh, dòng nước và thác đẹp Em hãy quan sát màu xanh của lá, hình dáng cây và dòng suối. Ảnh trên màn hình cho em quan sát cảnh suối, thác và rừng cây tại suối Tiên Quế Sơn. Theo nguồn Cục Du lịch Quốc gia Việt Nam, rừng cây là một phần làm nên vẻ đẹp của suối Tiên. Em thích rừng cây, dòng nước hay thác nước? Hãy chọn một nét đẹp để kể với người thân nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 25.428,
+    "peak": 0.7381,
+    "rms": 0.09485,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -151,7 +231,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Ở suối Tiên, nước trong và mát. Thác từ trên cao chảy xuống tạo thành hồ. Rừng cây, dòng thác và hồ nước cùng làm nên cảnh đẹp nơi đây. Em thử chỉ trên ảnh đâu là ghềnh đá, đâu là hồ nước. Đây là ảnh giới thiệu suối Tiên Quế Sơn từ nguồn Cục Du lịch Quốc gia Việt Nam. Nếu được tham quan, em đi cùng người lớn và làm theo hướng dẫn. Nước trông trong, đẹp không có nghĩa là an toàn để tự xuống chơi nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 25.14,
+    "peak": 0.70593,
+    "rms": 0.09913,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -165,7 +253,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Các em ơi! Quê hương Đà Nẵng của chúng ta có nhiều cảnh thiên nhiên tươi đẹp. Thác Răng ở xã Bến Rằng và thác Hòa Phú Thành ở xã Hòa Vang là những địa điểm để chúng mình cùng tìm hiểu. Các em còn nhớ suối Tiên không? Suối Tiên nằm ở xã Quế Sơn Trung, có rừng cây xanh, dòng nước trong mát và thác nước chảy xuống hồ. Khi giới thiệu một cảnh đẹp, chúng mình hãy nhớ nói ba điều: Tên cảnh đẹp là gì? Cảnh đẹp ấy ở đâu và nơi đó có gì nổi bật? Chúng mình hãy cùng yêu quý và giữ gìn những cảnh đẹp của quê hương nhé.",
-    "text_similarity": 0.983
+    "text_similarity": 0.983,
+    "duration_seconds": 30.86,
+    "peak": 0.67566,
+    "rms": 0.09505,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -179,7 +275,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Chào em đến với thành Điện Hải ở phường Hải Châu, thành phố Đà Nẵng. Đây là một di tích lịch sử, nơi lưu lại câu chuyện cha ông bảo vệ quê hương. Năm 2017, thành được công nhận là Di tích Quốc gia Đặc biệt. Cùng quan sát những dấu tích còn lại để tìm hiểu ngôi thành xưa nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 17.459,
+    "peak": 0.72248,
+    "rms": 0.10025,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -193,7 +297,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Ngôi thành được xây bằng gạch, có hai cửa. Cửa phía Nam là cửa chính và cửa phía Đông. Ở đây tường thành cao hơn năm mét, hào quanh thành sâu ba mét. Hào là phần được đào sâu bao quanh thành. Tường cao và hào sâu giúp ngăn quân tấn công, bảo vệ ngôi thành. Em thử tìm cửa thành, tường thành và hào trong những hình ảnh đã học nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 20.8,
+    "peak": 0.79358,
+    "rms": 0.09954,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -207,7 +319,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Em hãy quan sát súng thần công, còn gọi là đại bác được lưu giữ trong di tích. Hiện vật này gợi lại câu chuyện chiến đấu giữ thành. Thành Điện Hải là đồn lũy quan trọng, góp phần đánh bại cuộc tấn công của liên quân Pháp và Tây Ban Nha vào Đà Nẵng. Đồn lũy là nơi được xây dựng để phòng thủ. Tìm hiểu ngôi thành, em thêm biết ơn những người đã bảo vệ quê hương.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 20.639,
+    "peak": 0.7473,
+    "rms": 0.10046,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -221,7 +341,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Thành Điện Hải gắn với danh tướng Nguyễn Tri Phương. Trong khuôn viên thành có tượng của ông. Khi cùng lớp chuẩn bị tham quan, em hãy bàn với thầy cô đi lúc nào, đi bằng gì và muốn tìm hiểu điều gì. Em có thể hỏi ngày xưa cha ông bảo vệ thành thế nào. Khi tham quan, em đi cùng người lớn, giữ trật tự và không trèo lên hiện vật nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 21.052,
+    "peak": 0.73648,
+    "rms": 0.09812,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 4e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -235,7 +363,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Quê hương Đà Nẵng có nhiều món ăn ngon như mì quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng. Trong đó, mì quảng là món ăn nổi tiếng được bài học giới thiệu kỹ. Mỗi món có nguyên liệu và hương vị riêng. Em đã biết hoặc từng ăn món nào? Hãy gọi tên một món và chia sẻ điều em thích. Nếu chưa từng ăn, em vẫn có thể tìm hiểu món ấy qua tranh và lời kể nhé.",
-    "text_similarity": 0.988
+    "text_similarity": 0.988,
+    "duration_seconds": 22.54,
+    "peak": 0.75216,
+    "rms": 0.10108,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -249,7 +385,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Cùng xem nguyên liệu món mì quảng trong sách nhé. Có sợi mì, tôm tươi, thịt ba chỉ, trứng vịt hoặc trứng cút. Xương lợn được dùng để nấu nước dùng. Còn có bánh tráng nướng, đậu phộng và rau sống. Người nấu dùng các gia vị như muối, bột ngọt, tiêu, nước mắm, dầu ăn, hành, tỏi và ớt để tạo hương vị. Mỗi gia đình có thể nấu khác nhau. Nếu có nguyên liệu em không ăn được, hãy báo người lớn để chọn phần phù hợp nhé.",
-    "text_similarity": 0.989
+    "text_similarity": 0.989,
+    "duration_seconds": 26.36,
+    "peak": 0.69811,
+    "rms": 0.10278,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -263,7 +407,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Em cùng quan sát cách bày tô mì nhé. Đầu tiên, cho sợi mì vào tô. Tiếp đến, thêm tôm, thịt, trứng rồi nhờ người lớn chan nước dùng. Sau đó, rắc đậu phộng, hành và ngò lên trên. Rau sống có thể cho vào tô hoặc để riêng ăn kèm. Khi ăn, có thể thêm chanh, bánh tráng nướng, hoa chuối hoặc ớt xanh theo sở thích và phần ăn phù hợp. Người lớn giúp em xử lý nước nóng nhé.",
-    "text_similarity": 0.976
+    "text_similarity": 0.976,
+    "duration_seconds": 24.68,
+    "peak": 0.66404,
+    "rms": 0.1012,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 1,
@@ -277,7 +429,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Đến lượt nhóm em làm đầu bếp siêu hạng. Cùng chọn một món truyền thống của Đà Nẵng, vẽ món ăn rồi nhờ thầy cô hỗ trợ ghi tên nguyên liệu. Khi giới thiệu, em nói: Món gì, làm từ những nguyên liệu nào, em có thích món đó không và vì sao. Mỗi bạn có thể thích một món khác nhau. Ở nhà, em cùng người thân làm việc vừa sức, người lớn sử dụng dao, bếp và nước nóng. Nhớ cảm ơn người đã chuẩn bị món ăn nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 24.659,
+    "peak": 0.67552,
+    "rms": 0.09832,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 5e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -291,7 +451,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Ở thành phố Đà Nẵng có những làng nghề làm chiếu truyền thống như làng Cẩm Nê và làng Bàn Thạch. Những tấm chiếu nhiều màu sắc là sản phẩm gắn với công sức và kinh nghiệm của người thợ.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 9.723,
+    "peak": 0.5829,
+    "rms": 0.09492,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -305,7 +473,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Nguyên liệu chính để dệt chiếu là sợi cói. Sau khi phơi khô, sợi cói có màu ngà và thường được nhuộm đỏ, xanh, vàng, tím. Sợi đay cũng được dùng trong quá trình làm chiếu.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 11.163,
+    "peak": 0.69223,
+    "rms": 0.10534,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -319,7 +495,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Người thợ chuẩn bị sợi cói thường và cói nhuộm màu, chuẩn bị giàn dệt, đặt sợi đay vào thanh gâu và mắc giàn đay theo kích cỡ tấm chiếu. Sau đó, người thợ phối hợp nhịp nhàng để dệt nên tấm chiếu.",
-    "text_similarity": 0.977
+    "text_similarity": 0.977,
+    "duration_seconds": 12.106,
+    "peak": 0.63353,
+    "rms": 0.10423,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -333,7 +517,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Giàn dệt là dụng cụ giúp người thợ căng sợi và dệt chiếu. Trên giàn có các bộ phận như thanh gâu, thanh văng. Người thợ phối hợp thao tác để những sợi cói đan vào nhau thành mặt chiếu đều đặn. Nhìn từng hàng cói nối tiếp, em sẽ thấy sự khéo léo và kiên trì trong công việc này.",
-    "text_similarity": 0.984
+    "text_similarity": 0.984,
+    "duration_seconds": 16.754,
+    "peak": 0.6059,
+    "rms": 0.09559,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -347,7 +539,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Khi tham quan làng nghề, em cần chào hỏi lễ phép, không chạy nhảy tách đoàn, không tự ý sờ vào sản phẩm hoặc dụng cụ khi chưa xin phép. Biết lắng nghe người làm nghề và bỏ rác đúng nơi quy định.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 10.972,
+    "peak": 0.59713,
+    "rms": 0.09093,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -361,7 +561,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Cù Lao Chàm là khu dự trữ sinh quyển của thế giới gồm tám hòn đảo nhỏ. Hòn Lao là đảo chính và có diện tích lớn nhất. Bán đảo Sơn Trà có khu bảo tồn thiên nhiên Sơn Trà được thành lập từ năm 1992.",
-    "text_similarity": 0.978
+    "text_similarity": 0.978,
+    "duration_seconds": 13.421,
+    "peak": 0.78674,
+    "rms": 0.09471,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -375,7 +583,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Cù Lao Chàm có rừng xanh, những bãi cát và vùng biển với nhiều loài sinh vật. Đảo còn lưu giữ những dấu tích lịch sử gắn với đời sống cư dân. Năm 2009, khu dự trữ sinh quyển Cù Lao Chàm, Hội An được UNESCO công nhận. Vẻ đẹp ấy cần được gìn giữ bằng việc bảo vệ cả rừng, biển và cuộc sống của cộng đồng.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 19.49,
+    "peak": 0.58145,
+    "rms": 0.09459,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -389,7 +605,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Khi tham quan Cù Lao Chàm, du khách có thể lặn ngắm san hô, đi thuyền lướt sóng biển, câu cá, tắm biển và tham quan các điểm du lịch. Mỗi hoạt động cần thực hiện theo hướng dẫn để bảo đảm an toàn và giữ gìn môi trường.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 12.763,
+    "peak": 0.64738,
+    "rms": 0.09996,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -403,7 +627,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Khu bảo tồn thiên nhiên Sơn Trà có cây cối phong phú với nhiều cây gỗ lớn, cây thuốc, cây cảnh và nhiều loài động vật. Vọoc Chà Vá chân nâu là động vật quý hiếm cần được bảo vệ. Biển ở Sơn Trà còn có những rạn san hô và thảm cỏ biển rất đẹp và có giá trị.",
-    "text_similarity": 0.983
+    "text_similarity": 0.983,
+    "duration_seconds": 15.299,
+    "peak": 0.86064,
+    "rms": 0.10518,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -417,7 +649,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Để bảo vệ Cù Lao Chàm và Khu bảo tồn thiên nhiên Sơn Trà, em cần giữ gìn cảnh quan, không tham gia phá hoại hoặc khai thác trái phép tài nguyên và cùng tuyên truyền, vận động mọi người tham gia bảo vệ. Khi tham quan, em cần bỏ rác đúng nơi, không bẻ cành, nhổ cây, hái hoa, không tự tiện cho thú ăn và không tách đoàn.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 19.137,
+    "peak": 0.77926,
+    "rms": 0.09704,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 5e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -431,7 +671,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Danh tướng Nguyễn Văn Thoại được phong tước hiệu Thoại Ngọc Hầu. Ông quê ở làng An Hải, nay thuộc thành phố Đà Nẵng. Ở quê hương, ông đã hỗ trợ việc lập chợ, xây dựng đình, chùa cho làng An Hải.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 12.28,
+    "peak": 0.69374,
+    "rms": 0.10063,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -445,7 +693,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Khu di tích lịch sử văn hóa nhà thờ Tiền Hiền làng An Hải và Thoại Ngọc Hầu nằm ở phường An Hải. Năm 2007, nhà thờ được xếp hạng di tích cấp quốc gia.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 10.271,
+    "peak": 0.55398,
+    "rms": 0.09115,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -459,7 +715,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Cụ Huỳnh Thúc Kháng, năm 1876 đến năm 1947, là người học rộng, tài cao và rất mực yêu nước, thương dân. Cuộc đời của cụ để lại nhiều dấu ấn trong lịch sử.",
-    "text_similarity": 0.954
+    "text_similarity": 0.954,
+    "duration_seconds": 12.178,
+    "peak": 0.5443,
+    "rms": 0.09427,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -473,7 +737,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Nhà lưu niệm Huỳnh Thúc Kháng là ngôi nhà cổ, được xây dựng từ năm 1869 và nằm trong khu vườn rộng. Trong nhà còn giữ không gian làm việc xưa và những vật dụng mà cụ thường dùng.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 11.005,
+    "peak": 0.64846,
+    "rms": 0.09333,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -487,7 +759,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Phố cổ Hội An nổi bật với không gian cổ kính bên dòng sông Hoài. Năm 1999, Hội An được UNESCO công nhận là Di sản văn hóa thế giới.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 9.95,
+    "peak": 0.65156,
+    "rms": 0.09633,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -501,7 +781,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Những con đường trong phố cổ Hội An có nét riêng, có đường dọc ngang theo kiểu bàn cờ, có đoạn đường hẹp và uốn lượn. Quan sát đường phố giúp em nhận ra vẻ cổ kính và gần gũi của Hội An.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 11.094,
+    "peak": 0.70174,
+    "rms": 0.09901,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -515,7 +803,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Ở phố cổ Hội An có nhiều công trình tiêu biểu như chùa Cầu, Hội quán Phúc Kiến, Bảo tàng gốm sứ Mậu Dịch, nhà cổ Tấn Ký và Hội quán Quảng Đông. Các công trình góp phần tạo nên vẻ cổ kính đặc trưng của phố cổ.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 12.657,
+    "peak": 0.83957,
+    "rms": 0.09954,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -529,7 +825,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Phố cổ Hội An thường có nhiều hoạt động văn hóa nghệ thuật như làm lồng đèn, hô hát bài chòi, múa thiên cẩu và thả hoa đăng trên sông. Những hoạt động này làm cho không gian phố cổ thêm sinh động.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 11.011,
+    "peak": 0.64588,
+    "rms": 0.10049,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -543,7 +847,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Ở làng gốm Thanh Hà, đất được người thợ khéo léo tạo thành những sản phẩm gốm. Từ nguyên liệu gần gũi, bàn tay và kinh nghiệm của người làm nghề tạo nên đồ dùng với nhiều hình dáng. Đến thăm làng, em có thể quan sát sản phẩm, lắng nghe câu chuyện làm gốm và trân trọng công sức của người thợ.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 16.692,
+    "peak": 0.65254,
+    "rms": 0.09788,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -557,7 +869,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Làng rau Trà Quế có những cánh đồng rau xanh rộng lớn. Du khách đến đây có thể ngắm cảnh, tìm hiểu cách trồng rau, trải nghiệm làm đất và thưởng thức các món ăn được chế biến từ rau sạch của làng.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 11.618,
+    "peak": 0.66807,
+    "rms": 0.09826,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 0.0,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -571,7 +891,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Ở thành phố Đà Nẵng có nhiều lễ hội truyền thống như Lễ hội Cầu ngư, Lễ hội đình làng Túy Loan, Lễ hội Mục đồng, Lễ hội mừng lúa mới và Lễ hội Cầu bông.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 8.815,
+    "peak": 0.5867,
+    "rms": 0.119,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -585,7 +913,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Phần lễ thường có những nghi thức như dâng hương, lễ tế, lễ cầu an, cầu ngư hoặc rước kiệu. Đây là phần thể hiện sự trang nghiêm và lòng thành kính của cộng đồng.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 10.037,
+    "peak": 0.666,
+    "rms": 0.10084,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -599,7 +935,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Phần hội có nhiều trò chơi và hoạt động như lắc thúng trên biển, chơi bài chòi, kéo co, đập niêu đất, gói bánh tét, nướng bánh tráng, thi văn nghệ và thể thao.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 9.435,
+    "peak": 0.61947,
+    "rms": 0.10145,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -613,7 +957,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Lễ hội truyền thống có thể giúp tưởng nhớ những người có công khai hoang lập làng, tạ ơn các vị thần, tưởng nhớ ngư dân đã mất và cầu mong một năm mới an lành, mùa màng hoặc mùa đánh bắt bội thu, mọi người mạnh khỏe và hạnh phúc.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 12.41,
+    "peak": 0.6713,
+    "rms": 0.10443,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 2,
@@ -627,7 +979,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Khi tham gia lễ hội, em cần xếp hàng trật tự, bỏ rác đúng nơi quy định, mặc trang phục phù hợp và chấp hành nội quy. Em cũng có thể tập làm hướng dẫn viên, giới thiệu một lễ hội mà mình biết.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 11.219,
+    "peak": 0.61437,
+    "rms": 0.09591,
+    "start_rms_120ms": 6e-05,
+    "end_rms_120ms": 5e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -641,7 +1001,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Bãi biển Mỹ Khê thuộc phường Sơn Trà, thành phố Đà Nẵng. Nơi đây có bờ cát dài và phẳng, thu hút nhiều người đến tham quan, vui chơi. Qua hình ảnh ở đây, em có thể tìm hiểu các hoạt động như tắm biển, đá bóng trên cát, tạo hình trên cát, bay dù lượn và đua thuyền buồm. Em thích cảnh đẹp hoặc hoạt động nào nhất? Khi đi biển, em chỉ tham gia hoạt động phù hợp với lứa tuổi và theo hướng dẫn của người lớn.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 24.0,
+    "peak": 0.73119,
+    "rms": 0.09812,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -655,7 +1023,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Bãi biển Bàn Than thuộc xã đảo Tam Hải, thành phố Đà Nẵng. Nét đặc trưng ở đây là những dãy đá đen nằm san sát, có nhiều hình dáng độc đáo. Rêu xanh phủ trên đá tạo thêm vẻ đẹp cho cảnh biển. Hình ảnh ở đây còn giới thiệu hoạt động khai thác rong biển, khai thác hải sản, câu cá và tắm biển. Em thử so sánh nét nổi bật của Bàn Than với bờ cát Mỹ Khê nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 21.62,
+    "peak": 0.64974,
+    "rms": 0.09197,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -669,7 +1045,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Ở bãi biển Mỹ Khê có chòi canh, phao cứu sinh, cờ báo hiệu vùng nước xoáy và lực lượng cứu hộ túc trực. Những phương tiện và người làm nhiệm vụ ấy giúp nhắc nhở, hỗ trợ và ứng cứu khi cần. Em hãy nhận biết các dấu hiệu cảnh báo và làm theo hướng dẫn của người lớn, nhân viên cứu hộ. Có cứu hộ không có nghĩa em được tự xuống nước hoặc đi vào vùng bị cấm.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 20.9,
+    "peak": 0.74623,
+    "rms": 0.09743,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -683,7 +1067,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Trước chuyến đi, em cùng người lớn chuẩn bị đồ dùng cần thiết. Khi tắm biển luôn có người lớn đi cùng, khởi động theo hướng dẫn và chỉ xuống nước tại nơi được phép. Nếu thấy cờ hoặc biển cảnh báo nguy hiểm, em dừng lại và làm theo hướng dẫn cứu hộ. Khi mệt hoặc lạnh, hãy báo người lớn để lên bờ nghỉ. Sau buổi chơi, cùng thu gom rác đúng nơi quy định để bãi biển luôn sạch đẹp nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 22.723,
+    "peak": 0.81659,
+    "rms": 0.09922,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -697,7 +1089,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Hoàng Diệu sinh năm 1828, tên ban đầu là Hoàng Kim Tích. Ông quê ở làng Xuân Đài, nay thuộc xã Gò Nổi, thành phố Đà Nẵng. Ông nổi tiếng có tài, sống thanh liêm và yêu nước. Ngày 25 tháng Tư năm 1882, khi quân Pháp tấn công thành Hà Nội, ông chỉ huy quân sĩ chiến đấu bảo vệ thành. Dù thành thất thủ, lòng yêu nước và tinh thần trách nhiệm của ông vẫn được nhân dân ghi nhớ. Em khâm phục điều gì ở ông?",
-    "text_similarity": 0.989
+    "text_similarity": 0.989,
+    "duration_seconds": 27.62,
+    "peak": 0.68987,
+    "rms": 0.10035,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -711,7 +1111,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Phan Châu Trinh sinh năm 1872, quê ở làng Tây Lộc, nay thuộc xã Tây Hồ, thành phố Đà Nẵng. Ông học rộng, tài cao và có lòng yêu nước. Sau một thời gian làm quan, ông từ quan để hoạt động vì đất nước. Ông mong người dân được mở mang hiểu biết, có đời sống tốt hơn và đất nước được đổi mới. Em hãy kể lại một điều mình vừa biết về ông nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 21.72,
+    "peak": 0.74408,
+    "rms": 0.1027,
+    "start_rms_120ms": 2e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -725,7 +1133,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Năm 1904, Phan Châu Trinh cùng Huỳnh Thúc Kháng và Trần Quý Cáp khởi xướng phong trào Duy Tân ở Quảng Nam, nay thuộc thành phố Đà Nẵng. Phong trào mở trường dạy chữ quốc ngữ, khuyến khích lối sống tiết kiệm, văn minh và tinh thần tự lực, tự cường. Các ông còn khuyến khích khai hoang, làm vườn, sản xuất và trao đổi hàng hóa để chăm lo đời sống nhân dân. Qua câu chuyện ấy, em thấy việc học có thể giúp ích gì cho mọi người?",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 25.142,
+    "peak": 0.75039,
+    "rms": 0.09269,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -739,7 +1155,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Nhân dân ghi nhớ Hoàng Diệu và Phan Châu Trinh bằng cách đặt tên các ông cho đường phố, trường học và công trình tưởng niệm. Em có thể cùng thầy cô xem video hoặc tìm hiểu nhà lưu niệm Phan Châu Trinh tại xã Tây Hồ hay phường Hải Châu, thành phố Đà Nẵng. Sau khi tìm hiểu, hãy chia sẻ cảm xúc và giới thiệu một điều em biết về hai nhà yêu nước. Chăm học, trung thực và giúp đỡ bạn là những việc vừa sức để em noi gương người đi trước.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 24.688,
+    "peak": 0.71534,
+    "rms": 0.0983,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 0.0,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -753,7 +1177,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Thành phố Đà Nẵng có nhiều cộng đồng dân tộc cùng sinh sống như Kinh, Cơ Tu, Co, Rẻ Chiêng, Xơ Đăng và Hoa. Mỗi cộng đồng có những nét văn hóa riêng cùng góp phần làm quê hương thêm phong phú. Em đã biết tên những cộng đồng nào? Hãy cùng quan sát hình ảnh có chú thích và lắng nghe câu chuyện về đời sống của họ.",
-    "text_similarity": 0.971
+    "text_similarity": 0.971,
+    "duration_seconds": 18.439,
+    "peak": 0.63066,
+    "rms": 0.09503,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -767,7 +1199,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Đồng bào Cơ Tu có nhiều sinh hoạt văn hóa đặc sắc múa tung tung ra giá, sử dụng trống và chiêng trong lễ hội, dệt thổ cẩm và chế biến món ăn truyền thống. Tung tung ra giá là điệu múa truyền thống đã được đưa vào danh mục di sản văn hóa phi vật thể quốc gia. Em muốn tìm hiểu thêm về điệu múa, âm nhạc hay những tấm thổ cẩm?",
-    "text_similarity": 0.946
+    "text_similarity": 0.946,
+    "duration_seconds": 18.64,
+    "peak": 0.77557,
+    "rms": 0.09826,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -781,7 +1221,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Trong lễ hội của đồng bào Co, cây nêu thể hiện lòng thành kính và ước mong cuộc sống yên bình, no đủ. Theo quan niệm của đồng bào, cây nêu kết nối thế giới con người với các vị thần. Cây thường làm bằng gỗ cây trò cao khoảng bốn đến chín mét. Cây nêu được trang trí bằng năm màu đỏ, xanh lam, đen, trắng và vàng. Trên đỉnh có hình chim chèo bẻo bằng gỗ. Em hãy thử nhắc lại năm màu ấy nhé.",
-    "text_similarity": 0.966
+    "text_similarity": 0.966,
+    "duration_seconds": 24.681,
+    "peak": 0.73376,
+    "rms": 0.10603,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -795,7 +1243,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Mỗi dân tộc có những nét văn hóa truyền thống riêng cần được giữ gìn và phát huy. Em có thể kể một sinh hoạt văn hóa mình yêu thích, vẽ lại cảnh lễ hội hoặc giới thiệu điều đã học với người thân. Khi học và chơi cùng nhau, hãy lắng nghe, gọi đúng tên bạn và tôn trọng sự khác biệt. Nếu muốn chụp ảnh hay chạm vào đồ dùng của người khác, em nhớ xin phép nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 20.64,
+    "peak": 0.63764,
+    "rms": 0.08936,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -809,7 +1265,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Làng Nam Ô nằm ở cửa sông Cu Đê, dưới chân đèo Hải Vân, nay thuộc phường Hải Vân, thành phố Đà Nẵng. Biển có nhiều hải sản tạo thuận lợi cho đánh bắt và nghề làm nước mắm. Nước mắm Nam Ô từng là sản vật tiến vua. Năm 2019, nghề làm nước mắm Nam Ô được đưa vào danh mục di sản văn hóa phi vật thể quốc gia. Cùng tìm hiểu điều gì làm nên đặc sản này nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 22.52,
+    "peak": 0.65433,
+    "rms": 0.10698,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -823,7 +1287,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Nguyên liệu chính làm nước mắm Nam Ô là cá cơm than và muối. Khoảng tháng Giêng đến tháng Ba âm lịch, cá cơm than đến vịnh Đà Nẵng, người dân đánh bắt về làm mắm. Người làm nghề còn chọn muối Đề Gi ở Gia Lai, muối Sa Huỳnh ở Quảng Ngãi hoặc muối Cà Ná ở Khánh Hòa. Cá và muối đều gắn với biển, vì thế tài liệu gọi nước mắm là sản phẩm kết tinh từ biển.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 21.42,
+    "peak": 0.82171,
+    "rms": 0.10549,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -837,7 +1309,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Cùng theo dõi bốn bước nhé. Bước một: Rửa cá bằng nước biển rồi ướp với muối. Bước hai: Cho cá vào chum ủ từ mười hai đến mười tám tháng và đảo để cá chín đều. Bước ba: Lọc lấy nước mắm bằng vuột tre có lót vải sạch. Bước bốn: Ủ tiếp nước mắm trong chum để hương vị thơm dịu hơn, sau đó mới đóng chai. Những chai mắm là thành quả của nhiều công đoạn và thời gian chờ đợi.",
-    "text_similarity": 0.964
+    "text_similarity": 0.964,
+    "duration_seconds": 24.3,
+    "peak": 0.62893,
+    "rms": 0.0927,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -851,7 +1331,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Nước mắm Nam Ô có hương thơm, vị đậm đà, ngọt tự nhiên và màu đỏ thẫm. Sản phẩm được dùng làm gia vị, nước chấm và quà tặng quê hương. Nghề làm mắm tạo việc làm, tăng thu nhập cho người dân và lưu giữ kinh nghiệm truyền thống. Em hãy kể một món ăn thường dùng với nước mắm rồi nghĩ một cách giới thiệu làng nghề với bạn bè. Khi tham quan, em giữ vệ sinh và không tự mở chum hay chạm vào dụng cụ nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 24.864,
+    "peak": 0.65042,
+    "rms": 0.0962,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 0.0,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -865,7 +1353,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Thuyền thúng còn gọi là thúng chài, có dạng tròn, gắn với nghề đánh bắt hải sản gần bờ. Nghề đã được truyền qua nhiều thế hệ. Tài liệu giới thiệu những nơi còn duy trì nghề như làng Hà Bình ở xã Thăng An, làng Trà Nhiêu ở xã Nam Phước và làng Thọ Quang ở phường Sơn Trà. Cùng khám phá cách người thợ tạo nên chiếc thúng từ những thanh tre nhé.",
-    "text_similarity": 0.987
+    "text_similarity": 0.987,
+    "duration_seconds": 19.64,
+    "peak": 0.71539,
+    "rms": 0.09848,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -879,7 +1375,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Tre là nguyên liệu chính để đan thuyền thúng. Người thợ cưa, chẻ tre và vót thành nan. Nan được chuốt kỹ rồi phơi khô. Từ những nan ấy, người thợ đan để tạo thành thân thúng tròn. Từng thao tác cần sự khéo léo và kiên nhẫn. Em có thể quan sát công đoạn này qua hình ảnh hoặc khi đi cùng người lớn, không tự dùng cưa, dao hay chạm vào nan sắc.",
-    "text_similarity": 0.987
+    "text_similarity": 0.987,
+    "duration_seconds": 21.04,
+    "peak": 0.71865,
+    "rms": 0.10223,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -893,7 +1397,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Sau khi đan thân, người thợ dùng các thanh tre nẹp chặt vành rồi dùng dụng cụ ép vành thuyền. Tiếp đó, dầu ráy được phủ lên bề mặt thúng để chống thấm. Thúng được phơi nắng khoảng ba đến bốn ngày cho dầu khô, giúp dùng được lâu bền hơn. Mỗi công đoạn đều góp phần làm chiếc thúng hoàn chỉnh. Em hãy thử kể lại trình tự đan thân, nẹp vành, ép vành, phủ dầu và phơi khô.",
-    "text_similarity": 0.963
+    "text_similarity": 0.963,
+    "duration_seconds": 22.84,
+    "peak": 0.7053,
+    "rms": 0.09943,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 3,
@@ -907,7 +1419,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Thuyền thúng dễ xoay trở trong không gian hẹp, thuận tiện cho đánh bắt nhỏ gần bờ và du lịch khám phá sông nước. Tài liệu nêu ưu điểm khó bị lật, nhưng khi sử dụng vẫn phải tuân thủ hướng dẫn an toàn. Em không tự trèo vào thúng hoặc xuống nước. Trân trọng người thợ, em có thể vẽ, xé dán hoặc nặn một chiếc thúng rồi giới thiệu hình dáng, nguyên liệu và cách làm với người thân.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 21.506,
+    "peak": 0.69262,
+    "rms": 0.09777,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 5e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -921,7 +1441,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Thành phố Đà Nẵng nằm ở miền Trung Việt Nam, phía bắc giáp thành phố Huế, phía nam giáp tỉnh Quảng Ngãi, phía tây giáp nước Lào và phía đông giáp biển Đông. Từ vùng núi phía tây ra biển phía đông, quê hương mở ra nhiều cảnh quan khác nhau. Em hãy cùng thầy cô xác định các hướng trên bản đồ và kể tên những nơi tiếp giáp với Đà Nẵng nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 19.507,
+    "peak": 0.61458,
+    "rms": 0.09981,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -935,7 +1463,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Địa hình Đà Nẵng có vùng đồi núi phía tây, vùng trung du và đồng bằng ven biển phía đông. Núi rừng, sông ngòi và bờ biển tạo nên vẻ đẹp phong phú. Ở nơi đất bằng, người dân có điều kiện trồng trọt, xây dựng khu dân cư. Vùng núi và vùng biển lại có những thế mạnh riêng. Khi giới thiệu quê hương, em có thể chọn một cảnh núi, một dòng sông hoặc một bãi biển mà mình biết.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 21.876,
+    "peak": 0.70985,
+    "rms": 0.10019,
+    "start_rms_120ms": 2e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -949,7 +1485,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Đà Nẵng có khí hậu nhiệt đới gió mùa với mùa mưa và mùa khô. Vùng núi cao thường mát hơn vùng thấp. Sông Hàn, sông Thu Bồn cùng các sông Vu Gia, Vĩnh Điện, Túy Loan yên góp phần phục vụ sinh hoạt, sản xuất và đi lại vào mùa mưa bão. Em cần theo hướng dẫn của người lớn, tránh đến gần sông suối khi nước dâng. Cùng kể tên một dòng sông và lợi ích của dòng sông ấy nhé.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 22.986,
+    "peak": 0.74598,
+    "rms": 0.10251,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -963,7 +1507,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Thiên nhiên quê hương có nhiều loài động, thực vật đáng quý. Sơn Trà có voọc trà vá chân nâu. Vùng núi Ngọc Linh có cây sâm Ngọc Linh. Vườn quốc gia Sông Thanh. Các khu bảo tồn Sơn Trà, Bà Nà, Núi Chúa và vùng biển Cù Lao Chàm góp phần gìn giữ môi trường sống của sinh vật. Em bảo vệ thiên nhiên bằng cách không bẻ cây, không làm hại động vật, không cho thú hoang ăn và giữ sạch nơi tham quan.",
-    "text_similarity": 0.988
+    "text_similarity": 0.988,
+    "duration_seconds": 22.878,
+    "peak": 0.75138,
+    "rms": 0.09777,
+    "start_rms_120ms": 2e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -977,7 +1529,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Người Kinh, Cơ Tu, Xơ Đăng, Rẻ Chiêng, Co, Chăm Tày cùng nhiều cộng đồng khác sinh sống tại Đà Nẵng góp phần tạo nên đời sống văn hóa phong phú. Qua câu chuyện về người dân xứ Quảng, em biết thêm những nét đẹp như chân thật, cần cù, chịu khó và giàu tình cảm. Những phẩm chất ấy được thể hiện bằng việc làm cụ thể. Em có thể kể về một người chăm chỉ lao động, giúp đỡ hàng xóm hoặc có hành động đẹp mà mình biết.",
-    "text_similarity": 0.978
+    "text_similarity": 0.978,
+    "duration_seconds": 25.659,
+    "peak": 0.772,
+    "rms": 0.09443,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -991,7 +1551,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Cầu sông Hàn, phố cổ Hội An, Mỹ Sơn, biển Mỹ Khê hay hồ Phú Ninh đều có thể gợi cho em câu chuyện về quê hương. Em hãy chọn một địa điểm để giới thiệu bằng lời nói, tranh vẽ hoặc một bức thư gửi người thân. Trong bài giới thiệu, nói rõ tên nơi ấy một nét đẹp và cảm nhận của em. Giữ vệ sinh, tiết kiệm nước và chăm sóc cây xanh là những việc nhỏ góp phần làm thành phố xanh, sạch, đẹp.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 24.642,
+    "peak": 0.71663,
+    "rms": 0.09183,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 0.0,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1005,7 +1573,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Ở Đà Nẵng, hoạt động công nghiệp tạo ra nhiều sản phẩm phục vụ đời sống và sản xuất. Khu công nghiệp Hòa Cầm và Khu kinh tế mở Chu Lai là những ví dụ ở đây. Các công việc gồm chế biến nông, lâm, thủy sản, may mặc, sản xuất thiết bị điện, điện tử và cơ khí lắp ráp. Từ nguyên liệu đến sản phẩm hoàn chỉnh cần nhiều người phối hợp. Em thử kể tên một sản phẩm công nghiệp gần gũi trong gia đình mình.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 23.464,
+    "peak": 0.62655,
+    "rms": 0.09701,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1019,7 +1595,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Biển, núi rừng, di sản, lễ hội và làng nghề tạo điều kiện cho du lịch Đà Nẵng phát triển. Người làm dịch vụ vận tải, lưu trú, ăn uống hoặc hướng dẫn tham quan đáp ứng nhu cầu của du khách và người dân. Một chuyến đi thuận lợi cần sự phối hợp của nhiều nghề. Giữ cảnh quan sạch đẹp và ứng xử thân thiện cũng góp phần làm điểm đến được yêu mến. Em biết công việc dịch vụ nào ở nơi mình sống?",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 22.807,
+    "peak": 0.67378,
+    "rms": 0.09801,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1033,7 +1617,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Người dân Đà Nẵng trồng lúa, rau, hoa, cây ăn quả, chè và sản xuất nấm. Làng rau Trà Quế là một ví dụ về trồng rau gắn với trải nghiệm du lịch. Một số cơ sở áp dụng nông nghiệp hữu cơ, trồng rau thủy canh hoặc ứng dụng công nghệ để nâng chất lượng sản phẩm. Những cách làm ấy cần đi cùng việc sử dụng đất, nước hợp lý. Em hãy tìm một sản phẩm nông nghiệp trong bữa ăn và kể về công sức làm ra nó.",
-    "text_similarity": 0.989
+    "text_similarity": 0.989,
+    "duration_seconds": 24.134,
+    "peak": 0.64976,
+    "rms": 0.09803,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1047,7 +1639,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Biển đem đến điều kiện phát triển đánh bắt, chế biến thủy hải sản, du lịch biển và vận tải đường biển. Những cảng như Tiên Sa, Kỳ Hà và Chu Lai giúp kết nối hoạt động vận chuyển hàng hóa. Các dịch vụ hậu cần nghề cá hỗ trợ tàu thuyền và người lao động. Khai thác lợi ích từ biển cần đi cùng bảo vệ nguồn lợi và môi trường. Em có thể nhận ra những nghề khác nhau cùng gắn với biển không?",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 22.394,
+    "peak": 0.66855,
+    "rms": 0.09407,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1061,7 +1661,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Đá mỹ nghệ Non Nước, nước mắm Nam Ô, bánh tráng Túy Loan, đúc đồng Phước Kiều, gốm Thanh Hà và mộc Kim Bồng là những ví dụ về nghề truyền thống. Các nghề tạo việc làm, thu nhập và góp phần gìn giữ văn hóa. Khi gắn với tham quan, làng nghề còn mở thêm cơ hội giới thiệu sản phẩm. Em hãy hỏi người thân về công việc của họ, rồi kể tên nghề, sản phẩm hoặc dịch vụ và điều em trân trọng ở công việc ấy.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 24.808,
+    "peak": 0.65289,
+    "rms": 0.09731,
+    "start_rms_120ms": 2e-05,
+    "end_rms_120ms": 0.0,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1075,7 +1683,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Khu đền Tháp Mỹ Sơn ở xã Thu Bồn, thành phố Đà Nẵng, nằm trong một thung lũng bao quanh bởi đồi núi. Đây là di tích gắn với lịch sử và đời sống tín ngưỡng của các vương triều Champa. Cùng quan sát cảnh quan, những ngôi tháp và dấu tích còn lại để hình dung một không gian văn hóa xưa. Em hãy phân biệt tên của khu di tích với tên của một ngôi tháp riêng lẻ nhé.",
-    "text_similarity": 0.988
+    "text_similarity": 0.988,
+    "duration_seconds": 20.726,
+    "peak": 0.81253,
+    "rms": 0.09842,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1089,7 +1705,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Mỹ Sơn được hình thành và xây dựng qua nhiều thế kỷ, từ khoảng thế kỷ bốn đến thế kỷ mười ba. Hơn bảy mươi công trình từng tạo nên không gian đền tháp với những phong cách khác nhau. Chiến tranh và thời gian làm nhiều công trình hư hại. Công việc bảo tồn, trùng tu giúp gìn giữ các dấu tích còn lại. Năm 1999, Mỹ Sơn được UNESCO ghi danh là Di sản văn hóa thế giới. Đó là niềm tự hào và cũng là trách nhiệm gìn giữ di sản.",
-    "text_similarity": 0.925
+    "text_similarity": 0.925,
+    "duration_seconds": 26.202,
+    "peak": 0.72882,
+    "rms": 0.09454,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1103,7 +1727,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Ở Mỹ Sơn, các ngôi đền tháp cùng hoa văn, hình tượng và tác phẩm điêu khắc thể hiện tài nghệ của người Champa xưa. Nhiều tác phẩm được tạo trên gạch và đá. Nghệ thuật nơi đây có sự giao lưu với văn hóa Ấn Độ và mang dấu ấn riêng của Champa. Khi quan sát, em hãy tìm một chi tiết trang trí hoặc hình dáng công trình mình ấn tượng, rồi nói điều nhìn thấy trước khi chia sẻ cảm nhận.",
-    "text_similarity": 0.976
+    "text_similarity": 0.976,
+    "duration_seconds": 21.506,
+    "peak": 0.75173,
+    "rms": 0.10105,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1117,7 +1749,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Bảo tàng Điêu khắc Chăm Đà Nẵng, còn được gọi là Cổ viện Chàm, là nơi lưu giữ, nghiên cứu và giới thiệu nghệ thuật điêu khắc Champa. Bảo tàng được khởi công xây dựng năm 1915 và mở cửa đón khách năm 1919. Tư liệu, hiện vật giúp người xem tìm hiểu văn hóa của cư dân Champa xưa. Bảo tàng và khu di tích Mỹ Sơn là hai địa điểm khác nhau cùng giúp chúng ta khám phá di sản Champa.",
-    "text_similarity": 0.964
+    "text_similarity": 0.964,
+    "duration_seconds": 24.587,
+    "peak": 0.8762,
+    "rms": 0.09641,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1131,7 +1771,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Tòa nhà Bảo tàng Điêu khắc Chăm có kiến trúc riêng, gợi những đường nét của đền tháp Chăm và kiến trúc Pháp đầu thế kỷ hai mươi. Những tác phẩm bằng đá, đất nung và các chất liệu khác cho thấy sự sáng tạo của nghệ nhân xưa. Khi đứng trước hiện vật, em quan sát hình dáng và đọc nhãn để biết tên, chất liệu, niên đại, xuất xứ. Nhãn giúp em hiểu tác phẩm chính xác hơn thay vì chỉ đoán từ hình ảnh.",
-    "text_similarity": 0.971
+    "text_similarity": 0.971,
+    "duration_seconds": 22.226,
+    "peak": 0.71347,
+    "rms": 0.09161,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1145,7 +1793,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Khi đến Mỹ Sơn hoặc Bảo tàng Điêu khắc Chăm, em đi theo hướng dẫn, giữ trật tự và thực hiện nội quy chụp ảnh. Không leo trèo lên tháp, không viết lên gạch đá và không tự ý chạm vào hiện vật. Sau chuyến đi hoặc xem video, em có thể vẽ sơ đồ tư duy, một bức tranh hay kể lại điều mình ấn tượng. Hiểu và giữ gìn di sản là cách để những câu chuyện quý tiếp tục đến với nhiều người.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 22.884,
+    "peak": 0.68866,
+    "rms": 0.09577,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 0.0,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1159,7 +1815,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Sông Thu Bồn bắt nguồn từ vùng núi Ngọc Linh thuộc xã Trà Linh. Dòng sông chảy qua nhiều xã, phường và phần lớn đổ ra biển tại Cửa Đại, phường Hội An đông. Từ vùng núi đến vùng cửa sông, cảnh vật và hoạt động của người dân có nhiều nét khác nhau. Em hãy theo dõi hướng chảy trên bản đồ có chú giải và kể lại hành trình từ thượng nguồn ra biển.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 20.289,
+    "peak": 0.74955,
+    "rms": 0.10119,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1173,7 +1837,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Dòng Thu Bồn gắn với giao thương, đánh bắt thủy sản và việc đi lại của người dân. Vào dịp lễ hội còn có hoạt động đua thuyền thể hiện sức mạnh và tinh thần đoàn kết. Những thuyền đánh cá, chuyến hàng vào ngày hội ven sông cho thấy dòng nước gắn bó với đời sống quê hương. Em thử phân biệt một hoạt động mưu sinh với một hoạt động lễ hội mà chúng mình cùng tìm hiểu.",
-    "text_similarity": 0.988
+    "text_similarity": 0.988,
+    "duration_seconds": 20.63,
+    "peak": 0.76083,
+    "rms": 0.09868,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1187,7 +1859,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Hòn Kẽm Đá Dừng là thắng cảnh ở thượng nguồn sông Thu Bồn. Hai bên dòng nước là những vách núi đá sừng sững mang nhiều hình dáng. Dọc bờ còn có bãi cát, nương ngô và bãi dâu xanh. Buổi sớm, sương mờ làm cảnh sông núi thêm ấn tượng. Câu ca dao \"Ngó lên Hòn Kẽm Đá Dừng, thương cha nhớ mẹ quá Trường Bậu ơi\" gắn cảnh quê với tình cảm gia đình. Em cảm nhận điều gì qua câu ca dao ấy?",
-    "text_similarity": 0.988
+    "text_similarity": 0.988,
+    "duration_seconds": 24.45,
+    "peak": 0.76694,
+    "rms": 0.10395,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1201,7 +1881,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Hòn Kẽm Đá Dừng không chỉ có phong cảnh đẹp mà còn gắn với những dấu tích và câu chuyện lịch sử. Nơi đây có những chữ cổ Champa trên đá và những giai thoại về cuộc khởi nghĩa của Nguyễn Duy Hiệu trong phong trào Cần Vương. Khi tìm hiểu, em lắng nghe người hướng dẫn và đọc tư liệu để phân biệt dấu tích với lời kể. Những thông tin ấy giúp chuyến khám phá cảnh quan thêm ý nghĩa.",
-    "text_similarity": 0.988
+    "text_similarity": 0.988,
+    "duration_seconds": 20.549,
+    "peak": 0.67283,
+    "rms": 0.09266,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1215,7 +1903,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Du khách có thể đi thuyền ngắm cảnh, tham quan và chụp ảnh tại Hòn Kẽm Đá Dừng. Em đi cùng người phụ trách, mặc áo phao theo hướng dẫn và ngồi đúng vị trí khi thuyền di chuyển. Không nghiêng người ra mép thuyền, không xả rác xuống sông. Sau hành trình, em có thể viết đoạn văn giới thiệu nguồn sông, cảnh đẹp và một hoạt động đã tìm hiểu. Hoặc sưu tầm hình ảnh có nguồn để chia sẻ với lớp.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 23.042,
+    "peak": 0.65973,
+    "rms": 0.08879,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 0.0,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1229,7 +1925,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Làng đúc đồng Phước Kiều nằm tại khối phố Thanh Chiêm một, phường Điện Bàn, thành phố Đà Nẵng. Làng nghề đã tồn tại và phát triển hơn bốn trăm năm, gắn với lịch sử dinh trấn Thanh Chiêm. Người thợ qua nhiều thế hệ tạo nên những sản phẩm bằng đồng phục vụ đời sống và văn hóa. Cùng tìm hiểu điều gì làm nên giá trị của làng nghề lâu đời này nhé.",
-    "text_similarity": 0.966
+    "text_similarity": 0.966,
+    "duration_seconds": 19.668,
+    "peak": 0.67735,
+    "rms": 0.10063,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1243,7 +1947,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Để tạo một sản phẩm đồng, người thợ trước hết tạo mẫu rồi làm khuôn đúc. Mẫu giúp xác định hình dáng sản phẩm. Khuôn tạo khoảng trống để nhận kim loại nóng chảy. Mỗi loại sản phẩm cần cách chuẩn bị phù hợp. Sự chính xác, cẩn thận ở những bước đầu ảnh hưởng đến kết quả cuối cùng. Em hãy dùng thẻ hình để phân biệt bước tạo mẫu với bước làm khuôn.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 20.426,
+    "peak": 0.76997,
+    "rms": 0.09413,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1257,7 +1969,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Khi khuôn đã được chuẩn bị, người thợ nấu đồng rồi rót đồng nóng chảy vào khuôn. Sản phẩm cần được làm nguội trước khi tiếp tục đánh bóng và hoàn thiện. Công việc đòi hỏi tay nghề và tuân thủ an toàn vì có lò, kim loại nóng và dụng cụ chuyên dùng. Học sinh chỉ quan sát ở nơi được hướng dẫn. Em có thể xếp các thẻ Nấu đồng, Rót khuôn, Làm nguội, Đánh bóng để ghi nhớ trình tự.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 23.034,
+    "peak": 0.7426,
+    "rms": 0.09789,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1271,7 +1991,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Sản phẩm truyền thống của Phước Kiều có cồng, chiêng, đỉnh, chuông và đồ thờ cúng bằng đồng. Người thợ còn tạo tượng, đồ lưu niệm và những sản phẩm mới đáp ứng nhu cầu xã hội. Với các nhạc khí, kỹ năng thẩm âm giúp nghệ nhân nghe, kiểm tra và điều chỉnh âm thanh. Một sản phẩm kết hợp hình dáng, công dụng và kinh nghiệm của người làm nghề. Em thích tìm hiểu sản phẩm nào nhất?",
-    "text_similarity": 0.988
+    "text_similarity": 0.988,
+    "duration_seconds": 22.18,
+    "peak": 0.70799,
+    "rms": 0.09647,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 4,
@@ -1285,7 +2013,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Nghề đúc đồng tạo việc làm, thu nhập và góp phần giữ gìn bản sắc văn hóa. Người thợ truyền lại kinh nghiệm để thế hệ sau tiếp tục học hỏi và sáng tạo. Em có thể viết đoạn văn từ sáu đến tám câu giới thiệu địa điểm, sản phẩm, công việc và cảm nghĩ về làng nghề. Nếu lập kế hoạch tham quan, hãy cùng thầy cô xác định mục đích, thời gian, nhiệm vụ và cách trình bày kết quả. Luôn giữ khoảng cách an toàn khi quan sát người thợ làm việc.",
-    "text_similarity": 0.979
+    "text_similarity": 0.979,
+    "duration_seconds": 26.109,
+    "peak": 0.66994,
+    "rms": 0.09566,
+    "start_rms_120ms": 2e-05,
+    "end_rms_120ms": 5e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1299,7 +2035,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Em hãy hình dung một mạng đường hầm nối các nhà và những nơi kín đáo trong làng. Đó là Địa đạo Kỳ Anh, nay thuộc phường Bản Thạch, thành phố Đà Nẵng. Người dân bắt đầu đào từ tháng Năm năm 1965 và tiếp tục đến cuối năm 1967. Trong những năm kháng chiến chống Mỹ, công trình được làm bằng sức lao động và sự trung lòng của nhân dân.",
-    "text_similarity": 0.958
+    "text_similarity": 0.958,
+    "duration_seconds": 20.71,
+    "peak": 0.612,
+    "rms": 0.09417,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1313,7 +2057,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Các đoạn địa đạo nối nhau quanh co như bàn cờ, có lối thông tới nhà dân, giếng nước và những nơi được che kín. Bên trong có hầm chỉ huy, hầm cứu thương, kho lương thực, nơi cảnh giới và lỗ thông hơi. Mỗi bộ phận phục vụ một việc riêng. Em thử giải thích vì sao một đường hầm để trú ẩn vẫn cần có lỗ thông hơi?",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 19.39,
+    "peak": 0.7003,
+    "rms": 0.10004,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1327,7 +2079,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Địa đạo giúp cán bộ, chiến sĩ và nhân dân trú ẩn, liên lạc, cất giữ lương thực và chăm sóc người bị thương. Đình Thạch Tân là một địa điểm gắn với việc tập kết, cất giấu và cứu chữa trong hệ thống này. Những dấu tích ấy cho thấy người dân đã dựa vào nhau để bám đất, bám làng. Khi nghe kể, em hãy tìm một chi tiết thể hiện sự đoàn kết đó.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 20.49,
+    "peak": 0.66996,
+    "rms": 0.0897,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1341,7 +2101,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Mẹ Nhu tên thật là Lê Thị Rảnh, được gọi theo tên người con trai đầu. Mẹ giúp vận chuyển lương thực, đào hầm bí mật và che chở chiến sĩ. Ngày 26 tháng Mười Hai năm 1968, khi nhà bị bao vây, mẹ không tiết lộ nơi ẩn náu của các chiến sĩ và đã hy sinh. Câu chuyện của mẹ Nhu và bảy dũng sĩ Thanh Khê nhắc chúng mình về lòng yêu nước, sự dũng cảm và tình nghĩa.",
-    "text_similarity": 0.957
+    "text_similarity": 0.957,
+    "duration_seconds": 23.71,
+    "peak": 0.706,
+    "rms": 0.09516,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1355,7 +2123,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Khu lưu niệm mẹ Nhu và không bảy dũng sĩ Thanh Khê ở kiệt bảy trăm bốn mươi sáu đường Trần Cao Vân, phường Thanh Khê, lưu giữ câu chuyện về cơ sở cách mạng và trận đánh. Em cần phân biệt nơi này với tượng mẹ dũng sĩ tại nút giao Điện Biên Phủ Huỳnh Ngọc Huệ, dũng sĩ Thanh Khê. Tượng do nhà điêu khắc Phạm Văn Hạng sáng tác. Hai địa điểm cùng giúp chúng mình tưởng nhớ nhưng không phải cùng một công trình.",
-    "text_similarity": 0.947
+    "text_similarity": 0.947,
+    "duration_seconds": 22.57,
+    "peak": 0.59144,
+    "rms": 0.09406,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1369,7 +2145,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Em chọn Địa đạo Kỳ Anh hoặc khu lưu niệm mẹ Nhu để làm hướng dẫn viên nhỏ. Bài giới thiệu có thể gồm tên, vị trí, một dấu tích và ý nghĩa em hiểu được. Khi tham quan, em đi cùng người lớn theo hướng dẫn của nơi đón khách, nói vừa đủ nghe và giữ nguyên hiện vật. Một lời giới thiệu đúng cùng việc làm lịch sự là cách gần gũi để bày tỏ lòng biết ơn.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 21.998,
+    "peak": 0.70982,
+    "rms": 0.09671,
+    "start_rms_120ms": 2e-05,
+    "end_rms_120ms": 0.0,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1383,7 +2167,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Bà Nà còn gọi là núi Lỗ Đông, thuộc xã Bà Nà, thành phố Đà Nẵng. Đỉnh núi Chúa cao một nghìn bốn trăm tám mươi bảy mét so với mực nước biển. Khí hậu mát mẻ, mây và sương cùng địa hình núi rừng tạo nên cảnh quan hấp dẫn. Nơi đây còn là thượng nguồn các hệ thống sông Túy Loan, Lỗ Đông và sông Vàng. Em thử nối đặc điểm khí hậu với lý do Bà Nà trở thành nơi nghỉ mát.",
-    "text_similarity": 0.921
+    "text_similarity": 0.921,
+    "duration_seconds": 22.89,
+    "peak": 0.73655,
+    "rms": 0.10193,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1397,7 +2189,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Năm 1901, đoàn khảo sát của người Pháp do Dubet dẫn đầu tìm hiểu vùng núi Chúa. Đến năm 1919, đường lên núi và khu nghỉ mát tiếp tục được xây dựng. Ngày nay, Bà Nà có nhiều công trình và dịch vụ du lịch. Khi xem tư liệu xưa và nay, em tìm điểm thay đổi của công trình, đồng thời phân biệt công trình do con người xây với núi rừng tự nhiên.",
-    "text_similarity": 0.987
+    "text_similarity": 0.987,
+    "duration_seconds": 21.83,
+    "peak": 0.66324,
+    "rms": 0.09683,
+    "start_rms_120ms": 2e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1411,7 +2211,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Khu du lịch Bà Nà nằm bên cạnh khu rừng đặc dụng Núi Chúa. Rừng có nhiều loài động, thực vật cần được bảo vệ, trong đó có hoa đào chuông. Dưới chân núi còn có suối Mơ và thác Tóc Tiên. Cảnh đẹp và sự đa dạng sinh học góp phần tạo sức hấp dẫn của vùng núi này. Tham quan có trách nhiệm là giữ rác đúng nơi, không bẻ cành và không làm phiền động vật.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 20.869,
+    "peak": 0.70645,
+    "rms": 0.10013,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1425,7 +2233,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Hải Vân Quan nằm trên đỉnh đèo Hải Vân, ở vùng tiếp giáp thành phố Đà Nẵng và thành phố Huế. Cửa quan được xây dựng năm 1826 dưới thời vua Minh Mạng. Vị trí trên núi cao giúp quan sát con đường Bắc Nam và vùng biển. Vì vậy, công trình từng giữ vai trò phòng thủ cửa ngõ phía Nam kinh thành Huế và cửa biển Đà Nẵng.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 19.631,
+    "peak": 0.62405,
+    "rms": 0.09318,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1439,7 +2255,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Cửa hướng về Đà Nẵng mang ba chữ Hải Vân Quan. Cửa hướng về phía Huế mang sáu chữ Thiên hạ đệ nhất hùng quan, gợi sự hùng vĩ của cửa ải. Khi đọc tên và quan sát kiến trúc, em có thêm căn cứ để hiểu giá trị lịch sử của di tích. Danh xưng ấy thể hiện cách ca ngợi cảnh quan, không phải một phép đo để xếp hạng mọi cửa ải trên thế giới.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 20.011,
+    "peak": 0.66469,
+    "rms": 0.09897,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1453,7 +2277,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Hải Vân Quan được công nhận là di tích quốc gia năm 2017. Dự án bảo tồn, tu bổ và phục hồi được khởi công ngày 19 tháng 12 năm 2021. Khi xem ảnh trước và sau tu bổ, em cần đọc thời điểm chụp. Bà Nà nổi bật về núi rừng và du lịch nghỉ dưỡng. Hải Vân Quan nổi bật về lịch sử, kiến trúc và cảnh đèo. Một hành trình tốt cần vừa giới thiệu giá trị riêng, vừa nhắc cách gìn giữ cả hai nơi.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 26.418,
+    "peak": 0.83642,
+    "rms": 0.09716,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 0.0,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1467,7 +2299,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Danh Thắng Ngũ Hành Sơn thuộc phường Ngũ Hành Sơn, thành phố Đà Nẵng, gần biển Đông và sông Cổ Cò. Những tên Kim Sơn, Mộc Sơn, Thủy Sơn, Hỏa Sơn và Thổ Sơn gắn với ngũ hành. Riêng Hỏa Sơn gồm Dương Hỏa Sơn và Âm Hỏa Sơn. Vì thế, em cần phân biệt năm tên gọi theo ngũ hành với các ngọn núi thực tế trong quần thể.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 20.19,
+    "peak": 0.65768,
+    "rms": 0.09579,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1481,7 +2321,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Thủy Sơn có động Huyền Không và những ngôi chùa như Tam Thai, Linh Ứng. Trong quần thể còn có các hang động Âm Phủ, Hoa Nghiêm, Vân Thông và nhiều dấu tích văn hóa. Bảo tàng văn hóa Phật giáo tại chùa Quán Thế Âm ở Kim Sơn trưng bày các hiện vật có giá trị. Em chọn một cảnh hoặc một công trình để giới thiệu. Nói rõ đó là cảnh tự nhiên hay công trình văn hóa.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 21.37,
+    "peak": 0.89641,
+    "rms": 0.09671,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1495,7 +2343,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Ma nhai là chữ khắc trên vách đá. Tại Ngũ Hành Sơn có hệ thống bảy mươi tám văn bản bằng chữ Hán và chữ Nôm, có niên đại từ nửa đầu thế kỷ mười bảy đến thế kỷ hai mươi. Đây là di sản tư liệu văn khắc trên đá, giúp người sau tìm hiểu lịch sử và văn hóa. Năm 2022, ma nhai tại Danh Thắng được ghi danh trong Chương trình Ký ức Thế giới khu vực Châu Á - Thái Bình Dương. Sự ghi danh này dành cho hệ thống tư liệu ma nhai.",
-    "text_similarity": 0.926
+    "text_similarity": 0.926,
+    "duration_seconds": 26.11,
+    "peak": 0.66169,
+    "rms": 0.09558,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1509,7 +2365,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Làng nghề điêu khắc đá mỹ nghệ non nước nằm dưới chân Ngũ Hành Sơn. Nghề hình thành khoảng thế kỷ mười bảy, gắn với cụ Huỳnh Bá Quát, quê gốc Thanh Hóa. Từ những đồ dùng ban đầu, người thợ phát triển nhiều tác phẩm tinh xảo. Nghề điêu khắc đá mỹ nghệ non nước được đưa vào danh mục Di sản văn hóa phi vật thể quốc gia năm 2014.",
-    "text_similarity": 0.937
+    "text_similarity": 0.937,
+    "duration_seconds": 19.97,
+    "peak": 0.74951,
+    "rms": 0.10378,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1523,7 +2387,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Bàn tay người thợ làm ra tượng, bình hoa, bàn ghế, đồ trang trí và trang sức bằng đá. Mỗi nhóm sản phẩm có công dụng và hình dáng riêng. Trước đây có việc lấy đá tại núi để bảo vệ danh thắng, nguồn đá cho làng nghề được đưa từ nơi khác về. Vì vậy, giữ nghề không có nghĩa là tiếp tục khai thác đá ở Ngũ Hành Sơn. Em hãy nghĩ một cách giới thiệu sản phẩm vừa tôn vinh người thợ vừa bảo vệ cảnh quan.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 24.49,
+    "peak": 0.77606,
+    "rms": 0.09808,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1537,7 +2409,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Năm 2018, Danh Thắng Ngũ Hành Sơn được xếp hạng là di tích quốc gia đặc biệt. Khi tham quan, em đi theo lối hướng dẫn, không viết vẽ lên vách đá và không chạm vào chữ khắc. Em có thể vẽ một cảnh yêu thích trên giấy hoặc dùng đất nặn để thể hiện núi, hang động. Sản phẩm của em là cách chia sẻ điều đã hiểu mà vẫn giữ nguyên vẻ đẹp và dấu tích của Danh Thắng.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 22.378,
+    "peak": 0.63728,
+    "rms": 0.08591,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 0.0,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1551,7 +2431,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Làng nghề dệt lụa Mã Châu ở xã Nam Phước, thành phố Đà Nẵng. Nghề dệt có lịch sử lâu đời được bài học giới thiệu là hình thành từ trước thế kỷ mười sáu bên cạnh vùng Trà Kiệu. Năm 2004, làng được công nhận là làng nghề truyền thống. Trồng dâu, nuôi tằm, se tơ và dệt lụa kết nối công việc của nhiều người trong làng.",
-    "text_similarity": 0.949
+    "text_similarity": 0.949,
+    "duration_seconds": 20.67,
+    "peak": 0.66917,
+    "rms": 0.10581,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1565,7 +2453,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Lá dâu là thức ăn của tằm. Người nuôi chăm sóc tằm, giữ điều kiện sống phù hợp để tằm phát triển rồi nhả tơ làm kén. Bài học giới thiệu mùa xuân và mùa thu là những thời điểm có thời tiết mát, thuận lợi cho việc nuôi tằm. Em nhìn chuôi lá dâu tằm kén để thấy nguyên liệu dệt lụa gắn với việc chăm cây và nuôi con vật.",
-    "text_similarity": 0.986
+    "text_similarity": 0.986,
+    "duration_seconds": 18.53,
+    "peak": 0.73663,
+    "rms": 0.10155,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1579,7 +2475,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Khi làm kén, tằm nhả sợi tơ quấn quanh mình. Sau khi thu kén, người thợ xử lý kén trong nước nóng để tìm đầu mối và kéo các sợi tơ. Công đoạn ươm tơ tạo ra nguyên liệu cho khâu dệt. Em chỉ quan sát qua hình hoặc theo hướng dẫn khi tham quan. Công việc dùng nước nóng thuộc về người thợ. Mỗi sợi tơ nhắc chúng mình về sự kiên nhẫn của người làm nghề.",
-    "text_similarity": 0.987
+    "text_similarity": 0.987,
+    "duration_seconds": 20.65,
+    "peak": 0.68218,
+    "rms": 0.09652,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1593,7 +2497,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Từ sợi tơ, người thợ vận hành khung dệt, đan các sợi thành tấm lụa. Sau đó, sản phẩm có thể được nhuộm, in, vẽ hoặc thêu để có màu sắc và hoa văn phù hợp. Dệt cần cẩn thận, còn hoàn thiện đòi hỏi sự khéo léo và cảm nhận thẩm mỹ. Em thử kể lại đúng thứ tự nuôi tằm, bủa kén và ươm tơ, dệt lụa rồi hoàn thiện sản phẩm.",
-    "text_similarity": 0.986
+    "text_similarity": 0.986,
+    "duration_seconds": 21.13,
+    "peak": 0.64527,
+    "rms": 0.09733,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1607,7 +2519,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Em có thể gặp các sản phẩm như vải tafeta, lãnh hoa, lụa satin và lụa thau. Hoa văn tinh tế, màu sắc hài hòa thể hiện tay nghề qua nhiều công đoạn. Em có thể làm thẻ giới thiệu tên làng, vị trí, quy trình và sản phẩm. Khi gặp nghệ nhân, em lắng nghe và xin phép trước khi chụp ảnh. Hiểu đúng công sức của người thợ giúp chúng mình trân trọng và giới thiệu nghề truyền thống.",
-    "text_similarity": 0.975
+    "text_similarity": 0.975,
+    "duration_seconds": 23.478,
+    "peak": 0.69232,
+    "rms": 0.09045,
+    "start_rms_120ms": 2e-05,
+    "end_rms_120ms": 0.0,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1621,7 +2541,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Sâm Ngọc Linh còn gọi là sâm Việt Nam, tên khoa học Panax vietnamensis, thuộc họ ngũ gia bì. Cây thân thảo, lá có các lá chét xòe như bàn tay, phần thân rễ thường được gọi là củ. Hình dáng chỉ giúp chúng mình bước đầu quan sát. Việc xác định đúng loài cần chuyên môn. Em không tự hái hay nếm cây trong rừng vì thấy giống ảnh.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 20.17,
+    "peak": 0.64812,
+    "rms": 0.09343,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1635,7 +2563,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Sâm sống dưới tán rừng ẩm, mát ở vùng núi cao Ngọc Linh, thường ở độ cao khoảng 1500 đến 2100 mét vừa học. Vùng núi này trải trên địa bàn Đà Nẵng và Quảng Ngãi, tương ứng với phần địa bàn Quảng Nam và Kon Tum trước sắp xếp. Tán cây che mát và lớp đất rừng giúp tạo môi trường phù hợp. Vì thế, muốn giữ cây sâm phải giữ cả khu rừng nơi cây sinh trưởng.",
-    "text_similarity": 0.95
+    "text_similarity": 0.95,
+    "duration_seconds": 21.83,
+    "peak": 0.59251,
+    "rms": 0.0965,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1649,7 +2585,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Người dân bản địa đã biết sử dụng cây sâm trước khi các nhà chuyên môn tìm hiểu. Năm 1973 là mốc gắn với hành trình phát hiện sâm Ngọc Linh trong nghiên cứu dược liệu của nhóm cán bộ có dược sĩ Đào Kim Long và Nguyễn Châu Giang. Em hãy phân biệt mốc nghiên cứu với việc người dân đã biết cây từ trước. Tri thức cộng đồng và nghiên cứu đều góp phần giúp chúng ta hiểu giá trị cây quý.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 21.49,
+    "peak": 0.74916,
+    "rms": 0.09631,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1663,7 +2607,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Sâm Ngọc Linh có những thành phần được các nhà khoa học nghiên cứu, trong đó có nhóm chất saponin. Đây là dược liệu quý, nhưng kết quả nghiên cứu cần được hiểu đúng phạm vi. Em không biến lời quảng bá thành kết luận rằng sâm chữa được mọi bệnh. Khi tìm hiểu sản phẩm, em đọc nguồn thông tin. Việc sử dụng dược liệu cần người lớn hỏi ý kiến nhân viên y tế phù hợp, không tự dùng theo lời truyền miệng.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 22.45,
+    "peak": 0.66306,
+    "rms": 0.0941,
+    "start_rms_120ms": 4e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1677,7 +2629,15 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Ở vùng Trà Linh và những nơi phù hợp, người dân, trong đó có cộng đồng Xơ Đăng, góp phần giữ giống, trồng và chăm sóc sâm dưới tán rừng. Cây cần nhiều thời gian và công sức. Phát triển sâm còn gắn với nghiên cứu, quản lý nguồn giống và truy xuất nguồn gốc. Giá trị kinh tế bền vững cần đi cùng bảo vệ rừng, không khai thác cây tự nhiên tùy tiện hay phá rừng để mở rộng diện tích.",
-    "text_similarity": 0.988
+    "text_similarity": 0.988,
+    "duration_seconds": 21.63,
+    "peak": 0.72421,
+    "rms": 0.09777,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 6e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   },
   {
     "grade": 5,
@@ -1691,6 +2651,14 @@
     "decode_ok": true,
     "long_silence": false,
     "transcript": "Lễ hội Sâm Ngọc Linh là dịp giới thiệu cây sâm, công sức người trồng và sản phẩm có nguồn gốc. Em có thể làm một gian trưng bày nhỏ bằng tranh, ảnh và thẻ thông tin về cây, môi trường sống, bảo tồn và sản phẩm được giới thiệu trong tư liệu. Với trà, cao hoặc sản phẩm khác có thành phần sâm, cần đọc nhãn và nguồn gốc, không tự gán công dụng điều trị. Một đoạn giới thiệu ngắn của em có thể kết bằng lời nhắn: Giữ rừng để giữ cây quý.",
-    "text_similarity": 1.0
+    "text_similarity": 1.0,
+    "duration_seconds": 25.577,
+    "peak": 0.69444,
+    "rms": 0.09284,
+    "start_rms_120ms": 3e-05,
+    "end_rms_120ms": 5e-05,
+    "codec_name": "mp3",
+    "sample_rate": "24000",
+    "channels": 1
   }
 ]

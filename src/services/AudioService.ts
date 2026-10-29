@@ -10,6 +10,7 @@ class AudioService {
   private soundEnabled: boolean = true;
   private effectsVolume: number = 0.8;
   private stampDuckTimer: ReturnType<typeof setTimeout> | null = null;
+  private lastClickAt = 0;
   private currentUtterance: SpeechSynthesisUtterance | null = null;
   private recordedNarration: HTMLAudioElement | null = null;
   private recordedNarrationFailure: (() => void) | null = null;
@@ -84,6 +85,11 @@ class AudioService {
   // Play procedural sound effects using Web Audio API
   public playSfx(type: 'click' | 'correct' | 'wrong' | 'unlock' | 'reward' | 'stamp' | 'victory' | 'transition' | 'map' | 'treasure', delaySeconds = 0) {
     if (!this.soundEnabled) return;
+    if (type === 'click') {
+      const nowMs = Date.now();
+      if (nowMs - this.lastClickAt < 70) return;
+      this.lastClickAt = nowMs;
+    }
     try {
       this.initAudio();
       if (!this.audioCtx) return;

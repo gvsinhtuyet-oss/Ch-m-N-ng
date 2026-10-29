@@ -13,6 +13,7 @@ interface Props {
   station?: Station | null;
   hotspot?: ExplorationHotspot | null;
   compactGame?: boolean;
+  docked?: boolean;
 }
 
 interface ChatMessage {
@@ -40,7 +41,7 @@ const SimpleBold: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false }) => {
+export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false }) => {
   const [open, setOpen] = useState(false);
   const [tapPulse, setTapPulse] = useState(0);
   const [input, setInput] = useState('');
@@ -54,6 +55,10 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const drag = useRef<{pointerId:number;startX:number;startY:number;origin:AssistantPosition} | null>(null);
   const suppressClick = useRef(false);
   const previousPosition = useRef<AssistantPosition|null>(null);
+  useEffect(() => {
+    if (docked) setLauncherPosition(constrainAssistantPosition(
+      {x:viewport.width - 172, y:viewport.height - 130}, viewport.width, viewport.height));
+  }, [docked, viewport.width, viewport.height]);
   useEffect(() => {
     if (compactGame) {
       setLauncherPosition(position => {

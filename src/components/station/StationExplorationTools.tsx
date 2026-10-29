@@ -77,8 +77,8 @@ export function StationExplorationTools({station,onOpenChange}:{station:Station;
   if(!vrOptions.length&&!places.length)return null;
   return <>
     <nav aria-label="Dụng cụ khám phá" className="station-tool-nav">
-      {vrOptions.length>0&&<button type="button" className="station-tool-badge is-vr" aria-haspopup="dialog" aria-expanded={tool==='vr'} onClick={()=>{audioService.playSfx('click');setTool('vr');}}><ToolArtwork kind="vr"/><span>Khám phá 360°</span></button>}
-      {places.length>0&&<button type="button" className="station-tool-badge is-map" aria-haspopup="dialog" aria-expanded={tool==='map'} onClick={()=>{audioService.playSfx('click');setTool('map');}}><ToolArtwork kind="map"/><span>Bản đồ</span></button>}
+      {vrOptions.length>0&&<button type="button" aria-label="Khám phá 360°" className="station-tool-badge is-vr" aria-haspopup="dialog" aria-expanded={tool==='vr'} onClick={()=>{audioService.playSfx('click');setTool('vr');}}><ToolArtwork kind="vr"/><span>Khám phá 360°</span></button>}
+      {places.length>0&&<button type="button" aria-label="Bản đồ" className="station-tool-badge is-map" aria-haspopup="dialog" aria-expanded={tool==='map'} onClick={()=>{audioService.playSfx('click');setTool('map');}}><ToolArtwork kind="map"/><span>Bản đồ</span></button>}
     </nav>
     {tool&&<div className="station-tool-backdrop" data-testid="exploration-backdrop" onClick={event=>{if(event.target===event.currentTarget)close();}}>
       <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="exploration-tool-title" className="station-tool-dialog">

@@ -62,3 +62,13 @@
  .station-stage1-compact .stage-one-map-content,.station-stage1-compact .stage-one-map-surface{height:auto;min-height:100%}
  .station-stage1-compact .stage1-visual-column>.relative{min-height:220px}
 }
+.station-immersive-root.station-viewport:fullscreen>.station-compact-header,.station-immersive-root.station-viewport.station-immersive-active>.station-compact-header{display:flex!important}
+.station-immersive-root.station-viewport:fullscreen .station-lesson-panel,.station-immersive-root.station-viewport.station-immersive-active .station-lesson-panel{height:auto!important;flex:1 1 0!important}
+.station-compact-header .station-header-map .station-tool-nav{flex-direction:row;align-items:center}
+.station-compact-header .station-header-map .exploration-tool-art{width:23px;height:22px;flex:none}
+.station-compact-header .station-header-map .station-tool-badge{width:48px;height:36px;gap:0;box-shadow:0 2px 0 #ad7a36;flex:none;overflow:hidden}
+.station-compact-header .station-header-map .station-tool-badge>span{font-size:8px;line-height:1}
+@media(max-width:900px){
+ .station-stage1-compact .station-compact-header .station-header-map{max-width:none;width:65px}
+ .station-compact-header .station-header-map .station-tool-badge{width:31px;min-width:31px!important;min-height:36px!important}
+}

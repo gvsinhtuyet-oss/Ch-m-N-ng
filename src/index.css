@@ -276,21 +276,21 @@
 
 
 /* Compact, single-row navigation shared by all four station stages. */
-.station-immersive-root .station-compact-header{display:flex;align-items:center;gap:7px;flex-shrink:0;width:100%;min-height:46px;padding:2px 9px;background:rgba(255,255,255,.96);border-bottom:1px solid #e2e8f0;border-radius:0;box-shadow:none}
-.station-compact-back,.station-compact-action{display:grid;place-items:center;flex-shrink:0;width:30px;height:34px;border:0;background:transparent;color:#334155;border-radius:6px}
+.station-immersive-root .station-compact-header{display:flex;align-items:center;gap:7px;flex-shrink:0;width:100%;min-height:46px;padding:2px 9px;background:linear-gradient(180deg,#258bff 0%,#0864d9 35%,#0646a9 100%);border:1px solid #77b9ff;border-radius:12px;box-shadow:inset 0 1px 0 #ffffff80,inset 0 -2px 0 #003b91,0 3px 8px #063b7330}
+.station-compact-back,.station-compact-action{display:grid;place-items:center;flex-shrink:0;width:30px;height:34px;border:0;background:transparent;color:#fff;border-radius:6px}
 .station-compact-back svg,.station-compact-action svg{width:17px;height:17px}
-.station-compact-title{min-width:0;flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:clamp(12px,1.35vw,19px);font-weight:900;line-height:1.2;color:#111827}
+.station-compact-title{min-width:0;flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:clamp(12px,1.35vw,19px);font-weight:900;line-height:1.2;color:#fff}
 .station-compact-actions{display:flex;align-items:center;flex-shrink:0;gap:0}
 .station-compact-actions button:disabled{opacity:.4}
 .station-compact-header .station-stage-tabs,.station-stage1-compact .station-compact-header .station-stage-tabs{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));flex:0 0 auto;width:clamp(205px,31vw,325px);min-width:0;gap:2px;overflow:visible!important}
-.station-compact-header .station-stage-tab,.station-stage1-compact .station-compact-header .station-stage-tab{display:flex!important;position:relative;flex-direction:column;align-items:center;justify-content:center;min-width:0;min-height:40px;height:40px;padding:2px 1px!important;border:0!important;border-bottom:2px solid transparent!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#64748b;text-align:center;gap:2px}
+.station-compact-header .station-stage-tab,.station-stage1-compact .station-compact-header .station-stage-tab{display:flex!important;position:relative;flex-direction:column;align-items:center;justify-content:center;min-width:0;min-height:40px;height:40px;padding:2px 1px!important;border:0!important;border-bottom:2px solid transparent!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:#e0efff;text-align:center;gap:2px}
 .station-compact-header .station-stage-tab-title{display:flex;justify-content:center;align-items:center;gap:0;font-size:0}
 .station-compact-header .station-stage-tab-title svg,.station-stage1-compact .station-compact-header .station-stage-tab-title svg{width:17px;height:17px}
 .station-compact-header .station-stage-tab-title .station-stage-complete-mark{position:absolute;top:1px;right:15%;width:10px;height:10px;color:#16a34a}
 .station-compact-header .station-stage-tab-name,.station-stage1-compact .station-compact-header .station-stage-tab-name{display:block!important;font-size:10px;font-weight:500;line-height:1.1;white-space:nowrap}
-.station-compact-header .station-stage-tab.is-active,.station-stage1-compact .station-compact-header .station-stage-tab.is-active{color:#c2410c!important;border-bottom-color:#f97316!important;background:transparent!important;box-shadow:none!important}
+.station-compact-header .station-stage-tab.is-active,.station-stage1-compact .station-compact-header .station-stage-tab.is-active{color:#ffdf66!important;border-bottom-color:#ffcc32!important;background:transparent!important;box-shadow:none!important}
 .station-compact-header .station-stage-tab.is-active .station-stage-tab-name{font-weight:900}
-.station-compact-header .station-stage-tab.is-complete:not(.is-active){color:#15803d!important}
+.station-compact-header .station-stage-tab.is-complete:not(.is-active){color:#b9f8d9!important}
 .station-compact-header .station-stage-tab:disabled{opacity:.55}
 .station-compact-header .station-header-map{flex-shrink:0;max-width:120px}
 .station-compact-header .station-header-map .station-tool-badge{min-height:32px}

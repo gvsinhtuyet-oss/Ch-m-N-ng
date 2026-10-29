@@ -9,6 +9,7 @@ class AudioService {
   private effectsGain: GainNode | null = null;
   private soundEnabled: boolean = true;
   private effectsVolume: number = 0.8;
+  private stampDuckTimer: ReturnType<typeof setTimeout> | null = null;
   private currentUtterance: SpeechSynthesisUtterance | null = null;
   private recordedNarration: HTMLAudioElement | null = null;
   private recordedNarrationFailure: (() => void) | null = null;
@@ -81,7 +82,7 @@ class AudioService {
   }
 
   // Play procedural sound effects using Web Audio API
-  public playSfx(type: 'click' | 'correct' | 'wrong' | 'unlock' | 'reward' | 'stamp' | 'victory' | 'transition' | 'map' | 'treasure') {
+  public playSfx(type: 'click' | 'correct' | 'wrong' | 'unlock' | 'reward' | 'stamp' | 'victory' | 'transition' | 'map' | 'treasure', delaySeconds = 0) {
     if (!this.soundEnabled) return;
     try {
       this.initAudio();
@@ -90,7 +91,7 @@ class AudioService {
         this.audioCtx.resume();
       }
 
-      const now = this.audioCtx.currentTime;
+      const now = this.audioCtx.currentTime + Math.max(0, Math.min(1, delaySeconds));
 
       if (type === 'click') {
         const osc = this.audioCtx.createOscillator();
@@ -157,13 +158,30 @@ class AudioService {
           osc.stop(now + i * 0.09 + 0.25);
         });
       } else if (type === 'stamp') {
-        // Deep satisfying thud + resonance
+        // A solid low impact plus a crisp midrange knock audible on phone speakers.
+        backgroundMusic.setForegroundSource('journey-stamp', true);
+        if (this.stampDuckTimer) clearTimeout(this.stampDuckTimer);
+        this.stampDuckTimer = setTimeout(() => {
+          backgroundMusic.setForegroundSource('journey-stamp', false);
+          this.stampDuckTimer = null;
+        }, (Math.max(0, Math.min(1, delaySeconds)) + .65) * 1000);
+        const knock = this.audioCtx.createOscillator();
+        const knockGain = this.audioCtx.createGain();
+        knock.type = 'triangle';
+        knock.frequency.setValueAtTime(720, now);
+        knock.frequency.exponentialRampToValueAtTime(190, now + .065);
+        knockGain.gain.setValueAtTime(.3, now);
+        knockGain.gain.exponentialRampToValueAtTime(.001, now + .12);
+        knock.connect(knockGain);
+        knockGain.connect(this.effectsGain || this.audioCtx.destination);
+        knock.start(now);
+        knock.stop(now + .13);
         const osc = this.audioCtx.createOscillator();
         const gain = this.audioCtx.createGain();
         osc.type = 'sine';
         osc.frequency.setValueAtTime(140, now);
         osc.frequency.exponentialRampToValueAtTime(50, now + 0.28);
-        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.setValueAtTime(0.55, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
         osc.connect(gain);
         gain.connect(this.effectsGain || this.audioCtx.destination);

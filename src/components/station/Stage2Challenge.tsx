@@ -201,7 +201,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   // Approved V12: real Stage 2 completion transitions to the app's Stage 3.
   if (station.id === 'g3-station-2') {
     if (new URLSearchParams(window.location.search).get('stage2-engine') === 'shared-v1') {
-      return <SharedStage2 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} config={hoangDieuConfig}/>;
+      return <SharedStage2 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} config={hoangDieuConfig} embedded/>;
     }
     return <HoangDieuPhanChauTrinhV18 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} />;
   }
@@ -213,7 +213,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
 
   // Teacher-approved React games are now the default for these three stations.
   if (/^g3-station-[3-5]$/.test(station.id)) {
-    return <SharedStage2 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} config={grade3SharedConfigs[station.id]}/>;
+    return <SharedStage2 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} config={grade3SharedConfigs[station.id]} embedded/>;
   }
 
   // The reviewed grade 4–5 games are active only for their exact station IDs.

@@ -28,9 +28,10 @@ export const RewardClaimModal: React.FC<Props> = ({
   if (!reward) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in">
-      <div className="w-full max-w-md max-h-[90dvh] overflow-y-auto bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-amber-300 text-center relative space-y-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#2b2018]/70 backdrop-blur-sm p-4 animate-fade-in">
+      <div className="w-full max-w-md max-h-[90dvh] overflow-y-auto bg-gradient-to-b from-[#fffaf0] via-[#fff0d3] to-[#ffe0a1] rounded-3xl p-5 sm:p-7 shadow-[0_25px_70px_rgba(66,35,7,.55)] border-[3px] border-amber-400 text-center relative space-y-6">
         {/* Ambient Top Glow */}
+        <div className="pointer-events-none absolute inset-0 opacity-[0.13]" style={{backgroundImage:"url(/images/chamdanang-journey-orange.webp)",backgroundPosition:"center",backgroundSize:"cover"}} />
         <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-48 h-48 bg-gradient-to-b from-amber-400/30 to-transparent rounded-full blur-2xl pointer-events-none" />
 
         {/* Stage Badge */}

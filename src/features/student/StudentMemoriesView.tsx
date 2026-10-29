@@ -13,7 +13,7 @@ export const StudentMemoriesView: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto px-3 sm:px-6 py-8 space-y-8">
       {/* Header */}
-      <div className="bg-gradient-to-r from-rose-500 via-pink-600 to-amber-500 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
+      <div className="bg-gradient-to-r from-rose-500 via-pink-600 to-amber-500 text-white rounded-2xl p-4 sm:p-6 shadow-xl">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center">
             <Heart className="w-6 h-6 fill-white" />
@@ -22,7 +22,7 @@ export const StudentMemoriesView: React.FC = () => {
             KỈ NIỆM HÀNH TRÌNH
           </span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-black">Nhật Ký Cảm Xúc & Kỉ Niệm Quê Hương</h1>
+        <h1 className="text-xl sm:text-2xl font-black">Nhật Ký Cảm Xúc & Kỉ Niệm Quê Hương</h1>
         <p className="text-xs sm:text-sm text-rose-100 mt-1 max-w-xl">
           Nơi lưu giữ những vật phẩm danh giá và những lời hứa hành động đẹp mà em đã gửi gắm sau mỗi chuyến thám hiểm.
         </p>
@@ -35,35 +35,30 @@ export const StudentMemoriesView: React.FC = () => {
           <span>Kho Báu Kỉ Niệm Đã Thu Thập</span>
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {stations.map((st) => {
+        <div className="space-y-3">
+          {stations.map((st, stationIndex) => {
             const prog = progressService.getStationProgress(studentId, st.id);
-            return st.rewards.map((rw) => {
-              const isUnlocked = prog.rewardsCollected.includes(rw.id);
-
-              return (
-                <div
-                  key={rw.id}
-                  className={`p-4 rounded-2xl border transition flex items-center gap-3.5 ${
-                    isUnlocked
-                      ? 'bg-amber-50/60 border-amber-200 text-slate-900 shadow-xs'
-                      : 'bg-slate-50 border-slate-200/60 opacity-40'
-                  }`}
-                >
-                  <RewardBadge template={rw.template} size="sm" muted={!isUnlocked} />
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] font-bold uppercase text-amber-800">
-                        {st.titleVi.slice(0, 16)}...
-                      </span>
-                      <span className="text-[10px] text-slate-400">• Chặng {rw.stage}</span>
-                    </div>
-                    <h4 className="font-extrabold text-xs text-slate-900">{rw.nameVi}</h4>
-                    <p className="text-[11px] text-slate-500 mt-0.5">{rw.descriptionVi}</p>
-                  </div>
+            return (
+              <section key={st.id} className="rounded-2xl border border-amber-300 bg-amber-50/90 p-2.5 sm:p-4">
+                <h3 className="mb-2 text-xs font-black text-amber-950 sm:text-sm">
+                  Trạm {stationIndex + 1} · {st.titleVi}
+                </h3>
+                <div className="grid grid-cols-4 gap-1.5 sm:gap-3">
+                  {st.rewards.map(rw => {
+                    const collected = prog.rewardsCollected.includes(rw.id);
+                    return (
+                      <div key={rw.id} title={rw.nameVi} className={`min-w-0 rounded-xl border p-1.5 text-center ${collected ? 'border-amber-400 bg-white' : 'border-amber-200 bg-white/70 opacity-65'}`}>
+                        <div className="mx-auto flex h-12 items-center justify-center sm:h-16">
+                          <RewardBadge template={rw.template} size="sm" muted={!collected} />
+                        </div>
+                        <p className="line-clamp-2 text-[10px] font-bold leading-tight text-amber-950 sm:text-xs">{rw.nameVi}</p>
+                        <span className="text-[9px] text-slate-600">{collected ? '✓ Đã nhận' : 'Chưa nhận'}</span>
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            });
+              </section>
+            );
           })}
         </div>
       </div>

@@ -23,7 +23,8 @@ interface Props {
 }
 
 export const StationView: React.FC<Props> = ({ station, onBack }) => {
-  const { currentUser, currentStage: requestedStage, setCurrentStage } = useApp();
+  const { currentUser, role, currentStage: requestedStage, setCurrentStage } = useApp();
+  const isReadOnly = role !== 'student';
   const studentId = currentUser?.id || 'guest';
   const [, refreshProgress] = useState(0);
   useEffect(() => {
@@ -57,8 +58,8 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
 
   // If completed once or stamp received, student can freely navigate stages
   const [sessionUnlockedStage,setSessionUnlockedStage]=useState(()=>unlockedStage(progress));
-  const highestAccessibleStage=Math.max(sessionUnlockedStage,unlockedStage(progress));
-  const currentStage=visibleStage(requestedStage,progress,sessionUnlockedStage);
+  const highestAccessibleStage=Math.max(sessionUnlockedStage,unlockedStage(progress,isReadOnly));
+  const currentStage=visibleStage(requestedStage,progress,highestAccessibleStage);
   // The lesson panel can retain a scroll position from Stage 1. Start the new
   // grade 2, 4 and 5 games at the top so the artwork title and controls are visible.
   useLayoutEffect(() => {
@@ -77,7 +78,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const finishStage=(stage:1|2|3)=>{
     if(stage>highestAccessibleStage)return;
     const next=(stage+1) as 2|3|4;
-    setSessionUnlockedStage(highest=>Math.max(highest,next));
+    if (!isReadOnly) setSessionUnlockedStage(highest=>Math.max(highest,next));
     setCurrentStage(next);
   };
 
@@ -102,7 +103,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
     <nav aria-label={label} className="station-stage-tabs">
       {stages.map(st => {
         const active = currentStage === st.num;
-        const done = isUnlockedAllStages || st.num < highestAccessibleStage;
+        const done = !isReadOnly && (isUnlockedAllStages || st.num < highestAccessibleStage);
         const clickable = st.num <= highestAccessibleStage;
         const status = done ? 'Đã hoàn thành' : clickable ? 'Chưa hoàn thành' : 'Chưa mở';
         return <button key={st.num} type="button" disabled={!clickable}

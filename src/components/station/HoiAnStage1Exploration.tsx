@@ -82,7 +82,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   ]);
   const explored = completedHotspotIds.has(hotspot.id);
   const remainingHotspotCount = station.hotspots.filter(item => !completedHotspotIds.has(item.id)).length;
-  const freeReview = progress.stage1Completed || progress.stationCompleted || progress.stampReceived;
+  const freeReview = readOnly || progress.stage1Completed || progress.stationCompleted || progress.stampReceived;
   const firstIncompleteIndex = station.hotspots.findIndex(item => !completedHotspotIds.has(item.id));
   const activeUnlockIndex = firstIncompleteIndex === -1 ? station.hotspots.length - 1 : firstIncompleteIndex;
   const canAccessHotspot = (itemIndex: number) =>

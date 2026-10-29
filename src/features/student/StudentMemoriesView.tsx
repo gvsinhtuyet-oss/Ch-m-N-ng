@@ -37,10 +37,16 @@ export const StudentMemoriesView: React.FC = () => {
         <div className="space-y-1.5">
           {stations.map((st, stationIndex) => {
             const prog = progressService.getStationProgress(studentId, st.id);
+            let journeyRating = 0;
+            try {
+              const value = JSON.parse(localStorage.getItem(`cham_danang_journey_rating_v2:${studentId}:${st.id}`) || 'null');
+              if (Number.isInteger(value?.stars) && value.stars >= 1 && value.stars <= 5) journeyRating = value.stars;
+            } catch { /* No local rating available */ }
             return (
               <section key={st.id} className="rounded-xl border border-amber-300 bg-amber-50/90 px-2 py-1.5 sm:px-3 sm:py-2">
                 <h3 className="mb-1 text-xs font-black text-amber-950 sm:text-sm">
                   Trạm {stationIndex + 1} · {st.titleVi}
+                  {journeyRating > 0 && <span className="ml-2 whitespace-nowrap text-amber-600" aria-label={`${journeyRating} trên 5 sao`}>{'★'.repeat(journeyRating)}{'☆'.repeat(5-journeyRating)}</span>}
                 </h3>
                 <div className="grid grid-cols-3 gap-1 sm:gap-2">
                   {st.rewards.map(rw => {

@@ -35,35 +35,30 @@ export const StudentMemoriesView: React.FC = () => {
           <span>Kho Báu Kỉ Niệm Đã Thu Thập</span>
         </h2>
 
-        <div className="grid grid-cols-1 gap-3">
-          {stations.map((st) => {
+        <div className="space-y-3">
+          {stations.map((st, stationIndex) => {
             const prog = progressService.getStationProgress(studentId, st.id);
-            return st.rewards.map((rw) => {
-              const isUnlocked = prog.rewardsCollected.includes(rw.id);
-
-              return (
-                <div
-                  key={rw.id}
-                  className={`p-4 rounded-2xl border transition flex items-center gap-3.5 ${
-                    isUnlocked
-                      ? 'bg-amber-50/60 border-amber-200 text-slate-900 shadow-xs'
-                      : 'bg-slate-50 border-slate-200/60 opacity-40'
-                  }`}
-                >
-                  <RewardBadge template={rw.template} size="sm" muted={!isUnlocked} />
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[10px] font-bold uppercase text-amber-800">
-                        {st.titleVi.slice(0, 16)}...
-                      </span>
-                      <span className="text-[10px] text-slate-400">• Chặng {rw.stage}</span>
-                    </div>
-                    <h4 className="font-extrabold text-xs text-slate-900">{rw.nameVi}</h4>
-                    <p className="text-[11px] text-slate-500 mt-0.5">{rw.descriptionVi}</p>
-                  </div>
+            return (
+              <section key={st.id} className="rounded-2xl border border-amber-300 bg-amber-50/90 p-2.5 sm:p-4">
+                <h3 className="mb-2 text-xs font-black text-amber-950 sm:text-sm">
+                  Trạm {stationIndex + 1} · {st.titleVi}
+                </h3>
+                <div className="grid grid-cols-4 gap-1.5 sm:gap-3">
+                  {st.rewards.map(rw => {
+                    const collected = prog.rewardsCollected.includes(rw.id);
+                    return (
+                      <div key={rw.id} title={rw.nameVi} className={`min-w-0 rounded-xl border p-1.5 text-center ${collected ? 'border-amber-400 bg-white' : 'border-amber-200 bg-white/70 opacity-65'}`}>
+                        <div className="mx-auto flex h-12 items-center justify-center sm:h-16">
+                          <RewardBadge template={rw.template} size="sm" muted={!collected} />
+                        </div>
+                        <p className="line-clamp-2 text-[10px] font-bold leading-tight text-amber-950 sm:text-xs">{rw.nameVi}</p>
+                        <span className="text-[9px] text-slate-600">{collected ? '✓ Đã nhận' : 'Chưa nhận'}</span>
+                      </div>
+                    );
+                  })}
                 </div>
-              );
-            });
+              </section>
+            );
           })}
         </div>
       </div>

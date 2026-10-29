@@ -1,0 +1,698 @@
+[
+  {
+    "id": "phi-vat-the",
+    "term": "di sản văn hóa phi vật thể",
+    "aliases": [
+      "di sản phi vật thể"
+    ],
+    "answer": "Di sản văn hóa phi vật thể là những tập quán, cách diễn xướng, tri thức và kỹ năng được cộng đồng gìn giữ, truyền lại qua các thế hệ.",
+    "teachingExample": "Có thể phân biệt chiếc chiêng là đồ vật, còn kỹ năng diễn tấu và tập quán sinh hoạt gắn với chiêng là giá trị sống được truyền lại.",
+    "followUp": "Em biết người thân đã dạy lại cho mình trò chơi hay kỹ năng nào?",
+    "source": {
+      "label": "UNESCO – Di sản văn hóa phi vật thể",
+      "url": "https://ich.unesco.org/en/what-is-intangible-heritage-00003"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "truyen-nghe",
+    "term": "truyền nghề",
+    "aliases": [
+      "truyền dạy nghề"
+    ],
+    "answer": "Truyền nghề là người biết nghề hướng dẫn thế hệ sau thực hành kỹ năng, để nghề tiếp tục tồn tại trong đời sống.",
+    "teachingExample": "Một người thợ hướng dẫn học trò đan đúng một nan tre là ví dụ dễ hình dung về truyền nghề.",
+    "followUp": "Nếu chỉ giữ sản phẩm mà không còn ai biết làm, điều gì sẽ xảy ra?",
+    "source": {
+      "label": "UNESCO – Di sản văn hóa phi vật thể",
+      "url": "https://ich.unesco.org/en/what-is-intangible-heritage-00003"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "van-hoa-song",
+    "term": "di sản sống",
+    "aliases": [
+      "văn hóa sống"
+    ],
+    "answer": "Di sản sống tiếp tục được cộng đồng thực hành và trao truyền, có thể thay đổi phù hợp với đời sống mà vẫn giữ những giá trị được cộng đồng coi trọng.",
+    "teachingExample": "Một trò chơi dân gian vẫn được trẻ em chơi hôm nay có thể giúp các em hình dung việc thực hành truyền thống.",
+    "followUp": "Em có thể cùng gia đình thực hành nét đẹp nào?",
+    "source": {
+      "label": "UNESCO – Di sản văn hóa phi vật thể",
+      "url": "https://ich.unesco.org/en/what-is-intangible-heritage-00003"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "giao-luu",
+    "term": "giao lưu văn hóa",
+    "aliases": [
+      "giao thoa văn hóa"
+    ],
+    "answer": "Giao lưu văn hóa là quá trình các cộng đồng tiếp xúc, học hỏi và ảnh hưởng lẫn nhau. Phố cổ Hội An thể hiện sự kết hợp của nhiều ảnh hưởng văn hóa trong kiến trúc và đời sống.",
+    "teachingExample": "Cho lớp quan sát hai chi tiết kiến trúc rồi nhận xét điểm giống và khác, tránh kết luận chỉ từ hình dáng.",
+    "followUp": "Vì sao nơi có nhiều người buôn bán lại có sự gặp gỡ của các nền văn hóa?",
+    "source": {
+      "label": "UNESCO – Đô thị cổ Hội An",
+      "url": "https://whc.unesco.org/en/list/948/"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "thuong-cang",
+    "term": "thương cảng",
+    "aliases": [
+      "cảng buôn"
+    ],
+    "answer": "Thương cảng là nơi tàu thuyền và hoạt động trao đổi hàng hóa tập trung. Hội An từng là một thương cảng quốc tế phát triển qua nhiều thế kỷ.",
+    "teachingExample": "Có thể dùng sơ đồ thuyền → bến → người mua bán để giải thích cho học sinh.",
+    "followUp": "Hàng hóa đi từ thuyền vào phố bằng cách nào?",
+    "source": {
+      "label": "UNESCO – Đô thị cổ Hội An",
+      "url": "https://whc.unesco.org/en/list/948/"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "champa",
+    "term": "Chăm-pa",
+    "aliases": [
+      "Champa",
+      "vương quốc Chăm-pa"
+    ],
+    "answer": "Chăm-pa là tên một vương quốc lịch sử gắn với nhiều dấu tích văn hóa ở miền Trung Việt Nam. Khu đền tháp Mỹ Sơn là một minh chứng quan trọng cho lịch sử và nghệ thuật ấy.",
+    "teachingExample": "Dùng trục thời gian để phân biệt vương quốc trong lịch sử với cộng đồng người Chăm ngày nay.",
+    "followUp": "Một công trình cổ giúp chúng ta biết điều gì về người xưa?",
+    "source": {
+      "label": "UNESCO – Khu đền tháp Mỹ Sơn",
+      "url": "https://whc.unesco.org/en/list/949/"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "gach-nung",
+    "term": "gạch nung ở Mỹ Sơn",
+    "aliases": [
+      "vật liệu tháp Mỹ Sơn"
+    ],
+    "answer": "Nhiều công trình tại Mỹ Sơn được xây bằng gạch nung, kết hợp những thành phần đá và trang trí điêu khắc. Không nên tự khẳng định một công thức kết dính duy nhất khi chưa có tư liệu nghiên cứu cụ thể.",
+    "teachingExample": "Cho học sinh nhận diện gạch và đá trên ảnh, phân biệt điều quan sát thấy với điều cần nghiên cứu.",
+    "followUp": "Chi tiết nào trong ảnh giúp em nhận ra vật liệu?",
+    "source": {
+      "label": "UNESCO – Khu đền tháp Mỹ Sơn",
+      "url": "https://whc.unesco.org/en/list/949/"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "sinh-quyen",
+    "term": "khu dự trữ sinh quyển",
+    "aliases": [
+      "dự trữ sinh quyển"
+    ],
+    "answer": "Khu dự trữ sinh quyển là không gian gắn bảo tồn thiên nhiên với đời sống cộng đồng và phát triển phù hợp. Cù Lao Chàm–Hội An kết nối các giá trị biển đảo, cửa sông và văn hóa.",
+    "teachingExample": "Vẽ ba hình liên kết: thiên nhiên, con người, sinh kế để giải thích mục tiêu cùng tồn tại.",
+    "followUp": "Người dân có thể sinh sống mà vẫn giữ gìn thiên nhiên như thế nào?",
+    "source": {
+      "label": "UNESCO – Cù Lao Chàm–Hội An",
+      "url": "https://www.unesco.org/en/mab/cu-lao-cham-hoi"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "cu-lao-cham",
+    "term": "Cù Lao Chàm–Hội An được UNESCO ghi nhận",
+    "aliases": [
+      "Cù Lao Chàm được UNESCO công nhận năm nào"
+    ],
+    "answer": "Cù Lao Chàm–Hội An được UNESCO ghi nhận trong mạng lưới khu dự trữ sinh quyển năm 2009. Đây là chương trình khác với Danh mục Di sản thế giới.",
+    "teachingExample": "Đặt thẻ năm 1999 của Hội An và năm 2009 của khu sinh quyển ở hai hàng danh hiệu khác nhau.",
+    "followUp": "Hai danh hiệu đang bảo vệ những nhóm giá trị nào?",
+    "source": {
+      "label": "UNESCO – Cù Lao Chàm–Hội An",
+      "url": "https://www.unesco.org/en/mab/cu-lao-cham-hoi"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "san-ho",
+    "term": "san hô",
+    "aliases": [
+      "san hô là cây",
+      "san hô là động vật hay thực vật"
+    ],
+    "answer": "San hô là động vật, dù hình dáng có thể giống cành cây. Nhiều loài sống thành tập đoàn gồm các cá thể nhỏ gọi là polyp.",
+    "teachingExample": "Cho học sinh nhìn ảnh và nói: hình dáng giống cây không có nghĩa đó là thực vật.",
+    "followUp": "Vì sao chỉ nhìn hình dáng đôi khi chưa đủ để phân loại sinh vật?",
+    "source": {
+      "label": "NOAA – San hô là động vật",
+      "url": "https://oceanservice.noaa.gov/facts/coral.html"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "tay-trang",
+    "term": "san hô tẩy trắng",
+    "aliases": [
+      "tẩy trắng san hô"
+    ],
+    "answer": "Khi bị stress do điều kiện môi trường thay đổi, san hô có thể mất tảo cộng sinh và chuyển trắng. San hô tẩy trắng chưa nhất thiết đã chết, nhưng dễ bị tổn thương hơn.",
+    "teachingExample": "Dùng hai ảnh so sánh màu, nhấn mạnh màu trắng là dấu hiệu cần quan tâm chứ không kết luận ngay đã chết.",
+    "followUp": "Vì sao cần bảo vệ môi trường sống của san hô?",
+    "source": {
+      "label": "NOAA – San hô là động vật",
+      "url": "https://oceanservice.noaa.gov/facts/coral.html"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "ran-san-ho",
+    "term": "rạn san hô",
+    "aliases": [
+      "hệ sinh thái rạn san hô"
+    ],
+    "answer": "Rạn san hô tạo nơi trú ẩn, kiếm ăn và sinh sản cho nhiều sinh vật biển. Vì thế, bảo vệ rạn không chỉ là giữ san hô mà còn giữ môi trường sống của nhiều loài.",
+    "teachingExample": "Ví rạn như một khu dân cư nhiều ngóc ngách; đây là cách so sánh để dễ hiểu, không phải tên khoa học.",
+    "followUp": "Nếu nơi trú ẩn bị phá hủy, cá nhỏ gặp khó khăn gì?",
+    "source": {
+      "label": "NOAA – Hệ sinh thái rạn san hô",
+      "url": "https://www.noaa.gov/education/resource-collections/marine-life/coral-reef-ecosystems"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "cong-sinh",
+    "term": "cộng sinh",
+    "aliases": [
+      "tảo cộng sinh"
+    ],
+    "answer": "Cộng sinh là sự sống gắn bó giữa các sinh vật khác loài. Trong nhiều loài san hô, tảo sống trong mô san hô và mối quan hệ này đem lại lợi ích cho cả hai.",
+    "teachingExample": "Dùng sơ đồ hai chiều: san hô tạo chỗ ở, tảo tạo sản phẩm quang hợp cung cấp cho san hô.",
+    "followUp": "Hai bên nhận được lợi ích gì?",
+    "source": {
+      "label": "NOAA – San hô là động vật",
+      "url": "https://oceanservice.noaa.gov/facts/coral.html"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "vong-nuoc",
+    "term": "vòng tuần hoàn nước",
+    "aliases": [
+      "chu trình nước"
+    ],
+    "answer": "Nước liên tục di chuyển giữa không khí, mặt đất và dưới lòng đất. Nước có thể bốc hơi, ngưng tụ, rơi xuống thành mưa rồi chảy hoặc thấm qua đất.",
+    "teachingExample": "Cho học sinh xếp thẻ mặt trời, hơi nước, mây, mưa và sông thành một sơ đồ có mũi tên.",
+    "followUp": "Nước mưa có thể đi những đâu sau khi chạm đất?",
+    "source": {
+      "label": "USGS – Vòng tuần hoàn nước",
+      "url": "https://www.usgs.gov/water-science-school/water-cycle"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "boc-hoi",
+    "term": "bốc hơi",
+    "aliases": [
+      "sự bay hơi của nước"
+    ],
+    "answer": "Bốc hơi là khi nước lỏng chuyển thành hơi nước. Năng lượng từ mặt trời góp phần làm nước trên bề mặt đi vào không khí.",
+    "teachingExample": "Vũng nước nhỏ dần sau trời nắng là ví dụ quan sát; không cần đun nước trong lớp để minh họa.",
+    "followUp": "Nước có biến mất hoàn toàn khi vũng nước khô không?",
+    "source": {
+      "label": "USGS – Vòng tuần hoàn nước",
+      "url": "https://www.usgs.gov/water-science-school/water-cycle"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "ngung-tu",
+    "term": "ngưng tụ",
+    "aliases": [
+      "sự ngưng tụ"
+    ],
+    "answer": "Ngưng tụ là khi hơi nước chuyển thành nước lỏng. Đây là một quá trình quan trọng trong việc hình thành mây và vòng tuần hoàn nước.",
+    "teachingExample": "Giọt nước phía ngoài cốc lạnh là ví dụ gần gũi để học sinh phân biệt hơi nước và giọt nước.",
+    "followUp": "Giọt nước ngoài cốc đến từ đâu?",
+    "source": {
+      "label": "USGS – Vòng tuần hoàn nước",
+      "url": "https://www.usgs.gov/water-science-school/water-cycle"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "nuoc-ngam",
+    "term": "nước ngầm",
+    "aliases": [
+      "dòng nước ngầm"
+    ],
+    "answer": "Nước ngầm là nước nằm dưới bề mặt đất. Một phần nước từ mưa và mặt đất thấm xuống, bổ sung cho nguồn nước này.",
+    "teachingExample": "Vẽ mũi tên từ mưa xuyên qua lớp đất thay vì mô tả mọi nước ngầm như một dòng sông lớn dưới đất.",
+    "followUp": "Vì sao làm bẩn mặt đất cũng có thể ảnh hưởng nước bên dưới?",
+    "source": {
+      "label": "USGS – Vòng tuần hoàn nước",
+      "url": "https://www.usgs.gov/water-science-school/water-cycle"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "cua-song",
+    "term": "cửa sông",
+    "aliases": [
+      "vùng cửa sông"
+    ],
+    "answer": "Cửa sông là nơi dòng sông đổ ra biển hoặc một vùng nước lớn hơn. Ở vùng cửa sông ven biển, nước sông và nước biển gặp nhau.",
+    "teachingExample": "Dùng sơ đồ dòng sông nối với biển; có thể liên hệ Cửa Đại trong bài Thu Bồn.",
+    "followUp": "Vùng cửa sông nối những môi trường nào?",
+    "source": {
+      "label": "USGS – Thuật ngữ vùng bờ",
+      "url": "https://www.usgs.gov/glossary/coasts-glossary"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "xoi-mon",
+    "term": "xói mòn",
+    "aliases": [
+      "xói lở"
+    ],
+    "answer": "Xói mòn là quá trình nước, gió hoặc các tác động bề mặt lấy vật liệu đất đá khỏi một nơi và vận chuyển đi nơi khác.",
+    "teachingExample": "Dùng tranh bờ đất trước và sau mưa để phân biệt mất đất với đất được bồi thêm.",
+    "followUp": "Vì sao bờ đất trống dễ thay đổi sau mưa lớn?",
+    "source": {
+      "label": "USGS – Thuật ngữ vùng bờ",
+      "url": "https://www.usgs.gov/glossary/coasts-glossary"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "boi-tu",
+    "term": "bồi tụ",
+    "aliases": [
+      "bồi lắng"
+    ],
+    "answer": "Bồi tụ là sự tích lại của vật liệu đã được vận chuyển đến. Có thể hiểu đơn giản: xói mòn lấy vật liệu đi, bồi tụ để vật liệu lắng lại ở nơi khác.",
+    "teachingExample": "Đặt hai thẻ “mang đi” và “lắng lại” cạnh sơ đồ dòng nước.",
+    "followUp": "Một dòng sông có thể vừa xói ở nơi này vừa bồi ở nơi khác không?",
+    "source": {
+      "label": "USGS – Thuật ngữ vùng bờ",
+      "url": "https://www.usgs.gov/glossary/coasts-glossary"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "ma-nhai-mo-rong",
+    "term": "di sản tư liệu ma nhai",
+    "aliases": [
+      "ma nhai được ghi danh năm nào"
+    ],
+    "answer": "Ma nhai Ngũ Hành Sơn là những văn bản khắc trên đá mang giá trị tư liệu lịch sử, văn hóa. Năm 2022, di sản được ghi danh ở cấp khu vực châu Á–Thái Bình Dương trong Chương trình Ký ức thế giới.",
+    "teachingExample": "Phân biệt ba cách gọi: di tích, Di sản thế giới và di sản tư liệu; chúng không phải cùng một danh hiệu.",
+    "followUp": "Vì sao chữ khắc trên đá cũng là một loại tư liệu?",
+    "source": {
+      "label": "Cục Di sản văn hóa – Bia ma nhai Ngũ Hành Sơn",
+      "url": "https://dsvh.gov.vn/bia-ma-nhai-tai-danh-thang-ngu-hanh-son-da-nang-22113"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "han-nom",
+    "term": "chữ Hán và chữ Nôm trong ma nhai",
+    "aliases": [
+      "Hán Nôm ma nhai"
+    ],
+    "answer": "Ma nhai Ngũ Hành Sơn có văn bản bằng chữ Hán và chữ Nôm. Các văn bản lưu lại nhiều thể loại và dấu ấn của những người từng đến danh thắng.",
+    "teachingExample": "Cho lớp quan sát ảnh văn khắc và nhận biết đây là chữ viết; việc đọc nghĩa cần bản dịch đáng tin cậy.",
+    "followUp": "Nếu không đọc được chữ cổ, em có thể tìm hiểu bằng cách nào?",
+    "source": {
+      "label": "Cục Di sản văn hóa – Bia ma nhai Ngũ Hành Sơn",
+      "url": "https://dsvh.gov.vn/bia-ma-nhai-tai-danh-thang-ngu-hanh-son-da-nang-22113"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "dienhai-mo-rong",
+    "term": "lịch sử xây Thành Điện Hải",
+    "aliases": [
+      "Thành Điện Hải xây năm nào"
+    ],
+    "answer": "Điện Hải được dựng bằng đất năm 1813; đến năm 1823 được xây lại bằng gạch và chuyển sâu hơn vào đất liền. Hai mốc nói về hai giai đoạn khác nhau.",
+    "teachingExample": "Dùng hai thẻ thời gian thay vì coi mọi lần xây dựng là cùng một sự kiện.",
+    "followUp": "Một di tích có thể có nhiều mốc xây dựng và tu bổ không?",
+    "source": {
+      "label": "Cục Di sản văn hóa – Thành Điện Hải",
+      "url": "https://dsvh.gov.vn/thanh-dien-hai-3281"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "hao",
+    "term": "hào thành",
+    "aliases": [
+      "hào phòng thủ"
+    ],
+    "answer": "Hào thành là rãnh sâu bao quanh hoặc nằm bên ngoài phần tường thành, góp phần tạo chướng ngại cho việc tiếp cận. Thành Điện Hải có hệ thống tường và hào phòng thủ.",
+    "teachingExample": "Vẽ tường và rãnh nhìn từ cạnh bên để học sinh không nhầm hào với lối đi.",
+    "followUp": "Tường cao và hào sâu hỗ trợ bảo vệ thành ra sao?",
+    "source": {
+      "label": "Cục Di sản văn hóa – Thành Điện Hải",
+      "url": "https://dsvh.gov.vn/thanh-dien-hai-3281"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "dia-dao",
+    "term": "địa đạo",
+    "aliases": [
+      "đường hầm địa đạo"
+    ],
+    "answer": "Địa đạo là hệ thống đường hầm dưới lòng đất. Địa đạo Kỳ Anh được người dân đào trong giai đoạn 1965–1967, gắn với cuộc kháng chiến chống Mỹ.",
+    "teachingExample": "Dùng sơ đồ mặt cắt để phân biệt mặt đất, cửa hầm và đường hầm; không tổ chức chui vào chỗ kín để mô phỏng.",
+    "followUp": "Vì sao cần cửa hầm và các bộ phận nối nhau?",
+    "source": {
+      "label": "Cổng thông tin Đà Nẵng – Địa đạo Kỳ Anh",
+      "url": "https://cttdt.danangportal.gov.vn/vi/web/dng/w/kham-pha-dia-dao-ky-anh"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "kyanh-mo-rong",
+    "term": "Địa đạo Kỳ Anh được xếp hạng năm nào",
+    "aliases": [
+      "Kỳ Anh di tích quốc gia năm nào"
+    ],
+    "answer": "Địa đạo Kỳ Anh được công nhận là di tích lịch sử cách mạng cấp quốc gia năm 1997. Mốc công nhận khác với thời gian đào địa đạo.",
+    "teachingExample": "Tách hai hàng “xây dựng trong lịch sử” và “công nhận giá trị di tích” trên trục thời gian.",
+    "followUp": "Vì sao hai loại mốc này không nên nhầm lẫn?",
+    "source": {
+      "label": "Cổng thông tin Đà Nẵng – Địa đạo Kỳ Anh",
+      "url": "https://cttdt.danangportal.gov.vn/vi/web/dng/w/kham-pha-dia-dao-ky-anh"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "lua",
+    "term": "lụa tơ tằm",
+    "aliases": [
+      "lụa Mã Châu",
+      "tơ tằm",
+      "tơ tằm được làm từ bông phải không",
+      "tơ tằm có phải làm từ bông không"
+    ],
+    "answer": "Lụa tơ tằm được dệt từ sợi tơ lấy từ kén tằm. Nghề dệt Mã Châu gắn với kỹ năng xử lý tơ và dệt thành sản phẩm mềm, nhẹ.",
+    "teachingExample": "Cho học sinh xếp chuỗi hình kén → tơ → dệt → tấm lụa; không nói mọi loại vải đều làm từ tơ.",
+    "followUp": "Một tấm lụa trải qua những bước nào trước khi thành sản phẩm?",
+    "source": {
+      "label": "Cổng thông tin Đà Nẵng – Làng lụa Mã Châu",
+      "url": "https://danang.gov.vn/vi/web/dng/w/lang-nghe-det-vai-to-lua-ma-chau-cham-vao-soi-to-ngan-nam-xu-quang"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "khung-cui",
+    "term": "khung cửi",
+    "aliases": [
+      "khung dệt lụa"
+    ],
+    "answer": "Khung cửi là dụng cụ hỗ trợ người thợ đưa các hệ sợi đan xen nhau thành tấm vải. Tiếng khung dệt và kỹ năng đưa thoi là hình ảnh quen thuộc của làng lụa.",
+    "teachingExample": "Dùng các dải giấy đan xen để minh họa ý tưởng dệt; đây là mô hình đơn giản hóa.",
+    "followUp": "Vì sao các sợi cần được sắp xếp đều?",
+    "source": {
+      "label": "Cổng thông tin Đà Nẵng – Làng lụa Mã Châu",
+      "url": "https://danang.gov.vn/vi/web/dng/w/lang-nghe-det-vai-to-lua-ma-chau-cham-vao-soi-to-ngan-nam-xu-quang"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "u-mam",
+    "term": "ủ nước mắm Nam Ô",
+    "aliases": [
+      "nguyên liệu nước mắm Nam Ô"
+    ],
+    "answer": "Nghề nước mắm Nam Ô sử dụng cá cơm than và muối theo cách làm truyền thống. Cá được ủ và nước mắm được lọc qua các công đoạn của người làm nghề.",
+    "teachingExample": "Chỉ dùng ảnh hoặc sơ đồ quy trình; không yêu cầu học sinh tự ủ cá hay nếm mẫu chưa bảo đảm vệ sinh.",
+    "followUp": "Vì sao cần cả nguyên liệu phù hợp và kinh nghiệm người thợ?",
+    "source": {
+      "label": "Cổng du lịch Đà Nẵng – Nam Ô",
+      "url": "https://danangfantasticity.com/en/nam-o-diem-den-hap-dan-tiem-nang-cua-du-lich-da-nang"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "sa-thach",
+    "term": "sa thạch",
+    "aliases": [
+      "đá sa thạch trong điêu khắc Chăm"
+    ],
+    "answer": "Sa thạch là một loại đá được sử dụng nhiều trong các tác phẩm điêu khắc Chăm ở bảo tàng. Bên cạnh sa thạch còn có hiện vật bằng đất nung và đồng.",
+    "teachingExample": "Cho học sinh phân loại ảnh theo thông tin trên nhãn hiện vật, thay vì đoán chất liệu chỉ qua màu.",
+    "followUp": "Vì sao cần đọc nhãn hiện vật trước khi kết luận?",
+    "source": {
+      "label": "Bảo tàng Lịch sử quốc gia – Điêu khắc Chăm",
+      "url": "https://baotanglichsu.vn/vi/Articles/3091/76565/bao-tang-djieu-khac-cham-dja-nang-kho-bau-cua-nghe-thuat-djieu-khac-cham-pa.html"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "phu-dieu",
+    "term": "phù điêu",
+    "aliases": [
+      "phù điêu Chăm"
+    ],
+    "answer": "Phù điêu là hình được tạo nổi hoặc chìm trên một mặt nền. Nhiều tác phẩm điêu khắc Chăm thể hiện nhân vật, linh vật và câu chuyện tín ngưỡng bằng hình thức này.",
+    "teachingExample": "So sánh ảnh một bức phù điêu với một pho tượng đứng độc lập để nhận ra vai trò của mặt nền.",
+    "followUp": "Điểm nào giúp em nhận ra đây là phù điêu?",
+    "source": {
+      "label": "Bảo tàng Lịch sử quốc gia – Điêu khắc Chăm",
+      "url": "https://baotanglichsu.vn/vi/Articles/3091/76565/bao-tang-djieu-khac-cham-dja-nang-kho-bau-cua-nghe-thuat-djieu-khac-cham-pa.html"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "tho-cam",
+    "term": "thổ cẩm",
+    "aliases": [
+      "dệt thổ cẩm Cơ Tu"
+    ],
+    "answer": "Thổ cẩm là sản phẩm dệt có các họa tiết trang trí, gắn với kỹ năng và đời sống văn hóa của cộng đồng làm ra nó. Dệt thổ cẩm là một hoạt động nghề truyền thống của người Cơ Tu.",
+    "teachingExample": "Cho lớp quan sát họa tiết và màu sắc, tránh quy mọi cộng đồng dân tộc về một kiểu trang phục.",
+    "followUp": "Em nên hỏi người làm nghề điều gì để hiểu ý nghĩa họa tiết?",
+    "source": {
+      "label": "Cổng du lịch Đà Nẵng – Du lịch cộng đồng",
+      "url": "https://danangfantasticity.com/en/tin-tuc/du-lich-cong-dong-huong-di-moi-cua-du-lich-da-nang"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "du-lich-cong-dong",
+    "term": "du lịch cộng đồng",
+    "aliases": [
+      "du lịch cùng người dân"
+    ],
+    "answer": "Du lịch cộng đồng có sự tham gia của cư dân địa phương trong giới thiệu văn hóa, nghề và đời sống. Bảo tồn kỹ năng truyền thống là một phần quan trọng khi phát triển hoạt động này.",
+    "teachingExample": "Đề nghị học sinh đóng vai người giới thiệu nghề của gia đình, không diễn lại nghi lễ thiêng khi chưa hiểu.",
+    "followUp": "Khách tham quan có thể thể hiện sự tôn trọng bằng cách nào?",
+    "source": {
+      "label": "Cổng du lịch Đà Nẵng – Du lịch cộng đồng",
+      "url": "https://danangfantasticity.com/en/tin-tuc/du-lich-cong-dong-huong-di-moi-cua-du-lich-da-nang"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "nguyen-tieu",
+    "term": "Tết Nguyên tiêu",
+    "aliases": [
+      "Nguyên tiêu Hội An"
+    ],
+    "answer": "Tết Nguyên tiêu gắn với dịp rằm tháng Giêng. Ở Hội An, sinh hoạt tín ngưỡng và hoạt động cộng đồng diễn ra trong nhiều không gian; không nên coi lịch nghi lễ cụ thể của mọi nơi là giống nhau.",
+    "teachingExample": "Tách ý nghĩa chung của dịp lễ khỏi lịch tổ chức từng địa phương, từng năm.",
+    "followUp": "Một lễ hội có thể vừa có nghi lễ vừa có hoạt động vui chơi như thế nào?",
+    "source": {
+      "label": "Trung tâm di sản Hội An – Tết Nguyên tiêu",
+      "url": "https://hoianheritage.net/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/tet-nguyen-tieu-o-hoi-an-1101.html"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "nguon-gen",
+    "term": "bảo tồn nguồn gen",
+    "aliases": [
+      "nguồn gen sâm Ngọc Linh"
+    ],
+    "answer": "Bảo tồn nguồn gen là gìn giữ nguồn vật liệu di truyền và sự đa dạng của sinh vật cho hiện tại và tương lai. Bảo tồn, nghiên cứu và phát triển giống sâm Ngọc Linh là nhiệm vụ của cơ quan chuyên môn.",
+    "teachingExample": "Có thể ví các giống cây là những nguồn đặc điểm quý cần được giữ lại; tránh ví nguồn gen chỉ là một hạt giống duy nhất.",
+    "followUp": "Vì sao cần vừa bảo vệ cây ngoài tự nhiên vừa nghiên cứu nhân giống?",
+    "source": {
+      "label": "Trung tâm Phát triển Sâm Ngọc Linh và Dược liệu",
+      "url": "https://samngoclinh.danang.gov.vn/gioi-thieu-1.html"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "thoi-tiet",
+    "term": "thời tiết",
+    "aliases": [],
+    "answer": "Thời tiết là trạng thái của không khí tại một nơi trong thời gian ngắn, như hôm nay nắng, mưa, nóng hay có gió. Thời tiết có thể thay đổi nhanh.",
+    "teachingExample": "Cho lớp ghi nhận trời hôm nay bằng ký hiệu nắng, mây hoặc mưa; một ngày quan sát chưa đủ mô tả khí hậu.",
+    "followUp": "Muốn biết ngày mai cần mang áo mưa không, em xem thời tiết hay khí hậu?",
+    "source": {
+      "label": "NOAA – Phân biệt thời tiết và khí hậu",
+      "url": "https://www.noaa.gov/explainers/what-s-difference-between-climate-and-weather"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "khi-hau",
+    "term": "khí hậu",
+    "aliases": [
+      "khí hậu khác thời tiết thế nào",
+      "phân biệt thời tiết và khí hậu",
+      "thời tiết khác khí hậu thế nào",
+      "thời tiết và khí hậu khác nhau thế nào"
+    ],
+    "answer": "Khí hậu mô tả đặc điểm thời tiết của một nơi qua thời gian dài. Thời tiết nói về lúc cụ thể; khí hậu cho biết quy luật thường gặp qua nhiều năm.",
+    "teachingExample": "So sánh “chiều nay có mưa” với “nơi này thường có mùa mưa”; không dùng một đợt lạnh để kết luận khí hậu đã thay đổi.",
+    "followUp": "Vì sao cần theo dõi nhiều năm để nhận biết khí hậu?",
+    "source": {
+      "label": "NOAA – Phân biệt thời tiết và khí hậu",
+      "url": "https://www.noaa.gov/explainers/what-s-difference-between-climate-and-weather"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "hop-kim",
+    "term": "hợp kim",
+    "aliases": [
+      "hợp kim có phải chỉ gồm hai kim loại không"
+    ],
+    "answer": "Hợp kim là vật liệu gồm từ hai nguyên tố trở lên, trong đó có ít nhất một kim loại và vật liệu tạo thành có tính chất kim loại. Không phải mọi sản phẩm gọi là đồ đồng đều chỉ chứa đồng nguyên chất.",
+    "teachingExample": "Dùng thẻ tên thành phần để giải thích pha hợp kim; không tổ chức đun, nấu kim loại trong lớp.",
+    "followUp": "Vì sao người thợ có thể thay đổi thành phần để tạo vật liệu phù hợp?",
+    "source": {
+      "label": "Royal Society of Chemistry – Thuật ngữ hợp kim",
+      "url": "https://edu.rsc.org/download?ac=540573"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "dong-thiec",
+    "term": "đồng thiếc",
+    "aliases": [
+      "bronze"
+    ],
+    "answer": "Đồng thiếc là hợp kim thường gắn với đồng và thiếc. Đây là một ví dụ về hợp kim; không được từ ví dụ này suy ra công thức chính xác của mọi sản phẩm Phước Kiều.",
+    "teachingExample": "Phân biệt tên nghề “đúc đồng” và thành phần vật liệu của từng hiện vật; cần nhãn hoặc tư liệu riêng để kết luận.",
+    "followUp": "Muốn biết một chiếc chiêng làm từ những thành phần nào, em cần bằng chứng gì?",
+    "source": {
+      "label": "Royal Society of Chemistry – Thuật ngữ hợp kim",
+      "url": "https://edu.rsc.org/download?ac=540573"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "guol",
+    "term": "nhà Gươl",
+    "aliases": [
+      "Gươl",
+      "Gươl Cơ Tu"
+    ],
+    "answer": "Nhà Gươl là kiến trúc truyền thống có vai trò sinh hoạt cộng đồng và gìn giữ văn hóa của người Cơ Tu. Đây là không gian quan trọng của làng, không chỉ là một ngôi nhà để ở.",
+    "teachingExample": "Cho học sinh tìm trên ảnh nơi diễn ra sinh hoạt chung, đồng thời nhắc tôn trọng quy định của cộng đồng khi tham quan.",
+    "followUp": "Vì sao một ngôi nhà chung có thể giúp gắn kết cả làng?",
+    "source": {
+      "label": "Cổng thông tin Hòa Vang – Nhà Gươl của đồng bào Cơ Tu",
+      "url": "https://hoavang.danang.gov.vn/vi/w/nha-guol-cua-dong-bao-cotu-25047"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "ken-tam",
+    "term": "kén tằm",
+    "aliases": [],
+    "answer": "Kén tằm được tạo từ sợi tơ do tằm nhả ra bao quanh mình khi chuyển sang giai đoạn nhộng. Kén là nguồn nguyên liệu để người thợ lấy tơ.",
+    "teachingExample": "Cho học sinh xếp thẻ tằm, kén và sợi tơ theo quá trình; phân biệt kén với con tằm bên trong.",
+    "followUp": "Vì sao không gọi kén và sợi tơ đã lấy ra là cùng một sản phẩm?",
+    "source": {
+      "label": "Trung tâm di sản Hội An – Nghề trồng dâu, ươm tơ ở Cẩm Kim trước 1975",
+      "url": "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/nghe-trong-dau-uom-to-o-cam-kim-truoc-nam-1975-qua-thong-tin-tham-van-cong-dong-604.html"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "uom-to",
+    "term": "ươm tơ",
+    "aliases": [
+      "lấy tơ từ kén"
+    ],
+    "answer": "Ươm tơ là lấy sợi tơ từ kén và thu lại thành tơ để dùng trong các công đoạn tiếp theo. Đây là công đoạn khác với dệt các sợi thành tấm lụa.",
+    "teachingExample": "Đặt hai ảnh lấy tơ và dệt vải cạnh nhau, cho học sinh chỉ đầu vào và đầu ra của từng công đoạn.",
+    "followUp": "Lấy được sợi tơ đã có ngay một tấm lụa chưa?",
+    "source": {
+      "label": "Trung tâm di sản Hội An – Nghề trồng dâu, ươm tơ ở Cẩm Kim trước 1975",
+      "url": "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/nghe-trong-dau-uom-to-o-cam-kim-truoc-nam-1975-qua-thong-tin-tham-van-cong-dong-604.html"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "nong-tam",
+    "term": "nong nuôi tằm",
+    "aliases": [
+      "nong tằm"
+    ],
+    "answer": "Nong là dụng cụ có dạng mặt đan rộng được dùng trong một số công việc thủ công, sinh hoạt. Trong nghề nuôi tằm truyền thống được tư liệu Hội An ghi lại, nong được dùng để đặt tằm và lá dâu.",
+    "teachingExample": "Dùng ảnh nhận biết chức năng của nong trong nghề nuôi tằm; không đồng nhất nong với khung dệt.",
+    "followUp": "Cùng làm nghề tơ lụa, vì sao từng công đoạn cần dụng cụ khác nhau?",
+    "source": {
+      "label": "Trung tâm di sản Hội An – Nghề trồng dâu, ươm tơ ở Cẩm Kim trước 1975",
+      "url": "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/nghe-trong-dau-uom-to-o-cam-kim-truoc-nam-1975-qua-thong-tin-tham-van-cong-dong-604.html"
+    },
+    "reviewedOn": "2026-10-29"
+  },
+  {
+    "id": "chua-cau-vi-tri",
+    "term": "Chùa Cầu ở đâu",
+    "aliases": [
+      "vị trí Chùa Cầu"
+    ],
+    "answer": "Chùa Cầu nằm trong phố cổ Hội An, nối đường Trần Phú với đường Nguyễn Thị Minh Khai nhé.",
+    "teachingExample": "Chỉ hai đầu cầu trên sơ đồ phố cổ để học sinh thấy cầu nối hai tuyến đường, không cần học thuộc địa chỉ hành chính.",
+    "followUp": "Một cây cầu giúp người dân đi lại như thế nào?",
+    "source": {
+      "label": "Trung tâm di sản Hội An – Chùa Cầu",
+      "url": "https://hoianheritage.danang.gov.vn/vi/di-san-van-hoa/Cau/Chua-Cau-134.html"
+    },
+    "reviewedOn": "2026-10-30"
+  },
+  {
+    "id": "mua",
+    "term": "Vì sao có mưa",
+    "aliases": [
+      "vì sao trời mưa",
+      "tại sao trời mưa"
+    ],
+    "answer": "Hơi nước trong không khí ngưng tụ thành những giọt nước trong mây. Khi các giọt nước lớn lên và đủ nặng để rơi xuống mặt đất, ta có mưa.",
+    "teachingExample": "Dùng sơ đồ hơi nước → giọt nước trong mây → mưa; không nói mây là hơi nước vô hình.",
+    "followUp": "Nước mưa có thể chảy hoặc thấm đi đâu sau khi xuống đất?",
+    "source": {
+      "label": "NOAA – Vì sao có mưa",
+      "url": "https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/what-makes-it-rain"
+    },
+    "reviewedOn": "2026-10-30"
+  },
+  {
+    "id": "chua-cau-nguoi-xay",
+    "term": "Ai xây Chùa Cầu",
+    "aliases": [
+      "Chùa Cầu do ai xây dựng"
+    ],
+    "answer": "Theo tư liệu di sản Hội An, phần cầu được người Nhật xây trước, còn phần miếu thờ do người Minh Hương xây sau. Vì vậy, cần phân biệt các phần và giai đoạn của công trình, không gán toàn bộ Chùa Cầu cho một cá nhân.",
+    "teachingExample": "Cho học sinh xem sơ đồ tách phần cầu và phần miếu thờ, rồi ghép lại thành công trình hiện thấy.",
+    "followUp": "Vì sao một công trình có thể mang dấu ấn của nhiều cộng đồng?",
+    "source": {
+      "label": "Trung tâm di sản Hội An – Chùa Cầu, biểu trưng di sản",
+      "url": "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/chua-cau-bieu-trung-di-san-van-hoa-hoi-an-1016.html"
+    },
+    "reviewedOn": "2026-10-30"
+  }
+]

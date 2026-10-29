@@ -1,3 +1,5 @@
+import knowledge from '../data/assistantKnowledge.json';
+import guides from '../data/assistantStationGuides.json';
 import { ExplorationHotspot, Station } from '../types';
 import {
   AssistantLexiconEntry,
@@ -19,10 +21,15 @@ export interface AssistantRetrievalContext {
   station?: Station | null;
   hotspot?: ExplorationHotspot | null;
   stations?: Station[];
+  audience?: 'student' | 'teacher';
+  stage?: number;
 }
 
 export interface AssistantRetrievalResult {
   found: boolean;
+  sources?: { label: string; url?: string }[];
+  teachingExample?: string;
+  followUp?: string;
   layer: AssistantRetrievalLayer;
   answer: string;
   normalizedQuery: string;
@@ -50,8 +57,8 @@ const DEMO_STATIONS: DemoStationMeta[] = [
   {
     stationId: 'g3-station-2',
     scope: 'danh-nhan-xu-quang',
-    title: 'Huỳnh Thúc Kháng – Phan Châu Trinh',
-    aliases: ['danh nhân xứ quảng', 'huỳnh thúc kháng', 'phan châu trinh', 'duy tân'],
+    title: 'Hoàng Diệu – Phan Châu Trinh',
+    aliases: ['danh nhân xứ quảng', 'hoàng diệu', 'phan châu trinh', 'duy tân'],
   },
   {
     stationId: 'g1-station-4',
@@ -238,24 +245,30 @@ const makeResult = (
 });
 
 // Determine the requested fact before choosing a lesson passage.
-type QuestionIntent = 'definition' | 'location' | 'material' | 'history' | 'purpose' | 'action' | 'feature';
+type QuestionIntent = 'definition' | 'location' | 'material' | 'history' | 'purpose' | 'action' | 'actor' | 'quantity' | 'comparison' | 'feature';
 const questionIntent = (query: string): QuestionIntent => {
   const q = normalizeForSearch(query);
   if (/nguyen lieu|vat lieu|lam bang|lam tu/.test(q)) return 'material';
-  if (/o dau|nam o|dia chi|vi tri/.test(q)) return 'location';
+  if (/o dau|nam o|dia chi|vi tri|o tinh|o thanh pho|o phuong|o xa|o quan|thuoc tinh|thuoc thanh pho/.test(q)) return 'location';
   if (/nam nao|bao gio|khi nao|lich su|ra doi/.test(q)) return 'history';
+  if (/bao nhieu|dai bao|cao bao|rong bao/.test(q)) return 'quantity';
+  if (/ai (xay|tao|lap|sang|dung)|nguoi nao/.test(q)) return 'actor';
+  if (/khac .*the nao|so sanh|khac nhau|khac gi/.test(q)) return 'comparison';
   if (/em .*lam gi|nen lam gi|giu gin|bao ve|ung xu/.test(q)) return 'action';
-  if (/tai sao|de lam gi|y nghia|cong dung/.test(q)) return 'purpose';
+  if (/tai sao|vi sao|de lam gi|y nghia|cong dung/.test(q)) return 'purpose';
   if (/nghia la|la gi|la ai/.test(q)) return 'definition';
   return 'feature';
 };
 const intentEvidence: Record<QuestionIntent, RegExp> = {
   definition: /./,
-  location: /nam o|toa lac|dia chi|phuong|xa|huyen|pho|ben|tai |thuoc/,
-  material: /coi|lac|tre|go|dat set|da|soi|nguyen lieu|vat lieu/,
+  location: /\b(?:nam o|toa lac|dia chi|phuong|xa|huyen|pho|ben|tai|thuoc)\b/,
+  material: /\b(?:coi|lac|tre|go|dat set|da|soi|nguyen lieu|vat lieu)\b/,
   history: /[12][0-9]{3}|the ky|xay dung|ra doi|lich su/,
-  purpose: /de|giup|nham|vi|tuong nho|cau mong|y nghia|bao ve/,
-  action: /em|nen|can|khong|giu|bao ve|chap hanh|bo rac/,
+  purpose: /\b(?:de|giup|nham|vi|tuong nho|cau mong|y nghia|bao ve)\b/,
+  action: /\b(?:em|nen|can|khong|giu|bao ve|chap hanh|bo rac)\b/,
+  actor: /\b(?:nguoi|nhan dan|cu dan|nghe nhan|vua|trieu|nhat ban)\b.*\b(?:xay|tao|lap|dung|thiet ke)\b/,
+  quantity: /[0-9]+(?:[.,][0-9]+)?\s*(?:km|m|met|ha|nam|the ky|hon|dao|loai)/,
+  comparison: /\b(?:khac|trong khi|con|so voi|giong)\b/,
   feature: /./,
 };
 const dialectDefinitionRequested = (query: string, entry: AssistantLexiconEntry) => {
@@ -273,7 +286,7 @@ const concisePassage = (query: string, text: string, intent: QuestionIntent): st
     .sort((a, b) => a.index - b.index).map(item => item.text).join(' ');
 };
 
-export function retrieveDanangAssistantAnswer(
+function retrieveCoreAnswer(
   rawQuery: string,
   context: AssistantRetrievalContext = {},
 ): AssistantRetrievalResult {
@@ -298,7 +311,9 @@ export function retrieveDanangAssistantAnswer(
   if (intent === 'definition' && lexicon && lexicon.score >= 90
     && [lexicon.entry.term, ...lexicon.entry.aliases].some(term =>
       normalizeForSearch(query) === normalizeForSearch(term) || words(term).length >= 2 && tokenScore(query, term) >= 105)) {
-    const related = stationMetaFromScope(lexicon.entry.stations.find(s => s !== 'common'));
+    const authoredRelated = stationMetaFromScope(lexicon.entry.stations.find(s => s !== 'common'));
+    const actualRelated = stations.find(s => normalizeForSearch(s.titleVi).includes(normalizeForSearch(lexicon.entry.term)));
+    const related = actualRelated ? { stationId: actualRelated.id, title: actualRelated.titleVi } : authoredRelated;
     const layer = lexicon.entry.stations.includes('common') ? 'common'
       : scope && lexicon.entry.stations.includes(scope) ? 'station' : 'five-stations';
     return makeResult(layer, normalizedQuery, friendlyDefinition(lexicon.entry) + (related && layer === 'five-stations' ? ` Nội dung liên quan đến trạm **${related.title}**.` : ''), 'high', {
@@ -312,7 +327,9 @@ export function retrieveDanangAssistantAnswer(
     const explicitTerms = meaningfulWords(query).filter(t => !['nguyen', 'lieu', 'vat', 'nam', 'giu', 'gin', 'tai', 'sao', 'nguoi', 'goi'].includes(t));
     const corpusWords = new Set(words([title, h.subtitleVi, h.narrationVi, h.keyFactVi].join(' ')));
     const subjectScore = explicitTerms.length && explicitTerms.every(t => corpusWords.has(t)) ? 90 : 0;
-    const score = Math.max(subjectScore, tokenScore(query, title), h.subtitleVi ? tokenScore(query, h.subtitleVi) : 0,
+    const subject = normalizeDanangDialect(query).replace(/(?:là gì|nghĩa là gì|có nghĩa gì)[?!.]*$/u, '').trim();
+    const phraseScore = intent === 'definition' && words(subject).length >= 2 && normalizeDanangDialect(title).includes(subject) ? 145 : 0;
+    const score = Math.max(phraseScore, subjectScore, tokenScore(query, title), h.subtitleVi ? tokenScore(query, h.subtitleVi) : 0,
       hotspotCorpusScore(query, h));
     const text = [h.narrationVi, h.keyFactVi].filter(Boolean).join(' ');
     return { station: s, hotspot: h, score, text };
@@ -337,17 +354,7 @@ export function retrieveDanangAssistantAnswer(
     return makeResult('unknown', normalizedQuery,
       `Mình đã tìm thấy học liệu về **${target.hotspot.titleVi.replace(/^\d+\.\s*/, '')}**, nhưng chưa có thông tin đủ rõ để trả lời ý này. Bạn có thể hỏi cô giáo hoặc chọn câu hỏi về đặc điểm của điểm đến nhé!`, 'low');
   }
-  // Reuse authored question/answer pairs; never treat incorrect quiz options as facts.
-  const qa = stations.flatMap(s => [
-    ...s.hotspots.map(h => h.interaction), ...(s.challenge?.questions || []),
-  ].filter(Boolean).map(item => ({ station: s, item: item!, score: longTextScore(query, item!.questionVi) })))
-    .filter(c => c.score >= 88 && questionIntent(c.item.questionVi) === intent)
-    .sort((a, b) => b.score - a.score)[0];
-  if (qa) {
-    const answer = qa.item.options.filter(o => o.isCorrect).map(o => o.textVi).join('; ');
-    if (answer) return makeResult(station?.id === qa.station.id ? 'station' : 'five-stations',
-      normalizedQuery, answer, 'medium', { relatedStationId: qa.station.id, relatedStationTitle: qa.station.titleVi });
-  }
+  // Quiz options are never a knowledge source; similar wording is not factual evidence.
   if (intent === 'action' && /que huong|di san|di tich/.test(normalizeForSearch(query))) {
     return makeResult('common', normalizedQuery,
       'Em có thể bỏ rác đúng nơi, giữ vệ sinh, không viết vẽ lên di tích và thực hiện nội quy khi tham quan. Em cũng có thể giới thiệu những điều đã học về quê hương với bạn bè, người thân.', 'high');
@@ -356,7 +363,56 @@ export function retrieveDanangAssistantAnswer(
     (usesDeicticReference(query) && !context.hotspot ? ' Bạn đang muốn hỏi về điểm đến nào?' : ''), 'low');
 }
 
+/** Local retrieval only: no API key, per-account counter, or network inference. */
+export function retrieveDanangAssistantAnswer(rawQuery: string, context: AssistantRetrievalContext = {}): AssistantRetrievalResult {
+  const teacher = context.audience === 'teacher';
+  const query = rawQuery.trim().slice(0, teacher ? 600 : 220);
+  // While taking a challenge, keep the student in the learning flow, not an answer service.
+  if (!teacher && context.stage === 2 && query && !looksLikeHelpQuestion(query)) {
+    return makeResult('help', normalizeDanangDialect(query),
+      'Em thử quan sát kỹ hình và nhớ lại điều vừa khám phá nhé. Nếu còn phân vân, em có thể quay lại Chặng 1 để tìm chi tiết giúp mình lựa chọn. Mình sẽ không chọn đáp án thay em.', 'high');
+  }
+  const cleanQuery = query.replace(/^(?:cô|thầy|hãy|giúp tôi|giúp mình)\s+/i, '')
+    .replace(/^(?:giải thích|giải nghĩa|nói rõ|cho ví dụ về)\s+(?:từ\s+)?/i, '')
+    .replace(/(?:[,;]?\s*(?:giải thích|nói)\s+)?cho học sinh(?: tiểu học)?(?: lớp [1-5])?[^?]*\??$/i, '').trim();
+  const q = normalizeForSearch(cleanQuery);
+  const intent = questionIntent(cleanQuery);
+  const candidates = knowledge.map(card => {
+    const terms = [card.term, ...card.aliases];
+    const exact = terms.some(t => normalizeForSearch(t) === q);
+    const named = terms.some(t => (` ${q} `).includes(` ${normalizeForSearch(t)} `));
+    const askedFact = terms.some(t => /nam nao|vat lieu|nguyen lieu|dong vat hay thuc vat/.test(normalizeForSearch(t)) && questionIntent(t) === intent && longTextScore(cleanQuery, t) >= 96);
+    return {card, score: exact ? 150 : askedFact ? 140 : named && intent === 'definition' ? 110 + Math.max(...terms.filter(t => (` ${q} `).includes(` ${normalizeForSearch(t)} `)).map(t=>words(t).length)) : 0};
+  }).filter(item => item.score > 0).sort((a,b)=>b.score-a.score);
+  const best = candidates[0]?.card;
+  let result: AssistantRetrievalResult;
+  if (best) {
+    result = makeResult('common', normalizeDanangDialect(query), best.answer, 'high', {
+      matchedEntryId: `expanded-${best.id}`, matchedTerm: best.term,
+      sources: [best.source], teachingExample: teacher ? best.teachingExample : undefined,
+      followUp: teacher ? best.followUp : undefined,
+    });
+  } else {
+    const wantsExplanation = /^(?:(?:cô|thầy|hãy|giúp tôi|giúp mình)\s+)?(?:giải thích|giải nghĩa|cho ví dụ về)/i.test(query);
+    const coreQuery = wantsExplanation && questionIntent(cleanQuery) === 'feature' ? `${cleanQuery} là gì?` : cleanQuery || query;
+    result = retrieveCoreAnswer(coreQuery, context);
+    if (result.matchedEntryId) {
+      const entry = DANANG_ASSISTANT_LEXICON.find(e=>e.id===result.matchedEntryId);
+      if(entry?.sourceUrl) result.sources=[{label:entry.sourceLabel || 'Tài liệu tham khảo',url:entry.sourceUrl}];
+    }
+    if (!result.sources && result.relatedStationTitle) result.sources=[{label:`Học liệu trong ứng dụng: ${result.relatedStationTitle}`}];
+    const guide = guides.find(g=>g.stationId===(result.relatedStationId || context.station?.id));
+    if (teacher && result.found && result.layer !== 'help' && guide) {
+      result.teachingExample=guide.teachingActivity;
+      result.followUp=guide.followUp;
+    }
+  }
+  if(teacher && !result.found) result.answer='Tôi chưa có thông tin đủ rõ trong kho hiện tại để trả lời chính xác ý này. Thầy cô có thể nêu rõ thuật ngữ, địa danh hoặc đối chiếu thêm tài liệu gốc trước khi dùng để giảng nhé.';
+  return result;
+}
+
 export function getDanangAssistantQuickPrompts(context: AssistantRetrievalContext = {}): string[] {
+  if(context.audience === 'teacher' && !context.station) return ['Di sản văn hóa phi vật thể là gì?', 'San hô là động vật hay thực vật?', 'Vòng tuần hoàn nước là gì?'];
   const hotspot = context.hotspot;
   if (hotspot) {
     const title = hotspot.titleVi.replace(/^\d+\.\s*/, '');

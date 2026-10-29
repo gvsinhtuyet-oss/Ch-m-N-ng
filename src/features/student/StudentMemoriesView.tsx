@@ -51,12 +51,12 @@ export const StudentMemoriesView: React.FC = () => {
                   {st.rewards.map(rw => {
                     const collected = prog.rewardsCollected.includes(rw.id);
                     return (
-                      <div key={rw.id} title={rw.nameVi} className={`min-w-0 rounded-lg border px-1 py-0.5 text-center ${collected ? 'border-amber-400 bg-white' : 'border-amber-200 bg-white/70 opacity-65'}`}>
-                        <div className="mx-auto flex h-8 items-center justify-center sm:h-9">
+                      <div key={rw.id} title={rw.nameVi} className={`min-w-0 rounded-lg border px-1 py-1 text-center ${collected ? 'border-amber-400 bg-white' : 'border-amber-200 bg-white/70 opacity-65'}`}>
+                        <div className="mx-auto flex h-9 items-center justify-center sm:h-10">
                           <RewardBadge template={rw.template} size="sm" muted={!collected} />
                         </div>
-                        <p className="line-clamp-1 text-[10px] font-bold leading-tight text-amber-950 sm:text-xs">{rw.nameVi}</p>
-                        <span className="text-[9px] text-slate-600">{collected ? '✓ Đã nhận' : 'Chưa nhận'}</span>
+                        <p className="line-clamp-2 min-h-7 text-[10px] font-bold leading-tight text-amber-950 sm:text-xs">{rw.nameVi}</p>
+
                       </div>
                     );
                   })}

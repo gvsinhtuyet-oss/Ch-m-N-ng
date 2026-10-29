@@ -15,7 +15,7 @@ import { Stage3CheckIn } from '../../components/station/Stage3CheckIn';
 import { Stage4Stamp } from '../../components/station/Stage4Stamp';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { unlockedStage,visibleStage } from './stageAccess';
-import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles, Maximize2, Minimize2, LockKeyhole } from 'lucide-react';
+import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles, Maximize2, LockKeyhole } from 'lucide-react';
 
 interface Props {
   station: Station;
@@ -136,12 +136,6 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
       </div>
 
       <div ref={lessonPanelRef} className="station-lesson-panel min-h-0 flex-1 overflow-y-auto space-y-3">
-      <div className="station-immersive-topbar">
-        <button type="button" onClick={() => { audioService.playSfx('click'); onBack(); }} className="station-back-button" aria-label="Về danh sách trạm" title="Về danh sách trạm"><ArrowLeft className="h-5 w-5" /></button>
-        <h2 className="station-immersive-title">{station.titleVi}</h2>
-        {renderStageTabs('Chuyển chặng bài học')}
-        <button type="button" onClick={toggleLessonFullscreen} className="station-back-button" aria-label="Thoát toàn màn hình"><Minimize2 className="h-5 w-5" /></button>
-      </div>
       <div className={currentStage === 1 && stationHasExplorationTools(station) ? 'station-exploration-layout' : ''}>
 
       {/* Keep the lesson mounted so dismissing a tool preserves its point and answer. */}

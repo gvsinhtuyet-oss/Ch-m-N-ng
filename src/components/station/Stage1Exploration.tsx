@@ -24,7 +24,8 @@ import {
 } from 'lucide-react';
 import { RewardClaimModal } from '../common/RewardClaimModal';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
-import { gradeOneNarration } from './gradeOneNarration';
+import { stage1Narration } from './stage1Narration';
+import { NarrationButton } from './NarrationButton';
 
 
 // Shuffle a copy so option IDs and correctness stay unchanged.
@@ -47,6 +48,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   const isReadOnly = role !== 'student';
   const [answeredIds,setAnsweredIds]=useState<string[]>(()=>progressService.getStationProgress(currentUser?.id||'guest',station.id).exploredHotspotIds);
   const [currentHotspotIdx, setCurrentHotspotIdx] = useState(0);
+  const [narrationMessage, setNarrationMessage] = useState('');
   const [narrationState, setNarrationState] = useState<NarrationState>('idle');
   const [selectedOptionId, setSelectedOptionId] = useState<string | null>(null);
   const [answerSubmitted, setAnswerSubmitted] = useState<boolean>(false);
@@ -93,7 +95,8 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
     setWrongLocked(false);
     if (wrongTimerRef.current !== null) window.clearTimeout(wrongTimerRef.current);
     audioService.stopNarration();
-  }, [currentHotspotIdx]);
+    setNarrationMessage('');
+  }, [station.id, hotspot.id, language]);
 
   useEffect(() => () => {
     if (wrongTimerRef.current !== null) window.clearTimeout(wrongTimerRef.current);
@@ -122,10 +125,12 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   // Audio Playback Controls
   const handlePlayAudio = () => {
-    const recorded = gradeOneNarration(station, hotspot, language);
-    if (recorded) { audioService.playRecordedNarration(recorded); return; }
+    setNarrationMessage('');
+    const onError = () => setNarrationMessage('Chưa phát được thuyết minh. Em hãy thử lại hoặc đọc nội dung bên dưới.');
+    const recorded = stage1Narration(station, hotspot, language);
+    if (recorded) { audioService.playRecordedNarration(recorded, undefined, onError); return; }
     const textToSpeak = language === 'en' && hotspot.narrationEn ? hotspot.narrationEn : hotspot.narrationVi;
-    audioService.speakNarration(textToSpeak, language === 'en' && hotspot.narrationEn ? 'en-US' : 'vi-VN');
+    audioService.speakNarration(textToSpeak, language === 'en' && hotspot.narrationEn ? 'en-US' : 'vi-VN', undefined, onError);
   };
 
   const handlePauseAudio = () => {
@@ -134,11 +139,6 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   const handleResumeAudio = () => {
     audioService.resumeNarration();
-  };
-
-  const handleRestartAudio = () => {
-    audioService.stopNarration();
-    handlePlayAudio();
   };
 
   const handleSelectOption = (optId: string) => {
@@ -379,7 +379,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
         </div>
 
         {/* Hotspot Step Selector Tabs */}
-        <div className="flex items-center gap-2 bg-slate-100/80 p-1.5 rounded-2xl">
+        <div className="flex max-w-full flex-wrap items-center gap-2 bg-slate-100/80 p-1.5 rounded-2xl">
           {station.hotspots.map((h, idx) => {
             const explored = progress.exploredHotspotIds.includes(h.id);
             const isCurrent = idx === currentHotspotIdx;
@@ -408,6 +408,10 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Visual Showcase (7 cols) */}
         <div className="lg:col-span-7 bg-white rounded-3xl overflow-hidden shadow-md border border-slate-200 flex flex-col group">
+          <div className="p-4">
+            <NarrationButton state={narrationState} onClick={isPlaying ? handlePauseAudio : isPaused ? handleResumeAudio : handlePlayAudio} />
+            {narrationMessage && <p role="status" className="mt-2 text-sm text-amber-900">{narrationMessage}</p>}
+          </div>
           <div className="relative aspect-4/3 sm:aspect-16/10 bg-slate-950 overflow-hidden">
             <img
               src={hotspot.image}
@@ -431,61 +435,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
               </span>
             </div>
 
-            {/* Audio Playback Hero Pill (Positioned Prominently at Bottom Left) */}
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2 bg-black/75 backdrop-blur-md p-1.5 rounded-2xl border border-white/20 shadow-xl">
-                {!isPlaying && !isPaused ? (
-                  <button
-                    onClick={handlePlayAudio}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white font-black text-xs shadow-md transition transform hover:scale-102 active:scale-95"
-                  >
-                    <Volume2 className="w-4 h-4" />
-                    <span>NGHE THUYẾT MINH</span>
-                  </button>
-                ) : isPlaying ? (
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={handlePauseAudio}
-                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-black text-xs transition"
-                    >
-                      <Pause className="w-4 h-4 fill-slate-950" />
-                      <span>Tạm dừng</span>
-                    </button>
-                    <button
-                      onClick={handleRestartAudio}
-                      className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs transition"
-                      title="Nghe lại từ đầu"
-                    >
-                      <RotateCcw className="w-4 h-4" />
-                    </button>
-                    {/* Animated sound wave bars */}
-                    <div className="flex items-center gap-1 px-2">
-                      <span className="w-1 h-4 bg-sky-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                      <span className="w-1 h-6 bg-sky-300 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                      <span className="w-1 h-3 bg-sky-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                      <span className="w-1 h-5 bg-sky-400 rounded-full animate-bounce" style={{ animationDelay: '200ms' }} />
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={handleResumeAudio}
-                      className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-black text-xs transition"
-                    >
-                      <Play className="w-4 h-4 fill-white" />
-                      <span>Tiếp tục nghe</span>
-                    </button>
-                    <button
-                      onClick={handleRestartAudio}
-                      className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs transition"
-                      title="Nghe lại từ đầu"
-                    >
-                      <RotateCcw className="w-4 h-4" />
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
+
           </div>
 
           <RealPhotoGallery stationId={station.id} index={station.hotspots.findIndex(p=>p.id===hotspot.id)}/>
@@ -506,12 +456,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
                 <Sparkles className="w-4 h-4 text-amber-500" />
                 Câu Chuyện Điểm Đến
               </span>
-              <button
-                onClick={isPlaying ? handlePauseAudio : isPaused ? handleResumeAudio : handlePlayAudio}
-                className="text-xs font-bold text-sky-600 hover:underline flex items-center gap-1"
-              >
-                {isPlaying ? 'Tạm dừng đọc' : isPaused ? 'Tiếp tục' : 'Phát âm thanh'}
-              </button>
+
             </div>
 
             {/* Transcript text with subtle highlight when playing */}

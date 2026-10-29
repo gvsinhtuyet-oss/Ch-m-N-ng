@@ -1,0 +1,1210 @@
+[
+  {
+    "station": "g1-station-1",
+    "point": "g1-home-1",
+    "playPauseResume": true,
+    "count": 1,
+    "above": true,
+    "imageOK": true
+  },
+  {
+    "station": "g1-station-1",
+    "point": "g1-home-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "playPauseResume": true
+  },
+  {
+    "station": "g1-station-1",
+    "point": "g1-home-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "playPauseResume": true
+  },
+  {
+    "station": "g1-station-1",
+    "point": "g1-home-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "playPauseResume": true
+  },
+  {
+    "station": "g1-station-4",
+    "point": "tdh-thanh-co",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g1-station-4",
+    "point": "tdh-tuong-thanh-hao",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g1-station-4",
+    "point": "tdh-dai-bac",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g1-station-4",
+    "point": "tdh-nguyen-tri-phuong",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g1-station-2",
+    "point": "g1-game-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g1-station-2",
+    "point": "g1-game-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g1-station-2",
+    "point": "g1-game-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g1-station-2",
+    "point": "g1-game-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g1-station-3",
+    "point": "g1-stream-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g1-station-3",
+    "point": "g1-stream-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g1-station-3",
+    "point": "g1-stream-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g1-station-3",
+    "point": "g1-stream-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g1-station-5",
+    "point": "g1-food-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g1-station-5",
+    "point": "g1-food-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g1-station-5",
+    "point": "g1-food-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g1-station-5",
+    "point": "g1-food-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-4",
+    "point": "hoi-an-pho-co",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-4",
+    "point": "hoi-an-duong-pho",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-4",
+    "point": "hoi-an-cong-trinh",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-4",
+    "point": "hoi-an-hoat-dong",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-4",
+    "point": "hoi-an-thanh-ha",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-4",
+    "point": "hoi-an-tra-que",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "playPauseResume": true
+  },
+  {
+    "station": "g2-station-3",
+    "point": "g2s3-thoai",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-3",
+    "point": "g2s3-nha-tho",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-3",
+    "point": "g2s3-huynh",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-3",
+    "point": "g2s3-luu-niem",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-5",
+    "point": "g2s5-le-hoi",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-5",
+    "point": "g2s5-phan-le",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-5",
+    "point": "g2s5-phan-hoi",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-5",
+    "point": "g2s5-y-nghia",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-5",
+    "point": "g2s5-ung-xu",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-2",
+    "point": "g2s2-tong-quan",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-2",
+    "point": "g2s2-cu-lao",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-2",
+    "point": "g2s2-hoat-dong",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-2",
+    "point": "g2s2-son-tra",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-2",
+    "point": "g2s2-bao-ve",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-1",
+    "point": "g2s1-lang-chieu",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-1",
+    "point": "g2s1-nguyen-lieu",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-1",
+    "point": "g2s1-cac-buoc",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-1",
+    "point": "g2s1-gian-det",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g2-station-1",
+    "point": "g2s1-tham-quan",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g3-station-2",
+    "point": "dn3-huynh-thuc-khang",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-2",
+    "point": "dn3-phan-chau-trinh",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-2",
+    "point": "dn3-phong-trao-duy-tan",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-2",
+    "point": "dn3-dau-chan-hom-nay",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-3",
+    "point": "g3-3-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-3",
+    "point": "g3-3-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-3",
+    "point": "g3-3-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-3",
+    "point": "g3-3-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-1",
+    "point": "g3-1-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-1",
+    "point": "g3-1-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-1",
+    "point": "g3-1-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-1",
+    "point": "g3-1-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-4",
+    "point": "g3-4-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-4",
+    "point": "g3-4-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-4",
+    "point": "g3-4-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-4",
+    "point": "g3-4-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-5",
+    "point": "g3-5-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-5",
+    "point": "g3-5-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-5",
+    "point": "g3-5-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g3-station-5",
+    "point": "g3-5-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1235,
+    "width": 1227,
+    "play": true
+  },
+  {
+    "station": "g4-station-1",
+    "point": "g4-station-1-textbook-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-1",
+    "point": "g4-station-1-textbook-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-1",
+    "point": "g4-station-1-textbook-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-1",
+    "point": "g4-station-1-textbook-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-1",
+    "point": "g4-station-1-textbook-point-5",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-1",
+    "point": "g4-station-1-textbook-point-6",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-3",
+    "point": "g4-station-3-textbook-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-3",
+    "point": "g4-station-3-textbook-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-3",
+    "point": "g4-station-3-textbook-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-3",
+    "point": "g4-station-3-textbook-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-3",
+    "point": "g4-station-3-textbook-point-5",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-2",
+    "point": "g4-station-2-textbook-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-2",
+    "point": "g4-station-2-textbook-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-2",
+    "point": "g4-station-2-textbook-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-2",
+    "point": "g4-station-2-textbook-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-2",
+    "point": "g4-station-2-textbook-point-5",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-2",
+    "point": "g4-station-2-textbook-point-6",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-thu-bon-hon-kem",
+    "point": "g4-thu-bon-hon-kem-textbook-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-thu-bon-hon-kem",
+    "point": "g4-thu-bon-hon-kem-textbook-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-thu-bon-hon-kem",
+    "point": "g4-thu-bon-hon-kem-textbook-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-thu-bon-hon-kem",
+    "point": "g4-thu-bon-hon-kem-textbook-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-thu-bon-hon-kem",
+    "point": "g4-thu-bon-hon-kem-textbook-point-5",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-4",
+    "point": "g4-station-4-textbook-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-4",
+    "point": "g4-station-4-textbook-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-4",
+    "point": "g4-station-4-textbook-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-4",
+    "point": "g4-station-4-textbook-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g4-station-4",
+    "point": "g4-station-4-textbook-point-5",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-ky-anh-me-nhu",
+    "point": "g5-ky-anh-me-nhu-textbook-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1366,
+    "width": 1358,
+    "playPauseResume": true
+  },
+  {
+    "station": "g5-ky-anh-me-nhu",
+    "point": "g5-ky-anh-me-nhu-textbook-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1366,
+    "width": 1358,
+    "playPauseResume": true
+  },
+  {
+    "station": "g5-ky-anh-me-nhu",
+    "point": "g5-ky-anh-me-nhu-textbook-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1366,
+    "width": 1358,
+    "playPauseResume": true
+  },
+  {
+    "station": "g5-ky-anh-me-nhu",
+    "point": "g5-ky-anh-me-nhu-textbook-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1366,
+    "width": 1358,
+    "play": true
+  },
+  {
+    "station": "g5-ky-anh-me-nhu",
+    "point": "g5-ky-anh-me-nhu-textbook-point-5",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1366,
+    "width": 1358,
+    "play": true
+  },
+  {
+    "station": "g5-ky-anh-me-nhu",
+    "point": "g5-ky-anh-me-nhu-textbook-point-6",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1366,
+    "width": 1358,
+    "play": true
+  },
+  {
+    "station": "g5-station-3",
+    "point": "g5-station-3-textbook-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1366,
+    "width": 1358,
+    "play": true
+  },
+  {
+    "station": "g5-station-3",
+    "point": "g5-station-3-textbook-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1366,
+    "width": 1358,
+    "play": true
+  },
+  {
+    "station": "g5-station-3",
+    "point": "g5-station-3-textbook-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1366,
+    "width": 1358,
+    "play": true
+  },
+  {
+    "station": "g5-station-3",
+    "point": "g5-station-3-textbook-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1366,
+    "width": 1358,
+    "play": true
+  },
+  {
+    "station": "g5-station-3",
+    "point": "g5-station-3-textbook-point-5",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1366,
+    "width": 1358,
+    "play": true
+  },
+  {
+    "station": "g5-station-3",
+    "point": "g5-station-3-textbook-point-6",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 1366,
+    "width": 1358,
+    "play": true
+  },
+  {
+    "station": "g5-station-4",
+    "point": "nghs-quan-the",
+    "play": true,
+    "count": 1,
+    "above": true,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382
+  },
+  {
+    "station": "g5-station-4",
+    "point": "nghs-hang-dong-chua",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-station-4",
+    "point": "nghs-ma-nhai",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-station-4",
+    "point": "g5-station-4-textbook-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-station-4",
+    "point": "g5-station-4-textbook-point-5",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-station-4",
+    "point": "nghs-lang-da",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-lua-ma-chau",
+    "point": "g5-lua-ma-chau-textbook-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-lua-ma-chau",
+    "point": "g5-lua-ma-chau-textbook-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-lua-ma-chau",
+    "point": "g5-lua-ma-chau-textbook-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-lua-ma-chau",
+    "point": "g5-lua-ma-chau-textbook-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-lua-ma-chau",
+    "point": "g5-lua-ma-chau-textbook-point-5",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-station-5",
+    "point": "g5-station-5-textbook-point-1",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-station-5",
+    "point": "g5-station-5-textbook-point-2",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-station-5",
+    "point": "g5-station-5-textbook-point-3",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-station-5",
+    "point": "g5-station-5-textbook-point-4",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-station-5",
+    "point": "g5-station-5-textbook-point-5",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  },
+  {
+    "station": "g5-station-5",
+    "point": "g5-station-5-textbook-point-6",
+    "above": true,
+    "count": 1,
+    "imageOK": true,
+    "viewport": 390,
+    "width": 382,
+    "play": true
+  }
+]

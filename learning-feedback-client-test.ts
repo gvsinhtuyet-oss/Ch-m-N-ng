@@ -4,7 +4,7 @@ import {learningFeedbackService as service} from './src/services/LearningFeedbac
 test('client requires a server acknowledgement and never falls back to guest for a learner',async()=>{
  const nativeFetch=globalThis.fetch,nativeStorage=globalThis.localStorage;
  let calls=0,reply:unknown={saved:true,stars:4},status=200;
- globalThis.localStorage={getItem:()=>JSON.stringify({id:'learner-1',syncCode:'ABCD-EFGH-JKLM'})} as Storage;
+ globalThis.localStorage={length:1,clear(){},key:()=>null,removeItem(){},setItem(){},getItem:()=>JSON.stringify({id:'learner-1',syncCode:'ABCD-EFGH-JKLM'})};
  globalThis.fetch=async(_url,init)=>{calls++;const data=JSON.parse(String(init?.body));assert.equal(init?.credentials,'same-origin');if(data.syncCode)assert.equal(data.syncCode,'ABCD-EFGH-JKLM');return Response.json(reply,{status});};
  try {
   assert.equal(await service.saveRating('g1-station-1',4,'learner-1',true),4);

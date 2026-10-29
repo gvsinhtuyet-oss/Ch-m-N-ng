@@ -78,3 +78,14 @@
  .journey-preview-note { position:static; margin-top:8px; }
 }
 @media(prefers-reduced-motion:reduce) { .journey-key-claim { animation:none; } }
+
+/* Stage 4 features the destination photo, not a duplicate journey map. */
+.stage-four .journey-photo-surface{background:#fff4dc;border:2px solid #dba753;box-shadow:inset 0 0 0 3px #fff8e8;position:relative}
+.stage-four .journey-photo-main{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.stage-four .journey-photo-label{position:absolute;bottom:7px;left:7px;right:7px;background:#fff7e9ed;color:#744019;border:1px solid #eac280;border-radius:10px;padding:6px 9px;text-align:center;font-size:clamp(11px,1vw,14px);font-weight:900;line-height:1.25}
+@media(max-width:767px){
+ .stage-four .journey-photo-panel{padding:9px!important}
+ .stage-four .journey-photo-surface{min-height:190px!important;aspect-ratio:16/10!important}
+ .stage-four .journey-photo-main{object-fit:cover!important}
+ .stage-four .journey-photo-label{font-size:12px}
+}

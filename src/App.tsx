@@ -61,7 +61,7 @@ const AppContent: React.FC = () => {
   }
 
   return (
-    <div className="game-shell min-h-screen flex flex-col text-slate-800">
+    <div className={`game-shell min-h-screen flex flex-col text-slate-800 ${currentView === 'station-view' ? 'station-screen-fixed' : ''}`}>
       {currentView !== 'station-view' && <Header />}
 
       <main className="game-content flex-1">
@@ -80,7 +80,7 @@ const AppContent: React.FC = () => {
       {currentView !== 'student-journey' && currentView !== 'station-view' && <Footer />}
 
       {role === 'student' && currentUser && currentView !== 'presentation-view' && (
-        <Suspense fallback={null}><DanangAssistantChat compactGame={currentView === 'station-view' && currentStage === 2 && (currentStation?.grade === 2 || currentStation?.grade === 4 || currentStation?.grade === 5)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense>
+        <Suspense fallback={null}><DanangAssistantChat compactGame={currentView === 'station-view' && (currentStage === 1 || (currentStage === 2 && (currentStation?.grade === 2 || currentStation?.grade === 4 || currentStation?.grade === 5)))} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense>
       )}
 
       {storageWarning && (

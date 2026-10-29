@@ -1,3 +1,4 @@
+import {StationExplorationTools} from './StationExplorationTools';
 import {stage1Options} from '../../features/stations/stage1Options';
 import {RealPhotoGallery} from '../RealPhotoGallery';
 import {allHotspotsAnswered} from '../../features/stations/stageAccess';
@@ -31,6 +32,7 @@ import {
 interface Props {
   station: Station;
   onCompleteStage: () => void;
+  onToolsOpenChange?: (open: boolean) => void;
 }
 
 function shuffle<T>(items: readonly T[]): T[] {
@@ -42,7 +44,7 @@ function shuffle<T>(items: readonly T[]): T[] {
   return result;
 }
 
-export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteStage }) => {
+export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteStage, onToolsOpenChange }) => {
   const { currentUser, role, language, setAssistantHotspot } = useApp();
   const studentId = currentUser?.id || 'guest';
   const readOnly = role !== 'student';
@@ -320,6 +322,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
               </button>
 
+              <div className="stage1-image-tools"><StationExplorationTools station={station} onOpenChange={onToolsOpenChange || (() => {})} /></div>
               <button type="button" onClick={() => openImagePreview(index)} aria-label="Phóng to hình ảnh" className="absolute right-3 top-3 z-20 rounded-xl bg-slate-900/75 p-3 text-white shadow-lg"><Maximize2 className="h-5 w-5" /></button>
 
             </div>
@@ -414,7 +417,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 {hotspot.narrationVi}
               </p>
 
-              {hotspot.keyFactVi && (
+              {hotspot.keyFactVi && explored && (
                 <div className="mt-3 rounded-2xl border border-amber-300 bg-gradient-to-r from-yellow-50 via-amber-50 to-orange-50 p-3 shadow-sm shadow-amber-100/60">
                   <p className="text-[9px] font-black uppercase tracking-wide text-amber-700">
                     Điều thú vị cần nhớ
@@ -504,7 +507,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             <div className="flex items-center gap-1.5 rounded-xl bg-emerald-50 px-3 py-2" aria-label="Tiến độ điểm chạm">
               {station.hotspots.map((item, itemIndex) => <span key={item.id} className={`h-2 flex-1 rounded-full ${itemIndex === index ? 'bg-orange-500' : completedHotspotIds.has(item.id) ? 'bg-emerald-400' : 'bg-slate-200'}`} />)}
             </div>
-            <div className="flex gap-2" aria-label="Chuyển điểm khám phá">
+            <div className="stage1-point-navigation flex gap-2" aria-label="Chuyển điểm khám phá">
               <button type="button" onClick={() => go(index - 1)} disabled={index === 0} className="min-h-11 flex-1 rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-bold disabled:opacity-40"><ChevronLeft className="inline h-4 w-4" />Trước</button>
               <button type="button" onClick={next} disabled={!freeReview && !explored} className="min-h-11 flex-1 rounded-xl bg-orange-500 px-3 py-2 text-sm font-bold text-white disabled:opacity-40">{index === station.hotspots.length - 1 ? 'Hoàn thành' : 'Tiếp theo'}<ChevronRight className="inline h-4 w-4" /></button>
             </div>

@@ -57,11 +57,6 @@
  .station-stage1-compact .station-compact-header .station-header-map{display:block;max-width:48px}
  .station-stage1-compact .station-compact-header .station-header-map .station-tool-badge>span{display:none}
 }
-/* Extreme viewport sizes and enlarged text retain accessible overflow. */
-@media(min-width:901px) and (max-height:700px){
- .station-stage1-compact .stage-one-map-content,.station-stage1-compact .stage-one-map-surface{height:auto;min-height:100%}
- .station-stage1-compact .stage1-visual-column>.relative{min-height:220px}
-}
 .station-immersive-root.station-viewport:fullscreen>.station-compact-header,.station-immersive-root.station-viewport.station-immersive-active>.station-compact-header{display:flex!important}
 .station-immersive-root.station-viewport:fullscreen .station-lesson-panel,.station-immersive-root.station-viewport.station-immersive-active .station-lesson-panel{height:auto!important;flex:1 1 0!important}
 .station-compact-header .station-header-map .station-tool-nav{flex-direction:row;align-items:center}
@@ -71,4 +66,110 @@
 @media(max-width:900px){
  .station-stage1-compact .station-compact-header .station-header-map{max-width:none;width:65px}
  .station-compact-header .station-header-map .station-tool-badge{width:31px;min-width:31px!important;min-height:36px!important}
+}
+
+/* Approved blue-toolbar layout: use the viewport rather than fixed content heights. */
+.station-stage1-compact .stage-one-map-surface{padding:6px;border-radius:16px;box-sizing:border-box}
+.station-stage1-compact .station-lesson-panel>div,.station-stage1-compact .station-lesson-panel>div>div{height:100%;min-height:0}
+.station-stage1-compact .stage1-point-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;position:relative}
+.station-stage1-compact .stage1-point-heading>div:first-child{flex:1;min-width:0}
+.station-stage1-compact .stage1-point-heading>div:first-child>div{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.station-stage1-compact .stage1-point-heading h2{font-size:clamp(14px,1.2vw,19px);margin:0;font-weight:800}
+.station-stage1-compact .stage1-point-heading p{font-size:11px;margin:0}
+.station-stage1-compact .stage1-point-heading>.mt-3{margin:0;flex-shrink:0}
+.station-stage1-compact [data-stage1-narration]{min-height:34px;padding:5px 10px;font-size:12px;border-radius:12px;box-shadow:0 2px 0 #075985}
+.station-stage1-compact .stage1-quiz button{font-size:13px}
+.station-stage1-compact .stage1-quiz>div:last-child{margin-top:8px}
+.station-stage1-compact .stage1-quiz>div:last-child button{padding:8px;min-height:36px}
+.station-stage1-compact .stage1-point-navigation{margin-top:auto;flex-shrink:0}
+@media(min-width:901px){
+ .station-stage1-compact .stage-one-map-content>.grid{grid-template-rows:minmax(0,1fr) 74px;gap:8px}
+ .station-stage1-compact .stage1-visual-column{display:contents}
+ .station-stage1-compact .stage1-point-heading{grid-column:1;grid-row:1;align-self:start;z-index:1;margin:0 0 6px}
+ .station-stage1-compact .stage1-visual-column>.relative{grid-column:1;grid-row:1;margin-top:76px;min-height:0;height:auto;align-self:stretch;box-shadow:none}
+ .station-stage1-compact .stage-one-hotspot-ribbon{grid-column:1;grid-row:2;align-self:stretch}
+ .station-stage1-compact .stage-one-hotspot-ribbon>h2{display:none}
+ .station-stage1-compact .stage-one-hotspot-ribbon>.grid{height:100%;grid-template-columns:repeat(auto-fit,minmax(0,1fr))}
+ .station-stage1-compact .stage-one-hotspot-ribbon>.grid>button{flex-direction:row;align-items:center;gap:5px;box-shadow:none}
+ .station-stage1-compact .stage-one-hotspot-ribbon button img{width:42%;height:46px}
+ .station-stage1-compact .stage-one-hotspot-ribbon button>span>span:nth-child(2){display:none}
+ .station-stage1-compact .hoi-an-right-rail{grid-column:2;grid-row:1 / 3}
+ .station-stage1-compact .stage1-reading{flex:0 1 auto}
+ .station-stage1-compact .stage1-reading>p{font-size:clamp(13px,1.05vw,16px);font-weight:500;line-height:1.5}
+}
+@media(max-width:900px){
+ .station-stage1-compact .stage1-point-heading{flex-wrap:wrap;gap:4px}
+ .station-stage1-compact .stage-one-map-content>.grid{height:100%;min-height:0}
+ .station-stage1-compact .stage1-point-heading h2{font-size:14px}
+ .station-stage1-compact .stage1-visual-column>.relative{flex:1 1 0;min-height:80px;height:auto}
+ .station-stage1-compact .hoi-an-right-rail{flex:0 1 auto}
+ .station-stage1-compact .stage1-reading>p{font-size:13px;line-height:1.35}
+ .station-stage1-compact .stage1-reading>div{display:none}
+ .station-stage1-compact .stage1-quiz>p{font-size:13px;line-height:1.35}
+ .station-stage1-compact .stage-one-answer-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* The shell never scrolls. Only bounded reading/choice panels may scroll. */
+body:has(.station-screen-fixed){overflow:hidden;overscroll-behavior:none}
+.station-screen-fixed{height:100dvh;min-height:0!important;overflow:hidden}
+.station-screen-fixed>.game-content{min-height:0;height:100%;overflow:hidden}
+.station-immersive-root.station-viewport{max-width:none;gap:5px;padding:5px;height:100%;max-height:100dvh;overflow:hidden}
+.station-immersive-root.station-viewport>.station-lesson-panel{overflow:hidden}
+.station-viewport .station-lesson-panel>div,.station-viewport .station-lesson-panel>div>div{height:100%;min-height:0}
+.station-viewport>.station-compact-header{height:42px;min-height:42px;max-height:42px}
+.station-viewport .station-compact-title{font-size:clamp(11px,1.05vw,16px);font-weight:800}
+.station-viewport .station-stage-tab{height:38px;min-height:38px}
+.station-stage1-compact .hoi-an-right-rail{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:0 3px 3px 0}
+.stage1-image-tools{position:absolute;bottom:12px;right:12px;z-index:25;max-width:calc(100% - 24px)}
+.stage1-image-tools .station-tool-nav{position:static;display:flex;flex-direction:row;gap:8px;padding:0;align-items:center}
+.stage1-image-tools .station-tool-badge{display:flex;flex-direction:row;align-items:center;gap:5px;min-width:0;width:auto;min-height:40px;height:40px;padding:4px 9px;border:1px solid #edb84f;border-radius:12px;background:linear-gradient(#fff,#fff4d8);box-shadow:inset 0 1px #fff,0 3px 0 #c99738,0 5px 9px #51381035}
+.stage1-image-tools .exploration-tool-art{width:30px;height:29px;flex:none}
+.stage1-image-tools .station-tool-badge>span{font-size:11px;line-height:1.15;white-space:nowrap;color:#124c72}
+.station-viewport[data-stage="2"] .station-lesson-panel iframe{height:100%!important;min-height:0!important}
+.station-viewport[data-stage="2"] [data-shared-stage2]{height:100%;min-height:0}
+.station-viewport .journey-stage{height:100%;min-height:0;max-height:100%;aspect-ratio:auto;overflow:hidden}
+.station-viewport .stage-three>.relative{min-height:0;height:100%}
+@media(max-width:900px){
+ .station-stage1-compact .stage1-visual-column>.relative{flex:1 1 0;min-height:85px}
+ .station-stage1-compact .hoi-an-right-rail{flex:0 1 40%;min-height:90px}
+ .station-stage1-compact [data-compact-panel=quiz] .hoi-an-right-rail{flex:1 1 0}
+ .station-stage1-compact .stage-one-hotspot-ribbon{flex:none}
+ .stage1-image-tools{bottom:8px;right:8px}
+ .stage1-image-tools .station-tool-badge{height:36px;min-height:36px;padding:3px 6px}
+ .stage1-image-tools .exploration-tool-art{width:24px;height:24px}
+ .stage1-image-tools .station-tool-badge>span{font-size:10px}
+ .station-viewport .journey-stage{padding:0 8px 6px;display:flex;flex-direction:column}
+ .station-viewport .journey-stage::before{height:clamp(55px,12dvh,100px);margin:0 -8px 4px;flex:none;background-size:100% auto}
+ .station-viewport .checkin-layout{display:flex;flex-direction:column;flex:1;min-height:0;gap:5px}
+ .station-viewport .checkin-emotion-prompt{position:static;font-size:14px;margin:0;padding:3px;text-shadow:none;-webkit-text-stroke:0}
+ .station-viewport .checkin-emotions{position:static;height:auto;margin:0;flex:none}
+ .station-viewport .checkin-emotions button{min-height:40px;font-size:12px;flex-direction:row}
+ .station-viewport .checkin-pages{position:static;flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+ .station-viewport .checkin-page{padding:6px;border:1px solid #d8ac6c;border-radius:10px;background:#fff2d2;min-height:0;overflow:hidden}
+ .station-viewport .checkin-page h3{position:static;clip:auto;width:auto;height:auto;white-space:normal;font-size:13px;flex:none;margin:0 0 3px}
+ .station-viewport .checkin-page>div{overflow-y:auto;min-height:0;overscroll-behavior:contain}
+ .station-viewport .checkin-page p{font-size:10px}
+ .station-viewport .checkin-page button{min-height:36px;font-size:12px;padding:5px;line-height:1.25}
+ .station-viewport .checkin-submit{position:static;transform:none;margin:0 auto;font-size:11px;min-height:36px;padding:5px 8px;flex:none}
+ .station-viewport .stamp-layout{position:static;display:grid;flex:1;min-height:0;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto;gap:6px}
+ .station-viewport .journey-station-title{position:static;grid-column:1 / -1;font-size:13px;margin:0;width:auto}
+ .station-viewport .journey-map-panel,.station-viewport .journey-passport-panel{position:static;width:auto;height:auto;min-height:0;padding:6px;overflow:hidden}
+ .station-viewport .journey-map-panel>div:last-child,.station-viewport .journey-passport-panel>div:last-child{min-height:0;aspect-ratio:auto;flex:1}
+ .station-viewport .journey-map-surface{min-height:0;aspect-ratio:auto}
+ .station-viewport .journey-controls{position:static;grid-column:1 / -1;margin:0;gap:5px}
+ .station-viewport .journey-controls button{min-height:40px;font-size:10px;padding:4px;gap:3px}
+ .station-viewport .journey-passport-panel p{font-size:10px}
+ .station-viewport .journey-key-claim{font-size:10px;padding:4px}
+}
+@media(min-width:721px){
+ .station-compact-header .station-stage-tabs,.station-stage1-compact .station-compact-header .station-stage-tabs{width:clamp(350px,39vw,500px)}
+ .station-compact-header .station-stage-tab-name{font-size:10px!important}
+}
+@media(max-width:900px){
+ .station-viewport .stamp-layout{grid-template-rows:minmax(0,1fr) auto}
+ .station-viewport .journey-controls{grid-row:2}
+}
+@media(max-width:720px){
+ .station-compact-header .station-stage-tab-name,.station-stage1-compact .station-compact-header .station-stage-tab-name{white-space:normal;font-size:8px!important;line-height:1.05;max-width:58px}
+ .station-compact-header .station-stage-tab-title svg{width:14px;height:14px}
 }

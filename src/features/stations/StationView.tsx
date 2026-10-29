@@ -115,20 +115,20 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
           }}
           className={`station-stage-tab ${active ? 'is-active' : ''} ${done ? 'is-complete' : ''}`}>
           <span className="station-stage-tab-title">{!clickable ? <LockKeyhole aria-hidden="true" /> : <st.icon aria-hidden="true" />}{done && <CheckCircle2 className="station-stage-complete-mark" aria-hidden="true" />}</span>
-          <span className="station-stage-tab-name">{shortNames[st.num - 1]}</span>
+          <span className="station-stage-tab-name">{st.name}</span>
         </button>;
       })}
     </nav>
   );
 
   return (
-    <div ref={fullscreenRef} className={`station-immersive-root ${currentStage === 1 ? "station-stage1-compact" : ""} ${isLessonFullscreen ? "station-immersive-active" : ""} ${isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}`}>
+    <div ref={fullscreenRef} data-stage={currentStage} className={`station-immersive-root ${currentStage === 1 ? "station-stage1-compact" : ""} ${isLessonFullscreen ? "station-immersive-active" : ""} ${isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}`}>
             {/* Top Station Header bar */}
       <div className="station-compact-header relative z-10">
         <button type="button" onClick={() => { audioService.playSfx('click'); onBack(); }} aria-label="Quay lại danh sách trạm" className="station-compact-back"><ArrowLeft aria-hidden="true" /></button>
         <h1 className="station-compact-title" title={station.titleVi}>{station.titleVi}</h1>
         {renderStageTabs("Bốn chặng hành trình")}
-        {currentStage === 1 && stationHasExplorationTools(station) && <div className="station-header-map"><StationExplorationTools station={station} onOpenChange={setToolsOpen} /></div>}
+        
         <div className="station-compact-actions">
           <button type="button" onClick={toggleLessonFullscreen} aria-label={isLessonFullscreen ? 'Thu nhỏ bài học' : 'Toàn màn hình'} title="Toàn màn hình" className="station-compact-action"><Maximize2 aria-hidden="true" /></button>
           <button type="button" onClick={handleDownload} disabled={downloading || Boolean(offlinePkg)} title={offlinePkg ? 'Demo offline đã lưu' : 'Tải demo offline'} aria-label="Tải demo offline" className="station-compact-action"><Download aria-hidden="true" /></button>
@@ -142,7 +142,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
       <div className="transition-all duration-300" inert={toolsOpen || undefined}>
         {currentStage === 1 && (
           isPolishedJourney ? (
-            <HoiAnStage1Exploration station={station} onCompleteStage={() => finishStage(1)} />
+            <HoiAnStage1Exploration station={station} onToolsOpenChange={setToolsOpen} onCompleteStage={() => finishStage(1)} />
           ) : (
             <Stage1Exploration station={station} onCompleteStage={() => finishStage(1)} />
           )

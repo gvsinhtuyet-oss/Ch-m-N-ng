@@ -1,3 +1,4 @@
+import {createPortal} from 'react-dom';
 import React,{useEffect,useId,useRef,useState} from 'react';
 import {X,ExternalLink} from 'lucide-react';
 import type {Station} from '../../types';
@@ -80,7 +81,7 @@ export function StationExplorationTools({station,onOpenChange}:{station:Station;
       {vrOptions.length>0&&<button type="button" aria-label="Khám phá 360°" className="station-tool-badge is-vr" aria-haspopup="dialog" aria-expanded={tool==='vr'} onClick={()=>{audioService.playSfx('click');setTool('vr');}}><ToolArtwork kind="vr"/><span>Khám phá 360°</span></button>}
       {places.length>0&&<button type="button" aria-label="Bản đồ" className="station-tool-badge is-map" aria-haspopup="dialog" aria-expanded={tool==='map'} onClick={()=>{audioService.playSfx('click');setTool('map');}}><ToolArtwork kind="map"/><span>Bản đồ</span></button>}
     </nav>
-    {tool&&<div className="station-tool-backdrop" data-testid="exploration-backdrop" onClick={event=>{if(event.target===event.currentTarget)close();}}>
+    {tool&&createPortal(<div className="station-tool-backdrop" data-testid="exploration-backdrop" onClick={event=>{if(event.target===event.currentTarget)close();}}>
       <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="exploration-tool-title" className="station-tool-dialog">
         <header className="station-tool-dialog-header">
           <div><p className="text-xs font-bold text-amber-700">BỘ DỤNG CỤ KHÁM PHÁ</p><h2 id="exploration-tool-title" className="text-lg font-black text-sky-950 sm:text-2xl">{tool==='vr'?'Khám phá 360°':'Khám phá bản đồ'}</h2><p className="text-xs font-semibold text-slate-600">{station.titleVi}</p></div>
@@ -101,6 +102,6 @@ export function StationExplorationTools({station,onOpenChange}:{station:Station;
           </>}
         </div>
       </div>
-    </div>}
+    </div>,document.body)}
   </>;
 }

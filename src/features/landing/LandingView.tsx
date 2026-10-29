@@ -454,33 +454,33 @@ export const LandingView: React.FC = () => {
             </div>
 
             {!showStudentLogin && !showTeacherLogin ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+              <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-0">
                 {[
                   {id:'student',name:'HỌC SINH',demo:'Khám phá tự do dành cho học sinh',Icon:Compass,color:'bg-orange-600',description:'Nhà thám hiểm nhí · Khám phá di sản, tích lũy dấu ấn.'},
                   {id:'teacher',name:'GIÁO VIÊN',demo:'Khám phá tự do dành cho giáo viên',Icon:Presentation,color:'bg-emerald-700',description:'Người dẫn đường tri thức · Dạy học, trình chiếu và sáng tạo.'},
-                ].map(({id,name,demo,Icon,color,description})=><section key={id} className={`group relative flex flex-col overflow-hidden rounded-[26px] border bg-white shadow-[0_12px_35px_rgba(0,0,0,0.16)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_rgba(0,0,0,0.28)] motion-reduce:transform-none ${id==='student' ? 'border-orange-200 hover:border-orange-400' : 'border-emerald-200 hover:border-emerald-400'}`}>
-                  <div className={`relative flex h-36 sm:h-44 items-end overflow-hidden p-5 ${id==='student' ? 'bg-gradient-to-br from-orange-500 via-amber-400 to-sky-500' : 'bg-gradient-to-br from-emerald-800 via-teal-500 to-sky-400'}`}>
+                ].map(({id,name,demo,Icon,color,description})=><section key={id} className={`group relative flex flex-col overflow-hidden rounded-[16px] border bg-white shadow-[0_12px_35px_rgba(0,0,0,0.16)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_rgba(0,0,0,0.28)] motion-reduce:transform-none ${id==='student' ? 'border-orange-200 hover:border-orange-400' : 'border-emerald-200 hover:border-emerald-400'}`}>
+                  <div className={`relative flex h-[90px] sm:h-[112px] items-end overflow-hidden p-2 sm:p-3 ${id==='student' ? 'bg-gradient-to-br from-orange-500 via-amber-400 to-sky-500' : 'bg-gradient-to-br from-emerald-800 via-teal-500 to-sky-400'}`}>
                     <div className="absolute inset-0 opacity-30" style={{backgroundImage:'radial-gradient(circle at 80% 15%, white 0%, transparent 42%), repeating-linear-gradient(125deg, transparent 0px, transparent 24px, rgba(255,255,255,.22) 25px, transparent 26px)'}} />
-                    <div className="absolute right-5 top-4 rounded-full border border-white/40 bg-white/15 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white backdrop-blur-md">{id==='student' ? 'Hành trình khám phá' : 'Không gian sáng tạo'}</div>
-                    <div className="relative flex items-center gap-3">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/60 bg-white/20 text-white shadow-xl backdrop-blur-md transition-transform duration-300 group-hover:rotate-[-5deg] group-hover:scale-110"><Icon className="h-9 w-9" /></div>
-                      <div className="text-white"><div className="text-xl font-black tracking-wide drop-shadow-md">{name}</div><div className="text-xs font-medium opacity-90">CHẠM ĐÀ NẴNG</div></div>
+                    <div className="hidden sm:block absolute right-3 top-2 rounded-full border border-white/40 bg-white/15 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white backdrop-blur-md">{id==='student' ? 'Hành trình khám phá' : 'Không gian sáng tạo'}</div>
+                    <div className="relative flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
+                      <div className="flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-2xl border border-white/60 bg-white/20 text-white shadow-xl backdrop-blur-md transition-transform duration-300 group-hover:rotate-[-5deg] group-hover:scale-110"><Icon className="h-6 w-6 sm:h-7 sm:w-7" /></div>
+                      <div className="text-white"><div className="text-[12px] sm:text-lg font-black tracking-wide drop-shadow-md">{name}</div><div className="text-xs font-medium opacity-90">CHẠM ĐÀ NẴNG</div></div>
                     </div>
                   </div>
-                  <div className="flex flex-1 flex-col gap-3 bg-gradient-to-b from-white to-slate-50 p-5">
-                    <p className="min-h-[40px] text-sm leading-relaxed text-slate-600">{description}</p>
+                  <div className="flex flex-1 flex-col gap-1.5 bg-gradient-to-b from-white to-slate-50 p-2 sm:p-3">
+                    <p className="hidden sm:block min-h-[30px] text-xs leading-snug text-slate-600">{description}</p>
                     <button type="button" onClick={()=>{
                       audioService.playSfx('click');setLoginError('');setStaffPassword('');
                       if(id==='student'){setGuestMode(false);setChosenGrade(null);setShowStudentLogin(true);}
                       else{setAdminLogin(false);setShowTeacherLogin(true);}
-                    }} className={`h-11 rounded-xl ${color} px-4 text-sm font-black text-white shadow-md transition hover:brightness-110 active:scale-[.99]`}>Đăng nhập <span aria-hidden="true">→</span></button>
+                    }} className={`min-h-10 rounded-lg ${color} px-1 sm:px-3 text-[11px] sm:text-sm font-black text-white shadow-md transition hover:brightness-110 active:scale-[.99]`}>Đăng nhập <span aria-hidden="true">→</span></button>
                     <button type="button" disabled={staffBusy} onClick={async()=>{
                       setLoginError('');
                       if(id==='student'){setGuestMode(true);setChosenGrade(null);setShowStudentLogin(true);return;}
                       setStaffBusy(true);
                       try{await enterTeacherDemo();setShowRolePicker(false);}
                       catch(error){setLoginError((error as Error).message);}finally{setStaffBusy(false);}
-                    }} aria-label={demo} className={`h-11 rounded-xl border px-4 text-sm font-bold transition hover:bg-slate-100 disabled:opacity-50 ${id==='student' ? 'border-orange-200 text-orange-700' : 'border-emerald-200 text-emerald-700'}`}>Khám phá tự do</button>
+                    }} aria-label={demo} className={`min-h-10 rounded-lg border px-1 sm:px-3 text-[11px] sm:text-sm font-bold transition hover:bg-slate-100 disabled:opacity-50 ${id==='student' ? 'border-orange-200 text-orange-700' : 'border-emerald-200 text-emerald-700'}`}>Khám phá tự do</button>
                   </div>
                 </section>)}
                 {loginError && <p role="alert" className="md:col-span-2 rounded-xl bg-rose-50 p-3 text-rose-700">{loginError}</p>}

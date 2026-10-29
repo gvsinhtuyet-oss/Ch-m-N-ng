@@ -2,7 +2,9 @@
 
 **Trạng thái: 121 MP3 đã tích hợp, 121/121 điểm đã kiểm tra phát trên bản thử. Đang phát hành cùng main mới nhất `76c9a94`, giữ nguyên trang chủ đã duyệt.**
 
-Bản thử: https://work-stage1-narration-121.chamdanang-gddp.pages.dev/
+Bản thử âm thanh: https://work-stage1-narration-121.chamdanang-gddp.pages.dev/
+
+Bản thử giao diện gọn: https://98c97c40.chamdanang-gddp.pages.dev/ (commit `c1b25a564d6a25553235aa6a25148e55de14938c`).
 
 ## Kiểm tra Firestore ngày 29/10/2026 — điểm chặn đã hết
 
@@ -20,7 +22,7 @@ Giữ main `76c9a94` làm nền phát hành để không ghi đè trang chủ m�
 - Khối 4: `Khoi-4_27-doan_ranh-gioi-am-thanh-an-toan.zip` (27), giữ nguyên byte. ID lấy từ bảng ÁNH-XẠ-ĐÚNG, không lấy từ số trạm hiển thị. [Bảng ID nguồn](grade4-id-mapping.json).
 - Khối 5: `Khoi-5_29-MP3_DOI-CHIEU-VA-KIEM-TRA.zip` (29), giữ nguyên byte và ánh xạ manifest.
 - Mỗi URL chứa 12 ký tự đầu SHA-256, toàn bộ digest được kiểm tra. Không còn URL cũ trong mã phát thuyết minh; một manifest duy nhất quản lý 121 điểm. Nội dung Admin khác lời ghi âm sẽ không phát bản thu lỗi thời.
-- Giữ thứ tự trạm, dữ liệu giáo dục, ảnh, bản đồ, trò chơi và mã máy chủ/tài khoản. Giữ lại API gateway và xử lý URL học liệu đã có trên production `2558ff3`, tránh mất chức năng Admin khi main được triển khai lên cùng dự án Cloudflare. Không gộp các thay đổi trang bìa từ PR23.
+- Giữ thứ tự trạm, dữ liệu giáo dục, ảnh, bản đồ, trò chơi và mã máy chủ/tài khoản. Giữ lại API gateway và xử lý URL học liệu đã có trên production `2558ff3`, tránh mất chức năng Admin khi main được triển khai lên cùng dự án Cloudflare. Giữ nguyên trang bìa đã duyệt trong main `76c9a94`; không khôi phục trang bìa cũ từ nhánh âm thanh.
 
 ## Kiểm tra từng trạm
 
@@ -89,7 +91,7 @@ Các số viết bằng chữ, chữ số La Mã và chính tả vùng miền c�
 
 - API đã xác nhận Firestore đọc/ghi và Admin ready. Chưa đăng nhập thủ công bằng mật khẩu Admin/giáo viên trong lượt này; form không tự điền thông tin. Kiểm thử backend dùng dữ liệu giả lập không thay thế mọi thao tác tài khoản thật.
 - Chưa kiểm tra trên điện thoại vật lý/iOS Safari; mobile là viewport Chrome.
-- Chưa chơi trọn toàn bộ trò chơi Chặng 2 qua UI trong tác vụ này. Kiểm thử trò chơi, tiến độ, quà, bản đồ và phân quyền đạt; các tệp trò chơi/Chặng 3–4 không bị sửa.
+- Chưa chơi trọn toàn bộ trò chơi Chặng 2 qua UI trong tác vụ này. Kiểm thử trò chơi, tiến độ, quà, bản đồ và phân quyền đạt; Chặng 3–4 không bị sửa. Bộ trò chơi dùng chung chỉ thay chiều cao nhúng theo vùng trống thực tế và khoảng cách màn giới thiệu; không thay câu hỏi, thưởng, âm thanh hay luật chơi.
 - Vị trí Rita đã lưu trên trình duyệt có thể che giữa nút mở trạm đầu Khối 5. Đã dùng phần nút còn thấy để kiểm tra; không thay mã hoặc vị trí Rita.
 - Tiến trình phát hành được kiểm tra trên đúng dự án Cloudflare `chamdanang-gddp`; không đổi dịch vụ hoặc database.
 
@@ -102,3 +104,19 @@ Desktop (1366×900):
 Điện thoại mô phỏng (390×844):
 
 ![Chặng 1 mobile](stage1-mobile.jpg)
+
+## Giao diện gọn theo yêu cầu bổ sung
+
+- Một thanh điều hướng cao 44px, dùng lại khi toàn màn hình; bỏ thanh tiêu đề lặp. Khi vào trạm, dành toàn viewport cho bài học; quay lại danh sách để dùng thanh menu chung. Không thay trang chủ/video/nền Admin.
+- Máy tính: ảnh và nội dung/câu hỏi hai cột; ảnh co theo phần không gian còn lại, giữ object-fit contain; dải điểm chạm nhỏ.
+- Điện thoại: hai nút “Ảnh & kiến thức” và “Thử tài quan sát” để chuyển phần, giữ nguyên toàn bộ nội dung/câu hỏi. Không thu chữ đến mức khó đọc. Đổi điểm trở về phần quan sát.
+- Chrome 1366×768: document 1366×768, lesson clientHeight=scrollHeight=709, toolbar clientHeight=scrollHeight=43 (sai số pixel CSS). Không cuộn ngang/dọc ở điểm kiểm tra.
+- Chrome 390×844: document 390×844, lesson clientHeight=scrollHeight=785 ở cả phần quan sát và câu hỏi. Toolbar clientWidth=scrollWidth=380. Nút bản đồ/360° nằm gọn trong thanh, có aria-label khi ẩn nhãn chữ.
+- Rà lại phát/tạm dừng/tiếp tục trên candidate mới; bản đồ mở/đóng đúng. Fullscreen fallback giữ đúng một thanh.
+- Đi trọn 6 điểm Ngũ Hành Sơn qua các câu hỏi trên mobile: mở điểm, phần thưởng, chuyển Chặng 2 đúng. Màn giới thiệu và câu hỏi đầu Chặng 2 vừa viewport điện thoại.
+- 88/88 kiểm thử liên quan +25/25 backend/auth/storage/sync; TypeScript và production build đạt sau sửa bố cục.
+- Các phép đo gọn mới là mẫu đại diện, không thay thế bảng 121 điểm đã phát trên bản thử âm thanh trước đó. Khi viewport cực thấp, tăng cỡ chữ hoặc nội dung Admin dài hơn, vẫn cho cuộn dự phòng để không cắt mất nội dung. Không tuyên bố mọi thiết bị đều tuyệt đối không cuộn.
+
+![Giao diện gọn desktop 1366×768](stage1-compact-desktop.jpg)
+
+![Giao diện gọn mobile 390×844](stage1-compact-mobile.jpg)

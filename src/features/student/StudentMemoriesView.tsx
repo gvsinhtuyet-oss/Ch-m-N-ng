@@ -41,11 +41,11 @@ export const StudentMemoriesView: React.FC = () => {
             const prog = progressService.getStationProgress(studentId, st.id);
             return (
               <section key={st.id} className="rounded-xl border border-amber-300 bg-amber-50/90 px-2 py-1.5 sm:px-3 sm:py-2">
-                <div className="mb-1 flex flex-wrap items-center gap-x-3 gap-y-0.5">
+                <div className="mb-1 flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5">
                   <h3 className="min-w-0 max-w-full text-xs font-black text-amber-950 sm:text-sm">
                     Trạm {stationIndex + 1} · {st.titleVi}
                   </h3>
-                  {(prog.stampReceived || prog.stationCompleted) && <JourneyRating compact stationId={st.id} userId={currentUser?.id} requireStudent={!!currentUser && !(currentUser as Student).isGuest}/>}
+                  <JourneyRating compact readOnly stationId={st.id} userId={currentUser?.id} requireStudent={!!currentUser && !(currentUser as Student).isGuest}/>
                 </div>
                 <div className="grid grid-cols-3 gap-1 sm:gap-2">
                   {st.rewards.map(rw => {

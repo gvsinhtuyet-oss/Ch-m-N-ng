@@ -21,6 +21,9 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage, readO
   const [selectedEmotion, setSelectedEmotion] = useState<string>('');
   const [selectedRememberIds, setSelectedRememberIds] = useState<string[]>([]);
   const [selectedActionIds, setSelectedActionIds] = useState<string[]>([]);
+  const [otherEmotion, setOtherEmotion] = useState('');
+  const [otherRemember, setOtherRemember] = useState('');
+  const [otherAction, setOtherAction] = useState('');
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [showRewardModal, setShowRewardModal] = useState<boolean>(false);
 
@@ -54,6 +57,9 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage, readO
           rememberOptionIds: selectedRememberIds,
           actionOptionIds: selectedActionIds,
           submittedAt: new Date().toISOString(),
+          otherEmotionText: otherEmotion.trim().slice(0,300),
+          otherRememberText: otherRemember.trim().slice(0,300),
+          otherActionText: otherAction.trim().slice(0,300),
         }
       );
     }
@@ -81,6 +87,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage, readO
                 </button>
               ))}
             </div>
+            <label className="checkin-other-field"><span>✏️ Cảm xúc khác (không bắt buộc)</span><input value={otherEmotion} onChange={e=>setOtherEmotion(e.target.value)} maxLength={300} placeholder="Em còn cảm thấy…" /></label>
           </section>
           <div className="checkin-pages">
             <section aria-label="Điều em nhớ nhất" className="checkin-page">
@@ -95,6 +102,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage, readO
                   </button>;
                 })}
               </div>
+              <label className="checkin-other-field"><span>✏️ Khác (không bắt buộc)</span><input value={otherRemember} onChange={e=>setOtherRemember(e.target.value)} maxLength={300} placeholder="Em còn nhớ…" /></label>
             </section>
             <section aria-label="Việc em sẽ làm" className="checkin-page">
               <h3 className="sr-only">Việc em sẽ làm</h3>
@@ -108,6 +116,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage, readO
                   </button>;
                 })}
               </div>
+              <label className="checkin-other-field"><span>✏️ Khác (không bắt buộc)</span><input value={otherAction} onChange={e=>setOtherAction(e.target.value)} maxLength={300} placeholder="Em sẽ…" /></label>
             </section>
           </div>
           <button type="button" onClick={handleSubmit} disabled={!isValid}

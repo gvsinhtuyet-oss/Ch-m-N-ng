@@ -74,8 +74,8 @@ export const StudentJourneyView: React.FC = () => {
   const heroImage = nextStation?.coverImage || displayStations[0]?.coverImage;
 
   return (
-    <div className="mx-auto flex min-h-[calc(100dvh-70px)] max-w-[1600px] flex-col gap-3 px-3 py-3 sm:px-5 lg:px-7">
-      <section className="relative overflow-hidden rounded-[1.65rem] border border-white/80 bg-white/86 shadow-[0_12px_34px_rgba(124,45,18,0.12)] backdrop-blur-xl">
+    <div className="journey-overview mx-auto flex min-h-[calc(100dvh-70px)] max-w-[1600px] flex-col gap-3 px-3 py-3 sm:px-5 lg:px-7">
+      <section className="journey-overview-hero relative overflow-hidden rounded-[1.65rem] border border-white/80 bg-white/86 shadow-[0_12px_34px_rgba(124,45,18,0.12)] backdrop-blur-xl">
         {heroImage && (
           <img
             src={heroImage}
@@ -156,7 +156,7 @@ export const StudentJourneyView: React.FC = () => {
         </div>
       </section>
 
-      <section className="grid grid-cols-2 gap-2 lg:grid-cols-4">
+      <section className="journey-overview-stats grid grid-cols-2 gap-2 lg:grid-cols-4">
         {stats.map(item => {
           const Icon = item.icon;
           return (
@@ -176,11 +176,11 @@ export const StudentJourneyView: React.FC = () => {
         })}
       </section>
 
-      <section className="relative flex min-h-0 flex-1 flex-col rounded-[2rem] border border-white/80 bg-white/40 p-2.5 shadow-xl shadow-orange-950/5 backdrop-blur-md sm:p-3">
+      <section className="journey-overview-cards relative flex min-h-0 flex-1 flex-col rounded-[2rem] border border-white/80 bg-white/40 p-2.5 shadow-xl shadow-orange-950/5 backdrop-blur-md sm:p-3">
         <div className="relative min-h-0 flex-1">
           <div className="pointer-events-none absolute bottom-2 left-8 right-8 hidden border-t-2 border-dashed border-white/90 xl:block" />
 
-          <div className="relative grid h-full min-h-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div className="journey-station-grid relative grid h-full min-h-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {displayStations.map(station => {
               const isDemoReady = DEMO_STATION_IDS.has(station.id);
               const progress = isDemoReady

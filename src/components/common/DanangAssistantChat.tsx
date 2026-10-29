@@ -1,3 +1,4 @@
+import {audioService} from '../../services/AudioService';
 import {constrainAssistantPosition, type AssistantPosition} from '../../utils/assistantPosition';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Bot, MapPin, MessageCircle, Send, Sparkles, X } from 'lucide-react';
@@ -41,6 +42,7 @@ const SimpleBold: React.FC<{ text: string }> = ({ text }) => {
 
 export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false }) => {
   const [open, setOpen] = useState(false);
+  const [tapPulse, setTapPulse] = useState(0);
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([
     { id: 'welcome', role: 'assistant', text: WELCOME },
@@ -48,7 +50,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const endRef = useRef<HTMLDivElement | null>(null);
   const [viewport, setViewport] = useState(() => ({width: window.innerWidth, height: window.innerHeight}));
   const [launcherPosition, setLauncherPosition] = useState<AssistantPosition>(() =>
-    constrainAssistantPosition({x: 16, y: window.innerHeight - 182}, window.innerWidth, window.innerHeight));
+    constrainAssistantPosition({x: window.innerWidth - 172, y: window.innerHeight - 140}, window.innerWidth, window.innerHeight));
   const drag = useRef<{pointerId:number;startX:number;startY:number;origin:AssistantPosition} | null>(null);
   const suppressClick = useRef(false);
   const previousPosition = useRef<AssistantPosition|null>(null);
@@ -134,7 +136,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
   return (
     <>
-      <div className={`fixed z-[58] flex flex-col items-center select-none ${compactGame ? 'h-12 w-12' : 'h-[122px] w-[156px] gap-2'}`}
+      <div className={`discovery-assistant fixed z-[58] flex flex-col items-center select-none ${compactGame ? 'h-12 w-12' : 'h-[122px] w-[156px] gap-2'}`}
         style={{left: launcherPosition.x, top: launcherPosition.y}}>
         <span className={`${compactGame ? 'sr-only' : 'pointer-events-none whitespace-nowrap rounded-full border-2 border-amber-300 bg-white px-3 py-1.5 text-[13px] font-black leading-tight text-sky-950 shadow-lg'} `}>Trợ lý khám phá</span>
         <button
@@ -163,16 +165,30 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
           onLostPointerCapture={() => { drag.current = null; }}
           onClick={event => {
             if (event.detail !== 0 && suppressClick.current) { suppressClick.current = false; return; }
+            audioService.playSfx('unlock');
+            setTapPulse(value => value + 1);
             setOpen(value => !value);
           }}
           style={{touchAction:'none', ...(compactGame ? {width:48,height:48} : {})}}
-          className="relative inline-flex h-[72px] w-[72px] shrink-0 cursor-grab items-center justify-center rounded-full border-[3px] border-white bg-gradient-to-br from-sky-600 via-cyan-500 to-teal-500 text-white shadow-[0_8px_24px_rgba(3,105,161,.45)] ring-[3px] ring-amber-300 transition-shadow hover:shadow-[0_10px_30px_rgba(3,105,161,.6)] focus-visible:outline focus-visible:outline-4 focus-visible:outline-sky-900 active:cursor-grabbing"
+          className="discovery-assistant-button relative inline-flex h-[72px] w-[72px] shrink-0 cursor-grab items-center justify-center rounded-full border-[3px] border-white bg-gradient-to-br from-sky-600 via-cyan-500 to-teal-500 text-white shadow-[0_8px_24px_rgba(3,105,161,.45)] ring-[3px] ring-amber-300 transition-shadow hover:shadow-[0_10px_30px_rgba(3,105,161,.6)] focus-visible:outline focus-visible:outline-4 focus-visible:outline-sky-900 active:cursor-grabbing"
           aria-label={open ? 'Đóng Trợ lý khám phá Đà Nẵng' : 'Mở Trợ lý khám phá Đà Nẵng'}
           aria-expanded={open}
           aria-controls="danang-assistant-panel"
           aria-describedby="assistant-drag-hint"
           title="Bấm để trò chuyện · Giữ và kéo để di chuyển">
-          <Bot aria-hidden="true" className="h-10 w-10 drop-shadow-md" />
+          <svg key={tapPulse} aria-hidden="true" viewBox="0 0 100 100" className={`discovery-robot ${tapPulse ? 'is-tapped' : ''}`}>
+            <defs><linearGradient id="discovery-shell" x2="0" y2="1"><stop stopColor="#f5ffff"/><stop offset="1" stopColor="#9be7ec"/></linearGradient><linearGradient id="discovery-face" x2="0" y2="1"><stop stopColor="#17466a"/><stop offset="1" stopColor="#082438"/></linearGradient></defs>
+            <path d="M50 18V9" stroke="#fbd45c" strokeWidth="5"/><circle cx="50" cy="8" r="5" fill="#ffe387"/>
+            <ellipse cx="50" cy="88" rx="30" ry="6" fill="#075985" opacity=".25"/>
+            <rect x="24" y="65" width="52" height="25" rx="12" fill="url(#discovery-shell)" stroke="#fff" strokeWidth="2"/>
+            <path d="M24 70L12 79M76 70L88 79" stroke="#b7f5f2" strokeWidth="9" strokeLinecap="round"/>
+            <rect x="12" y="33" width="12" height="24" rx="6" fill="#ffd16a"/><rect x="76" y="33" width="12" height="24" rx="6" fill="#ffd16a"/>
+            <rect x="19" y="19" width="62" height="49" rx="18" fill="url(#discovery-shell)" stroke="#fff" strokeWidth="3"/>
+            <rect x="26" y="28" width="48" height="30" rx="12" fill="url(#discovery-face)"/>
+            <g className="discovery-robot-eyes"><ellipse cx="39" cy="41" rx="5" ry="6" fill="#64f5f0"/><ellipse cx="61" cy="41" rx="5" ry="6" fill="#64f5f0"/></g>
+            <path d="M44 51Q50 55 56 51" fill="none" stroke="#91ffff" strokeWidth="2" strokeLinecap="round"/>
+            <circle cx="50" cy="77" r="5" fill="#ffcd57"/><path d="M47 77h6M50 74v6" stroke="#fff" strokeWidth="2"/>
+          </svg>
           <span aria-hidden="true" className="absolute -bottom-1 -right-1 rounded-full border-2 border-white bg-amber-300 p-1.5 text-sky-950"><MessageCircle className="h-4 w-4" /></span>
         </button>
         <span id="assistant-drag-hint" className="sr-only">Giữ và kéo biểu tượng để tránh che nội dung.</span>

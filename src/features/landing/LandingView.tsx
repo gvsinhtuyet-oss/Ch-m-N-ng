@@ -370,7 +370,7 @@ export const LandingView: React.FC = () => {
       <main data-intro-active={introActive} className="landing-cover-main relative z-20 w-full min-h-0 flex-1 mx-auto text-center">
         <div className="landing-cover-identity">
           <h1 className="landing-cover-title">
-            CHẠM ĐÀ NẴNG
+            <span>CHẠM</span><span>ĐÀ NẴNG</span>
           </h1>
           <p className="text-xs sm:text-lg xl:text-2xl font-extrabold text-white tracking-tight drop-shadow-md">
             Hành trình số khám phá quê hương

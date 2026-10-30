@@ -1,5 +1,5 @@
 import {audioService} from '../../services/AudioService';
-import {constrainAssistantPosition, compactAssistantPosition, type AssistantPosition} from '../../utils/assistantPosition';
+import {constrainAssistantPosition, type AssistantPosition} from '../../utils/assistantPosition';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Bot, MapPin, MessageCircle, Send, Sparkles, X } from 'lucide-react';
 import { ALL_25_STATIONS } from '../../data/allStations';
@@ -8,6 +8,13 @@ import {
   getDanangAssistantQuickPrompts,
   retrieveDanangAssistantAnswer,
 } from '../../services/DanangAssistantRetrievalService';
+
+// Keep this rule with its consumer: incremental sync can serve a legacy helper.
+// Importing a newly added helper export would prevent this entire module loading.
+const compactPosition = (width:number,height:number,stage?:number):AssistantPosition =>
+  width < 1024
+    ? stage===2 ? {x:8,y:Math.max(8,height-144)} : {x:64,y:10}
+    : {x:Math.max(4,(width-48)/2),y:Math.max(4,height-56)};
 
 interface Props {
   station?: Station | null;
@@ -81,7 +88,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     if (compactGame) {
       setLauncherPosition(position => {
         previousPosition.current ||= position;
-        return compactAssistantPosition(window.innerWidth,window.innerHeight,stage);
+        return compactPosition(window.innerWidth,window.innerHeight,stage);
       });
     } else if (previousPosition.current) {
       setLauncherPosition(previousPosition.current);

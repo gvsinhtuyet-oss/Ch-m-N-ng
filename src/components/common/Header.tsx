@@ -18,7 +18,7 @@ export const Header: React.FC = () => {
     { label: 'Bản đồ', icon: MapIcon, view: 'student-maps' },
     { label: 'Bộ sưu tập', icon: Heart, view: 'student-memories' },
   ] as const;
-  return <header className="sticky top-0 z-40 border-b border-orange-100 bg-[#fffdf9]/95 shadow-sm backdrop-blur-xl">
+  return <header className="app-touch-header sticky top-0 z-40 border-b border-orange-100 bg-[#fffdf9]/95 shadow-sm backdrop-blur-xl">
     <div className={`mx-auto flex ${currentView === 'station-view' ? 'h-[52px] sm:h-[56px]' : 'h-[68px]'} max-w-[1500px] items-center justify-between gap-2 px-3 sm:gap-4 sm:px-6`}>
       <button type="button" onClick={() => setCurrentView(home)} className="flex min-w-0 items-center gap-2.5 text-left" aria-label="CHẠM ĐÀ NẴNG – trang chính">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-white shadow-md shadow-orange-200/60"><Compass className="h-6 w-6" /></span>
@@ -33,6 +33,7 @@ export const Header: React.FC = () => {
         <button type="button" onClick={toggleLanguage} aria-label="Đổi ngôn ngữ VI / EN" className="flex h-9 items-center gap-1 rounded-full px-2 text-xs font-bold text-slate-600 hover:bg-orange-50"><Globe className="h-4 w-4" />{language.toUpperCase()}</button>
         {student && <span className="hidden rounded-full bg-orange-100 px-2 py-1 text-[10px] font-bold text-orange-700 sm:block">Khối {currentGrade}</span>}
         <MusicControl />
+        <button type="button" className="header-touch-assistant rounded-xl border border-sky-200 bg-sky-50 px-2 text-xs font-bold text-sky-900" aria-label="Mở Trợ lý khám phá Đà Nẵng" onClick={()=>window.dispatchEvent(new Event('cham-open-assistant'))}>Trợ lý</button>
         <details className="relative">
           <summary className="flex h-10 cursor-pointer list-none items-center gap-1.5 rounded-full border border-orange-200 bg-white px-2.5 text-xs font-bold text-slate-700 hover:bg-orange-50 [&::-webkit-details-marker]:hidden" aria-label="Menu tài khoản"><User className="h-4 w-4 text-orange-600" /><span className="hidden max-w-28 truncate md:block">{student ? name : roleLabel}</span><ChevronDown className="h-3.5 w-3.5" /></summary>
           <div className="absolute right-0 top-12 z-50 w-64 rounded-2xl border border-orange-100 bg-white p-3 shadow-xl">

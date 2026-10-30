@@ -1,5 +1,5 @@
 {
-  "commit": "028004ec546e45b10e5f6fccec4768c4615576a1",
+  "commit": "0fbd56f1fcea64ebf7e3eb9d053f083f367b7965",
   "files": [
     {
       "path": "src/games/stage2/Preview.tsx",
@@ -115,7 +115,7 @@
     },
     {
       "path": "src/index.css",
-      "sha256": "d6809f57aeed3b39cbc8e67f471565931d5fad955bb011f30a39b47d1611ddc2"
+      "sha256": "0eb6f12517702f18925a8d04df6889f60b73a8b54b9529168d098a2085d9463e"
     },
     {
       "path": "src/main.tsx",
@@ -283,7 +283,11 @@
     },
     {
       "path": "src/features/student/StudentJourneyView.tsx",
-      "sha256": "d3a38b76a1daf06d2604750feee1ee0dc3d71dcc28f40eaf148d9dd0ddb2dbb0"
+      "sha256": "401d918dd7384383a53c27f956ef48932ca5d37074d0c2f1b080a4489bb2be84"
+    },
+    {
+      "path": "src/components/common/Header.tsx",
+      "sha256": "b19b9cdf120ee456d345614311d9a2897421d0608265639f97b3cc26a2ed195d"
     }
   ]
 }

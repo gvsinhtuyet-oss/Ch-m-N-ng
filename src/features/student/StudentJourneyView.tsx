@@ -152,7 +152,6 @@ export const StudentJourneyView: React.FC = () => {
               Bản đồ
               <span aria-hidden="true">→</span>
             </button>
-            <button type="button" className="journey-touch-assistant rounded-xl border-2 border-sky-600 bg-white px-3 py-2 font-bold text-sky-900" aria-label="Mở Trợ lý khám phá Đà Nẵng" onClick={()=>window.dispatchEvent(new Event('cham-open-assistant'))}>Trợ lý</button>
           </div>
         </div>
       </section>

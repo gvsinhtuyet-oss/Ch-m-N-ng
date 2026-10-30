@@ -53,3 +53,13 @@ test('API failures and retry hints survive; upstream HTML/redirect/network error
   }
   assert.equal((await proxyApi(request('/api/health'),async()=>{throw Error('offline');})).status,503);
 });
+
+
+test('gateway forwards only the anonymous feedback cookie alongside the staff session',async()=>{
+ const req=new Request('https://school.pages.dev/api/learning/rating',{method:'POST',headers:{Origin:'https://school.pages.dev','Content-Type':'application/json',Cookie:'cham_feedback='+ 'b'.repeat(64)+'; tracking=private'},body:JSON.stringify({stationId:'g1-station-1',stars:5})});
+ const res=await proxyApi(req,async(_url,options)=>{
+  assert.equal(options.headers.get('Cookie'),'cham_feedback='+'b'.repeat(64));
+  return Response.json({saved:true},{headers:{'Set-Cookie':'cham_feedback='+ 'b'.repeat(64)+'; Path=/; HttpOnly; SameSite=Strict; Secure'}});
+ });
+ assert.equal(res.status,200);assert.match(res.headers.get('Set-Cookie'),/HttpOnly/);
+});

@@ -84,5 +84,19 @@ for (const runtime of ['production','vite']) test(runtime+' HTTP server: Admin, 
  const again=await call('/api/auth/login','POST',{email:'teacher@example.com',password:'Synthetic-teacher-password-42'});
  assert.equal((await call('/api/teacher/implementations','GET',undefined,again.cookie)).data.records.length,1);
  assert.equal((await call('/api/teacher/proposals','GET',undefined,again.cookie)).data.records.length,1);
+ // New feedback shares the deployed server and the existing private admin inbox.
+ const feedbackStation='g1-station-1';
+ const guest=await call('/api/learning/rating','POST',{stationId:feedbackStation,action:'read'});
+ assert.equal(guest.status,200);assert.match(guest.cookie,/^cham_feedback=/);
+ assert.equal((await call('/api/learning/rating','POST',{stationId:feedbackStation,stars:5},guest.cookie)).data.saved,true);
+ assert.equal((await call('/api/learning/rating','POST',{stationId:feedbackStation,action:'read'},guest.cookie)).data.stars,5);
+ assert.equal((await call('/api/learning/rating','POST',{stationId:feedbackStation,stars:4,syncCode})).data.saved,true);
+ assert.equal((await call('/api/learning/rating','POST',{stationId:feedbackStation,action:'read',syncCode})).data.stars,4);
+ assert.equal((await call('/api/learning/proposals','POST',{stationId:feedbackStation,category:'Hình ảnh/âm thanh',text:'Góp ý từ khách thử nghiệm',source:'https://example.org/reference'},guest.cookie)).data.saved,true);
+ const guestProposal=(await call('/api/teacher/proposals','GET',undefined,admin.cookie)).data.records.find(r=>r.actorKind==='guest');
+ assert.equal(guestProposal.source,'https://example.org/reference');assert.equal(guestProposal.id.length,64);
+ assert.equal((await call('/api/teacher/proposals','PUT',{id:guestProposal.id,status:'accepted'},second.cookie)).status,403);
+ assert.equal((await call('/api/teacher/proposals','PUT',{id:guestProposal.id,status:'accepted'},admin.cookie)).status,200);
+ assert.equal((await call('/api/teacher/proposals','GET',undefined,second.cookie)).data.records.length,0);
  }catch(error){error.message+='\nServer stderr: '+logs;throw error;}finally{child.kill();await new Promise(resolve=>child.exitCode!==null?resolve():child.once('exit',resolve));await rm(dir,{recursive:true,force:true});}
 });

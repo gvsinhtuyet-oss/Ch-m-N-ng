@@ -36,7 +36,7 @@ export class ProgressService {
       if (raw) {
         const parsed: Record<string, StudentStationProgress> = JSON.parse(raw);
         Object.entries(parsed).forEach(([key, val]) => {
-          this.memoryCache.set(key, val);
+          if (val && typeof val === 'object') this.memoryCache.set(key, val);
         });
       }
     } catch (e) {
@@ -91,6 +91,8 @@ export class ProgressService {
     if (existing) {
       return {
         ...existing,
+        exploredHotspotIds: Array.isArray(existing.exploredHotspotIds) ? existing.exploredHotspotIds : [],
+        rewardsCollected: Array.isArray(existing.rewardsCollected) ? existing.rewardsCollected : [],
         journeyMapReceived: existing.journeyMapReceived ?? false,
         keyFragmentReceived: existing.keyFragmentReceived ?? false,
       };

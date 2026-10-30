@@ -1,3 +1,5 @@
+import {JourneyRating} from '../../components/station/JourneyRating';
+import {Student} from '../../types';
 import React from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { progressService } from '../../services/ProgressService';
@@ -31,7 +33,7 @@ export const StudentMemoriesView: React.FC = () => {
       <div className="bg-white/90 rounded-2xl p-3 sm:p-4 shadow-sm border border-slate-200 space-y-2">
         <h2 className="text-base font-black text-slate-900 flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-amber-500" />
-          <span>Kho Báu Kỉ Niệm Đã Thu Thập</span>
+          <span>Kho báu kỉ niệm</span>
         </h2>
 
         <div className="space-y-1.5">
@@ -39,19 +41,22 @@ export const StudentMemoriesView: React.FC = () => {
             const prog = progressService.getStationProgress(studentId, st.id);
             return (
               <section key={st.id} className="rounded-xl border border-amber-300 bg-amber-50/90 px-2 py-1.5 sm:px-3 sm:py-2">
-                <h3 className="mb-1 text-xs font-black text-amber-950 sm:text-sm">
-                  Trạm {stationIndex + 1} · {st.titleVi}
-                </h3>
+                <div className="mb-1 flex flex-wrap items-center justify-between gap-x-3 gap-y-0.5">
+                  <h3 className="min-w-0 max-w-full text-xs font-black text-amber-950 sm:text-sm">
+                    Trạm {stationIndex + 1} · {st.titleVi}
+                  </h3>
+                  <JourneyRating compact readOnly stationId={st.id} userId={currentUser?.id} requireStudent={!!currentUser && !(currentUser as Student).isGuest}/>
+                </div>
                 <div className="grid grid-cols-3 gap-1 sm:gap-2">
                   {st.rewards.map(rw => {
                     const collected = prog.rewardsCollected.includes(rw.id);
                     return (
-                      <div key={rw.id} title={rw.nameVi} className={`min-w-0 rounded-lg border px-1 py-0.5 text-center ${collected ? 'border-amber-400 bg-white' : 'border-amber-200 bg-white/70 opacity-65'}`}>
+                      <div key={rw.id} title={rw.nameVi} className={`min-w-0 rounded-lg border px-1 py-1 text-center ${collected ? 'border-amber-400 bg-white' : 'border-amber-200 bg-white/70 opacity-65'}`}>
                         <div className="mx-auto flex h-8 items-center justify-center sm:h-9">
                           <RewardBadge template={rw.template} size="sm" muted={!collected} />
                         </div>
-                        <p className="line-clamp-1 text-[10px] font-bold leading-tight text-amber-950 sm:text-xs">{rw.nameVi}</p>
-                        <span className="text-[9px] text-slate-600">{collected ? '✓ Đã nhận' : 'Chưa nhận'}</span>
+                        <p className="line-clamp-2 text-[10px] font-bold leading-tight text-amber-950 sm:text-xs">{rw.nameVi}</p>
+
                       </div>
                     );
                   })}

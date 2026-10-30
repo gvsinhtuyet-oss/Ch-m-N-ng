@@ -164,3 +164,9 @@
  .stage-four .journey-controls button:not(:disabled):active { transform:translateY(4px);box-shadow:0 2px 0 #84532699,0 5px 10px #3a230b47!important; }
 }
 .stage-four .journey-photo-blur {display:none!important;}
+
+/* Optional feedback sits beside the passport without covering its stamp. */
+.journey-rating-panel{position:absolute;left:59%;top:51%;width:19%;padding:6px 2px;border-radius:12px;background:#fff8e9ed;border:1px solid #ddb36b}
+.journey-rating-panel button{padding:2px}
+.journey-rating-panel button svg{width:clamp(16px,1.8vw,24px);height:clamp(16px,1.8vw,24px)}
+@media(max-width:767px){.journey-rating-panel{position:static;width:100%;padding:10px}.journey-rating-panel button{padding:6px}.journey-rating-panel button svg{width:24px;height:24px}}

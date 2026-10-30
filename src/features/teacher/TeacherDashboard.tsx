@@ -1,3 +1,4 @@
+import {LearningFeedbackForm} from '../../components/station/LearningFeedbackForm';
 import {learningThumbnail} from '../../utils/learningThumbnail';
 import {TeacherWorkspace} from './TeacherWorkspace';
 import { ClassRoster } from './ClassRoster';
@@ -39,8 +40,6 @@ export const TeacherDashboard: React.FC = () => {
   const [selectedStationForImp, setSelectedStationForImp] = useState<Station | null>(null);
   const [selectedClassId, setSelectedClassId] = useState<string>('class-2-24');
   const [proposalStation, setProposalStation] = useState<Station | null>(null);
-  const [proposalText, setProposalText] = useState<string>('');
-  const [proposalSent, setProposalSent] = useState<boolean>(false);
 
   const teacher = currentUser as any;
   const stations = allStationsInCurrentGrade;
@@ -55,7 +54,6 @@ export const TeacherDashboard: React.FC = () => {
   const isDemo=currentUser?.id==='teacher-demo';
   const [implementations,setImplementations]=useState<ImplementationRecord[]>([]);
   const [workflowError,setWorkflowError]=useState('');
-  const [proposalBusy,setProposalBusy]=useState(false);
   const loadImplementations=async()=>{try{setWorkflowError('');setImplementations(isDemo?implementationService.getAll():await authService.implementations());}catch(e){setWorkflowError((e as Error).message);}};
   useEffect(()=>{void loadImplementations();},[currentUser?.id]);
   const teacherClasses = DEMO_CLASSROOMS.filter(classroom =>
@@ -447,8 +445,6 @@ export const TeacherDashboard: React.FC = () => {
                     <button
                       onClick={() => {
                         setProposalStation(st);
-                        setProposalText('');
-                        setProposalSent(false);
                       }}
                       className="text-emerald-700 font-bold hover:underline flex items-center gap-1"
                     >
@@ -475,56 +471,7 @@ export const TeacherDashboard: React.FC = () => {
         />
       )}
 
-      {/* Proposal Modal */}
-      {proposalStation && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <div className="w-full max-w-md bg-white rounded-3xl p-6 shadow-2xl space-y-4">
-            <h3 className="text-lg font-black text-slate-900">
-              Đề Xuất Chỉnh Sửa Học Liệu: {proposalStation.titleVi}
-            </h3>
-            <p className="text-xs text-slate-500">
-              {isDemo?'Đề xuất trong bản trải nghiệm chỉ là minh họa.':'Đề xuất được lưu trên máy chủ để quản trị đọc và rà soát.'}
-            </p>
-
-            {workflowError&&<p role="alert" className="text-rose-700 text-sm">{workflowError}</p>}
-            {!proposalSent ? (
-              <div className="space-y-3">
-                <textarea
-                  value={proposalText}
-                  onChange={(e) => setProposalText(e.target.value)}
-                  rows={4} maxLength={3000}
-                  placeholder="Góp ý về từ ngữ, hình ảnh, câu hỏi tương tác hoặc tư liệu cập nhật..."
-                  className="w-full p-3 rounded-2xl border border-slate-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-                />
-                <div className="flex gap-2">
-                  <button
-                    disabled={proposalBusy} onClick={() => setProposalStation(null)}
-                    className="flex-1 py-2.5 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold"
-                  >
-                    Hủy
-                  </button>
-                  <button
-                    onClick={async () => {
-                      if(proposalBusy)return;setProposalBusy(true);setWorkflowError('');
-                      try{if(!isDemo)await authService.submitProposal({stationId:proposalStation.id,stationName:proposalStation.titleVi,grade:proposalStation.grade,text:proposalText});setProposalSent(true);}
-                      catch(e){setWorkflowError((e as Error).message);}finally{setProposalBusy(false);}
-                    }}
-                    disabled={proposalBusy || !proposalText.trim()}
-                    className="flex-1 py-2.5 rounded-xl bg-emerald-600 disabled:opacity-40 text-white text-xs font-bold"
-                  >
-                    {proposalBusy?'Đang gửi…':'Gửi đề xuất'}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center py-4 text-emerald-700 font-bold text-sm">
-                {isDemo?'✓ Đã xem thử thao tác gửi đề xuất.':'✓ Máy chủ đã lưu đề xuất học liệu.'}
-                <button type="button" onClick={()=>setProposalStation(null)} className="block mx-auto mt-3 underline">Đóng</button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      {proposalStation && <LearningFeedbackForm station={proposalStation} onClose={()=>setProposalStation(null)}/>}
     </div>
   );
 };

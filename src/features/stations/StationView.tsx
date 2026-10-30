@@ -1,3 +1,4 @@
+import {LearningFeedbackForm} from '../../components/station/LearningFeedbackForm';
 import '../../components/station/station-exploration-tools.css';
 import './station-stage1-compact.css';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -37,6 +38,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
 
   const fullscreenRef = useRef<HTMLDivElement>(null);
   const [isLessonFullscreen, setIsLessonFullscreen] = useState(false);
+  const [feedbackOpen,setFeedbackOpen]=useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
   const toggleLessonFullscreen = async () => {
     const element = fullscreenRef.current;
@@ -124,12 +126,14 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
 
   return (
     <div ref={fullscreenRef} data-stage={currentStage} className={`station-immersive-root ${currentStage === 1 ? "station-stage1-compact" : ""} ${isLessonFullscreen ? "station-immersive-active" : ""} ${isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}`}>
+      {feedbackOpen&&<LearningFeedbackForm station={station} onClose={()=>setFeedbackOpen(false)}/>}
             {/* Top Station Header bar */}
       <div className="station-compact-header relative z-10">
         <button type="button" onClick={() => { audioService.playSfx('click'); onBack(); }} aria-label="Quay lại danh sách trạm" className="station-compact-back"><ArrowLeft aria-hidden="true" /></button>
         <h1 className="station-compact-title" title={station.titleVi}>{station.titleVi}</h1>
         {renderStageTabs("Bốn chặng hành trình")}
         
+        <button type="button" onClick={()=>setFeedbackOpen(true)} className="shrink-0 rounded bg-white/15 px-1 py-2 text-[10px] font-bold text-white">Góp ý cho trạm</button>
         <div className="station-compact-actions">
           <button type="button" onClick={toggleLessonFullscreen} aria-label={isLessonFullscreen ? 'Thu nhỏ bài học' : 'Toàn màn hình'} title="Toàn màn hình" className="station-compact-action"><Maximize2 aria-hidden="true" /></button>
           <button type="button" onClick={handleDownload} disabled={downloading || Boolean(offlinePkg)} title={offlinePkg ? 'Demo offline đã lưu' : 'Tải demo offline'} aria-label="Tải demo offline" className="station-compact-action"><Download aria-hidden="true" /></button>

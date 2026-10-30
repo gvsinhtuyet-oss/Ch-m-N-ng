@@ -1,3 +1,4 @@
+import {createLearningFeedback} from './learning-feedback.mjs';
 import {getCuratedGddpLink,textbookReviewStatus} from './gddp-curriculum-links.mjs';
 
 import { isDeepStrictEqual } from 'node:util';
@@ -26,6 +27,7 @@ const auth = createAuth({
   adminEmail: process.env.AUTH_ADMIN_EMAIL, adminPassword: process.env.AUTH_ADMIN_PASSWORD,
   secureCookie: process.env.AUTH_LOCAL_HTTP !== 'true' || !!process.env.K_SERVICE,
 });
+const learningFeedback = createLearningFeedback({store:cloudStore,auth,secureCookie:process.env.AUTH_LOCAL_HTTP !== 'true' || !!process.env.K_SERVICE});
 await mkdir(dataDir, { recursive: true });
 let stations = {};
 try { stations = JSON.parse(await readFile(dataFile, 'utf8')); }
@@ -156,7 +158,7 @@ async function body(req) {
   const chunks = [];
   for await (const chunk of req) {
     size += chunk.length;
-    if (size > (req.url === '/api/teacher/workspace' ? 300000 : req.url.startsWith('/api/auth/') || req.url === '/api/admin/users' || req.url === '/api/teacher/classes' ? 32768 : 32 * 1024 * 1024)) throw Object.assign(new Error('Too large'), { status: 413 });
+    if (size > (req.url.startsWith('/api/learning/') ? 16384 : req.url === '/api/teacher/workspace' ? 300000 : req.url.startsWith('/api/auth/') || req.url === '/api/admin/users' || req.url === '/api/teacher/classes' ? 32768 : 32 * 1024 * 1024)) throw Object.assign(new Error('Too large'), { status: 413 });
     chunks.push(chunk);
   }
   try { return JSON.parse(Buffer.concat(chunks).toString('utf8')); }
@@ -166,6 +168,7 @@ const types = { '.html':'text/html', '.js':'application/javascript', '.css':'tex
 const server = createServer(async (req,res) => {
   try {
     const pathname = new URL(req.url, 'http://localhost').pathname;
+    if(await learningFeedback(req,res,pathname,body,json))return;
     if (pathname === '/api/health' && req.method === 'GET') {
       const cachedHealthTtl = healthCache?.auth?.ready ? HEALTH_OK_CACHE_MS : HEALTH_ERROR_CACHE_MS;
       if (healthCache && Date.now() - healthCacheAt < cachedHealthTtl) {

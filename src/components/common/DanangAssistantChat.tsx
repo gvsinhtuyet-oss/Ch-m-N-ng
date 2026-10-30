@@ -48,7 +48,7 @@ const SimpleBold: React.FC<{ text: string }> = ({ text }) => {
 
 export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage }) => {
   const isTeacher = audience === 'teacher';
-  const welcome = isTeacher ? 'Thầy cô muốn giải thích từ khó hay mở rộng kiến thức nào? Tôi có thể tìm trong 25 bài học và kho kiến thức có nguồn, kèm ví dụ để giảng cho học sinh.' : WELCOME;
+  const welcome = isTeacher ? 'Thầy cô muốn tìm hiểu kiến thức giáo dục địa phương nào? Tôi có thể tra cứu văn hóa, lịch sử, địa lý, làng nghề, trò chơi dân gian và học liệu có nguồn.' : WELCOME;
   const [open, setOpen] = useState(false);
   const [tapPulse, setTapPulse] = useState(0);
   const [input, setInput] = useState('');
@@ -131,7 +131,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
     append({ id: `q-${Date.now()}`, role: 'student', text: question });
     try {
-      const result = retrieveDanangAssistantAnswer(question, context);
+      const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text });
       append({
         id: `a-${Date.now()}`,
         role: 'assistant',
@@ -223,7 +223,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                 <div>
                   <h2 className="font-black leading-tight">{isTeacher ? 'Trợ lý giảng dạy Đà Nẵng' : 'Trợ lý khám phá Đà Nẵng'}</h2>
                   <p className="mt-0.5 text-[11px] font-medium text-sky-100">
-                    {isTeacher ? 'Hỗ trợ giảng dạy • Kiến thức có nguồn' : 'Học cùng bài • Không giới hạn lượt hỏi'}
+                    {isTeacher ? 'Hỗ trợ giảng dạy • Kiến thức có nguồn' : 'Khám phá địa phương • Kiến thức có nguồn'}
                   </p>
                 </div>
               </div>

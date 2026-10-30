@@ -1,5 +1,6 @@
 import knowledge from '../data/assistantKnowledge.json';
 import guides from '../data/assistantStationGuides.json';
+import { answerLocalEducationQuestion, resolveLocalEducationFollowUp } from './LocalEducationKnowledge';
 import { ExplorationHotspot, Station } from '../types';
 import {
   AssistantLexiconEntry,
@@ -23,6 +24,7 @@ export interface AssistantRetrievalContext {
   stations?: Station[];
   audience?: 'student' | 'teacher';
   stage?: number;
+  previousQuery?: string;
 }
 
 export interface AssistantRetrievalResult {
@@ -245,7 +247,7 @@ const makeResult = (
 });
 
 // Determine the requested fact before choosing a lesson passage.
-type QuestionIntent = 'definition' | 'location' | 'material' | 'history' | 'purpose' | 'action' | 'actor' | 'quantity' | 'comparison' | 'feature';
+type QuestionIntent = 'definition' | 'location' | 'material' | 'history' | 'purpose' | 'action' | 'actor' | 'quantity' | 'comparison' | 'list' | 'confirmation' | 'feature';
 const questionIntent = (query: string): QuestionIntent => {
   const q = normalizeForSearch(query);
   if (/nguyen lieu|vat lieu|lam bang|lam tu/.test(q)) return 'material';
@@ -256,6 +258,8 @@ const questionIntent = (query: string): QuestionIntent => {
   if (/khac .*the nao|so sanh|khac nhau|khac gi/.test(q)) return 'comparison';
   if (/em .*lam gi|nen lam gi|giu gin|bao ve|ung xu/.test(q)) return 'action';
   if (/tai sao|vi sao|de lam gi|y nghia|cong dung/.test(q)) return 'purpose';
+  if (/co phai|phai khong|phai ko|dung khong|dung ko/.test(q)) return 'confirmation';
+  if (/ke ten|liet ke|ke vai|nhung .*nao|co .*gi|co .*nao|gom nhung/.test(q)) return 'list';
   if (/nghia la|la gi|la ai/.test(q)) return 'definition';
   return 'feature';
 };
@@ -270,6 +274,8 @@ const intentEvidence: Record<QuestionIntent, RegExp> = {
   quantity: /[0-9]+(?:[.,][0-9]+)?\s*(?:km|m|met|ha|nam|the ky|hon|dao|loai)/,
   comparison: /\b(?:khac|trong khi|con|so voi|giong)\b/,
   feature: /./,
+  list: /./,
+  confirmation: /$^/,
 };
 const dialectDefinitionRequested = (query: string, entry: AssistantLexiconEntry) => {
   // Inspect the original words: dialect normalization erases the word being defined.
@@ -345,6 +351,9 @@ function retrieveCoreAnswer(
     const title = normalizeForSearch(c.hotspot.titleVi.replace(/^\d+\.\s*/, ''));
     return words(title).length >= 2 && (` ${normalizeForSearch(query)} `).includes(` ${title} `);
   });
+  if (intent === 'list' && !explicitStation && !namedHotspot && !usesDeicticReference(query)) {
+    return makeResult('unknown', normalizedQuery, UNKNOWN_RESPONSE, 'low');
+  }
   if (intent === 'action' && !explicitStation && !namedHotspot && !usesDeicticReference(query)) {
     if (/\b(?:que huong|di san|di tich|moi truong|bai bien|cay xanh)\b/.test(normalizeForSearch(query))) {
       return makeResult('common', normalizedQuery,
@@ -376,7 +385,7 @@ function retrieveCoreAnswer(
 /** Local retrieval only: no API key, per-account counter, or network inference. */
 export function retrieveDanangAssistantAnswer(rawQuery: string, context: AssistantRetrievalContext = {}): AssistantRetrievalResult {
   const teacher = context.audience === 'teacher';
-  const query = rawQuery.trim().slice(0, teacher ? 600 : 220);
+  const query = resolveLocalEducationFollowUp(rawQuery.trim(), context.previousQuery).slice(0, teacher ? 600 : 220);
   // While taking a challenge, keep the student in the learning flow, not an answer service.
   if (!teacher && context.stage === 2 && query && !looksLikeHelpQuestion(query)) {
     return makeResult('help', normalizeDanangDialect(query),
@@ -403,6 +412,8 @@ export function retrieveDanangAssistantAnswer(rawQuery: string, context: Assista
       followUp: teacher ? best.followUp : undefined,
     });
   } else {
+    const local = answerLocalEducationQuestion(cleanQuery);
+    if (local) return makeResult(local.found ? 'common' : 'unknown', normalizeDanangDialect(query), local.answer, local.found ? 'high' : 'low', { sources: local.sources });
     const wantsExplanation = /^(?:(?:cô|thầy|hãy|giúp tôi|giúp mình)\s+)?(?:giải thích|giải nghĩa|cho ví dụ về)/i.test(query);
     const coreQuery = wantsExplanation && questionIntent(cleanQuery) === 'feature' ? `${cleanQuery} là gì?` : cleanQuery || query;
     result = retrieveCoreAnswer(coreQuery, context);
@@ -448,8 +459,8 @@ export function getDanangAssistantQuickPrompts(context: AssistantRetrievalContex
   }
 
   return (scope && promptsByScope[scope]) || [
-    'Chùa Cầu có gì đặc biệt?',
-    'Nguyên liệu làm chiếu là gì?',
+    'Đà Nẵng có làng nghề gì?',
+    'Trốn tìm có phải trò chơi dân gian không?',
     'Em nên làm gì để giữ gìn quê hương?',
   ];
 }

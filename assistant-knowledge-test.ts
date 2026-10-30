@@ -83,3 +83,20 @@ test('student challenge quick prompts invite learning rather than asking for blo
  assert.equal(p.length,3);assert.ok(p.every(q=>!/UNESCO|năm nào|đáp án/i.test(q)));
  assert.ok(getDanangAssistantQuickPrompts({station,stage:2,audience:'teacher'}).some(q=>/UNESCO/.test(q)));
 });
+
+test('general hometown care question is not hijacked by any station or hotspot context',()=>{
+ for(const station of ALL_25_STATIONS)for(const hotspot of station.hotspots){
+  for(const q of ['Em nên làm gì để giữ gìn quê hương?', 'Em có thể làm gì để giữ gìn vẻ đẹp quê hương?', 'Em can lam gi de bao ve moi truong?']){
+   const r=ask(q,{station,hotspot,stations:ALL_25_STATIONS,stage:1});
+   assert.equal(r.layer,'common',`${station.id}/${hotspot.id}: ${q}: ${r.answer}`);
+   assert.match(r.answer,/bỏ rác|vệ sinh/);
+   assert.equal(r.relatedStationId,undefined);
+  }
+ }
+});
+test('general care intent does not override a named destination or supply unrelated unsupported advice',()=>{
+ const ctx={stations:ALL_25_STATIONS};
+ assert.equal(ask('Em nên làm gì để bảo vệ sao Hỏa?',ctx).found,false);
+ const named=ask('Em nên làm gì khi tham quan Thành Điện Hải?',ctx);
+ assert.ok(!named.found || named.relatedStationTitle==='Thành Điện Hải');
+});

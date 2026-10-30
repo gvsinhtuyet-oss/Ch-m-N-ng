@@ -22,3 +22,12 @@ test('rejects corrupted downloads and unsafe paths without writing source',async
  await assert.rejects(readFile(join(root,'src/main.tsx')),/ENOENT/);
  await assert.rejects(recoverSources({root,manifest:{...manifest,files:[{...manifest.files[0],path:'../secret.ts'}]}}),/Invalid source recovery entry/);
 });
+
+test('recovery snapshot contains the current assistant module contract and isolated learning shell',async()=>{
+ const current=JSON.parse(await readFile('scripts/aistudio-source-manifest.json','utf8'));
+ assert.notEqual(current.commit,'02d04447aa496a6b59c8da243084f5b56b358d75');
+ for(const path of ['src/App.tsx','src/components/common/DanangAssistantChat.tsx','src/components/common/FeatureLoadBoundary.tsx','src/utils/assistantPosition.ts','src/services/LocalEducationKnowledge.ts']){
+  const entry=current.files.find(e=>e.path===path);assert.ok(entry,path);
+  const source=await readFile(path);assert.equal(createHash('sha256').update(source).digest('hex'),entry.sha256,path);
+ }
+});

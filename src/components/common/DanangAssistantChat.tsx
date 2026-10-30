@@ -1,5 +1,5 @@
 import {audioService} from '../../services/AudioService';
-import {constrainAssistantPosition, type AssistantPosition} from '../../utils/assistantPosition';
+import {constrainAssistantPosition, compactAssistantPosition, type AssistantPosition} from '../../utils/assistantPosition';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Bot, MapPin, MessageCircle, Send, Sparkles, X } from 'lucide-react';
 import { ALL_25_STATIONS } from '../../data/allStations';
@@ -69,16 +69,14 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   useEffect(() => {
     if (compactGame) {
       setLauncherPosition(position => {
-        previousPosition.current = position;
-        return window.innerWidth < 1024
-          ? {x: 64, y: 10}
-          : {x: Math.max(4,(window.innerWidth - 48) / 2), y: Math.max(4,window.innerHeight - 56)};
+        previousPosition.current ||= position;
+        return compactAssistantPosition(window.innerWidth,window.innerHeight,stage);
       });
     } else if (previousPosition.current) {
       setLauncherPosition(previousPosition.current);
       previousPosition.current = null;
     }
-  }, [compactGame]);
+  }, [compactGame, stage]);
 
   useEffect(() => {
     const resize = () => {

@@ -17,7 +17,12 @@ export function JourneyRating({stationId,userId,requireStudent=false,compact=fal
     if(readOnly||saving.current)return;saving.current=true;setBusy(true);setStatus('Đang lưu…');
     try{const saved=await learningFeedbackService.saveRating(stationId,value,userId,requireStudent);setStars(saved);setStatus('Đã lưu ✓');
       try{localStorage.setItem(`cham_danang_journey_rating_v2:${userId||'guest'}:${stationId}`,JSON.stringify({stars:saved}));}catch{/* Server confirmation remains authoritative. */}
-    }catch(e){setStatus((e as Error).message);}finally{saving.current=false;setBusy(false);}
+    }catch(e){
+      if((e as {status?:number}).status===404){
+        try{localStorage.setItem(`cham_danang_journey_rating_v2:${userId||'guest'}:${stationId}`,JSON.stringify({stars:value,storage:'device'}));setStars(value);setStatus('Đã lưu trên thiết bị này; chưa đồng bộ máy chủ.');}
+        catch{setStatus('Không thể lưu đánh giá trên thiết bị này.');}
+      }else setStatus((e as Error).message);
+    }finally{saving.current=false;setBusy(false);}
   }
   return <div className={compact?"flex shrink-0 flex-wrap items-center gap-x-1 text-amber-950":"flex flex-col items-center gap-1 text-amber-950"}>
     {!readOnly && <span className={compact?"sr-only":"text-[11px] font-semibold"}>Em thích hành trình này chứ?</span>}

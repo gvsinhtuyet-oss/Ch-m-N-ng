@@ -352,6 +352,7 @@ export const LandingView: React.FC = () => {
           </button>
 
           <button
+            aria-label="Đổi vai trò"
             onClick={() => {
               stopIntroVideo();
               audioService.playSfx('click');

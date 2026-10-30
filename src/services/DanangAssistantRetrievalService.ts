@@ -401,7 +401,9 @@ export function retrieveDanangAssistantAnswer(rawQuery: string, context: Assista
     const exact = terms.some(t => normalizeForSearch(t) === q);
     const named = terms.some(t => (` ${q} `).includes(` ${normalizeForSearch(t)} `));
     const askedFact = terms.some(t => /nam nao|vat lieu|nguyen lieu|dong vat hay thuc vat/.test(normalizeForSearch(t)) && questionIntent(t) === intent && longTextScore(cleanQuery, t) >= 96);
-    return {card, score: exact ? 150 : askedFact ? 140 : named && intent === 'definition' ? 110 + Math.max(...terms.filter(t => (` ${q} `).includes(` ${normalizeForSearch(t)} `)).map(t=>words(t).length)) : 0};
+    const supportedIntent=intent==='definition'||card.intents?.includes(intent);
+    const namedSubject=card.subjects?.some(t=>(` ${q} `).includes(` ${normalizeForSearch(t)} `));
+    return {card, score: exact ? 150 : askedFact ? 140 : named && supportedIntent ? (namedSubject?140:110) + Math.max(...terms.filter(t => (` ${q} `).includes(` ${normalizeForSearch(t)} `)).map(t=>words(t).length)) : 0};
   }).filter(item => item.score > 0).sort((a,b)=>b.score-a.score);
   const best = candidates[0]?.card;
   let result: AssistantRetrievalResult;

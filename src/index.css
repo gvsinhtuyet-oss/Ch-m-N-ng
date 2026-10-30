@@ -477,9 +477,9 @@ body:has(.journey-screen-fixed){overflow:hidden}
  .station-touch-tools button:disabled{opacity:.5}
 }
 @media (max-width:1023px), (max-width:1366px) and (pointer:coarse){
- body:has(.station-screen-fixed){overflow-y:auto;overscroll-behavior:auto}
- .station-screen-fixed{height:auto;min-height:100dvh!important;overflow:visible}
- .station-screen-fixed>.game-content{height:auto;overflow:visible!important}
+ body:has(.station-screen-fixed){overflow-y:auto!important;overscroll-behavior:auto!important}
+ .station-screen-fixed{height:auto!important;min-height:100dvh!important;overflow:visible!important}
+ .station-screen-fixed>.game-content{height:auto!important;overflow:visible!important}
  .station-immersive-root.station-viewport[data-stage]{max-height:none!important}
  .station-immersive-root.station-viewport[data-stage]>.station-compact-header{max-height:none!important}
  .station-compact-header .station-compact-title{font-size:16px!important}

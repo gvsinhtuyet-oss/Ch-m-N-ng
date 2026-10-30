@@ -70,7 +70,7 @@ const AppContent: React.FC = () => {
 
   // If in Presentation Mode, render full-screen projection without header/footer
   if (currentView === 'presentation-view' && currentStation && (role === 'teacher' || role === 'admin')) {
-    return <><ClassroomPresentationMode key={currentStation.id} station={currentStation} onExit={exitPresentationMode} /><Suspense fallback={null}><DanangAssistantChat audience="teacher" station={currentStation} hotspot={currentAssistantHotspot} /></Suspense></>;
+    return <><ClassroomPresentationMode key={currentStation.id} station={currentStation} onExit={exitPresentationMode} /><FeatureLoadBoundary fallback={null}><Suspense fallback={null}><DanangAssistantChat audience="teacher" station={currentStation} hotspot={currentAssistantHotspot} /></Suspense></FeatureLoadBoundary></>;
   }
 
   // If on Landing Cover Page, render full-screen immersive cover
@@ -98,7 +98,7 @@ const AppContent: React.FC = () => {
       {currentView !== 'student-journey' && currentView !== 'station-view' && <Footer />}
 
       {(role === 'student' || role === 'teacher' || role === 'admin') && currentUser && currentView !== 'presentation-view' && (
-        <Suspense fallback={null}><DanangAssistantChat docked={currentView === 'student-journey'} audience={role === 'student' ? 'student' : 'teacher'} stage={currentView === 'station-view' ? currentStage : undefined} compactGame={currentView === 'station-view' && (currentStage === 1 || currentStage === 2)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense>
+        <FeatureLoadBoundary fallback={null}><Suspense fallback={null}><DanangAssistantChat docked={currentView === 'student-journey'} audience={role === 'student' ? 'student' : 'teacher'} stage={currentView === 'station-view' ? currentStage : undefined} compactGame={currentView === 'station-view' && (currentStage === 1 || currentStage === 2)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense></FeatureLoadBoundary>
       )}
 
       {storageWarning && (

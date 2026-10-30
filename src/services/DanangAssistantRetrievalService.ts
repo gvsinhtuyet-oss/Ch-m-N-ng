@@ -471,6 +471,12 @@ function retrieveSingleAnswer(rawQuery: string, context: AssistantRetrievalConte
   } else {
     const local = answerLocalEducationQuestion(cleanQuery);
     if (local) return makeResult(local.found ? 'common' : 'unknown', normalizeDanangDialect(query), local.answer, local.found ? 'high' : 'low', { sources: local.sources });
+    // A known subject with an unsupported requested fact must not fall through
+    // to an incidental station passage mentioning the same noun.
+    if(topicCards(cleanQuery).length && ['history','quantity','actor'].includes(intent)) {
+      return makeResult('unknown',normalizeDanangDialect(query),
+        'Mình nhận ra chủ đề bạn hỏi, nhưng chưa có nguồn đủ rõ cho thông tin cụ thể này. Bạn muốn hỏi về đặc điểm hoặc xem ví dụ dễ hiểu của chủ đề đó không?','low');
+    }
     const wantsExplanation = /^(?:(?:cô|thầy|hãy|giúp tôi|giúp mình)\s+)?(?:giải thích|giải nghĩa|cho ví dụ về)/i.test(query);
     const coreQuery = wantsExplanation && questionIntent(cleanQuery) === 'feature' ? `${cleanQuery} là gì?` : cleanQuery || query;
     result = retrieveCoreAnswer(coreQuery, context);

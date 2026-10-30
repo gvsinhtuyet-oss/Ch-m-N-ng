@@ -1,5 +1,5 @@
 {
-  "commit": "3f94c5970476877a059bd1bea053d4848fadd599",
+  "commit": "028004ec546e45b10e5f6fccec4768c4615576a1",
   "files": [
     {
       "path": "src/games/stage2/Preview.tsx",
@@ -247,7 +247,7 @@
     },
     {
       "path": "vite.config.ts",
-      "sha256": "81f3bfdf2a4beb5b3724bd395dfa0da233a2679bf399dd48074de6b980650a15"
+      "sha256": "d658dcd355f0e9821757d0657e41a56769da2f8b2e23a43627650204e9ca387d"
     },
     {
       "path": "src/App.tsx",

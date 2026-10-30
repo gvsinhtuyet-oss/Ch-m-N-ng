@@ -34,6 +34,7 @@ interface ChatMessage {
   teachingExample?: string;
   followUp?: string;
   ai?: boolean;
+  topic?: string;
 }
 
 const WELCOME =
@@ -62,6 +63,9 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const [input, setInput] = useState('');
   const [aiAvailable,setAiAvailable]=useState(false);
   const [aiBusy,setAiBusy]=useState(false);
+  const activeAi=useRef<AbortController|null>(null);
+  const aiLock=useRef(false);
+  useEffect(()=>()=>activeAi.current?.abort(),[]);
   useEffect(()=>{
     if(!isTeacher||!open)return;
     const controller=new AbortController();
@@ -128,6 +132,10 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
 
   useEffect(() => {
+    activeAi.current?.abort();
+    activeAi.current=null;
+    aiLock.current=false;
+    setAiBusy(false);
     setMessages([{ id: 'welcome', role: 'assistant', text: welcome }]);
     setInput('');
   }, [station?.id, welcome]);
@@ -145,35 +153,54 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
   const ask = (rawQuestion: string) => {
     const question = rawQuestion.trim();
-    if (!question) return;
+    if (!question || aiLock.current) return;
 
     append({ id: `q-${Date.now()}`, role: 'student', text: question });
     try {
-      const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text });
+      const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text, previousTopic:messages.filter(message=>message.role==='assistant').at(-1)?.topic });
+      if(!result.found && aiAvailable && isTeacher){
+        void requestAi(question,result.answer);
+        setInput('');
+        return;
+      }
       append({
         id: `a-${Date.now()}`,
         role: 'assistant',
         text: result.answer,
         relatedStationTitle: result.relatedStationTitle,
-        sources: result.sources, teachingExample: result.teachingExample, followUp: result.followUp,
+        topic:result.topic, sources: result.sources, teachingExample: result.teachingExample, followUp: result.followUp,
       });
     } catch {
       append({ id: `error-${Date.now()}`, role: 'assistant', text: 'Mình chưa đọc được nội dung này. Bạn thử hỏi lại hoặc chọn một câu hỏi gợi ý nhé!' });
     }
     setInput('');
   };
-  const askAi=async()=>{
-    const question=input.trim()||messages.filter(m=>m.role==='student').at(-1)?.text;
-    if(!question||aiBusy||!aiAvailable||!isTeacher)return;
+  const requestAi=async(question:string,fallback?:string)=>{
+    if(aiLock.current||!aiAvailable||!isTeacher)return;
+    aiLock.current=true;
     setAiBusy(true);
-    if(input.trim()){append({id:`ai-q-${Date.now()}`,role:'student',text:question});setInput('');}
+    const controller=new AbortController();
+    activeAi.current=controller;
+    const timeout=window.setTimeout(()=>controller.abort(),30000);
+    const history=messages.filter(m=>m.id!=='welcome').slice(-6).map(m=>({role:m.role==='student'?'user':'assistant',text:m.text.slice(0,1200)}));
     try{
-      const response=await fetch('/api/education-assistant',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({question}),signal:AbortSignal.timeout(30000)});
+      const response=await fetch('/api/education-assistant',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({question,history}),signal:controller.signal});
       const result=await response.json();
-      if(!response.ok||typeof result.answer!=='string')throw Error(result.error||'AI chưa trả lời được.');
+      if(!response.ok||typeof result.answer!=='string')throw Error('AI unavailable');
+      if(activeAi.current!==controller)return;
       append({id:`ai-a-${Date.now()}`,role:'assistant',text:result.answer,ai:true});
-    }catch{append({id:`ai-e-${Date.now()}`,role:'assistant',text:'AI mở rộng hiện chưa kết nối được. Thầy cô vẫn có thể tra cứu kho kiến thức có nguồn.'});}
-    finally{setAiBusy(false);}
+    }catch{
+      if(activeAi.current===controller)append({id:`ai-e-${Date.now()}`,role:'assistant',text:fallback || 'AI mở rộng hiện chưa kết nối được. Thầy cô vẫn có thể tra cứu kho kiến thức có nguồn.'});
+    }finally{
+      window.clearTimeout(timeout);
+      if(activeAi.current===controller){activeAi.current=null;aiLock.current=false;setAiBusy(false);}
+    }
+  };
+  const askAi=()=>{
+    const question=input.trim()||messages.filter(m=>m.role==='student').at(-1)?.text;
+    if(!question||aiLock.current||!aiAvailable||!isTeacher)return;
+    if(input.trim()){append({id:`ai-q-${Date.now()}`,role:'student',text:question});setInput('');}
+    void requestAi(question);
   };
 
   return (
@@ -312,6 +339,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                   </div>
                 </div>
               ))}
+              <div role="status" aria-live="polite">{aiBusy && <p className="text-sm text-sky-800">Trợ lý đang tìm cách giải thích…</p>}</div>
               <div ref={endRef} />
             </div>
 
@@ -358,7 +386,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
               />
               <button
                 type="submit"
-                disabled={!input.trim()}
+                disabled={!input.trim()||aiBusy}
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-700 text-white shadow-sm transition hover:bg-sky-800 disabled:bg-slate-200 disabled:text-slate-400"
                 aria-label="Gửi câu hỏi"
               >
@@ -367,7 +395,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             </div>
             {isTeacher&&aiAvailable&&<div className="mt-2"><button type="button" onClick={askAi} disabled={aiBusy||(!input.trim()&&!messages.some(m=>m.role==='student'))} className="rounded-xl bg-sky-800 px-3 py-2 text-xs font-bold text-white disabled:opacity-50">{aiBusy?'AI đang giải thích…':'Mở rộng bằng AI'}</button><p className="mt-1 text-[10px] text-slate-500">Gửi câu hỏi đến AI để giải thích hoặc gợi ý thêm. Không nhập dữ liệu cá nhân học sinh.</p></div>}
             <p className="mt-1.5 text-center text-[9px] text-slate-400">
-              Tra cứu từ học liệu và kho mở rộng có nguồn. Chưa có dữ liệu sẽ nói rõ; không tự tìm Internet.
+              {aiAvailable ? 'Có thể hỏi tiếp theo chủ đề. Câu vượt kho kiến thức được chuyển sang AI; câu trả lời AI cần đối chiếu.' : 'Kho kiến thức có nguồn đang hoạt động. AI mở rộng chưa kết nối; có thể hỏi tiếp hoặc yêu cầu ví dụ.'}
             </p>
           </form>
         </section>

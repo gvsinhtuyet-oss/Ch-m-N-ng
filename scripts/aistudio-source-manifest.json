@@ -1,5 +1,5 @@
 {
-  "commit": "432806b4876f86cc977441dcaae1901e9be3540d",
+  "commit": "7877d4a13d5db181994d9785317e8e092d107088",
   "files": [
     {
       "path": "src/games/stage2/Preview.tsx",
@@ -255,7 +255,7 @@
     },
     {
       "path": "src/components/common/DanangAssistantChat.tsx",
-      "sha256": "f1b16ade44793a53bef3d8c4d47dee6e2ab737ba66652a707189b8171d08834e"
+      "sha256": "8a969ae39d8e587316440f0569c871fba3a7071feacb6e5a2fe84975bae315a7"
     },
     {
       "path": "src/components/common/FeatureLoadBoundary.tsx",

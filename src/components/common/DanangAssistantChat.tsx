@@ -268,10 +268,10 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
           id="danang-assistant-panel"
           role="dialog"
           aria-label="Trợ lý khám phá Đà Nẵng"
-          style={{left:panelLeft, top:panelTop, width:panelWidth, maxHeight:panelHeight}}
+          style={{left:panelLeft, top:panelTop, width:panelWidth, height:panelHeight, maxHeight:panelHeight}}
           className="discovery-chat-bubble fixed z-[60] flex flex-col overflow-hidden rounded-[1.75rem] border-2 border-sky-200 bg-white shadow-2xl"
         >
-          <header className="relative overflow-hidden bg-gradient-to-r from-sky-800 via-sky-700 to-cyan-600 px-4 py-4 text-white">
+          <header className="relative shrink-0 overflow-hidden bg-gradient-to-r from-sky-800 via-sky-700 to-cyan-600 px-4 py-4 text-white">
             <div className="absolute -right-7 -top-8 h-24 w-24 rounded-full bg-white/10" />
             <div className="relative flex items-start justify-between gap-3">
               <div className="flex gap-3">
@@ -307,7 +307,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             )}
           </header>
 
-          <div className="flex-1 overflow-y-auto bg-gradient-to-b from-sky-50/70 to-white px-3 py-4">
+          <div className="min-h-0 flex-1 overflow-y-auto bg-gradient-to-b from-sky-50/70 to-white px-3 py-4">
             <div className="space-y-3">
               {messages.map(message => (
                 <div
@@ -367,7 +367,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
               event.preventDefault();
               ask(input);
             }}
-            className="border-t border-slate-100 bg-white p-3"
+            className="shrink-0 border-t border-slate-100 bg-white p-3"
           >
             <div className="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-2 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100">
               <textarea

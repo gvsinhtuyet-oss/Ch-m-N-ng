@@ -2,7 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
-import {constrainAssistantPosition} from './src/utils/assistantPosition';
+import {constrainAssistantPosition,compactAssistantPosition} from './src/utils/assistantPosition';
 import {DanangAssistantChat} from './src/components/common/DanangAssistantChat';
 
 test('dragged assistant stays fully visible on phone and desktop, including after rotation',()=>{
@@ -25,4 +25,12 @@ test('launcher label is always rendered; enlarged control exposes open state and
   assert.match(html,/touch-action:none/);
   assert.doesNotMatch(html,/group-hover:flex/);
  }finally{(globalThis as any).window=previous;}
+});
+
+test("compact game assistant clears the mobile victory buttons",()=>{
+ for(const [width,height] of [[320,568],[375,812],[390,844],[412,915]]){
+  const p=compactAssistantPosition(width,height,2);
+  assert.ok(p.x>=8 && p.x+48<=width-8);
+  assert.ok(p.y+48<=height-84);
+ }
 });

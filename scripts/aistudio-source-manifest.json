@@ -1,5 +1,5 @@
 {
-  "commit": "df42e7a069981923d23afc1b60715be2334c6fc6",
+  "commit": "1f9d7b12ee6591906c1844eee2a5bdf9e109120a",
   "files": [
     {
       "path": "src/games/stage2/Preview.tsx",
@@ -115,7 +115,7 @@
     },
     {
       "path": "src/index.css",
-      "sha256": "f7bad2a8f2d64ca991710257f08da0cf462d5183ca0f1b9fe7e7f4fd728f91b1"
+      "sha256": "b123424a0447d7bb120a8774725609bb9138df97b31900922257c552c1dcc551"
     },
     {
       "path": "src/main.tsx",

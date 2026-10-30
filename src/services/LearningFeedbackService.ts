@@ -15,7 +15,7 @@ async function request(path:string,data:object) {
   const response=await fetchWithTimeout('/api/learning/'+path,{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
   if(!response.headers.get('content-type')?.includes('application/json'))throw new Error('Máy chủ phản hồi chưa sẵn sàng.');
   const result=await response.json();
-  if(!response.ok)throw new Error(result.error||'Chưa lưu được. Vui lòng thử lại.');
+  if(!response.ok)throw Object.assign(new Error(response.status===404?'Máy chủ chưa hỗ trợ tính năng này.':result.error||'Chưa lưu được. Vui lòng thử lại.'),{status:response.status});
   return result;
 }
 export const learningFeedbackService={

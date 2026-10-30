@@ -209,8 +209,8 @@
   .station-immersive-root.station-immersive-active .station-lesson-panel > .transition-all {
     min-height: calc(100dvh - 70px);
   }
-  .station-immersive-root:fullscreen .station-lesson-panel .lg\\:h-\\[calc\\(100dvh-310px\\)\\],
-  .station-immersive-root.station-immersive-active .station-lesson-panel .lg\\:h-\\[calc\\(100dvh-310px\\)\\] {
+  .station-immersive-root:fullscreen .station-lesson-panel [class~="lg:h-[calc(100dvh-310px)]"],
+  .station-immersive-root.station-immersive-active .station-lesson-panel [class~="lg:h-[calc(100dvh-310px)]"] {
     height: calc(100dvh - 110px);
   }
 }

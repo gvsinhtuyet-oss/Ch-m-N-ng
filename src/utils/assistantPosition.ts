@@ -7,3 +7,10 @@ export function constrainAssistantPosition(position:AssistantPosition,width:numb
     y:Math.max(margin,Math.min(position.y,Math.max(margin,height-ASSISTANT_LAUNCHER_SIZE.height-margin))),
   };
 }
+
+// Keep the compact game launcher above the mobile victory action row.
+export function compactAssistantPosition(width:number,height:number,stage?:number):AssistantPosition {
+  return width < 1024
+    ? stage===2 ? {x:8,y:Math.max(8,height-144)} : {x:64,y:10}
+    : {x:Math.max(4,(width-48)/2),y:Math.max(4,height-56)};
+}

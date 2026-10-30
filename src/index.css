@@ -421,3 +421,83 @@ body:has(.journey-screen-fixed){overflow:hidden}
   .journey-station-grid button { font-size: 10px; min-height: 36px; }
   .journey-overview-hero > div.relative > div.flex.shrink-0 { flex-wrap: wrap; min-width: 0; }
 }
+
+/* Touch layouts: readable controls and natural document scrolling. */
+.station-touch-assistant{display:none}
+@media (max-width:1023px), (max-width:1366px) and (pointer:coarse){
+ body:has(.journey-screen-fixed){overflow-y:auto}
+ .journey-screen-fixed{height:auto;min-height:100dvh!important;overflow:visible}
+ .journey-screen-fixed>.game-content{overflow:visible}
+ .journey-overview{height:auto;overflow:visible;padding:10px 10px 85px;gap:10px}
+ .journey-overview-hero>div.relative{flex-wrap:wrap;gap:10px;padding:12px}
+ .journey-overview-hero h1{white-space:normal;font-size:17px}
+ .journey-overview-hero button{min-height:44px;font-size:13px}
+ .journey-overview-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ .journey-overview-stats>div{min-height:38px;padding:7px}
+ .journey-overview-stats .text-\[10px\]{font-size:12px}
+ .journey-station-grid{height:auto;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;gap:12px}
+ .journey-station-grid>article{min-height:150px;flex-direction:row}
+ .journey-station-grid>article:last-child{grid-column:auto}
+ .journey-station-grid>article>div:first-child{flex:0 0 30%;min-height:130px}
+ .journey-station-grid>article>div:last-child{flex:1;min-width:0;padding:10px;gap:8px}
+ .journey-station-grid h3{display:block;min-height:0;font-size:16px;line-height:1.35;overflow:visible;overflow-wrap:break-word}
+ .journey-station-grid button{min-height:44px;font-size:13px;padding:10px 6px;white-space:normal}
+ .journey-station-grid article span.rounded-full{font-size:11px;padding:4px 6px}
+ .station-immersive-root.station-viewport[data-stage]{height:auto!important;min-height:100dvh!important;overflow:visible!important;padding:8px;gap:10px}
+ .station-immersive-root.station-viewport[data-stage]>.station-compact-header{display:grid!important;grid-template-columns:44px minmax(0,1fr) auto auto;height:auto!important;gap:6px;padding:6px!important}
+ .station-compact-header .station-compact-back{width:44px;height:44px}
+ .station-compact-header .station-compact-title{font-size:16px;white-space:normal;overflow:visible;line-height:1.3;overflow-wrap:break-word}
+ .station-compact-header .station-stage-tabs,.station-stage1-compact .station-compact-header .station-stage-tabs{grid-column:1/-1;grid-row:2;width:100%!important;gap:4px}
+ .station-compact-header .station-stage-tab,.station-stage1-compact .station-compact-header .station-stage-tab{height:auto!important;min-height:54px;padding:6px 2px!important}
+ .station-compact-header .station-stage-tab-name,.station-stage1-compact .station-compact-header .station-stage-tab-name{font-size:12px!important;line-height:1.2;max-width:none;white-space:normal}
+ .station-compact-header .station-stage-tab-name .stage-full-name{display:none}
+ .station-compact-header .stage-touch-name{display:inline!important}
+ .station-touch-assistant{display:block;min-height:44px;padding:8px;border-radius:8px;background:#ffffff26;color:white;font-size:12px;font-weight:800}
+ .station-feedback-toggle{min-height:44px;font-size:12px;padding:8px}
+ .station-immersive-root.station-viewport[data-stage]>.station-lesson-panel{flex:initial!important;overflow:visible!important}
+ body:has(.station-immersive-root) .discovery-assistant{display:none}
+ .discovery-chat-bubble textarea{font-size:16px}
+ .journey-overview button,.station-compact-header button{touch-action:manipulation}
+}
+.stage-touch-name{display:none}
+@media(max-width:599px){
+ .journey-station-grid{grid-template-columns:1fr}
+ .journey-station-grid>article{min-height:136px}
+ .journey-station-grid>article>div:first-child{flex-basis:29%;min-height:136px}
+ .journey-station-grid>article>div:first-child>div{font-size:10px;padding:4px;left:3px;top:3px}
+ .journey-station-grid button svg{width:16px;height:16px}
+}
+.station-touch-tools{display:none}
+@media (max-width:1023px), (max-width:1366px) and (pointer:coarse){
+ .station-compact-header>.station-feedback-toggle,.station-compact-header>.station-compact-actions{display:none}
+ .station-touch-tools{position:relative;display:block;color:white;font-size:12px;font-weight:800}
+ .station-touch-tools summary{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px;border-radius:8px;background:#ffffff26;cursor:pointer;list-style:none;touch-action:manipulation}
+ .station-touch-tools>div{position:absolute;right:0;top:100%;z-index:30;display:grid;width:210px;padding:8px;gap:6px;border-radius:12px;background:#fff;color:#075985;box-shadow:0 8px 24px #003b9155}
+ .station-touch-tools button{min-height:44px;padding:10px;text-align:left;border-radius:8px;background:#eaf5ff}
+ .station-touch-tools button:disabled{opacity:.5}
+}
+@media (max-width:1023px), (max-width:1366px) and (pointer:coarse){
+ body:has(.station-screen-fixed){overflow-y:auto!important;overscroll-behavior:auto!important}
+ .station-screen-fixed{height:auto!important;min-height:100dvh!important;overflow:visible!important}
+ .station-screen-fixed>.game-content{height:auto!important;overflow:visible!important}
+ .station-immersive-root.station-viewport[data-stage]{max-height:none!important}
+ .station-immersive-root.station-viewport[data-stage]>.station-compact-header{max-height:none!important}
+ .station-compact-header .station-compact-title{font-size:16px!important}
+ .station-viewport .station-lesson-panel>div,.station-viewport .station-lesson-panel>div>div{height:auto!important}
+ .station-viewport[data-stage="2"] .station-lesson-panel iframe{height:max(600px,calc(100dvh - 140px))!important}
+ .station-viewport[data-stage="2"] [data-shared-stage2]{min-height:600px;height:auto}
+}
+@media (max-width:1023px), (max-width:1366px) and (pointer:coarse){
+ .station-immersive-root[data-stage] .station-compact-header .station-stage-tab-name{font-size:12px!important;line-height:1.3;white-space:normal}
+}
+@media(max-width:599px){
+ .station-stage1-compact .stage1-visual-column>.relative{aspect-ratio:16/9;min-height:180px!important;flex:none!important}
+ .station-stage1-compact .hoi-an-right-rail{flex:none!important;overflow:visible!important;max-height:none!important}
+ .station-stage1-compact .stage1-reading>p{font-size:16px!important;line-height:1.55}
+}
+.journey-touch-assistant{display:none}
+@media (max-width:1023px), (max-width:1366px) and (pointer:coarse){
+ .journey-touch-assistant{display:block}
+ .journey-overview-hero>div.relative>div.flex.shrink-0{flex-wrap:wrap}
+ body:has(.journey-overview) .discovery-assistant{display:none}
+}

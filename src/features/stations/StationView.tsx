@@ -118,7 +118,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
           }}
           className={`station-stage-tab ${active ? 'is-active' : ''} ${done ? 'is-complete' : ''}`}>
           <span className="station-stage-tab-title">{!clickable ? <LockKeyhole aria-hidden="true" /> : <st.icon aria-hidden="true" />}{done && <CheckCircle2 className="station-stage-complete-mark" aria-hidden="true" />}</span>
-          <span className="station-stage-tab-name">{st.name}</span>
+          <span className="station-stage-tab-name"><span className="stage-full-name">{st.name}</span><span className="stage-touch-name">{st.num}. {shortNames[st.num-1]}</span></span>
         </button>;
       })}
     </nav>
@@ -133,7 +133,13 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         <h1 className="station-compact-title" title={station.titleVi}>{station.titleVi}</h1>
         {renderStageTabs("Bốn chặng hành trình")}
         
-        <button type="button" onClick={()=>setFeedbackOpen(true)} className="shrink-0 rounded bg-white/15 px-1 py-2 text-[10px] font-bold text-white">Góp ý cho trạm</button>
+        <button type="button" onClick={()=>setFeedbackOpen(true)} className="station-feedback-toggle shrink-0 rounded bg-white/15 px-1 py-2 text-[10px] font-bold text-white">Góp ý cho trạm</button>
+        <button type="button" className="station-touch-assistant" onClick={()=>window.dispatchEvent(new Event('cham-open-assistant'))} aria-label="Mở Trợ lý khám phá Đà Nẵng">Trợ lý</button>
+        <details className="station-touch-tools"><summary>Công cụ</summary><div>
+          <button type="button" onClick={()=>setFeedbackOpen(true)}>Góp ý cho trạm</button>
+          <button type="button" onClick={toggleLessonFullscreen}>{isLessonFullscreen?'Thu nhỏ bài học':'Toàn màn hình'}</button>
+          <button type="button" disabled={downloading||Boolean(offlinePkg)} onClick={handleDownload}>{offlinePkg?'Đã lưu ngoại tuyến':downloading?'Đang tải…':'Tải demo offline'}</button>
+        </div></details>
         <div className="station-compact-actions">
           <button type="button" onClick={toggleLessonFullscreen} aria-label={isLessonFullscreen ? 'Thu nhỏ bài học' : 'Toàn màn hình'} title="Toàn màn hình" className="station-compact-action"><Maximize2 aria-hidden="true" /></button>
           <button type="button" onClick={handleDownload} disabled={downloading || Boolean(offlinePkg)} title={offlinePkg ? 'Demo offline đã lưu' : 'Tải demo offline'} aria-label="Tải demo offline" className="station-compact-action"><Download aria-hidden="true" /></button>

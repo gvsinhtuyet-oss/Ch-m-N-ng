@@ -67,7 +67,7 @@ export function answerLocalEducationQuestion(query:string):LocalKnowledgeAnswer|
   // Unknown named subjects in yes/no questions must not become a generic list.
   if(confirmation) return {found:false,answer:`Bạn đang muốn xác nhận điều gì có phải ${group.label} không? Hãy nêu rõ tên để mình trả lời đúng đối tượng nhé.`,sources:[]};
   if(listing || group.aliases.some(a=>normalize(a)===q)){
-   if(g==='craft' && !/da nang|que huong|dia phuong/.test(q) && /ha noi|hue|sai gon|ho chi minh/.test(q)) return null;
+   if(g==='craft' && !/da nang|que huong|dia phuong/.test(q) && /ha noi|hue|sai gon|ho chi minh|sao hoa|sao kim|nhat ban|trung quoc|nuoc phap|nuoc my/.test(q)) return null;
    const selected=entities.filter(e=>e.group===g);
    const names=selected.map(e=>e.name).join(', ');
    return {found:true,answer:g==='craft'?`Một số làng nghề và nghề truyền thống tiêu biểu ở Đà Nẵng có: ${names}. Đây là các ví dụ, không phải danh sách đầy đủ. Bạn muốn tìm hiểu nghề nào?`:`Một số trò chơi dân gian gồm: ${names}. Mỗi trò có cách chơi riêng; bạn muốn tìm hiểu trò nào?`,sources:uniqueSources(selected)};

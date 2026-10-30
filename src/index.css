@@ -495,3 +495,9 @@ body:has(.journey-screen-fixed){overflow:hidden}
  .station-stage1-compact .hoi-an-right-rail{flex:none!important;overflow:visible!important;max-height:none!important}
  .station-stage1-compact .stage1-reading>p{font-size:16px!important;line-height:1.55}
 }
+.journey-touch-assistant{display:none}
+@media (max-width:1023px), (max-width:1366px) and (pointer:coarse){
+ .journey-touch-assistant{display:block}
+ .journey-overview-hero>div.relative>div.flex.shrink-0{flex-wrap:wrap}
+ body:has(.journey-overview) .discovery-assistant{display:none}
+}

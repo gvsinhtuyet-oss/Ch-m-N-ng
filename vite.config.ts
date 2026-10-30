@@ -73,9 +73,9 @@ export default defineConfig(({mode, command}) => {
               return { manifest: entries, warnings: [] };
             }
             const html = readFileSync(shellPath, 'utf8');
-            const startupScripts = new Set(Array.from(html.matchAll(/(?:src|href)=["']\/([^"']+\.js)["']/g), match => match[1]));
+            const startupAssets = new Set(Array.from(html.matchAll(/(?:src|href)=["']\/([^"']+\.(?:js|css))["']/g), match => match[1]));
             return {
-              manifest: entries.filter(entry => !entry.url.endsWith('.js') || startupScripts.has(entry.url)),
+              manifest: entries.filter(entry => ! /\.(?:js|css)$/.test(entry.url) || startupAssets.has(entry.url)),
               warnings: [],
             };
           }],

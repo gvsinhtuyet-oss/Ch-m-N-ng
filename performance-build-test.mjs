@@ -10,8 +10,8 @@ vm.runInNewContext(readFileSync('dist/sw.js','utf8'),{self,define:(deps,callback
 test('install caches shell, never eagerly downloads lesson media or lazy feature scripts',()=>{
  assert.ok(precache.some(entry=>entry.url==='index.html'));
  const html=readFileSync('dist/index.html','utf8');
- const startup=new Set(Array.from(html.matchAll(/(?:src|href)=["']\/([^"']+\.js)["']/g),match=>match[1]));
- assert.ok(precache.every(entry=>!entry.url.startsWith('learning/')&&!entry.url.startsWith('images/')&&(!entry.url.endsWith('.js')||startup.has(entry.url))));
+ const startup=new Set(Array.from(html.matchAll(/(?:src|href)=["']\/([^"']+\.(?:js|css))["']/g),match=>match[1]));
+ assert.ok(precache.every(entry=>!entry.url.startsWith('learning/')&&!entry.url.startsWith('images/')&&(!/\.(?:js|css)$/.test(entry.url)||startup.has(entry.url))));
  for(const script of startup)assert.ok(precache.some(entry=>entry.url===script),script);
  const bytes=new Map(precache.map(entry=>[entry.url,statSync('dist/'+entry.url).size]));
  assert.ok([...bytes.values()].reduce((a,b)=>a+b,0)<1500000);

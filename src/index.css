@@ -476,3 +476,14 @@ body:has(.journey-screen-fixed){overflow:hidden}
  .station-touch-tools button{min-height:44px;padding:10px;text-align:left;border-radius:8px;background:#eaf5ff}
  .station-touch-tools button:disabled{opacity:.5}
 }
+@media (max-width:1023px), (max-width:1366px) and (pointer:coarse){
+ body:has(.station-screen-fixed){overflow-y:auto;overscroll-behavior:auto}
+ .station-screen-fixed{height:auto;min-height:100dvh!important;overflow:visible}
+ .station-screen-fixed>.game-content{height:auto;overflow:visible!important}
+ .station-immersive-root.station-viewport[data-stage]{max-height:none!important}
+ .station-immersive-root.station-viewport[data-stage]>.station-compact-header{max-height:none!important}
+ .station-compact-header .station-compact-title{font-size:16px!important}
+ .station-viewport .station-lesson-panel>div,.station-viewport .station-lesson-panel>div>div{height:auto!important}
+ .station-viewport[data-stage="2"] .station-lesson-panel iframe{height:max(600px,calc(100dvh - 140px))!important}
+ .station-viewport[data-stage="2"] [data-shared-stage2]{min-height:600px;height:auto}
+}

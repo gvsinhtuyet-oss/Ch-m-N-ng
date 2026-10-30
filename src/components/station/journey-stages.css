@@ -202,3 +202,7 @@
  .station-viewport .journey-controls button{flex:1 1 120px;min-height:48px!important;font-size:14px!important}
  .station-viewport .journey-controls .journey-control-next{flex-basis:100%}
 }
+@media (max-width:1023px), (max-width:1366px) and (pointer:coarse){
+ .station-viewport .checkin-section-title{clip-path:none!important;display:block!important}
+ .station-viewport .stage-three,.station-viewport .stage-four{max-height:none!important}
+}

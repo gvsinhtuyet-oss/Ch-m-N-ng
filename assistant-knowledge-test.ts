@@ -175,3 +175,10 @@ test('comparison presents both sourced concepts and keeps challenge protection',
  const blocked=ask('San hô là gì? Cho ví dụ?',{stage:2});
  assert.equal(blocked.layer,'help');assert.doesNotMatch(blocked.answer,/động vật/);
 });
+
+ test('known subject cannot fall through into an unrelated lesson date when all stations are loaded',()=>{
+  for(const station of ALL_25_STATIONS){
+   const r=ask('San hô được UNESCO công nhận năm nào?',{station,hotspot:station.hotspots[0],stations:ALL_25_STATIONS});
+   assert.equal(r.found,false);assert.doesNotMatch(r.answer,/2009|Cù Lao Chàm/);
+  }
+ });

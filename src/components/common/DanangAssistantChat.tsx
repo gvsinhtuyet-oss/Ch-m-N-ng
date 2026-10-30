@@ -67,7 +67,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const aiLock=useRef(false);
   useEffect(()=>()=>activeAi.current?.abort(),[]);
   useEffect(()=>{
-    if(!isTeacher||!open)return;
+    if(!isTeacher||!open){if(!isTeacher)setAiAvailable(false);return;}
     const controller=new AbortController();
     fetch('/api/education-assistant',{credentials:'same-origin',signal:controller.signal})
       .then(r=>r.ok?r.json():null).then(data=>{if(!controller.signal.aborted)setAiAvailable(data?.available===true);})

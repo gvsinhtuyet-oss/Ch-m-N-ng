@@ -339,6 +339,20 @@ function retrieveCoreAnswer(
   const explicitStation = stations.map(s => ({station:s,terms:[s.titleVi,...(DEMO_STATIONS.find(m=>m.stationId===s.id)?.aliases||[])]
     .map(normalizeForSearch).filter(term=>words(term).length>=2 && normalizeForSearch(query).includes(term))}))
     .filter(x=>x.terms.length).sort((a,b)=>Math.max(...b.terms.map(t=>t.length))-Math.max(...a.terms.map(t=>t.length)))[0]?.station;
+  // General care questions must be answered before fuzzy lesson matching.
+  // Words such as "em", "giữ" and "quê hương" occur in unrelated passages too.
+  const namedHotspot = candidates.some(c => {
+    const title = normalizeForSearch(c.hotspot.titleVi.replace(/^\d+\.\s*/, ''));
+    return words(title).length >= 2 && (` ${normalizeForSearch(query)} `).includes(` ${title} `);
+  });
+  if (intent === 'action' && !explicitStation && !namedHotspot && !usesDeicticReference(query)) {
+    if (/\b(?:que huong|di san|di tich|moi truong|bai bien|cay xanh)\b/.test(normalizeForSearch(query))) {
+      return makeResult('common', normalizedQuery,
+        'Em có thể bỏ rác đúng nơi, giữ vệ sinh, chăm sóc cây xanh, không viết vẽ lên di tích và thực hiện nội quy khi tham quan. Em cũng có thể giới thiệu những điều đã học về quê hương với bạn bè, người thân.', 'high');
+    }
+    // Do not turn shared action words into evidence about an unknown subject.
+    return makeResult('unknown', normalizedQuery, UNKNOWN_RESPONSE, 'low');
+  }
   const relevantCandidates=explicitStation?candidates.filter(c=>c.station.id===explicitStation.id):candidates;
   const named = relevantCandidates.filter(c => c.score >= 88).sort((a, b) => b.score - a.score);
   const target = named[0] || (explicitStation ? [...relevantCandidates].sort((a,b)=>b.score-a.score)[0] : undefined) || (usesDeicticReference(query) && context.hotspot
@@ -355,10 +369,6 @@ function retrieveCoreAnswer(
       `Mình đã tìm thấy học liệu về **${target.hotspot.titleVi.replace(/^\d+\.\s*/, '')}**, nhưng chưa có thông tin đủ rõ để trả lời ý này. Bạn có thể hỏi cô giáo hoặc chọn câu hỏi về đặc điểm của điểm đến nhé!`, 'low');
   }
   // Quiz options are never a knowledge source; similar wording is not factual evidence.
-  if (intent === 'action' && /que huong|di san|di tich/.test(normalizeForSearch(query))) {
-    return makeResult('common', normalizedQuery,
-      'Em có thể bỏ rác đúng nơi, giữ vệ sinh, không viết vẽ lên di tích và thực hiện nội quy khi tham quan. Em cũng có thể giới thiệu những điều đã học về quê hương với bạn bè, người thân.', 'high');
-  }
   return makeResult('unknown', normalizedQuery, UNKNOWN_RESPONSE +
     (usesDeicticReference(query) && !context.hotspot ? ' Bạn đang muốn hỏi về điểm đến nào?' : ''), 'low');
 }

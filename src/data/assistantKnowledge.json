@@ -694,5 +694,46 @@
       "url": "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/chua-cau-bieu-trung-di-san-van-hoa-hoi-an-1016.html"
     },
     "reviewedOn": "2026-10-30"
+  },
+  {
+    "id": "dan-toc-kinh",
+    "term": "người Kinh",
+    "aliases": [
+      "dân tộc Kinh",
+      "người Việt dân tộc Kinh"
+    ],
+    "subjects": [
+      "người Kinh",
+      "dân tộc Kinh"
+    ],
+    "intents": [
+      "definition",
+      "confirmation"
+    ],
+    "answer": "Dân tộc Kinh là dân tộc đa số ở Việt Nam, không thuộc nhóm dân tộc thiểu số. Việt Nam có 54 dân tộc; 53 dân tộc còn lại được xếp vào nhóm dân tộc thiểu số. Đa số và thiểu số nói về quy mô dân số, không phải hơn hay kém về giá trị.",
+    "teachingExample": "Có thể giải thích cho học sinh rằng các dân tộc có số người khác nhau, nhưng không nên dùng số lượng để đánh giá phẩm chất hay năng lực của một người.",
+    "followUp": "Em biết những dân tộc nào cùng sinh sống trên đất nước Việt Nam?",
+    "source": {
+      "label": "Cơ quan Thống kê – Quy mô dân số Việt Nam, kết quả Tổng điều tra 2019",
+      "url": "https://thongkeketnoi.nso.gov.vn/bai-viet/quy-mo-dan-so-viet-nam-nhung-phat-hien-chinh-legacy-n-14512"
+    },
+    "reviewedOn": "2026-10-30"
+  },
+  {
+    "id": "54-dan-toc",
+    "term": "Việt Nam có bao nhiêu dân tộc",
+    "aliases": [
+      "Việt Nam có mấy dân tộc",
+      "nước ta có bao nhiêu dân tộc",
+      "nước ta có mấy dân tộc"
+    ],
+    "answer": "Việt Nam có 54 dân tộc. Dân tộc Kinh là dân tộc đa số; 53 dân tộc còn lại thuộc nhóm dân tộc thiểu số. Các cộng đồng cùng góp phần tạo nên sự đa dạng văn hóa của đất nước.",
+    "teachingExample": "Cho học sinh tìm hiểu tên gọi, ngôn ngữ hoặc một nét văn hóa của vài cộng đồng, tránh coi một nét riêng là đại diện cho tất cả mọi người.",
+    "followUp": "Em muốn tìm hiểu thêm về cộng đồng dân tộc nào?",
+    "source": {
+      "label": "Cơ quan Thống kê – Quy mô dân số Việt Nam",
+      "url": "https://thongkeketnoi.nso.gov.vn/bai-viet/quy-mo-dan-so-viet-nam-nhung-phat-hien-chinh-legacy-n-14512"
+    },
+    "reviewedOn": "2026-10-30"
   }
 ]

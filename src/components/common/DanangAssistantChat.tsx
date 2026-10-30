@@ -26,6 +26,7 @@ interface ChatMessage {
   sources?: {label:string;url?:string}[];
   teachingExample?: string;
   followUp?: string;
+  ai?: boolean;
 }
 
 const WELCOME =
@@ -52,6 +53,16 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const [open, setOpen] = useState(false);
   const [tapPulse, setTapPulse] = useState(0);
   const [input, setInput] = useState('');
+  const [aiAvailable,setAiAvailable]=useState(false);
+  const [aiBusy,setAiBusy]=useState(false);
+  useEffect(()=>{
+    if(!isTeacher||!open)return;
+    const controller=new AbortController();
+    fetch('/api/education-assistant',{credentials:'same-origin',signal:controller.signal})
+      .then(r=>r.ok?r.json():null).then(data=>{if(!controller.signal.aborted)setAiAvailable(data?.available===true);})
+      .catch(()=>{});
+    return()=>controller.abort();
+  },[isTeacher,open]);
   const [messages, setMessages] = useState<ChatMessage[]>([
     { id: 'welcome', role: 'assistant', text: welcome },
   ]);
@@ -143,6 +154,19 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
       append({ id: `error-${Date.now()}`, role: 'assistant', text: 'Mình chưa đọc được nội dung này. Bạn thử hỏi lại hoặc chọn một câu hỏi gợi ý nhé!' });
     }
     setInput('');
+  };
+  const askAi=async()=>{
+    const question=input.trim()||messages.filter(m=>m.role==='student').at(-1)?.text;
+    if(!question||aiBusy||!aiAvailable||!isTeacher)return;
+    setAiBusy(true);
+    if(input.trim()){append({id:`ai-q-${Date.now()}`,role:'student',text:question});setInput('');}
+    try{
+      const response=await fetch('/api/education-assistant',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({question}),signal:AbortSignal.timeout(30000)});
+      const result=await response.json();
+      if(!response.ok||typeof result.answer!=='string')throw Error(result.error||'AI chưa trả lời được.');
+      append({id:`ai-a-${Date.now()}`,role:'assistant',text:result.answer,ai:true});
+    }catch{append({id:`ai-e-${Date.now()}`,role:'assistant',text:'AI mở rộng hiện chưa kết nối được. Thầy cô vẫn có thể tra cứu kho kiến thức có nguồn.'});}
+    finally{setAiBusy(false);}
   };
 
   return (
@@ -268,6 +292,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                       </span>
                     )}
                     <p className="whitespace-pre-wrap"><SimpleBold text={message.text} /></p>
+                    {message.ai && <p className="mt-2 text-[11px] text-amber-800">AI tham khảo — thầy cô cần đối chiếu trước khi sử dụng để giảng dạy.</p>}
                     {message.teachingExample && <p className="mt-2 border-t border-sky-100 pt-2"><strong>Gợi ý giảng dễ hiểu: </strong>{message.teachingExample}</p>}
                     {message.followUp && <p className="mt-2"><strong>Hỏi thêm học sinh: </strong>{message.followUp}</p>}
                     {message.sources?.map(source => <p key={source.label} className="mt-2 text-[11px] leading-4 text-sky-800">{source.url ? <a href={source.url} target="_blank" rel="noopener noreferrer" className="underline">Nguồn: {source.label}</a> : source.label}</p>)}
@@ -333,6 +358,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                 <Send className="h-4 w-4" />
               </button>
             </div>
+            {isTeacher&&aiAvailable&&<div className="mt-2"><button type="button" onClick={askAi} disabled={aiBusy||(!input.trim()&&!messages.some(m=>m.role==='student'))} className="rounded-xl bg-sky-800 px-3 py-2 text-xs font-bold text-white disabled:opacity-50">{aiBusy?'AI đang giải thích…':'Mở rộng bằng AI'}</button><p className="mt-1 text-[10px] text-slate-500">Gửi câu hỏi đến AI để giải thích hoặc gợi ý thêm. Không nhập dữ liệu cá nhân học sinh.</p></div>}
             <p className="mt-1.5 text-center text-[9px] text-slate-400">
               Tra cứu từ học liệu và kho mở rộng có nguồn. Chưa có dữ liệu sẽ nói rõ; không tự tìm Internet.
             </p>

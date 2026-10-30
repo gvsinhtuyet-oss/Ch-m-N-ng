@@ -1,4 +1,5 @@
 import {createLearningFeedback} from './learning-feedback.mjs';
+import {createEducationAssistant} from './education-assistant.mjs';
 import {getCuratedGddpLink,textbookReviewStatus} from './gddp-curriculum-links.mjs';
 
 import { isDeepStrictEqual } from 'node:util';
@@ -28,6 +29,10 @@ const auth = createAuth({
   secureCookie: process.env.AUTH_LOCAL_HTTP !== 'true' || !!process.env.K_SERVICE,
 });
 const learningFeedback = createLearningFeedback({store:cloudStore,auth,secureCookie:process.env.AUTH_LOCAL_HTTP !== 'true' || !!process.env.K_SERVICE});
+const educationAssistant = createEducationAssistant({auth,generate:async(input)=>{
+  const {GoogleGenAI}=await import('@google/genai');
+  return new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY}).models.generateContent(input);
+}});
 await mkdir(dataDir, { recursive: true });
 let stations = {};
 try { stations = JSON.parse(await readFile(dataFile, 'utf8')); }
@@ -167,6 +172,7 @@ async function body(req) {
 const types = { '.html':'text/html', '.js':'application/javascript', '.css':'text/css', '.json':'application/json', '.png':'image/png', '.svg':'image/svg+xml', '.webmanifest':'application/manifest+json', '.jpg':'image/jpeg', '.webp':'image/webp', '.woff2':'font/woff2' };
 const server = createServer(async (req,res) => {
   try {
+    if(await educationAssistant(req,res))return;
     const pathname = new URL(req.url, 'http://localhost').pathname;
     if(await learningFeedback(req,res,pathname,body,json))return;
     if (pathname === '/api/health' && req.method === 'GET') {

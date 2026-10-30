@@ -1,5 +1,5 @@
 {
-  "commit": "7877d4a13d5db181994d9785317e8e092d107088",
+  "commit": "028004ec546e45b10e5f6fccec4768c4615576a1",
   "files": [
     {
       "path": "src/games/stage2/Preview.tsx",
@@ -115,7 +115,7 @@
     },
     {
       "path": "src/index.css",
-      "sha256": "21493089e7169048b2c672f58df80245c6d9155e9f0764f88cb682e14db2c527"
+      "sha256": "d6809f57aeed3b39cbc8e67f471565931d5fad955bb011f30a39b47d1611ddc2"
     },
     {
       "path": "src/main.tsx",
@@ -247,7 +247,7 @@
     },
     {
       "path": "vite.config.ts",
-      "sha256": "81f3bfdf2a4beb5b3724bd395dfa0da233a2679bf399dd48074de6b980650a15"
+      "sha256": "d658dcd355f0e9821757d0657e41a56769da2f8b2e23a43627650204e9ca387d"
     },
     {
       "path": "src/App.tsx",
@@ -255,7 +255,7 @@
     },
     {
       "path": "src/components/common/DanangAssistantChat.tsx",
-      "sha256": "8a969ae39d8e587316440f0569c871fba3a7071feacb6e5a2fe84975bae315a7"
+      "sha256": "0489dbb4e7e9d7889c171f799fa7189fe789150d27349a2f4e5d700034011274"
     },
     {
       "path": "src/components/common/FeatureLoadBoundary.tsx",
@@ -268,6 +268,22 @@
     {
       "path": "src/data/assistantKnowledge.json",
       "sha256": "79266ae6c60363def13baf2a2bd630cf02b32de404b3fbcabd3e6b69c1134e58"
+    },
+    {
+      "path": "src/features/stations/StationView.tsx",
+      "sha256": "e95ce4f9baf0e5a4dd933292170c12b62550ced3786a59d1b3161e3e896b684e"
+    },
+    {
+      "path": "src/components/station/Stage3CheckIn.tsx",
+      "sha256": "3c1ff53c05ef02aa0a9882d76e5fcbc3605302371f43d2daa11603f4b5351753"
+    },
+    {
+      "path": "src/components/station/journey-stages.css",
+      "sha256": "969aa76d4055889d740f515bffe3d212057d7951040d0c3cd118b6a1d796089e"
+    },
+    {
+      "path": "src/features/student/StudentJourneyView.tsx",
+      "sha256": "d3a38b76a1daf06d2604750feee1ee0dc3d71dcc28f40eaf148d9dd0ddb2dbb0"
     }
   ]
 }

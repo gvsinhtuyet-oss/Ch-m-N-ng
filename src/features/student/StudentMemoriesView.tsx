@@ -33,7 +33,7 @@ export const StudentMemoriesView: React.FC = () => {
       <div className="bg-white/90 rounded-2xl p-3 sm:p-4 shadow-sm border border-slate-200 space-y-2">
         <h2 className="text-base font-black text-slate-900 flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-amber-500" />
-          <span>Kho Báu Kỉ Niệm Đã Thu Thập</span>
+          <span>Kho báu kỉ niệm</span>
         </h2>
 
         <div className="space-y-1.5">
@@ -52,10 +52,10 @@ export const StudentMemoriesView: React.FC = () => {
                     const collected = prog.rewardsCollected.includes(rw.id);
                     return (
                       <div key={rw.id} title={rw.nameVi} className={`min-w-0 rounded-lg border px-1 py-1 text-center ${collected ? 'border-amber-400 bg-white' : 'border-amber-200 bg-white/70 opacity-65'}`}>
-                        <div className="mx-auto flex h-9 items-center justify-center sm:h-10">
+                        <div className="mx-auto flex h-8 items-center justify-center sm:h-9">
                           <RewardBadge template={rw.template} size="sm" muted={!collected} />
                         </div>
-                        <p className="line-clamp-2 min-h-7 text-[10px] font-bold leading-tight text-amber-950 sm:text-xs">{rw.nameVi}</p>
+                        <p className="line-clamp-2 text-[10px] font-bold leading-tight text-amber-950 sm:text-xs">{rw.nameVi}</p>
 
                       </div>
                     );

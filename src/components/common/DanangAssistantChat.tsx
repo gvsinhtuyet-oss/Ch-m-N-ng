@@ -60,6 +60,11 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const welcome = isTeacher ? 'Thầy cô muốn tìm hiểu kiến thức giáo dục địa phương nào? Tôi có thể tra cứu văn hóa, lịch sử, địa lý, làng nghề, trò chơi dân gian và học liệu có nguồn.' : WELCOME;
   const [open, setOpen] = useState(false);
   const [tapPulse, setTapPulse] = useState(0);
+  useEffect(()=>{
+    const openFromLesson=()=>setOpen(true);
+    window.addEventListener('cham-open-assistant',openFromLesson);
+    return()=>window.removeEventListener('cham-open-assistant',openFromLesson);
+  },[]);
   const [input, setInput] = useState('');
   const [aiAvailable,setAiAvailable]=useState(false);
   const [aiBusy,setAiBusy]=useState(false);

@@ -18,7 +18,7 @@ COPY package.json ./
 RUN npm install --omit=dev --no-audit --no-fund
 
 COPY --from=build /app/dist ./dist
-COPY google-identity.mjs content-server.mjs auth-server.mjs content-storage.mjs gddp-catalog.mjs gddp-curriculum-links.mjs gddp-ai.mjs gddp-bundled-data.mjs deployment-config.mjs ./
+COPY learning-feedback.mjs learning-feedback-catalog.mjs google-identity.mjs content-server.mjs auth-server.mjs content-storage.mjs gddp-catalog.mjs gddp-curriculum-links.mjs gddp-ai.mjs gddp-bundled-data.mjs deployment-config.mjs ./
 
 
 RUN mkdir -p /app/content-data

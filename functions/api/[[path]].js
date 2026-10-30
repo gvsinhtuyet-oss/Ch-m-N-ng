@@ -29,7 +29,9 @@ export async function proxyApi(request, fetchUpstream = fetch) {
   // Do not forward Cloudflare cookies, Authorization, Host or spoofed proxy headers.
   const session = /(?:^|;\s*)(cham_session=[a-f0-9]{48}(?:[a-f0-9]{16})?)(?:;|$)/
     .exec(request.headers.get('cookie') || '')?.[1];
-  if (session) headers.set('Cookie', session);
+  const feedback = /(?:^|;\s*)(cham_feedback=[a-f0-9]{64})(?:;|$)/.exec(request.headers.get('cookie') || '')?.[1];
+  const cookies = [session, feedback].filter(Boolean).join('; ');
+  if (cookies) headers.set('Cookie', cookies);
   try {
     const upstream = await fetchUpstream(BACKEND_ORIGIN + url.pathname + url.search, {
       method: request.method, headers, redirect: 'manual',

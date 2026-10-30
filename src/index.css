@@ -209,8 +209,8 @@
   .station-immersive-root.station-immersive-active .station-lesson-panel > .transition-all {
     min-height: calc(100dvh - 70px);
   }
-  .station-immersive-root:fullscreen .station-lesson-panel .lg\\:h-\\[calc\\(100dvh-310px\\)\\],
-  .station-immersive-root.station-immersive-active .station-lesson-panel .lg\\:h-\\[calc\\(100dvh-310px\\)\\] {
+  .station-immersive-root:fullscreen .station-lesson-panel [class~="lg:h-[calc(100dvh-310px)]"],
+  .station-immersive-root.station-immersive-active .station-lesson-panel [class~="lg:h-[calc(100dvh-310px)]"] {
     height: calc(100dvh - 110px);
   }
 }
@@ -405,4 +405,19 @@ body:has(.journey-screen-fixed){overflow:hidden}
  .journey-maps-treasure .space-y-2>:not(:last-child){margin-bottom:4px}
  .journey-maps-treasure button{padding:6px 12px;font-size:11px}
  .journey-maps-treasure .bg-slate-200{padding:6px 12px}
+}
+
+/* Mobile recovery: keep all destinations reachable when browser chrome reduces height. */
+@media (max-width: 720px) {
+  body:has(.journey-screen-fixed) { overflow-x: hidden; overflow-y: auto; }
+  .journey-screen-fixed { height: auto; min-height: 100dvh !important; overflow: visible; }
+  .journey-screen-fixed > .game-content { overflow: visible; min-height: 0; }
+  .journey-overview { height: auto; min-height: calc(100dvh - 64px) !important; overflow: visible; padding-bottom: max(100px, env(safe-area-inset-bottom)); }
+  .journey-overview-cards, .journey-overview-cards > div { overflow: visible; }
+  .journey-station-grid { height: auto; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: none; align-items: stretch; }
+  .journey-station-grid > article { min-height: 122px; }
+  .journey-station-grid > article:last-child { grid-column: 1 / -1; }
+  .journey-station-grid h3 { font-size: 12px; overflow-wrap: anywhere; }
+  .journey-station-grid button { font-size: 10px; min-height: 36px; }
+  .journey-overview-hero > div.relative > div.flex.shrink-0 { flex-wrap: wrap; min-width: 0; }
 }

@@ -143,3 +143,35 @@ test('ethnicity knowledge answers the subject and classification beyond textbook
  }
  assert.match(ask('Việt Nam có mấy dân tộc?').answer,/54/);
 });
+
+test('conversation gives a real example and retains the topic across three turns',()=>{
+ const first=ask('San hô là gì?');
+ assert.ok(first.found);assert.ok(first.topic);
+ const second=ask('Nói dễ hiểu hơn',{previousQuery:'San hô là gì?',previousTopic:first.topic});
+ assert.ok(second.found);assert.equal(second.answer,knowledge.find(c=>c.id==='san-ho')!.teachingExample);
+ const third=ask('Cho ví dụ',{previousQuery:'Nói dễ hiểu hơn',previousTopic:second.topic});
+ assert.ok(third.found);assert.equal(third.topic,first.topic);assert.equal(third.answer,second.answer);
+ assert.equal(ask('Nói dễ hiểu hơn').found,false);
+});
+test('explicit new subject overrides conversation, while unsupported facts remain unknown',()=>{
+ const ctx={previousTopic:'san hô',previousQuery:'San hô là gì?'};
+ assert.match(ask('Nước ngầm là gì?',ctx).answer,/nước/);
+ assert.doesNotMatch(ask('Nước ngầm là gì?',ctx).answer,/san hô/);
+ assert.equal(ask('Nó có giá bao nhiêu?',ctx).found,false);
+ assert.equal(ask('Nó được UNESCO công nhận năm nào?',ctx).found,false);
+ const direct=ask('Cho ví dụ về ngưng tụ');
+ assert.ok(direct.found);assert.equal(direct.answer,knowledge.find(c=>c.id==='ngung-tu')!.teachingExample);
+});
+test('multiple questions retain both requested facts rather than returning only a keyword match',()=>{
+ const r=ask('Đà Nẵng có làng nghề gì? Trốn tìm có phải trò chơi dân gian không?');
+ assert.ok(r.found);assert.match(r.answer,/Nam Ô/);assert.match(r.answer,/Đúng rồi! Trốn tìm/);
+ assert.ok((r.sources?.length||0)>=2);
+ const mixed=ask('San hô là gì? Sao Hỏa có làng nghề gì?');
+ assert.equal(mixed.found,false);assert.match(mixed.answer,/động vật/);
+});
+test('comparison presents both sourced concepts and keeps challenge protection',()=>{
+ const r=ask('So sánh xói mòn và bồi tụ');
+ assert.ok(r.found);assert.match(r.answer,/Xói mòn|xói mòn/);assert.match(r.answer,/Bồi tụ|bồi tụ/);assert.ok(r.sources?.length);
+ const blocked=ask('San hô là gì? Cho ví dụ?',{stage:2});
+ assert.equal(blocked.layer,'help');assert.doesNotMatch(blocked.answer,/động vật/);
+});

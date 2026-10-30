@@ -25,9 +25,11 @@ export interface AssistantRetrievalContext {
   audience?: 'student' | 'teacher';
   stage?: number;
   previousQuery?: string;
+  previousTopic?: string;
 }
 
 export interface AssistantRetrievalResult {
+  topic?: string;
   found: boolean;
   sources?: { label: string; url?: string }[];
   teachingExample?: string;
@@ -382,8 +384,61 @@ function retrieveCoreAnswer(
     (usesDeicticReference(query) && !context.hotspot ? ' Bạn đang muốn hỏi về điểm đến nào?' : ''), 'low');
 }
 
+// Conversational composition uses reviewed facts, never question options or invented facts.
+const topicCards = (query:string) => {
+  const q = ` ${normalizeForSearch(query)} `;
+  return knowledge.map(card=>({card, length:Math.max(0,...[card.term,...card.aliases]
+    .filter(term=>words(term).length>=2 && q.includes(` ${normalizeForSearch(term)} `)).map(term=>term.length))}))
+    .filter(item=>item.length>0).sort((a,b)=>b.length-a.length);
+};
+const followUpRequest = (q:string) => /^(?:(?:vay|the|rua|con) )?(?:no |dieu do |cai do |noi nay |tro nay )?(?:cho vi du|vi du|noi (?:ro|them|don gian|de hieu)|giai thich (?:them|ro|don gian)|de hieu hon|day (?:the nao|ra sao)|ap dung|goi y (?:bai day|hoat dong)|co y nghia gi|o dau|cach choi|choi the nao|choi ra sao|vi sao|tai sao)\b/.test(q);
+
+export function retrieveDanangAssistantAnswer(rawQuery:string, context:AssistantRetrievalContext={}):AssistantRetrievalResult {
+  // Keep assessment protection ahead of composition and every retrieval layer.
+  if(context.stage===2 && context.audience!=='teacher') return retrieveSingleAnswer(rawQuery,context);
+  const query=rawQuery.trim().slice(0,context.audience==='teacher'?600:220);
+  const q=normalizeForSearch(query);
+  const named=topicCards(query);
+  const previous=context.previousTopic || context.previousQuery;
+  const previousCards=previous?topicCards(previous):[];
+  // Short pronoun questions inherit only an unambiguous, supported topic.
+  const inherited=!named.length && (followUpRequest(q)||/^(?:no|dieu do|cai do)\b/.test(q)) && previousCards.length===1 ? previousCards[0].card : undefined;
+  const exampleCard=inherited || (named.length===1?named[0].card:undefined);
+  if(exampleCard && /cho vi du|^vi du|de hieu|don gian|day the nao|day ra sao|ap dung|goi y/.test(q)) {
+    return makeResult('common',normalizeDanangDialect(query),exampleCard.teachingExample,'high',{
+      topic:exampleCard.term,sources:[exampleCard.source],followUp:exampleCard.followUp,
+    });
+  }
+  // Two explicit questions are answered separately, instead of one keyword hiding the other.
+  const parts=query.split(/[?？;]+/).map(s=>s.trim()).filter(Boolean);
+  if(parts.length>1) {
+    const results=parts.slice(0,3).map((part,index)=>retrieveDanangAssistantAnswer(part,{
+      ...context,previousQuery:index?parts[index-1]:context.previousQuery,
+    }));
+    return makeResult(results.every(r=>r.found)?'common':'unknown',normalizeDanangDialect(query),
+      results.map((r,i)=>`**${parts[i]}?**\n${r.answer}`).join('\n\n')+(parts.length>3?'\n\nBạn tách các ý còn lại thành lượt tiếp theo nhé.':''),
+      results.every(r=>r.found)?'medium':'low',{
+        sources:[...new Map(results.flatMap(r=>r.sources||[]).map(s=>[s.url||s.label,s])).values()],
+        topic:results.at(-1)?.topic,
+      });
+  }
+  if(questionIntent(query)==='comparison') {
+    // A reviewed comparison card has priority; otherwise present the two reviewed definitions.
+    const exact=knowledge.find(c=>[c.term,...c.aliases].some(t=>normalizeForSearch(t)===q));
+    if(!exact && named.length===2) {
+      return makeResult('common',normalizeDanangDialect(query),named.map(({card})=>`**${card.term}:** ${card.answer}`).join('\n\n'),'medium',{
+        sources:[...new Map(named.map(({card})=>[card.source.url,card.source])).values()],
+      });
+    }
+  }
+  const resolved=inherited?`${inherited.term}: ${query}`:resolveLocalEducationFollowUp(query,previous);
+  const result=retrieveSingleAnswer(resolved,context);
+  if(result.found) result.topic=result.matchedTerm || (named.length===1?named[0].card.term:resolved!==query?resolved.split(':')[0]:undefined);
+  return result;
+}
+
 /** Local retrieval only: no API key, per-account counter, or network inference. */
-export function retrieveDanangAssistantAnswer(rawQuery: string, context: AssistantRetrievalContext = {}): AssistantRetrievalResult {
+function retrieveSingleAnswer(rawQuery: string, context: AssistantRetrievalContext = {}): AssistantRetrievalResult {
   const teacher = context.audience === 'teacher';
   const query = resolveLocalEducationFollowUp(rawQuery.trim(), context.previousQuery).slice(0, teacher ? 600 : 220);
   // While taking a challenge, keep the student in the learning flow, not an answer service.
@@ -400,7 +455,7 @@ export function retrieveDanangAssistantAnswer(rawQuery: string, context: Assista
     const terms = [card.term, ...card.aliases];
     const exact = terms.some(t => normalizeForSearch(t) === q);
     const named = terms.some(t => (` ${q} `).includes(` ${normalizeForSearch(t)} `));
-    const askedFact = terms.some(t => /nam nao|vat lieu|nguyen lieu|dong vat hay thuc vat/.test(normalizeForSearch(t)) && questionIntent(t) === intent && longTextScore(cleanQuery, t) >= 96);
+    const askedFact = terms.some(t => /nam nao|vat lieu|nguyen lieu|dong vat hay thuc vat/.test(normalizeForSearch(t)) && questionIntent(t) === intent && longTextScore(cleanQuery, t) >= 96 && (` ${q} `).includes(` ${normalizeForSearch(t).split(/ duoc | di tich | dong vat | vat lieu | nguyen lieu /)[0]} `));
     const supportedIntent=intent==='definition'||card.intents?.includes(intent);
     const namedSubject=card.subjects?.some(t=>(` ${q} `).includes(` ${normalizeForSearch(t)} `));
     return {card, score: exact ? 150 : askedFact ? 140 : named && supportedIntent ? (namedSubject?140:110) + Math.max(...terms.filter(t => (` ${q} `).includes(` ${normalizeForSearch(t)} `)).map(t=>words(t).length)) : 0};

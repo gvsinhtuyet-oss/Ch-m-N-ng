@@ -1,0 +1,253 @@
+{
+  "commit": "02d04447aa496a6b59c8da243084f5b56b358d75",
+  "files": [
+    {
+      "path": "src/games/stage2/Preview.tsx",
+      "sha256": "5ecb37ca3cbae321a24c258b223f160a748f4b4cbc7c1834e54bbc9f27cebba0"
+    },
+    {
+      "path": "src/games/stage2/SharedChallengeGame.tsx",
+      "sha256": "3148179ddb3b63d465f25371cdf62080a8527ffb699596196038a0fe2c5c3f7c"
+    },
+    {
+      "path": "src/games/stage2/SharedStage2.tsx",
+      "sha256": "b8c9f9f82d392673af1f0c549d68b14b45c2b50d1ac3f2091974f4dda2fbf07f"
+    },
+    {
+      "path": "src/games/stage2/approved-v18.css",
+      "sha256": "68aed6b984303f50f8bf264e631ef3ce1f6aa58bafba25c812f4fb5597952210"
+    },
+    {
+      "path": "src/games/stage2/audio.ts",
+      "sha256": "4ad99422a0a5b823c347dbba1a955ce342455d909cc259b7b4efb92aa9f603cd"
+    },
+    {
+      "path": "src/games/stage2/audioPatterns.ts",
+      "sha256": "6f2fde4c569085c4ec596befaa275670bd02f9421bed1164822fa095eafd1029"
+    },
+    {
+      "path": "src/games/stage2/compact-match.css",
+      "sha256": "f6c4a08ded8f190051845fdffa918e5067d54d7d4a5fb1efa8ab8cce1887ae6c"
+    },
+    {
+      "path": "src/games/stage2/fireworks.ts",
+      "sha256": "9d1e4fac21c9ecd79cd2f38472a3de6ca13fb81cd050d8a8afb5fbb7fd91e860"
+    },
+    {
+      "path": "src/games/stage2/grade1/index.ts",
+      "sha256": "d98a5001c6d7052f7472362bb2d2e54153b4152cdef6f7e57dae982f1ea7d17a"
+    },
+    {
+      "path": "src/games/stage2/grade1/narration.ts",
+      "sha256": "c9c8b61d70208b6a4f6725acf8e426072cf7f1a64a2b16d8ccfee895f96fec78"
+    },
+    {
+      "path": "src/games/stage2/grade1/reviewed.ts",
+      "sha256": "e40f42b2cb3c76597ffa735aac859863bfdb8ee269019bfe8637b13f8eb740ff"
+    },
+    {
+      "path": "src/games/stage2/grade1/shuffle.ts",
+      "sha256": "3f6766f61f5949630a56ed59f0c21ed467154bc9a3b466b3b1605aa04a722edd"
+    },
+    {
+      "path": "src/games/stage2/grade2/index.ts",
+      "sha256": "4f792e638ccdf1845465d7b5f4aec2385704b0e37923048b36c60eb14cf2d2f8"
+    },
+    {
+      "path": "src/games/stage2/grade3/index.ts",
+      "sha256": "d50df5ac2720a67f06bd18b70c63492575f143b755e3d232ef8abfd58b300b23"
+    },
+    {
+      "path": "src/games/stage2/grade3/station3.ts",
+      "sha256": "feb957e0671ff01eaeff292bbde90f5f0d0c6dff002dacb2a1665fa6de1a8c07"
+    },
+    {
+      "path": "src/games/stage2/grade3/station4.ts",
+      "sha256": "a09248c196cdc7d866fbbf9e49fe3e1f64ea22aaca3e0752a908e6e65b4096f2"
+    },
+    {
+      "path": "src/games/stage2/grade3/station5.ts",
+      "sha256": "845fd92f33b8335f274d9b065dcd10d0c1d4c6d51850f1f8bd5e2131e59250df"
+    },
+    {
+      "path": "src/games/stage2/grade45/index.ts",
+      "sha256": "c1da44c838ea5c1c3b5f6b3e023e4b1a50801374a108feab0481ed05855e4a85"
+    },
+    {
+      "path": "src/games/stage2/grade45/themes.json",
+      "sha256": "ad6c731474c021d06519e5992c69e54917e703e6ad9f14a73fc185c242349f13"
+    },
+    {
+      "path": "src/games/stage2/hoangDieu.ts",
+      "sha256": "459ba08ecd534f0003b7d58298460da76b076f5aafa3e27d40be19985360fd63"
+    },
+    {
+      "path": "src/games/stage2/multiImage.ts",
+      "sha256": "2cd53a63f29d8a0f352ff8743bdb742e31b791307bba33b6e9cd08f77ee44823"
+    },
+    {
+      "path": "src/games/stage2/registry.ts",
+      "sha256": "88c19a6a24d51a812b4da37fa6944a6edf2e45c1cfca973f804976c578752fcf"
+    },
+    {
+      "path": "src/games/stage2/reviewNarration.ts",
+      "sha256": "e2c5f1c77edee9560122d78fd568ebf3abe9859a1bf179e3e5a4655c85c6e8ce"
+    },
+    {
+      "path": "src/games/stage2/rewards.ts",
+      "sha256": "0d6f5c021daa3905dc97061d52ec218a2f439bb05bee6c2f1fb113c5e034aab0"
+    },
+    {
+      "path": "src/games/stage2/rollout.ts",
+      "sha256": "1830cc11168ab99990cb53e3efd408141b59b5738804529ab373630947fe504a"
+    },
+    {
+      "path": "src/games/stage2/safe-layout.css",
+      "sha256": "31300e7edae26583477c4e1466458d1ea1f7a2432797781141f9b5fb4f7ce59b"
+    },
+    {
+      "path": "src/games/stage2/state.ts",
+      "sha256": "8d67b530409f7c53215c32dc6663c3f6511b52e068da74739aa74aa030283efb"
+    },
+    {
+      "path": "src/games/stage2/types.ts",
+      "sha256": "2d5f7e007789a6732f0520f30a08d6c40973371b60452f63a45a2c23679e34ab"
+    },
+    {
+      "path": "src/index.css",
+      "sha256": "fbfcd3cbf02c7c8b9c0dbeb7bd17b3fad3089f51399199f8e507f51c6a1bdd47"
+    },
+    {
+      "path": "src/main.tsx",
+      "sha256": "18a5cf90a8ab011a5347d37ec31c7dd5bee81c8374d485121509395e7053f297"
+    },
+    {
+      "path": "src/services/AudioService.ts",
+      "sha256": "205f030500cad301939467d4d2bcc1ed5f62fccbb72b679f125a452e6ba7b638"
+    },
+    {
+      "path": "src/services/AuthService.ts",
+      "sha256": "f21ba40e59c998c8c54ecd76e645b9b9de13055b4c8c0d56a9e3e6384c431707"
+    },
+    {
+      "path": "src/services/BackgroundMusic.ts",
+      "sha256": "0606ccb06f7cfa9f9891f533bae8f98a74750bc5bdb2336c1a70ec45c15a0cb0"
+    },
+    {
+      "path": "src/services/ContentService.ts",
+      "sha256": "b98651c6d658d00977aa7b8bb18198a15f35a0f88d79f03aeed1a74966fc951b"
+    },
+    {
+      "path": "src/services/DanangAssistantRetrievalService.ts",
+      "sha256": "aac7f9983ff057d2c23c80124a07407d4d3a5d104cadfbabd3cc7e12da5a6b01"
+    },
+    {
+      "path": "src/services/GddpBundledCatalog.ts",
+      "sha256": "87efc3791bfbc778121c3c5e9dc480b04068658e3d32f5c6ff71732c046b5d39"
+    },
+    {
+      "path": "src/services/GddpLessonDeckService.ts",
+      "sha256": "6e9b8cdb7fec9e8d788422e530a41cba64ca655a145d66611a8b357605473c70"
+    },
+    {
+      "path": "src/services/GddpResourceMatcher.ts",
+      "sha256": "5c4edc05302af6656cfe4267d9d0810aa684ff144432114a03993f529919f8ac"
+    },
+    {
+      "path": "src/services/GddpService.ts",
+      "sha256": "98b783ecec8409991ddb4799762c472ca33a38c76db694c0302ffbac0954684b"
+    },
+    {
+      "path": "src/services/Grade1ContentPolicy.ts",
+      "sha256": "dbe3623098bda745f717a44feed343dcda2c6e4a717c8319e308017f3cf45f11"
+    },
+    {
+      "path": "src/services/Grade2ContentPolicy.ts",
+      "sha256": "f7e26838b7df0d4a90b5cf91250e38acc60ed4e1ee1af59674004175d5273d16"
+    },
+    {
+      "path": "src/services/Grade3ContentPolicy.ts",
+      "sha256": "4226257c8cd52abf0cfa0dbb320a4acdd588200d8496c3dacbbb7ff95ea7ca11"
+    },
+    {
+      "path": "src/services/Grade45ContentPolicy.ts",
+      "sha256": "09e23a9c00d9ddec0111cf815b7456dc722452f4a438273e26483ffc37216fcb"
+    },
+    {
+      "path": "src/services/ImageOptimizationService.ts",
+      "sha256": "6799d449fb23308471b42cdceb0c513b799903c8115927bd4acd373b7ce34227"
+    },
+    {
+      "path": "src/services/ImplementationService.ts",
+      "sha256": "e1f2c943382f7f818fea14714ef70472b1b64ea329419b8ab2672faf606f69b8"
+    },
+    {
+      "path": "src/services/LearningFeedbackService.ts",
+      "sha256": "bb2895317387350fab0d3d81da9c4c5ec119f6f2d28f23dfd3489c082a206677"
+    },
+    {
+      "path": "src/services/LessonPlanService.ts",
+      "sha256": "7b0ea699d87f02e828897ed7a3cb18e86366533cc23e77253c5719584b5bde86"
+    },
+    {
+      "path": "src/services/NarrationReviewPolicy.ts",
+      "sha256": "306b31818157266444d274a825808f05a8587a4f870f06906993436b22e5026d"
+    },
+    {
+      "path": "src/services/NetworkService.ts",
+      "sha256": "dcd4156bb45b0d629d7f468d929d54fbe09970819ce20278470bf6b7a1adc237"
+    },
+    {
+      "path": "src/services/OfflineService.ts",
+      "sha256": "ea007376356b637b3a7397676cfc603825a9c253aecd72c281274b5a32b007a2"
+    },
+    {
+      "path": "src/services/ProgressService.ts",
+      "sha256": "d6f0437220c5ab2230510f10d3b2c282601d60f8d7f7005e94f4b7766f1e3624"
+    },
+    {
+      "path": "src/services/RealPhotoPolicy.ts",
+      "sha256": "e3e90796b4e94cd3ae4293c2158fa10069c943ec53d0b453a8432cede6043302"
+    },
+    {
+      "path": "src/services/StudentSyncService.ts",
+      "sha256": "18d7c8f034adaefb04c41b40ed86c0e34f6b2462643c0a4e800425162699b727"
+    },
+    {
+      "path": "src/services/TeacherWorkspaceService.ts",
+      "sha256": "36d6aec6e6761aaa0d3e441e1a18e98ff61aea7f7f4e773be6875ca857c20c0b"
+    },
+    {
+      "path": "src/services/ThemeService.ts",
+      "sha256": "3200e4e8099a94ce2c5b8195a7daeec35cf31afaf0bc39246635497fabe86d58"
+    },
+    {
+      "path": "src/services/contentAssetUrls.ts",
+      "sha256": "9e8a3b70c674ea795d765dd6f794d90cca49e16c2501414787f4e0393831bb42"
+    },
+    {
+      "path": "src/types/index.ts",
+      "sha256": "46d42839074f7657e0287c2f583892563d82ab635b2c77a1093f539fad3e58dd"
+    },
+    {
+      "path": "src/utils/assistantPosition.ts",
+      "sha256": "5bdf912a13411c9986f7222b59be187cb04692ff63a5882907a033efc4f397df"
+    },
+    {
+      "path": "src/utils/i18n.ts",
+      "sha256": "3b491d8e1182ea06a399e233e5db31ca37dd03ab616a20b66a71c4a81c8a34c9"
+    },
+    {
+      "path": "src/utils/learningThumbnail.ts",
+      "sha256": "0222db8f114d204f7eb65b9d5181a25df7cf64070d5f1569c77ceebc0cf1ce8a"
+    },
+    {
+      "path": "tsconfig.json",
+      "sha256": "80a40b629ded69c08d02450526be12d229323c90f543c2be25c59e00bb16622f"
+    },
+    {
+      "path": "vite.config.ts",
+      "sha256": "81f3bfdf2a4beb5b3724bd395dfa0da233a2679bf399dd48074de6b980650a15"
+    }
+  ]
+}

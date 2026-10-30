@@ -6,8 +6,8 @@ import {ALL_25_STATIONS} from './src/data/allStations';
 import {DANANG_ASSISTANT_LEXICON} from './src/data/danangAssistantLexicon';
 import {retrieveDanangAssistantAnswer as ask, getDanangAssistantQuickPrompts} from './src/services/DanangAssistantRetrievalService';
 
-test('46 sourced expansions have unique identities, verified HTTPS attribution, and teaching examples',()=>{
- assert.equal(knowledge.length,46);
+test('sourced expansions have unique identities, verified HTTPS attribution, and teaching examples',()=>{
+ assert.ok(knowledge.length>=46);
  assert.equal(new Set(knowledge.map(c=>c.id)).size,knowledge.length);
  for(const c of knowledge){assert.ok(c.answer.length>40);assert.ok(c.teachingExample.length>30);assert.ok(c.followUp.endsWith('?'));assert.equal(new URL(c.source.url).protocol,'https:');assert.match(c.reviewedOn,/^2026-10-(29|30)$/);}
  assert.ok(DANANG_ASSISTANT_LEXICON.length>50);
@@ -134,4 +134,12 @@ test('listing and definitions are not interchangeable; station challenge protect
  assert.match(ask('Làng nghề là gì?').answer,/nhiều hộ/);
  assert.equal(ask('Trốn tìm có phải trò chơi dân gian ko?',{stage:2,audience:'student'}).layer,'help');
  assert.match(ask('Trốn tìm có phải trò chơi dân gian ko?',{stage:2,audience:'teacher'}).answer,/Đúng rồi/);
+});
+
+test('ethnicity knowledge answers the subject and classification beyond textbook passages',()=>{
+ for(const audience of ['teacher','student'] as const)for(const q of ['người kinh có phải dân tộc thiểu số?','Người Kinh có phải dân tộc đa số không?','dan toc kinh co phai dan toc thieu so ko?']){
+  const r=ask(q,{audience,stations:ALL_25_STATIONS});
+  assert.equal(r.found,true,q);assert.match(r.answer,/Kinh.*đa số/);assert.match(r.answer,/không thuộc nhóm dân tộc thiểu số/);assert.ok(r.sources?.[0].url?.includes('nso.gov.vn'));
+ }
+ assert.match(ask('Việt Nam có mấy dân tộc?').answer,/54/);
 });

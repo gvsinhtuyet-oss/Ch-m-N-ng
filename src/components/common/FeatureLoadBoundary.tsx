@@ -11,7 +11,7 @@ export class FeatureLoadBoundary extends React.Component<React.PropsWithChildren
     return {
       failed: true,
       code: chunkError ? 'CHAM-CHUNK' : 'CHAM-RENDER',
-      detail: chunkError ? 'Không tải được thành phần của phiên bản ứng dụng.' : 'Một thành phần của màn hình gặp lỗi khi hiển thị.',
+      detail: (chunkError ? 'Không tải được thành phần của phiên bản ứng dụng. ' : 'Một thành phần của màn hình gặp lỗi khi hiển thị. ') + message.slice(0, 180),
     };
   }
 

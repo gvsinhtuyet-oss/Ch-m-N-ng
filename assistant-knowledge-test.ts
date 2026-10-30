@@ -100,3 +100,38 @@ test('general care intent does not override a named destination or supply unrela
  const named=ask('Em nên làm gì khi tham quan Thành Điện Hải?',ctx);
  assert.ok(!named.found || named.relatedStationTitle==='Thành Điện Hải');
 });
+
+test('local education is independent of all 25 station contexts and understands category questions',()=>{
+ const variants=['Đà Nẵng có làng nghề gì?','Kể tên các làng nghề ở Đà Nẵng','da nang co lang nghe nao','Quê hương mình có nghề truyền thống nào?'];
+ for(const station of ALL_25_STATIONS) for(const query of variants){
+  const r=ask(query,{station,hotspot:station.hotspots[0],stations:ALL_25_STATIONS});
+  assert.equal(r.layer,'common',`${station.id}: ${query}: ${r.answer}`);
+  for(const name of ['Cẩm Nê','Non Nước','Nam Ô','Túy Loan','Thanh Hà','Phước Kiều']) assert.ok(r.answer.includes(name),r.answer);
+  assert.doesNotMatch(r.answer,/kéo co|bao bố|trò chơi dân gian/i);
+  assert.ok(r.sources?.every(s=>s.url?.startsWith('https://')));
+ }
+});
+test('folk-game confirmation answers the named subject and corrects false premises',()=>{
+ for(const station of ALL_25_STATIONS){
+  for(const q of ['Trốn tìm có phải trò chơi dân gian ko?','tron tim co phai tro choi dan gian khong','Ú tim có phải trò chơi dân gian không?']){
+   const r=ask(q,{station,stations:ALL_25_STATIONS});
+   assert.match(r.answer,/Đúng rồi!/);assert.match(r.answer,/Trốn tìm/);assert.doesNotMatch(r.answer,/Kéo co|Nhảy bao bố/);
+  }
+ }
+ assert.match(ask('Trốn tìm có phải làng nghề không?').answer,/không phải là làng nghề/);
+ assert.match(ask('Trốn tìm không phải trò chơi dân gian đúng không?').answer,/Thực ra.*Trốn tìm là trò chơi dân gian/);
+ assert.equal(ask('Trò ABC có phải trò chơi dân gian không?',{stations:ALL_25_STATIONS}).found,false);
+});
+test('subject-specific definition and follow-up work outside the stations',()=>{
+ const first=ask('Trốn tìm là gì?');assert.match(first.answer,/một người đi tìm/);assert.ok(first.sources?.[0].url?.includes('hanoi.edu.vn'));
+ const follow=ask('Vậy chơi thế nào?',{previousQuery:'Trốn tìm là gì?'});assert.match(follow.answer,/nhắm mắt.*đếm/);assert.doesNotMatch(follow.answer,/kéo co|bao bố/);
+ const unrelated=ask('Vậy chơi thế nào?',{previousQuery:'Đà Nẵng có làng nghề gì?'});assert.equal(unrelated.found,false);
+ assert.equal(ask('Ai phát minh trò trốn tìm năm nào?',{stations:ALL_25_STATIONS}).found,false);
+});
+test('listing and definitions are not interchangeable; station challenge protection still applies',()=>{
+ assert.match(ask('Trò chơi dân gian là gì?').answer,/lưu truyền/);
+ assert.match(ask('Kể tên vài trò chơi dân gian').answer,/Trốn tìm.*Kéo co/);
+ assert.match(ask('Làng nghề là gì?').answer,/nhiều hộ/);
+ assert.equal(ask('Trốn tìm có phải trò chơi dân gian ko?',{stage:2,audience:'student'}).layer,'help');
+ assert.match(ask('Trốn tìm có phải trò chơi dân gian ko?',{stage:2,audience:'teacher'}).answer,/Đúng rồi/);
+});

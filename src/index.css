@@ -421,3 +421,26 @@ body:has(.journey-screen-fixed){overflow:hidden}
   .journey-station-grid button { font-size: 10px; min-height: 36px; }
   .journey-overview-hero > div.relative > div.flex.shrink-0 { flex-wrap: wrap; min-width: 0; }
 }
+
+/* Mobile text containment: never let long Vietnamese station names push controls off screen. */
+@media (max-width: 720px) {
+  .journey-screen-fixed, .journey-overview, .journey-overview-cards,
+  .journey-station-grid, .journey-station-grid > article,
+  .journey-station-grid > article > div:last-child { min-width: 0; max-width: 100%; }
+  .journey-station-grid h3 {
+    overflow-wrap: anywhere; word-break: normal; white-space: normal;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;
+    overflow: hidden; max-width: 100%; line-height: 1.3;
+  }
+  .journey-station-grid button { min-width: 0; max-width: 100%; white-space: normal; overflow-wrap: anywhere; line-height: 1.25; }
+  .station-immersive-root .station-compact-header { min-width: 0; max-width: 100%; overflow: hidden; }
+  .station-compact-header .station-stage-tabs,
+  .station-stage1-compact .station-compact-header .station-stage-tabs {
+    flex: 1 1 0 !important; width: auto !important; min-width: 0 !important;
+  }
+  .station-compact-header .station-stage-tab-name,
+  .station-stage1-compact .station-compact-header .station-stage-tab-name {
+    max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .station-compact-title { flex: 0 1 32%; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}

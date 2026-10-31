@@ -995,23 +995,43 @@
   "warnings": [
     {
       "id": "RV001",
-      "issue": "[object Object]"
+      "pointId": "g1-home-2",
+      "severity": "high",
+      "issue": "Theo UBND Tam Kỳ, tên pháp lý Trường Tiểu học Kim Đồng không còn độc lập từ 26/08/2026 do hợp nhất vào Trường Tiểu học Tam Kỳ.",
+      "action": "Kiểm duyệt lời dẫn bài gốc trước khi tiếp tục xuất bản học liệu; KHÔNG tự thay nội dung khi chưa được duyệt.",
+      "publishBlocker": true
     },
     {
       "id": "RV002",
-      "issue": "[object Object]"
+      "pointId": "g1-home-2",
+      "severity": "medium",
+      "issue": "Hai trường Võ Thị Sáu trong lời dẫn chưa được kiểm chứng tên hiện hành tại thời điểm 31/10/2026.",
+      "action": "Đối chiếu thông báo của từng nhà trường và địa phương trước khi trích dẫn như dữ kiện hiện hành.",
+      "publishBlocker": true
     },
     {
       "id": "RV003",
-      "issue": "[object Object]"
+      "pointId": "g1-home-1",
+      "severity": "medium",
+      "issue": "Không có vị trí nơi ở của học sinh.",
+      "action": "Không phỏng đoán hoặc yêu cầu số nhà, GPS hay thông tin nhận dạng.",
+      "publishBlocker": false
     },
     {
       "id": "RV004",
-      "issue": "[object Object]"
+      "pointId": "g1-home-3",
+      "severity": "medium",
+      "issue": "Sơ đồ đường đi có nguy cơ lộ nơi ở học sinh.",
+      "action": "Chỉ gợi ý sơ đồ giả định, không thu thập và lưu tuyến đường thật.",
+      "publishBlocker": false
     },
     {
       "id": "RV005",
-      "issue": "[object Object]"
+      "pointId": "g1-home-1",
+      "severity": "low",
+      "issue": "Tên đơn vị hành chính có thể thay đổi sau các quyết định mới.",
+      "action": "Đối chiếu lại văn bản chính thức trước mỗi năm học.",
+      "publishBlocker": false
     }
   ]
 }

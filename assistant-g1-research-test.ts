@@ -65,3 +65,10 @@ test('challenging unlisted questions never match an unrelated authored FAQ',()=>
     assert.ok(!r.matchedEntryId?.startsWith('g1s1-'),q+' returned wrong researched answer '+r.matchedEntryId);
   }
 });
+
+test('questions mentioning a topic are not mistaken for generic help requests',()=>{
+  assert.equal(ask('Bạn có thể giúp tôi điều gì?').layer,'help');
+  const hoiAn=ALL_25_STATIONS.find(s=>s.id==='g2-station-4')!;
+  assert.notEqual(ask('Bạn biết gì về Hội An?',{station:hoiAn}).layer,'help');
+  assert.notEqual(ask('Bạn biết gì về quê hương em?',{station}).layer,'help');
+});

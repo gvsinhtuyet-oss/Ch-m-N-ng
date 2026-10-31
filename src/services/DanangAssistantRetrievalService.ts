@@ -200,6 +200,9 @@ const stationMetaFromScope = (scope?: AssistantStationScope) =>
 
 const looksLikeHelpQuestion = (query: string) => {
   const normalized = normalizeForSearch(query);
+  // "Bạn biết gì về Hội An?" asks for facts, not chatbot instructions.
+  // Broad help phrases must not hijack a named-topic question.
+  if (/\b(?:biet gi|lam gi|lam duoc gi|hoi gi|giup duoc gi|giup toi dieu gi|giup minh dieu gi)\s+(?:ve|tai|o)\s+\S/.test(normalized)) return false;
   return HELP_PATTERNS.some(pattern => normalized.includes(normalizeForSearch(pattern)));
 };
 

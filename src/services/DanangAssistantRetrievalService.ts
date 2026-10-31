@@ -497,6 +497,9 @@ function retrieveSingleAnswer(rawQuery: string, context: AssistantRetrievalConte
     return makeResult('help', normalizeDanangDialect(query),
       'Em thử quan sát kỹ hình và nhớ lại điều vừa khám phá nhé. Nếu còn phân vân, em có thể quay lại Chặng 1 để tìm chi tiết giúp mình lựa chọn. Mình sẽ không chọn đáp án thay em.', 'high');
   }
+  // Match authored teacher/student formulations before stripping pedagogical phrasing.
+  const curatedOriginal = findCuratedAnswer(query,context);
+  if(curatedOriginal)return curatedOriginal;
   const cleanQuery = query.replace(/^(?:cô|thầy|hãy|giúp tôi|giúp mình)\s+/i, '')
     .replace(/^(?:giải thích|giải nghĩa|nói rõ|cho ví dụ về)\s+(?:từ\s+)?/i, '')
     .replace(/(?:[,;]?\s*(?:giải thích|nói)\s+)?cho học sinh(?: tiểu học)?(?: lớp [1-5])?[^?]*\??$/i, '').trim();

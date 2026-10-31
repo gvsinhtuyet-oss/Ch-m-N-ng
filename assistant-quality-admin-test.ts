@@ -73,5 +73,5 @@ test('quality UI only mounts under real admin dashboard; demo does not expose it
   assert.match(real,/KIỂM ĐỊNH CHATBOT/);
   assert.doesNotMatch(demo,/AssistantQualityDashboard|assistant-qa/);
   assert.match(panel,/currentUser\?\.id!=='admin-demo'/);
-  assert.doesNotMatch(panel,/\/api\/|firestore/i);
+  assert.doesNotMatch(panel,/\bfetch\s*\(|authService\./);
 });

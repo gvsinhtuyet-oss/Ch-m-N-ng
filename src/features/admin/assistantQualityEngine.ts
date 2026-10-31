@@ -1,5 +1,5 @@
-import { ALL_25_STATIONS } from '../data/allStations';
-import { retrieveDanangAssistantAnswer } from '../services/DanangAssistantRetrievalService';
+import { ALL_25_STATIONS } from '../../data/allStations';
+import { retrieveDanangAssistantAnswer } from '../../services/DanangAssistantRetrievalService';
 
 /**
  * Admin-only LOCAL diagnostic suite. No question is sent to a model, API,
@@ -152,7 +152,7 @@ export function calculateQualityScore(
     const values=rows.filter(c=>ratings[c.id]!==undefined).map(c=>ratings[c.id]);
     return {id,label:QUALITY_DIMENSIONS[id].label,weight:QUALITY_DIMENSIONS[id].weight,
       reviewed:values.length,total:rows.length,
-      average:values.length?values.reduce((a,b)=>a+b,0)/(2*values.length):null};
+      average:values.length?values.reduce<number>((a,b)=>a+b,0)/(2*values.length):null};
   });
   // Do not invent an overall score while a dimension is completely unreviewed.
   const score=dimensions.every(d=>d.reviewed>0)

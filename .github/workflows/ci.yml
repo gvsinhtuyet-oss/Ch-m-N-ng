@@ -70,6 +70,9 @@ jobs:
       - name: Da Nang assistant retrieval tests
         run: npm run test:assistant
 
+      - name: Admin chatbot quality audit tests
+        run: node --import tsx --test assistant-quality-admin-test.ts
+
       - name: Grade 1 integrated presentations and exact mappings
         run: node --import tsx --test grade1-lesson-decks-test.ts
 

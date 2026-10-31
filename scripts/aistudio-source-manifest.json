@@ -1,5 +1,5 @@
 {
-  "commit": "0fbd56f1fcea64ebf7e3eb9d053f083f367b7965",
+  "commit": "853da2f38b477cf832204e2e728418dad55293a6",
   "files": [
     {
       "path": "src/games/stage2/Preview.tsx",
@@ -139,7 +139,7 @@
     },
     {
       "path": "src/services/DanangAssistantRetrievalService.ts",
-      "sha256": "dc7306f6fcc51daa8912a46dcdef977fd91d5058f5a8637a03278c188447ae78"
+      "sha256": "417c264a689bbe6d71da7c8e39f50b866ecc8ee7fa7d051db0111dcc4451d7c2"
     },
     {
       "path": "src/services/GddpBundledCatalog.ts",
@@ -255,7 +255,7 @@
     },
     {
       "path": "src/components/common/DanangAssistantChat.tsx",
-      "sha256": "0489dbb4e7e9d7889c171f799fa7189fe789150d27349a2f4e5d700034011274"
+      "sha256": "6dc5f7eb8352f457ed53b194d42bb3b88dde6f8b072babea9f28f22ff9b5ef80"
     },
     {
       "path": "src/components/common/FeatureLoadBoundary.tsx",
@@ -288,6 +288,10 @@
     {
       "path": "src/components/common/Header.tsx",
       "sha256": "b19b9cdf120ee456d345614311d9a2897421d0608265639f97b3cc26a2ed195d"
+    },
+    {
+      "path": "src/data/assistantGrade1Research.json",
+      "sha256": "cf6413e9d81c2abe923db29de5374068c461b16c413ffe2ab4d66a3a5887aa3f"
     }
   ]
 }

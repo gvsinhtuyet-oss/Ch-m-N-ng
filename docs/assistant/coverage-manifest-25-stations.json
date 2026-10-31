@@ -1,0 +1,655 @@
+{
+  "schemaVersion": "1.0.0",
+  "project": "CHAM DA NANG",
+  "purpose": "25 station × 121 hotspot editorial knowledge coverage — targets, NOT achievements",
+  "authoritativeStationGuide": "src/data/assistantStationGuides.json",
+  "policy": {
+    "knowledgeUnitPerHotspotTarget": {
+      "min": 10,
+      "max": 15
+    },
+    "independentQuestionsPerHotspotTarget": 8,
+    "evidence": "Every factual claim requires at least one checked source. Sensitive, historical dates and changing administrative facts need independent corroboration where possible.",
+    "stages": [
+      "research",
+      "source_check",
+      "teacher_review",
+      "holdout_eval",
+      "staging",
+      "published"
+    ],
+    "releaseThresholds": {
+      "factAccuracyMin": 0.95,
+      "paraphraseIntentMin": 0.9,
+      "unsupportedAbstentionMin": 0.95,
+      "stage2DirectAnswerLeaks": 0,
+      "wrongStationAnswerMax": 0.01,
+      "invalidSourceLinksMax": 0
+    },
+    "privacy": "No student address, home-school route, session transcript or personal data in the research pack. Aggregate consent-based evaluation only.",
+    "deployment": "Static or lazy-loaded JSON shards, default local retrieval; optional explicit teacher-only paid AI."
+  },
+  "stations": [
+    {
+      "stationId": "g1-station-1",
+      "title": "Quê hương em",
+      "hotspotCount": 4,
+      "hotspotIds": [
+        "g1-home-1",
+        "g1-home-2",
+        "g1-home-3",
+        "g1-home-4"
+      ],
+      "topicClusters": [
+        "Quê hương và đơn vị hành chính",
+        "Bản đồ và định hướng an toàn",
+        "Trường học và cộng đồng",
+        "Cảnh quan, cây xanh, môi trường",
+        "Nét văn hóa địa phương"
+      ],
+      "researchStatus": "draft_in_pr72",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "51 authored QAs are in PR #72; school-name verification is pending."
+    },
+    {
+      "stationId": "g1-station-4",
+      "title": "Thành Điện Hải",
+      "hotspotCount": 4,
+      "hotspotIds": [
+        "tdh-thanh-co",
+        "tdh-tuong-thanh-hao",
+        "tdh-dai-bac",
+        "tdh-nguyen-tri-phuong"
+      ],
+      "topicClusters": [
+        "Lịch sử hình thành Thành Điện Hải",
+        "Kiến trúc thành, hào, cổng và pháo",
+        "Nguyễn Tri Phương và kháng chiến ở Đà Nẵng",
+        "Hiện vật, bảo tồn và bảo tàng",
+        "Ý nghĩa lịch sử và cách tham quan"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g1-station-2",
+      "title": "Trò chơi dân gian",
+      "hotspotCount": 4,
+      "hotspotIds": [
+        "g1-game-1",
+        "g1-game-2",
+        "g1-game-3",
+        "g1-game-4"
+      ],
+      "topicClusters": [
+        "Nguồn gốc và biến thể trò chơi",
+        "Luật chơi, vai trò và công bằng",
+        "Vận động, kỹ năng phối hợp",
+        "An toàn trong trò chơi",
+        "Bảo tồn trò chơi dân gian"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g1-station-3",
+      "title": "Những dòng suối ở thành phố Đà Nẵng",
+      "hotspotCount": 4,
+      "hotspotIds": [
+        "g1-stream-1",
+        "g1-stream-2",
+        "g1-stream-3",
+        "g1-stream-4"
+      ],
+      "topicClusters": [
+        "Suối, thác và vòng tuần hoàn nước",
+        "Địa hình và hệ sinh thái",
+        "Vai trò của rừng đầu nguồn",
+        "An toàn mưa lũ, tắm suối",
+        "Du lịch và bảo vệ nguồn nước"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g1-station-5",
+      "title": "Món ăn truyền thống",
+      "hotspotCount": 4,
+      "hotspotIds": [
+        "g1-food-1",
+        "g1-food-2",
+        "g1-food-3",
+        "g1-food-4"
+      ],
+      "topicClusters": [
+        "Đặc sản và thành phần nguyên liệu",
+        "Cách chế biến truyền thống",
+        "Văn hóa bữa ăn và sự kiện",
+        "Vệ sinh, dị ứng thực phẩm",
+        "Làng nghề, sinh kế và du lịch"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g2-station-4",
+      "title": "Di sản văn hóa thế giới Hội An",
+      "hotspotCount": 6,
+      "hotspotIds": [
+        "hoi-an-pho-co",
+        "hoi-an-duong-pho",
+        "hoi-an-cong-trinh",
+        "hoi-an-hoat-dong",
+        "hoi-an-thanh-ha",
+        "hoi-an-tra-que"
+      ],
+      "topicClusters": [
+        "Thương cảng và giao lưu văn hóa",
+        "Kiến trúc Chùa Cầu, hội quán, phố cổ",
+        "Di sản UNESCO và ý nghĩa bảo tồn",
+        "Sông Thu Bồn và đời sống cư dân",
+        "Làng nghề, du lịch bền vững"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g2-station-3",
+      "title": "Nhà thờ Nguyễn Văn Thoại – Nhà lưu niệm Huỳnh Thúc Kháng",
+      "hotspotCount": 4,
+      "hotspotIds": [
+        "g2s3-thoai",
+        "g2s3-nha-tho",
+        "g2s3-huynh",
+        "g2s3-luu-niem"
+      ],
+      "topicClusters": [
+        "Nguyễn Văn Thoại và bối cảnh lịch sử",
+        "Huỳnh Thúc Kháng và phong trào yêu nước",
+        "Nhà thờ, nhà lưu niệm và hiện vật",
+        "Mốc thời gian có nguồn",
+        "Công dân, lòng biết ơn và gìn giữ di tích"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g2-station-5",
+      "title": "Lễ hội truyền thống ở thành phố Đà Nẵng",
+      "hotspotCount": 5,
+      "hotspotIds": [
+        "g2s5-le-hoi",
+        "g2s5-phan-le",
+        "g2s5-phan-hoi",
+        "g2s5-y-nghia",
+        "g2s5-ung-xu"
+      ],
+      "topicClusters": [
+        "Nguồn gốc lễ hội địa phương",
+        "Nghi lễ, trang phục và trò diễn",
+        "Lễ hội vật thể và phi vật thể",
+        "Lịch tổ chức, địa điểm cần cập nhật",
+        "An toàn và ứng xử khi dự lễ hội"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g2-station-2",
+      "title": "Cù Lao Chàm – Khu bảo tồn thiên nhiên Sơn Trà",
+      "hotspotCount": 5,
+      "hotspotIds": [
+        "g2s2-tong-quan",
+        "g2s2-cu-lao",
+        "g2s2-hoat-dong",
+        "g2s2-son-tra",
+        "g2s2-bao-ve"
+      ],
+      "topicClusters": [
+        "Địa lý Cù Lao Chàm và Sơn Trà",
+        "Khu dự trữ sinh quyển, bảo tồn",
+        "San hô, đa dạng sinh học",
+        "Du lịch và nghề biển",
+        "Rác thải nhựa và an toàn sinh thái"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g2-station-1",
+      "title": "Chiếu Cẩm Nê – Chiếu Bàn Thạch",
+      "hotspotCount": 5,
+      "hotspotIds": [
+        "g2s1-lang-chieu",
+        "g2s1-nguyen-lieu",
+        "g2s1-cac-buoc",
+        "g2s1-gian-det",
+        "g2s1-tham-quan"
+      ],
+      "topicClusters": [
+        "Cây cói, nguyên liệu và sản phẩm chiếu",
+        "Quy trình dệt và họa tiết",
+        "Cẩm Nê, Bàn Thạch và phân biệt địa danh",
+        "Sinh kế và thị trường",
+        "Bảo tồn nghề, vật liệu bền vững"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g3-station-2",
+      "title": "Hoàng Diệu – Phan Châu Trinh",
+      "hotspotCount": 4,
+      "hotspotIds": [
+        "dn3-huynh-thuc-khang",
+        "dn3-phan-chau-trinh",
+        "dn3-phong-trao-duy-tan",
+        "dn3-dau-chan-hom-nay"
+      ],
+      "topicClusters": [
+        "Tiểu sử Hoàng Diệu và Phan Châu Trinh",
+        "Niên biểu sự kiện và bối cảnh",
+        "Tư tưởng và đóng góp khác nhau",
+        "Phong trào Duy Tân và giáo dục",
+        "Di tích tưởng niệm, nguồn lịch sử"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g3-station-3",
+      "title": "Cộng đồng các dân tộc ở thành phố Đà Nẵng",
+      "hotspotCount": 4,
+      "hotspotIds": [
+        "g3-3-point-1",
+        "g3-3-point-2",
+        "g3-3-point-3",
+        "g3-3-point-4"
+      ],
+      "topicClusters": [
+        "Các dân tộc và phân bố cư trú",
+        "Ngôn ngữ, trang phục, nhà ở",
+        "Lễ hội, âm nhạc, nghề truyền thống",
+        "Đoàn kết và tôn trọng khác biệt",
+        "Tri thức bản địa và bảo tồn văn hóa"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g3-station-1",
+      "title": "Bãi biển Mỹ Khê – Bãi biển Bàn Than",
+      "hotspotCount": 4,
+      "hotspotIds": [
+        "g3-1-point-1",
+        "g3-1-point-2",
+        "g3-1-point-3",
+        "g3-1-point-4"
+      ],
+      "topicClusters": [
+        "Đặc điểm bờ biển và bãi đá",
+        "Hệ sinh thái ven biển",
+        "Kinh tế du lịch, ngư nghiệp",
+        "An toàn tắm biển và thời tiết",
+        "Bảo vệ môi trường biển"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g3-station-4",
+      "title": "Nước mắm Nam Ô",
+      "hotspotCount": 4,
+      "hotspotIds": [
+        "g3-4-point-1",
+        "g3-4-point-2",
+        "g3-4-point-3",
+        "g3-4-point-4"
+      ],
+      "topicClusters": [
+        "Cá, muối và nguyên liệu nước mắm",
+        "Quy trình ủ chượp và lên men",
+        "Làng Nam Ô và tri thức nghề",
+        "Nghề biển, thương mại và an toàn",
+        "Bảo tồn di sản, môi trường làng nghề"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g3-station-5",
+      "title": "Nghề đan thuyền thúng ở Sơn Trà",
+      "hotspotCount": 4,
+      "hotspotIds": [
+        "g3-5-point-1",
+        "g3-5-point-2",
+        "g3-5-point-3",
+        "g3-5-point-4"
+      ],
+      "topicClusters": [
+        "Đặc điểm thuyền thúng",
+        "Đan nan, chống thấm, vật liệu",
+        "Lực nổi và khoa học đơn giản",
+        "Đánh bắt, nghề biển và sinh kế",
+        "Bảo tồn nghề, an toàn trên biển"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g4-station-1",
+      "title": "Thiên nhiên và con người Đà Nẵng",
+      "hotspotCount": 6,
+      "hotspotIds": [
+        "g4-station-1-textbook-point-1",
+        "g4-station-1-textbook-point-2",
+        "g4-station-1-textbook-point-3",
+        "g4-station-1-textbook-point-4",
+        "g4-station-1-textbook-point-5",
+        "g4-station-1-textbook-point-6"
+      ],
+      "topicClusters": [
+        "Vị trí, địa hình và khí hậu",
+        "Sông ngòi, rừng, biển, tài nguyên",
+        "Cộng đồng, dân cư và văn hóa",
+        "Thiên tai, thích ứng và bảo vệ môi trường",
+        "Liên hệ Toán, Khoa học và bản đồ"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g4-station-3",
+      "title": "Tìm hiểu một số hoạt động kinh tế Đà Nẵng",
+      "hotspotCount": 5,
+      "hotspotIds": [
+        "g4-station-3-textbook-point-1",
+        "g4-station-3-textbook-point-2",
+        "g4-station-3-textbook-point-3",
+        "g4-station-3-textbook-point-4",
+        "g4-station-3-textbook-point-5"
+      ],
+      "topicClusters": [
+        "Nông, lâm, thủy sản và sản xuất",
+        "Công nghiệp, làng nghề, chuỗi cung ứng",
+        "Du lịch, dịch vụ, cảng biển",
+        "Thương mại, việc làm và tiêu dùng",
+        "Kinh tế xanh, số liệu cần ghi năm"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g4-station-2",
+      "title": "Khu đền tháp Mỹ Sơn – Bảo tàng Điêu khắc Chăm Đà Nẵng",
+      "hotspotCount": 6,
+      "hotspotIds": [
+        "g4-station-2-textbook-point-1",
+        "g4-station-2-textbook-point-2",
+        "g4-station-2-textbook-point-3",
+        "g4-station-2-textbook-point-4",
+        "g4-station-2-textbook-point-5",
+        "g4-station-2-textbook-point-6"
+      ],
+      "topicClusters": [
+        "Văn hóa Chăm và lịch sử Champa",
+        "Kiến trúc, vật liệu và biểu tượng",
+        "Mỹ Sơn, di sản UNESCO",
+        "Hiện vật Bảo tàng Điêu khắc Chăm",
+        "Bảo tồn và ứng xử với tín ngưỡng"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g4-thu-bon-hon-kem",
+      "title": "Sông Thu Bồn – Hòn Kẽm Đá Dừng",
+      "hotspotCount": 5,
+      "hotspotIds": [
+        "g4-thu-bon-hon-kem-textbook-point-1",
+        "g4-thu-bon-hon-kem-textbook-point-2",
+        "g4-thu-bon-hon-kem-textbook-point-3",
+        "g4-thu-bon-hon-kem-textbook-point-4",
+        "g4-thu-bon-hon-kem-textbook-point-5"
+      ],
+      "topicClusters": [
+        "Địa lý lưu vực Thu Bồn",
+        "Hòn Kẽm Đá Dừng và cảnh quan",
+        "Giao thông thủy, sinh kế ven sông",
+        "Văn học, ca dao và văn hóa sông nước",
+        "Lũ lụt, sạt lở và bảo vệ dòng sông"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g4-station-4",
+      "title": "Nghề đúc đồng ở Phước Kiều",
+      "hotspotCount": 5,
+      "hotspotIds": [
+        "g4-station-4-textbook-point-1",
+        "g4-station-4-textbook-point-2",
+        "g4-station-4-textbook-point-3",
+        "g4-station-4-textbook-point-4",
+        "g4-station-4-textbook-point-5"
+      ],
+      "topicClusters": [
+        "Lịch sử và vị trí làng Phước Kiều",
+        "Đồng, hợp kim và nghề đúc",
+        "Chuông, cồng chiêng, âm học",
+        "Tay nghề, sản phẩm và thương mại",
+        "Bảo tồn, an toàn lao động, môi trường"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g5-ky-anh-me-nhu",
+      "title": "Địa đạo Kỳ Anh – Khu lưu niệm Mẹ Nhu và 07 Dũng sĩ Thanh Khê",
+      "hotspotCount": 6,
+      "hotspotIds": [
+        "g5-ky-anh-me-nhu-textbook-point-1",
+        "g5-ky-anh-me-nhu-textbook-point-2",
+        "g5-ky-anh-me-nhu-textbook-point-3",
+        "g5-ky-anh-me-nhu-textbook-point-4",
+        "g5-ky-anh-me-nhu-textbook-point-5",
+        "g5-ky-anh-me-nhu-textbook-point-6"
+      ],
+      "topicClusters": [
+        "Địa đạo Kỳ Anh và kháng chiến",
+        "Mẹ Nhu, 7 Dũng sĩ Thanh Khê",
+        "Mốc lịch sử và di tích có nguồn",
+        "Hậu quả chiến tranh, hòa bình",
+        "Tưởng niệm, kể chuyện phù hợp lứa tuổi"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g5-station-3",
+      "title": "Bà Nà – Hải Vân Quan",
+      "hotspotCount": 6,
+      "hotspotIds": [
+        "g5-station-3-textbook-point-1",
+        "g5-station-3-textbook-point-2",
+        "g5-station-3-textbook-point-3",
+        "g5-station-3-textbook-point-4",
+        "g5-station-3-textbook-point-5",
+        "g5-station-3-textbook-point-6"
+      ],
+      "topicClusters": [
+        "Bà Nà: độ cao, khí hậu và hệ sinh thái",
+        "Hải Vân Quan: lịch sử và kiến trúc",
+        "Đèo, đường giao thông và địa lý",
+        "Du lịch, di sản và sinh kế",
+        "Bảo tồn thiên nhiên, an toàn du lịch"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g5-station-4",
+      "title": "Danh thắng Ngũ Hành Sơn",
+      "hotspotCount": 6,
+      "hotspotIds": [
+        "nghs-quan-the",
+        "nghs-hang-dong-chua",
+        "nghs-ma-nhai",
+        "g5-station-4-textbook-point-4",
+        "g5-station-4-textbook-point-5",
+        "nghs-lang-da"
+      ],
+      "topicClusters": [
+        "Địa hình Ngũ Hành Sơn, hang động",
+        "Ma nhai, chùa chiền và tư liệu cổ",
+        "Ngũ Hành Sơn và văn hóa tín ngưỡng",
+        "Làng đá Non Nước, nghề thủ công",
+        "Bảo tồn, tham quan an toàn"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g5-lua-ma-chau",
+      "title": "Lụa Mã Châu",
+      "hotspotCount": 5,
+      "hotspotIds": [
+        "g5-lua-ma-chau-textbook-point-1",
+        "g5-lua-ma-chau-textbook-point-2",
+        "g5-lua-ma-chau-textbook-point-3",
+        "g5-lua-ma-chau-textbook-point-4",
+        "g5-lua-ma-chau-textbook-point-5"
+      ],
+      "topicClusters": [
+        "Con tằm, cây dâu và ươm tơ",
+        "Quy trình dệt lụa thủ công",
+        "Hoa văn, sản phẩm và nghệ nhân",
+        "Buôn bán, làng nghề, phát triển du lịch",
+        "Môi trường và giữ nghề truyền thống"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    },
+    {
+      "stationId": "g5-station-5",
+      "title": "Sâm Ngọc Linh",
+      "hotspotCount": 6,
+      "hotspotIds": [
+        "g5-station-5-textbook-point-1",
+        "g5-station-5-textbook-point-2",
+        "g5-station-5-textbook-point-3",
+        "g5-station-5-textbook-point-4",
+        "g5-station-5-textbook-point-5",
+        "g5-station-5-textbook-point-6"
+      ],
+      "topicClusters": [
+        "Đặc điểm thực vật sâm Ngọc Linh",
+        "Vùng sinh trưởng và môi trường núi cao",
+        "Bảo tồn, nguy cơ khai thác quá mức",
+        "Lao động địa phương và kinh tế",
+        "Phân biệt thông tin khoa học với quảng cáo sức khỏe"
+      ],
+      "researchStatus": "not_yet_specialized",
+      "verifiedByTeacher": false,
+      "holdoutEvaluated": false,
+      "factualUnitsCount": null,
+      "independentScore": null,
+      "editorNotes": "Existing in-app hotspot narration/teacher guide is baseline only; no full off-lesson editorial audit."
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import knowledge from '../data/assistantKnowledge.json';
+import grade1Research from '../data/assistantGrade1Research.json';
 import guides from '../data/assistantStationGuides.json';
 import { answerLocalEducationQuestion, resolveLocalEducationFollowUp } from './LocalEducationKnowledge';
 import { ExplorationHotspot, Station } from '../types';
@@ -199,6 +200,9 @@ const stationMetaFromScope = (scope?: AssistantStationScope) =>
 
 const looksLikeHelpQuestion = (query: string) => {
   const normalized = normalizeForSearch(query);
+  // "Bạn biết gì về Hội An?" asks for facts, not chatbot instructions.
+  // Broad help phrases must not hijack a named-topic question.
+  if (/\b(?:biet gi|lam gi|lam duoc gi|hoi gi|giup duoc gi|giup toi dieu gi|giup minh dieu gi)\s+(?:ve|tai|o)\s+\S/.test(normalized)) return false;
   return HELP_PATTERNS.some(pattern => normalized.includes(normalizeForSearch(pattern)));
 };
 
@@ -384,6 +388,56 @@ function retrieveCoreAnswer(
     (usesDeicticReference(query) && !context.hotspot ? ' Bạn đang muốn hỏi về điểm đến nào?' : ''), 'low');
 }
 
+/**
+ * Source-linked editorial FAQ layer for grade 1 station 1.
+ * Conservative matching prefers uncertainty to guessing a different answer.
+ */
+const curatedRows = grade1Research.entries.map(row => ({
+  ...row, texts: [row.question, ...row.variants]
+    .map(text => ({text, normalized:normalizeForSearch(text), intent:questionIntent(text)})),
+}));
+const curatedSources = new Map(grade1Research.sources.map(s=>[s.id,s]));
+const curatedMeaningful = (query:string) => new Set(meaningfulWords(query));
+const curatedCompare = (query:string, candidate:string) => {
+  const a=curatedMeaningful(query), b=curatedMeaningful(candidate);
+  if(a.size<2 || b.size<2)return 0;
+  const common=[...a].filter(term=>b.has(term)).length;
+  if(!common)return 0;
+  const aCoverage=common/a.size, bCoverage=common/b.size;
+  return aCoverage>=.76 && bCoverage>=.70 ? 2*common/(a.size+b.size) : 0;
+};
+function findCuratedAnswer(query:string, context:AssistantRetrievalContext):AssistantRetrievalResult|null {
+  if (context.station?.id && context.station.id!==grade1Research.stationId) return null;
+  if (!query.trim())return null;
+  const nq=normalizeForSearch(query);
+  const intent=questionIntent(query);
+  const teacher=context.audience==='teacher';
+  const ranked=curatedRows.filter(row=>row.audience==='student'||teacher).map(row=>{
+    const pointBoost=context.hotspot?.id===row.pointId ? .02 : 0;
+    const scores=row.texts.map(item=>{
+      if(nq===item.normalized)return 2+pointBoost;
+      if(item.intent!==intent)return 0;
+      return curatedCompare(query,item.text)+pointBoost;
+    });
+    return {row,score:Math.max(0,...scores)};
+  }).filter(x=>x.score>=.84).sort((a,b)=>b.score-a.score);
+  if(!ranked.length)return null;
+  if(ranked[0].score<1.9 && ranked[1] && ranked[0].score-ranked[1].score<.09)return null;
+  const match=ranked[0].row;
+  const sources=match.sources.flatMap(id=>{
+    const src=curatedSources.get(id);
+    return src ? [{label:src.title,url:src.url}] : [];
+  });
+  return makeResult(context.hotspot?.id===match.pointId?'hotspot':'station',nq,
+    match.answer,'high',{
+      matchedEntryId:match.id,matchedTerm:match.question,
+      relatedStationId:grade1Research.stationId,
+      relatedStationTitle:'Quê hương em',
+      topic:match.question,sources,followUp:match.followUp,
+      teachingExample:teacher && match.teacherNote ? match.teacherNote : undefined,
+    });
+}
+
 // Conversational composition uses reviewed facts, never question options or invented facts.
 const topicCards = (query:string) => {
   const q = ` ${normalizeForSearch(query)} `;
@@ -446,9 +500,15 @@ function retrieveSingleAnswer(rawQuery: string, context: AssistantRetrievalConte
     return makeResult('help', normalizeDanangDialect(query),
       'Em thử quan sát kỹ hình và nhớ lại điều vừa khám phá nhé. Nếu còn phân vân, em có thể quay lại Chặng 1 để tìm chi tiết giúp mình lựa chọn. Mình sẽ không chọn đáp án thay em.', 'high');
   }
+  // Match authored teacher/student formulations before stripping pedagogical phrasing.
+  const curatedOriginal = findCuratedAnswer(query,context);
+  if(curatedOriginal)return curatedOriginal;
   const cleanQuery = query.replace(/^(?:cô|thầy|hãy|giúp tôi|giúp mình)\s+/i, '')
     .replace(/^(?:giải thích|giải nghĩa|nói rõ|cho ví dụ về)\s+(?:từ\s+)?/i, '')
     .replace(/(?:[,;]?\s*(?:giải thích|nói)\s+)?cho học sinh(?: tiểu học)?(?: lớp [1-5])?[^?]*\??$/i, '').trim();
+  // Curated evidence precedes fuzzy narration; Stage 2 protection stays above.
+  const curated = findCuratedAnswer(cleanQuery,context);
+  if(curated)return curated;
   const q = normalizeForSearch(cleanQuery);
   const intent = questionIntent(cleanQuery);
   const candidates = knowledge.map(card => {
@@ -497,6 +557,18 @@ function retrieveSingleAnswer(rawQuery: string, context: AssistantRetrievalConte
 
 export function getDanangAssistantQuickPrompts(context: AssistantRetrievalContext = {}): string[] {
   if(context.audience !== 'teacher' && context.stage === 2) return ['Em nên quan sát gì?', 'Em ôn lại bài ở đâu?', 'Nếu phân vân thì làm gì?'];
+  if(context.station?.id===grade1Research.stationId) {
+    const isTeacher=context.audience==='teacher';
+    const rows=grade1Research.entries.filter(item=>item.audience==='student'||isTeacher);
+    const matching=context.hotspot
+      ? rows.filter(item=>item.pointId===context.hotspot?.id)
+      : [...new Map(rows.map(item=>[item.pointId,item])).values()];
+    const selected=isTeacher
+      ? [...matching.filter(x=>x.audience==='teacher'),...matching.filter(x=>x.audience==='student')]
+      : matching;
+    if(selected.length)return selected.slice(0,3).map(item=>item.question);
+  }
+
   if(context.audience === 'teacher' && !context.station) return ['Di sản văn hóa phi vật thể là gì?', 'San hô là động vật hay thực vật?', 'Vòng tuần hoàn nước là gì?'];
   const hotspot = context.hotspot;
   if (hotspot) {

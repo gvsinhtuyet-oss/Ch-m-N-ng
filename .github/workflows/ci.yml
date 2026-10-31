@@ -101,4 +101,4 @@ jobs:
         run: npm run build
 
       - name: Measure and smoke-test isolated production runtime
-        run: node scripts/package-production.mjs && node --test production-package-test.mjs
+        run: node scripts/package-production.mjs && node --test production-package-test.mjs && node --test production-package-audit-test.mjs

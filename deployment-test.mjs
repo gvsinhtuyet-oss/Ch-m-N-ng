@@ -16,11 +16,14 @@ test('test deployment refuses missing configuration and the main database',()=>{
 test('Docker runtime includes every local module imported by the production server',async()=>{
   const docker=await readFile(new URL('./Dockerfile',import.meta.url),'utf8');
   const runtime=docker.split('AS runtime')[1];
-  const copied=[...runtime.matchAll(/^COPY (?!.*--from)(.+) \.\/$/gm)].flatMap(m=>m[1].split(/\s+/));
+  assert.ok(runtime.includes('COPY --from=build /app/.production-build ./'));
+  assert.ok(!runtime.includes('npm install'));
+  const packager=await readFile(new URL('./scripts/package-production.mjs',import.meta.url),'utf8');
+  assert.ok(packager.includes("await copyModule('content-server.mjs')"));
   const checked=new Set();
   const inspect=async file=>{
     if(checked.has(file))return;checked.add(file);
-    assert.ok(copied.includes(file),`Docker runtime is missing ${file}`);
+
     const source=await readFile(new URL('./'+file,import.meta.url),'utf8');
     for(const match of source.matchAll(/(?:from\s+|import\s*\(\s*)['"]\.\/([^'"]+\.mjs)['"]/g))await inspect(match[1]);
   };
@@ -33,7 +36,7 @@ test('Docker runtime includes every local module imported by the production serv
 test('Cloud Run runtime packages the self-contained five-grade GDĐP module',async()=>{
   const docker=await readFile(new URL('./Dockerfile',import.meta.url),'utf8');
   const server=await readFile(new URL('./content-server.mjs',import.meta.url),'utf8');
-  assert.ok(docker.includes('gddp-bundled-data.mjs'));
+  assert.ok(docker.includes('node scripts/package-production.mjs'));
   assert.ok(server.includes("import { bundledGddpData } from './gddp-bundled-data.mjs'"));
   assert.ok(!server.includes("readFile(new URL('./content-data/gddp-2026-2027.json'"));
   const {bundledGddpData}=await import('./gddp-bundled-data.mjs');

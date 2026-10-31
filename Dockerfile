@@ -6,7 +6,7 @@ COPY package.json ./
 RUN npm install --no-audit --no-fund
 
 COPY . .
-RUN npm run lint && npm run build
+RUN npm run lint && npm run build && node scripts/package-production.mjs
 
 FROM node:22-slim AS runtime
 
@@ -14,16 +14,8 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=8080
 
-COPY package.json ./
-RUN npm install --omit=dev --no-audit --no-fund
-
-COPY --from=build /app/dist ./dist
-COPY education-assistant.mjs ./
-COPY learning-feedback.mjs learning-feedback-catalog.mjs google-identity.mjs content-server.mjs auth-server.mjs content-storage.mjs gddp-catalog.mjs gddp-curriculum-links.mjs gddp-ai.mjs gddp-bundled-data.mjs deployment-config.mjs ./
-
-
-RUN mkdir -p /app/content-data
+# Only the measured runtime package crosses into the final image.
+COPY --from=build /app/.production-build ./
 
 EXPOSE 8080
-
-CMD ["npm", "start"]
+CMD ["node", "content-server.mjs"]

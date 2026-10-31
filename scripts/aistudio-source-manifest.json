@@ -1,5 +1,5 @@
 {
-  "commit": "2b182c1033f6741fecff381a2507f03f59105352",
+  "commit": "853da2f38b477cf832204e2e728418dad55293a6",
   "files": [
     {
       "path": "src/games/stage2/Preview.tsx",
@@ -139,7 +139,7 @@
     },
     {
       "path": "src/services/DanangAssistantRetrievalService.ts",
-      "sha256": "ab0fc7eac332c3226e415930f1c9d1f5f4d07ba599bba70cf0e433b68f059636"
+      "sha256": "417c264a689bbe6d71da7c8e39f50b866ecc8ee7fa7d051db0111dcc4451d7c2"
     },
     {
       "path": "src/services/GddpBundledCatalog.ts",

@@ -7,3 +7,4 @@ content-data/*
 *.log
 .env
 .env.*
+.production-build

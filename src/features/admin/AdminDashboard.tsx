@@ -24,11 +24,14 @@ import {
   Search,
   Plus,
   RefreshCw,
+  MessageSquareText,
 } from 'lucide-react';
+
+const AssistantQualityDashboard = React.lazy(() => import('./AssistantQualityDashboard').then(module => ({ default: module.AssistantQualityDashboard })));
 
 export const AdminDashboard: React.FC = () => {
   const { allStationsInCurrentGrade, currentGrade } = useApp();
-  const [activeTab, setActiveTab] = useState<'overview' | 'tracking' | 'stations' | 'users' | 'reports' | 'theme' | 'gddp' | 'proposals'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'tracking' | 'stations' | 'users' | 'reports' | 'theme' | 'gddp' | 'proposals' | 'assistant-qa'>('overview');
   const [gradeFilter, setGradeFilter] = useState<number>(0); // 0 = all
   const [selectedStationTab, setSelectedStationTab] = useState<string>('g2-station-4');
 
@@ -79,6 +82,7 @@ export const AdminDashboard: React.FC = () => {
             { id: 'proposals', label: 'ĐỀ XUẤT HỌC LIỆU', icon: BookOpen },
             { id: 'users', label: 'NGƯỜI DÙNG', icon: Users },
             { id: 'reports', label: 'BÁO CÁO', icon: FileText },
+            { id: 'assistant-qa', label: 'KIỂM ĐỊNH CHATBOT', icon: MessageSquareText },
           ].map(tab => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -100,6 +104,7 @@ export const AdminDashboard: React.FC = () => {
 
       {workflowError&&<p role="alert" className="bg-rose-50 text-rose-700 rounded-xl p-3">{workflowError}</p>}
       <button disabled={loading} onClick={()=>void load()} className="border rounded-xl bg-white px-4 py-2 text-sm">{loading?'Đang tải dữ liệu…':'Làm mới dữ liệu máy chủ'}</button>
+      {activeTab === 'assistant-qa' && <React.Suspense fallback={<p role="status" className="rounded-2xl bg-white p-5">Đang mở bảng kiểm định chatbot…</p>}><AssistantQualityDashboard /></React.Suspense>}
       {activeTab === 'proposals' && <ProposalInbox />}
       {activeTab === 'theme' && <ThemeEditor />}
       {activeTab === 'gddp' && <GddpAdminEditor />}

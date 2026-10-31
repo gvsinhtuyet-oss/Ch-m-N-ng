@@ -1,0 +1,1017 @@
+{
+  "schemaVersion": 1,
+  "stationId": "g1-station-1",
+  "grade": 1,
+  "reviewStatus": "reviewed_sources_pending_teacher_signoff",
+  "createdFrom": "cham_danang_g1_station1_knowledge.json",
+  "sources": [
+    {
+      "id": "APP1",
+      "title": "Nội dung Chặng 1 và Chặng 2 – Quê hương em",
+      "url": "https://github.com/gvsinhtuyet-oss/Ch-m-N-ng/blob/b278c1e6b4b0c7fe0154d9f1712e059d31185d91/src/data/grade1Content.ts",
+      "kind": "app_original"
+    },
+    {
+      "id": "APPC",
+      "title": "Danh mục chương trình 25 trạm",
+      "url": "https://github.com/gvsinhtuyet-oss/Ch-m-N-ng/blob/b278c1e6b4b0c7fe0154d9f1712e059d31185d91/src/data/curriculumCatalog.ts",
+      "kind": "app_original"
+    },
+    {
+      "id": "DN26",
+      "title": "Phân loại 94 đơn vị hành chính cấp xã Đà Nẵng – 26/04/2026",
+      "url": "https://danang.gov.vn/vi/web/dng/w/phan-loai-94-don-vi-hanh-chinh-cap-xa",
+      "kind": "official_primary"
+    },
+    {
+      "id": "TK26",
+      "title": "Tam Kỳ tinh gọn đầu mối, nâng cao hiệu quả quản lý giáo dục – 13/09/2026",
+      "url": "https://tamky.danang.gov.vn/chi-tiet-tin/group/151/nid/4719/default",
+      "kind": "official_primary"
+    },
+    {
+      "id": "UNROAD",
+      "title": "Những lời khuyên về an toàn giao thông đường bộ",
+      "url": "https://www.unicef.org/vietnam/vi/loi-khuyen-an-toan-giao-thong-duong-bo",
+      "kind": "institutional"
+    },
+    {
+      "id": "UNPRIV",
+      "title": "Danh mục kiểm tra bảo vệ quyền riêng tư trực tuyến dành cho cha mẹ",
+      "url": "https://www.unicef.org/vietnam/vi/danh-muc-kiem-tra-bao-ve-quyen-rieng-tu-truc-tuyen-danh-cho-cha-me",
+      "kind": "institutional"
+    },
+    {
+      "id": "UNCAMP",
+      "title": "Quan điểm của trẻ em về biến đổi khí hậu và phát triển kinh tế – xã hội",
+      "url": "https://www.unicef.org/vietnam/vi/bao-cao/quan-diem-tre-em-bien-doi-khi-hau-phat-trien-kinh-te",
+      "kind": "institutional"
+    }
+  ],
+  "entries": [
+    {
+      "id": "g1s1-q001",
+      "pointId": "g1-home-1",
+      "audience": "student",
+      "question": "Quê hương là gì?",
+      "variants": [
+        "Quê em nghĩa là sao?",
+        "Thế nào là quê hương?",
+        "Quê hương mình là chi rứa?"
+      ],
+      "answer": "Quê hương là nơi em sống, gắn bó với gia đình và những người thân quen.",
+      "followUp": "Em yêu điều gì ở nơi mình sống?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "app_grounded",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q002",
+      "pointId": "g1-home-1",
+      "audience": "student",
+      "question": "Xã và phường là gì?",
+      "variants": [
+        "Phường có giống xã không?",
+        "Xã với phường là tên chi rứa?"
+      ],
+      "answer": "Xã và phường là những tên gọi của đơn vị hành chính ở địa phương. Em có thể nhờ người lớn giúp đọc đúng tên nơi mình ở.",
+      "followUp": "Em biết tên xã hoặc phường nào của Đà Nẵng?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "DN26"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q003",
+      "pointId": "g1-home-1",
+      "audience": "student",
+      "question": "Em ở phường nào?",
+      "variants": [
+        "Chatbot đoán nhà em ở đâu",
+        "Biết nhà em không?",
+        "Phường nơi tui ở là mô?"
+      ],
+      "answer": "Mình không biết chính xác nơi em ở. Em hãy hỏi người thân hoặc thầy cô để biết tên phường hay xã nhé; em không cần gửi địa chỉ nhà lên đây.",
+      "followUp": "Em có muốn tìm hiểu nơi ở qua tên xã/phường không?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNPRIV"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q004",
+      "pointId": "g1-home-1",
+      "audience": "student",
+      "question": "Đà Nẵng có xã Nam Trà My không?",
+      "variants": [
+        "Nam Trà My ở thành phố nào?",
+        "Nam Trà My thuộc mô?"
+      ],
+      "answer": "Có. Nam Trà My là một xã thuộc thành phố Đà Nẵng theo danh mục hành chính được công bố năm 2026.",
+      "followUp": "Em muốn biết thêm một phường khác của Đà Nẵng không?",
+      "teacherNote": null,
+      "sources": [
+        "DN26"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q005",
+      "pointId": "g1-home-1",
+      "audience": "student",
+      "question": "Hội An có phải là tên một phường ở Đà Nẵng không?",
+      "variants": [
+        "Hội An là phường à?",
+        "Hội An giờ ở mô?"
+      ],
+      "answer": "Có. Phường Hội An là một trong các phường của thành phố Đà Nẵng theo danh mục hành chính năm 2026.",
+      "followUp": "Vì sao em muốn tìm hiểu về Hội An?",
+      "teacherNote": null,
+      "sources": [
+        "DN26"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q006",
+      "pointId": "g1-home-1",
+      "audience": "student",
+      "question": "Đặc khu Hoàng Sa có trong danh mục địa phương Đà Nẵng không?",
+      "variants": [
+        "Hoàng Sa có phải đơn vị hành chính không?",
+        "Hoàng Sa thuộc mô?"
+      ],
+      "answer": "Có. Danh mục hành chính Đà Nẵng năm 2026 ghi tên đặc khu Hoàng Sa. Em có thể tìm tên đó trên bản đồ do thầy cô hướng dẫn.",
+      "followUp": "Em còn muốn biết tên một đơn vị hành chính khác không?",
+      "teacherNote": null,
+      "sources": [
+        "DN26"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q007",
+      "pointId": "g1-home-1",
+      "audience": "student",
+      "question": "Ở nông thôn và đô thị có cảnh vật giống nhau không?",
+      "variants": [
+        "Sao quê mỗi bạn khác nhau?",
+        "Quê bạn ni khác quê bạn tê răng?"
+      ],
+      "answer": "Có nơi có nhiều ruộng vườn, có nơi có nhiều nhà và đường phố. Mỗi nơi đều có nét đẹp riêng; em hãy kể những gì mình thật sự nhìn thấy.",
+      "followUp": "Em thích cảnh vật nào ở nơi mình sống?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q008",
+      "pointId": "g1-home-1",
+      "audience": "student",
+      "question": "Vì sao tên xã hoặc phường có thể thay đổi?",
+      "variants": [
+        "Sao chỗ em đổi tên phường?",
+        "Răng chỗ ni đổi tên?"
+      ],
+      "answer": "Có lúc Nhà nước sắp xếp lại các đơn vị hành chính nên tên nơi ở có thể thay đổi. Em nên hỏi người lớn để biết tên đang sử dụng.",
+      "followUp": "Khi nghe tên nơi ở thay đổi, em sẽ hỏi ai?",
+      "teacherNote": null,
+      "sources": [
+        "DN26"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q009",
+      "pointId": "g1-home-1",
+      "audience": "student",
+      "question": "Em nên nói gì khi giới thiệu quê hương?",
+      "variants": [
+        "Giới thiệu nơi mình ở sao cho rõ?",
+        "Giới thiệu quê mình răng cho hay?"
+      ],
+      "answer": "Em có thể nói tên xã hoặc phường và một cảnh vật em yêu thích. Không cần đọc số nhà hay thông tin riêng của gia đình.",
+      "followUp": "Em muốn kể về cây xanh, ngôi trường hay con đường?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNPRIV"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q010",
+      "pointId": "g1-home-1",
+      "audience": "student",
+      "question": "Vì sao phải tôn trọng quê hương của bạn khác?",
+      "variants": [
+        "Bạn quê khác em thì sao?",
+        "Bạn ở bên tê khác mình có sao không?"
+      ],
+      "answer": "Vì mỗi bạn có trải nghiệm và nơi gắn bó riêng. Lắng nghe nhau giúp cả lớp biết thêm nhiều cảnh đẹp và câu chuyện.",
+      "followUp": "Bạn em thích điều gì ở quê hương của bạn?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q011",
+      "pointId": "g1-home-1",
+      "audience": "teacher",
+      "question": "Giải thích xã, phường, đặc khu cho học sinh lớp 1 thế nào?",
+      "variants": [
+        "Gợi ý hoạt động phân biệt xã phường đặc khu",
+        "Dạy học sinh phân biệt xã phường đặc khu răng?"
+      ],
+      "answer": "Dùng ba thẻ tên và bản đồ đơn giản của thành phố. Hỏi học sinh nhận ra tên gọi, không yêu cầu học thuộc 94 đơn vị hoặc chia theo định nghĩa pháp lý phức tạp.",
+      "followUp": "Thầy cô có thể dùng hình nào để dạy ba tên gọi?",
+      "teacherNote": "Trình chiếu danh mục hành chính theo mốc 2026; nhãn có thể thay đổi về sau.",
+      "sources": [
+        "APPC",
+        "DN26"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q012",
+      "pointId": "g1-home-1",
+      "audience": "teacher",
+      "question": "Làm sao kiểm tra địa danh của trẻ mà không thu thập địa chỉ nhà?",
+      "variants": [
+        "Hoạt động giới thiệu nơi ở an toàn dữ liệu",
+        "Kiểm tra nơi ở học sinh không hỏi địa chỉ nhà răng?"
+      ],
+      "answer": "Chỉ yêu cầu nêu tên xã/phường nếu gia đình đồng ý, hoặc chọn một địa danh công cộng. Không yêu cầu số nhà, vị trí GPS hoặc ảnh ngôi nhà. Có thể cho trẻ trả lời miệng.",
+      "followUp": "Thầy cô muốn câu hỏi kiểm tra không yêu cầu địa chỉ nhà không?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNPRIV"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q013",
+      "pointId": "g1-home-2",
+      "audience": "student",
+      "question": "Làm sao biết đúng tên trường mình?",
+      "variants": [
+        "Tên trường xem ở đâu?",
+        "Đọc tên trường ở cổng trường thế nào?",
+        "Đọc tên trường ở cổng trường răng?"
+      ],
+      "answer": "Em hãy nhìn biển tên ở cổng trường hoặc nhờ thầy cô, người thân đọc giúp. Tên trường và tên phường, xã sẽ giúp phân biệt rõ hơn.",
+      "followUp": "Em sẽ hỏi ai để đọc đúng biển tên trường?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "app_grounded",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q014",
+      "pointId": "g1-home-2",
+      "audience": "student",
+      "question": "Vì sao có hai trường cùng tên?",
+      "variants": [
+        "Hai trường trùng tên có sao không?",
+        "Răng hai trường tên giống nhau?"
+      ],
+      "answer": "Nhiều trường có thể được đặt theo cùng một nhân vật hoặc tên gọi. Vì vậy, cần kiểm tra thêm địa phương và thông tin hiện hành để không nhầm trường.",
+      "followUp": "Em còn biết địa điểm nào giúp phân biệt hai trường không?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "app_grounded",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q015",
+      "pointId": "g1-home-2",
+      "audience": "student",
+      "question": "Ngôi trường có những khu vực nào?",
+      "variants": [
+        "Trường có gì bên trong?",
+        "Trong trường có chi?"
+      ],
+      "answer": "Tùy từng trường, em có thể thấy lớp học, sân trường, thư viện hoặc khu sinh hoạt. Hãy quan sát trường của mình để kể đúng.",
+      "followUp": "Trường em có góc nào mà em yêu thích?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q016",
+      "pointId": "g1-home-2",
+      "audience": "student",
+      "question": "Thư viện trường học dùng để làm gì?",
+      "variants": [
+        "Thư viện có tác dụng gì?",
+        "Vô thư viện mần chi?"
+      ],
+      "answer": "Thư viện là nơi em có thể đọc, mượn hoặc tìm sách theo hướng dẫn của nhà trường. Em nhớ giữ sách sạch và dùng nhẹ nhàng nhé.",
+      "followUp": "Em thích đọc loại sách nào?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q017",
+      "pointId": "g1-home-2",
+      "audience": "student",
+      "question": "Ai giúp trường học sạch đẹp?",
+      "variants": [
+        "Ai dọn trường?",
+        "Ai giữ trường sạch rứa?"
+      ],
+      "answer": "Thầy cô, nhân viên và học sinh đều có thể góp phần giữ trường sạch đẹp. Em có thể bỏ rác đúng nơi và chăm sóc góc học tập.",
+      "followUp": "Em có thể giúp giữ lớp sạch bằng việc nhỏ nào?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q018",
+      "pointId": "g1-home-2",
+      "audience": "student",
+      "question": "Nếu em không tìm được lớp học thì làm sao?",
+      "variants": [
+        "Lạc trong trường phải làm gì?",
+        "Đi lạc trong trường thì mần chi?"
+      ],
+      "answer": "Em hãy ở khu vực an toàn và nhờ thầy cô hoặc nhân viên nhà trường giúp đỡ; không tự ý đi ra ngoài cổng trường.",
+      "followUp": "Em sẽ nhờ ai giúp nếu lạc lớp?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q019",
+      "pointId": "g1-home-2",
+      "audience": "student",
+      "question": "Em có nên cho chatbot biết số điện thoại của bố mẹ không?",
+      "variants": [
+        "Có được ghi số điện thoại bố mẹ lên đây?",
+        "Cho số điện thoại lên ni được không?"
+      ],
+      "answer": "Không nên gửi số điện thoại, địa chỉ hay thông tin riêng của gia đình vào chatbot. Khi cần giúp đỡ, em hãy hỏi người lớn tin cậy.",
+      "followUp": "Em nên hỏi ai khi cần liên lạc với gia đình?",
+      "teacherNote": null,
+      "sources": [
+        "UNPRIV"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q020",
+      "pointId": "g1-home-2",
+      "audience": "student",
+      "question": "Nếu trường đổi tên thì hỏi ai?",
+      "variants": [
+        "Tên trường cũ có còn đúng?",
+        "Trường đổi tên rồi làm răng biết?"
+      ],
+      "answer": "Em có thể hỏi thầy cô hoặc đọc thông báo chính thức của trường. Đừng đoán tên trường chỉ từ một bức ảnh cũ nhé.",
+      "followUp": "Em có thể kiểm tra thông báo tên trường ở đâu?",
+      "teacherNote": null,
+      "sources": [
+        "TK26",
+        "APP1"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q021",
+      "pointId": "g1-home-2",
+      "audience": "student",
+      "question": "Em có thể làm gì để giúp bạn mới ở trường?",
+      "variants": [
+        "Đón bạn mới ra sao?",
+        "Bạn mới vô trường thì mần chi?"
+      ],
+      "answer": "Em có thể chào bạn, giới thiệu lớp học và cùng bạn tìm thầy cô khi cần. Đừng tự ý dẫn bạn ra khỏi trường.",
+      "followUp": "Em sẽ nói gì để chào bạn mới?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q022",
+      "pointId": "g1-home-2",
+      "audience": "teacher",
+      "question": "Thông tin Trường Tiểu học Kim Đồng ở Tam Kỳ trong bài còn dùng được không?",
+      "variants": [
+        "Kim Đồng Tam Kỳ hiện đổi thành trường gì?",
+        "Trường Kim Đồng Tam Kỳ chừ tên chi?"
+      ],
+      "answer": "Cổng thông tin phường Tam Kỳ thông báo Trường Tiểu học Tam Kỳ được thành lập từ ngày 26/08/2026 trên cơ sở hợp nhất bốn trường, trong đó có Tiểu học Kim Đồng. Nên kiểm tra với cơ sở giáo dục trước khi giữ tên cũ như tên trường hiện tại.",
+      "followUp": "Thầy cô muốn rà soát cả tên và điểm trường không?",
+      "teacherNote": "Thông tin xác minh ngày 31/10/2026; cần giáo viên kiểm tra nhãn tên trường và điểm trường trong năm học hiện hành.",
+      "sources": [
+        "TK26",
+        "APP1"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q023",
+      "pointId": "g1-home-2",
+      "audience": "teacher",
+      "question": "Nên dạy bài Ngôi trường của em với ảnh trường minh họa thế nào?",
+      "variants": [
+        "Thiết kế hoạt động quan sát trường lớp 1",
+        "Dùng ảnh trường để dạy răng?"
+      ],
+      "answer": "Tách rõ ảnh minh họa với ngôi trường thực tế của từng học sinh. Dùng câu “Hãy quan sát và liên hệ” thay cho việc khẳng định ảnh là trường học của em.",
+      "followUp": "Thầy cô muốn biến bức ảnh thành trò chơi tìm điểm khác nhau không?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q024",
+      "pointId": "g1-home-2",
+      "audience": "teacher",
+      "question": "Làm sao tích hợp Tiếng Việt vào điểm Ngôi trường của em?",
+      "variants": [
+        "Tích hợp môn Tiếng Việt bài trường em",
+        "Tích hợp Tiếng Việt luyện nói tên trường răng cho dễ?"
+      ],
+      "answer": "Cho học sinh luyện nói một câu có cấu trúc “Trường em tên là…”, đọc biển tên trường và viết hoặc vẽ một chi tiết quen thuộc; không bắt trẻ cung cấp dữ liệu cá nhân.",
+      "followUp": "Thầy cô muốn thêm câu mẫu luyện nói ở mức dễ hơn không?",
+      "teacherNote": null,
+      "sources": [
+        "APPC",
+        "UNPRIV"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q025",
+      "pointId": "g1-home-3",
+      "audience": "student",
+      "question": "Trên đường đến trường có thể thấy gì?",
+      "variants": [
+        "Dọc đường đi học có gì?",
+        "Đi học thấy chi dọc đường?"
+      ],
+      "answer": "Em có thể thấy hàng cây, cửa hàng, chợ hoặc cây cầu. Em hãy kể những điều mình đã nhìn thấy thật sự.",
+      "followUp": "Em có thể nêu một điểm mốc dễ nhận ra không?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "app_grounded",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q026",
+      "pointId": "g1-home-3",
+      "audience": "student",
+      "question": "Vì sao đường đến trường mỗi bạn khác nhau?",
+      "variants": [
+        "Sao bạn đi học đường khác?",
+        "Răng bạn nớ đi đường khác?"
+      ],
+      "answer": "Vì các bạn có thể ở những nơi khác nhau và đi theo những con đường khác nhau. Em hãy lắng nghe và tôn trọng câu chuyện của bạn.",
+      "followUp": "Em sẽ lắng nghe bạn có đường đi khác như thế nào?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "app_grounded",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q027",
+      "pointId": "g1-home-3",
+      "audience": "student",
+      "question": "Điểm mốc trên đường là gì?",
+      "variants": [
+        "Điểm mốc nghĩa là gì?",
+        "Cái mốc đường là chi?"
+      ],
+      "answer": "Điểm mốc là vật hoặc nơi dễ nhận ra, như một cây cầu hay tòa nhà nổi bật. Em dùng điểm mốc để kể đường đi, không cần nêu địa chỉ nhà.",
+      "followUp": "Điểm mốc nào gần trường mà mọi người đều nhận biết?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNPRIV"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q028",
+      "pointId": "g1-home-3",
+      "audience": "student",
+      "question": "Sơ đồ đường đến trường là gì?",
+      "variants": [
+        "Vẽ bản đồ đến trường thế nào?",
+        "Sơ đồ đường đi học vẽ răng?"
+      ],
+      "answer": "Đó là hình vẽ đơn giản thể hiện vài nơi em đi qua. Em có thể vẽ trường, đường và cây xanh bằng ký hiệu; không cần vẽ chính xác đường đến nhà mình.",
+      "followUp": "Em thử dùng ba hình để vẽ sơ đồ giả định nhé?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNPRIV"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q029",
+      "pointId": "g1-home-3",
+      "audience": "student",
+      "question": "Vì sao không đứng giữa đường để vẽ?",
+      "variants": [
+        "Em muốn vẽ cảnh ngay trên đường có được không?",
+        "Đứng giữa đường vẽ được không rứa?"
+      ],
+      "answer": "Vì xe cộ đang đi lại có thể gây nguy hiểm. Em chỉ quan sát khi ở nơi an toàn cùng người lớn, rồi về lớp hoặc nhà mới vẽ.",
+      "followUp": "Em sẽ chọn nơi nào an toàn để quan sát?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNROAD"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q030",
+      "pointId": "g1-home-3",
+      "audience": "student",
+      "question": "Khi qua đường em cần làm gì?",
+      "variants": [
+        "Sang đường an toàn ra sao?",
+        "Qua đường mần răng cho an toàn?"
+      ],
+      "answer": "Em nên đi cùng người lớn, dừng lại, quan sát hai phía và đi qua ở nơi được phép khi an toàn. Không chạy băng qua đường.",
+      "followUp": "Em nhớ phải đi cùng ai khi sang đường?",
+      "teacherNote": null,
+      "sources": [
+        "UNROAD"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q031",
+      "pointId": "g1-home-3",
+      "audience": "student",
+      "question": "Vì sao phải chú ý xe ở lối ra vào?",
+      "variants": [
+        "Đường ra vào bãi xe có nguy hiểm không?",
+        "Chỗ xe chạy ra vô nguy hiểm răng?"
+      ],
+      "answer": "Xe có thể bất ngờ đi ra hoặc vào, còn người lái đôi khi khó nhìn thấy trẻ nhỏ. Em nên tránh xa khu vực xe di chuyển và đi cùng người lớn.",
+      "followUp": "Em sẽ đứng ở đâu khi có xe ra vào?",
+      "teacherNote": null,
+      "sources": [
+        "UNROAD"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q032",
+      "pointId": "g1-home-3",
+      "audience": "student",
+      "question": "Vì sao đội mũ bảo hiểm khi ngồi xe máy?",
+      "variants": [
+        "Ngồi xe máy sao phải đội mũ?",
+        "Răng ngồi xe máy phải đội nón bảo hiểm?"
+      ],
+      "answer": "Mũ bảo hiểm phù hợp giúp bảo vệ đầu khi có va chạm. Em hãy nhờ người lớn cài quai đúng cách và tuân thủ quy định giao thông.",
+      "followUp": "Người lớn giúp em kiểm tra mũ bằng cách nào?",
+      "teacherNote": null,
+      "sources": [
+        "UNROAD"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q033",
+      "pointId": "g1-home-3",
+      "audience": "student",
+      "question": "Cây cầu giúp người dân điều gì?",
+      "variants": [
+        "Cây cầu để làm gì?",
+        "Cây cầu giúp người đi qua sông mần chi?"
+      ],
+      "answer": "Cầu giúp người và phương tiện đi qua sông hoặc chướng ngại một cách thuận tiện khi được sử dụng đúng quy định. Em hãy quan sát cầu từ nơi an toàn.",
+      "followUp": "Em đã nhìn thấy cây cầu nào trên tranh?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q034",
+      "pointId": "g1-home-3",
+      "audience": "student",
+      "question": "Chợ và cửa hàng khác nhau thế nào?",
+      "variants": [
+        "Chợ có gì khác tiệm?",
+        "Chợ với tiệm khác chi?"
+      ],
+      "answer": "Chợ thường có nhiều người bán ở các quầy, còn cửa hàng là nơi bán hàng trong một địa điểm cụ thể. Em có thể quan sát các nghề buôn bán quanh mình.",
+      "followUp": "Em có thể kể nghề của một người bán hàng không?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q035",
+      "pointId": "g1-home-3",
+      "audience": "student",
+      "question": "Nếu trời mưa trên đường đi học thì sao?",
+      "variants": [
+        "Đi học gặp mưa cần chú ý gì?",
+        "Đi học trời mưa mần răng?"
+      ],
+      "answer": "Em hãy đi cùng người lớn, tránh chỗ nước sâu hoặc mặt đường trơn và làm theo hướng dẫn an toàn. Không mải nhìn điện thoại khi đi đường.",
+      "followUp": "Nếu đường ngập nước em nên nhờ ai giúp?",
+      "teacherNote": null,
+      "sources": [
+        "UNROAD"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q036",
+      "pointId": "g1-home-3",
+      "audience": "student",
+      "question": "Em có thể đếm những gì trên đường đến trường?",
+      "variants": [
+        "Tích hợp Toán trên đường đi học như thế nào?",
+        "Đếm cây đi học để luyện toán",
+        "Đếm cây đi học để luyện toán được không?"
+      ],
+      "answer": "Em có thể đếm số cây hoặc số biển báo nhìn thấy từ nơi an toàn rồi kể lại ở lớp. Đừng dừng giữa đường chỉ để đếm.",
+      "followUp": "Em thử đếm số cây trên bức ảnh nhé?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNROAD"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q037",
+      "pointId": "g1-home-3",
+      "audience": "teacher",
+      "question": "Thiết kế hoạt động Toán cho điểm Từ nhà đến trường thế nào?",
+      "variants": [
+        "Gợi ý STEM môn Toán đường đến trường",
+        "Dạy toán đường đi học răng?"
+      ],
+      "answer": "Cho học sinh đếm và so sánh hình ảnh biển báo, cây xanh hoặc cửa hàng trong ảnh mẫu; không yêu cầu các em khảo sát trực tiếp ở lòng đường.",
+      "followUp": "Thầy cô muốn mẫu bài tập đếm cây hay biển báo?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNROAD"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q038",
+      "pointId": "g1-home-3",
+      "audience": "teacher",
+      "question": "Dạy học sinh vẽ sơ đồ mà không lộ lộ trình thật thế nào?",
+      "variants": [
+        "Làm bản đồ tuyến đi học bảo mật",
+        "Vẽ sơ đồ đường về nhà có nguy cơ không?"
+      ],
+      "answer": "Dùng tuyến đường giả định hoặc vài địa điểm công cộng; cho học sinh chọn biểu tượng và miêu tả bằng lời. Không thu bản đồ dẫn đến nhà riêng hay vị trí định vị.",
+      "followUp": "Thầy cô muốn mẫu sơ đồ giả định 3 địa điểm công cộng?",
+      "teacherNote": null,
+      "sources": [
+        "UNPRIV",
+        "APP1"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q039",
+      "pointId": "g1-home-3",
+      "audience": "teacher",
+      "question": "Có nên để học sinh lớp 1 tự qua đường khi làm nhiệm vụ quan sát không?",
+      "variants": [
+        "Hướng dẫn khảo sát giao thông lớp 1",
+        "Cho trò tự qua đường khảo sát được không?"
+      ],
+      "answer": "Không. Hoạt động phải thực hiện cùng người lớn ở vị trí an toàn; không giao nhiệm vụ tự sang đường, chụp ảnh giao thông hoặc đi tìm điểm mốc ngoài lớp.",
+      "followUp": "Thầy cô muốn tình huống đóng vai sang đường an toàn trong lớp?",
+      "teacherNote": null,
+      "sources": [
+        "UNROAD"
+      ],
+      "kind": "official_source",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q040",
+      "pointId": "g1-home-4",
+      "audience": "student",
+      "question": "Em làm gì để nơi mình sống sạch đẹp?",
+      "variants": [
+        "Làm sao bảo vệ quê hương?",
+        "Mần chi để xóm mình sạch?"
+      ],
+      "answer": "Em có thể bỏ rác đúng chỗ, giữ sân sạch và cùng người lớn chăm cây. Việc nhỏ của em cũng có ích.",
+      "followUp": "Em sẽ chọn làm một việc tốt nào hôm nay?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNCAMP"
+      ],
+      "kind": "app_grounded",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q041",
+      "pointId": "g1-home-4",
+      "audience": "student",
+      "question": "Vì sao không nên vứt rác xuống suối hoặc sông?",
+      "variants": [
+        "Vứt rác xuống sông có sao không?",
+        "Răng không quăng rác xuống suối?"
+      ],
+      "answer": "Rác làm nước và cảnh quan bẩn, có thể gây hại cho sinh vật. Em nên bỏ rác đúng nơi quy định và nhắc người lớn cùng giữ sạch.",
+      "followUp": "Em sẽ làm gì nếu thấy rác ở gần sông?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNCAMP"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q042",
+      "pointId": "g1-home-4",
+      "audience": "student",
+      "question": "Cây xanh giúp ích gì cho nơi ở?",
+      "variants": [
+        "Trồng cây có ích chi?",
+        "Cây xanh có lợi chi?"
+      ],
+      "answer": "Cây xanh tạo bóng mát và làm cảnh quan thêm đẹp. Em có thể cùng người lớn chăm cây phù hợp ở trường hoặc nơi ở.",
+      "followUp": "Em đã thấy ai cùng chăm cây ở trường chưa?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNCAMP"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q043",
+      "pointId": "g1-home-4",
+      "audience": "student",
+      "question": "Vì sao phải tiết kiệm nước?",
+      "variants": [
+        "Tiết kiệm nước bằng cách nào?",
+        "Răng phải khóa vòi nước?"
+      ],
+      "answer": "Nước sạch rất cần cho sinh hoạt và chăm cây. Em có thể khóa vòi khi không dùng và báo người lớn nếu vòi bị rò rỉ.",
+      "followUp": "Em có thể nhắc người thân tắt vòi nước không?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNCAMP"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q044",
+      "pointId": "g1-home-4",
+      "audience": "student",
+      "question": "Tiết kiệm điện ở lớp bằng cách nào?",
+      "variants": [
+        "Làm gì để bớt tốn điện?",
+        "Điện tốn quá thì mần chi?"
+      ],
+      "answer": "Khi không cần dùng đèn hoặc quạt, em có thể báo thầy cô hay người lớn để tắt. Em không tự ý chạm vào ổ điện hoặc thiết bị hỏng.",
+      "followUp": "Em sẽ báo ai nếu thấy ổ điện có vấn đề?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q045",
+      "pointId": "g1-home-4",
+      "audience": "student",
+      "question": "Có nên bẻ cành cây để chơi không?",
+      "variants": [
+        "Bẻ cành có hại gì?",
+        "Bẻ nhánh cây chơi được không?"
+      ],
+      "answer": "Không nên. Bẻ cành làm hư cây và có thể khiến em bị thương. Hãy ngắm và chăm cây theo hướng dẫn của người lớn.",
+      "followUp": "Thay vì bẻ cành, em có thể quan sát cây bằng cách nào?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q046",
+      "pointId": "g1-home-4",
+      "audience": "student",
+      "question": "Những nghề nào làm cho nơi mình sống tốt hơn?",
+      "variants": [
+        "Nghề gì giúp ích khu phố?",
+        "Người mần nghề chi giúp khu mình?"
+      ],
+      "answer": "Người quét dọn giữ đường sạch, thợ sửa chữa bảo trì công trình, người bán hàng phục vụ nhu cầu. Mỗi nghề đều có đóng góp riêng.",
+      "followUp": "Em muốn cảm ơn nghề nào ở nơi mình sống?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q047",
+      "pointId": "g1-home-4",
+      "audience": "student",
+      "question": "Vì sao phải giữ gìn nơi công cộng?",
+      "variants": [
+        "Nơi công cộng là gì?",
+        "Chỗ ai cũng đến phải giữ răng?"
+      ],
+      "answer": "Đó là nơi nhiều người cùng sử dụng. Giữ vệ sinh và dùng đồ dùng đúng cách giúp mọi người thoải mái và an toàn.",
+      "followUp": "Em sẽ giữ gìn chỗ vui chơi công cộng ra sao?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q048",
+      "pointId": "g1-home-4",
+      "audience": "student",
+      "question": "Em có thể giới thiệu một nét văn hóa quê mình như thế nào?",
+      "variants": [
+        "Giới thiệu văn hóa nơi mình sống",
+        "Quê mình có món chi kể sao?"
+      ],
+      "answer": "Em có thể kể về một trò chơi, món ăn hoặc lễ hội mà mình đã biết, rồi nói điều mình thích. Nếu chưa rõ, hãy hỏi người lớn thay vì đoán.",
+      "followUp": "Em muốn kể thêm món ăn hay lễ hội nào?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q049",
+      "pointId": "g1-home-4",
+      "audience": "student",
+      "question": "Khi thấy rác nguy hiểm em nên làm gì?",
+      "variants": [
+        "Nhặt kim tiêm ngoài sân được không?",
+        "Thấy đồ nhọn dưới đất mần chi?"
+      ],
+      "answer": "Không tự nhặt vật sắc nhọn, vật lạ hoặc rác có thể gây hại. Em hãy báo ngay thầy cô hay người lớn để xử lý an toàn.",
+      "followUp": "Em sẽ báo người lớn thế nào khi thấy vật sắc nhọn?",
+      "teacherNote": null,
+      "sources": [
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q050",
+      "pointId": "g1-home-4",
+      "audience": "teacher",
+      "question": "Tích hợp Tự nhiên và Xã hội cho hoạt động giữ gìn quê hương thế nào?",
+      "variants": [
+        "Bài tập TNXH giữ gìn môi trường lớp 1",
+        "Hoạt động giữ sạch sân trường soạn răng?"
+      ],
+      "answer": "Cho học sinh quan sát hai tranh sân trường sạch và bẩn; nhận xét hậu quả, chọn một hành động nhỏ phù hợp. Không yêu cầu trẻ dọn vật sắc nhọn hay rác nguy hiểm.",
+      "followUp": "Thầy cô muốn thêm câu hỏi phân biệt rác thông thường và rác nguy hiểm không?",
+      "teacherNote": null,
+      "sources": [
+        "APP1",
+        "UNCAMP"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    },
+    {
+      "id": "g1s1-q051",
+      "pointId": "g1-home-4",
+      "audience": "teacher",
+      "question": "Đánh giá sau bài Quê hương em theo năng lực thế nào?",
+      "variants": [
+        "Tiêu chí đánh giá bài Quê hương em lớp 1",
+        "Đánh giá tiết ni thế nào?"
+      ],
+      "answer": "Dùng ba chỉ báo quan sát được: trẻ giới thiệu một cảnh vật có thật; nhận ra một điểm mốc trên tranh; đề xuất một việc giữ gìn nơi ở. Chấp nhận trả lời bằng lời nói, tranh vẽ hoặc chỉ hình.",
+      "followUp": "Thầy cô muốn một bảng kiểm ba mức: nhận biết, mô tả, thực hiện không?",
+      "teacherNote": null,
+      "sources": [
+        "APPC",
+        "APP1"
+      ],
+      "kind": "pedagogical_example",
+      "reviewStatus": "requires_teacher_approval"
+    }
+  ],
+  "warnings": [
+    {
+      "id": "RV001",
+      "issue": "[object Object]"
+    },
+    {
+      "id": "RV002",
+      "issue": "[object Object]"
+    },
+    {
+      "id": "RV003",
+      "issue": "[object Object]"
+    },
+    {
+      "id": "RV004",
+      "issue": "[object Object]"
+    },
+    {
+      "id": "RV005",
+      "issue": "[object Object]"
+    }
+  ]
+}

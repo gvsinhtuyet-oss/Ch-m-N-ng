@@ -73,6 +73,9 @@ jobs:
       - name: Admin chatbot quality audit tests
         run: node --import tsx --test assistant-quality-admin-test.ts
 
+      - name: Extended Grade 1 assistant knowledge and cross-station QA
+        run: node --import tsx --test assistant-g1-research-test.ts
+
       - name: Grade 1 integrated presentations and exact mappings
         run: node --import tsx --test grade1-lesson-decks-test.ts
 

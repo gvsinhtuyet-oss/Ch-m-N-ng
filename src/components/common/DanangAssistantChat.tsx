@@ -163,11 +163,8 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     append({ id: `q-${Date.now()}`, role: 'student', text: question });
     try {
       const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text, previousTopic:messages.filter(message=>message.role==='assistant').at(-1)?.topic });
-      if(!result.found && aiAvailable && isTeacher){
-        void requestAi(question,result.answer);
-        setInput('');
-        return;
-      }
+      // A local question never silently triggers a paid AI call.
+      // Teacher AI expansion remains explicit via the separate button.
       append({
         id: `a-${Date.now()}`,
         role: 'assistant',
@@ -400,7 +397,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             </div>
             {isTeacher&&aiAvailable&&<div className="mt-2"><button type="button" onClick={askAi} disabled={aiBusy||(!input.trim()&&!messages.some(m=>m.role==='student'))} className="rounded-xl bg-sky-800 px-3 py-2 text-xs font-bold text-white disabled:opacity-50">{aiBusy?'AI đang giải thích…':'Mở rộng bằng AI'}</button><p className="mt-1 text-[10px] text-slate-500">Gửi câu hỏi đến AI để giải thích hoặc gợi ý thêm. Không nhập dữ liệu cá nhân học sinh.</p></div>}
             <p className="mt-1.5 text-center text-[9px] text-slate-400">
-              {aiAvailable ? 'Có thể hỏi tiếp theo chủ đề. Câu vượt kho kiến thức được chuyển sang AI; câu trả lời AI cần đối chiếu.' : 'Kho kiến thức có nguồn đang hoạt động. AI mở rộng chưa kết nối; có thể hỏi tiếp hoặc yêu cầu ví dụ.'}
+              {aiAvailable ? 'Kho kiến thức có nguồn hoạt động miễn phí. Chỉ khi thầy cô bấm “Mở rộng bằng AI” mới gửi câu hỏi đến dịch vụ AI.' : 'Kho kiến thức có nguồn đang hoạt động. AI mở rộng chưa kết nối; có thể hỏi tiếp hoặc yêu cầu ví dụ.'}
             </p>
           </form>
         </section>

@@ -554,6 +554,18 @@ function retrieveSingleAnswer(rawQuery: string, context: AssistantRetrievalConte
 
 export function getDanangAssistantQuickPrompts(context: AssistantRetrievalContext = {}): string[] {
   if(context.audience !== 'teacher' && context.stage === 2) return ['Em nên quan sát gì?', 'Em ôn lại bài ở đâu?', 'Nếu phân vân thì làm gì?'];
+  if(context.station?.id===grade1Research.stationId) {
+    const isTeacher=context.audience==='teacher';
+    const rows=grade1Research.entries.filter(item=>item.audience==='student'||isTeacher);
+    const matching=context.hotspot
+      ? rows.filter(item=>item.pointId===context.hotspot?.id)
+      : [...new Map(rows.map(item=>[item.pointId,item])).values()];
+    const selected=isTeacher
+      ? [...matching.filter(x=>x.audience==='teacher'),...matching.filter(x=>x.audience==='student')]
+      : matching;
+    if(selected.length)return selected.slice(0,3).map(item=>item.question);
+  }
+
   if(context.audience === 'teacher' && !context.station) return ['Di sản văn hóa phi vật thể là gì?', 'San hô là động vật hay thực vật?', 'Vòng tuần hoàn nước là gì?'];
   const hotspot = context.hotspot;
   if (hotspot) {

@@ -1,4 +1,5 @@
 import knowledge from '../data/assistantKnowledge.json';
+import grade1Research from '../data/assistantGrade1Research.json';
 import guides from '../data/assistantStationGuides.json';
 import { answerLocalEducationQuestion, resolveLocalEducationFollowUp } from './LocalEducationKnowledge';
 import { ExplorationHotspot, Station } from '../types';
@@ -384,6 +385,56 @@ function retrieveCoreAnswer(
     (usesDeicticReference(query) && !context.hotspot ? ' Bạn đang muốn hỏi về điểm đến nào?' : ''), 'low');
 }
 
+/**
+ * Source-linked editorial FAQ layer for grade 1 station 1.
+ * Conservative matching prefers uncertainty to guessing a different answer.
+ */
+const curatedRows = grade1Research.entries.map(row => ({
+  ...row, texts: [row.question, ...row.variants]
+    .map(text => ({text, normalized:normalizeForSearch(text), intent:questionIntent(text)})),
+}));
+const curatedSources = new Map(grade1Research.sources.map(s=>[s.id,s]));
+const curatedMeaningful = (query:string) => new Set(meaningfulWords(query));
+const curatedCompare = (query:string, candidate:string) => {
+  const a=curatedMeaningful(query), b=curatedMeaningful(candidate);
+  if(a.size<2 || b.size<2)return 0;
+  const common=[...a].filter(term=>b.has(term)).length;
+  if(!common)return 0;
+  const aCoverage=common/a.size, bCoverage=common/b.size;
+  return aCoverage>=.76 && bCoverage>=.70 ? 2*common/(a.size+b.size) : 0;
+};
+function findCuratedAnswer(query:string, context:AssistantRetrievalContext):AssistantRetrievalResult|null {
+  if (context.station?.id && context.station.id!==grade1Research.stationId) return null;
+  if (!query.trim())return null;
+  const nq=normalizeForSearch(query);
+  const intent=questionIntent(query);
+  const teacher=context.audience==='teacher';
+  const ranked=curatedRows.filter(row=>row.audience==='student'||teacher).map(row=>{
+    const pointBoost=context.hotspot?.id===row.pointId ? .02 : 0;
+    const scores=row.texts.map(item=>{
+      if(nq===item.normalized)return 2+pointBoost;
+      if(item.intent!==intent)return 0;
+      return curatedCompare(query,item.text)+pointBoost;
+    });
+    return {row,score:Math.max(0,...scores)};
+  }).filter(x=>x.score>=.84).sort((a,b)=>b.score-a.score);
+  if(!ranked.length)return null;
+  if(ranked[0].score<1.9 && ranked[1] && ranked[0].score-ranked[1].score<.09)return null;
+  const match=ranked[0].row;
+  const sources=match.sources.flatMap(id=>{
+    const src=curatedSources.get(id);
+    return src ? [{label:src.title,url:src.url}] : [];
+  });
+  return makeResult(context.hotspot?.id===match.pointId?'hotspot':'station',nq,
+    match.answer,'high',{
+      matchedEntryId:match.id,matchedTerm:match.question,
+      relatedStationId:grade1Research.stationId,
+      relatedStationTitle:'Quê hương em',
+      topic:match.question,sources,followUp:match.followUp,
+      teachingExample:teacher && match.teacherNote ? match.teacherNote : undefined,
+    });
+}
+
 // Conversational composition uses reviewed facts, never question options or invented facts.
 const topicCards = (query:string) => {
   const q = ` ${normalizeForSearch(query)} `;
@@ -449,6 +500,9 @@ function retrieveSingleAnswer(rawQuery: string, context: AssistantRetrievalConte
   const cleanQuery = query.replace(/^(?:cô|thầy|hãy|giúp tôi|giúp mình)\s+/i, '')
     .replace(/^(?:giải thích|giải nghĩa|nói rõ|cho ví dụ về)\s+(?:từ\s+)?/i, '')
     .replace(/(?:[,;]?\s*(?:giải thích|nói)\s+)?cho học sinh(?: tiểu học)?(?: lớp [1-5])?[^?]*\??$/i, '').trim();
+  // Curated evidence precedes fuzzy narration; Stage 2 protection stays above.
+  const curated = findCuratedAnswer(cleanQuery,context);
+  if(curated)return curated;
   const q = normalizeForSearch(cleanQuery);
   const intent = questionIntent(cleanQuery);
   const candidates = knowledge.map(card => {

@@ -14,8 +14,8 @@ export function createEducationAssistant({auth,generate,quotaStore=null,env=proc
   if(req.method==='GET'){respond(res,200,{available:available(),teacherOnly:true});return true;}
   if(req.method!=='POST')throw fail(405,'Phương thức không được hỗ trợ.');
   auth.sameOrigin(req);
-  if(!available())throw fail(503,'AI mở rộng chưa được kích hoạt trên máy chủ. Kho kiến thức có nguồn vẫn hoạt động.');
   const user=await auth.requireTeacher(req);
+  if(!available())throw fail(503,'AI mở rộng chưa được kích hoạt trên máy chủ. Kho kiến thức có nguồn vẫn hoạt động.');
   let bytes=0,text='';
   for await(const chunk of req){bytes+=Buffer.byteLength(chunk);if(bytes>8192)throw fail(413,'Câu hỏi quá dài.');text+=chunk;}
   let input;try{input=JSON.parse(text);}catch{throw fail(400,'Câu hỏi không hợp lệ.');}

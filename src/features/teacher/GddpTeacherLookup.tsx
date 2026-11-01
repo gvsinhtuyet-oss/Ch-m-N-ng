@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { gddpService, GddpRecord } from '../../services/GddpService';
+import { gddpService, GddpRecord, GddpCatalog } from '../../services/GddpService';
 import { bundledGddpCatalog } from '../../services/GddpBundledCatalog';
 import { Station } from '../../types';
 import {matchGddpResources,MatchedLessonResource} from '../../services/GddpResourceMatcher';
@@ -7,8 +7,8 @@ import {LessonPlanEditor} from './LessonPlanEditor';
 import {GddpLessonPresentation} from './GddpLessonPresentation';
 import {getGddpLessonDeck,getGddpTeachingRecord} from '../../services/GddpLessonDeckService';
 
-interface Props {onOpenStudentStage1?: (station:Station)=>void; stations: Station[]; currentGrade: number; onGradeChange: (grade: number) => void; privateRecords?:GddpRecord[]; privateYear?:string; privateSource?:string;}
-export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGradeChange,privateRecords,privateYear,privateSource,onOpenStudentStage1}) => {
+interface Props {initialRecordId?:string; catalogSnapshot?:GddpCatalog; onOpenStudentStage1?: (station:Station)=>void; stations: Station[]; currentGrade: number; onGradeChange: (grade: number) => void; privateRecords?:GddpRecord[]; privateYear?:string; privateSource?:string;}
+export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGradeChange,privateRecords,privateYear,privateSource,onOpenStudentStage1,initialRecordId,catalogSnapshot}) => {
   const [records, setRecords] = useState<GddpRecord[]>([]);
   const [grade, setGrade] = useState(currentGrade);
   const [subject, setSubject] = useState('');
@@ -25,9 +25,10 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const [showLessonDetails,setShowLessonDetails]=useState(false);
   const [showPreparation,setShowPreparation]=useState(false);
   const [projected,setProjected] = useState<MatchedLessonResource|null>(null);
-  useEffect(()=>{setGrade(currentGrade);setSubject('');setWeek('');setSelectedId('');setSelectedHotspots([]);setManualChoice(false);setProjected(null);},[currentGrade]);
+  useEffect(()=>{setGrade(currentGrade);setSubject('');setWeek('');setSelectedId(initialRecordId || '');setSelectedHotspots([]);setManualChoice(false);setProjected(null);setShowLessonDetails(!!initialRecordId);},[currentGrade,initialRecordId]);
   useEffect(() => {
     let active = true;
+    if(catalogSnapshot){setRecords(catalogSnapshot.records);setLoading(false);setPublished(!!catalogSnapshot.published);setOfflineSource(!catalogSnapshot.published);return;}
     if(privateRecords){setRecords(privateRecords);setLoading(false);setPublished(false);setOfflineSource(false);return;}
     gddpService.publicCatalog().then(data => {
       if (!active) return;
@@ -46,7 +47,7 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       setLoading(false);
     } });
     return () => {active = false;};
-  }, [privateRecords]);
+  }, [privateRecords,catalogSnapshot]);
   const byGrade = useMemo(() => records.filter(x => x.grade === grade), [records,grade]);
   const subjects = useMemo(() => [...new Set(byGrade.map(x=>x.subject))].sort(), [byGrade]);
   const bySubject = useMemo(() => byGrade.filter(x=>!subject || x.subject===subject), [byGrade,subject]);
@@ -102,11 +103,12 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       </label>
     </div>
     {!loading && !filtered.length && <p className="rounded-xl bg-amber-50 p-4 text-sm text-amber-900">Chưa có địa chỉ tích hợp phù hợp với bộ lọc đang chọn. Vui lòng liên hệ Admin nếu cần bổ sung.</p>}
-    {!!filtered.length && <div className="grid gap-2 max-h-64 overflow-y-auto pr-1">
+    {!!filtered.length && (!initialRecordId || !selected) && <div className="grid gap-2 max-h-64 overflow-y-auto pr-1">
       {filtered.map(x=><button key={x.id} type="button" onClick={()=>{setSelectedId(x.id);setSelectedHotspots([]);setManualChoice(false);setShowLessonDetails(false);setShowPreparation(false);setProjected(null);setCopied(false)}} className={`w-full rounded-xl border p-3 text-left text-sm transition ${selectedId===x.id?'border-emerald-600 bg-emerald-50':'border-slate-200 hover:bg-slate-50'}`}>
         <span className="font-bold">{x.lesson}</span><span className="mt-1 block text-xs text-slate-500">{x.subject} · {x.week ? 'Tuần '+x.week : 'Chưa ghi tuần'}</span>
       </button>)}
     </div>}
+    {initialRecordId && selected && <button type="button" className="text-sm font-semibold text-sky-800 underline" onClick={()=>setSelectedId('')}>Chọn bài khác trong danh mục</button>}
     {selected && <article className="space-y-4 rounded-2xl border border-sky-200 bg-sky-50/40 p-4">
       <div><p className="text-xs font-bold uppercase text-sky-800">Địa chỉ tích hợp từ tài liệu nguồn</p><h3 className="font-black text-slate-900">{selected.lesson}</h3></div>
       <div className="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-4 space-y-3">
@@ -170,3 +172,4 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
     {selected && projected && <GddpLessonPresentation record={selected} resource={projected} onExit={()=>setProjected(null)} />}
   </section>;
 };
+

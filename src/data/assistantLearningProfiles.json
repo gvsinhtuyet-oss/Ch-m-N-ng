@@ -1,0 +1,359 @@
+[
+  {
+    "id": "phi-vat-the",
+    "young": "Di sản văn hóa phi vật thể là những cách làm, lời hát và điệu múa được người dân truyền lại. Mọi người cùng thực hành để giữ gìn chúng.",
+    "example": "Chiếc chiêng là đồ vật; cách đánh chiêng được truyền dạy là một kỹ năng.",
+    "applicationQuestion": "Muốn giữ một điệu múa truyền thống, em có thể làm gì?",
+    "applicationAnswer": "Em có thể tìm hiểu, học múa với người hướng dẫn và giới thiệu điệu múa một cách tôn trọng."
+  },
+  {
+    "id": "truyen-nghe",
+    "young": "Truyền nghề là người biết nghề dạy người khác cách làm. Nhờ vậy, nghề được tiếp nối.",
+    "example": "Người thợ dệt hướng dẫn người trẻ cách đưa sợi trên khung cửi.",
+    "applicationQuestion": "Nếu chỉ giữ một chiếc chiếu mà không ai học dệt nữa, nghề có được tiếp nối không?",
+    "applicationAnswer": "Chưa đủ; cần có người học và thực hành kỹ năng dệt để nghề tiếp tục."
+  },
+  {
+    "id": "van-hoa-song",
+    "young": "Di sản sống là những nét văn hóa vẫn được mọi người thực hành và truyền lại. Chúng gắn với cuộc sống hôm nay.",
+    "example": "Một trò chơi được ông bà dạy cho con cháu và các bạn vẫn chơi là ví dụ gần gũi.",
+    "applicationQuestion": "Gia đình em có thể làm gì để một trò chơi truyền thống tiếp tục được biết đến?",
+    "applicationAnswer": "Cùng chơi, hướng dẫn người nhỏ tuổi và tìm hiểu luật chơi đã được truyền lại."
+  },
+  {
+    "id": "giao-luu",
+    "young": "Giao lưu văn hóa là mọi người gặp gỡ và học hỏi cách sống, cách làm của nhau. Hội An lưu lại nhiều dấu ấn văn hóa.",
+    "example": "Quan sát những kiểu kiến trúc trong phố cổ giúp em tìm hiểu sự gặp gỡ văn hóa.",
+    "applicationQuestion": "Thấy công trình có nét lạ, em nên đoán nguồn gốc hay tìm thông tin trước?",
+    "applicationAnswer": "Em nên đọc chú thích, tìm tư liệu hoặc hỏi người hướng dẫn trước khi kết luận."
+  },
+  {
+    "id": "thuong-cang",
+    "young": "Thương cảng là nơi nhiều tàu thuyền đến trao đổi hàng hóa. Hội An từng là một thương cảng phát triển.",
+    "example": "Có thể hình dung thuyền chở hàng tới bến rồi hàng được chuyển vào phố.",
+    "applicationQuestion": "Vì sao thương cảng cần cả bến thuyền và nơi trao đổi hàng?",
+    "applicationAnswer": "Bến giúp tàu thuyền cập vào; nơi trao đổi giúp người dân mua bán hàng hóa."
+  },
+  {
+    "id": "champa",
+    "young": "Chăm-pa là tên một vương quốc trong lịch sử. Mỹ Sơn lưu lại dấu tích văn hóa và nghệ thuật của vương quốc này.",
+    "example": "Những đền tháp cổ ở Mỹ Sơn là một nguồn tư liệu để tìm hiểu người xưa.",
+    "applicationQuestion": "Muốn kể về cuộc sống người xưa ở Mỹ Sơn, em nên dựa vào đâu?",
+    "applicationAnswer": "Dựa vào công trình, hiện vật, chú thích và tư liệu đã được đối chiếu; không tự đoán thêm."
+  },
+  {
+    "id": "gach-nung",
+    "young": "Nhiều công trình Mỹ Sơn được xây bằng gạch nung. Công trình còn có phần bằng đá và các hình trang trí.",
+    "example": "Qua ảnh, em có thể tìm các hàng gạch và đối chiếu với chú thích vật liệu.",
+    "applicationQuestion": "Nhìn một bức ảnh có đủ để khẳng định công thức gắn gạch của người xưa không?",
+    "applicationAnswer": "Không; cần tư liệu nghiên cứu cụ thể để nói về cách kết dính gạch."
+  },
+  {
+    "id": "sinh-quyen",
+    "young": "Khu dự trữ sinh quyển gắn việc giữ gìn thiên nhiên với cuộc sống người dân. Cù Lao Chàm–Hội An có nhiều giá trị thiên nhiên và văn hóa.",
+    "example": "Người dân và khách cùng giữ sạch biển là một việc làm phù hợp với bảo tồn.",
+    "applicationQuestion": "Khi đi tham quan biển đảo, em có thể làm gì để giữ môi trường sống của sinh vật?",
+    "applicationAnswer": "Không xả rác, không bẻ san hô và thực hiện nội quy tham quan."
+  },
+  {
+    "id": "cu-lao-cham",
+    "young": "Cù Lao Chàm–Hội An được UNESCO ghi nhận là khu dự trữ sinh quyển năm 2009. Danh hiệu này khác với Di sản thế giới.",
+    "example": "Hai tấm thẻ ghi Hội An năm 1999 và khu sinh quyển năm 2009 cần đặt ở hai hàng danh hiệu khác nhau.",
+    "applicationQuestion": "Bạn ghi khu sinh quyển được công nhận năm 1999; em sẽ kiểm tra điều gì?",
+    "applicationAnswer": "Cần phân biệt danh hiệu của phố cổ Hội An với khu dự trữ sinh quyển Cù Lao Chàm–Hội An, có mốc 2009."
+  },
+  {
+    "id": "san-ho",
+    "young": "San hô là động vật. Dù trông giống cành cây, san hô vẫn là động vật sống dưới nước.",
+    "example": "Một nhánh san hô trông giống cây nhưng không vì thế mà được xếp là thực vật.",
+    "applicationQuestion": "Bạn nói san hô giống cây nên là thực vật; em giải thích thế nào?",
+    "applicationAnswer": "Hình dáng giống cây chưa đủ để phân loại; san hô là động vật."
+  },
+  {
+    "id": "tay-trang",
+    "young": "San hô có thể chuyển trắng khi môi trường sống thay đổi bất lợi. San hô trắng chưa chắc đã chết nhưng đang dễ bị tổn thương.",
+    "example": "Quan sát hai ảnh san hô khác màu giúp nhận ra thay đổi cần được tìm hiểu thêm.",
+    "applicationQuestion": "Thấy san hô chuyển trắng, em có nên kết luận ngay nó đã chết không?",
+    "applicationAnswer": "Không; tẩy trắng chưa đồng nghĩa với đã chết, nhưng san hô đang bị tổn thương và cần được bảo vệ."
+  },
+  {
+    "id": "ran-san-ho",
+    "young": "Rạn san hô là nơi nhiều sinh vật biển trú ẩn, kiếm ăn và sinh sản. Giữ rạn san hô cũng giúp giữ nơi sống của chúng.",
+    "example": "Cá nhỏ có thể tìm nơi trú ẩn trong rạn san hô.",
+    "applicationQuestion": "Nếu rạn bị phá hủy, cá nhỏ có thể gặp khó khăn gì?",
+    "applicationAnswer": "Chúng có thể mất nơi trú ẩn, kiếm ăn hoặc sinh sản."
+  },
+  {
+    "id": "cong-sinh",
+    "young": "Cộng sinh là các sinh vật khác loài sống gắn bó với nhau. Tảo và nhiều loài san hô có thể cùng có lợi từ mối quan hệ ấy.",
+    "example": "Tảo sống trong mô san hô là một ví dụ về sự gắn bó giữa các sinh vật.",
+    "applicationQuestion": "Khi giải thích cộng sinh ở san hô, em cần nói về một bên hay cả hai bên?",
+    "applicationAnswer": "Cần nói về cả san hô và tảo cùng mối quan hệ đem lại lợi ích cho chúng."
+  },
+  {
+    "id": "vong-nuoc",
+    "young": "Nước luôn di chuyển giữa không khí, mặt đất và trong đất. Nước có thể thành hơi, thành giọt mây rồi rơi xuống thành mưa.",
+    "example": "Một vũng nước khô dần là ví dụ nước lỏng chuyển thành hơi đi vào không khí.",
+    "applicationQuestion": "Sau khi mưa xuống, nước có thể đi đâu?",
+    "applicationAnswer": "Nước có thể chảy trên mặt đất hoặc thấm xuống đất rồi tiếp tục vòng tuần hoàn."
+  },
+  {
+    "id": "boc-hoi",
+    "young": "Bốc hơi là nước lỏng chuyển thành hơi nước. Nước đi vào không khí chứ không mất hẳn.",
+    "example": "Vũng nước nhỏ ngoài sân khô dần khi nước bốc hơi.",
+    "applicationQuestion": "Vũng nước khô đi có nghĩa nước đã biến mất hoàn toàn không?",
+    "applicationAnswer": "Không; một phần nước đã chuyển thành hơi và đi vào không khí."
+  },
+  {
+    "id": "ngung-tu",
+    "young": "Ngưng tụ là hơi nước chuyển thành những giọt nước lỏng. Quá trình này góp phần tạo thành mây.",
+    "example": "Những giọt nước ngoài cốc lạnh có thể hình thành từ hơi nước trong không khí.",
+    "applicationQuestion": "Những giọt ngoài cốc lạnh có nhất thiết là nước từ trong cốc thấm ra không?",
+    "applicationAnswer": "Không; hơi nước trong không khí có thể ngưng tụ trên mặt cốc lạnh."
+  },
+  {
+    "id": "nuoc-ngam",
+    "young": "Nước ngầm là nước ở dưới mặt đất. Nước mưa có thể thấm xuống và bổ sung nguồn nước này.",
+    "example": "Có thể dùng mũi tên đi xuống đất để minh họa nước thấm vào đất.",
+    "applicationQuestion": "Vì sao không nên đổ chất bẩn xuống đất?",
+    "applicationAnswer": "Chất bẩn có thể theo nước thấm xuống và ảnh hưởng tới nước dưới đất."
+  },
+  {
+    "id": "cua-song",
+    "young": "Cửa sông là nơi sông đổ ra biển hoặc một vùng nước lớn hơn. Ở cửa sông ven biển, nước sông gặp nước biển.",
+    "example": "Có thể lần theo dòng sông trên bản đồ tới nơi nó gặp biển.",
+    "applicationQuestion": "Trên sơ đồ sông chảy ra biển, em đặt nhãn cửa sông ở đâu?",
+    "applicationAnswer": "Đặt ở nơi dòng sông đổ ra và gặp biển."
+  },
+  {
+    "id": "xoi-mon",
+    "young": "Xói mòn là đất, đá bị nước hoặc gió lấy đi và chuyển sang nơi khác. Bề mặt đất có thể thay đổi vì quá trình này.",
+    "example": "Dòng nước mưa cuốn đất từ bờ đất trống đi là một ví dụ.",
+    "applicationQuestion": "Sau mưa, đất ở một bờ bị cuốn đi; em đang thấy xói mòn hay bồi tụ?",
+    "applicationAnswer": "Đó là xói mòn vì vật liệu đất bị lấy khỏi vị trí cũ."
+  },
+  {
+    "id": "boi-tu",
+    "young": "Bồi tụ là đất, cát hoặc vật liệu được mang tới rồi lắng lại. Xói mòn lấy vật liệu đi, còn bồi tụ làm vật liệu tích lại.",
+    "example": "Cát được dòng nước mang tới và lắng thành một bãi là ví dụ về bồi tụ.",
+    "applicationQuestion": "Dòng nước để lại một lớp cát mới; em gọi quá trình đó là gì?",
+    "applicationAnswer": "Đó là bồi tụ vì vật liệu được tích lại tại nơi mới."
+  },
+  {
+    "id": "ma-nhai-mo-rong",
+    "young": "Ma nhai Ngũ Hành Sơn là những văn bản khắc trên đá. Năm 2022, di sản này được ghi danh ở cấp khu vực châu Á–Thái Bình Dương.",
+    "example": "Chữ khắc trên vách đá có thể lưu lại thông tin về lịch sử và văn hóa.",
+    "applicationQuestion": "Em có nên chạm khắc thêm tên mình lên đá có ma nhai không?",
+    "applicationAnswer": "Không; cần giữ nguyên di sản và làm theo hướng dẫn bảo vệ tại điểm tham quan."
+  },
+  {
+    "id": "han-nom",
+    "young": "Ma nhai Ngũ Hành Sơn có chữ Hán và chữ Nôm. Những chữ khắc giúp lưu lại tư liệu của người xưa.",
+    "example": "Một tấm chú giải bên ảnh chữ cổ giúp người chưa đọc được tìm hiểu nội dung.",
+    "applicationQuestion": "Không đọc được chữ cổ, em có thể tìm hiểu bằng cách nào?",
+    "applicationAnswer": "Đọc bản giới thiệu, chú giải đáng tin cậy hoặc hỏi người hướng dẫn; không tự đoán nghĩa."
+  },
+  {
+    "id": "dienhai-mo-rong",
+    "young": "Điện Hải được dựng bằng đất năm 1813. Năm 1823, thành được xây lại bằng gạch và chuyển sâu hơn vào đất liền.",
+    "example": "Hai thẻ năm 1813 và 1823 thể hiện hai giai đoạn khác nhau của thành.",
+    "applicationQuestion": "Bạn ghi thành chỉ có một mốc xây dựng; em sẽ bổ sung thế nào?",
+    "applicationAnswer": "Cần tách mốc dựng bằng đất năm 1813 và mốc xây lại bằng gạch, chuyển vị trí năm 1823."
+  },
+  {
+    "id": "hao",
+    "young": "Hào thành là rãnh sâu ở bên ngoài tường thành. Hào góp phần làm việc tiếp cận thành khó hơn.",
+    "example": "Trong sơ đồ, hào nằm ngoài tường thành chứ không phải là chính bức tường.",
+    "applicationQuestion": "Trên sơ đồ thành, em vẽ hào ở phía trong phòng ở hay bên ngoài tường?",
+    "applicationAnswer": "Vẽ hào bên ngoài tường thành để thể hiện bộ phận góp phần phòng thủ."
+  },
+  {
+    "id": "dia-dao",
+    "young": "Địa đạo là các đường hầm dưới lòng đất nối với nhau. Địa đạo Kỳ Anh gắn với cuộc kháng chiến chống Mỹ.",
+    "example": "Sơ đồ các đoạn hầm nối nhau giúp hình dung một hệ thống địa đạo.",
+    "applicationQuestion": "Một lỗ nhỏ dưới đất có đủ để gọi là hệ thống địa đạo không?",
+    "applicationAnswer": "Chưa đủ; địa đạo là hệ thống đường hầm, cần xem cấu trúc và tư liệu của di tích."
+  },
+  {
+    "id": "kyanh-mo-rong",
+    "young": "Địa đạo Kỳ Anh được công nhận là di tích cấp quốc gia năm 1997. Năm công nhận khác với thời gian người dân đào hầm.",
+    "example": "Mốc đào hầm 1965–1967 và mốc công nhận 1997 cần đặt ở hai mục khác nhau.",
+    "applicationQuestion": "Bạn nói địa đạo được đào năm 1997; em sửa thế nào?",
+    "applicationAnswer": "Năm 1997 là mốc công nhận di tích; thời gian đào được tư liệu ghi là 1965–1967."
+  },
+  {
+    "id": "lua",
+    "young": "Lụa tơ tằm được dệt từ sợi tơ lấy ở kén tằm. Người thợ cần nhiều công đoạn để làm thành tấm lụa.",
+    "example": "Kén tằm, sợi tơ và tấm lụa là những sản phẩm ở các công đoạn khác nhau.",
+    "applicationQuestion": "Có kén tằm rồi đã có ngay tấm lụa chưa?",
+    "applicationAnswer": "Chưa; cần lấy tơ, xử lý sợi và dệt thành tấm lụa."
+  },
+  {
+    "id": "khung-cui",
+    "young": "Khung cửi là dụng cụ để người thợ dệt vải. Các sợi được đan xen nhau thành tấm vải.",
+    "example": "Các dải giấy đan xen có thể minh họa cách các hệ sợi tạo thành mặt vải.",
+    "applicationQuestion": "Em phân biệt khung cửi và tấm lụa thế nào?",
+    "applicationAnswer": "Khung cửi là dụng cụ dệt, còn tấm lụa là sản phẩm được dệt từ sợi tơ."
+  },
+  {
+    "id": "u-mam",
+    "young": "Nước mắm Nam Ô được làm từ cá cơm than và muối theo nghề truyền thống. Người thợ thực hiện các bước ủ và lọc.",
+    "example": "Các thẻ cá, muối, ủ và lọc giúp hình dung những công đoạn của nghề.",
+    "applicationQuestion": "Chỉ có cá và muối đã đủ để tạo ngay nước mắm thành phẩm chưa?",
+    "applicationAnswer": "Chưa; còn cần thời gian ủ và các công đoạn cùng kỹ năng của người làm nghề."
+  },
+  {
+    "id": "sa-thach",
+    "young": "Sa thạch là một loại đá. Nhiều hiện vật điêu khắc Chăm được làm từ sa thạch nhưng cũng có hiện vật bằng vật liệu khác.",
+    "example": "Đọc nhãn hiện vật giúp biết tác phẩm làm từ đá, đất nung hay đồng.",
+    "applicationQuestion": "Nhìn màu của một hiện vật có đủ để khẳng định nó làm bằng sa thạch không?",
+    "applicationAnswer": "Chưa đủ; cần đọc nhãn và đối chiếu thông tin về chất liệu hiện vật."
+  },
+  {
+    "id": "phu-dieu",
+    "young": "Phù điêu là hình được làm nổi hoặc chìm trên một mặt nền. Hình vẫn gắn với mặt nền ấy.",
+    "example": "Một hình nhân vật nổi trên mặt đá là ví dụ để nhận diện phù điêu.",
+    "applicationQuestion": "Em quan sát chi tiết nào để nhận ra một phù điêu?",
+    "applicationAnswer": "Quan sát hình nổi hoặc chìm và mối liên hệ của hình với mặt nền."
+  },
+  {
+    "id": "tho-cam",
+    "young": "Thổ cẩm là sản phẩm dệt có các họa tiết trang trí. Nó gắn với kỹ năng và văn hóa của cộng đồng làm ra sản phẩm.",
+    "example": "Một tấm vải dệt có họa tiết giúp em tìm hiểu người làm nghề và cách dệt.",
+    "applicationQuestion": "Em có nên tự gán ý nghĩa cho một họa tiết khi chưa tìm hiểu không?",
+    "applicationAnswer": "Không; nên hỏi người làm nghề và đọc tư liệu về cộng đồng trước khi giải thích."
+  },
+  {
+    "id": "du-lich-cong-dong",
+    "young": "Du lịch cộng đồng có người dân địa phương cùng tham gia. Người dân giới thiệu văn hóa, nghề và cuộc sống của mình.",
+    "example": "Người làm nghề trực tiếp giới thiệu cách làm sản phẩm là một hình thức tham gia.",
+    "applicationQuestion": "Khi người dân giới thiệu nghề của họ, khách nên làm gì?",
+    "applicationAnswer": "Lắng nghe, hỏi lịch sự, tôn trọng cách sống và thực hiện nội quy của cộng đồng."
+  },
+  {
+    "id": "nguyen-tieu",
+    "young": "Tết Nguyên tiêu gắn với rằm tháng Giêng. Ở Hội An có những sinh hoạt tín ngưỡng và cộng đồng trong dịp này.",
+    "example": "Có thể dùng lịch để tìm ngày rằm tháng Giêng và phân biệt với ngày Tết đầu năm.",
+    "applicationQuestion": "Có nên cho rằng mọi nơi đều tổ chức nghi lễ Nguyên tiêu giống hệt nhau không?",
+    "applicationAnswer": "Không; hoạt động cụ thể có thể khác nhau theo từng cộng đồng và không gian."
+  },
+  {
+    "id": "nguon-gen",
+    "young": "Bảo tồn nguồn gen là gìn giữ sự đa dạng của sinh vật cho hiện tại và mai sau. Việc bảo tồn giống sâm cần cơ quan chuyên môn.",
+    "example": "Giữ cây ngoài tự nhiên và nghiên cứu giống là những việc khác nhau cùng góp phần bảo tồn.",
+    "applicationQuestion": "Nghe quảng cáo về sâm, em có nên tự dùng để chữa bệnh không?",
+    "applicationAnswer": "Không; bài học tìm hiểu bảo tồn không phải hướng dẫn dùng thuốc, cần hỏi người lớn và chuyên môn y tế."
+  },
+  {
+    "id": "thoi-tiet",
+    "young": "Thời tiết cho biết lúc này trời nắng, mưa, nóng hay lạnh. Thời tiết có thể đổi nhanh.",
+    "example": "Hôm nay mưa nhưng ngày mai có thể nắng là ví dụ về thời tiết.",
+    "applicationQuestion": "Muốn biết hôm nay có cần áo mưa, em xem thời tiết hay khí hậu?",
+    "applicationAnswer": "Xem dự báo thời tiết vì câu hỏi nói về một thời điểm cụ thể."
+  },
+  {
+    "id": "khi-hau",
+    "young": "Khí hậu là đặc điểm thời tiết được nhận biết qua nhiều năm. Một ngày nắng hay mưa chưa cho biết khí hậu của một nơi.",
+    "example": "Muốn nhận xét mưa nắng thường gặp của một vùng, cần xem thông tin trong thời gian dài.",
+    "applicationQuestion": "Chỉ thấy hôm nay nắng, em có kết luận được khí hậu nơi đó không?",
+    "applicationAnswer": "Chưa; cần thông tin thời tiết được theo dõi trong nhiều năm."
+  },
+  {
+    "id": "hop-kim",
+    "young": "Hợp kim là vật liệu có từ hai nguyên tố trở lên và có tính chất kim loại. Trong đó phải có ít nhất một kim loại.",
+    "example": "Đồng thiếc là một ví dụ về hợp kim gắn với đồng và thiếc.",
+    "applicationQuestion": "Nghe tên đồ đồng, em có nên kết luận mọi món đều là đồng nguyên chất không?",
+    "applicationAnswer": "Không; cần xem thông tin vật liệu vì đồ đồng có thể được làm từ hợp kim."
+  },
+  {
+    "id": "dong-thiec",
+    "young": "Đồng thiếc là một ví dụ về hợp kim, thường gắn với đồng và thiếc. Tên gọi chưa cho biết tỉ lệ chính xác của từng sản phẩm.",
+    "example": "Một vật được giới thiệu là đồng thiếc giúp minh họa việc kết hợp các thành phần vật liệu.",
+    "applicationQuestion": "Có thể từ tên đồng thiếc đoán đúng tỉ lệ mọi sản phẩm đúc không?",
+    "applicationAnswer": "Không; tỉ lệ và thành phần cụ thể cần được đối chiếu với tư liệu của sản phẩm."
+  },
+  {
+    "id": "guol",
+    "young": "Nhà Gươl là ngôi nhà gắn với sinh hoạt chung của cộng đồng Cơ Tu. Đây cũng là nơi góp phần gìn giữ văn hóa.",
+    "example": "Một nơi để dân làng gặp gỡ, sinh hoạt chung giúp hình dung vai trò cộng đồng của nhà Gươl.",
+    "applicationQuestion": "Có nên chỉ giới thiệu nhà Gươl như nhà ở riêng của một gia đình không?",
+    "applicationAnswer": "Không; cần nói đến vai trò sinh hoạt cộng đồng và gìn giữ văn hóa của nhà Gươl."
+  },
+  {
+    "id": "ken-tam",
+    "young": "Kén tằm được tạo bởi sợi tơ do tằm nhả ra bao quanh mình. Người thợ có thể lấy tơ từ kén.",
+    "example": "Có thể xếp hình tằm, kén và sợi tơ để phân biệt các giai đoạn.",
+    "applicationQuestion": "Kén tằm có phải là tấm vải đã dệt xong không?",
+    "applicationAnswer": "Không; kén là nguồn nguyên liệu lấy tơ, còn vải cần công đoạn dệt."
+  },
+  {
+    "id": "uom-to",
+    "young": "Ươm tơ là lấy và thu sợi tơ từ kén. Sau đó còn những công đoạn khác để làm thành sản phẩm.",
+    "example": "Đặt thẻ lấy tơ trước thẻ dệt giúp phân biệt hai công đoạn.",
+    "applicationQuestion": "Bạn ghép ươm tơ và dệt thành một bước giống nhau; em sửa thế nào?",
+    "applicationAnswer": "Ươm tơ là lấy sợi từ kén, còn dệt là đan các hệ sợi thành tấm vải."
+  },
+  {
+    "id": "nong-tam",
+    "young": "Nong là dụng cụ có mặt đan rộng. Trong nghề nuôi tằm truyền thống, nong dùng để đặt tằm và lá dâu.",
+    "example": "Có thể so sánh ảnh nong đặt tằm với ảnh khung cửi dệt vải.",
+    "applicationQuestion": "Nong nuôi tằm và khung cửi có cùng công dụng không?",
+    "applicationAnswer": "Không; nong có thể dùng đặt tằm và lá dâu, còn khung cửi dùng dệt vải."
+  },
+  {
+    "id": "chua-cau-vi-tri",
+    "young": "Chùa Cầu nằm trong phố cổ Hội An. Cầu nối đường Trần Phú với đường Nguyễn Thị Minh Khai.",
+    "example": "Trên sơ đồ phố cổ, hai đầu cầu nối hai phía đường giúp hình dung vị trí công trình.",
+    "applicationQuestion": "Muốn tìm đường đi thực tế tới Chùa Cầu, em có chỉ dựa vào sơ đồ minh họa không?",
+    "applicationAnswer": "Không; cần dùng hướng dẫn và bản đồ phù hợp, đi cùng người lớn theo kế hoạch an toàn."
+  },
+  {
+    "id": "mua",
+    "young": "Trong mây có những giọt nước nhỏ. Khi giọt nước lớn lên và đủ nặng, chúng rơi xuống thành mưa.",
+    "example": "Có thể dùng tranh mây và giọt nước rơi để hình dung sự hình thành mưa.",
+    "applicationQuestion": "Nước mưa chạm đất rồi có thể chảy hoặc thấm đi đâu?",
+    "applicationAnswer": "Nước có thể chảy vào dòng nước trên mặt đất hoặc thấm xuống đất."
+  },
+  {
+    "id": "chua-cau-nguoi-xay",
+    "young": "Phần cầu của Chùa Cầu được người Nhật xây trước. Phần miếu thờ do người Minh Hương xây sau.",
+    "example": "Hai thẻ phần cầu và phần miếu giúp phân biệt các phần của công trình.",
+    "applicationQuestion": "Có nên gán toàn bộ Chùa Cầu cho một cá nhân xây cùng một lúc không?",
+    "applicationAnswer": "Không; tư liệu phân biệt các phần và giai đoạn, với những cộng đồng đóng góp khác nhau."
+  },
+  {
+    "id": "dan-toc-kinh",
+    "young": "Người Kinh thuộc dân tộc đa số ở Việt Nam. Đa số nói về số dân, không có nghĩa hơn về giá trị.",
+    "example": "Các thẻ tên dân tộc khác nhau đều được đặt ngang hàng khi giới thiệu văn hóa.",
+    "applicationQuestion": "Có nên nói dân tộc đa số có giá trị văn hóa cao hơn không?",
+    "applicationAnswer": "Không; đa số hay thiểu số nói về quy mô dân số, không xếp hơn kém giá trị của cộng đồng."
+  },
+  {
+    "id": "54-dan-toc",
+    "young": "Việt Nam có 54 dân tộc. Các dân tộc cùng góp phần làm nên văn hóa đa dạng của đất nước.",
+    "example": "Một bảng nhiều thẻ tên dân tộc cho thấy sự đa dạng của các cộng đồng.",
+    "applicationQuestion": "Khi gặp một nét văn hóa khác, em nên tìm hiểu với thái độ nào?",
+    "applicationAnswer": "Tôn trọng, lắng nghe và không đánh giá hơn kém chỉ vì khác biệt."
+  },
+  {
+    "id": "hoi-an-on-tap",
+    "young": "Hội An là đô thị cổ có nhiều giá trị văn hóa. Đô thị cổ Hội An được UNESCO ghi danh Di sản thế giới năm 1999.",
+    "example": "Nhà cổ, đường phố và hoạt động văn hóa là những điều có thể tìm hiểu về Hội An.",
+    "applicationQuestion": "Khi tham quan phố cổ, em làm gì để giữ gìn di sản?",
+    "applicationAnswer": "Thực hiện nội quy, giữ vệ sinh, không viết vẽ hay làm hỏng công trình và tôn trọng người dân."
+  },
+  {
+    "id": "lang-nghe-on-tap",
+    "young": "Làng nghề là nơi nhiều hộ cùng làm một hoặc một số nghề. Nghề truyền thống giữ lại kỹ năng và kinh nghiệm qua các thế hệ.",
+    "example": "Chiếu Cẩm Nê và nước mắm Nam Ô là những ví dụ để tìm hiểu nghề truyền thống.",
+    "applicationQuestion": "Muốn giữ nghề truyền thống, chỉ giữ sản phẩm trưng bày đã đủ chưa?",
+    "applicationAnswer": "Chưa; cần có người học nghề, thực hành và tiếp nối kỹ năng cùng kinh nghiệm."
+  },
+  {
+    "id": "tro-choi-on-tap",
+    "young": "Trò chơi dân gian được mọi người truyền lại qua nhiều thế hệ. Trốn tìm là một trò chơi dân gian quen thuộc.",
+    "example": "Ở trò trốn tìm, một bạn đi tìm còn các bạn khác trốn trong phạm vi đã thống nhất.",
+    "applicationQuestion": "Trước khi chơi trốn tìm, các bạn cần thống nhất điều gì?",
+    "applicationAnswer": "Thống nhất luật, lượt chơi và phạm vi an toàn; tránh chỗ nguy hiểm."
+  }
+]

@@ -1,10 +1,11 @@
+import {handleLearningRequest,adaptLearningResult,type LearningTask,type PracticeQuestion} from './AssistantLearningEngine';
 import knowledge from '../data/assistantKnowledge.json';
 import guides from '../data/assistantStationGuides.json';
 import { answerLocalEducationQuestion, resolveLocalEducationFollowUp } from './LocalEducationKnowledge';
-import { ExplorationHotspot, Station } from '../types';
+import type { ExplorationHotspot, Station } from '../types';
 import {
-  AssistantLexiconEntry,
-  AssistantStationScope,
+  type AssistantLexiconEntry,
+  type AssistantStationScope,
   DANANG_ASSISTANT_HELP_RESPONSE,
   DANANG_ASSISTANT_LEXICON,
   normalizeDanangDialect,
@@ -24,11 +25,18 @@ export interface AssistantRetrievalContext {
   stations?: Station[];
   audience?: 'student' | 'teacher';
   stage?: number;
+  grade?: number;
+  previousAnswer?: string;
+  practiceIndex?: number;
+  pendingTask?: LearningTask;
   previousQuery?: string;
   previousTopic?: string;
 }
 
 export interface AssistantRetrievalResult {
+  task?: LearningTask;
+  practice?: PracticeQuestion;
+  pendingTask?: LearningTask;
   topic?: string;
   found: boolean;
   sources?: { label: string; url?: string }[];
@@ -394,6 +402,13 @@ const topicCards = (query:string) => {
 const followUpRequest = (q:string) => /^(?:(?:vay|the|rua|con) )?(?:no |dieu do |cai do |noi nay |tro nay )?(?:cho vi du|vi du|noi (?:ro|them|don gian|de hieu)|giai thich (?:them|ro|don gian)|de hieu hon|day (?:the nao|ra sao)|ap dung|goi y (?:bai day|hoat dong)|co y nghia gi|o dau|cach choi|choi the nao|choi ra sao|vi sao|tai sao)\b/.test(q);
 
 export function retrieveDanangAssistantAnswer(rawQuery:string, context:AssistantRetrievalContext={}):AssistantRetrievalResult {
+  if(context.stage===2 && context.audience!=='teacher')return retrieveSingleAnswer(rawQuery,context);
+  const query=rawQuery.trim().slice(0,context.audience==='teacher'?600:220);
+  const learning=handleLearningRequest(query,context);
+  if(learning)return learning;
+  return adaptLearningResult(retrieveLegacyAnswer(query,context),query,context);
+}
+function retrieveLegacyAnswer(rawQuery:string, context:AssistantRetrievalContext={}):AssistantRetrievalResult {
   // Keep assessment protection ahead of composition and every retrieval layer.
   if(context.stage===2 && context.audience!=='teacher') return retrieveSingleAnswer(rawQuery,context);
   const query=rawQuery.trim().slice(0,context.audience==='teacher'?600:220);
@@ -529,4 +544,5 @@ export function getDanangAssistantQuickPrompts(context: AssistantRetrievalContex
 }
 
 export const DANANG_ASSISTANT_DEMO_STATIONS = DEMO_STATIONS;
+
 

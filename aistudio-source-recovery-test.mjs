@@ -26,7 +26,7 @@ test('rejects corrupted downloads and unsafe paths without writing source',async
 test('recovery snapshot contains the current assistant module contract and isolated learning shell',async()=>{
  const current=JSON.parse(await readFile('scripts/aistudio-source-manifest.json','utf8'));
  assert.notEqual(current.commit,'02d04447aa496a6b59c8da243084f5b56b358d75');
- for(const path of ['src/App.tsx','src/components/common/DanangAssistantChat.tsx','src/components/common/FeatureLoadBoundary.tsx','src/utils/assistantPosition.ts','src/services/LocalEducationKnowledge.ts']){
+ for(const path of ['src/App.tsx','src/components/common/DanangAssistantChat.tsx','src/components/common/FeatureLoadBoundary.tsx','src/utils/assistantPosition.ts','src/services/LocalEducationKnowledge.ts','src/services/TeacherLessonSearch.ts','src/features/teacher/GddpTeacherLookup.tsx','src/features/teacher/TeacherAssistantLessonPanel.tsx','src/services/AssistantLearningEngine.ts','src/services/AssistantEffectivenessService.ts','src/components/common/AssistantPracticeCard.tsx','src/components/common/AssistantEffectivenessPanel.tsx','src/data/assistantLearningProfiles.json','src/data/assistantAssessmentBank.json']){
   const entry=current.files.find(e=>e.path===path);assert.ok(entry,path);
   const source=await readFile(path);assert.equal(createHash('sha256').update(source).digest('hex'),entry.sha256,path);
  }

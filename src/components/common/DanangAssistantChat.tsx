@@ -173,7 +173,11 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     if(!open)return;
     const dismiss=(event:PointerEvent)=>{
       if(event.button!==0)return;
-      if(panelRef.current?.contains(event.target as Node)||launcherRef.current?.contains(event.target as Node))return;
+      if(panelRef.current?.contains(event.target as Node)){
+        if(menuRef.current&&!menuRef.current.contains(event.target as Node))menuRef.current.open=false;
+        return;
+      }
+      if(launcherRef.current?.contains(event.target as Node))return;
       setOpen(false);
     };
     document.addEventListener('pointerdown',dismiss,true);
@@ -207,7 +211,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
   useEffect(() => {
     if (open) endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }, [messages, open]);
+  }, [messages, open, showSuggestions]);
 
   const context = useMemo(() => ({ station, hotspot, stations: ALL_25_STATIONS, audience, stage, grade:currentGrade || station?.grade }), [station, hotspot, audience, stage, currentGrade]);
   const quickPrompts = useMemo(() => {
@@ -441,7 +445,6 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                 </div>
               ))}
               <div role="status" aria-live="polite">{copyError&&<p className="text-sm text-amber-800">{copyError}</p>}{(aiBusy || lookupBusy) && <p className="text-sm text-sky-800">Đang trả lời…</p>}</div>
-              <div ref={endRef} />
             </div>
 
             {showSuggestions&&<div className="mt-4 flex flex-wrap gap-2" aria-label="Gợi ý nhanh">
@@ -451,7 +454,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                 {label:'Hoạt động 5 phút',query:station?'Gợi ý hoạt động 5 phút về bài đang học':'Gợi ý hoạt động 5 phút về ',draft:!station},
               ]:quickPrompts.slice(0,3).map(query=>({label:query,query,draft:false}))).map(item=><button key={item.label} type="button" disabled={aiBusy||lookupBusy} onClick={()=>{if(item.draft){setInput(item.query);inputRef.current?.focus();}else void ask(item.query);}} className="min-h-11 rounded-2xl border border-sky-100 bg-white px-3 py-2 text-xs font-semibold text-sky-800 transition hover:border-sky-200 hover:bg-sky-50 disabled:opacity-40">{item.label}</button>)}
             </div>}
-
+            <div ref={endRef} />
           </div>
 
           <form

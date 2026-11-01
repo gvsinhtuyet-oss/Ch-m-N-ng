@@ -14,13 +14,16 @@ test('dragged assistant stays fully visible on phone and desktop, including afte
   }
  }
 });
-test('launcher label is always rendered; enlarged control exposes open state and touch drag',()=>{
+test('round exploration launcher has an accessible label and exposes open state and touch drag',()=>{
  const previous=(globalThis as any).window;
  (globalThis as any).window={innerWidth:390,innerHeight:844};
  try{
   const html=renderToStaticMarkup(<DanangAssistantChat/>);
   assert.match(html,/Trợ lý Khám phá<\/span>/);
-  assert.match(html,/h-\[72px\]/);
+  assert.match(html,/discovery-chat-launcher/);
+  assert.match(html,/rounded-full/);
+  assert.match(html,/h-16 w-16/);
+  assert.doesNotMatch(html,/discovery-robot|discovery-assistant-button|rounded-none/);
   assert.match(html,/aria-expanded="false"/);
   assert.match(html,/touch-action:none/);
   assert.doesNotMatch(html,/group-hover:flex/);

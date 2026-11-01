@@ -1,7 +1,7 @@
 import {audioService} from '../../services/AudioService';
 import {constrainAssistantPosition, type AssistantPosition} from '../../utils/assistantPosition';
 import React, { useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
-import { Bot, MapPin, MessageCircle, Send, MoreHorizontal, Plus, X } from 'lucide-react';
+import { MapPin, Send, MoreHorizontal, Plus, X } from 'lucide-react';
 import {detectLearningTask,type PracticeQuestion,type LearningTask} from '../../services/AssistantLearningEngine';
 import {AssistantPracticeCard} from './AssistantPracticeCard';
 const EffectivenessPanel = lazy(() => import('./AssistantEffectivenessPanel'));
@@ -72,6 +72,14 @@ const SimpleBold: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
+const AssistantEmblem=({className}:{className?:string})=>(
+  <svg aria-hidden="true" viewBox="0 0 64 64" className={className} fill="none">
+    <path d="M48 32a18 18 0 0 1-18 18h-6l-12 6 3-13a18 18 0 1 1 33-11Z" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="23" cy="32" r="2" fill="currentColor"/><circle cx="30" cy="32" r="2" fill="currentColor"/><circle cx="37" cy="32" r="2" fill="currentColor"/>
+    <path d="m47 7 2.8 8.2L58 18l-8.2 2.8L47 29l-2.8-8.2L36 18l8.2-2.8Z" fill="#ffe093" stroke="#0891b2" strokeWidth="1.5" strokeLinejoin="round"/>
+  </svg>
+);
+
 export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '' }) => {
   const isTeacher = audience === 'teacher';
   const welcome = isTeacher ? 'Thầy cô cần tìm bài học hay chuẩn bị nội dung nào?' : WELCOME;
@@ -81,7 +89,6 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const launcherRef=useRef<HTMLDivElement|null>(null);
   const inputRef=useRef<HTMLTextAreaElement|null>(null);
   const menuRef=useRef<HTMLDetailsElement|null>(null);
-  const [tapPulse, setTapPulse] = useState(0);
   useEffect(()=>{
     const openFromLesson=()=>setOpen(true);
     window.addEventListener('cham-open-assistant',openFromLesson);
@@ -309,9 +316,9 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
   return (
     <>
-      <div ref={launcherRef} aria-hidden={open||measurementOpen||!!lessonPanel} className={`discovery-assistant fixed z-[58] flex flex-col items-center select-none ${compactGame ? 'h-12 w-12' : 'h-[122px] w-[156px] gap-2'}`}
+      <div ref={launcherRef} aria-hidden={open||measurementOpen||!!lessonPanel} className={`discovery-assistant fixed z-[58] pointer-events-none flex flex-col items-end justify-end select-none ${compactGame ? 'h-12 w-12' : 'h-[122px] w-[156px] gap-2'}`}
         style={{left: launcherPosition.x, top: launcherPosition.y,visibility:open||measurementOpen||lessonPanel?'hidden':'visible'}}>
-        <span className={`${compactGame ? 'sr-only' : 'pointer-events-none whitespace-nowrap rounded-full border-2 border-amber-300 bg-white px-3 py-1.5 text-[13px] font-black leading-tight text-sky-950 shadow-lg'} `}>Trợ lý Khám phá</span>
+        <span className="sr-only">Trợ lý Khám phá</span>
         <button
           type="button"
           onPointerDown={event => {
@@ -339,30 +346,16 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
           onClick={event => {
             if (event.detail !== 0 && suppressClick.current) { suppressClick.current = false; return; }
             audioService.playSfx('unlock');
-            setTapPulse(value => value + 1);
             setOpen(value => !value);
           }}
           style={{touchAction:'none', ...(compactGame ? {width:48,height:48} : {})}}
-          className="discovery-assistant-button relative inline-flex h-[72px] w-[72px] shrink-0 cursor-grab items-center justify-center rounded-none border-0 bg-transparent text-white shadow-none ring-0 transition-shadow hover:shadow-[0_10px_30px_rgba(3,105,161,.6)] focus-visible:outline focus-visible:outline-4 focus-visible:outline-sky-900 active:cursor-grabbing"
+          className="discovery-chat-launcher pointer-events-auto relative inline-flex h-16 w-16 shrink-0 cursor-grab items-center justify-center overflow-hidden rounded-full border-2 border-white bg-gradient-to-br from-cyan-500 via-sky-600 to-sky-800 text-white shadow-[0_8px_24px_rgba(3,105,161,0.3)] transition-[box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(3,105,161,0.4)] focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-sky-800 active:cursor-grabbing motion-reduce:transform-none"
           aria-label={open ? 'Đóng Trợ lý khám phá Đà Nẵng' : 'Mở Trợ lý khám phá Đà Nẵng'}
           aria-expanded={open}
           aria-controls="danang-assistant-panel"
           aria-describedby="assistant-drag-hint"
           title="Bấm để trò chuyện · Giữ và kéo để di chuyển">
-          <svg key={tapPulse} aria-hidden="true" viewBox="0 0 100 100" className={`discovery-robot ${tapPulse ? 'is-tapped' : ''}`}>
-            <defs><linearGradient id="discovery-shell" x2="0" y2="1"><stop stopColor="#f5ffff"/><stop offset="1" stopColor="#9be7ec"/></linearGradient><linearGradient id="discovery-face" x2="0" y2="1"><stop stopColor="#17466a"/><stop offset="1" stopColor="#082438"/></linearGradient></defs>
-            <path d="M50 18V9" stroke="#fbd45c" strokeWidth="5"/><circle cx="50" cy="8" r="5" fill="#ffe387"/>
-            <ellipse cx="50" cy="88" rx="30" ry="6" fill="#075985" opacity=".25"/>
-            <rect x="24" y="65" width="52" height="25" rx="12" fill="url(#discovery-shell)" stroke="#fff" strokeWidth="2"/>
-            <path d="M24 70L12 79M76 70L88 79" stroke="#b7f5f2" strokeWidth="9" strokeLinecap="round"/>
-            <rect x="12" y="33" width="12" height="24" rx="6" fill="#ffd16a"/><rect x="76" y="33" width="12" height="24" rx="6" fill="#ffd16a"/>
-            <rect x="19" y="19" width="62" height="49" rx="18" fill="url(#discovery-shell)" stroke="#fff" strokeWidth="3"/>
-            <rect x="26" y="28" width="48" height="30" rx="12" fill="url(#discovery-face)"/>
-            <g className="discovery-robot-eyes"><ellipse cx="39" cy="41" rx="5" ry="6" fill="#64f5f0"/><ellipse cx="61" cy="41" rx="5" ry="6" fill="#64f5f0"/></g>
-            <path d="M44 51Q50 55 56 51" fill="none" stroke="#91ffff" strokeWidth="2" strokeLinecap="round"/>
-            <circle cx="50" cy="77" r="5" fill="#ffcd57"/><path d="M47 77h6M50 74v6" stroke="#fff" strokeWidth="2"/>
-          </svg>
-          <span aria-hidden="true" className="absolute -right-6 top-1 rounded-2xl border-2 border-amber-300 bg-white px-2 py-1 text-sky-950 shadow-md"><MessageCircle className="h-5 w-5" /></span>
+          <AssistantEmblem className={compactGame?'h-9 w-9':'h-12 w-12'}/>
         </button>
         <span id="assistant-drag-hint" className="sr-only">Giữ và kéo biểu tượng để tránh che nội dung.</span>
       </div>
@@ -383,7 +376,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         >
           <header className="relative z-10 shrink-0 border-b border-white/10 bg-gradient-to-r from-sky-800 to-cyan-700 px-4 py-3 text-white">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white/15"><Bot className="h-5 w-5"/></span>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10"><AssistantEmblem className="h-8 w-8"/></span>
               <div className="min-w-0 flex-1">
                 <h2 className="truncate text-[15px] font-bold tracking-tight">Trợ lý Khám phá</h2>
                 {(currentGrade||station?.grade)&&<p className="mt-0.5 truncate text-[11px] text-sky-100">Lớp {currentGrade||station?.grade}{station?' · '+(hotspot?.titleVi?.replace(/^\d+\.\s*/,'')||station.titleVi):''}</p>}

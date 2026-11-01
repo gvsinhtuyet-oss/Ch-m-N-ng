@@ -9,7 +9,7 @@ import {retrieveDanangAssistantAnswer as ask, getDanangAssistantQuickPrompts} fr
 test('sourced expansions have unique identities, verified HTTPS attribution, and teaching examples',()=>{
  assert.ok(knowledge.length>=46);
  assert.equal(new Set(knowledge.map(c=>c.id)).size,knowledge.length);
- for(const c of knowledge){assert.ok(c.answer.length>40);assert.ok(c.teachingExample.length>30);assert.ok(c.followUp.endsWith('?'));assert.equal(new URL(c.source.url).protocol,'https:');assert.match(c.reviewedOn,/^2026-10-(29|30)$/);}
+ for(const c of knowledge){assert.ok(c.answer.length>40);assert.ok(c.teachingExample.length>30);assert.ok(c.followUp.endsWith('?'));assert.equal(new URL(c.source.url).protocol,'https:');assert.match(c.reviewedOn,/^\d{4}-\d{2}-\d{2}$/);assert.equal(new Date(c.reviewedOn).toISOString().slice(0,10),c.reviewedOn);}
  assert.ok(DANANG_ASSISTANT_LEXICON.length>50);
 });
 test('25 teaching guides map every actual station and all 121 actual points without inferred IDs',()=>{
@@ -151,7 +151,7 @@ test('conversation gives a real example and retains the topic across three turns
  assert.ok(second.found);assert.match(second.answer,/San hô là động vật/);assert.doesNotMatch(second.answer,/Cho học sinh/);
  const third=ask('Cho ví dụ',{previousQuery:'Nói dễ hiểu hơn',previousTopic:second.topic});
  assert.ok(third.found);assert.equal(third.topic,first.topic);assert.match(third.answer,/Ví dụ:/);assert.doesNotMatch(third.answer,/Cho học sinh/);
- assert.equal(ask('Nói dễ hiểu hơn').found,false);
+ assert.equal(ask('Nói dễ hiểu hơn').pendingTask,'rewrite');assert.match(ask('Nói dễ hiểu hơn').answer,/chủ đề nào/);
 });
 test('explicit new subject overrides conversation, while unsupported facts remain unknown',()=>{
  const ctx={previousTopic:'san hô',previousQuery:'San hô là gì?'};

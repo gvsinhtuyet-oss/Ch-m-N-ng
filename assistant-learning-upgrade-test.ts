@@ -36,7 +36,7 @@ test('requested tasks preserve intent, duration, count, source and current-topic
  assert.match(activity.answer,/1 phút — Khởi động/);assert.match(activity.answer,/2 phút — Khám phá/);assert.match(activity.answer,/1 phút — Vận dụng/);assert.match(activity.answer,/1 phút — Kiểm tra/);assert.match(activity.answer,/Không bẻ/);
  const rewrite=handleLearningRequest('Viết lại ngắn hơn bằng 2 câu cho học sinh lớp 1',{previousTopic:'san hô',previousQuery:'San hô là gì?'})!;
  assert.equal(rewrite.answer.split(/(?<=[.!?])\s+/).length,2);assert.doesNotMatch(rewrite.answer,/Cho học sinh|Dùng sơ đồ|polyp/);
- const compare=handleLearningRequest('So sánh thời tiết và khí hậu',{grade:5})!;assert.match(compare.answer,/lúc cụ thể/);assert.match(compare.answer,/nhiều năm/);
+ for(const query of ['So sánh thời tiết và khí hậu','Khí hậu khác thời tiết thế nào?','Thời tiết khác khí hậu thế nào?']){const compare=handleLearningRequest(query,{grade:5})!;assert.match(compare.answer,/lúc cụ thể/);assert.match(compare.answer,/thời gian dài/);assert.match(compare.answer,/nhiều năm/);}
 });
 test('topic clarification is actionable and an unfamiliar new subject does not inherit an old one',()=>{
  const first=handleLearningRequest('Hỏi em một câu để kiểm tra',{grade:2})!;assert.equal(first.pendingTask,'practice');assert.equal(first.practice,undefined);

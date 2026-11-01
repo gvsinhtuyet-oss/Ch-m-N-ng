@@ -115,7 +115,7 @@ export function handleLearningRequest(query:string,context:LearningContext={}):L
     }
     return null;
   }
-  const named=cardsIn(query);
+  const named=task==='comparison'?(()=>{const direct=knowledge.filter(card=>contains(q,card.term));return direct.length===2?direct:cardsIn(query);})():cardsIn(query);
   if(task==='comparison'){
     if(named.length!==2)return clarify(query,task);
     const [a,b]=named;
@@ -136,7 +136,9 @@ export function handleLearningRequest(query:string,context:LearningContext={}):L
     if(task==='rewrite')return {...result(query,sentences.slice(0,2).join(' '),undefined,task),topic:material.topic,sources:material.sources};
     if(task==='practice')return {...result(query,`Em hãy nêu một điều đã biết về ${material.topic}.`,undefined,task),topic:material.topic,sources:material.sources,practice:{id:material.id,topicId:material.id,topic:material.topic,question:`Em hãy nêu một điều đã biết về ${material.topic}.`,answer:sentences.slice(0,2).join(' '),explanation:'Đối chiếu câu trả lời với học liệu; phần tự đối chiếu này không được chấm điểm tự động.'}};
     if(task==='questions')return {...result(query,`**1.** Bài học nói gì về ${material.topic}?\nGợi ý đáp án: ${sentences.slice(0,2).join(' ')}\n\n**2.** Em chọn chi tiết nào trong bài để giới thiệu?\nGợi ý đáp án: Chọn một chi tiết đúng trong học liệu và nói rõ căn cứ.\n\n**3.** Em sẽ kiểm tra thông tin về chủ đề này bằng cách nào?\nGợi ý đáp án: Đọc lại học liệu, chú thích nguồn và hỏi giáo viên khi còn chưa rõ.`,undefined,task),topic:material.topic,sources:material.sources};
-    return {...result(query,`**Hoạt động 5 phút: ${material.topic}**\n1 phút: Quan sát ảnh và đọc nội dung.\n2 phút: Mỗi cặp chọn một chi tiết có căn cứ để giới thiệu.\n1 phút: Chia sẻ và chỉ căn cứ trong học liệu.\n1 phút: Giáo viên kiểm tra một chi tiết học sinh vừa nêu.\n**Kiểm tra:** Chi tiết phải đúng với học liệu; không tự thêm số liệu.`,undefined,task),topic:material.topic,sources:material.sources};
+    const duration=Math.max(3,Math.min(20,Number(q.match(/\b(\d+)\s*phut\b/)?.[1]||5)));
+    const first=duration===3?.5:1,middle=duration-first-2;
+    return {...result(query,`**Hoạt động ${duration} phút: ${material.topic}**\n${first} phút: Quan sát ảnh và đọc nội dung.\n${middle} phút: Mỗi cặp chọn một chi tiết có căn cứ để giới thiệu.\n1 phút: Chia sẻ và chỉ căn cứ trong học liệu.\n1 phút: Giáo viên kiểm tra một chi tiết học sinh vừa nêu.\n**Kiểm tra:** Chi tiết phải đúng với học liệu; không tự thêm số liệu.`,undefined,task),topic:material.topic,sources:material.sources};
   }
   if(task==='rewrite'){
     const count=q.match(/\b(?:bang|thanh|trong|gon|con)\s*([1-4])\s*cau\b/)?.[1];

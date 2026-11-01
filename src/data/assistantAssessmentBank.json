@@ -1,0 +1,730 @@
+[
+  {
+    "id": "san-ho-0",
+    "topicId": "san-ho",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "San hô thuộc nhóm nào?",
+    "options": [
+      "Động vật",
+      "Thực vật",
+      "Đá không có sự sống"
+    ],
+    "correctIndex": 0,
+    "explanation": "San hô là động vật. Dù trông giống cành cây, san hô vẫn là động vật sống dưới nước."
+  },
+  {
+    "id": "san-ho-1",
+    "topicId": "san-ho",
+    "form": "pre",
+    "domain": "application",
+    "question": "Bạn nói san hô giống cây nên là thực vật. Em chọn ý nào?",
+    "options": [
+      "Hình dáng chưa đủ để phân loại; san hô là động vật",
+      "Giống cây thì chắc chắn là thực vật",
+      "Mọi vật bám đáy biển đều là thực vật"
+    ],
+    "correctIndex": 0,
+    "explanation": "Hình dáng giống cây chưa đủ để phân loại; san hô là động vật."
+  },
+  {
+    "id": "san-ho-2",
+    "topicId": "san-ho",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Mô tả nào đúng về san hô?",
+    "options": [
+      "San hô là động vật dù có hình dáng giống cây",
+      "San hô chỉ là cành cây khô",
+      "San hô không phải sinh vật"
+    ],
+    "correctIndex": 0,
+    "explanation": "San hô là động vật. Dù trông giống cành cây, san hô vẫn là động vật sống dưới nước."
+  },
+  {
+    "id": "san-ho-3",
+    "topicId": "san-ho",
+    "form": "post",
+    "domain": "application",
+    "question": "Thấy ảnh sinh vật giống cành cây, em nên làm gì?",
+    "options": [
+      "Tìm thông tin phân loại trước khi kết luận",
+      "Gọi ngay là thực vật",
+      "Kết luận ảnh không chụp sinh vật"
+    ],
+    "correctIndex": 0,
+    "explanation": "Hình dáng giống cây chưa đủ để phân loại; san hô là động vật."
+  },
+  {
+    "id": "vong-nuoc-0",
+    "topicId": "vong-nuoc",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "Nước di chuyển giữa những nơi nào trong vòng tuần hoàn?",
+    "options": [
+      "Không khí, mặt đất và dưới đất",
+      "Chỉ ở trong mây",
+      "Chỉ ở trong biển"
+    ],
+    "correctIndex": 0,
+    "explanation": "Nước luôn di chuyển giữa không khí, mặt đất và trong đất. Nước có thể thành hơi, thành giọt mây rồi rơi xuống thành mưa."
+  },
+  {
+    "id": "vong-nuoc-1",
+    "topicId": "vong-nuoc",
+    "form": "pre",
+    "domain": "application",
+    "question": "Mưa rơi xuống đất rồi có thể đi đâu?",
+    "options": [
+      "Chảy trên mặt đất hoặc thấm xuống đất",
+      "Biến mất hoàn toàn",
+      "Chỉ nằm yên mãi ở một chỗ"
+    ],
+    "correctIndex": 0,
+    "explanation": "Nước có thể chảy trên mặt đất hoặc thấm xuống đất rồi tiếp tục vòng tuần hoàn."
+  },
+  {
+    "id": "vong-nuoc-2",
+    "topicId": "vong-nuoc",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Chuỗi nào thuộc vòng tuần hoàn nước?",
+    "options": [
+      "Bốc hơi, ngưng tụ, mưa, chảy hoặc thấm",
+      "Nước biến mất và không trở lại",
+      "Chỉ có mưa, không có quá trình khác"
+    ],
+    "correctIndex": 0,
+    "explanation": "Nước luôn di chuyển giữa không khí, mặt đất và trong đất. Nước có thể thành hơi, thành giọt mây rồi rơi xuống thành mưa."
+  },
+  {
+    "id": "vong-nuoc-3",
+    "topicId": "vong-nuoc",
+    "form": "post",
+    "domain": "application",
+    "question": "Vũng nước khô dần ngoài sân cho thấy điều gì?",
+    "options": [
+      "Nước có thể bốc hơi vào không khí",
+      "Nước đã hết tồn tại",
+      "Nước lỏng biến thành đất"
+    ],
+    "correctIndex": 0,
+    "explanation": "Nước có thể chảy trên mặt đất hoặc thấm xuống đất rồi tiếp tục vòng tuần hoàn."
+  },
+  {
+    "id": "boc-hoi-0",
+    "topicId": "boc-hoi",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "Bốc hơi là quá trình nào?",
+    "options": [
+      "Nước lỏng chuyển thành hơi nước",
+      "Hơi nước chuyển thành giọt nước",
+      "Đất chuyển thành nước"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bốc hơi là nước lỏng chuyển thành hơi nước. Nước đi vào không khí chứ không mất hẳn."
+  },
+  {
+    "id": "boc-hoi-1",
+    "topicId": "boc-hoi",
+    "form": "pre",
+    "domain": "application",
+    "question": "Vũng nước khô đi có nghĩa gì?",
+    "options": [
+      "Một phần nước chuyển thành hơi đi vào không khí",
+      "Mọi phân tử nước đã mất hẳn",
+      "Nước chỉ đổi màu"
+    ],
+    "correctIndex": 0,
+    "explanation": "Không; một phần nước đã chuyển thành hơi và đi vào không khí."
+  },
+  {
+    "id": "boc-hoi-2",
+    "topicId": "boc-hoi",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Nước đi vào không khí dưới dạng hơi là quá trình gì?",
+    "options": [
+      "Bốc hơi",
+      "Bồi tụ",
+      "Ngưng tụ"
+    ],
+    "correctIndex": 0,
+    "explanation": "Bốc hơi là nước lỏng chuyển thành hơi nước. Nước đi vào không khí chứ không mất hẳn."
+  },
+  {
+    "id": "boc-hoi-3",
+    "topicId": "boc-hoi",
+    "form": "post",
+    "domain": "application",
+    "question": "Sau một lúc, mặt sân ướt khô dần. Ý nào phù hợp?",
+    "options": [
+      "Nước có thể đã bốc hơi",
+      "Không khí không thể nhận hơi nước",
+      "Nước đã biến thành đá"
+    ],
+    "correctIndex": 0,
+    "explanation": "Không; một phần nước đã chuyển thành hơi và đi vào không khí."
+  },
+  {
+    "id": "ngung-tu-0",
+    "topicId": "ngung-tu",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "Ngưng tụ là quá trình nào?",
+    "options": [
+      "Hơi nước chuyển thành nước lỏng",
+      "Nước lỏng chuyển thành hơi nước",
+      "Đá chuyển thành đất"
+    ],
+    "correctIndex": 0,
+    "explanation": "Ngưng tụ là hơi nước chuyển thành những giọt nước lỏng. Quá trình này góp phần tạo thành mây."
+  },
+  {
+    "id": "ngung-tu-1",
+    "topicId": "ngung-tu",
+    "form": "pre",
+    "domain": "application",
+    "question": "Giọt nước ngoài cốc lạnh có thể đến từ đâu?",
+    "options": [
+      "Hơi nước trong không khí ngưng tụ",
+      "Chắc chắn do cốc luôn thủng",
+      "Do mặt kính tự tạo nước từ không có gì"
+    ],
+    "correctIndex": 0,
+    "explanation": "Không; hơi nước trong không khí có thể ngưng tụ trên mặt cốc lạnh."
+  },
+  {
+    "id": "ngung-tu-2",
+    "topicId": "ngung-tu",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Hơi nước chuyển thành các giọt nhỏ được gọi là gì?",
+    "options": [
+      "Ngưng tụ",
+      "Bốc hơi",
+      "Xói mòn"
+    ],
+    "correctIndex": 0,
+    "explanation": "Ngưng tụ là hơi nước chuyển thành những giọt nước lỏng. Quá trình này góp phần tạo thành mây."
+  },
+  {
+    "id": "ngung-tu-3",
+    "topicId": "ngung-tu",
+    "form": "post",
+    "domain": "application",
+    "question": "Có giọt nước ngoài một cốc kín, em chọn giải thích nào?",
+    "options": [
+      "Hơi nước có thể ngưng tụ trên mặt cốc lạnh",
+      "Nước chỉ có thể thấm qua thành cốc",
+      "Hơi nước không bao giờ thành giọt"
+    ],
+    "correctIndex": 0,
+    "explanation": "Không; hơi nước trong không khí có thể ngưng tụ trên mặt cốc lạnh."
+  },
+  {
+    "id": "thoi-tiet-0",
+    "topicId": "thoi-tiet",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "Thời tiết nói về điều gì?",
+    "options": [
+      "Trạng thái không khí tại nơi và lúc cụ thể",
+      "Quy luật thời tiết qua nhiều năm",
+      "Tên một di tích"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thời tiết cho biết lúc này trời nắng, mưa, nóng hay lạnh. Thời tiết có thể đổi nhanh."
+  },
+  {
+    "id": "thoi-tiet-1",
+    "topicId": "thoi-tiet",
+    "form": "pre",
+    "domain": "application",
+    "question": "Muốn biết hôm nay có cần áo mưa, em xem gì?",
+    "options": [
+      "Dự báo thời tiết",
+      "Chỉ xem ảnh chụp nhiều năm trước",
+      "Chỉ xem danh sách làng nghề"
+    ],
+    "correctIndex": 0,
+    "explanation": "Xem dự báo thời tiết vì câu hỏi nói về một thời điểm cụ thể."
+  },
+  {
+    "id": "thoi-tiet-2",
+    "topicId": "thoi-tiet",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Câu nào mô tả thời tiết?",
+    "options": [
+      "Hôm nay trời mưa",
+      "Khí hậu được nhận biết qua nhiều năm",
+      "Hội An có nhà cổ"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thời tiết cho biết lúc này trời nắng, mưa, nóng hay lạnh. Thời tiết có thể đổi nhanh."
+  },
+  {
+    "id": "thoi-tiet-3",
+    "topicId": "thoi-tiet",
+    "form": "post",
+    "domain": "application",
+    "question": "Sáng nắng, chiều mưa cho thấy điều gì?",
+    "options": [
+      "Thời tiết có thể thay đổi nhanh",
+      "Khí hậu đã đổi chỉ trong một buổi",
+      "Mưa không liên quan thời tiết"
+    ],
+    "correctIndex": 0,
+    "explanation": "Xem dự báo thời tiết vì câu hỏi nói về một thời điểm cụ thể."
+  },
+  {
+    "id": "khi-hau-0",
+    "topicId": "khi-hau",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "Khí hậu được nhận biết qua khoảng thời gian nào?",
+    "options": [
+      "Nhiều năm",
+      "Một buổi sáng",
+      "Chỉ một trận mưa"
+    ],
+    "correctIndex": 0,
+    "explanation": "Khí hậu là đặc điểm thời tiết được nhận biết qua nhiều năm. Một ngày nắng hay mưa chưa cho biết khí hậu của một nơi."
+  },
+  {
+    "id": "khi-hau-1",
+    "topicId": "khi-hau",
+    "form": "pre",
+    "domain": "application",
+    "question": "Một ngày nắng có đủ để kết luận khí hậu một vùng không?",
+    "options": [
+      "Chưa đủ; cần theo dõi lâu dài",
+      "Đủ để kết luận mọi năm đều nắng",
+      "Đủ để biết chính xác mọi ngày sau đó"
+    ],
+    "correctIndex": 0,
+    "explanation": "Chưa; cần thông tin thời tiết được theo dõi trong nhiều năm."
+  },
+  {
+    "id": "khi-hau-2",
+    "topicId": "khi-hau",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Ý nào mô tả đúng khí hậu?",
+    "options": [
+      "Đặc điểm thời tiết của một nơi qua thời gian dài",
+      "Chỉ nhiệt độ ngay lúc này",
+      "Chỉ mưa của ngày hôm qua"
+    ],
+    "correctIndex": 0,
+    "explanation": "Khí hậu là đặc điểm thời tiết được nhận biết qua nhiều năm. Một ngày nắng hay mưa chưa cho biết khí hậu của một nơi."
+  },
+  {
+    "id": "khi-hau-3",
+    "topicId": "khi-hau",
+    "form": "post",
+    "domain": "application",
+    "question": "Muốn tìm quy luật mưa nắng của một vùng, em cần gì?",
+    "options": [
+      "Thông tin thời tiết trong nhiều năm",
+      "Chỉ một bức ảnh nắng",
+      "Chỉ dự báo của một giờ"
+    ],
+    "correctIndex": 0,
+    "explanation": "Chưa; cần thông tin thời tiết được theo dõi trong nhiều năm."
+  },
+  {
+    "id": "phi-vat-the-0",
+    "topicId": "phi-vat-the",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "Ví dụ nào là kỹ năng thuộc di sản phi vật thể?",
+    "options": [
+      "Cách diễn tấu chiêng được truyền dạy",
+      "Chỉ chiếc chiêng như một đồ vật",
+      "Một bức tường mới xây"
+    ],
+    "correctIndex": 0,
+    "explanation": "Di sản văn hóa phi vật thể là những cách làm, lời hát và điệu múa được người dân truyền lại. Mọi người cùng thực hành để giữ gìn chúng."
+  },
+  {
+    "id": "phi-vat-the-1",
+    "topicId": "phi-vat-the",
+    "form": "pre",
+    "domain": "application",
+    "question": "Muốn giữ một điệu múa truyền thống, việc nào phù hợp?",
+    "options": [
+      "Học và thực hành với người hướng dẫn",
+      "Chỉ giữ một bức ảnh rồi không ai múa nữa",
+      "Tự thay mọi động tác và gọi đó là bản gốc"
+    ],
+    "correctIndex": 0,
+    "explanation": "Em có thể tìm hiểu, học múa với người hướng dẫn và giới thiệu điệu múa một cách tôn trọng."
+  },
+  {
+    "id": "phi-vat-the-2",
+    "topicId": "phi-vat-the",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Di sản phi vật thể được tiếp nối bằng cách nào?",
+    "options": [
+      "Cộng đồng gìn giữ, thực hành và trao truyền",
+      "Chỉ cất đồ vật trong kho",
+      "Không cần người thực hành"
+    ],
+    "correctIndex": 0,
+    "explanation": "Di sản văn hóa phi vật thể là những cách làm, lời hát và điệu múa được người dân truyền lại. Mọi người cùng thực hành để giữ gìn chúng."
+  },
+  {
+    "id": "phi-vat-the-3",
+    "topicId": "phi-vat-the",
+    "form": "post",
+    "domain": "application",
+    "question": "Muốn tìm hiểu lời hát được ông bà truyền lại, em nên làm gì?",
+    "options": [
+      "Lắng nghe, học đúng và tìm hiểu ý nghĩa",
+      "Đoán lời rồi khẳng định là nguyên bản",
+      "Bỏ qua người biết hát"
+    ],
+    "correctIndex": 0,
+    "explanation": "Em có thể tìm hiểu, học múa với người hướng dẫn và giới thiệu điệu múa một cách tôn trọng."
+  },
+  {
+    "id": "truyen-nghe-0",
+    "topicId": "truyen-nghe",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "Truyền nghề là gì?",
+    "options": [
+      "Người biết nghề dạy thế hệ sau thực hành",
+      "Chỉ bán sản phẩm cho khách",
+      "Chỉ cất sản phẩm trong hộp"
+    ],
+    "correctIndex": 0,
+    "explanation": "Truyền nghề là người biết nghề dạy người khác cách làm. Nhờ vậy, nghề được tiếp nối."
+  },
+  {
+    "id": "truyen-nghe-1",
+    "topicId": "truyen-nghe",
+    "form": "pre",
+    "domain": "application",
+    "question": "Giữ một chiếc chiếu nhưng không ai học dệt đã đủ tiếp nối nghề chưa?",
+    "options": [
+      "Chưa; cần người học và thực hành",
+      "Đã đủ vì không cần kỹ năng",
+      "Đã đủ vì nghề tự tồn tại"
+    ],
+    "correctIndex": 0,
+    "explanation": "Chưa đủ; cần có người học và thực hành kỹ năng dệt để nghề tiếp tục."
+  },
+  {
+    "id": "truyen-nghe-2",
+    "topicId": "truyen-nghe",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Việc nào thể hiện truyền nghề?",
+    "options": [
+      "Người thợ hướng dẫn người trẻ làm sản phẩm",
+      "Chỉ chụp ảnh sản phẩm",
+      "Chỉ đọc giá bán"
+    ],
+    "correctIndex": 0,
+    "explanation": "Truyền nghề là người biết nghề dạy người khác cách làm. Nhờ vậy, nghề được tiếp nối."
+  },
+  {
+    "id": "truyen-nghe-3",
+    "topicId": "truyen-nghe",
+    "form": "post",
+    "domain": "application",
+    "question": "Muốn nghề tiếp tục được làm trong làng, cần chú ý gì?",
+    "options": [
+      "Tiếp nối kỹ năng và kinh nghiệm người thợ",
+      "Chỉ giữ tên nghề trên biển hiệu",
+      "Không cần người thực hành"
+    ],
+    "correctIndex": 0,
+    "explanation": "Chưa đủ; cần có người học và thực hành kỹ năng dệt để nghề tiếp tục."
+  },
+  {
+    "id": "lua-0",
+    "topicId": "lua",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "Lụa tơ tằm được dệt từ gì?",
+    "options": [
+      "Sợi tơ lấy từ kén tằm",
+      "Cát biển",
+      "Đá nguyên khối"
+    ],
+    "correctIndex": 0,
+    "explanation": "Lụa tơ tằm được dệt từ sợi tơ lấy ở kén tằm. Người thợ cần nhiều công đoạn để làm thành tấm lụa."
+  },
+  {
+    "id": "lua-1",
+    "topicId": "lua",
+    "form": "pre",
+    "domain": "application",
+    "question": "Có kén tằm rồi đã có tấm lụa chưa?",
+    "options": [
+      "Chưa; còn lấy tơ và dệt",
+      "Có ngay vì kén là vải đã dệt",
+      "Không bao giờ lấy được tơ từ kén"
+    ],
+    "correctIndex": 0,
+    "explanation": "Chưa; cần lấy tơ, xử lý sợi và dệt thành tấm lụa."
+  },
+  {
+    "id": "lua-2",
+    "topicId": "lua",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Thứ nào là sản phẩm sau công đoạn dệt tơ?",
+    "options": [
+      "Tấm lụa",
+      "Kén nguyên chưa lấy tơ",
+      "Lá dâu dùng nuôi tằm"
+    ],
+    "correctIndex": 0,
+    "explanation": "Lụa tơ tằm được dệt từ sợi tơ lấy ở kén tằm. Người thợ cần nhiều công đoạn để làm thành tấm lụa."
+  },
+  {
+    "id": "lua-3",
+    "topicId": "lua",
+    "form": "post",
+    "domain": "application",
+    "question": "Bạn nhầm kén với tấm lụa. Em nên giải thích thế nào?",
+    "options": [
+      "Kén cung cấp tơ; tơ cần được dệt thành lụa",
+      "Kén và lụa là một vật ở cùng công đoạn",
+      "Lụa không cần qua công đoạn dệt"
+    ],
+    "correctIndex": 0,
+    "explanation": "Chưa; cần lấy tơ, xử lý sợi và dệt thành tấm lụa."
+  },
+  {
+    "id": "hao-0",
+    "topicId": "hao",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "Hào thành là gì?",
+    "options": [
+      "Rãnh sâu phía ngoài tường thành",
+      "Chính bức tường thành",
+      "Mái của một căn nhà"
+    ],
+    "correctIndex": 0,
+    "explanation": "Hào thành là rãnh sâu ở bên ngoài tường thành. Hào góp phần làm việc tiếp cận thành khó hơn."
+  },
+  {
+    "id": "hao-1",
+    "topicId": "hao",
+    "form": "pre",
+    "domain": "application",
+    "question": "Trên sơ đồ thành, nhãn hào nên đặt ở đâu?",
+    "options": [
+      "Rãnh phía ngoài tường thành",
+      "Trên mái nhà",
+      "Ở giữa một căn phòng"
+    ],
+    "correctIndex": 0,
+    "explanation": "Vẽ hào bên ngoài tường thành để thể hiện bộ phận góp phần phòng thủ."
+  },
+  {
+    "id": "hao-2",
+    "topicId": "hao",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Hào góp phần làm gì?",
+    "options": [
+      "Tạo chướng ngại cho việc tiếp cận thành",
+      "Thay mọi bộ phận của thành",
+      "Chỉ làm chỗ treo tranh"
+    ],
+    "correctIndex": 0,
+    "explanation": "Hào thành là rãnh sâu ở bên ngoài tường thành. Hào góp phần làm việc tiếp cận thành khó hơn."
+  },
+  {
+    "id": "hao-3",
+    "topicId": "hao",
+    "form": "post",
+    "domain": "application",
+    "question": "Bạn vẽ hào thành chính là tường. Em sửa ý nào?",
+    "options": [
+      "Tách rãnh hào phía ngoài khỏi phần tường",
+      "Xóa mọi đường rãnh và chỉ giữ tường",
+      "Đổi hào thành mái nhà"
+    ],
+    "correctIndex": 0,
+    "explanation": "Vẽ hào bên ngoài tường thành để thể hiện bộ phận góp phần phòng thủ."
+  },
+  {
+    "id": "ran-san-ho-0",
+    "topicId": "ran-san-ho",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "Rạn san hô có vai trò nào?",
+    "options": [
+      "Nơi sống, trú ẩn và kiếm ăn của nhiều sinh vật biển",
+      "Chỉ là đồ trang trí dưới nước",
+      "Không liên quan sinh vật biển"
+    ],
+    "correctIndex": 0,
+    "explanation": "Rạn san hô là nơi nhiều sinh vật biển trú ẩn, kiếm ăn và sinh sản. Giữ rạn san hô cũng giúp giữ nơi sống của chúng."
+  },
+  {
+    "id": "ran-san-ho-1",
+    "topicId": "ran-san-ho",
+    "form": "pre",
+    "domain": "application",
+    "question": "Rạn bị phá hủy có thể khiến cá nhỏ gặp điều gì?",
+    "options": [
+      "Mất nơi trú ẩn hoặc kiếm ăn",
+      "Chắc chắn có thêm mọi nơi sống",
+      "Không thể bị ảnh hưởng"
+    ],
+    "correctIndex": 0,
+    "explanation": "Chúng có thể mất nơi trú ẩn, kiếm ăn hoặc sinh sản."
+  },
+  {
+    "id": "ran-san-ho-2",
+    "topicId": "ran-san-ho",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Giữ rạn san hô còn giúp bảo vệ điều gì?",
+    "options": [
+      "Môi trường sống của nhiều loài",
+      "Chỉ màu của nước biển",
+      "Chỉ một vật không có sự sống"
+    ],
+    "correctIndex": 0,
+    "explanation": "Rạn san hô là nơi nhiều sinh vật biển trú ẩn, kiếm ăn và sinh sản. Giữ rạn san hô cũng giúp giữ nơi sống của chúng."
+  },
+  {
+    "id": "ran-san-ho-3",
+    "topicId": "ran-san-ho",
+    "form": "post",
+    "domain": "application",
+    "question": "Đi tham quan gần rạn, em nên chọn hành động nào?",
+    "options": [
+      "Không bẻ san hô và làm theo nội quy",
+      "Bẻ một nhánh làm kỷ niệm",
+      "Giẫm lên rạn để chụp ảnh"
+    ],
+    "correctIndex": 0,
+    "explanation": "Chúng có thể mất nơi trú ẩn, kiếm ăn hoặc sinh sản."
+  },
+  {
+    "id": "54-dan-toc-0",
+    "topicId": "54-dan-toc",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "Việt Nam có bao nhiêu dân tộc?",
+    "options": [
+      "54",
+      "53",
+      "Chỉ có một"
+    ],
+    "correctIndex": 0,
+    "explanation": "Việt Nam có 54 dân tộc. Các dân tộc cùng góp phần làm nên văn hóa đa dạng của đất nước."
+  },
+  {
+    "id": "54-dan-toc-1",
+    "topicId": "54-dan-toc",
+    "form": "pre",
+    "domain": "application",
+    "question": "Gặp một nét văn hóa khác, em nên làm gì?",
+    "options": [
+      "Tìm hiểu với thái độ tôn trọng",
+      "Xếp văn hóa khác là thấp kém",
+      "Chỉ coi trọng cộng đồng đông người"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tôn trọng, lắng nghe và không đánh giá hơn kém chỉ vì khác biệt."
+  },
+  {
+    "id": "54-dan-toc-2",
+    "topicId": "54-dan-toc",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Đa số và thiểu số nói về điều gì trong bài học này?",
+    "options": [
+      "Quy mô dân số",
+      "Giá trị hơn kém của dân tộc",
+      "Khả năng của từng cá nhân"
+    ],
+    "correctIndex": 0,
+    "explanation": "Việt Nam có 54 dân tộc. Các dân tộc cùng góp phần làm nên văn hóa đa dạng của đất nước."
+  },
+  {
+    "id": "54-dan-toc-3",
+    "topicId": "54-dan-toc",
+    "form": "post",
+    "domain": "application",
+    "question": "Bạn nói dân tộc đông người có giá trị cao hơn. Em chọn ý nào?",
+    "options": [
+      "Số dân không xếp hơn kém giá trị các cộng đồng",
+      "Bạn đúng vì số dân quyết định mọi giá trị",
+      "Không cần tôn trọng nhóm ít người"
+    ],
+    "correctIndex": 0,
+    "explanation": "Tôn trọng, lắng nghe và không đánh giá hơn kém chỉ vì khác biệt."
+  },
+  {
+    "id": "hoi-an-on-tap-0",
+    "topicId": "hoi-an-on-tap",
+    "form": "pre",
+    "domain": "understanding",
+    "question": "Đô thị cổ Hội An được UNESCO ghi danh năm nào?",
+    "options": [
+      "1999",
+      "2009",
+      "2022"
+    ],
+    "correctIndex": 0,
+    "explanation": "Hội An là đô thị cổ có nhiều giá trị văn hóa. Đô thị cổ Hội An được UNESCO ghi danh Di sản thế giới năm 1999."
+  },
+  {
+    "id": "hoi-an-on-tap-1",
+    "topicId": "hoi-an-on-tap",
+    "form": "pre",
+    "domain": "application",
+    "question": "Khi tham quan phố cổ, việc nào giúp gìn giữ di sản?",
+    "options": [
+      "Giữ vệ sinh và thực hiện nội quy",
+      "Viết tên lên tường nhà cổ",
+      "Lấy một chi tiết công trình làm kỷ niệm"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thực hiện nội quy, giữ vệ sinh, không viết vẽ hay làm hỏng công trình và tôn trọng người dân."
+  },
+  {
+    "id": "hoi-an-on-tap-2",
+    "topicId": "hoi-an-on-tap",
+    "form": "post",
+    "domain": "understanding",
+    "question": "Mốc 1999 trong bài nói về điều gì?",
+    "options": [
+      "Đô thị cổ Hội An được ghi danh Di sản thế giới",
+      "Khu sinh quyển Cù Lao Chàm–Hội An được ghi nhận",
+      "Ma nhai Ngũ Hành Sơn được ghi danh cấp khu vực"
+    ],
+    "correctIndex": 0,
+    "explanation": "Hội An là đô thị cổ có nhiều giá trị văn hóa. Đô thị cổ Hội An được UNESCO ghi danh Di sản thế giới năm 1999."
+  },
+  {
+    "id": "hoi-an-on-tap-3",
+    "topicId": "hoi-an-on-tap",
+    "form": "post",
+    "domain": "application",
+    "question": "Muốn giới thiệu Hội An có căn cứ, em nên làm gì?",
+    "options": [
+      "Quan sát và đối chiếu thông tin về công trình, văn hóa",
+      "Tự thêm năm tháng chưa kiểm chứng",
+      "Chỉ đoán từ một bức ảnh"
+    ],
+    "correctIndex": 0,
+    "explanation": "Thực hiện nội quy, giữ vệ sinh, không viết vẽ hay làm hỏng công trình và tôn trọng người dân."
+  }
+]

@@ -148,9 +148,9 @@ test('conversation gives a real example and retains the topic across three turns
  const first=ask('San hô là gì?');
  assert.ok(first.found);assert.ok(first.topic);
  const second=ask('Nói dễ hiểu hơn',{previousQuery:'San hô là gì?',previousTopic:first.topic});
- assert.ok(second.found);assert.equal(second.answer,knowledge.find(c=>c.id==='san-ho')!.teachingExample);
+ assert.ok(second.found);assert.match(second.answer,/San hô là động vật/);assert.doesNotMatch(second.answer,/Cho học sinh/);
  const third=ask('Cho ví dụ',{previousQuery:'Nói dễ hiểu hơn',previousTopic:second.topic});
- assert.ok(third.found);assert.equal(third.topic,first.topic);assert.equal(third.answer,second.answer);
+ assert.ok(third.found);assert.equal(third.topic,first.topic);assert.match(third.answer,/Ví dụ:/);assert.doesNotMatch(third.answer,/Cho học sinh/);
  assert.equal(ask('Nói dễ hiểu hơn').found,false);
 });
 test('explicit new subject overrides conversation, while unsupported facts remain unknown',()=>{
@@ -160,7 +160,7 @@ test('explicit new subject overrides conversation, while unsupported facts remai
  assert.equal(ask('Nó có giá bao nhiêu?',ctx).found,false);
  assert.equal(ask('Nó được UNESCO công nhận năm nào?',ctx).found,false);
  const direct=ask('Cho ví dụ về ngưng tụ');
- assert.ok(direct.found);assert.equal(direct.answer,knowledge.find(c=>c.id==='ngung-tu')!.teachingExample);
+ assert.ok(direct.found);assert.match(direct.answer,/Ví dụ:/);assert.match(direct.answer,/cốc lạnh/);
 });
 test('multiple questions retain both requested facts rather than returning only a keyword match',()=>{
  const r=ask('Đà Nẵng có làng nghề gì? Trốn tìm có phải trò chơi dân gian không?');
@@ -182,3 +182,4 @@ test('comparison presents both sourced concepts and keeps challenge protection',
    assert.equal(r.found,false);assert.doesNotMatch(r.answer,/2009|Cù Lao Chàm/);
   }
  });
+

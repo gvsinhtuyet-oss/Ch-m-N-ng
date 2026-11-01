@@ -2,6 +2,9 @@ import {audioService} from '../../services/AudioService';
 import {constrainAssistantPosition, type AssistantPosition} from '../../utils/assistantPosition';
 import React, { useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
 import { Bot, MapPin, MessageCircle, Send, Sparkles, X } from 'lucide-react';
+import {detectLearningTask,type PracticeQuestion,type LearningTask} from '../../services/AssistantLearningEngine';
+import {AssistantPracticeCard} from './AssistantPracticeCard';
+const EffectivenessPanel = lazy(() => import('./AssistantEffectivenessPanel'));
 import { gddpService, type GddpCatalog } from '../../services/GddpService';
 import { bundledGddpCatalog } from '../../services/GddpBundledCatalog';
 import { searchTeacherLessons, type TeacherLessonHit } from '../../services/TeacherLessonSearch';
@@ -28,6 +31,7 @@ interface Props {
   docked?: boolean;
   audience?: 'student' | 'teacher';
   stage?: number;
+  storageScope?: string;
   currentGrade?: number;
   onOpenTeacherStation?: (station: Station) => void;
 }
@@ -41,6 +45,9 @@ interface ChatMessage {
   teachingExample?: string;
   followUp?: string;
   ai?: boolean;
+  task?: LearningTask;
+  practice?: PracticeQuestion;
+  pendingTask?: LearningTask;
   topic?: string;
   lessons?: TeacherLessonHit[];
   lessonCatalog?: GddpCatalog;
@@ -65,7 +72,7 @@ const SimpleBold: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation }) => {
+export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '' }) => {
   const isTeacher = audience === 'teacher';
   const welcome = isTeacher ? 'Thầy cô nhập tên bài để mở học liệu ngay, hoặc hỏi các nội dung tích hợp theo lớp, môn và chủ đề. Ví dụ: “Mở bài Em yêu quê hương lớp 2”, “Tìm bài tích hợp về Hội An”. Tôi cũng hỗ trợ tra cứu kiến thức địa phương có nguồn.' : WELCOME;
   const [open, setOpen] = useState(false);
@@ -76,6 +83,8 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     return()=>window.removeEventListener('cham-open-assistant',openFromLesson);
   },[]);
   const [input, setInput] = useState('');
+  const [measurementOpen,setMeasurementOpen]=useState(false);
+  const [measurementMounted,setMeasurementMounted]=useState(false);
   const [lessonPanel, setLessonPanel] = useState<{recordId: string; catalog: GddpCatalog; source: string} | null>(null);
   const [lookupBusy, setLookupBusy] = useState(false);
   const lookupLock = useRef(false);
@@ -178,8 +187,12 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     if (open) endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [messages, open]);
 
-  const context = useMemo(() => ({ station, hotspot, stations: ALL_25_STATIONS, audience, stage }), [station, hotspot, audience, stage]);
-  const quickPrompts = useMemo(() => isTeacher && !station ? ['Mở bài Em yêu quê hương lớp 2', 'Tìm bài tích hợp về Hội An', 'Tìm bài lớp 3 môn TNXH'] : getDanangAssistantQuickPrompts(context), [context, isTeacher, station]);
+  const context = useMemo(() => ({ station, hotspot, stations: ALL_25_STATIONS, audience, stage, grade:currentGrade || station?.grade }), [station, hotspot, audience, stage, currentGrade]);
+  const quickPrompts = useMemo(() => {
+    if(!isTeacher&&stage===2)return getDanangAssistantQuickPrompts(context);
+    if(isTeacher)return station?['Tạo 3 câu hỏi kèm đáp án về bài đang học','Gợi ý hoạt động 5 phút về bài đang học',...getDanangAssistantQuickPrompts(context).slice(0,1)]:['Mở bài Em yêu quê hương lớp 2','Tìm bài tích hợp về Hội An','Tạo 3 câu hỏi về Hội An kèm đáp án','Gợi ý hoạt động 5 phút về bảo vệ san hô'];
+    return ['Hỏi em một câu để kiểm tra','Nói dễ hiểu hơn',...getDanangAssistantQuickPrompts(context).slice(0,2)];
+  },[context,isTeacher,station,stage]);
 
   const append = (message: ChatMessage) => {
     setMessages(current => [...current, message].slice(-MAX_VISIBLE_MESSAGES));
@@ -192,7 +205,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     const epoch=chatEpoch.current;
     append({ id: `q-${Date.now()}`, role: 'student', text: question });
     try {
-      if (isTeacher) {
+      if (isTeacher && detectLearningTask(question)==='knowledge') {
         lookupLock.current = true;
         setLookupBusy(true);
         const {catalog, source} = await loadLessonCatalog();
@@ -204,7 +217,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
           return;
         }
       }
-      const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text, previousTopic:messages.filter(message=>message.role==='assistant').at(-1)?.topic });
+      const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text, previousTopic:messages.filter(message=>message.role==='assistant').at(-1)?.topic, previousAnswer:messages.filter(message=>message.role==='assistant'&&!message.ai).at(-1)?.text, pendingTask:messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask });
       if(!result.found && aiAvailable && isTeacher){
         void requestAi(question,result.answer);
         setInput('');
@@ -215,7 +228,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         role: 'assistant',
         text: result.answer,
         relatedStationTitle: result.relatedStationTitle,
-        topic:result.topic, sources: result.sources, teachingExample: result.teachingExample, followUp: result.followUp,
+        task:result.task,practice:result.practice,pendingTask:result.pendingTask,topic:result.topic, sources: result.sources, teachingExample: result.teachingExample, followUp: result.followUp,
       });
     } catch {
       append({ id: `error-${Date.now()}`, role: 'assistant', text: 'Mình chưa đọc được nội dung này. Bạn thử hỏi lại hoặc chọn một câu hỏi gợi ý nhé!' });
@@ -312,6 +325,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         <span id="assistant-drag-hint" className="sr-only">Giữ và kéo biểu tượng để tránh che nội dung.</span>
       </div>
 
+      {measurementMounted && <Suspense fallback={null}><EffectivenessPanel key={storageScope} open={measurementOpen} audience={audience} grade={currentGrade || station?.grade || 2} scope={storageScope} initialTopic={messages.filter(message=>message.role==='assistant').at(-1)?.topic} onClose={()=>{setMeasurementOpen(false);setOpen(true);}} /></Suspense>}
       {isTeacher && lessonPanel && <Suspense fallback={<div role="status" className="fixed inset-4 z-[70] rounded-2xl bg-white p-6 shadow-xl">Đang mở bài học…</div>}>
         <TeacherLessonPanel catalog={lessonPanel.catalog} recordId={lessonPanel.recordId} source={lessonPanel.source} stations={ALL_25_STATIONS} onClose={() => {setLessonPanel(null);setOpen(true);}} onOpenStation={station => {setLessonPanel(null);onOpenTeacherStation?.(station);}} />
       </Suspense>}
@@ -392,9 +406,11 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                       </article>)}
                       <p className="text-[11px] text-slate-600">{message.catalogSource}</p>
                     </div>}
+                    {message.practice && <AssistantPracticeCard practice={message.practice} />}
+                    {isTeacher && (message.task==='questions'||message.task==='activity') && <p className="mt-2 text-[11px] text-slate-500">Gợi ý biên soạn từ học liệu; thầy cô điều chỉnh trước khi sử dụng.</p>}
                     {message.ai && <p className="mt-2 text-[11px] text-amber-800">AI tham khảo — thầy cô cần đối chiếu trước khi sử dụng để giảng dạy.</p>}
                     {message.teachingExample && <p className="mt-2 border-t border-sky-100 pt-2"><strong>Gợi ý giảng dễ hiểu: </strong>{message.teachingExample}</p>}
-                    {message.followUp && <p className="mt-2"><strong>Hỏi thêm học sinh: </strong>{message.followUp}</p>}
+                    {message.followUp && <p className="mt-2"><strong>{isTeacher?'Hỏi thêm học sinh: ':'Em thử nghĩ thêm: '}</strong>{message.followUp}</p>}
                     {message.sources?.map(source => <p key={source.label} className="mt-2 text-[11px] leading-4 text-sky-800">{source.url ? <a href={source.url} target="_blank" rel="noopener noreferrer" className="underline">Nguồn: {source.label}</a> : source.label}</p>)}
                     {message.role === 'assistant' && message.relatedStationTitle && (
                       <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-bold text-amber-800 ring-1 ring-amber-200">
@@ -435,6 +451,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             }}
             className="shrink-0 border-t border-slate-100 bg-white p-3"
           >
+            {(isTeacher||stage!==2)&&storageScope&&<button type="button" className="mb-2 min-h-11 w-full rounded-xl border border-sky-200 bg-sky-50 px-3 py-2 text-xs font-bold text-sky-900" onClick={()=>{setMeasurementMounted(true);setMeasurementOpen(true);setOpen(false);}}>{isTeacher?'Ghi nhận thời gian chuẩn bị':'Kiểm tra trước–sau'}</button>}
             <div className="flex items-end gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-2 focus-within:border-sky-400 focus-within:ring-2 focus-within:ring-sky-100">
               <textarea
                 value={input}
@@ -471,4 +488,5 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 };
 
 export default DanangAssistantChat;
+
 

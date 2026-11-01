@@ -735,5 +735,52 @@
       "url": "https://thongkeketnoi.nso.gov.vn/bai-viet/quy-mo-dan-so-viet-nam-nhung-phat-hien-chinh-legacy-n-14512"
     },
     "reviewedOn": "2026-10-30"
+  },
+  {
+    "id": "hoi-an-on-tap",
+    "term": "Hội An",
+    "aliases": [
+      "phố cổ Hội An",
+      "đô thị cổ Hội An"
+    ],
+    "answer": "Đô thị cổ Hội An lưu giữ nhiều giá trị kiến trúc và văn hóa. UNESCO ghi danh Đô thị cổ Hội An là Di sản thế giới năm 1999.",
+    "teachingExample": "Cho học sinh quan sát ảnh nhà cổ, đường phố và sinh hoạt văn hóa rồi nêu một chi tiết có căn cứ.",
+    "followUp": "Khi tham quan Hội An, em có thể làm gì để gìn giữ di sản?",
+    "source": {
+      "label": "UNESCO – Đô thị cổ Hội An",
+      "url": "https://whc.unesco.org/en/list/948/"
+    },
+    "reviewedOn": "2026-11-01"
+  },
+  {
+    "id": "lang-nghe-on-tap",
+    "term": "làng nghề",
+    "aliases": [
+      "làng nghề truyền thống",
+      "nghề truyền thống"
+    ],
+    "answer": "Làng nghề là nơi có nhiều hộ cùng làm một hoặc một số nghề. Làng nghề truyền thống gìn giữ kỹ năng và kinh nghiệm được trao truyền qua nhiều thế hệ.",
+    "teachingExample": "Đối chiếu sản phẩm chiếu Cẩm Nê và nước mắm Nam Ô với nguyên liệu, công đoạn và kỹ năng của người thợ.",
+    "followUp": "Vì sao chỉ giữ sản phẩm mà không có người học nghề thì chưa đủ?",
+    "source": {
+      "label": "Cổng thông tin Đà Nẵng – Làng nghề",
+      "url": "https://cttdt.danangportal.gov.vn/vi/web/dng/lang-nghe"
+    },
+    "reviewedOn": "2026-11-01"
+  },
+  {
+    "id": "tro-choi-on-tap",
+    "term": "trò chơi dân gian",
+    "aliases": [
+      "trò dân gian"
+    ],
+    "answer": "Trò chơi dân gian là những trò chơi được cộng đồng lưu truyền qua nhiều thế hệ. Trốn tìm là một ví dụ; các bạn cần thống nhất luật và phạm vi chơi an toàn.",
+    "teachingExample": "Mời học sinh nêu luật trò trốn tìm, chia lượt và khoanh vùng chơi an toàn.",
+    "followUp": "Luật chơi nào giúp các bạn tham gia an toàn và công bằng?",
+    "source": {
+      "label": "Trường Mầm non Bồ Đề – Trò chơi dân gian: Trốn tìm",
+      "url": "https://mnbode.hanoi.edu.vn/tro-choi-cho-be/tro-choi-dan-gian-tron-tim/ctmb/9344/637577"
+    },
+    "reviewedOn": "2026-11-01"
   }
 ]

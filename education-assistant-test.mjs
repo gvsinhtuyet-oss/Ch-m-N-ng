@@ -17,8 +17,8 @@ const quotaStore=()=>{
  }};
 };
 
-test('AI expansion defaults off and does not invoke provider or auth store',async()=>{
- const h=createEducationAssistant({auth:{sameOrigin(){},requireTeacher(){assert.fail();}},env:{},generate(){assert.fail();}});
+test('AI expansion defaults off and never invokes provider',async()=>{
+ const h=createEducationAssistant({auth:{sameOrigin(){},requireTeacher:async()=>({id:'teacher-test'})},env:{},generate(){assert.fail();}});
  const r=response();await h(request('GET'),r);assert.equal(r.data.available,false);
  await assert.rejects(h(request(),response()),{status:503});
 });

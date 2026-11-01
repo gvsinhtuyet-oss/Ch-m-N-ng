@@ -15,6 +15,8 @@ Chưa có dữ liệu thử nghiệm lớp học. Kết quả kiểm tra mã và
 | Xin 5 câu trắc nghiệm khi ngân hàng có 4 | Chỉ xuất 4 mà không giải thích | Xuất đủ 5 câu tự luận và nêu rõ chưa đủ bộ trắc nghiệm |
 | Xin 10 câu hoặc hoạt động 2 phút | Âm thầm đổi số lượng hoặc thời lượng | Nêu giới hạn 1–5 câu, 3–20 phút và yêu cầu chọn lại |
 | Viết lại 4 câu | Có thể lặp ví dụ để đủ câu | Dùng các câu có căn cứ, loại trùng; báo rõ nếu thiếu ý |
+| Khẳng định sai về năm UNESCO ghi danh Hội An | Có dữ kiện 1999 nhưng chưa sửa trực tiếp mốc năm sai | Đối chiếu mốc năm với dữ kiện UNESCO; dẫn đúng nguồn |
+| Nguồn về tẩy trắng san hô | Dẫn trang phân loại san hô | Dẫn riêng trang NOAA về tẩy trắng và khả năng phục hồi |
 | Luyện một câu nhiều lần | Lặp một câu từ ngân hàng đo trước–sau | Ba lượt nhớ ý chính, ví dụ, vận dụng; có gợi ý, tự đối chiếu, tự phản hồi và câu tiếp theo |
 | Hỏi “bài đang học” sau khi trò chuyện chủ đề khác | Có thể ưu tiên chủ đề trước | Ưu tiên bài đang mở; nếu chưa định danh được thì dùng học liệu trạm |
 | Đổi lớp hoặc tài khoản | Ngữ cảnh chat có thể còn từ lượt trước | Khởi tạo lại hội thoại và bộ đếm luyện tập |

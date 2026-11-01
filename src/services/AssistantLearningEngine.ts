@@ -84,6 +84,19 @@ function misconception(query:string,context:LearningContext):LearningResult|null
     ['boc-hoi',/\b(?:boc hoi|vung nuoc kho|nuoc kho)\b/,/\b(?:bien mat|mat han|khong con ton tai)\b/,'Khi bốc hơi, nước chuyển từ dạng lỏng sang hơi nước đi vào không khí, không biến mất hoàn toàn.'],
     ['khi-hau',/\bkhi hau\b/,/\b(?:mot ngay|hom nay|mot buoi)\b.*\b(?:du|ket luan|quyet dinh)\b/,'Một ngày nắng hoặc mưa chưa đủ để kết luận khí hậu. Khí hậu được nhận biết từ đặc điểm thời tiết qua nhiều năm.'],
   ];
+  if(/\bhoi an\b/.test(q)&&/\b(?:unesco|di san the gioi)\b/.test(q)&&/\b(?:ghi danh|cong nhan)\b/.test(q)){
+    const years=[...q.matchAll(/\bnam (\d{4})\b/g)];
+    if(years.length===1&&/^(?:(?:do thi co|pho co) )?hoi an (?:co phai )?(?:(?:khong|chua) )?(?:duoc )?(?:unesco )?(?:ghi danh|cong nhan) (?:la )?(?:di san (?:van hoa )?the gioi )?nam \d{4}(?: (?:dung khong|phai khong|khong))?$/.test(q)){
+      const card=knowledge.find(item=>item.id==='hoi-an-on-tap')!;
+      const negative=/\b(?:khong|chua) (?:duoc )?(?:unesco )?(?:ghi danh|cong nhan)\b/.test(q);
+      const correct=(Number(years[0][1])===1999)!==negative;
+      return result(query,(correct?'Đúng rồi. ':'Cần sửa lại ý này: ')+learningExplanation(card.id,grade),card);
+    }
+  }
+  if(/\bsan ho\b/.test(q)&&/\b(?:song|o) tren can\b/.test(q)){
+    const card=knowledge.find(item=>item.id==='san-ho')!;
+    return result(query,'San hô là động vật sống ở biển. Không thể kết luận san hô sống trên cạn từ việc hình dáng giống cành cây.',card);
+  }
   if(/\bhay\b/.test(q))return null;
   if(/^san ho (?:co phai la |co phai |la |thuoc nhom |khong phai la |khong phai |chang phai la )?(?:dong vat|thuc vat|cay)(?: (?:dung khong|phai khong|khong|ko))?$/.test(q)){
     const card=knowledge.find(item=>item.id==='san-ho')!;

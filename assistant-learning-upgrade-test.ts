@@ -26,7 +26,7 @@ test('false and true coral premises are answered directly with source; unsupport
   const result=handleLearningRequest(query,{audience:'student',grade:1});assert.ok(result);assert.match(result.answer,/động vật/);assert.match(result.answer,/sửa/);assert.ok(result.sources?.[0].url?.includes('noaa.gov'));
  }
  for(const query of ['San hô là động vật đúng không?','San hô không phải thực vật đúng không?'])assert.match(handleLearningRequest(query,{grade:2})!.answer,/Đúng rồi/);
- assert.equal(handleLearningRequest('San hô là động vật sống trên cạn đúng không?',{grade:3}),null);
+ assert.match(handleLearningRequest('San hô là động vật sống trên cạn đúng không?',{grade:3})!.answer,/sống ở biển/);
  const older=handleLearningRequest('San hô là thực vật đúng không?',{grade:5})!;assert.match(older.answer,/polyp/);
 });
 test('requested tasks preserve intent, duration, count, source and current-topic follow-ups',()=>{
@@ -116,4 +116,12 @@ test('practice cycles through recall, example and application separately from me
  const first=handleLearningRequest('Hỏi em một câu về san hô',{practiceIndex:0})!;
  const fourth=handleLearningRequest('Hỏi em một câu về san hô',{practiceIndex:3})!;
  assert.equal(first.practice?.question,fourth.practice?.question);
+});
+
+test('corrects the known UNESCO date and provides a claim-specific bleaching source',()=>{
+ for(const year of [1998,2000,2020]){const r=handleLearningRequest(`Hội An được UNESCO công nhận năm ${year} đúng không?`)!;assert.match(r.answer,/sửa/);assert.match(r.answer,/1999/);assert.ok(r.sources?.[0].url?.includes('unesco.org'));}
+ assert.match(handleLearningRequest('Hội An được UNESCO công nhận năm 1999 đúng không?')!.answer,/Đúng rồi/);
+ assert.match(handleLearningRequest('Hội An không được UNESCO công nhận năm 1999 đúng không?')!.answer,/sửa/);
+ assert.equal(handleLearningRequest('Hội An được UNESCO công nhận năm 1999 và nằm ở Hà Nội đúng không?'),null);
+ const r=handleLearningRequest('San hô tẩy trắng là đã chết đúng không?')!;assert.match(r.answer,/chưa nhất thiết/);assert.ok(r.sources?.[0].url?.includes('coral_bleach.html'));
 });

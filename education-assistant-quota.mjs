@@ -33,9 +33,9 @@ export async function reserveAssistantQuota({store,teacherId,now=Date.now,limits
  // We never refund slots on error: conservative accounting prevents retry bursts.
  await takeSlot(store,'cham_ai_teacher_day',teacherPrefix,teacherDaily,current+3*86400000,
    'Giáo viên đã đạt giới hạn 5 lượt AI trong ngày (UTC).');
- await takeSlot(store,'cham_ai_shared_day',day,sharedDaily,current+3*86400000,
-   'Hệ thống đã đạt hạn mức AI dùng chung trong ngày.');
  await takeSlot(store,'cham_ai_shared_minute',String(minute),sharedMinute,current+3*86400000,
    'Hệ thống đang giới hạn yêu cầu AI mỗi phút.');
+ await takeSlot(store,'cham_ai_shared_day',day,sharedDaily,current+3*86400000,
+   'Hệ thống đã đạt hạn mức AI dùng chung trong ngày.');
  return {day,teacherDailyLimit:teacherDaily,sharedDailyLimit:sharedDaily,sharedMinuteLimit:sharedMinute};
 }

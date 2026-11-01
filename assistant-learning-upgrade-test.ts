@@ -78,3 +78,42 @@ test('effectiveness records are actual completed observations, scoped per accoun
  const csv=effectivenessCSV([student,teacher]);assert.doesNotMatch(csv,/student:A|teacher:A|ho ten|cau tra loi/i);assert.match(csv,/90/);
  const rejected={getItem:()=>null,setItem:()=>{throw Error('quota');}};assert.throws(()=>saveEffectiveness(rejected,'A',student),/quota/);
 });
+
+test('a new request cancels pending clarification without inheriting stale subjects',()=>{
+ const pending={audience:'teacher' as const,grade:2,previousTopic:'Hội An',previousQuery:'So sánh thời tiết và khí hậu',pendingTask:'comparison' as const};
+ for(const [query,task] of [['Tạo 3 câu hỏi về san hô','questions'],['Đố em một câu về san hô','practice'],['Hãy đặt 3 câu hỏi về san hô','questions'],['Viết lại san hô bằng 2 câu','rewrite'],['Thiết kế hoạt động 5 phút về san hô','activity']] as const){
+   const answer=handleLearningRequest(query,pending)!;assert.equal(answer.task,task,query);assert.equal(answer.topic,'san hô',query);assert.doesNotMatch(answer.answer,/Hội An|Thời tiết/);
+ }
+ assert.match(handleLearningRequest('San hô không phải là thực vật đúng không?',pending)!.answer,/Đúng rồi/);
+ const first=handleLearningRequest('Tạo 2 câu hỏi')!;
+ const resumed=handleLearningRequest('san hô',{pendingTask:first.pendingTask,previousQuery:'Tạo 2 câu hỏi'})!;
+ assert.equal((resumed.answer.match(/\*\*Câu \d/g)||[]).length,2);
+});
+test('question counts are exact or limitations are explicit, including Vietnamese counts',()=>{
+ for(const token of ['1','2','3','4','5','hai','ba','bốn','năm']){
+  const expected=({hai:2,ba:3,'bốn':4,'năm':5} as Record<string,number>)[token]||Number(token);
+  for(const kind of ['câu hỏi','câu hỏi trắc nghiệm']){
+   const answer=handleLearningRequest(`Tạo ${token} ${kind} về san hô`,{audience:'teacher'})!;
+   assert.equal((answer.answer.match(/\*\*Câu \d/g)||[]).length,expected,token+kind);
+  }
+ }
+ for(const n of [0,6,10,100]){const r=handleLearningRequest(`Tạo ${n} câu hỏi về san hô`)!;assert.equal(r.confidence,'low');assert.match(r.answer,/1 đến 5/);}
+ for(const n of [1,2,21,60])assert.match(handleLearningRequest(`Thiết kế hoạt động ${n} phút về san hô`)!.answer,/3 đến 20/);
+ const rewritten=handleLearningRequest('Viết lại san hô bằng 4 câu',{grade:1})!.answer;
+ const sentences=rewritten.split(/(?<=[.!?])\s+/);assert.equal(new Set(sentences).size,sentences.length);
+});
+test('practice cycles through recall, example and application separately from measurement items',()=>{
+ for(const card of knowledge){
+  const seen=new Set<string>();
+  for(let index=0;index<3;index++){
+   const r=handleLearningRequest(`Đố em một câu về ${card.term}`,{grade:2,practiceIndex:index})!;
+   assert.ok(r.practice?.hint,card.id);assert.equal(r.practice.sequence,index);seen.add(r.practice.question);
+   assert.ok(!learningAssessmentBank.some(item=>item.question===r.practice!.question),card.id);
+   assert.doesNotMatch(r.answer,/Đáp án/);
+  }
+  assert.equal(seen.size,3,card.id);
+ }
+ const first=handleLearningRequest('Hỏi em một câu về san hô',{practiceIndex:0})!;
+ const fourth=handleLearningRequest('Hỏi em một câu về san hô',{practiceIndex:3})!;
+ assert.equal(first.practice?.question,fourth.practice?.question);
+});

@@ -83,6 +83,9 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     return()=>window.removeEventListener('cham-open-assistant',openFromLesson);
   },[]);
   const [input, setInput] = useState('');
+  const [copiedMessage,setCopiedMessage]=useState('');
+  const [copyError,setCopyError]=useState('');
+  const practiceCounts=useRef<Record<string,number>>({});
   const [measurementOpen,setMeasurementOpen]=useState(false);
   const [measurementMounted,setMeasurementMounted]=useState(false);
   const [lessonPanel, setLessonPanel] = useState<{recordId: string; catalog: GddpCatalog; source: string} | null>(null);
@@ -178,10 +181,11 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     lookupLock.current=false;
     setLookupBusy(false);
     setLessonPanel(null);
+    practiceCounts.current={};
     setMessages([{ id: 'welcome', role: 'assistant', text: welcome }]);
     setInput('');
     return()=>{chatEpoch.current++;};
-  }, [station?.id, welcome]);
+  }, [station?.id, welcome, storageScope, currentGrade]);
 
   useEffect(() => {
     if (open) endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -198,14 +202,28 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     setMessages(current => [...current, message].slice(-MAX_VISIBLE_MESSAGES));
   };
 
-  const ask = async (rawQuestion: string) => {
+  const copyAnswer=async(message:ChatMessage)=>{
+    try {
+      const sources=(message.sources||[]).map(source=>'Nguồn: '+source.label+(source.url?' — '+source.url:''));
+      await navigator.clipboard.writeText([message.text,...sources].join('\n\n'));
+      setCopiedMessage(message.id);setCopyError('');
+    } catch {setCopyError('Chưa sao chép được. Thầy cô có thể chọn nội dung câu trả lời để sao chép.');}
+  };
+  const resetConversation=()=>{
+    if(aiLock.current||lookupLock.current)return;
+    practiceCounts.current={};setCopiedMessage('');setCopyError('');setInput('');
+    setMessages([{id:'welcome',role:'assistant',text:welcome}]);
+  };
+
+  const ask = async (rawQuestion: string, practiceTopic?: string) => {
     const question = rawQuestion.trim();
     if (!question || aiLock.current || lookupLock.current) return;
 
     const epoch=chatEpoch.current;
     append({ id: `q-${Date.now()}`, role: 'student', text: question });
     try {
-      if (isTeacher && detectLearningTask(question)==='knowledge') {
+      const pending=messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask;
+      if (isTeacher && detectLearningTask(question)==='knowledge'&&(!pending||/^(?:mở|tìm|tra cứu|mo|tim)\b/i.test(question))) {
         lookupLock.current = true;
         setLookupBusy(true);
         const {catalog, source} = await loadLessonCatalog();
@@ -217,7 +235,8 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
           return;
         }
       }
-      const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text, previousTopic:messages.filter(message=>message.role==='assistant').at(-1)?.topic, previousAnswer:messages.filter(message=>message.role==='assistant'&&!message.ai).at(-1)?.text, pendingTask:messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask });
+      const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text, previousTopic:messages.filter(message=>message.role==='assistant').at(-1)?.topic, previousAnswer:messages.filter(message=>message.role==='assistant'&&!message.ai).at(-1)?.text, pendingTask:messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask, practiceIndex:practiceCounts.current[practiceTopic || messages.filter(message=>message.role==='assistant').at(-1)?.topic || ''] || 0 });
+      if(result.practice)practiceCounts.current[result.topic || '']=(result.practice.sequence??0)+1;
       if(!result.found && aiAvailable && isTeacher){
         void requestAi(question,result.answer);
         setInput('');
@@ -373,6 +392,10 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             )}
           </header>
 
+          <div className="flex shrink-0 items-center justify-between gap-2 border-b border-sky-100 px-3 py-1 text-[11px] text-sky-900">
+            <span>{currentGrade||station?.grade?`Đang hỗ trợ lớp ${currentGrade||station?.grade}`:'Có thể nêu lớp trong câu hỏi'}</span>
+            <button type="button" disabled={aiBusy||lookupBusy} onClick={resetConversation} className="min-h-11 rounded-lg px-2 font-bold hover:bg-sky-50 disabled:opacity-40">Cuộc trò chuyện mới</button>
+          </div>
           <div className="min-h-0 flex-1 overflow-y-auto bg-gradient-to-b from-sky-50/70 to-white px-3 py-4">
             <div className="space-y-3">
               {messages.map(message => (
@@ -406,8 +429,9 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                       </article>)}
                       <p className="text-[11px] text-slate-600">{message.catalogSource}</p>
                     </div>}
-                    {message.practice && <AssistantPracticeCard practice={message.practice} />}
+                    {message.practice && <AssistantPracticeCard practice={message.practice} onNext={()=>void ask(`Hỏi em câu tiếp theo về ${message.practice!.topic}`,message.practice!.topic)} />}
                     {isTeacher && (message.task==='questions'||message.task==='activity') && <p className="mt-2 text-[11px] text-slate-500">Gợi ý biên soạn từ học liệu; thầy cô điều chỉnh trước khi sử dụng.</p>}
+                    {isTeacher&&message.role==='assistant'&&message.id!=='welcome'&&!message.lessons&&<button type="button" onClick={()=>void copyAnswer(message)} className="mt-2 min-h-11 rounded-lg border border-sky-200 px-3 py-2 text-xs font-bold text-sky-800">{copiedMessage===message.id?'Đã sao chép nội dung và nguồn':'Sao chép kèm nguồn'}</button>}
                     {message.ai && <p className="mt-2 text-[11px] text-amber-800">AI tham khảo — thầy cô cần đối chiếu trước khi sử dụng để giảng dạy.</p>}
                     {message.teachingExample && <p className="mt-2 border-t border-sky-100 pt-2"><strong>Gợi ý giảng dễ hiểu: </strong>{message.teachingExample}</p>}
                     {message.followUp && <p className="mt-2"><strong>{isTeacher?'Hỏi thêm học sinh: ':'Em thử nghĩ thêm: '}</strong>{message.followUp}</p>}
@@ -421,7 +445,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                   </div>
                 </div>
               ))}
-              <div role="status" aria-live="polite">{(aiBusy || lookupBusy) && <p className="text-sm text-sky-800">Trợ lý đang tìm cách giải thích…</p>}</div>
+              <div role="status" aria-live="polite">{copyError&&<p className="text-sm text-amber-800">{copyError}</p>}{(aiBusy || lookupBusy) && <p className="text-sm text-sky-800">Trợ lý đang tìm cách giải thích…</p>}</div>
               <div ref={endRef} />
             </div>
 

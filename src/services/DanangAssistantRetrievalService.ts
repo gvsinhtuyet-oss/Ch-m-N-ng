@@ -27,6 +27,7 @@ export interface AssistantRetrievalContext {
   stage?: number;
   grade?: number;
   previousAnswer?: string;
+  practiceIndex?: number;
   pendingTask?: LearningTask;
   previousQuery?: string;
   previousTopic?: string;

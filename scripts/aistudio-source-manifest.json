@@ -1,5 +1,5 @@
 {
-  "commit": "73b3ced77e7eefec22fc0ab801b16d864c40db44",
+  "commit": "8ed945e0e4ad36c2f22413541ac8bd4439276739",
   "files": [
     {
       "path": "src/games/stage2/SharedStage2.tsx",
@@ -139,7 +139,7 @@
     },
     {
       "path": "src/services/GddpBundledCatalog.ts",
-      "sha256": "87efc3791bfbc778121c3c5e9dc480b04068658e3d32f5c6ff71732c046b5d39"
+      "sha256": "129063eebf064893591e5804f79ef13c5e3493492c55029fc30e5d78e2a4fd12"
     },
     {
       "path": "src/services/ContentService.ts",
@@ -151,7 +151,7 @@
     },
     {
       "path": "src/services/GddpService.ts",
-      "sha256": "98b783ecec8409991ddb4799762c472ca33a38c76db694c0302ffbac0954684b"
+      "sha256": "f8bf18e899f8164b50fb827ede5bb5c7418b5003fe35b3c50dda1e05cea039cc"
     },
     {
       "path": "src/services/BackgroundMusic.ts",
@@ -159,7 +159,7 @@
     },
     {
       "path": "src/services/DanangAssistantRetrievalService.ts",
-      "sha256": "5adb27b22e9038c1c86c8e1c02ae13ab1e4407138d67a7434c1f262ef228149c"
+      "sha256": "5d46c3bb1d3c84c412379c23b5caf9dcacf42c6751c23d206ae6b1d5147b6a07"
     },
     {
       "path": "src/services/ImplementationService.ts",
@@ -203,7 +203,7 @@
     },
     {
       "path": "src/services/NetworkService.ts",
-      "sha256": "dcd4156bb45b0d629d7f468d929d54fbe09970819ce20278470bf6b7a1adc237"
+      "sha256": "01014b8cf57eb22f06efd9ed30164cbb550375395b19d60c6508cfd5c9bc6e3f"
     },
     {
       "path": "src/services/RealPhotoPolicy.ts",
@@ -231,7 +231,7 @@
     },
     {
       "path": "src/components/common/DanangAssistantChat.tsx",
-      "sha256": "146046ba5db03e0077288e69c5c952f7d6537ad931d3902df474283cd3d4817d"
+      "sha256": "d812f7a4f1a51299874704cbdd08005c62cb5436011af41a243de02563986373"
     },
     {
       "path": "tsconfig.json",
@@ -247,7 +247,7 @@
     },
     {
       "path": "src/types/index.ts",
-      "sha256": "46d42839074f7657e0287c2f583892563d82ab635b2c77a1093f539fad3e58dd"
+      "sha256": "4e5f7ae873a2c4145689b3d22c525b4c2aff6b48a7743c05a39d156084eb33b7"
     },
     {
       "path": "src/utils/assistantPosition.ts",
@@ -279,7 +279,7 @@
     },
     {
       "path": "src/services/LocalEducationKnowledge.ts",
-      "sha256": "7a0031dd14cf25970fcdf4b869666ff0bac3d3080c702af75dca7c969ac85c5d"
+      "sha256": "07c7db66685247dd8c8d7472c93d42266001be29837148dd73e666de406e9872"
     },
     {
       "path": "src/features/student/StudentJourneyView.tsx",
@@ -299,11 +299,11 @@
     },
     {
       "path": "src/services/TeacherLessonSearch.ts",
-      "sha256": "340e897f87d24f1430e99246004d191496ee4a1cdcb1c99d46f2a13602dd0c2e"
+      "sha256": "bf1a3c0b0b45ee2d3d1251ed0d75b5716ed073c0b45ce66af9f5daf86a409059"
     },
     {
       "path": "src/services/AssistantLearningEngine.ts",
-      "sha256": "22c151abb0125868d89f9887f6569f81febc8dabca23424249f037d6fe888400"
+      "sha256": "05a1f4286b6f684aebeca80aa8988317c0af54f469701775c3017c7eb44a0d03"
     },
     {
       "path": "src/services/AssistantEffectivenessService.ts",
@@ -311,11 +311,11 @@
     },
     {
       "path": "src/components/common/AssistantPracticeCard.tsx",
-      "sha256": "1371e2e74a6a1396c93a630421df24e2a3a3cb3ef94cbfb9439c8de70701b61d"
+      "sha256": "a02a5a7b59309752cce861fc862398e1939b53124e8e30ca396c6bc4865d8387"
     },
     {
       "path": "src/components/common/AssistantEffectivenessPanel.tsx",
-      "sha256": "fd1c2b136ee27c46446af9212ec5aa1c81c0e845de419158d51bad3163fbe366"
+      "sha256": "67a1b34ac3a235527bb364209c38e046dc5bcc4e5b1c2225c300747cbcc52025"
     },
     {
       "path": "src/data/assistantLearningProfiles.json",

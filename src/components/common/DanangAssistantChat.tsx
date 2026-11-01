@@ -13,7 +13,6 @@ const TeacherLessonPanel = lazy(() => import('../../features/teacher/TeacherAssi
 import { ALL_25_STATIONS } from '../../data/allStations';
 import { ExplorationHotspot, Station } from '../../types';
 import {
-  getDanangAssistantQuickPrompts,
   retrieveDanangAssistantAnswer,
 } from '../../services/DanangAssistantRetrievalService';
 
@@ -58,6 +57,38 @@ const WELCOME =
   'Chào em! Em muốn khám phá điều gì hôm nay?';
 
 const MAX_VISIBLE_MESSAGES = 10;
+
+export interface AssistantSuggestion {label:string;query:string;draft?:boolean;}
+/** Contextual prompts run entirely in the local knowledge-based chatbot. */
+export function buildAssistantFollowUps({audience,stage,topic,stationTitle,hotspotTitle,unknown=false}:{
+ audience:'student'|'teacher';stage?:number;topic?:string;stationTitle?:string;hotspotTitle?:string;unknown?:boolean;
+}):AssistantSuggestion[]{
+ if(audience==='student'&&stage===2)return [
+  {label:'Quan sát gì?',query:'Em nên quan sát gì?'},
+  {label:'Ôn bài ở đâu?',query:'Em ôn lại bài ở đâu?'},
+  {label:'Khi phân vân?',query:'Nếu phân vân thì làm gì?'},
+ ];
+ const clean=(x?:string)=>x?.replace(/^\d+[.)]\s*/,'').replace(/\s+/g,' ').trim().slice(0,90)||'';
+ const focus=clean(unknown?undefined:topic)||clean(hotspotTitle)||clean(stationTitle);
+ if(audience==='teacher')return focus?[
+  {label:'Soạn 3 câu hỏi',query:'Tạo 3 câu hỏi kèm đáp án về '+focus},
+  {label:'Hoạt động 5 phút',query:'Gợi ý hoạt động 5 phút về '+focus},
+  {label:'Giải thích dễ hiểu',query:'Nói dễ hiểu hơn về '+focus},
+ ]:[
+  {label:'Tìm bài học',query:'Mở bài ',draft:true},
+  {label:'Soạn 3 câu hỏi',query:'Tạo 3 câu hỏi kèm đáp án về ',draft:true},
+  {label:'Hoạt động 5 phút',query:'Gợi ý hoạt động 5 phút về ',draft:true},
+ ];
+ return focus?[
+  {label:'Nói dễ hiểu hơn',query:'Nói dễ hiểu hơn về '+focus},
+  {label:'Cho em ví dụ',query:'Cho ví dụ về '+focus},
+  {label:'Em thử trả lời',query:'Hỏi em một câu để kiểm tra về '+focus},
+ ]:[
+  {label:'Làng nghề Đà Nẵng',query:'Đà Nẵng có làng nghề gì?'},
+  {label:'Khám phá san hô',query:'San hô là động vật hay thực vật?'},
+  {label:'Giữ gìn quê hương',query:'Em nên làm gì để giữ gìn quê hương?'},
+ ];
+}
 
 const SimpleBold: React.FC<{ text: string }> = ({ text }) => {
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
@@ -221,14 +252,15 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   }, [messages, open, showSuggestions]);
 
   const context = useMemo(() => ({ station, hotspot, stations: ALL_25_STATIONS, audience, stage, grade:currentGrade || station?.grade }), [station, hotspot, audience, stage, currentGrade]);
-  const quickPrompts = useMemo(() => {
-    if(!isTeacher&&stage===2)return getDanangAssistantQuickPrompts(context);
-    if(isTeacher)return station?['Tạo 3 câu hỏi kèm đáp án về bài đang học','Gợi ý hoạt động 5 phút về bài đang học',...getDanangAssistantQuickPrompts(context).slice(0,1)]:['Mở bài Em yêu quê hương lớp 2','Tìm bài tích hợp về Hội An','Tạo 3 câu hỏi về Hội An kèm đáp án','Gợi ý hoạt động 5 phút về bảo vệ san hô'];
-    return ['Hỏi em một câu để kiểm tra','Nói dễ hiểu hơn',...getDanangAssistantQuickPrompts(context).slice(0,2)];
-  },[context,isTeacher,station,stage]);
+  const latestAnswer=messages.filter(m=>m.role==='assistant'&&m.id!=='welcome').at(-1);
+  const suggestedPrompts=buildAssistantFollowUps({
+    audience,stage,topic:latestAnswer?.topic,stationTitle:station?.titleVi,hotspotTitle:hotspot?.titleVi,
+    unknown:!!latestAnswer&&!latestAnswer.topic&&!latestAnswer.lessons&&!latestAnswer.relatedStationTitle,
+  });
 
   const append = (message: ChatMessage) => {
     setMessages(current => [...current, message].slice(-MAX_VISIBLE_MESSAGES));
+    if(message.role==='assistant')setShowSuggestions(true);
   };
 
   const copyAnswer=async(message:ChatMessage)=>{
@@ -267,11 +299,6 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
       }
       const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text, previousTopic:messages.filter(message=>message.role==='assistant').at(-1)?.topic, previousAnswer:messages.filter(message=>message.role==='assistant'&&!message.ai).at(-1)?.text, pendingTask:messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask, practiceIndex:practiceCounts.current[practiceTopic || messages.filter(message=>message.role==='assistant').at(-1)?.topic || ''] || 0 });
       if(result.practice)practiceCounts.current[result.topic || '']=(result.practice.sequence??0)+1;
-      if(!result.found && aiAvailable && isTeacher){
-        void requestAi(question,result.answer);
-        setInput('');
-        return;
-      }
       append({
         id: `a-${Date.now()}`,
         role: 'assistant',
@@ -349,13 +376,13 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             setOpen(value => !value);
           }}
           style={{touchAction:'none', ...(compactGame ? {width:48,height:48} : {})}}
-          className="discovery-chat-launcher pointer-events-auto relative inline-flex h-16 w-16 shrink-0 cursor-grab items-center justify-center overflow-hidden rounded-full border-2 border-white bg-gradient-to-br from-cyan-500 via-sky-600 to-sky-800 text-white shadow-[0_8px_24px_rgba(3,105,161,0.3)] transition-[box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(3,105,161,0.4)] focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-sky-800 active:cursor-grabbing motion-reduce:transform-none"
+          className={`discovery-chat-launcher pointer-events-auto relative inline-flex ${compactGame||mobile?'h-12 w-12':'h-16 w-16'} shrink-0 cursor-grab items-center justify-center overflow-hidden rounded-full border-2 border-white bg-gradient-to-br from-cyan-500 via-sky-600 to-sky-800 text-white shadow-[0_8px_24px_rgba(3,105,161,0.3)] transition-[box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(3,105,161,0.4)] focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-sky-800 active:cursor-grabbing motion-reduce:transform-none`}
           aria-label={open ? 'Đóng Trợ lý khám phá Đà Nẵng' : 'Mở Trợ lý khám phá Đà Nẵng'}
           aria-expanded={open}
           aria-controls="danang-assistant-panel"
           aria-describedby="assistant-drag-hint"
           title="Bấm để trò chuyện · Giữ và kéo để di chuyển">
-          <AssistantEmblem className={compactGame?'h-9 w-9':'h-12 w-12'}/>
+          <AssistantEmblem className={compactGame||mobile?'h-9 w-9':'h-12 w-12'}/>
         </button>
         <span id="assistant-drag-hint" className="sr-only">Giữ và kéo biểu tượng để tránh che nội dung.</span>
       </div>
@@ -376,7 +403,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         >
           <header className="relative z-10 shrink-0 border-b border-white/10 bg-gradient-to-r from-sky-800 to-cyan-700 px-4 py-3 text-white">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10"><AssistantEmblem className="h-8 w-8"/></span>
+              <button type="button" onClick={()=>setOpen(false)} aria-label="Thu gọn Trợ lý Khám phá" title="Thu gọn Trợ lý Khám phá" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"><AssistantEmblem className="h-8 w-8"/></button>
               <div className="min-w-0 flex-1">
                 <h2 className="truncate text-[15px] font-bold tracking-tight">Trợ lý Khám phá</h2>
                 {(currentGrade||station?.grade)&&<p className="mt-0.5 truncate text-[11px] text-sky-100">Lớp {currentGrade||station?.grade}{station?' · '+(hotspot?.titleVi?.replace(/^\d+\.\s*/,'')||station.titleVi):''}</p>}
@@ -440,13 +467,9 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
               <div role="status" aria-live="polite">{copyError&&<p className="text-sm text-amber-800">{copyError}</p>}{(aiBusy || lookupBusy) && <p className="text-sm text-sky-800">Đang trả lời…</p>}</div>
             </div>
 
-            {showSuggestions&&<div className="mt-4 flex flex-wrap gap-2" aria-label="Gợi ý nhanh">
-              {(isTeacher?[
-                {label:'Tìm bài học',query:'Mở bài ',draft:true},
-                {label:'Soạn câu hỏi',query:station?'Tạo 3 câu hỏi kèm đáp án về bài đang học':'Tạo 3 câu hỏi kèm đáp án về ',draft:!station},
-                {label:'Hoạt động 5 phút',query:station?'Gợi ý hoạt động 5 phút về bài đang học':'Gợi ý hoạt động 5 phút về ',draft:!station},
-              ]:quickPrompts.slice(0,3).map(query=>({label:query,query,draft:false}))).map(item=><button key={item.label} type="button" disabled={aiBusy||lookupBusy} onClick={()=>{if(item.draft){setInput(item.query);inputRef.current?.focus();}else void ask(item.query);}} className="min-h-11 rounded-2xl border border-sky-100 bg-white px-3 py-2 text-xs font-semibold text-sky-800 transition hover:border-sky-200 hover:bg-sky-50 disabled:opacity-40">{item.label}</button>)}
-            </div>}
+             {showSuggestions&&<div className="mt-4 flex flex-wrap gap-2" aria-label="Gợi ý hỏi tiếp theo">
+               {suggestedPrompts.slice(0,3).map(item=><button key={item.label} type="button" disabled={aiBusy||lookupBusy} onClick={()=>{if(item.draft){setInput(item.query);inputRef.current?.focus();}else void ask(item.query);}} className="min-h-11 rounded-2xl border border-sky-100 bg-white px-3 py-2 text-xs font-semibold text-sky-800 transition hover:border-sky-200 hover:bg-sky-50 disabled:opacity-40">{item.label}</button>)}
+             </div>}
             <div ref={endRef} />
           </div>
 

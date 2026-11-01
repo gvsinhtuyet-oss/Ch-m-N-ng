@@ -469,7 +469,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
              {showSuggestions&&<div className="mt-4 flex flex-wrap gap-2" aria-label="Gợi ý hỏi tiếp theo">
                {suggestedPrompts.slice(0,3).map(item=><button key={item.label} type="button" disabled={aiBusy||lookupBusy} onClick={()=>{if(item.draft){setInput(item.query);inputRef.current?.focus();}else void ask(item.query);}} className="min-h-11 rounded-2xl border border-sky-100 bg-white px-3 py-2 text-xs font-semibold text-sky-800 transition hover:border-sky-200 hover:bg-sky-50 disabled:opacity-40">{item.label}</button>)}
-             </div>
+             </div>}
             <div ref={endRef} />
           </div>
 

@@ -5,7 +5,13 @@ import { existsSync, readFileSync } from 'node:fs';
 import { defineConfig, loadEnv } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
-export default defineConfig(({mode, command}) => {
+export default defineConfig(async ({mode, command}) => {
+  // AI Studio may restart Vite directly after an incremental GitHub pull,
+  // bypassing npm run dev. Recover missing allowlisted inputs before serving.
+  if (command === 'serve') {
+    const { recoverSources } = await import('./scripts/recover-aistudio-source.mjs');
+    await recoverSources();
+  }
   // Server-only environment values are never injected into browser bundles.
   const serverEnv=loadEnv(mode,process.cwd(),'');
   for(const name of ['GOOGLE_CLIENT_ID','AUTH_FIRESTORE_PROJECT','AUTH_FIRESTORE_DATABASE','AUTH_ADMIN_EMAIL','AUTH_ADMIN_PASSWORD','CONTENT_DATA_DIR','CHAM_ENV','GEMINI_API_KEY']) {

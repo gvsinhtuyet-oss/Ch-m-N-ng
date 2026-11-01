@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {constrainAssistantPosition,compactAssistantPosition} from './src/utils/assistantPosition';
-import {DanangAssistantChat} from './src/components/common/DanangAssistantChat';
+import {DanangAssistantChat,buildAssistantFollowUps} from './src/components/common/DanangAssistantChat';
 
 test('dragged assistant stays fully visible on phone and desktop, including after rotation',()=>{
  for(const [width,height] of [[390,844],[844,390],[1920,1080]]){
@@ -22,7 +22,7 @@ test('round exploration launcher has an accessible label and exposes open state 
   assert.match(html,/Trợ lý Khám phá<\/span>/);
   assert.match(html,/discovery-chat-launcher/);
   assert.match(html,/rounded-full/);
-  assert.match(html,/h-16 w-16/);
+  assert.match(html,/h-12 w-12/);
   assert.doesNotMatch(html,/discovery-robot|discovery-assistant-button|rounded-none/);
   assert.match(html,/aria-expanded="false"/);
   assert.match(html,/touch-action:none/);
@@ -38,3 +38,32 @@ test("compact game assistant clears the mobile victory buttons",()=>{
  }
 });
 
+
+test('context prompts distinguish teachers, students and quiz-safe mode, with at most three options',()=>{
+ const teacher=buildAssistantFollowUps({audience:'teacher',topic:'san hô'});
+ assert.equal(teacher.length,3);
+ assert.match(teacher[0].query,/Tạo 3 câu hỏi kèm đáp án về san hô/);
+ assert.match(teacher[1].query,/hoạt động 5 phút về san hô/i);
+ const student=buildAssistantFollowUps({audience:'student',topic:'Hội An'});
+ assert.equal(student.length,3);
+ assert.match(student[2].query,/kiểm tra về Hội An/);
+ assert.doesNotMatch(student.map(item=>item.query).join(' '),/Tạo 3 câu hỏi kèm đáp án/);
+ const quiz=buildAssistantFollowUps({audience:'student',stage:2,topic:'Hội An'});
+ assert.equal(quiz.length,3);
+ assert.doesNotMatch(quiz.map(item=>item.query).join(' '),/Đáp án|1999|giải bài/);
+ const unknown=buildAssistantFollowUps({audience:'teacher',topic:'Hội An',unknown:true});
+ assert.ok(unknown.every(item=>item.draft));
+ assert.ok(unknown.every(item=>!item.query.includes('Hội An')));
+ const localized=buildAssistantFollowUps({audience:'student',stationTitle:'Cù Lao Chàm',hotspotTitle:'2. San hô'});
+ assert.ok(localized.every(item=>item.query.includes('San hô')));
+});
+test('collapsed panel retains input draft and exposes same icon for close; AI is never auto-called on missing retrieval',async()=>{
+ const fs=await import('node:fs/promises');
+ const source=await fs.readFile(new URL('./src/components/common/DanangAssistantChat.tsx',import.meta.url),'utf8');
+ assert.match(source,/aria-label="Thu gọn Trợ lý Khám phá"/);
+ assert.match(source,/event\.key === 'Escape'\) setOpen\(false\)/);
+ assert.match(source,/document\.addEventListener\('pointerdown',dismiss,true\)/);
+ assert.doesNotMatch(source,/setOpen\(false\);setInput\(''\)/);
+ assert.doesNotMatch(source,/if\(!result\.found && aiAvailable/);
+ assert.match(source,/suggestedPrompts\.slice\(0,3\)/);
+});

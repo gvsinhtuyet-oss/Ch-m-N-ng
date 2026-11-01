@@ -1,5 +1,5 @@
 {
-  "commit": "fabe4589c33f518bdc99c13155b0c109da559b5b",
+  "commit": "b94eac4f7153853449b45529b945b3fae16eee00",
   "files": [
     {
       "path": "src/games/stage2/SharedStage2.tsx",
@@ -159,7 +159,7 @@
     },
     {
       "path": "src/services/DanangAssistantRetrievalService.ts",
-      "sha256": "dc7306f6fcc51daa8912a46dcdef977fd91d5058f5a8637a03278c188447ae78"
+      "sha256": "5adb27b22e9038c1c86c8e1c02ae13ab1e4407138d67a7434c1f262ef228149c"
     },
     {
       "path": "src/services/ImplementationService.ts",
@@ -227,11 +227,11 @@
     },
     {
       "path": "src/App.tsx",
-      "sha256": "851c9e68ebec09f7bb42435dee867d2df05de2a0bb6ea871cd107ee3e1a48e27"
+      "sha256": "ef69fb4a20c49a50ea73037eda552b8e0c4327f07e96d1582cba47f81852261d"
     },
     {
       "path": "src/components/common/DanangAssistantChat.tsx",
-      "sha256": "1c028ddc876cd98efa41bdbdc99c30bc2fde491634d59c75635bae782378c383"
+      "sha256": "146046ba5db03e0077288e69c5c952f7d6537ad931d3902df474283cd3d4817d"
     },
     {
       "path": "tsconfig.json",
@@ -287,7 +287,7 @@
     },
     {
       "path": "src/data/assistantKnowledge.json",
-      "sha256": "79266ae6c60363def13baf2a2bd630cf02b32de404b3fbcabd3e6b69c1134e58"
+      "sha256": "7c00d25a04a98cbdcd5277e65e4fbb6cc49b17acf72e6a227c1c5f839cca9404"
     },
     {
       "path": "src/features/teacher/GddpTeacherLookup.tsx",
@@ -300,6 +300,30 @@
     {
       "path": "src/services/TeacherLessonSearch.ts",
       "sha256": "340e897f87d24f1430e99246004d191496ee4a1cdcb1c99d46f2a13602dd0c2e"
+    },
+    {
+      "path": "src/services/AssistantLearningEngine.ts",
+      "sha256": "2821f3e13d1d0f3b3379387a274787ed5f46b64b15ea78df329dafb8517935d2"
+    },
+    {
+      "path": "src/services/AssistantEffectivenessService.ts",
+      "sha256": "c18ad7285514486dfe9013abe154d30d017a7fb02bcd0972a377d4649a4beb35"
+    },
+    {
+      "path": "src/components/common/AssistantPracticeCard.tsx",
+      "sha256": "1371e2e74a6a1396c93a630421df24e2a3a3cb3ef94cbfb9439c8de70701b61d"
+    },
+    {
+      "path": "src/components/common/AssistantEffectivenessPanel.tsx",
+      "sha256": "fd1c2b136ee27c46446af9212ec5aa1c81c0e845de419158d51bad3163fbe366"
+    },
+    {
+      "path": "src/data/assistantLearningProfiles.json",
+      "sha256": "a0a88d30ebad06ce1c0148d4d0113a814cce25dcfee4df82468db698457088ed"
+    },
+    {
+      "path": "src/data/assistantAssessmentBank.json",
+      "sha256": "a3aff34f7c57bed5a00f092e8c51006824225b7c112ffbbcd3206276f3617dd2"
     }
   ]
 }

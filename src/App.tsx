@@ -70,7 +70,7 @@ const AppContent: React.FC = () => {
 
   // If in Presentation Mode, render full-screen projection without header/footer
   if (currentView === 'presentation-view' && currentStation && (role === 'teacher' || role === 'admin')) {
-    return <><ClassroomPresentationMode key={currentStation.id} station={currentStation} onExit={exitPresentationMode} /><FeatureLoadBoundary fallback={null}><Suspense fallback={null}><DanangAssistantChat currentGrade={currentGrade} onOpenTeacherStation={station=>{setCurrentGrade(station.grade);openStation(station,1);}} audience="teacher" station={currentStation} hotspot={currentAssistantHotspot} /></Suspense></FeatureLoadBoundary></>;
+    return <><ClassroomPresentationMode key={currentStation.id} station={currentStation} onExit={exitPresentationMode} /><FeatureLoadBoundary fallback={null}><Suspense fallback={null}><DanangAssistantChat storageScope={currentUser?role+':'+currentUser.id:''} currentGrade={currentGrade} onOpenTeacherStation={station=>{setCurrentGrade(station.grade);openStation(station,1);}} audience="teacher" station={currentStation} hotspot={currentAssistantHotspot} /></Suspense></FeatureLoadBoundary></>;
   }
 
   // If on Landing Cover Page, render full-screen immersive cover
@@ -98,7 +98,7 @@ const AppContent: React.FC = () => {
       {currentView !== 'student-journey' && currentView !== 'station-view' && <Footer />}
 
       {(role === 'student' || role === 'teacher' || role === 'admin') && currentUser && currentView !== 'presentation-view' && (
-        <FeatureLoadBoundary fallback={null}><Suspense fallback={null}><DanangAssistantChat currentGrade={currentGrade} onOpenTeacherStation={role === 'student' ? undefined : station=>{setCurrentGrade(station.grade);openStation(station,1);}} docked={currentView === 'student-journey'} audience={role === 'student' ? 'student' : 'teacher'} stage={currentView === 'station-view' ? currentStage : undefined} compactGame={currentView === 'station-view' && (currentStage === 1 || currentStage === 2)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense></FeatureLoadBoundary>
+        <FeatureLoadBoundary fallback={null}><Suspense fallback={null}><DanangAssistantChat storageScope={currentUser?role+':'+currentUser.id:''} currentGrade={currentGrade} onOpenTeacherStation={role === 'student' ? undefined : station=>{setCurrentGrade(station.grade);openStation(station,1);}} docked={currentView === 'student-journey'} audience={role === 'student' ? 'student' : 'teacher'} stage={currentView === 'station-view' ? currentStage : undefined} compactGame={currentView === 'station-view' && (currentStage === 1 || currentStage === 2)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense></FeatureLoadBoundary>
       )}
 
       {storageWarning && (
@@ -131,6 +131,7 @@ export function App() {
 }
 
 export default App;
+
 
 
 

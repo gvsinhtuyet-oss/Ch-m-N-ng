@@ -133,9 +133,12 @@ export function handleLearningRequest(query:string,context:LearningContext={}):L
   if(context.stage===2&&context.audience!=='teacher')return null;
   // Resume only a short subject-only reply. A new full request always wins.
   const subject=cardsIn(query);
-  if(context.pendingTask&&subject.length&&detectLearningTask(query)==='knowledge'&&
-    /^(?:ve |chu de )?[^?!.:]+$/.test(norm(query))&&norm(query).split(' ').length<=8&&
-    !/\b(?:la|phai|vi sao|tai sao|the nao|o dau|vi du|mo|tim|lop)\b/.test(norm(query))){
+  const remainder=subject.reduce((text,card)=>{
+    const aliases=[card.term,...card.aliases].map(norm).filter(alias=>!/\b(?:la|gi|sao|nao|nhieu|khong)\b/.test(alias)).sort((a,b)=>b.length-a.length);
+    for(const alias of aliases)text=(' '+text+' ').split(' '+alias+' ').join(' ').trim();
+    return text;
+  },norm(query)).replace(/\b(?:ve|chu de|va|voi|giua)\b/g,'').trim();
+  if(context.pendingTask&&subject.length&&detectLearningTask(query)==='knowledge'&&!remainder){
     const verbs:Record<LearningTask,string>={knowledge:'Giải thích',comparison:'So sánh',questions:'Tạo 3 câu hỏi',activity:'Gợi ý hoạt động 5 phút',rewrite:'Viết lại dễ hiểu',practice:'Hỏi em một câu'};
     const prior=context.previousQuery&&detectLearningTask(context.previousQuery)===context.pendingTask?context.previousQuery:verbs[context.pendingTask];
     query=prior+' về '+query;

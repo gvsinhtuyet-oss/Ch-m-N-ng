@@ -85,6 +85,7 @@ test('a new request cancels pending clarification without inheriting stale subje
    const answer=handleLearningRequest(query,pending)!;assert.equal(answer.task,task,query);assert.equal(answer.topic,'san hô',query);assert.doesNotMatch(answer.answer,/Hội An|Thời tiết/);
  }
  assert.match(handleLearningRequest('San hô không phải là thực vật đúng không?',pending)!.answer,/Đúng rồi/);
+ for(const query of ['Giải thích san hô','Xin giải thích san hô','Hội An ở đâu?'])assert.equal(handleLearningRequest(query,{pendingTask:'questions',previousQuery:'Tạo 3 câu hỏi'}),null,query);
  const first=handleLearningRequest('Tạo 2 câu hỏi')!;
  const resumed=handleLearningRequest('san hô',{pendingTask:first.pendingTask,previousQuery:'Tạo 2 câu hỏi'})!;
  assert.equal((resumed.answer.match(/\*\*Câu \d/g)||[]).length,2);

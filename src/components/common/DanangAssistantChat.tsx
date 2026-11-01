@@ -223,7 +223,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     append({ id: `q-${Date.now()}`, role: 'student', text: question });
     try {
       const pending=messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask;
-      if (isTeacher && detectLearningTask(question)==='knowledge'&&(!pending||/^(?:mở|tìm|tra cứu|mo|tim)\b/i.test(question))) {
+      if (isTeacher && detectLearningTask(question)==='knowledge'&&(!pending||/^(?:mở|tìm|tra cứu|mo|tim)(?:\s|$)/i.test(question))) {
         lookupLock.current = true;
         setLookupBusy(true);
         const {catalog, source} = await loadLessonCatalog();

@@ -1,7 +1,12 @@
 import {audioService} from '../../services/AudioService';
 import {constrainAssistantPosition, type AssistantPosition} from '../../utils/assistantPosition';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
 import { Bot, MapPin, MessageCircle, Send, Sparkles, X } from 'lucide-react';
+import { gddpService, type GddpCatalog } from '../../services/GddpService';
+import { bundledGddpCatalog } from '../../services/GddpBundledCatalog';
+import { searchTeacherLessons, type TeacherLessonHit } from '../../services/TeacherLessonSearch';
+const TeacherLessonPanel = lazy(() => import('../../features/teacher/TeacherAssistantLessonPanel'));
+
 import { ALL_25_STATIONS } from '../../data/allStations';
 import { ExplorationHotspot, Station } from '../../types';
 import {
@@ -23,6 +28,8 @@ interface Props {
   docked?: boolean;
   audience?: 'student' | 'teacher';
   stage?: number;
+  currentGrade?: number;
+  onOpenTeacherStation?: (station: Station) => void;
 }
 
 interface ChatMessage {
@@ -35,6 +42,9 @@ interface ChatMessage {
   followUp?: string;
   ai?: boolean;
   topic?: string;
+  lessons?: TeacherLessonHit[];
+  lessonCatalog?: GddpCatalog;
+  catalogSource?: string;
 }
 
 const WELCOME =
@@ -55,9 +65,9 @@ const SimpleBold: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage }) => {
+export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation }) => {
   const isTeacher = audience === 'teacher';
-  const welcome = isTeacher ? 'Thầy cô muốn tìm hiểu kiến thức giáo dục địa phương nào? Tôi có thể tra cứu văn hóa, lịch sử, địa lý, làng nghề, trò chơi dân gian và học liệu có nguồn.' : WELCOME;
+  const welcome = isTeacher ? 'Thầy cô nhập tên bài để mở học liệu ngay, hoặc hỏi các nội dung tích hợp theo lớp, môn và chủ đề. Ví dụ: “Mở bài Em yêu quê hương lớp 2”, “Tìm bài tích hợp về Hội An”. Tôi cũng hỗ trợ tra cứu kiến thức địa phương có nguồn.' : WELCOME;
   const [open, setOpen] = useState(false);
   const [tapPulse, setTapPulse] = useState(0);
   useEffect(()=>{
@@ -66,6 +76,20 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     return()=>window.removeEventListener('cham-open-assistant',openFromLesson);
   },[]);
   const [input, setInput] = useState('');
+  const [lessonPanel, setLessonPanel] = useState<{recordId: string; catalog: GddpCatalog; source: string} | null>(null);
+  const [lookupBusy, setLookupBusy] = useState(false);
+  const lookupLock = useRef(false);
+  const chatEpoch = useRef(0);
+  const catalogRequest = useRef<Promise<{catalog:GddpCatalog;source:string}> | null>(null);
+  const loadLessonCatalog = () => {
+    if (!catalogRequest.current) catalogRequest.current = gddpService.publicCatalog().then(data => {
+      const fallback = !data.records?.length && !data.published;
+      return {catalog: fallback ? bundledGddpCatalog : data, source: fallback ? 'Danh mục cài sẵn — cần đối chiếu với kế hoạch đang dùng.' : data.published ? 'Danh mục do Admin xuất bản.' : 'Danh mục nguồn — cần đối chiếu với kế hoạch đang dùng.'};
+    }).catch(() => ({catalog:bundledGddpCatalog, source:'Danh mục cài sẵn — chưa tải được bản mới từ máy chủ.'}));
+    return catalogRequest.current;
+  };
+  useEffect(() => { if (isTeacher && open) void loadLessonCatalog(); }, [isTeacher, open]);
+  useEffect(() => { if (!isTeacher) {setLessonPanel(null);catalogRequest.current=null;} }, [isTeacher]);
   const [aiAvailable,setAiAvailable]=useState(false);
   const [aiBusy,setAiBusy]=useState(false);
   const activeAi=useRef<AbortController|null>(null);
@@ -141,8 +165,13 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     activeAi.current=null;
     aiLock.current=false;
     setAiBusy(false);
+    chatEpoch.current++;
+    lookupLock.current=false;
+    setLookupBusy(false);
+    setLessonPanel(null);
     setMessages([{ id: 'welcome', role: 'assistant', text: welcome }]);
     setInput('');
+    return()=>{chatEpoch.current++;};
   }, [station?.id, welcome]);
 
   useEffect(() => {
@@ -150,18 +179,31 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   }, [messages, open]);
 
   const context = useMemo(() => ({ station, hotspot, stations: ALL_25_STATIONS, audience, stage }), [station, hotspot, audience, stage]);
-  const quickPrompts = useMemo(() => getDanangAssistantQuickPrompts(context), [context]);
+  const quickPrompts = useMemo(() => isTeacher && !station ? ['Mở bài Em yêu quê hương lớp 2', 'Tìm bài tích hợp về Hội An', 'Tìm bài lớp 3 môn TNXH'] : getDanangAssistantQuickPrompts(context), [context, isTeacher, station]);
 
   const append = (message: ChatMessage) => {
     setMessages(current => [...current, message].slice(-MAX_VISIBLE_MESSAGES));
   };
 
-  const ask = (rawQuestion: string) => {
+  const ask = async (rawQuestion: string) => {
     const question = rawQuestion.trim();
-    if (!question || aiLock.current) return;
+    if (!question || aiLock.current || lookupLock.current) return;
 
+    const epoch=chatEpoch.current;
     append({ id: `q-${Date.now()}`, role: 'student', text: question });
     try {
+      if (isTeacher) {
+        lookupLock.current = true;
+        setLookupBusy(true);
+        const {catalog, source} = await loadLessonCatalog();
+        if(epoch!==chatEpoch.current)return;
+        const found = searchTeacherLessons(question, catalog.records || [], ALL_25_STATIONS, currentGrade);
+        if (found) {
+          append({id:`lessons-${Date.now()}`,role:'assistant',text:found.message,lessons:found.hits,lessonCatalog:catalog,catalogSource:source});
+          setInput('');
+          return;
+        }
+      }
       const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text, previousTopic:messages.filter(message=>message.role==='assistant').at(-1)?.topic });
       if(!result.found && aiAvailable && isTeacher){
         void requestAi(question,result.answer);
@@ -177,6 +219,8 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
       });
     } catch {
       append({ id: `error-${Date.now()}`, role: 'assistant', text: 'Mình chưa đọc được nội dung này. Bạn thử hỏi lại hoặc chọn một câu hỏi gợi ý nhé!' });
+    } finally {
+      if(epoch===chatEpoch.current){lookupLock.current = false;setLookupBusy(false);}
     }
     setInput('');
   };
@@ -268,6 +312,9 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         <span id="assistant-drag-hint" className="sr-only">Giữ và kéo biểu tượng để tránh che nội dung.</span>
       </div>
 
+      {isTeacher && lessonPanel && <Suspense fallback={<div role="status" className="fixed inset-4 z-[70] rounded-2xl bg-white p-6 shadow-xl">Đang mở bài học…</div>}>
+        <TeacherLessonPanel catalog={lessonPanel.catalog} recordId={lessonPanel.recordId} source={lessonPanel.source} stations={ALL_25_STATIONS} onClose={() => {setLessonPanel(null);setOpen(true);}} onOpenStation={station => {setLessonPanel(null);onOpenTeacherStation?.(station);}} />
+      </Suspense>}
       {open && (
         <section
           id="danang-assistant-panel"
@@ -331,6 +378,20 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                       </span>
                     )}
                     <p className="whitespace-pre-wrap"><SimpleBold text={message.text} /></p>
+                    {message.lessons && message.lessons.length > 0 && <div className="mt-3 space-y-2">
+                      {message.lessons.map(hit => hit.kind === 'integration' ? <article key={'integration:'+hit.record.id} className="rounded-xl border border-emerald-200 bg-emerald-50 p-3">
+                        <p className="font-bold text-emerald-950">{hit.record.lesson}</p>
+                        <p className="mt-1 text-xs">Lớp {hit.record.grade} · {hit.record.subject} · {hit.record.week ? (/tuần/i.test(hit.record.week) ? hit.record.week : `Tuần ${hit.record.week}`) : 'Chưa ghi tuần'}</p>
+                        <p className="mt-1 text-xs"><strong>Tích hợp: </strong>{hit.record.content}</p>
+                        {hit.record.activity && <p className="mt-1 text-xs"><strong>Hoạt động: </strong>{hit.record.activity}</p>}
+                        <button type="button" className="mt-2 min-h-11 rounded-lg bg-emerald-700 px-3 py-2 text-xs font-bold text-white" aria-label={`Mở học liệu tích hợp: ${hit.record.lesson}`} onClick={() => {setOpen(false);setLessonPanel({recordId:hit.record.id,catalog:message.lessonCatalog!,source:message.catalogSource || ''});}}>Mở học liệu tích hợp</button>
+                      </article> : <article key={'station:'+hit.station.id} className="rounded-xl border border-sky-200 bg-sky-50 p-3">
+                        <p className="font-bold text-sky-950">{hit.station.titleVi}</p>
+                        <p className="mt-1 text-xs">Lớp {hit.station.grade} · Bài khám phá địa phương</p>
+                        {onOpenTeacherStation && <button type="button" className="mt-2 min-h-11 rounded-lg bg-sky-700 px-3 py-2 text-xs font-bold text-white" aria-label={`Mở bài học: ${hit.station.titleVi}`} onClick={() => {setOpen(false);onOpenTeacherStation(hit.station);}}>Mở bài học</button>}
+                      </article>)}
+                      <p className="text-[11px] text-slate-600">{message.catalogSource}</p>
+                    </div>}
                     {message.ai && <p className="mt-2 text-[11px] text-amber-800">AI tham khảo — thầy cô cần đối chiếu trước khi sử dụng để giảng dạy.</p>}
                     {message.teachingExample && <p className="mt-2 border-t border-sky-100 pt-2"><strong>Gợi ý giảng dễ hiểu: </strong>{message.teachingExample}</p>}
                     {message.followUp && <p className="mt-2"><strong>Hỏi thêm học sinh: </strong>{message.followUp}</p>}
@@ -344,7 +405,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                   </div>
                 </div>
               ))}
-              <div role="status" aria-live="polite">{aiBusy && <p className="text-sm text-sky-800">Trợ lý đang tìm cách giải thích…</p>}</div>
+              <div role="status" aria-live="polite">{(aiBusy || lookupBusy) && <p className="text-sm text-sky-800">Trợ lý đang tìm cách giải thích…</p>}</div>
               <div ref={endRef} />
             </div>
 
@@ -385,20 +446,20 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                   }
                 }}
                 rows={1}
-                placeholder="Hỏi mình: “Sông Hoài ở mô?”..."
+                placeholder={isTeacher ? 'Nhập tên bài, lớp hoặc chủ đề tích hợp…' : 'Hỏi mình: “Sông Hoài ở mô?”…'}
                 className="max-h-24 min-h-[38px] flex-1 resize-none bg-transparent px-2 py-2 text-sm text-slate-800 outline-none placeholder:text-slate-400"
                 aria-label="Nhập câu hỏi"
               />
               <button
                 type="submit"
-                disabled={!input.trim()||aiBusy}
+                disabled={!input.trim()||aiBusy||lookupBusy}
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-700 text-white shadow-sm transition hover:bg-sky-800 disabled:bg-slate-200 disabled:text-slate-400"
                 aria-label="Gửi câu hỏi"
               >
                 <Send className="h-4 w-4" />
               </button>
             </div>
-            {isTeacher&&aiAvailable&&<div className="mt-2"><button type="button" onClick={askAi} disabled={aiBusy||(!input.trim()&&!messages.some(m=>m.role==='student'))} className="rounded-xl bg-sky-800 px-3 py-2 text-xs font-bold text-white disabled:opacity-50">{aiBusy?'AI đang giải thích…':'Mở rộng bằng AI'}</button><p className="mt-1 text-[10px] text-slate-500">Gửi câu hỏi đến AI để giải thích hoặc gợi ý thêm. Không nhập dữ liệu cá nhân học sinh.</p></div>}
+            {isTeacher&&aiAvailable&&<div className="mt-2"><button type="button" onClick={askAi} disabled={aiBusy||lookupBusy||(!input.trim()&&!messages.some(m=>m.role==='student'))} className="rounded-xl bg-sky-800 px-3 py-2 text-xs font-bold text-white disabled:opacity-50">{aiBusy?'AI đang giải thích…':'Mở rộng bằng AI'}</button><p className="mt-1 text-[10px] text-slate-500">Gửi câu hỏi đến AI để giải thích hoặc gợi ý thêm. Không nhập dữ liệu cá nhân học sinh.</p></div>}
             <p className="mt-1.5 text-center text-[9px] text-slate-400">
               {aiAvailable ? 'Có thể hỏi tiếp theo chủ đề. Câu vượt kho kiến thức được chuyển sang AI; câu trả lời AI cần đối chiếu.' : 'Kho kiến thức có nguồn đang hoạt động. AI mở rộng chưa kết nối; có thể hỏi tiếp hoặc yêu cầu ví dụ.'}
             </p>
@@ -410,3 +471,4 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 };
 
 export default DanangAssistantChat;
+

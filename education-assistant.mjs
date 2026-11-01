@@ -1,8 +1,11 @@
 // Optional teacher-only AI expansion. Disabled until explicitly configured on
 // the existing backend; no keys or account data are sent to the browser.
-export function createEducationAssistant({auth,generate,env=process.env,now=Date.now}) {
- const usage=new Map();
- const available=()=>env.EDUCATION_ASSISTANT_AI_ENABLED==='true' && !!env.GEMINI_API_KEY;
+import {reserveAssistantQuota} from './education-assistant-quota.mjs';
+export function createEducationAssistant({auth,generate,quotaStore=null,env=process.env,now=Date.now}) {
+ // The extra policy switch is intentionally OFF in this primary-school app.
+ // A policy review must establish eligibility; changing flags alone does not create compliance.
+ const available=()=>env.EDUCATION_ASSISTANT_AI_ENABLED==='true'
+  && env.EDUCATION_ASSISTANT_POLICY_REVIEWED==='true' && !!env.GEMINI_API_KEY && !!quotaStore;
  const fail=(status,message)=>Object.assign(new Error(message),{status});
  const respond=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(JSON.stringify(data));};
  return async function handle(req,res){
@@ -20,12 +23,9 @@ export function createEducationAssistant({auth,generate,env=process.env,now=Date
   const question=input.question.trim();
   if(input.history!==undefined && (!Array.isArray(input.history)||input.history.length>6||input.history.some(m=>!m||!['user','assistant'].includes(m.role)||typeof m.text!=='string'||m.text.length>1200)))throw fail(400,'Lịch sử trò chuyện không hợp lệ.');
   const history=(input.history||[]).map(m=>({role:m.role==='user'?'user':'model',parts:[{text:m.text}]}));
-  const hour=Math.floor(now()/3600000),key=user.id+':'+hour;
-  for(const [k,v] of usage)if(v.hour!==hour)usage.delete(k);
-  if(usage.size>=10000 && !usage.has(key))throw fail(429,'AI đang bận, vui lòng thử lại sau.');
-  const used=usage.get(key)?.count||0;
-  if(used>=10)throw fail(429,'Đã đạt 10 lượt AI mở rộng trong giờ này. Tra cứu kiến thức tại máy vẫn sử dụng được.');
-  usage.set(key,{hour,count:used+1});
+  // Atomic create-only reservations are shared by every backend instance.
+  // Fail closed on storage trouble; never spend API quota without durable counters.
+  await reserveAssistantQuota({store:quotaStore,teacherId:user.id,now});
   const systemInstruction=[
    'Bạn là trợ lý giáo dục địa phương Đà Nẵng dành cho giáo viên tiểu học.',
    'Trả lời tiếng Việt, trực tiếp đúng đối tượng và loại câu hỏi. Không bị giới hạn trong 25 trạm hoặc SGK.',

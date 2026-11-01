@@ -19,7 +19,7 @@ test('launcher label is always rendered; enlarged control exposes open state and
  (globalThis as any).window={innerWidth:390,innerHeight:844};
  try{
   const html=renderToStaticMarkup(<DanangAssistantChat/>);
-  assert.match(html,/Trợ lý khám phá<\/span>/);
+  assert.match(html,/Trợ lý Khám phá<\/span>/);
   assert.match(html,/h-\[72px\]/);
   assert.match(html,/aria-expanded="false"/);
   assert.match(html,/touch-action:none/);
@@ -34,3 +34,4 @@ test("compact game assistant clears the mobile victory buttons",()=>{
   assert.ok(p.y+48<=height-84);
  }
 });
+

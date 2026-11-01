@@ -1,5 +1,5 @@
 {
-  "commit": "394be0f0a571949c809234fcfe5d13d5c0640beb",
+  "commit": "fb2c261b3e41ead3c47a65b513cd9824fc3388a7",
   "files": [
     {
       "path": "src/games/stage2/SharedStage2.tsx",
@@ -231,7 +231,7 @@
     },
     {
       "path": "src/components/common/DanangAssistantChat.tsx",
-      "sha256": "d812f7a4f1a51299874704cbdd08005c62cb5436011af41a243de02563986373"
+      "sha256": "90b293d98825cfee6d0cf3c0a0f42982bb3ea1bc930bf462352c45739901fa84"
     },
     {
       "path": "tsconfig.json",
@@ -303,7 +303,7 @@
     },
     {
       "path": "src/services/AssistantLearningEngine.ts",
-      "sha256": "0cbc5b848dd0d2eed3be3d56488a9bd88c2eb2342fd8ea7fd74a452d2b0e0682"
+      "sha256": "2f939f16c0f3e6a05ccd888b7749858f91a9809b55c25a51da0041cfcf83af67"
     },
     {
       "path": "src/services/AssistantEffectivenessService.ts",

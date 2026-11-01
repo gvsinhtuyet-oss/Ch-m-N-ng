@@ -1,5 +1,5 @@
 {
-  "commit": "73b3ced77e7eefec22fc0ab801b16d864c40db44",
+  "commit": "fb2c261b3e41ead3c47a65b513cd9824fc3388a7",
   "files": [
     {
       "path": "src/games/stage2/SharedStage2.tsx",
@@ -159,7 +159,7 @@
     },
     {
       "path": "src/services/DanangAssistantRetrievalService.ts",
-      "sha256": "5adb27b22e9038c1c86c8e1c02ae13ab1e4407138d67a7434c1f262ef228149c"
+      "sha256": "276d47324ebb7dfda5ce27a64865432ec086d930f0362dbe2cd0f992caad1ded"
     },
     {
       "path": "src/services/ImplementationService.ts",
@@ -231,7 +231,7 @@
     },
     {
       "path": "src/components/common/DanangAssistantChat.tsx",
-      "sha256": "146046ba5db03e0077288e69c5c952f7d6537ad931d3902df474283cd3d4817d"
+      "sha256": "90b293d98825cfee6d0cf3c0a0f42982bb3ea1bc930bf462352c45739901fa84"
     },
     {
       "path": "tsconfig.json",
@@ -287,7 +287,7 @@
     },
     {
       "path": "src/data/assistantKnowledge.json",
-      "sha256": "7c00d25a04a98cbdcd5277e65e4fbb6cc49b17acf72e6a227c1c5f839cca9404"
+      "sha256": "bd088d507791427718e4b2e77d9af2abf83798838b4ba6f6dbecd4c3a69bd417"
     },
     {
       "path": "src/features/teacher/GddpTeacherLookup.tsx",
@@ -303,7 +303,7 @@
     },
     {
       "path": "src/services/AssistantLearningEngine.ts",
-      "sha256": "22c151abb0125868d89f9887f6569f81febc8dabca23424249f037d6fe888400"
+      "sha256": "2f939f16c0f3e6a05ccd888b7749858f91a9809b55c25a51da0041cfcf83af67"
     },
     {
       "path": "src/services/AssistantEffectivenessService.ts",
@@ -311,11 +311,11 @@
     },
     {
       "path": "src/components/common/AssistantPracticeCard.tsx",
-      "sha256": "1371e2e74a6a1396c93a630421df24e2a3a3cb3ef94cbfb9439c8de70701b61d"
+      "sha256": "a02a5a7b59309752cce861fc862398e1939b53124e8e30ca396c6bc4865d8387"
     },
     {
       "path": "src/components/common/AssistantEffectivenessPanel.tsx",
-      "sha256": "fd1c2b136ee27c46446af9212ec5aa1c81c0e845de419158d51bad3163fbe366"
+      "sha256": "67a1b34ac3a235527bb364209c38e046dc5bcc4e5b1c2225c300747cbcc52025"
     },
     {
       "path": "src/data/assistantLearningProfiles.json",

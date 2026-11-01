@@ -4,8 +4,8 @@ import guides from '../data/assistantStationGuides.json';
 import { answerLocalEducationQuestion, resolveLocalEducationFollowUp } from './LocalEducationKnowledge';
 import type { ExplorationHotspot, Station } from '../types';
 import {
-  AssistantLexiconEntry,
-  AssistantStationScope,
+  type AssistantLexiconEntry,
+  type AssistantStationScope,
   DANANG_ASSISTANT_HELP_RESPONSE,
   DANANG_ASSISTANT_LEXICON,
   normalizeDanangDialect,
@@ -27,6 +27,7 @@ export interface AssistantRetrievalContext {
   stage?: number;
   grade?: number;
   previousAnswer?: string;
+  practiceIndex?: number;
   pendingTask?: LearningTask;
   previousQuery?: string;
   previousTopic?: string;

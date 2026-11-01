@@ -5,7 +5,7 @@ import {getCuratedGddpLink,textbookReviewStatus} from './gddp-curriculum-links.m
 import { isDeepStrictEqual } from 'node:util';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'node:http';
-import { createAuth, firestoreStoreWithFallback } from './auth-server.mjs';
+import { createAuth, firestoreStore, firestoreStoreWithFallback } from './auth-server.mjs';
 import { contentStorage } from './content-storage.mjs';
 import { firestoreConfiguration } from './deployment-config.mjs';
 import { GDDP_COLLECTION, GDDP_DOCUMENT, GDDP_YEAR, cleanGddpCatalog } from './gddp-catalog.mjs';
@@ -23,13 +23,15 @@ const cloudStore = firestoreProject
   ? firestoreStoreWithFallback(firestoreProject, firestoreCandidates)
   : null;
 const durableContent = cloudStore ? contentStorage(cloudStore) : null;
+// Quotas must never jump between fallback databases: one fixed, atomic store.
+const aiQuotaStore = firestoreProject ? firestoreStore(firestoreProject, firestoreDatabase) : null;
 const auth = createAuth({
   store: cloudStore,
   adminEmail: process.env.AUTH_ADMIN_EMAIL, adminPassword: process.env.AUTH_ADMIN_PASSWORD,
   secureCookie: process.env.AUTH_LOCAL_HTTP !== 'true' || !!process.env.K_SERVICE,
 });
 const learningFeedback = createLearningFeedback({store:cloudStore,auth,secureCookie:process.env.AUTH_LOCAL_HTTP !== 'true' || !!process.env.K_SERVICE});
-const educationAssistant = createEducationAssistant({auth,generate:async(input)=>{
+const educationAssistant = createEducationAssistant({auth,quotaStore:aiQuotaStore,generate:async(input)=>{
   const {GoogleGenAI}=await import('@google/genai');
   return new GoogleGenAI({apiKey:process.env.GEMINI_API_KEY}).models.generateContent(input);
 }});

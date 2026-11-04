@@ -4,6 +4,7 @@ import {startFireworks} from './fireworks';
 import {audioService} from '../../services/AudioService';
 import approvedCss from './approved-v18.css?raw';
 import safeLayoutCss from './safe-layout.css?raw';
+import mobilePortraitCss from './mobile-portrait.css?raw';
 import compactMatchCss from './compact-match.css?raw';
 import {validateConfig, type GameConfig, type MatchQuestion} from './types';
 import {gameReducer,initialState,connectPair,isCorrectMatch} from './state';
@@ -228,5 +229,5 @@ export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void
   const victorySideFillCss=`@media(min-width:768px){.scene.is-victory{background-size:100% auto,cover!important;background-position:center top,center center!important;background-repeat:no-repeat,no-repeat!important}}`;
   const grade2Css=`@media(max-width:650px) and (orientation:portrait){.scene.safe-layout.grade2-game:not(.is-victory){--art-width:140vw;--banner-bottom:26.8vw}}`;
   const embeddedCss=`:host([data-embedded]) .scene .intro-screen{padding:14px 20px!important;gap:6px!important;max-width:560px!important}:host([data-embedded]) .scene .intro-emblem{font-size:26px!important}:host([data-embedded]) .scene .intro-screen h2{font-size:clamp(18px,2vw,26px)!important;margin:0!important}:host([data-embedded]) .scene .intro-story{font-size:clamp(14px,1.5vw,17px)!important;line-height:1.4!important;margin:4px 0!important}:host([data-embedded]) .scene .intro-call{font-size:14px!important;margin:4px 0!important}:host([data-embedded]) .scene .intro-start{min-height:44px!important;padding:9px 18px!important;font-size:16px!important}:host([data-embedded]) .scene{height:var(--embedded-height,100dvh)!important;min-height:0!important}:host([data-embedded]) .scene .shell{height:100%!important;min-height:0!important}:host([data-embedded]) .scene.safe-layout.is-victory .panel,:host([data-embedded]) .scene.safe-layout.is-victory .victory{height:100%!important;min-height:0!important}`;
-  return <div ref={host} data-shared-stage2="v1" data-embedded={props.embedded?'':undefined}>{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss+'\n'+compactMatchCss+'\n'+voiceCss+'\n'+trueFalseCss+'\n'+compactVoiceCss+'\n'+grade2Css+'\n'+embeddedCss+'\n'+questionEmphasisCss+'\n'+victorySideFillCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
+  return <div ref={host} data-shared-stage2="v1" data-embedded={props.embedded?'':undefined}>{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss+'\n'+compactMatchCss+'\n'+voiceCss+'\n'+trueFalseCss+'\n'+compactVoiceCss+'\n'+grade2Css+'\n'+embeddedCss+'\n'+questionEmphasisCss+'\n'+victorySideFillCss+'\n'+mobilePortraitCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
 }

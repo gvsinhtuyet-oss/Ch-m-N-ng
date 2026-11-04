@@ -22,6 +22,9 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
 
   const [stamped, setStamped] = useState<boolean>(progress.stampReceived || progress.stationCompleted);
   const [photoFailed, setPhotoFailed] = useState(false);
+  const [mapZoomOpen, setMapZoomOpen] = useState(false);
+  const [mapZoomScale, setMapZoomScale] = useState(1);
+  const actualMapImage = station.journeyMap?.image || station.coverImage;
   const [mapAspectRatio, setMapAspectRatio] = useState<string>('3 / 2');
   const [saveMessage, setSaveMessage] = useState('');
   const canExchange = isReadOnly || (
@@ -36,6 +39,12 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
   useEffect(() => () => {
     timers.current.forEach(clearTimeout);
   }, []);
+  useEffect(() => {
+    if (!mapZoomOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === 'Escape') setMapZoomOpen(false); };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [mapZoomOpen]);
 
   const schedule = (callback: () => void, delay: number) => {
     timers.current.push(setTimeout(callback, delay));
@@ -90,6 +99,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
 
     return (
       <div className="journey-stage stage-four" aria-label="Dấu ấn hành trình">
+        <header className="mobile-journey-hero mobile-stamp-hero" aria-hidden="true"><span className="mobile-journey-hero-kicker">Chặng 4</span><strong>Dấu ấn hành trình</strong><span className="mobile-journey-hero-symbol">🔖</span></header>
         <style>{`
           @keyframes journeyStampDrop {
             0% { opacity:0; transform: translateY(-90px) scale(2.2) rotate(-25deg); }
@@ -102,12 +112,15 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
 
         <div className="stamp-layout">
           <section aria-label="Bản đồ hành trình" className="journey-map-panel journey-photo-panel">
+            <h3 className="mobile-journey-section-title">🗺️ Bản đồ hành trình</h3>
             <div className="journey-map-surface journey-photo-surface" style={{ aspectRatio: mapAspectRatio }}>
-              {(station.journeyMap?.image || station.coverImage) && !photoFailed ? <><img src={station.journeyMap?.image || station.coverImage} alt={`Bản đồ hành trình ${station.titleVi}`} onError={() => setPhotoFailed(true)} className="journey-photo-main" onLoad={event => { const { naturalWidth, naturalHeight } = event.currentTarget; if(naturalWidth > 0 && naturalHeight > 0) setMapAspectRatio(`${naturalWidth} / ${naturalHeight}`); }} decoding="async" /></> :
+              {actualMapImage && !photoFailed ? <><img src={actualMapImage} alt={`Bản đồ hành trình ${station.titleVi}`} onError={() => setPhotoFailed(true)} className="journey-photo-main" onLoad={event => { const { naturalWidth, naturalHeight } = event.currentTarget; if(naturalWidth > 0 && naturalHeight > 0) setMapAspectRatio(`${naturalWidth} / ${naturalHeight}`); }} decoding="async" /></> :
                 <div className="journey-map-fallback"><h3>ĐIỂM ĐẾN CỦA EM</h3><strong>{station.titleVi}</strong></div>}
             </div>
+            {actualMapImage && !photoFailed && <button type="button" className="mobile-map-zoom-trigger" onClick={() => setMapZoomOpen(true)}>⛶ Chạm để phóng to bản đồ</button>}
           </section>
           <section aria-label="Hộ chiếu hành trình" className="journey-passport-panel">
+            <h3 className="mobile-journey-section-title">📘 Hộ chiếu hành trình</h3>
             <div className="sr-only">
               <p className="text-[10px] font-black tracking-wider text-[#96621c] sm:text-xs">CHẠM ĐÀ NẴNG</p>
               <h3 className="text-sm font-black text-[#683917] sm:text-lg">📖 HỘ CHIẾU HÀNH TRÌNH</h3>
@@ -139,6 +152,17 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
           <button type="button" onClick={() => { audioService.playSfx('click'); onExploreNext(); }} className="journey-control-next"><ArrowRight className="h-5 w-5 shrink-0" />Khám phá thêm</button>
         </div>
         {isReadOnly && <p className="journey-preview-note">Chế độ xem thử: không lưu phần thưởng.</p>}
+        {mapZoomOpen && actualMapImage && !photoFailed && <div className="mobile-map-modal" role="presentation" onClick={() => setMapZoomOpen(false)}>
+          <div role="dialog" aria-modal="true" aria-label={`Bản đồ hành trình ${station.titleVi}`} className="mobile-map-modal-panel" onClick={e => e.stopPropagation()}>
+            <div className="mobile-map-modal-tools">
+              <button type="button" onClick={() => setMapZoomScale(v => Math.max(1, v - .5))} aria-label="Thu nhỏ bản đồ" disabled={mapZoomScale <= 1}>−</button>
+              <span>{Math.round(mapZoomScale * 100)}%</span>
+              <button type="button" onClick={() => setMapZoomScale(v => Math.min(3, v + .5))} aria-label="Phóng to bản đồ" disabled={mapZoomScale >= 3}>+</button>
+              <button type="button" className="mobile-map-close" onClick={() => {setMapZoomOpen(false);setMapZoomScale(1);}} aria-label="Đóng bản đồ phóng to">✕ Đóng</button>
+            </div>
+            <div className="mobile-map-modal-scroll"><img src={actualMapImage} alt={`Bản đồ hành trình ${station.titleVi} phóng to`} style={{width:`${mapZoomScale * 100}%`}} /></div>
+          </div>
+        </div>}
 
       </div>
     );

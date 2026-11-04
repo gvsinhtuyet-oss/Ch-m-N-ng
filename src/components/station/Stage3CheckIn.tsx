@@ -73,6 +73,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage, readO
 
   return (
     <div className="journey-stage stage-three" aria-label="Check-in cảm xúc">
+      <header className="mobile-journey-hero mobile-checkin-hero" aria-hidden="true"><span className="mobile-journey-hero-kicker">Chặng 3</span><strong>Check-in cảm xúc</strong><span className="mobile-journey-hero-symbol">💗</span></header>
       {!isSubmitted ? (
         <div className="checkin-layout">
           <p className="checkin-emotion-prompt">Em cảm thấy thế nào sau hành trình khám phá?</p>
@@ -91,7 +92,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage, readO
           </section>
           <div className="checkin-pages">
             <section aria-label="Điều em nhớ nhất" className="checkin-page">
-              <h3 className="checkin-section-title sr-only">Điều em nhớ nhất</h3>
+              <h3 className="checkin-section-title">📸 Điều em nhớ nhất</h3>
               <p className="mb-1 line-clamp-2 shrink-0 rounded-md bg-amber-50/80 px-1 py-1 text-[10px] font-bold text-amber-950 sm:text-xs">{checkIn.rememberPromptVi}</p>
               <div className="min-h-0 flex-1 space-y-1 overflow-y-auto pr-1 [scrollbar-width:thin]">
                 {checkIn.rememberOptions.map(opt => {
@@ -105,7 +106,7 @@ export const Stage3CheckIn: React.FC<Props> = ({ station, onCompleteStage, readO
               <label className="checkin-other-field"><span>✏️ Khác (không bắt buộc)</span><input value={otherRemember} onChange={e=>setOtherRemember(e.target.value)} maxLength={300} placeholder="Em còn nhớ…" /></label>
             </section>
             <section aria-label="Việc em sẽ làm" className="checkin-page">
-              <h3 className="checkin-section-title sr-only">Việc em sẽ làm</h3>
+              <h3 className="checkin-section-title">🌱 Việc em sẽ làm</h3>
               <p className="mb-1 line-clamp-2 shrink-0 rounded-md bg-green-50/80 px-1 py-1 text-[10px] font-bold text-emerald-950 sm:text-xs">{checkIn.actionPromptVi}</p>
               <div className="min-h-0 flex-1 space-y-1 overflow-y-auto pr-1 [scrollbar-width:thin]">
                 {checkIn.actionOptions.map(opt => {

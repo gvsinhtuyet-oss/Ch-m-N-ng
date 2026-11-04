@@ -503,7 +503,7 @@ export const LandingView: React.FC = () => {
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-5 gap-2 sm:gap-3">
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-5 sm:gap-3" aria-label="Chọn một trong năm khối lớp">
                     {[
                       'from-sky-500 to-blue-700', 'from-emerald-500 to-teal-700',
                       'from-amber-400 to-orange-600', 'from-rose-500 to-pink-700', 'from-violet-500 to-indigo-700',
@@ -526,7 +526,7 @@ export const LandingView: React.FC = () => {
                               setSelectedClass(classroom?.name.replace('Lớp ', '') || `${grade}/1`);
                             }
                           }}
-                          className={`min-w-0 rounded-2xl bg-gradient-to-br ${color} px-1 py-3 sm:px-2 sm:py-3 text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-sky-300 ${
+                          className={`min-w-0 min-h-[68px] last:col-span-2 sm:last:col-span-1 rounded-2xl bg-gradient-to-br ${color} px-2 py-3 sm:px-2 sm:py-3 text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-sky-300 ${
                             active
                               ? 'ring-2 ring-orange-300 ring-offset-2 shadow-md z-10'
                               : guestMode && chosenGrade

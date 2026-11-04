@@ -23,6 +23,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
   const [stamped, setStamped] = useState<boolean>(progress.stampReceived || progress.stationCompleted);
   const [photoFailed, setPhotoFailed] = useState(false);
   const [mapZoomOpen, setMapZoomOpen] = useState(false);
+  const [mapZoomScale, setMapZoomScale] = useState(1);
   const actualMapImage = station.journeyMap?.image || station.coverImage;
   const [mapAspectRatio, setMapAspectRatio] = useState<string>('3 / 2');
   const [saveMessage, setSaveMessage] = useState('');
@@ -153,8 +154,13 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
         {isReadOnly && <p className="journey-preview-note">Chế độ xem thử: không lưu phần thưởng.</p>}
         {mapZoomOpen && actualMapImage && !photoFailed && <div className="mobile-map-modal" role="presentation" onClick={() => setMapZoomOpen(false)}>
           <div role="dialog" aria-modal="true" aria-label={`Bản đồ hành trình ${station.titleVi}`} className="mobile-map-modal-panel" onClick={e => e.stopPropagation()}>
-            <button type="button" className="mobile-map-close" onClick={() => setMapZoomOpen(false)} aria-label="Đóng bản đồ phóng to">✕ Đóng</button>
-            <img src={actualMapImage} alt={`Bản đồ hành trình ${station.titleVi} phóng to`} />
+            <div className="mobile-map-modal-tools">
+              <button type="button" onClick={() => setMapZoomScale(v => Math.max(1, v - .5))} aria-label="Thu nhỏ bản đồ" disabled={mapZoomScale <= 1}>−</button>
+              <span>{Math.round(mapZoomScale * 100)}%</span>
+              <button type="button" onClick={() => setMapZoomScale(v => Math.min(3, v + .5))} aria-label="Phóng to bản đồ" disabled={mapZoomScale >= 3}>+</button>
+              <button type="button" className="mobile-map-close" onClick={() => {setMapZoomOpen(false);setMapZoomScale(1);}} aria-label="Đóng bản đồ phóng to">✕ Đóng</button>
+            </div>
+            <div className="mobile-map-modal-scroll"><img src={actualMapImage} alt={`Bản đồ hành trình ${station.titleVi} phóng to`} style={{width:`${mapZoomScale * 100}%`}} /></div>
           </div>
         </div>}
 

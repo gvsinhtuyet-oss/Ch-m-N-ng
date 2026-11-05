@@ -10,6 +10,7 @@ import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import {
   CheckCircle2,
+  ChevronUp,
   KeyRound,
   LockKeyhole,
   Map,
@@ -75,6 +76,21 @@ export const StudentJourneyView: React.FC = () => {
 
   return (
     <div className="journey-overview mx-auto flex min-h-[calc(100dvh-70px)] max-w-[1600px] flex-col gap-3 px-3 py-3 sm:px-5 lg:px-7">
+      <div className="journey-phone-toolbar">
+        <h1>Hành trình Khối {currentGrade}</h1>
+        <details>
+          <summary>Tổng quan</summary>
+          <div className="journey-phone-summary">
+            <p>Đã chinh phục {completed}/{total} điểm đến</p>
+            <progress aria-label="Tiến độ hành trình" value={completed} max={total} />
+            <ul>
+              {stats.slice(1).map(item => <li key={item.label}>{item.label} <strong>{item.value}</strong></li>)}
+            </ul>
+            {nextStation && <button type="button" onClick={() => openStation(nextStation)}>Tiếp tục hành trình</button>}
+            <button type="button" onClick={() => setCurrentView('student-maps')}>Bản đồ</button>
+          </div>
+        </details>
+      </div>
       <section className="journey-overview-hero relative overflow-hidden rounded-[1.65rem] border border-white/80 bg-white/86 shadow-[0_12px_34px_rgba(124,45,18,0.12)] backdrop-blur-xl">
         {heroImage && (
           <img
@@ -181,7 +197,7 @@ export const StudentJourneyView: React.FC = () => {
           <div className="pointer-events-none absolute bottom-2 left-8 right-8 hidden border-t-2 border-dashed border-white/90 xl:block" />
 
           <div className="journey-station-grid relative grid h-full min-h-0 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {displayStations.map(station => {
+            {displayStations.map((station, index) => {
               const isDemoReady = DEMO_STATION_IDS.has(station.id);
               const progress = isDemoReady
                 ? progressService.getStationProgress(studentId, station.id)
@@ -242,7 +258,13 @@ export const StudentJourneyView: React.FC = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/38 via-transparent to-slate-950/10" />
                     <div className={`absolute left-3 top-3 rounded-full px-4 py-1.5 text-xs font-black text-white shadow ${stationBadge}`}>
-                      Điểm đến {station.number}
+                      <span className="journey-desktop-label">Điểm đến {station.number}</span>
+                      <span className="journey-phone-label">Trạm {index + 1}/{displayStations.length}</span>
+                    </div>
+                    <div className="journey-phone-dots" aria-hidden="true">
+                      {displayStations.map((stop, position) => (
+                        <span key={stop.id} data-active={position === index} />
+                      ))}
                     </div>
                     {!isDemoReady && (
                       <div className="absolute inset-0 bg-slate-900/8" />
@@ -281,7 +303,10 @@ export const StudentJourneyView: React.FC = () => {
                         }`}
                       >
                         {isCompleted ? <RotateCcw className="h-4 w-4" /> : <Play className="h-4 w-4 fill-current" />}
-                        {isCompleted ? 'Khám phá lại' : isInProgress ? 'Tiếp tục hành trình' : 'Bắt đầu khám phá'}
+                        <span className={isCompleted || isInProgress ? undefined : 'journey-desktop-label'}>
+                          {isCompleted ? 'Khám phá lại' : isInProgress ? 'Tiếp tục hành trình' : 'Bắt đầu khám phá'}
+                        </span>
+                        {!isCompleted && !isInProgress && <span className="journey-phone-label">Khám phá</span>}
                         <span aria-hidden="true">→</span>
                       </button>
                     ) : (
@@ -294,6 +319,9 @@ export const StudentJourneyView: React.FC = () => {
                         Đang phát triển
                       </button>
                     )}
+                    <p className="journey-phone-swipe">
+                      {index < displayStations.length - 1 ? <><ChevronUp aria-hidden="true" /> Vuốt lên để xem trạm tiếp theo</> : 'Trạm cuối'}
+                    </p>
                   </div>
                 </article>
               );
@@ -301,7 +329,7 @@ export const StudentJourneyView: React.FC = () => {
           </div>
         </div>
       </section>
-      {currentGrade === 4 && <details className="rounded-2xl border border-emerald-200 bg-white p-4 shadow-sm" onToggle={event=>{if(!event.currentTarget.open)audioService.stopNarration();}}>
+      {currentGrade === 4 && <details className="journey-extension rounded-2xl border border-emerald-200 bg-white p-4 shadow-sm" onToggle={event=>{if(!event.currentTarget.open)audioService.stopNarration();}}>
         <summary className="cursor-pointer text-lg font-bold text-emerald-900">Học liệu mở rộng: Nghề dệt lụa Mã Châu</summary>
         <p className="mt-3 text-sm text-slate-600">Khám phá thêm câu chuyện tơ lụa quê hương sau năm trạm chính. Phần này không tính vào tiến độ hay điều kiện nhận hộ chiếu khối 4.</p>
         <figure className="mt-4 max-w-xl"><img loading="lazy" src="/learning/grade45/photos/ma-chau.webp" alt="Sản phẩm lụa Mã Châu" className="max-h-64 w-full rounded-xl object-contain"/><figcaption className="mt-2 text-xs text-slate-600"><LearningMediaCredit src="/learning/grade45/photos/ma-chau.webp"/></figcaption></figure>

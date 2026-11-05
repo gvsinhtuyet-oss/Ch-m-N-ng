@@ -54,7 +54,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const [index, setIndex] = useState(0);
   const previousIndex = useRef(index);
   const pointHeadingRef = useRef<HTMLDivElement>(null);
-  const quizHeadingRef = useRef<HTMLHeadingElement>(null);
+  const quizQuestionRef = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
     if (previousIndex.current !== index && window.matchMedia('(max-width: 640px) and (orientation: portrait)').matches) {
       pointHeadingRef.current?.scrollIntoView({block: 'start'});
@@ -434,8 +434,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                 {hotspot.narrationVi}
               </p>
 
-              {hotspot.keyFactVi && explored && (
-                <div className="mt-3 rounded-2xl border border-amber-300 bg-gradient-to-r from-yellow-50 via-amber-50 to-orange-50 p-3 shadow-sm shadow-amber-100/60">
+              {hotspot.keyFactVi && (
+                <div className={`stage1-key-fact ${explored ? '' : 'stage1-phone-only'} mt-3 rounded-2xl border border-amber-300 bg-gradient-to-r from-yellow-50 via-amber-50 to-orange-50 p-3 shadow-sm shadow-amber-100/60`}>
                   <p className="text-[9px] font-black uppercase tracking-wide text-amber-700">
                     Điều thú vị cần nhớ
                   </p>
@@ -444,25 +444,25 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   </p>
                 </div>
               )}
-              {hotspot.interaction && <button type="button" className="stage1-phone-only stage1-quiz-link"
-                onClick={() => {
-                  quizHeadingRef.current?.focus({preventScroll: true});
-                  quizHeadingRef.current?.scrollIntoView({block: 'start'});
-                }}>
-                Câu hỏi khám phá <ChevronDown aria-hidden="true" size={18} />
-              </button>}
             </div>
 
             {hotspot.interaction ? (
               <div className="stage1-quiz shrink-0 rounded-[1.5rem] border-2 border-sky-200 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-4 shadow-sm">
-                <div className="mb-2 flex items-center gap-2">
+                <div className="stage1-quiz-heading mb-2 flex items-center gap-2">
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-600 text-xs font-black text-white shadow-sm shadow-sky-300/60">
                     ?
                   </span>
-                  <h3 ref={quizHeadingRef} tabIndex={-1} className="text-[15px] font-black text-slate-950 sm:text-base">Câu hỏi khám phá</h3>
+                  <h3 className="text-[15px] font-black text-slate-950 sm:text-base">Câu hỏi khám phá</h3>
                 </div>
 
-                <p className="text-[13px] font-black leading-6 text-slate-800 sm:text-[14px]">
+                <button type="button" className="stage1-phone-only stage1-quiz-link"
+                  onClick={() => {
+                    quizQuestionRef.current?.focus({preventScroll: true});
+                    quizQuestionRef.current?.scrollIntoView({block: 'nearest'});
+                  }}>
+                  Thử tài trí nhớ <ChevronDown aria-hidden="true" size={18} />
+                </button>
+                <p ref={quizQuestionRef} tabIndex={-1} className="text-[13px] font-black leading-6 text-slate-800 sm:text-[14px]">
                   {hotspot.interaction.questionVi}
                 </p>
 

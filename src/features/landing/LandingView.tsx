@@ -503,7 +503,7 @@ export const LandingView: React.FC = () => {
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-5 sm:gap-3" aria-label="Chọn một trong năm khối lớp">
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-5 sm:gap-3 max-sm:[&>button:last-child]:col-span-2 max-sm:[&>button:last-child]:w-[calc((100%-0.75rem)/2)] max-sm:[&>button:last-child]:justify-self-center" aria-label="Chọn một trong năm khối lớp">
                     {[
                       'from-sky-500 to-blue-700', 'from-emerald-500 to-teal-700',
                       'from-amber-400 to-orange-600', 'from-rose-500 to-pink-700', 'from-violet-500 to-indigo-700',

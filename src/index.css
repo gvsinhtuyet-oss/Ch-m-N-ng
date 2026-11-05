@@ -584,13 +584,22 @@ body:has(.journey-screen-fixed){overflow:hidden}
  .journey-maps-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
  .journey-map-card-image{aspect-ratio:16/10!important}
 }
+.station-tools-dots,.station-phone-stage-name{display:none}
 @media (max-width:640px) {
- .journey-station-grid{grid-template-columns:minmax(0,1fr)!important;gap:11px!important}
- .journey-station-grid>article{min-height:142px!important}
- .journey-station-grid>article>div:first-child{flex:0 0 34%!important;min-height:142px!important}
- .journey-station-grid>article>div:last-child{padding:10px!important;gap:7px!important}
- .journey-station-grid h3{font-size:16px!important}
- .journey-station-grid button{font-size:14px!important}
+ .journey-station-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+ .journey-station-grid>article{flex-direction:column!important;min-height:0!important;border-width:2px;border-radius:16px}
+ .journey-station-grid>article:last-child:nth-child(odd){grid-column:1/-1!important;justify-self:center;width:calc((100% - 10px)/2)}
+ .journey-station-grid>article>div:first-child{flex:none!important;min-height:0!important;aspect-ratio:16/10}
+ .journey-station-grid>article>div:first-child>div.rounded-full{left:6px;top:6px;padding:4px 7px;font-size:10px}
+ .journey-station-grid>article>div:last-child{padding:9px!important;gap:6px!important}
+ .journey-station-grid h3{font-size:14px!important}
+ .journey-station-grid button{font-size:12px!important;margin-top:auto}
+ .journey-station-grid button svg{flex-shrink:0}
  .journey-maps-grid{grid-template-columns:minmax(0,1fr)!important}
+ .station-compact-header .station-stage-tabs .station-stage-tab{min-height:44px!important}
+ .station-compact-header .station-stage-tabs .station-stage-tab .station-stage-tab-name{display:none!important}
+ .station-tools-label{display:none}
+ .station-tools-dots{display:inline;font-size:24px;line-height:1}
+ .station-phone-stage-name{display:block;text-align:center;border-radius:12px;background:#fff4db;color:#173e68;padding:8px;font-weight:800}
  .station-compact-header .station-compact-title{-webkit-line-clamp:2!important}
 }

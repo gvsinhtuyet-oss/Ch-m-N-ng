@@ -248,3 +248,10 @@ body:has(.station-screen-fixed){overflow:hidden;overscroll-behavior:none}
  .station-stage1-compact [data-compact-panel="observe"] .stage1-quiz{display:none!important}
  .station-stage1-compact [data-compact-panel="quiz"] .stage1-reading,.station-stage1-compact [data-compact-panel="quiz"] .stage1-visual-column>.relative{display:none!important}
 }
+
+@media (max-width: 640px) {
+  .station-viewport[data-stage="2"] .station-lesson-panel #my-khe-v12-frame {
+    height: 100dvh !important;
+    min-height: 600px !important;
+  }
+}

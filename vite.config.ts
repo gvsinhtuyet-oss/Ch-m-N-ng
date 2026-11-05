@@ -69,7 +69,8 @@ export default defineConfig(async ({mode, command}) => {
           ],
         },
         workbox: {
-          navigateFallbackDenylist: [/^\/api\//, /^\/nam-o-background-review\.html(?:\?|$)/],
+          // Serve the embedded game document instead of the SPA shell.
+          navigateFallbackDenylist: [/^\/games\/grade3-my-khe-ban-than\/v12(?:\/index\.html|\/)?(?:\?|$)/, /^\/api\//, /^\/nam-o-background-review\.html(?:\?|$)/],
           // Install only the shell. Lesson assets and feature chunks are cached on use.
           globPatterns: ['index.html', 'registerSW.js', 'assets/*.{js,css}', '*.{ico,png,svg}'],
           // Keep only startup scripts referenced by HTML, never lazy features.

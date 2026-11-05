@@ -18,8 +18,8 @@ test('phone shell and four-stage toolbar use natural flow and a two-row tab grid
  assert.match(index,/station-stage-tab-name[\s\S]*?overflow-wrap:anywhere!important/);
 });
 test('phone destination selection cannot force five cramped vertical strips',()=>{
- assert.match(index,/max-width:640px[\s\S]*?journey-station-grid\{grid-template-columns:minmax\(0,1fr\)!important/);
- assert.match(index,/journey-station-grid>article>div:first-child\{flex:0 0 34%/);
+ assert.match(index,/max-width:640px[\s\S]*?journey-station-grid\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)!important/);
+ assert.match(index,/journey-station-grid>article>div:first-child\{flex:none!important;min-height:0!important;aspect-ratio:16\/10/);
  assert.match(landing,/grid-cols-2 gap-3 sm:grid-cols-5/);
  assert.match(index,/journey-overview-hero h1\{font-size:clamp/);
 });

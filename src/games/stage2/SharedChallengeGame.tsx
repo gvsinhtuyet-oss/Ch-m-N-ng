@@ -43,6 +43,7 @@ function Fireworks({lightweight=false}:{lightweight?:boolean}) {
 function GameSurface({config:originalConfig,onComplete,embedded=false}:{config:GameConfig;onComplete:()=>void;embedded?:boolean}) {
   const [config,setConfig]=useState(()=>shuffleGrade1(originalConfig));
   const sceneRef=useRef<HTMLElement>(null);
+  const panelRef=useRef<HTMLElement>(null);
   const isGrade1=config.stationId.startsWith('g1-');
   const total=config.questions.length;
   const rewardCount=total;
@@ -109,6 +110,9 @@ function GameSurface({config:originalConfig,onComplete,embedded=false}:{config:G
   const restart=()=>{audio.stop();completed.current=false;clickLocked.current=false;setPairs({});setConfig(shuffleGrade1(originalConfig));act('retry',()=>dispatch({type:'restart'}));};
   const victory=state.phase==='victory';
   useLayoutEffect(()=>{
+    if(state.phase==='question'&&panelRef.current)panelRef.current.scrollTop=0;
+  },[state.index,state.phase,state.reviewing]);
+  useLayoutEffect(()=>{
     if(!embedded || !victory || window.innerWidth>=1024 || !sceneRef.current)return;
     const root=sceneRef.current.getRootNode();
     if(root instanceof ShadowRoot)root.host.closest<HTMLElement>('.station-lesson-panel')?.scrollIntoView({block:'start',behavior:'instant'});
@@ -128,7 +132,7 @@ function GameSurface({config:originalConfig,onComplete,embedded=false}:{config:G
           <button className="music-toggle" aria-label={muted?'Bật âm thanh':'Tắt âm thanh'} aria-pressed={!muted} onClick={()=>{if(muteTimer.current)clearTimeout(muteTimer.current);if(responsiveAudio&&!muted){audio.play('tap');setMuted(true);muteTimer.current=setTimeout(()=>{audio.setMuted(true);muteTimer.current=null;},100);}else{audio.setMuted(!muted);setMuted(!muted);if(muted)audio.play('tap');}}}>{muted?'♪̸':'♫'}</button>
         </div>
       </div>
-      <section className={`panel ${compactMatch?'compact-match':''} ${locked?'has-result':''}`} aria-label={config.title}>
+      <section ref={panelRef} className={`panel ${compactMatch?'compact-match':''} ${locked?'has-result':''}`} aria-label={config.title}>
         {state.phase==='intro'&&<div className="intro-screen"><div className="intro-emblem" aria-hidden="true">🧭</div><h2>{config.intro.heading}</h2>{isGrade1&&voiceError&&!muted&&<p role="status" className="voice-error">Chưa phát được giọng đọc. Nhờ người lớn hỗ trợ nhé!</p>}<p className="intro-story">{config.intro.story}</p><div className="intro-rules"><span>🧩 {total} thử thách</span><span>{config.collectible.icon} Tìm đủ {rewardCount} {config.collectible.name}</span><span>🔎 Sai? Truy lại dấu vết!</span></div><p className="intro-call">{config.intro.call}</p><button className="btn intro-start" onClick={()=>{void audio.preload();act('next',()=>dispatch({type:'start',count:total}));}}>🚀 BẮT ĐẦU KHÁM PHÁ</button></div>}
         {state.phase==='question'&&<>
           <h2 className={`prompt ${isGrade1?'voice-prompt':''}`}>{isGrade1&&<button className="voice-question" onClick={()=>speak(question.prompt)} aria-label="Nghe lại câu hỏi">🔊</button>}<span>{question.prompt}</span></h2>
@@ -217,11 +221,32 @@ export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void
  text-shadow:0 1px 2px #7c2d12!important;
  font-size:clamp(16px,2.2vw,29px)!important;line-height:1.25!important;
  padding:9px 16px!important;white-space:normal!important;overflow-wrap:anywhere!important;
- height:auto!important;min-height:0!important;
+ flex-shrink:0!important;height:auto!important;min-height:0!important;
 }
 .scene:not(.is-victory) .panel .prompt span {color:#fff!important;white-space:normal!important;overflow-wrap:anywhere!important}
 .scene:not(.is-victory) .answers button[data-choice],
 .scene:not(.is-victory) .match button {white-space:normal!important;overflow-wrap:anywhere!important;line-height:1.2!important}
+@media(min-width:651px){
+ .scene.safe-layout:not(.is-victory):has(.prompt){
+  --banner-bottom:min(19.125vw,calc(var(--embedded-height,100dvh) * .55));
+ }
+ .scene.safe-layout.grade45-question{
+  --question-top:min(calc(16.5vw + 5px),calc(var(--embedded-height,100dvh) * .55));
+ }
+ .scene.safe-layout:not(.is-victory) .panel:has(.prompt){
+  overflow-y:auto!important;scrollbar-width:thin;
+ }
+ .scene.safe-layout:not(.is-victory):not(.grade45-question) .panel:has(.prompt){
+  max-height:calc(var(--embedded-height,100dvh) - var(--banner-bottom) - 28px)!important;
+  justify-content:safe center!important;
+ }
+ .scene.safe-layout.grade45-question .panel .match{
+  flex:none!important;height:auto!important;max-height:none!important;
+ }
+ .scene.safe-layout.grade45-question .panel .matchcol{
+  height:auto!important;grid-template-rows:none!important;grid-auto-rows:minmax(44px,1fr);
+ }
+}
 @media(max-width:650px) and (orientation:portrait){
  :host([data-embedded]){display:block!important;min-height:100%!important;overflow:visible!important}
  :host([data-embedded]) .scene:not(.is-victory){height:auto!important;min-height:var(--embedded-height,100dvh)!important;overflow-y:auto!important;overscroll-behavior:contain!important}

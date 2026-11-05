@@ -8,9 +8,9 @@ export function constrainAssistantPosition(position:AssistantPosition,width:numb
   };
 }
 
-// Keep the compact game launcher above the mobile victory action row.
+// Keep the compact launcher clear of the Stage 2 actions.
 export function compactAssistantPosition(width:number,height:number,stage?:number):AssistantPosition {
   return width < 1024
     ? stage===2 ? {x:8,y:Math.max(8,height-144)} : {x:64,y:10}
-    : {x:Math.max(4,(width-48)/2),y:Math.max(4,height-56)};
+    : {x:stage===2 ? 12 : Math.max(4,(width-48)/2),y:Math.max(4,height-56)};
 }

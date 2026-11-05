@@ -38,6 +38,13 @@ test("compact game assistant clears the mobile victory buttons",()=>{
  }
 });
 
+test('desktop Stage 2 launcher stays to the left of the answer panel',()=>{
+ for(const [width,height] of [[1024,540],[1366,610],[1920,1080]]){
+  const p=compactAssistantPosition(width,height,2);
+  assert.ok(p.x+48<width*.1);
+ }
+});
+
 
 test('context prompts distinguish teachers, students and quiz-safe mode, with at most three options',()=>{
  const teacher=buildAssistantFollowUps({audience:'teacher',topic:'san hô'});

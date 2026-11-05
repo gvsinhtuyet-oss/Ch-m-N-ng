@@ -21,7 +21,7 @@ import {
 const compactPosition = (width:number,height:number,stage?:number):AssistantPosition =>
   width < 1024
     ? stage===2 ? {x:8,y:Math.max(8,height-144)} : {x:64,y:10}
-    : {x:Math.max(4,(width-48)/2),y:Math.max(4,height-56)};
+    : {x:stage===2 ? 12 : Math.max(4,(width-48)/2),y:Math.max(4,height-56)};
 
 interface Props {
   station?: Station | null;

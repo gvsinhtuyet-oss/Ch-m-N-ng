@@ -113,7 +113,12 @@ function GameSurface({config:originalConfig,onComplete,embedded=false}:{config:G
     const root=sceneRef.current.getRootNode();
     if(root instanceof ShadowRoot)root.host.closest<HTMLElement>('.station-lesson-panel')?.scrollIntoView({block:'start',behavior:'instant'});
   },[embedded,victory]);
-  return <main ref={sceneRef} className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${victory?'is-victory':''} ${grade45Question?'grade45-question':''} ${isGrade1?'grade1-game':''} ${/^g[12]-/.test(config.stationId)?'grade2-game':''}`} style={{backgroundImage: victory ? `url("${config.victoryBackground}"),url("${config.victoryBackground}")` : `url("${config.background}")`}}>
+  const artwork = `url("${config.background}")`;
+  const sceneStyle = {
+    '--game-artwork': artwork,
+    backgroundImage: victory ? `url("${config.victoryBackground}"),url("${config.victoryBackground}")` : artwork,
+  } as React.CSSProperties;
+  return <main ref={sceneRef} className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${victory?'is-victory':''} ${grade45Question?'grade45-question':''} ${isGrade1?'grade1-game':''} ${/^g[12]-/.test(config.stationId)?'grade2-game':''}`} style={sceneStyle}>
     <h1 className="preview-title">{config.title}</h1>
     {isGrade1&&state.phase==='intro'&&<button className="voice-question intro-voice" onClick={()=>playRecorded('intro')} aria-label="Nghe giới thiệu thử thách">🔊</button>}
     {isGrade1&&state.phase==='review'&&<button className="voice-question intro-voice" onClick={()=>playRecorded('review')} aria-label="Nghe lại hướng dẫn truy lại dấu vết">🔊</button>}

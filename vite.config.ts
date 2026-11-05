@@ -74,7 +74,13 @@ export default defineConfig(async ({mode, command}) => {
           // Let the network handle the front door before falling back to the cached shell.
           directoryIndex: null,
           // The root has its own route. Serve embedded games as their own documents.
-          navigateFallbackDenylist: [/^\/(?:\?|$)/, /^\/games\/grade3-my-khe-ban-than\/v12(?:\/index\.html|\/)?(?:\?|$)/, /^\/api\//, /^\/nam-o-background-review\.html(?:\?|$)/],
+          navigateFallbackDenylist: [
+            /^\/(?:\?|$)/,
+            /^\/games\/grade3-my-khe-ban-than\/v12(?:\/index\.html|\/)?(?:\?|$)/,
+            /^\/games\/grade3-hoang-dieu-phan-chau-trinh\/v18(?:\/index\.html|\/)?(?:\?|$)/,
+            /^\/api\//,
+            /^\/nam-o-background-review\.html(?:\?|$)/,
+          ],
           // Install only the shell. Lesson assets and feature chunks are cached on use.
           globPatterns: ['index.html', 'registerSW.js', 'assets/*.{js,css}', '*.{ico,png,svg}'],
           // Keep only startup scripts referenced by HTML, never lazy features.

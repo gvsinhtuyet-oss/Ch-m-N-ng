@@ -44,5 +44,5 @@ export const MyKheBanThanV12: React.FC<Props> = ({station,studentId,isReadOnly,o
     window.addEventListener('message',handler);
     return () => window.removeEventListener('message',handler);
   },[onContinue]);
-  return <iframe id="my-khe-v12-frame" title="Mật mã hai miền biển – Chặng 2" src="/games/grade3-my-khe-ban-than/v12/index.html" className="block h-[100dvh] min-h-[500px] w-full rounded-2xl border-0" allow="autoplay; fullscreen" onLoad={fitMobileGameArtwork} />;
+  return <iframe data-stage2-game-frame id="my-khe-v12-frame" title="Mật mã hai miền biển – Chặng 2" src="/games/grade3-my-khe-ban-than/v12/index.html" className="block h-[100dvh] min-h-[500px] w-full rounded-2xl border-0" allow="autoplay; fullscreen" onLoad={fitMobileGameArtwork} />;
 };

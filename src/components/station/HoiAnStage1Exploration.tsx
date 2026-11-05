@@ -507,7 +507,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       ? (index < station.hotspots.length - 1
                           ? `Chính xác! Em đã mở Điểm ${index + 2}. Hãy tiếp tục khám phá nhé!`
                           : 'Chính xác! Em đã hoàn thành câu hỏi ở điểm cuối.')
-                      : 'Chưa đúng rồi! Gợi ý: Em nghe lại lời thuyết minh phía trên nhé. Sau 2 giây, em có thể chọn đáp án khác.'}
+                      : 'Gợi ý: Em xem lại ảnh hoặc nghe lại lời thuyết minh nhé!'}
                   </p>
                 )}
 

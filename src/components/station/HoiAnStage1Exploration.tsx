@@ -424,7 +424,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
           {/* On small screens, switch panels instead of shrinking the lesson text. */}
           <div className="stage1-panel-switch" role="group" aria-label="Nội dung điểm khám phá">
             <button type="button" aria-pressed={compactPanel === 'observe'} onClick={() => setCompactPanel('observe')}>Ảnh & kiến thức</button>
-            <button type="button" aria-pressed={compactPanel === 'quiz'} onClick={() => setCompactPanel('quiz')}>Thử tài quan sát</button>
+            <button type="button" aria-pressed={compactPanel === 'quiz'} onClick={() => setCompactPanel('quiz')}>Câu hỏi khám phá</button>
           </div>
           {/* RIGHT: information rail */}
           <aside className="hoi-an-right-rail flex min-h-0 min-w-0 flex-col gap-3">
@@ -449,7 +449,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   quizHeadingRef.current?.focus({preventScroll: true});
                   quizHeadingRef.current?.scrollIntoView({block: 'start'});
                 }}>
-                Thử tài quan sát <ChevronDown aria-hidden="true" size={18} />
+                Câu hỏi khám phá <ChevronDown aria-hidden="true" size={18} />
               </button>}
             </div>
 
@@ -459,7 +459,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-600 text-xs font-black text-white shadow-sm shadow-sky-300/60">
                     ?
                   </span>
-                  <h3 ref={quizHeadingRef} tabIndex={-1} className="text-[15px] font-black text-slate-950 sm:text-base">Thử tài quan sát</h3>
+                  <h3 ref={quizHeadingRef} tabIndex={-1} className="text-[15px] font-black text-slate-950 sm:text-base">Câu hỏi khám phá</h3>
                 </div>
 
                 <p className="text-[13px] font-black leading-6 text-slate-800 sm:text-[14px]">

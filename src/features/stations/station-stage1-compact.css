@@ -257,6 +257,13 @@ body:has(.station-screen-fixed){overflow:hidden;overscroll-behavior:none}
   }
 }
 
+@media (max-width: 650px) and (orientation: portrait) {
+  .station-viewport[data-stage="2"] .station-lesson-panel iframe[data-stage2-game-frame] {
+    height:var(--stage2-frame-height, 100dvh)!important;
+    min-height:0!important;
+  }
+}
+
 .stage1-phone-only { display: none; }
 .stage1-photo { position: absolute; inset: 0; }
 

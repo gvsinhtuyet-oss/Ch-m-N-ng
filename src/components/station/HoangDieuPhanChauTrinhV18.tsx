@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { progressService } from '../../services/ProgressService';
+import { usePortraitStage2Frame } from '../../games/stage2/usePortraitStage2Frame';
 import type { Station } from '../../types';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 /** Approved V18 historical challenge for grade 3 station 2. */
 export const HoangDieuPhanChauTrinhV18: React.FC<Props> = ({ station, studentId, isReadOnly, onCompleteStage }) => {
   const frameRef = useRef<HTMLIFrameElement>(null);
+  const fitPortrait = usePortraitStage2Frame();
   const completed = useRef(false);
   const onContinue = useCallback(() => {
     if (completed.current) return;
@@ -31,7 +33,7 @@ export const HoangDieuPhanChauTrinhV18: React.FC<Props> = ({ station, studentId,
     return () => window.removeEventListener('message', handler);
   }, [onContinue]);
 
-  const prepareGame = () => {
+  const prepareGame = (event: React.SyntheticEvent<HTMLIFrameElement>) => {
     const doc = frameRef.current?.contentDocument;
     if (!doc?.querySelector('.scene') || doc.getElementById('cham-danang-shared-audio')) return;
     const mobileLayout = doc.createElement('style');
@@ -48,6 +50,7 @@ export const HoangDieuPhanChauTrinhV18: React.FC<Props> = ({ station, studentId,
       }
     `;
     doc.head.append(mobileLayout);
+    fitPortrait(event);
     const script = doc.createElement('script');
     script.id = 'cham-danang-shared-audio';
     script.src = '/games/shared/game-audio.js';

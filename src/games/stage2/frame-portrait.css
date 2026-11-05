@@ -1,0 +1,32 @@
+html[data-stage2-portrait] body {
+  height:auto!important;overflow:visible!important;margin:0;
+}
+html[data-stage2-portrait] .scene::before { opacity:1; }
+html[data-stage2-portrait] .scene .shell > .head { display:none!important; }
+html[data-stage2-portrait] .scene:not(.is-victory) .shell:not(:has(>.hud)) { margin-top:0!important; }
+html[data-stage2-portrait] .scene:not(.is-victory) .shell:not(:has(>.hud)) .top {
+  display:flex!important;flex-wrap:wrap;gap:4px;margin:0!important;
+}
+html[data-stage2-portrait] .scene:not(.is-victory) .feedback:empty,
+html[data-stage2-portrait] .scene:not(.is-victory) .controls:has(>span:only-child) { display:none!important; }
+html[data-stage2-portrait] .scene:not(.is-victory) .panel .prompt {
+  box-sizing:border-box;width:fit-content;max-width:100%!important;margin:0 auto 6px!important;
+  padding:8px 12px!important;border:2px solid #fed7aa!important;border-radius:18px!important;
+  background:linear-gradient(#fb923c,#ea580c)!important;color:#fff!important;
+  box-shadow:0 5px 0 #9a3412,0 8px 16px #43140755!important;
+  font-size:clamp(15px,4.1vw,20px)!important;line-height:1.25!important;
+}
+html[data-stage2-portrait] .scene:not(.is-victory) .answers:has(.choice-photo) {
+  display:grid!important;max-width:100%!important;
+}
+html[data-stage2-portrait] .scene:not(.is-victory) .music-toggle { min-width:44px;min-height:44px; }
+html[data-stage2-portrait] .scene.is-victory,
+html[data-stage2-portrait] .scene.is-victory .shell.finished { min-height:0!important; }
+html[data-stage2-portrait] .scene.is-victory .shell.finished {
+  padding:calc(56.25vw + 16px) 10px max(24px,env(safe-area-inset-bottom))!important;
+}
+html[data-stage2-portrait] .scene.is-victory .victory-praise,
+html[data-stage2-portrait] .scene.is-victory .victory-achievement,
+html[data-stage2-portrait] .scene.is-victory .victory-reward {
+  color:#683b16!important;text-shadow:none!important;-webkit-text-stroke:0;
+}

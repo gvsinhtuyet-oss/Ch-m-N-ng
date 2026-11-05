@@ -15,7 +15,6 @@ import { RewardClaimModal } from '../common/RewardClaimModal';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import {
   CheckCircle2,
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
@@ -54,7 +53,6 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const [index, setIndex] = useState(0);
   const previousIndex = useRef(index);
   const pointHeadingRef = useRef<HTMLDivElement>(null);
-  const quizQuestionRef = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
     if (previousIndex.current !== index && window.matchMedia('(max-width: 640px) and (orientation: portrait)').matches) {
       pointHeadingRef.current?.scrollIntoView({block: 'start'});
@@ -447,15 +445,12 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
             </div>
 
             {hotspot.interaction ? (
-              <div className="stage1-quiz shrink-0 rounded-[1.5rem] border-2 border-sky-200 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-4 shadow-sm">
-                <button type="button" className="stage1-quiz-link"
-                  onClick={() => {
-                    quizQuestionRef.current?.focus({preventScroll: true});
-                    quizQuestionRef.current?.scrollIntoView({block: 'nearest'});
-                  }}>
-                  Thử tài trí nhớ <ChevronDown aria-hidden="true" size={18} />
-                </button>
-                <p ref={quizQuestionRef} tabIndex={-1} className="text-[13px] font-black leading-6 text-slate-800 sm:text-[14px]">
+              <div className="stage1-quiz shrink-0 rounded-[1.5rem] border p-4">
+                <h3 className="stage1-quiz-title">
+                  <span aria-hidden="true" className="stage1-quiz-symbol">?</span>
+                  Thử tài trí nhớ
+                </h3>
+                <p className="text-[13px] font-black leading-6 text-slate-800 sm:text-[14px]">
                   {hotspot.interaction.questionVi}
                 </p>
 
@@ -463,7 +458,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   {options.map(option => {
                     const active = selected === option.id;
                     let className =
-                      'border-sky-100 bg-white text-slate-800 hover:border-sky-300 hover:bg-sky-50';
+                      'border-amber-200 bg-[#fffefa] text-slate-800 hover:border-amber-400';
 
                     if (submitted && correct && option.isCorrect) {
                       className =
@@ -472,18 +467,20 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       className = 'border-rose-400 bg-rose-50 text-rose-700';
                     } else if (active) {
                       className =
-                        'border-sky-500 bg-sky-100 text-sky-900 ring-2 ring-sky-200';
+                        'border-sky-600 bg-sky-50 text-sky-900';
                     }
 
                     return (
                       <button
                         key={option.id}
                         type="button"
+                        aria-pressed={active}
                         disabled={submitted || wrongLocked}
                         onClick={() => choose(option.id)}
-                        className={`w-full rounded-xl border px-3.5 py-3 text-left text-[13px] font-bold leading-5 transition sm:text-[14px] ${className}`}
+                        className={`flex w-full items-center justify-between gap-2 rounded-xl border px-3.5 py-3 text-left text-[13px] font-bold leading-5 transition sm:text-[14px] ${className}`}
                       >
                         {option.textVi}
+                        {active && !submitted && <CheckCircle2 aria-hidden="true" className="h-4 w-4 shrink-0" />}
                       </button>
                     );
                   })}
@@ -510,7 +507,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       type="button"
                       disabled={options.length !== 2 || !selected || wrongLocked}
                       onClick={check}
-                      className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 py-3.5 text-sm font-black !text-white shadow-md shadow-orange-200/70 transition hover:from-orange-600 hover:to-amber-600 disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
+                      className="w-full rounded-xl py-3.5 text-sm font-black transition enabled:bg-gradient-to-r enabled:from-orange-700 enabled:to-amber-700 enabled:text-white enabled:shadow-md enabled:hover:from-orange-800 enabled:hover:to-amber-800 disabled:bg-slate-100 disabled:text-slate-600"
                     >
                       KIỂM TRA
                     </button>

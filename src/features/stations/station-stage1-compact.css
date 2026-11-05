@@ -24,7 +24,23 @@
 .station-stage1-compact .hoi-an-right-rail p{line-height:1.45;overflow-wrap:anywhere}
 .station-stage1-compact .stage1-reading>p{margin-top:0;font-size:14px}
 .station-stage1-compact .stage1-reading>div{margin-top:7px;padding:8px}
+.station-stage1-compact .stage1-key-fact p:first-child { font-size: 12px; }
+.station-stage1-compact .stage1-key-fact p + p { font-size: 14px; line-height: 1.5; }
 .station-stage1-compact .stage1-quiz>p{line-height:1.4}
+.station-stage1-compact .stage1-quiz .stage1-quiz-link {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  color: white;
+  background: #b9490a;
+  font-size: 16px;
+  font-weight: 900;
+}
 .station-stage1-compact .stage-one-answer-options{margin-top:8px;gap:6px}
 .station-stage1-compact .stage-one-answer-options button{min-height:44px;padding:7px 10px;overflow-wrap:anywhere}
 .station-stage1-compact .stage-one-hotspot-ribbon{padding:6px!important;border-radius:13px;min-width:0;width:100%;margin-top:0}
@@ -104,7 +120,6 @@
  .station-stage1-compact .stage1-visual-column>.relative{flex:1 1 0;min-height:80px;height:auto}
  .station-stage1-compact .hoi-an-right-rail{flex:0 1 auto}
  .station-stage1-compact .stage1-reading>p{font-size:13px;line-height:1.35}
- .station-stage1-compact .stage1-reading>div{display:none}
  .station-stage1-compact .stage1-quiz>p{font-size:13px;line-height:1.35}
  .station-stage1-compact .stage-one-answer-options{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
@@ -387,24 +402,6 @@ body:has(.station-screen-fixed){overflow:hidden;overscroll-behavior:none}
     margin-bottom: 5px;
     color: #8b3c10;
     font-size: 15px;
-    font-weight: 900;
-  }
-  .station-stage1-compact .stage1-reading > .stage1-key-fact { display: block; }
-  .station-stage1-compact .stage1-key-fact p:first-child { font-size: 12px; }
-  .station-stage1-compact .stage1-key-fact p + p { font-size: 14px; line-height: 1.5; }
-  .station-stage1-compact .stage1-quiz-heading { display: none; }
-  .station-stage1-compact .stage1-quiz .stage1-quiz-link {
-    display: flex;
-    width: 100%;
-    min-height: 44px;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    margin-bottom: 8px;
-    border-radius: 10px;
-    color: white;
-    background: #b9490a;
-    font-size: 16px;
     font-weight: 900;
   }
   .station-stage1-compact .stage-one-answer-options { grid-template-columns: minmax(0, 1fr) !important; }

@@ -424,7 +424,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
           {/* On small screens, switch panels instead of shrinking the lesson text. */}
           <div className="stage1-panel-switch" role="group" aria-label="Nội dung điểm khám phá">
             <button type="button" aria-pressed={compactPanel === 'observe'} onClick={() => setCompactPanel('observe')}>Ảnh & kiến thức</button>
-            <button type="button" aria-pressed={compactPanel === 'quiz'} onClick={() => setCompactPanel('quiz')}>Câu hỏi khám phá</button>
+            <button type="button" aria-pressed={compactPanel === 'quiz'} onClick={() => setCompactPanel('quiz')}>Trả lời câu hỏi</button>
           </div>
           {/* RIGHT: information rail */}
           <aside className="hoi-an-right-rail flex min-h-0 min-w-0 flex-col gap-3">
@@ -435,7 +435,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               </p>
 
               {hotspot.keyFactVi && (
-                <div className={`stage1-key-fact ${explored ? '' : 'stage1-phone-only'} mt-3 rounded-2xl border border-amber-300 bg-gradient-to-r from-yellow-50 via-amber-50 to-orange-50 p-3 shadow-sm shadow-amber-100/60`}>
+                <div className="stage1-key-fact mt-3 rounded-2xl border border-amber-300 bg-gradient-to-r from-yellow-50 via-amber-50 to-orange-50 p-3 shadow-sm shadow-amber-100/60">
                   <p className="text-[9px] font-black uppercase tracking-wide text-amber-700">
                     Điều thú vị cần nhớ
                   </p>
@@ -448,14 +448,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
             {hotspot.interaction ? (
               <div className="stage1-quiz shrink-0 rounded-[1.5rem] border-2 border-sky-200 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-4 shadow-sm">
-                <div className="stage1-quiz-heading mb-2 flex items-center gap-2">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-600 text-xs font-black text-white shadow-sm shadow-sky-300/60">
-                    ?
-                  </span>
-                  <h3 className="text-[15px] font-black text-slate-950 sm:text-base">Câu hỏi khám phá</h3>
-                </div>
-
-                <button type="button" className="stage1-phone-only stage1-quiz-link"
+                <button type="button" className="stage1-quiz-link"
                   onClick={() => {
                     quizQuestionRef.current?.focus({preventScroll: true});
                     quizQuestionRef.current?.scrollIntoView({block: 'nearest'});

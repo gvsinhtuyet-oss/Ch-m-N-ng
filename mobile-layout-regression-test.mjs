@@ -17,11 +17,14 @@ test('phone shell and four-stage toolbar use natural flow and a two-row tab grid
  assert.match(index,/station-stage-tabs[\s\S]*?grid-row:2!important/);
  assert.match(index,/station-stage-tab-name[\s\S]*?overflow-wrap:anywhere!important/);
 });
-test('phone destination selection cannot force five cramped vertical strips',()=>{
- assert.match(index,/max-width:640px[\s\S]*?journey-station-grid\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)!important/);
- assert.match(index,/journey-station-grid>article>div:first-child\{flex:none!important;min-height:0!important;aspect-ratio:16\/10/);
+test('portrait destination selection snaps vertically one station at a time',()=>{
+ const phone=index.slice(index.lastIndexOf('@media (max-width: 640px) and (orientation: portrait)'));
+ assert.match(phone,/scroll-snap-type: y mandatory/);
+ assert.match(phone,/grid-template-columns: minmax\(0, 1fr\) !important/);
+ assert.match(phone,/min-height: var\(--station-page-height\) !important/);
+ assert.match(phone,/scroll-snap-stop: always/);
+ assert.match(phone,/journey-extension .*scroll-snap-align: start/);
  assert.match(landing,/grid-cols-2 gap-3 sm:grid-cols-5/);
- assert.match(index,/journey-overview-hero h1\{font-size:clamp/);
 });
 test('cover keeps 2-row identity, fixed 16:9 video and accessible buttons',()=>{
  assert.match(cover,/landing-cover-title\s*\{[\s\S]*?flex-direction:column!important/);

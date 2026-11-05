@@ -15,6 +15,7 @@ import { RewardClaimModal } from '../common/RewardClaimModal';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import {
   CheckCircle2,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
@@ -51,6 +52,15 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
   const readOnly = role !== 'student';
 
   const [index, setIndex] = useState(0);
+  const previousIndex = useRef(index);
+  const pointHeadingRef = useRef<HTMLDivElement>(null);
+  const quizHeadingRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    if (previousIndex.current !== index && window.matchMedia('(max-width: 640px) and (orientation: portrait)').matches) {
+      pointHeadingRef.current?.scrollIntoView({block: 'start'});
+    }
+    previousIndex.current = index;
+  }, [index]);
   const [compactPanel, setCompactPanel] = useState<'observe' | 'quiz'>('observe');
   useEffect(() => { setCompactPanel('observe'); }, [index, station.id]);
   const [narrationState, setNarrationState] = useState<NarrationState>('idle');
@@ -264,7 +274,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
         <div className="grid min-w-0 grid-cols-1 items-start gap-3 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
           {/* LEFT: immersive visual explorer */}
           <div className="stage1-visual-column flex min-h-0 min-w-0 flex-col gap-3">
-            <div className="stage1-point-heading rounded-2xl bg-white/95 p-4 shadow-sm">
+            <div ref={pointHeadingRef} className="stage1-point-heading rounded-2xl bg-white/95 p-4 shadow-sm">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
@@ -279,10 +289,12 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                     )}
                   </div>
                   <h2 className="mt-2 text-xl font-black leading-tight text-slate-950">
-                    {hotspot.titleVi}
+                    <span className="stage1-phone-only stage1-point-counter">Điểm {index + 1}/{station.hotspots.length} · </span>
+                    <span className="stage1-wide-label">{hotspot.titleVi}</span>
+                    <span className="stage1-phone-only">{hotspot.titleVi.replace(/^\d+\.\s*/, '')}</span>
                   </h2>
                   {hotspot.subtitleVi && (
-                    <p className="mt-1 text-xs font-bold text-orange-700">
+                    <p className="stage1-point-subtitle mt-1 text-xs font-bold text-orange-700">
                       {hotspot.subtitleVi}
                     </p>
                   )}
@@ -295,7 +307,8 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               {narrationMessage && <p role="status" className="mt-2 text-sm text-amber-900">{narrationMessage}</p>}
             </div>
 
-            <div className="relative min-h-[300px] aspect-[16/10] overflow-hidden rounded-[1.65rem] border-2 border-orange-200 bg-slate-950 shadow-xl">
+            <div className="stage1-media relative min-h-[300px] aspect-[16/10] overflow-hidden rounded-[1.65rem] border-2 border-orange-200 bg-slate-950 shadow-xl">
+              <div className="stage1-photo">
               <button
                 type="button"
                 onClick={() => openImagePreview(index)}
@@ -323,12 +336,14 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
 
               </button>
 
-              <div className="stage1-image-tools"><StationExplorationTools station={station} onOpenChange={onToolsOpenChange || (() => {})} /></div>
               <button type="button" onClick={() => openImagePreview(index)} aria-label="Phóng to hình ảnh" className="absolute right-3 top-3 z-20 rounded-xl bg-slate-900/75 p-3 text-white shadow-lg"><Maximize2 className="h-5 w-5" /></button>
 
+              </div>
+              <div className="stage1-image-tools"><StationExplorationTools station={station} onOpenChange={onToolsOpenChange || (() => {})} /></div>
             </div>
-        <section className="stage-one-hotspot-ribbon mt-1 shrink-0 rounded-[1.5rem] border-2 border-amber-300 bg-gradient-to-r from-amber-50 via-white to-orange-50 p-3 shadow-md">
+        <section aria-label="Các điểm chạm khám phá" className="stage-one-hotspot-ribbon mt-1 shrink-0 rounded-[1.5rem] border-2 border-amber-300 bg-gradient-to-r from-amber-50 via-white to-orange-50 p-3 shadow-md">
           <h2 className="mb-3 text-base font-black text-amber-900">📍 CÁC ĐIỂM CHẠM KHÁM PHÁ</h2>
+          <span className="stage1-phone-only stage1-hotspot-label" aria-hidden="true">Điểm chạm</span>
                       {/* hotspot shortcut cards */}
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
               {station.hotspots.map((item, itemIndex) => {
@@ -371,7 +386,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                       <span className={`flex items-center gap-1 text-[9px] font-black uppercase ${
                         done ? 'text-emerald-700' : isCurrentOpen ? 'text-sky-700' : 'text-slate-400'
                       }`}>
-                        Điểm {itemIndex + 1}
+                        <span className="stage1-wide-label">Điểm </span>{itemIndex + 1}
                         {done ? (
                           <CheckCircle2 className="h-3 w-3 text-emerald-600" />
                         ) : !unlocked ? (
@@ -414,6 +429,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
           {/* RIGHT: information rail */}
           <aside className="hoi-an-right-rail flex min-h-0 min-w-0 flex-col gap-3">
             <div className="stage1-reading shrink-0 rounded-[1.5rem] border-2 border-amber-300 bg-gradient-to-br from-amber-50 via-white to-orange-50 p-4 shadow-sm">
+              {hotspot.subtitleVi && <h3 className="stage1-phone-only stage1-reading-title">{hotspot.subtitleVi}</h3>}
               <p className="mt-3 pr-1 text-[13px] font-semibold leading-6 text-slate-700 sm:text-[14px]">
                 {hotspot.narrationVi}
               </p>
@@ -428,6 +444,13 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   </p>
                 </div>
               )}
+              {hotspot.interaction && <button type="button" className="stage1-phone-only stage1-quiz-link"
+                onClick={() => {
+                  quizHeadingRef.current?.focus({preventScroll: true});
+                  quizHeadingRef.current?.scrollIntoView({block: 'start'});
+                }}>
+                Thử tài quan sát <ChevronDown aria-hidden="true" size={18} />
+              </button>}
             </div>
 
             {hotspot.interaction ? (
@@ -436,7 +459,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
                   <span className="flex h-7 w-7 items-center justify-center rounded-full bg-sky-600 text-xs font-black text-white shadow-sm shadow-sky-300/60">
                     ?
                   </span>
-                  <h3 className="text-[15px] font-black text-slate-950 sm:text-base">Thử tài quan sát</h3>
+                  <h3 ref={quizHeadingRef} tabIndex={-1} className="text-[15px] font-black text-slate-950 sm:text-base">Thử tài quan sát</h3>
                 </div>
 
                 <p className="text-[13px] font-black leading-6 text-slate-800 sm:text-[14px]">
@@ -505,7 +528,7 @@ export const HoiAnStage1Exploration: React.FC<Props> = ({ station, onCompleteSta
               </div>
             ) : null}
 
-            <div className="flex items-center gap-1.5 rounded-xl bg-emerald-50 px-3 py-2" aria-label="Tiến độ điểm chạm">
+            <div className="stage1-progress-strip flex items-center gap-1.5 rounded-xl bg-emerald-50 px-3 py-2" aria-label="Tiến độ điểm chạm">
               {station.hotspots.map((item, itemIndex) => <span key={item.id} className={`h-2 flex-1 rounded-full ${itemIndex === index ? 'bg-orange-500' : completedHotspotIds.has(item.id) ? 'bg-emerald-400' : 'bg-slate-200'}`} />)}
             </div>
             <div className="stage1-point-navigation flex gap-2" aria-label="Chuyển điểm khám phá">

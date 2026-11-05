@@ -103,6 +103,9 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const shortNames = ['Khám phá', 'Thử thách', 'Cảm xúc', 'Dấu ấn'];
   const renderStageTabs = (label: string) => (
     <nav aria-label={label} className="station-stage-tabs">
+      {currentStage === 1 && <span className="stage1-phone-only station-stage-phone-summary" aria-hidden="true">
+        <strong>Chặng 1/4</strong><span>Khám phá</span>
+      </span>}
       {stages.map(st => {
         const active = currentStage === st.num;
         const done = !isReadOnly && (isUnlockedAllStages || st.num < highestAccessibleStage);
@@ -118,6 +121,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
           }}
           className={`station-stage-tab ${active ? 'is-active' : ''} ${done ? 'is-complete' : ''}`}>
           <span className="station-stage-tab-title">{!clickable ? <LockKeyhole aria-hidden="true" /> : <st.icon aria-hidden="true" />}{done && <CheckCircle2 className="station-stage-complete-mark" aria-hidden="true" />}</span>
+          {currentStage === 1 && <span className="stage1-phone-only station-stage-phone-number" aria-hidden="true">{st.num}</span>}
           <span className="station-stage-tab-name"><span className="stage-full-name">{st.name}</span><span className="stage-touch-name">{st.num}. {shortNames[st.num-1]}</span></span>
         </button>;
       })}

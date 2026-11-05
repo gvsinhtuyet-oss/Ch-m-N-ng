@@ -249,10 +249,11 @@ body:has(.station-screen-fixed){overflow:hidden;overscroll-behavior:none}
  .station-stage1-compact [data-compact-panel="quiz"] .stage1-reading,.station-stage1-compact [data-compact-panel="quiz"] .stage1-visual-column>.relative{display:none!important}
 }
 
-@media (max-width: 640px) {
-  .station-viewport[data-stage="2"] .station-lesson-panel #my-khe-v12-frame {
+@media (max-width: 1023px) {
+  .station-viewport[data-stage="2"] .station-lesson-panel iframe[data-stage2-game-frame] {
+    height: 100vh !important;
     height: 100dvh !important;
-    min-height: 600px !important;
+    min-height: 720px !important;
   }
 }
 

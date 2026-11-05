@@ -31,9 +31,23 @@ export const HoangDieuPhanChauTrinhV18: React.FC<Props> = ({ station, studentId,
     return () => window.removeEventListener('message', handler);
   }, [onContinue]);
 
-  const installSharedAudio = () => {
+  const prepareGame = () => {
     const doc = frameRef.current?.contentDocument;
-    if (!doc || doc.getElementById('cham-danang-shared-audio')) return;
+    if (!doc?.querySelector('.scene') || doc.getElementById('cham-danang-shared-audio')) return;
+    const mobileLayout = doc.createElement('style');
+    mobileLayout.textContent = `
+      @media (max-width: 650px) {
+        html, body { height: auto !important; overflow-y: auto !important; }
+        .scene:not(.is-victory), .scene:not(.is-victory) .shell {
+          height: auto !important;
+          min-height: 100vh !important;
+          min-height: 100dvh !important;
+          overflow: visible !important;
+        }
+        .scene:not(.is-victory) .panel { max-height: none !important; }
+      }
+    `;
+    doc.head.append(mobileLayout);
     const script = doc.createElement('script');
     script.id = 'cham-danang-shared-audio';
     script.src = '/games/shared/game-audio.js';
@@ -41,5 +55,5 @@ export const HoangDieuPhanChauTrinhV18: React.FC<Props> = ({ station, studentId,
     (doc.head || doc.documentElement).appendChild(script);
   };
 
-  return <iframe onLoad={installSharedAudio} ref={frameRef} title="Giải mã dấu ấn lịch sử – Chặng 2" src="/games/grade3-hoang-dieu-phan-chau-trinh/v18/index.html" className="block h-[100dvh] min-h-[500px] w-full rounded-2xl border-0" allow="autoplay; fullscreen" />;
+  return <iframe data-stage2-game-frame onLoad={prepareGame} ref={frameRef} title="Giải mã dấu ấn lịch sử – Chặng 2" src="/games/grade3-hoang-dieu-phan-chau-trinh/v18/index.html" className="block h-[100dvh] min-h-[500px] w-full rounded-2xl border-0" allow="autoplay; fullscreen" />;
 };

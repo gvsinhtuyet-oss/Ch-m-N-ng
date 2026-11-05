@@ -69,8 +69,10 @@ export default defineConfig(async ({mode, command}) => {
           ],
         },
         workbox: {
-          // Serve the embedded game document instead of the SPA shell.
-          navigateFallbackDenylist: [/^\/games\/grade3-my-khe-ban-than\/v12(?:\/index\.html|\/)?(?:\?|$)/, /^\/api\//, /^\/nam-o-background-review\.html(?:\?|$)/],
+          // Let the network handle the front door before falling back to the cached shell.
+          directoryIndex: null,
+          // The root has its own route. Serve embedded games as their own documents.
+          navigateFallbackDenylist: [/^\/(?:\?|$)/, /^\/games\/grade3-my-khe-ban-than\/v12(?:\/index\.html|\/)?(?:\?|$)/, /^\/api\//, /^\/nam-o-background-review\.html(?:\?|$)/],
           // Install only the shell. Lesson assets and feature chunks are cached on use.
           globPatterns: ['index.html', 'registerSW.js', 'assets/*.{js,css}', '*.{ico,png,svg}'],
           // Keep only startup scripts referenced by HTML, never lazy features.
@@ -88,6 +90,14 @@ export default defineConfig(async ({mode, command}) => {
           }],
           cleanupOutdatedCaches: true,
           runtimeCaching: [
+            {
+              urlPattern: ({url, request, sameOrigin}) =>
+                sameOrigin && request.mode === 'navigate' && url.pathname === '/',
+              handler: 'NetworkOnly',
+              options: {
+                precacheFallback: {fallbackURL: '/index.html'},
+              },
+            },
             {
               urlPattern: ({url, request}) => url.origin === self.location.origin && request.destination === 'script',
               handler: 'NetworkFirst',

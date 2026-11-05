@@ -586,6 +586,16 @@ body:has(.journey-screen-fixed){overflow:hidden}
 }
 .station-tools-dots,.station-phone-stage-name{display:none}
 @media (max-width:640px) {
+ .journey-maps-grid{grid-template-columns:minmax(0,1fr)!important}
+ .station-compact-header .station-stage-tabs .station-stage-tab{min-height:44px!important}
+ .station-compact-header .station-stage-tabs .station-stage-tab .station-stage-tab-name{display:none!important}
+ .station-tools-label{display:none}
+ .station-tools-dots{display:inline;font-size:24px;line-height:1}
+ .station-phone-stage-name{display:block;text-align:center;border-radius:12px;background:#fff4db;color:#173e68;padding:8px;font-weight:800}
+ .station-compact-header .station-compact-title{-webkit-line-clamp:2!important}
+}
+
+@media (max-width: 640px) and (orientation: landscape) {
  .journey-station-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
  .journey-station-grid>article{flex-direction:column!important;min-height:0!important;border-width:2px;border-radius:16px}
  .journey-station-grid>article:last-child:nth-child(odd){grid-column:1/-1!important;justify-self:center;width:calc((100% - 10px)/2)}
@@ -595,11 +605,166 @@ body:has(.journey-screen-fixed){overflow:hidden}
  .journey-station-grid h3{font-size:14px!important}
  .journey-station-grid button{font-size:12px!important;margin-top:auto}
  .journey-station-grid button svg{flex-shrink:0}
- .journey-maps-grid{grid-template-columns:minmax(0,1fr)!important}
- .station-compact-header .station-stage-tabs .station-stage-tab{min-height:44px!important}
- .station-compact-header .station-stage-tabs .station-stage-tab .station-stage-tab-name{display:none!important}
- .station-tools-label{display:none}
- .station-tools-dots{display:inline;font-size:24px;line-height:1}
- .station-phone-stage-name{display:block;text-align:center;border-radius:12px;background:#fff4db;color:#173e68;padding:8px;font-weight:800}
- .station-compact-header .station-compact-title{-webkit-line-clamp:2!important}
+}
+
+.journey-phone-toolbar, .journey-phone-label, .journey-phone-dots, .journey-phone-swipe {
+  display: none;
+}
+
+@media (max-width: 640px) and (orientation: portrait) {
+  .journey-screen-fixed {
+    height: 100vh !important;
+    height: 100dvh !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+  .journey-screen-fixed > .game-content {
+    container-type: size;
+    overflow: hidden auto !important;
+    scroll-padding-block-start: 48px;
+    scroll-snap-type: y mandatory;
+  }
+  .journey-overview {
+    --station-page-height: calc(100vh - 132px);
+    min-height: 100% !important;
+    gap: 0 !important;
+    padding: 0 8px 8px !important;
+  }
+  @supports (height: 1cqh) {
+    .journey-overview { --station-page-height: calc(100cqh - 48px - 16px); }
+  }
+  .journey-overview-hero, .journey-overview-stats, .journey-desktop-label {
+    display: none !important;
+  }
+  .journey-phone-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    flex: 0 0 48px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 10px;
+    border-radius: 0 0 14px 14px;
+    color: white;
+    background: linear-gradient(180deg, #087bd9, #064b9f);
+  }
+  .journey-phone-toolbar h1 { font-size: clamp(16px, 4.8vw, 21px); font-weight: 900; }
+  .journey-phone-toolbar summary {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    padding-inline: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 800;
+  }
+  .journey-phone-summary {
+    position: absolute;
+    inset: 100% 0 auto;
+    display: grid;
+    gap: 8px;
+    max-height: 60dvh;
+    overflow: auto;
+    padding: 12px;
+    border-radius: 0 0 14px 14px;
+    background: #fff9ea;
+    color: #173a60;
+    box-shadow: 0 8px 20px #0d305b55;
+    font-weight: 700;
+  }
+  .journey-phone-summary progress { width: 100%; }
+  .journey-phone-summary li { display: flex; justify-content: space-between; }
+  .journey-phone-summary button {
+    min-height: 44px;
+    border: 1px solid #e3903d;
+    border-radius: 10px;
+    background: white;
+    color: #963a0d;
+  }
+  .journey-overview-cards {
+    padding: 8px 0 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+  .journey-station-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 16px !important;
+  }
+  .journey-station-grid > article {
+    width: 100%;
+    min-height: var(--station-page-height) !important;
+    flex-direction: column !important;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    transform: none;
+    border-radius: 20px;
+    background: #fff9eb;
+  }
+  .journey-station-grid > article > div:first-child {
+    flex: 1 0 clamp(145px, 34svh, 380px) !important;
+    min-height: 145px !important;
+  }
+  .journey-station-grid > article > div:first-child img {
+    position: absolute;
+    inset: 0;
+    transform: none;
+  }
+  .journey-station-grid > article > div:first-child > div.rounded-full {
+    padding: 6px 11px;
+    background: #fff5dc;
+    color: #a83a0c;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+  .journey-phone-label { display: inline; }
+  .journey-phone-dots {
+    position: absolute;
+    inset: 16px 12px auto auto;
+    display: grid;
+    gap: 7px;
+    padding: 7px 5px;
+    border-radius: 12px;
+    background: #132f4e88;
+  }
+  .journey-phone-dots > span {
+    width: 8px;
+    height: 8px;
+    border: 1px solid white;
+    border-radius: 50%;
+    background: #fff8dd;
+  }
+  .journey-phone-dots > [data-active="true"] { background: #ea6b12; }
+  .journey-station-grid > article > div:last-child {
+    flex: none !important;
+    gap: 9px !important;
+    padding: 12px !important;
+  }
+  .journey-station-grid h3 {
+    font-size: clamp(20px, 5.8vw, 31px) !important;
+    line-height: 1.15 !important;
+    text-align: center;
+  }
+  .journey-station-grid h3 + div { justify-content: center; }
+  .journey-station-grid button {
+    min-height: 48px !important;
+    font-size: 16px !important;
+  }
+  .journey-station-grid button svg { flex-shrink: 0; }
+  .journey-phone-swipe {
+    display: flex;
+    min-height: 20px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: #4c5d76;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .journey-phone-swipe svg { width: 15px; height: 15px; }
+  .journey-extension { margin-top: 16px; scroll-snap-align: start; }
 }

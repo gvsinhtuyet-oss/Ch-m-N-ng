@@ -9,6 +9,24 @@ interface Props {
   onCompleteStage: () => void;
 }
 
+function fitMobileGameArtwork(event: React.SyntheticEvent<HTMLIFrameElement>) {
+  const gameDocument = event.currentTarget.contentDocument;
+  if (!gameDocument?.querySelector('.scene')) return;
+
+  const style = gameDocument.createElement('style');
+  style.textContent = `
+    @media (max-width: 640px) {
+      .scene, .scene.is-victory {
+        background-size: 100% auto !important;
+        background-position: center top !important;
+        background-repeat: no-repeat;
+        background-color: #07547d;
+      }
+    }
+  `;
+  gameDocument.head.append(style);
+}
+
 /** Only mount this component for g3-station-1; the iframe contains approved V12. */
 export const MyKheBanThanV12: React.FC<Props> = ({station,studentId,isReadOnly,onCompleteStage}) => {
   const onContinue = useCallback(() => {
@@ -26,5 +44,5 @@ export const MyKheBanThanV12: React.FC<Props> = ({station,studentId,isReadOnly,o
     window.addEventListener('message',handler);
     return () => window.removeEventListener('message',handler);
   },[onContinue]);
-  return <iframe id="my-khe-v12-frame" title="Mật mã hai miền biển – Chặng 2" src="/games/grade3-my-khe-ban-than/v12/index.html" className="block h-[100dvh] min-h-[500px] w-full rounded-2xl border-0" allow="autoplay; fullscreen" />;
+  return <iframe id="my-khe-v12-frame" title="Mật mã hai miền biển – Chặng 2" src="/games/grade3-my-khe-ban-than/v12/index.html" className="block h-[100dvh] min-h-[500px] w-full rounded-2xl border-0" allow="autoplay; fullscreen" onLoad={fitMobileGameArtwork} />;
 };

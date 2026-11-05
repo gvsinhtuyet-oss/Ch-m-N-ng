@@ -29,17 +29,19 @@
 .station-stage1-compact .stage1-quiz>p{line-height:1.4}
 .station-stage1-compact .stage1-quiz .stage1-quiz-link {
   display: flex;
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
   min-height: 44px;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 6px;
   margin-bottom: 8px;
+  padding: 6px 12px;
   border-radius: 10px;
   color: white;
-  background: #b9490a;
-  font-size: 16px;
-  font-weight: 900;
+  background: #047857;
+  font-size: 15px;
+  font-weight: 800;
 }
 .station-stage1-compact .stage-one-answer-options{margin-top:8px;gap:6px}
 .station-stage1-compact .stage-one-answer-options button{min-height:44px;padding:7px 10px;overflow-wrap:anywhere}

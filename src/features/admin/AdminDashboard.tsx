@@ -7,7 +7,6 @@ import { OFFICIAL_25_CATALOG } from '../../data/curriculumCatalog';
 import { authService } from '../../services/AuthService';
 import { ImplementationRecord } from '../../types';
 import { EffectivenessReport } from './EffectivenessReport';
-import { EffectivenessDemo } from './EffectivenessDemo';
 import { ProposalInbox } from './ProposalInbox';
 import { RealClassResults } from '../teacher/RealClassResults';
 import {
@@ -25,7 +24,6 @@ const adminGroups = [
   ] },
   { label: 'Báo cáo', icon: BarChart3, pages: [
     { id: 'effectiveness', label: 'Hiệu quả sử dụng' }, { id: 'proposals', label: 'Đánh giá sao và góp ý' },
-    { id: 'effectiveness-demo', label: 'Minh họa hiệu quả' },
   ] },
   { label: 'Cài đặt', icon: Settings, pages: [
     { id: 'users', label: 'Tài khoản và quyền' }, { id: 'theme', label: 'Giao diện' },
@@ -127,7 +125,6 @@ export const AdminDashboard: React.FC = () => {
           openProgress={() => navigate('reports')}
           openFeedback={stationId => navigate('proposals', stationId)}
         />}
-        {activeTab === 'effectiveness-demo' && <EffectivenessDemo />}
         {activeTab === 'theme' && <ThemeEditor />}
         {activeTab === 'gddp' && <GddpAdminEditor />}
 
@@ -141,7 +138,7 @@ export const AdminDashboard: React.FC = () => {
               </span>
             </div>
 
-            <div aria-label="Lối tắt quản trị" className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+            <div aria-label="Lối tắt quản trị" className="grid gap-2 sm:grid-cols-3">
               <button type="button" onClick={() => navigate('reports')} className="flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-sm font-bold text-indigo-900 hover:bg-indigo-50">
                 <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />Xem kết quả lớp
               </button>
@@ -151,9 +148,6 @@ export const AdminDashboard: React.FC = () => {
               </button>
               <button type="button" onClick={() => navigate('stations')} className="flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-sm font-bold text-indigo-900 hover:bg-indigo-50">
                 <BookOpen className="h-4 w-4 shrink-0" aria-hidden="true" />Sửa nội dung trạm
-              </button>
-              <button type="button" onClick={() => navigate('effectiveness-demo')} className="flex min-h-11 items-center gap-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-left text-sm font-bold text-amber-950 hover:bg-amber-100">
-                <BarChart3 className="h-4 w-4 shrink-0" aria-hidden="true" />Xem dữ liệu mô phỏng
               </button>
             </div>
 

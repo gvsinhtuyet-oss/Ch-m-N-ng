@@ -12,6 +12,8 @@ type Report = {
   stations: StationStats[];
 };
 const number = new Intl.NumberFormat('vi-VN');
+const reportTime = new Intl.DateTimeFormat('vi-VN', {timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit'});
+const refreshIntervalMs = 120_000;
 const date = (day: string) => day.split('-').reverse().join('/');
 const stages = ['stage1', 'stage2', 'stage3', 'stage4'] as const;
 const fieldClass = 'block w-full min-w-0 rounded-xl border bg-white px-3 py-2';
@@ -29,31 +31,57 @@ export function EffectivenessReport({openProgress, openFeedback}: {
   const [refresh, setRefresh] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [report, setReport] = useState<Report | null>(null);
+  const [snapshot, setSnapshot] = useState<{days: number; report: Report; checkedAt: number} | null>(null);
+  const currentSnapshot = snapshot?.days === days ? snapshot : null;
+  const report = currentSnapshot?.report;
   const [downloading, setDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState('');
 
   useEffect(() => {
     let active = true;
-    setLoading(true);
+    let inFlight = false;
+    let lastAttempt = 0;
     setError('');
-    setReport(null);
-    void (async () => {
+
+    const load = async () => {
+      if (!active || inFlight) return;
+      inFlight = true;
+      lastAttempt = Date.now();
+      setLoading(true);
       try {
         const response = await fetchWithTimeout('/api/effectiveness?days=' + days, {
           credentials: 'same-origin', cache: 'no-store',
         });
+        if (!active) return;
+        if (response.status === 401 || response.status === 403) setSnapshot(null);
         if (!response.headers.get('content-type')?.includes('application/json')) throw Error('Chưa tải được báo cáo.');
         const data = await response.json();
         if (!response.ok) throw Error(data.error || 'Chưa tải được báo cáo.');
-        if (active) setReport(data);
+        if (active) {
+          setSnapshot({days, report: data, checkedAt: Date.now()});
+          setError('');
+        }
       } catch (failure) {
         if (active) setError((failure as Error).message);
       } finally {
+        inFlight = false;
         if (active) setLoading(false);
       }
-    })();
-    return () => {active = false;};
+    };
+
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === 'visible' && navigator.onLine &&
+          Date.now() - lastAttempt >= refreshIntervalMs) void load();
+    };
+
+    void load();
+    const timer = window.setInterval(refreshWhenVisible, refreshIntervalMs);
+    document.addEventListener('visibilitychange', refreshWhenVisible);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', refreshWhenVisible);
+    };
   }, [days, refresh]);
 
   const catalog = OFFICIAL_25_CATALOG.filter(station => !grade || station.grade === grade);
@@ -142,10 +170,15 @@ export function EffectivenessReport({openProgress, openFeedback}: {
         </select>
       </label>
     </div>
-    <button type="button" disabled={loading} onClick={() => setRefresh(value => value + 1)} className="rounded-xl border px-4 py-2 text-sm font-semibold">
-      {loading ? 'Đang tải số liệu…' : 'Làm mới số liệu'}
-    </button>
-    {error && <p role="alert" className="rounded-xl bg-amber-50 p-3 text-sm text-amber-900">{error}</p>}
+    <div className="flex flex-wrap items-center gap-3">
+      <button type="button" disabled={loading} onClick={() => setRefresh(value => value + 1)} className="rounded-xl border px-4 py-2 text-sm font-semibold">
+        {loading ? 'Đang tải số liệu…' : 'Làm mới số liệu'}
+      </button>
+      {currentSnapshot && <p className="text-xs text-slate-600">Cập nhật thành công lúc {reportTime.format(currentSnapshot.checkedAt)} · Giờ Việt Nam</p>}
+    </div>
+    {error && <p role="alert" className="rounded-xl bg-amber-50 p-3 text-sm text-amber-900">
+      {error}{report ? ' Đang hiển thị số liệu từ lần tải thành công gần nhất.' : ''}
+    </p>}
     {report && <>
       <p className="text-xs text-slate-500">Từ {date(report.start)} đến {date(report.end)} · Giờ Việt Nam</p>
       <div className="grid gap-3 sm:grid-cols-3">

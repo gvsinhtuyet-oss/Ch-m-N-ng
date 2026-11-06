@@ -404,6 +404,21 @@
 
 /* Desktop-only coordinates follow the original 1671 × 941 illustration. */
 @media (min-width:1024px) and (pointer:fine) and (hover:hover) {
+  .station-immersive-root.station-viewport[data-stage="4"] > .station-lesson-panel { overflow-y:auto!important; }
+
+  .game-shell:has(.station-viewport[data-stage="4"]) .discovery-assistant { display:none; }
+  .station-viewport[data-stage="4"] .station-touch-assistant {
+    display:block;
+    flex:none;
+    min-height:36px;
+    padding:0 8px;
+    border-radius:8px;
+    background:#ffffff26;
+    color:white;
+    font-size:12px;
+    font-weight:800;
+  }
+
   .station-viewport[data-stage="4"] .stage-four {
     aspect-ratio:1671 / 941;
     min-height:0!important;

@@ -1,4 +1,6 @@
 import { FeatureLoadBoundary } from './components/common/FeatureLoadBoundary';
+import { effectivenessService } from './services/EffectivenessService';
+import type { Student } from './types';
 import { backgroundMusic } from './services/BackgroundMusic';
 import { audioService } from './services/AudioService';
 import { AppBackground } from './components/common/AppBackground';
@@ -57,6 +59,24 @@ const AppContent: React.FC = () => {
     };
     document.addEventListener('click', soundOnActivation);
     return () => document.removeEventListener('click', soundOnActivation);
+  }, []);
+
+  const analyticsAudience = currentUser && role !== 'student' ? 2
+    : currentUser && !(currentUser as Student).isGuest ? 1 : 0;
+  useEffect(() => {
+    effectivenessService.visit(analyticsAudience);
+  }, [analyticsAudience]);
+  useEffect(() => {
+    const visible = () => {
+      if (document.visibilityState === 'hidden') effectivenessService.flush();
+      else effectivenessService.refreshVisit();
+    };
+    window.addEventListener('online', effectivenessService.flush);
+    document.addEventListener('visibilitychange', visible);
+    return () => {
+      window.removeEventListener('online', effectivenessService.flush);
+      document.removeEventListener('visibilitychange', visible);
+    };
   }, []);
 
   const [storageWarning, setStorageWarning] = useState(false);

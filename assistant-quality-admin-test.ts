@@ -70,7 +70,7 @@ test('quality UI only mounts under real admin dashboard; demo does not expose it
   const demo=readFileSync('src/features/admin/AdminDemoDashboard.tsx','utf8');
   const panel=readFileSync('src/features/admin/AssistantQualityDashboard.tsx','utf8');
   assert.match(app,/role === 'admin'.*AdminDemoDashboard.*AdminDashboard/);
-  assert.match(real,/KIỂM ĐỊNH CHATBOT/);
+  assert.match(real,/Kiểm định chatbot/i);
   assert.doesNotMatch(demo,/AssistantQualityDashboard|assistant-qa/);
   assert.match(panel,/currentUser\?\.id!=='admin-demo'/);
   assert.doesNotMatch(panel,/\bfetch\s*\(|authService\./);

@@ -3,9 +3,9 @@ import React, {useEffect,useState} from 'react';
 import {authService,LearningProposal} from '../../services/AuthService';
 import {OFFICIAL_25_CATALOG} from '../../data/curriculumCatalog';
 
-export const ProposalInbox:React.FC=()=>{
+export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStationId})=>{
  const [records,setRecords]=useState<LearningProposal[]>([]),[error,setError]=useState(''),[busy,setBusy]=useState(true);
- const [stationId,setStationId]=useState(OFFICIAL_25_CATALOG[0].id);
+ const [stationId,setStationId]=useState(initialStationId ?? OFFICIAL_25_CATALOG[0].id);
  const [ratings,setRatings]=useState<Record<string,number[]>>({});
  const [ratingsError,setRatingsError]=useState('');
  const [ratingsBusy,setRatingsBusy]=useState(true);
@@ -14,7 +14,13 @@ export const ProposalInbox:React.FC=()=>{
   setRatingsBusy(true);
   setRatingsError('');
   try{setRatings(await authService.stationRatings());}
-  catch{setRatingsError('Chưa tải được đánh giá sao từ máy chủ. Vui lòng thử lại.');}
+  catch(error){
+   const status=(error as {status?:number})?.status;
+   if(status===404) setRatingsError('Máy chủ chưa có bản cập nhật thống kê sao. Mục góp ý được tải riêng bên dưới.');
+   else if(status===401) setRatingsError('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại để xem đánh giá sao.');
+   else if(status===403) setRatingsError('Chỉ tài khoản quản trị mới xem được đánh giá sao.');
+   else setRatingsError('Chưa tải được đánh giá sao từ máy chủ. Vui lòng thử lại.');
+  }
   finally{setRatingsBusy(false);}
  };
  useEffect(()=>{void load();void loadRatings();},[]);

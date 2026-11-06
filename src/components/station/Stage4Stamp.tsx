@@ -1,3 +1,4 @@
+import { effectivenessService } from '../../services/EffectivenessService';
 import React, { useState, useEffect, useRef } from 'react';
 import { Station, Student } from '../../types';
 import { useApp } from '../../contexts/AppContext';
@@ -70,6 +71,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
         exchanging.current = false;
         return;
       }
+      effectivenessService.stage(station.id, 4);
       setStamped(true);
       setSaveMessage('✓ Bản đồ đã lưu • Đã nhận 1 mảnh chìa khóa • Hộ chiếu đã được đóng dấu.');
     }

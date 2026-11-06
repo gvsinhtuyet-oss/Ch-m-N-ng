@@ -401,3 +401,148 @@
     margin:14px auto 4px;
   }
 }
+
+/* Desktop-only coordinates follow the original 1671 × 941 illustration. */
+@media (min-width:1024px) and (pointer:fine) and (hover:hover) {
+  .station-viewport[data-stage="4"] .stage-four {
+    aspect-ratio:1671 / 941;
+    min-height:0!important;
+    padding:0;
+    background:url('/images/stage4-danang-desktop.webp') center / 100% 100% no-repeat #f5e5bf;
+  }
+
+  .stage-four .mobile-stamp-hero,
+  .stage-four .mobile-journey-section-title { display:none; }
+
+  .station-viewport[data-stage="4"] .stage-four .stamp-layout {
+    position:absolute;
+    inset:0;
+    display:block;
+    max-width:none;
+  }
+
+  .stage-four .journey-summary-panel,
+  .stage-four .journey-passport-panel>div:last-child { display:contents; }
+
+  .stage-four .journey-map-panel,
+  .stage-four .journey-passport-panel,
+  .stage-four .journey-rating-panel {
+    position:absolute!important;
+    margin:0;
+  }
+
+  .stage-four .journey-map-panel {
+    inset:28.8% auto auto 11.4%;
+    width:45.9%!important;
+    height:52.9%!important;
+    padding:0;
+    border:0;
+    background:transparent;
+    box-shadow:none;
+  }
+
+  .station-viewport[data-stage="4"] .stage-four .journey-photo-surface {
+    display:grid!important;
+    place-items:center;
+    height:100%!important;
+    border:0!important;
+    box-shadow:none!important;
+  }
+
+  .station-viewport[data-stage="4"] .stage-four .journey-photo-main {
+    height:100%!important;
+    border-radius:0;
+  }
+
+  .stage-four .mobile-map-zoom-trigger {
+    position:absolute;
+    z-index:2;
+    top:0;
+    right:0;
+    margin:0;
+    transform:translateY(-55%);
+    padding:6px 12px;
+    border:1px solid #e8b763;
+    background:#fff6df;
+    color:#174872;
+    box-shadow:0 3px 8px #512c2250;
+  }
+
+  .stage-four .journey-passport-panel {
+    inset:60.5% auto auto 87.4%;
+    width:11%!important;
+    aspect-ratio:1;
+    transform:translate(-50%,-50%);
+    padding:0;
+    border:0;
+    background:none;
+    box-shadow:none;
+  }
+
+  .stage-four .journey-passport-panel .journey-stamp-target {
+    width:100%;
+    border:0;
+    background:transparent;
+  }
+
+  .stage-four .journey-stamp-target>div:not(.journey-stamp) { visibility:hidden; }
+  .stage-four .journey-stamp { width:100%;max-width:none; }
+  .stage-four .journey-stamp svg { width:clamp(18px,2vw,32px);height:clamp(18px,2vw,32px); }
+
+  .stage-four .journey-passport-panel .journey-stamp-caption,
+  .stage-four .journey-stamp-reward,
+  .stage-four .journey-stamp-status {
+    position:absolute;
+    left:50%;
+    width:150%;
+    transform:translateX(-50%);
+    margin:0;
+    text-align:center;
+  }
+
+  .stage-four .journey-passport-panel .journey-stamp-caption {
+    bottom:calc(100% + 5px);
+    font-size:clamp(10px,1vw,13px);
+  }
+
+  .stage-four .journey-stamp-reward,
+  .stage-four .journey-stamp-status { top:calc(100% + 7px); }
+
+  .stage-four[data-stamped="true"] .journey-stamp-status {
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    clip-path:inset(50%);
+  }
+
+  .stage-four .journey-rating-panel {
+    inset:auto auto 65.2% 61.4%;
+    width:clamp(230px,18%,290px)!important;
+    padding:6px 8px;
+    border-radius:12px;
+    background:#fff9eaf5;
+  }
+
+  .station-viewport[data-stage="4"] .stage-four .journey-controls {
+    position:absolute;
+    inset:auto 25% 3.8% 25%!important;
+    margin:0;
+    gap:8px!important;
+  }
+
+  .stage-four .journey-controls button {
+    min-height:44px!important;
+    padding:6px 8px;
+    border-radius:12px!important;
+    font-size:clamp(12px,1vw,16px);
+  }
+
+  .stage-four[data-stamped="true"] .journey-controls { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .stage-four[data-stamped="true"] .journey-control-stamp { display:none; }
+  .stage-four .journey-preview-note {
+    inset:25.6% auto auto 11.4%;
+    padding:2px 6px;
+    border-radius:6px;
+    background:#fff9ed;
+  }
+}

@@ -99,7 +99,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
 
 
     return (
-      <div className="journey-stage stage-four" aria-label="Dấu ấn hành trình">
+      <div className="journey-stage stage-four" aria-label="Dấu ấn hành trình" data-stamped={stamped}>
         <header className="mobile-journey-hero mobile-stamp-hero"><span className="mobile-journey-hero-kicker">Chặng 4</span><strong>Dấu ấn hành trình</strong></header>
         <style>{`
           @keyframes journeyStampDrop {
@@ -129,8 +129,8 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
               <p className="mt-1 text-[10px] font-semibold text-[#704e30] sm:text-xs">{`Khối ${station.grade} · ${station.titleVi}`}</p>
             </div>
             <div className="flex min-h-0 flex-1 flex-col items-center justify-center gap-1">
-              <p className="text-center text-[10px] font-bold text-[#78542d] sm:text-xs">{stamped ? 'Dấu ấn đã lưu trong hộ chiếu' : 'Vị trí chờ đóng dấu hoàn thành'}</p>
-              <div className="relative flex aspect-square w-[min(100%,170px)] max-h-[60%] items-center justify-center rounded-full border-2 border-dashed border-[#bb9569] bg-white/35">
+              <p className="journey-stamp-caption text-center text-[10px] font-bold text-[#78542d] sm:text-xs">{stamped ? 'Dấu ấn đã lưu trong hộ chiếu' : 'Vị trí chờ đóng dấu hoàn thành'}</p>
+              <div className="journey-stamp-target relative flex aspect-square w-[min(100%,170px)] max-h-[60%] items-center justify-center rounded-full border-2 border-dashed border-[#bb9569] bg-white/35">
                 {stamped ? (
                   <div className="journey-stamp flex aspect-square w-[94%] flex-col items-center justify-center rounded-full border-[5px] border-double border-red-700 bg-red-50/30 p-1 text-center text-red-800 shadow-lg" style={{animation:'journeyStampDrop .7s cubic-bezier(.2,.85,.25,1.1) both'}}>
                     <span className="text-[8px] font-black sm:text-[10px]">CHẠM ĐÀ NẴNG</span>
@@ -140,10 +140,10 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
                   </div>
                 ) : <div className="flex flex-col items-center gap-2 text-[#b99a75]"><Stamp className="h-10 w-10 opacity-50" /><span className="text-[10px] font-bold">CHƯA ĐÓNG DẤU</span></div>}
               </div>
-              {stamped && <div className="flex w-full flex-col items-center gap-1 rounded-xl bg-amber-50/85 p-1 text-amber-950">
+              {stamped && <div className="journey-stamp-reward flex w-full flex-col items-center gap-1 rounded-xl bg-amber-50/85 p-1 text-amber-950">
                 <span className="inline-flex items-center gap-1 text-xs font-bold"><KeyRound className="h-5 w-5" />{isReadOnly?'Chìa khóa xem thử':'Đã nhận chìa khóa và kỷ vật ✓'}</span>
               </div>}
-              {saveMessage && <p role="status" className="line-clamp-2 text-center text-[10px] font-bold text-emerald-900">{saveMessage}</p>}
+              {saveMessage && <p role="status" className="journey-stamp-status line-clamp-2 text-center text-[10px] font-bold text-emerald-900">{saveMessage}</p>}
             </div>
           </section>
           {stamped && !isReadOnly && <section aria-label="Đánh giá hành trình" className="journey-rating-panel"><JourneyRating key={`${studentId}:${station.id}`} stationId={station.id} userId={currentUser?.id} requireStudent={role==='student' && !!currentUser && !(currentUser as Student).isGuest}/></section>}

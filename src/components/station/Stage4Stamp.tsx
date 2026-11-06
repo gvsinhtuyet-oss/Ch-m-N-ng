@@ -25,7 +25,6 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
   const [mapZoomOpen, setMapZoomOpen] = useState(false);
   const [mapZoomScale, setMapZoomScale] = useState(1);
   const actualMapImage = station.journeyMap?.image || station.coverImage;
-  const [mapAspectRatio, setMapAspectRatio] = useState<string>('3 / 2');
   const [saveMessage, setSaveMessage] = useState('');
   const canExchange = isReadOnly || (
     progress.stage1Completed &&
@@ -99,7 +98,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
 
     return (
       <div className="journey-stage stage-four" aria-label="Dấu ấn hành trình">
-        <header className="mobile-journey-hero mobile-stamp-hero" aria-hidden="true"><span className="mobile-journey-hero-kicker">Chặng 4</span><strong>Dấu ấn hành trình</strong><span className="mobile-journey-hero-symbol">🔖</span></header>
+        <header className="mobile-journey-hero mobile-stamp-hero"><span className="mobile-journey-hero-kicker">Chặng 4</span><strong>Dấu ấn hành trình</strong></header>
         <style>{`
           @keyframes journeyStampDrop {
             0% { opacity:0; transform: translateY(-90px) scale(2.2) rotate(-25deg); }
@@ -113,12 +112,13 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
         <div className="stamp-layout">
           <section aria-label="Bản đồ hành trình" className="journey-map-panel journey-photo-panel">
             <h3 className="mobile-journey-section-title">🗺️ Bản đồ hành trình</h3>
-            <div className="journey-map-surface journey-photo-surface" style={{ aspectRatio: mapAspectRatio }}>
-              {actualMapImage && !photoFailed ? <><img src={actualMapImage} alt={`Bản đồ hành trình ${station.titleVi}`} onError={() => setPhotoFailed(true)} className="journey-photo-main" onLoad={event => { const { naturalWidth, naturalHeight } = event.currentTarget; if(naturalWidth > 0 && naturalHeight > 0) setMapAspectRatio(`${naturalWidth} / ${naturalHeight}`); }} decoding="async" /></> :
+            <div className="journey-map-surface journey-photo-surface">
+              {actualMapImage && !photoFailed ? <img src={actualMapImage} alt={`Bản đồ hành trình ${station.titleVi}`} onError={() => setPhotoFailed(true)} className="journey-photo-main" decoding="async" /> :
                 <div className="journey-map-fallback"><h3>ĐIỂM ĐẾN CỦA EM</h3><strong>{station.titleVi}</strong></div>}
             </div>
-            {actualMapImage && !photoFailed && <button type="button" className="mobile-map-zoom-trigger" onClick={() => setMapZoomOpen(true)}>⛶ Chạm để phóng to bản đồ</button>}
+            {actualMapImage && !photoFailed && <button type="button" className="mobile-map-zoom-trigger" onClick={() => setMapZoomOpen(true)}>⛶ Phóng to bản đồ</button>}
           </section>
+          <div className="journey-summary-panel">
           <section aria-label="Hộ chiếu hành trình" className="journey-passport-panel">
             <h3 className="mobile-journey-section-title">📘 Hộ chiếu hành trình</h3>
             <div className="sr-only">
@@ -145,6 +145,7 @@ export const Stage4Stamp: React.FC<Props> = ({ station, onReviewJourney, onExplo
             </div>
           </section>
           {stamped && !isReadOnly && <section aria-label="Đánh giá hành trình" className="journey-rating-panel"><JourneyRating key={`${studentId}:${station.id}`} stationId={station.id} userId={currentUser?.id} requireStudent={role==='student' && !!currentUser && !(currentUser as Student).isGuest}/></section>}
+          </div>
         </div>
         <div className="journey-controls">
           <button type="button" onClick={() => { audioService.playSfx('click'); onReviewJourney(); }} className="journey-control-review"><RotateCcw className="h-5 w-5 shrink-0" />Khám phá lại</button>

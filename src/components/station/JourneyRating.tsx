@@ -1,28 +1,69 @@
 import React,{useEffect,useRef,useState} from 'react';
 import {Star} from 'lucide-react';
 import {learningFeedbackService} from '../../services/LearningFeedbackService';
+
+const deviceStatus = 'Đã lưu trên thiết bị này. Chạm lại số sao để thử đồng bộ.';
+
 export function JourneyRating({stationId,userId,requireStudent=false,compact=false,readOnly=false}:{stationId:string;userId?:string;requireStudent?:boolean;compact?:boolean;readOnly?:boolean}) {
   const [stars,setStars]=useState(0),[status,setStatus]=useState(''),[busy,setBusy]=useState(false);
   const [ready,setReady]=useState(false);
   const saving=useRef(false);
-  useEffect(()=>{let active=true;setStars(0);setStatus('');setReady(false);
-    // Local rating is a fallback only; server values remain authoritative when available.
+  const revision=useRef(0);
+  const storageKey=`cham_danang_journey_rating_v2:${userId||'guest'}:${stationId}`;
+  useEffect(()=>{
+    const version=++revision.current;
     let localStars=0;
-    try { const saved=JSON.parse(localStorage.getItem(`cham_danang_journey_rating_v2:${userId||'guest'}:${stationId}`)||'null'); if(Number.isInteger(saved?.stars)&&saved.stars>=1&&saved.stars<=5)localStars=saved.stars; } catch {}
-    if(localStars)setStars(localStars);
-    learningFeedbackService.rating(stationId,userId,requireStudent).then(value=>{if(active)setStars(Number.isInteger(value)&&value>=1&&value<=5?value:localStars);}).catch(()=>{if(active)setStatus(localStars?'':'Không tải được đánh giá từ máy chủ');}).finally(()=>{if(active)setReady(true);});
-    return()=>{active=false;};
-  },[stationId,userId,requireStudent,readOnly]);
+    let pending=false;
+    try {
+      const saved=JSON.parse(localStorage.getItem(storageKey)||'null');
+      if(Number.isInteger(saved?.stars)&&saved.stars>=1&&saved.stars<=5) {
+        localStars=saved.stars;
+        pending=saved.storage==='device';
+      }
+    } catch {/* The server can still provide the rating. */}
+    setStars(localStars);
+    setStatus(pending&&!readOnly?deviceStatus:'');
+    setReady(!readOnly||localStars>0);
+    setBusy(false);
+    saving.current=false;
+    // An older server rating must not replace a newer choice saved on this device.
+    if(!pending) {
+      learningFeedbackService.rating(stationId,userId,requireStudent).then(value=>{
+        if(revision.current===version&&Number.isInteger(value)&&value>=1&&value<=5)setStars(value);
+      }).catch(()=>{/* Rating stays available on this device. */}).finally(()=>{
+        if(revision.current===version)setReady(true);
+      });
+    }
+    return()=>{revision.current++;};
+  },[stationId,userId,requireStudent,readOnly,storageKey]);
   async function save(value:number){
-    if(readOnly||saving.current)return;saving.current=true;setBusy(true);setStatus('Đang lưu…');
-    try{const saved=await learningFeedbackService.saveRating(stationId,value,userId,requireStudent);setStars(saved);setStatus('Đã lưu ✓');
-      try{localStorage.setItem(`cham_danang_journey_rating_v2:${userId||'guest'}:${stationId}`,JSON.stringify({stars:saved}));}catch{/* Server confirmation remains authoritative. */}
-    }catch(e){
-      if((e as {status?:number}).status===404){
-        try{localStorage.setItem(`cham_danang_journey_rating_v2:${userId||'guest'}:${stationId}`,JSON.stringify({stars:value,storage:'device'}));setStars(value);setStatus('Đã lưu trên thiết bị này; chưa đồng bộ máy chủ.');}
-        catch{setStatus('Không thể lưu đánh giá trên thiết bị này.');}
-      }else setStatus((e as Error).message);
-    }finally{saving.current=false;setBusy(false);}
+    if(readOnly||saving.current)return;
+    const version=++revision.current;
+    saving.current=true;
+    setBusy(true);
+    setStars(value);
+    setStatus('Đang đồng bộ…');
+    let savedLocally=false;
+    try {
+      localStorage.setItem(storageKey,JSON.stringify({stars:value,storage:'device'}));
+      savedLocally=true;
+    } catch {/* Try the server even if device storage is unavailable. */}
+    try {
+      const saved=await learningFeedbackService.saveRating(stationId,value,userId,requireStudent);
+      if(revision.current!==version)return;
+      try {localStorage.setItem(storageKey,JSON.stringify({stars:saved}));}catch{/* The server confirmed the save. */}
+      setStars(saved);
+      setStatus('Đã đồng bộ ✓');
+    } catch {
+      if(revision.current!==version)return;
+      if(!savedLocally)setStars(stars);
+      setStatus(savedLocally?deviceStatus:'Chưa lưu được đánh giá. Em hãy thử lại.');
+    } finally {
+      if(revision.current===version){
+        saving.current=false;
+        setBusy(false);
+      }
+    }
   }
   return <div className={compact?"flex shrink-0 flex-wrap items-center gap-x-1 text-amber-950":"flex flex-col items-center gap-1 text-amber-950"}>
     {!readOnly && <span className={compact?"sr-only":"text-[11px] font-semibold"}>Em thích hành trình này chứ?</span>}

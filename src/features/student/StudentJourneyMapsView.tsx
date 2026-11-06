@@ -1,5 +1,6 @@
 import {JourneyMapDialog} from '../../components/common/JourneyMapDialog';
-import React, { useMemo, useState } from 'react';
+import {LessonOverlay} from '../../components/common/LessonOverlay';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import confetti from 'canvas-confetti';
 import {
   Award,
@@ -61,6 +62,15 @@ export const StudentJourneyMapsView: React.FC = () => {
   const [mapZoomed, setMapZoomed] = useState(false);
   const [previewTreasure, setPreviewTreasure] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const closeMapButton = useRef<HTMLButtonElement>(null);
+  const zoomMapButton = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!selectedStation) return;
+    const opener = document.activeElement as HTMLElement | null;
+    closeMapButton.current?.focus({preventScroll: true});
+    return () => opener?.focus({preventScroll: true});
+  }, [selectedStation]);
 
   const gradeSummary = useMemo(
     () => progressService.getGradeProgress(studentId, stationIds, currentGrade),
@@ -296,27 +306,46 @@ export const StudentJourneyMapsView: React.FC = () => {
         </div>
       </section>
 
-      {selectedStation && mapZoomed && selectedStation.journeyMap?.image && <JourneyMapDialog image={selectedStation.journeyMap.image} title={'Bản đồ hành trình ' + selectedStation.titleVi} onClose={() => setMapZoomed(false)} />}
-
       {selectedStation && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md p-3 sm:p-6 overflow-y-auto">
-          <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden my-3">
+        <LessonOverlay>
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="journey-map-details-title"
+          className="fixed inset-0 z-[80] overflow-y-auto overscroll-contain bg-slate-950/80 p-3 backdrop-blur-md sm:p-6"
+          onClick={event => {
+            if (event.target === event.currentTarget) setSelectedStation(null);
+          }}
+          onKeyDown={event => {
+            if (event.key === 'Escape') setSelectedStation(null);
+            if (event.key === 'Tab') {
+              event.preventDefault();
+              const next = document.activeElement === closeMapButton.current ? zoomMapButton : closeMapButton;
+              next.current?.focus();
+            }
+          }}
+        >
+          <div className="sticky top-0 z-20 mx-auto mt-3 h-0 max-w-5xl">
+            <button
+              ref={closeMapButton}
+              type="button"
+              aria-label="Đóng chi tiết bản đồ"
+              onClick={() => setSelectedStation(null)}
+              className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-xl bg-slate-900/85 text-white shadow-md hover:bg-slate-800"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+          <div className="max-w-5xl mx-auto bg-white rounded-3xl shadow-2xl overflow-hidden mb-3">
             <div className="relative min-h-[260px] bg-slate-900">
               <img loading="lazy" decoding="async" src={selectedStation.coverImage} alt="" className="absolute inset-0 w-full h-full object-cover opacity-45" />
               <div className="absolute inset-0 bg-gradient-to-br from-sky-950/90 via-indigo-950/75 to-amber-900/55" />
-              <button
-                type="button"
-                onClick={() => setSelectedStation(null)}
-                className="absolute top-4 right-4 z-10 w-10 h-10 rounded-xl bg-white/15 hover:bg-white/25 text-white flex items-center justify-center"
-              >
-                <X className="w-5 h-5" />
-              </button>
-              <div className="relative z-10 p-7 sm:p-10 text-white text-center">
+              <div className="relative z-10 px-14 py-7 sm:py-10 text-white text-center">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-300 text-slate-950 text-[10px] font-black">
                   <MapIcon className="w-4 h-4" />
                   <span>BẢN ĐỒ HÀNH TRÌNH • KHỐI {selectedStation.grade}</span>
                 </div>
-                <h2 className="text-xl sm:text-2xl font-black mt-4">{selectedStation.titleVi}</h2>
+                <h2 id="journey-map-details-title" className="text-xl sm:text-2xl font-black mt-4">{selectedStation.titleVi}</h2>
                 <p className="text-sm text-sky-100 mt-2 max-w-2xl mx-auto">{selectedStation.subtitleVi}</p>
                 {isReadOnly && (
                   <div className="mt-4 inline-block px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs font-bold">
@@ -329,6 +358,7 @@ export const StudentJourneyMapsView: React.FC = () => {
             <div className="p-5 sm:p-8 space-y-7">
               <div className="relative">
                 <button
+                  ref={zoomMapButton}
                   type="button"
                   onClick={() => setMapZoomed(true)}
                   className="group mx-auto block max-w-[220px] sm:max-w-[260px] rounded-2xl border-4 border-amber-100 bg-white overflow-hidden shadow-xl relative z-10"
@@ -396,6 +426,15 @@ export const StudentJourneyMapsView: React.FC = () => {
             </div>
           </div>
         </div>
+        </LessonOverlay>
+      )}
+
+      {selectedStation && mapZoomed && (
+        <JourneyMapDialog
+          image={selectedStation.journeyMap?.image || selectedStation.coverImage}
+          title={'Bản đồ hành trình ' + selectedStation.titleVi}
+          onClose={() => setMapZoomed(false)}
+        />
       )}
 
       {previewTreasure && (

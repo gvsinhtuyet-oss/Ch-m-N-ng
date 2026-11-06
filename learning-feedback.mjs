@@ -44,6 +44,18 @@ export function createLearningFeedback({store,auth,secureCookie=true}) {
     return {id,kind:'guest'};
   }
   return async function handle(req,res,pathname,body,json) {
+    if(pathname==='/api/admin/station-ratings') {
+      if(req.method!=='GET')throw fail(405,'Phương thức không hỗ trợ.');
+      if(!store)throw fail(503,'Máy chủ phản hồi chưa được cấu hình.');
+      await auth.requireAdmin(req);
+      const countsByStation=new Map(FEEDBACK_STATIONS.map(({id})=>[id,[0,0,0,0,0]]));
+      for(const {stationId,stars} of await store.list('cham_journey_ratings')) {
+        const counts=countsByStation.get(stationId);
+        if(counts&&Number.isInteger(stars)&&stars>=1&&stars<=5)counts[stars-1]++;
+      }
+      json(res,200,{ratings:Object.fromEntries(countsByStation)});
+      return true;
+    }
     if(!['/api/learning/rating','/api/learning/proposals'].includes(pathname))return false;
     if(req.method!=='POST')throw fail(405,'Phương thức không hỗ trợ.');
     auth.sameOrigin(req);

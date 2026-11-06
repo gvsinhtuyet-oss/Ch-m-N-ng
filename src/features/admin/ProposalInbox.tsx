@@ -1,17 +1,60 @@
 import {gddpService} from '../../services/GddpService';
 import React, {useEffect,useState} from 'react';
 import {authService,LearningProposal} from '../../services/AuthService';
+import {OFFICIAL_25_CATALOG} from '../../data/curriculumCatalog';
+
 export const ProposalInbox:React.FC=()=>{
- const [records,setRecords]=useState<LearningProposal[]>([]),[error,setError]=useState(''),[busy,setBusy]=useState(false);
+ const [records,setRecords]=useState<LearningProposal[]>([]),[error,setError]=useState(''),[busy,setBusy]=useState(true);
+ const [stationId,setStationId]=useState(OFFICIAL_25_CATALOG[0].id);
+ const [ratings,setRatings]=useState<Record<string,number[]>>({});
+ const [ratingsError,setRatingsError]=useState('');
+ const [ratingsBusy,setRatingsBusy]=useState(true);
  const load=async()=>{setBusy(true);setError('');try{setRecords(await authService.proposals());}catch(e){setError((e as Error).message);}finally{setBusy(false);}};
- useEffect(()=>{void load();},[]);
+ const loadRatings=async()=>{
+  setRatingsBusy(true);
+  setRatingsError('');
+  try{setRatings(await authService.stationRatings());}
+  catch{setRatingsError('Chưa tải được đánh giá sao từ máy chủ. Vui lòng thử lại.');}
+  finally{setRatingsBusy(false);}
+ };
+ useEffect(()=>{void load();void loadRatings();},[]);
+ const visibleRecords=stationId?records.filter(record=>record.stationId===stationId):records;
+ const counts=ratings[stationId];
+ const total=counts?.reduce((sum,count)=>sum+count,0)||0;
+ const average=total?counts.reduce((sum,count,index)=>sum+count*(index+1),0)/total:0;
  return <section className="rounded-3xl bg-white border p-6 space-y-4">
-  <h2 className="text-xl font-bold">Góp ý cải tiến học liệu</h2>
-  <p className="text-sm text-slate-600">Các đề xuất đã được máy chủ lưu. Quản trị đọc và xem xét trước khi chỉnh sửa học liệu.</p>
-  <button disabled={busy} onClick={()=>void load()} className="border rounded-xl px-4 py-2">{busy?'Đang tải…':'Làm mới'}</button>
+  <h2 className="text-xl font-bold">Đánh giá và góp ý theo trạm</h2>
+  <div className="flex flex-wrap items-end gap-3">
+   <label className="min-w-0 w-full sm:max-w-md">
+    <span className="block text-sm font-semibold mb-1">Chọn trạm</span>
+    <select value={stationId} onChange={event=>setStationId(event.target.value)} className="w-full rounded-xl border bg-white px-3 py-2">
+     <option value="">Tất cả góp ý và đề xuất</option>
+     {[1,2,3,4,5].map(grade=><optgroup key={grade} label={`Khối ${grade}`}>
+      {OFFICIAL_25_CATALOG.filter(station=>station.grade===grade).map(station=><option key={station.id} value={station.id}>{station.titleVi}</option>)}
+     </optgroup>)}
+    </select>
+   </label>
+   <button type="button" disabled={busy||ratingsBusy} onClick={()=>{void load();void loadRatings();}} className="border rounded-xl px-4 py-2">
+    {busy||ratingsBusy?'Đang tải…':'Làm mới'}
+   </button>
+  </div>
+  {stationId&&<section className="rounded-xl bg-amber-50 border border-amber-200 p-4 space-y-2">
+   <h3 className="font-bold">Đánh giá ở Chặng 4</h3>
+   {ratingsBusy?<p role="status" className="text-sm">Đang tải đánh giá…</p>
+    :ratingsError?<p role="alert" className="text-sm text-rose-700">{ratingsError}</p>
+    :!counts?<p role="alert" className="text-sm text-rose-700">Máy chủ chưa trả dữ liệu cho trạm này.</p>
+    :!total?<p className="text-sm">Trạm này chưa có đánh giá sao.</p>
+    :<>
+      <p className="font-bold">{average.toLocaleString('vi-VN',{maximumFractionDigits:2})}/5 sao · {total.toLocaleString('vi-VN')} lượt đánh giá</p>
+      <ul aria-label="Số lượt theo mức sao" className="flex flex-wrap gap-2 text-sm">
+       {counts.map((count,index)=><li key={index} className="rounded-lg border border-amber-200 bg-white px-2 py-1">{index+1} sao · {count.toLocaleString('vi-VN')} lượt</li>)}
+      </ul>
+     </>}
+  </section>}
+  <h3 className="font-bold">{stationId?'Góp ý cho trạm':'Tất cả góp ý và đề xuất'}{!busy&&!error&&` (${visibleRecords.length})`}</h3>
   {error&&<p role="alert" className="text-rose-700">{error}</p>}
-  {!busy&&!error&&!records.length&&<p>Chưa có đề xuất.</p>}
-  {records.map(r=><article key={r.id} className="border rounded-xl p-4 space-y-2">
+  {!busy&&!error&&!visibleRecords.length&&<p>{stationId?'Trạm này chưa có góp ý.':'Chưa có góp ý hoặc đề xuất.'}</p>}
+  {visibleRecords.map(r=><article key={r.id} className="border rounded-xl p-4 space-y-2">
    <h3 className="font-bold">{r.stationName} · Khối {r.grade}</h3>
    <p className="text-sm text-slate-500">{r.teacherName} · {new Date(r.createdAt).toLocaleString('vi-VN')}</p>
    {r.category&&<p className="text-xs font-bold text-emerald-800">{r.category}</p>}

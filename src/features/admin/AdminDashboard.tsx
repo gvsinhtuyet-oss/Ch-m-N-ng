@@ -45,7 +45,7 @@ export const AdminDashboard: React.FC = () => {
       setCounts({teachers:teachers.length,active:teachers.filter(u=>u.active).length,classes:classes.length,students:classes.reduce((n,c)=>n+c.totalStudents,0),proposals:proposals.length});
     }catch(e){setWorkflowError((e as Error).message);}finally{setLoading(false);}
   };
-  useEffect(()=>{void load();},[activeTab]);
+  useEffect(()=>{if(activeTab!=='proposals')void load();},[activeTab]);
 
   const filteredImplementations = gradeFilter === 0
     ? implementations
@@ -79,7 +79,7 @@ export const AdminDashboard: React.FC = () => {
             { id: 'stations', label: 'NỘI DUNG TRẠM', icon: BookOpen },
             { id: 'theme', label: 'GIAO DIỆN', icon: Layers },
             { id: 'gddp', label: 'ĐỊA CHỈ GDĐP', icon: BookOpen },
-            { id: 'proposals', label: 'ĐỀ XUẤT HỌC LIỆU', icon: BookOpen },
+            { id: 'proposals', label: 'ĐÁNH GIÁ & GÓP Ý', icon: MessageSquareText },
             { id: 'users', label: 'NGƯỜI DÙNG', icon: Users },
             { id: 'reports', label: 'BÁO CÁO', icon: FileText },
             { id: 'assistant-qa', label: 'KIỂM ĐỊNH CHATBOT', icon: MessageSquareText },
@@ -102,8 +102,10 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      {workflowError&&<p role="alert" className="bg-rose-50 text-rose-700 rounded-xl p-3">{workflowError}</p>}
-      <button disabled={loading} onClick={()=>void load()} className="border rounded-xl bg-white px-4 py-2 text-sm">{loading?'Đang tải dữ liệu…':'Làm mới dữ liệu máy chủ'}</button>
+      {activeTab !== 'proposals' && <>
+        {workflowError&&<p role="alert" className="bg-rose-50 text-rose-700 rounded-xl p-3">{workflowError}</p>}
+        <button disabled={loading} onClick={()=>void load()} className="border rounded-xl bg-white px-4 py-2 text-sm">{loading?'Đang tải dữ liệu…':'Làm mới dữ liệu máy chủ'}</button>
+      </>}
       {activeTab === 'assistant-qa' && <React.Suspense fallback={<p role="status" className="rounded-2xl bg-white p-5">Đang mở bảng kiểm định chatbot…</p>}><AssistantQualityDashboard /></React.Suspense>}
       {activeTab === 'proposals' && <ProposalInbox />}
       {activeTab === 'theme' && <ThemeEditor />}

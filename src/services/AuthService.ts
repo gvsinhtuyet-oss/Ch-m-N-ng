@@ -27,7 +27,7 @@ async function request(path: string, method='GET', data?: unknown) {
     ...(data !== undefined ? { headers:{'Content-Type':'application/json'},body:JSON.stringify(data) } : {}) });
   if(!response.headers.get('content-type')?.includes('application/json')) throw new Error('Máy chủ đăng nhập chưa sẵn sàng.');
   const result=await response.json();
-  if(!response.ok) throw new Error(result.error || 'Chưa thực hiện được yêu cầu.');
+  if(!response.ok) throw Object.assign(new Error(result.error || 'Chưa thực hiện được yêu cầu.'), {status: response.status});
   return result;
 }
 export const authService = {

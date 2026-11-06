@@ -14,7 +14,13 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
   setRatingsBusy(true);
   setRatingsError('');
   try{setRatings(await authService.stationRatings());}
-  catch{setRatingsError('Chưa tải được đánh giá sao từ máy chủ. Vui lòng thử lại.');}
+  catch(error){
+   const status=(error as {status?:number})?.status;
+   if(status===404) setRatingsError('Máy chủ chưa có bản cập nhật thống kê sao. Mục góp ý được tải riêng bên dưới.');
+   else if(status===401) setRatingsError('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại để xem đánh giá sao.');
+   else if(status===403) setRatingsError('Chỉ tài khoản quản trị mới xem được đánh giá sao.');
+   else setRatingsError('Chưa tải được đánh giá sao từ máy chủ. Vui lòng thử lại.');
+  }
   finally{setRatingsBusy(false);}
  };
  useEffect(()=>{void load();void loadRatings();},[]);

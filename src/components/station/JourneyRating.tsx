@@ -2,10 +2,8 @@ import React,{useEffect,useRef,useState} from 'react';
 import {Star} from 'lucide-react';
 import {learningFeedbackService} from '../../services/LearningFeedbackService';
 
-const deviceStatus = 'Đã lưu trên thiết bị này. Chạm lại số sao để thử đồng bộ.';
-
 export function JourneyRating({stationId,userId,requireStudent=false,compact=false,readOnly=false}:{stationId:string;userId?:string;requireStudent?:boolean;compact?:boolean;readOnly?:boolean}) {
-  const [stars,setStars]=useState(0),[status,setStatus]=useState(''),[busy,setBusy]=useState(false);
+  const [stars,setStars]=useState(0),[thanked,setThanked]=useState(false),[busy,setBusy]=useState(false);
   const [ready,setReady]=useState(false);
   const saving=useRef(false);
   const revision=useRef(0);
@@ -22,7 +20,7 @@ export function JourneyRating({stationId,userId,requireStudent=false,compact=fal
       }
     } catch {/* The server can still provide the rating. */}
     setStars(localStars);
-    setStatus(pending&&!readOnly?deviceStatus:'');
+    setThanked(false);
     setReady(!readOnly||localStars>0);
     setBusy(false);
     saving.current=false;
@@ -42,22 +40,22 @@ export function JourneyRating({stationId,userId,requireStudent=false,compact=fal
     saving.current=true;
     setBusy(true);
     setStars(value);
-    setStatus('Đang đồng bộ…');
+    setThanked(false);
     let savedLocally=false;
     try {
       localStorage.setItem(storageKey,JSON.stringify({stars:value,storage:'device'}));
       savedLocally=true;
+      setThanked(true);
     } catch {/* Try the server even if device storage is unavailable. */}
     try {
       const saved=await learningFeedbackService.saveRating(stationId,value,userId,requireStudent);
       if(revision.current!==version)return;
       try {localStorage.setItem(storageKey,JSON.stringify({stars:saved}));}catch{/* The server confirmed the save. */}
       setStars(saved);
-      setStatus('Đã đồng bộ ✓');
+      setThanked(true);
     } catch {
       if(revision.current!==version)return;
       if(!savedLocally)setStars(stars);
-      setStatus(savedLocally?deviceStatus:'Chưa lưu được đánh giá. Em hãy thử lại.');
     } finally {
       if(revision.current===version){
         saving.current=false;
@@ -71,6 +69,6 @@ export function JourneyRating({stationId,userId,requireStudent=false,compact=fal
       {[1,2,3,4,5].map(value=>readOnly?<Star key={value} aria-hidden="true" className={`h-4 w-4 sm:h-5 sm:w-5 ${value<=stars?"fill-amber-400 text-amber-600":"text-amber-300"}`}/>:<button key={value} type="button" disabled={busy||!ready} aria-label={`${value} sao`} aria-pressed={stars===value} onClick={()=>void save(value)} className="rounded p-1 focus-visible:outline-2 focus-visible:outline-amber-700 disabled:opacity-60"><Star className={`${compact?'h-4 w-4 sm:h-5 sm:w-5':'h-6 w-6'} ${value<=stars?'fill-amber-400 text-amber-600':'text-amber-600'}`}/></button>)}
     </div>
 
-    {status&&<span role="status" className={compact?"basis-full max-w-56 text-[10px] font-semibold":"max-w-56 text-center text-[10px] font-semibold"}>{status}</span>}
+    {thanked&&<span role="status" className={compact?"basis-full max-w-56 text-[10px] font-semibold":"max-w-56 text-center text-[10px] font-semibold"}>Cảm ơn em đã đánh giá!</span>}
   </div>;
 }

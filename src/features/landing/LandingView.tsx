@@ -3,7 +3,7 @@ import {GoogleTeacherLogin} from '../../components/auth/GoogleTeacherLogin';
 import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { DEMO_STUDENTS, DEMO_CLASSROOMS } from '../../data/mockUsers';
-import { authService } from '../../services/AuthService';
+import { authService, type StaffUser } from '../../services/AuthService';
 import { audioService } from '../../services/AudioService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
 import { progressService } from '../../services/ProgressService';
@@ -12,7 +12,7 @@ import { readTheme } from '../../services/ThemeService';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import {
   Compass,
-  Settings,
+  LogIn,
   GraduationCap,
   Presentation,
   Globe,
@@ -41,11 +41,10 @@ export const LandingView: React.FC = () => {
   const [chosenGrade, setChosenGrade] = useState<number | null>(null);
   const [guestMode, setGuestMode] = useState(false);
   const [showStudentLogin, setShowStudentLogin] = useState<boolean>(false);
-  const [adminLogin, setAdminLogin] = useState(false);
   const [staffEmail, setStaffEmail] = useState('');
   const [staffPassword, setStaffPassword] = useState('');
   const [staffBusy, setStaffBusy] = useState(false);
-  const [showTeacherLogin, setShowTeacherLogin] = useState<boolean>(false);
+  const [showStaffLogin, setShowStaffLogin] = useState<boolean>(false);
   const [selectedClass, setSelectedClass] = useState<string>('2/24');
   const [studentName, setStudentName] = useState<string>('');
   const [savedStudentId, setSavedStudentId] = useState<string>('');
@@ -164,9 +163,24 @@ export const LandingView: React.FC = () => {
     setShowStudentLogin(false);
     setChosenGrade(null);
     setGuestMode(false);
-    setShowTeacherLogin(false);
-    setAdminLogin(false);
+    setShowStaffLogin(false);
     setShowRolePicker(true);
+  };
+
+  const openStaffLogin = () => {
+    stopIntroVideo();
+    audioService.playSfx('click');
+    setShowStudentLogin(false);
+    setStaffPassword('');
+    setLoginError('');
+    setShowStaffLogin(true);
+    setShowRolePicker(true);
+  };
+
+  const finishStaffLogin = (user: StaffUser) => {
+    if (user.role === 'admin') loginAsAdmin(user);
+    else loginAsTeacher(user);
+    setShowRolePicker(false);
   };
 
   const handleStartJourney = () => {
@@ -351,19 +365,10 @@ export const LandingView: React.FC = () => {
             <span className="hidden sm:inline">{soundEnabled ? 'Âm thanh' : 'Tắt tiếng'}</span>
           </button>
 
-          <button
-            aria-label="Đổi vai trò"
-            onClick={() => {
-              stopIntroVideo();
-              audioService.playSfx('click');
-              openRolePicker();
-            }}
-            className="px-3.5 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 backdrop-blur-md text-white text-xs font-bold border border-white/20 transition flex items-center gap-1.5 cursor-pointer shadow-xs"
-          >
-            <Presentation className="w-3.5 h-3.5 text-amber-300" />
-            <span>Đổi vai trò</span>
+          <button type="button" onClick={openStaffLogin} className="landing-staff-login min-h-10 rounded-xl border border-white/20 bg-white/15 px-3 py-1.5 text-xs font-bold text-white hover:bg-white/25 flex items-center gap-1.5">
+            <LogIn aria-hidden="true" className="h-4 w-4 text-amber-300" />
+            <span>Đăng nhập</span>
           </button>
-        <button type="button" onClick={()=>{setAdminLogin(true);setShowTeacherLogin(true);setShowStudentLogin(false);setShowRolePicker(true);setLoginError('');setStaffPassword('');}} className="landing-review-admin" aria-label="Đăng nhập quản trị"><Settings className="w-4 h-4" /></button>
         </div>
       </header>
 
@@ -431,34 +436,35 @@ export const LandingView: React.FC = () => {
           />
           <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
           <div className="absolute inset-0 bg-slate-950/38 backdrop-blur-[2px] pointer-events-none" />
-          <div role="dialog" aria-modal="true" aria-label="Chọn vai trò và đăng nhập" className={`relative z-10 w-full max-h-[94dvh] overflow-y-auto rounded-[22px] border border-white/30 p-3 text-slate-800 shadow-[0_28px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:p-5 space-y-3 ${showTeacherLogin || showStudentLogin ? 'max-w-[460px] bg-[#fffdf9]/95' : 'max-w-[780px] bg-gradient-to-br from-[#102b45]/95 via-[#123a53]/95 to-[#064e52]/95'}`}>
+          <div role="dialog" aria-modal="true" aria-label={showStaffLogin ? "Đăng nhập quản trị và giáo viên" : "Chọn vai trò và đăng nhập"} className={`relative z-10 w-full max-h-[94dvh] overflow-y-auto rounded-[22px] border border-white/30 p-3 text-slate-800 shadow-[0_28px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:p-5 space-y-3 ${showStaffLogin || showStudentLogin ? 'max-w-[460px] bg-[#fffdf9]/95' : 'max-w-[780px] bg-gradient-to-br from-[#102b45]/95 via-[#123a53]/95 to-[#064e52]/95'}`}>
             <div className="flex items-center justify-between">
               <div>
-                <span className={`px-3 py-1 rounded-full text-[11px] font-bold tracking-widest ${!showStudentLogin && !showTeacherLogin ? 'bg-amber-300/15 text-amber-200 ring-1 ring-amber-200/25' : 'bg-sky-100 text-sky-800'}`}>
+                <span className={`px-3 py-1 rounded-full text-[11px] font-bold tracking-widest ${!showStudentLogin && !showStaffLogin ? 'bg-amber-300/15 text-amber-200 ring-1 ring-amber-200/25' : 'bg-sky-100 text-sky-800'}`}>
                   CHẠM ĐÀ NẴNG
                 </span>
-                <h3 className={`mt-1.5 font-black tracking-tight ${!showStudentLogin && !showTeacherLogin ? 'text-lg sm:text-2xl text-white' : 'text-xl text-slate-900'}`}>{showTeacherLogin ? (adminLogin ? 'Không gian quản trị' : 'Không gian giáo viên') : showStudentLogin ? 'Chào Nhà phiêu lưu!' : 'Bạn muốn bắt đầu hành trình nào?'}</h3>
-                {!showStudentLogin && !showTeacherLogin && <p className="mt-2 text-sm text-sky-100/85">Mỗi hành trình là một cách chạm vào di sản quê hương</p>}
+                <h3 className={`mt-1.5 font-black tracking-tight ${!showStudentLogin && !showStaffLogin ? 'text-lg sm:text-2xl text-white' : 'text-xl text-slate-900'}`}>{showStaffLogin ? 'Đăng nhập quản trị và giáo viên' : showStudentLogin ? 'Chào Nhà phiêu lưu!' : 'Bạn muốn bắt đầu hành trình nào?'}</h3>
+                {!showStudentLogin && !showStaffLogin && <p className="mt-2 text-sm text-sky-100/85">Mỗi hành trình là một cách chạm vào di sản quê hương</p>}
               </div>
               <button
                 onClick={() => {
                   setShowRolePicker(false);
                   setIntroActive(true);
                   setShowStudentLogin(false);
-                  setShowTeacherLogin(false);
+                  setShowStaffLogin(false);
+                  setStaffPassword('');
                   setLoginError('');
                 }}
-                aria-label="Đóng khung đăng nhập" className={`w-9 h-9 shrink-0 rounded-xl flex items-center justify-center transition ${!showStudentLogin && !showTeacherLogin ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-slate-100 hover:bg-slate-200 text-slate-600'}`}
+                aria-label="Đóng khung đăng nhập" className={`w-9 h-9 shrink-0 rounded-xl flex items-center justify-center transition ${!showStudentLogin && !showStaffLogin ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-slate-100 hover:bg-slate-200 text-slate-600'}`}
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {!showStudentLogin && !showTeacherLogin ? (
+            {!showStudentLogin && !showStaffLogin ? (
               <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-0">
                 {[
                   {id:'student',name:'HỌC SINH',demo:'Khám phá tự do dành cho học sinh',Icon:Compass,color:'bg-orange-600',description:'Nhà thám hiểm nhí · Khám phá di sản, tích lũy dấu ấn.'},
-                  {id:'teacher',name:'GIÁO VIÊN',demo:'Khám phá tự do dành cho giáo viên',Icon:Presentation,color:'bg-emerald-700',description:'Người dẫn đường tri thức · Dạy học, trình chiếu và sáng tạo.'},
+                  {id:'teacher',name:'GIÁO VIÊN / QUẢN TRỊ',demo:'Khám phá tự do dành cho giáo viên',Icon:Presentation,color:'bg-emerald-700',description:'Một cửa đăng nhập cho giáo viên và quản trị.'},
                 ].map(({id,name,demo,Icon,color,description})=><section key={id} className={`group relative flex flex-col overflow-hidden rounded-[16px] border bg-white shadow-[0_12px_35px_rgba(0,0,0,0.16)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_rgba(0,0,0,0.28)] motion-reduce:transform-none ${id==='student' ? 'border-orange-200 hover:border-orange-400' : 'border-emerald-200 hover:border-emerald-400'}`}>
                   <div className={`relative flex h-[90px] sm:h-[112px] items-end overflow-hidden p-2 sm:p-3 ${id==='student' ? 'bg-gradient-to-br from-orange-500 via-amber-400 to-sky-500' : 'bg-gradient-to-br from-emerald-800 via-teal-500 to-sky-400'}`}>
                     <div className="absolute inset-0 opacity-30" style={{backgroundImage:'radial-gradient(circle at 80% 15%, white 0%, transparent 42%), repeating-linear-gradient(125deg, transparent 0px, transparent 24px, rgba(255,255,255,.22) 25px, transparent 26px)'}} />
@@ -471,9 +477,9 @@ export const LandingView: React.FC = () => {
                   <div className="flex flex-1 flex-col gap-1.5 bg-gradient-to-b from-white to-slate-50 p-2 sm:p-3">
                     <p className="hidden sm:block min-h-[30px] text-xs leading-snug text-slate-600">{description}</p>
                     <button type="button" onClick={()=>{
-                      audioService.playSfx('click');setLoginError('');setStaffPassword('');
-                      if(id==='student'){setGuestMode(false);setChosenGrade(null);setShowStudentLogin(true);}
-                      else{setAdminLogin(false);setShowTeacherLogin(true);}
+                      if (id !== 'student') { openStaffLogin(); return; }
+                      audioService.playSfx('click');setLoginError('');
+                      setGuestMode(false);setChosenGrade(null);setShowStudentLogin(true);
                     }} className={`min-h-10 rounded-lg ${color} px-1 sm:px-3 text-[11px] sm:text-sm font-black text-white shadow-md transition hover:brightness-110 active:scale-[.99]`}>Đăng nhập <span aria-hidden="true">→</span></button>
                     <button type="button" disabled={staffBusy} onClick={async()=>{
                       setLoginError('');
@@ -656,15 +662,11 @@ export const LandingView: React.FC = () => {
                 try {
                   const user = await authService.login(staffEmail,staffPassword);
                   setStaffPassword('');
-                  if(adminLogin && user.role !== 'admin') throw new Error('Tài khoản này không có quyền quản trị.');
-                  if(!adminLogin && user.role !== 'teacher') throw new Error('Vui lòng dùng tài khoản giáo viên tại đây.');
-                  if(user.role === 'admin') loginAsAdmin(user); else loginAsTeacher(user);
-                  setShowRolePicker(false);
+                  finishStaffLogin(user);
                 } catch(error) { setLoginError((error as Error).message); }
                 finally { setStaffBusy(false); }
               }}>
-                {!adminLogin && <GoogleTeacherLogin onLogin={user=>{if(user.role!=='teacher')return;loginAsTeacher(user);setShowRolePicker(false);}} />}
-                <p className="text-slate-500">Tài khoản được cấp: đăng nhập bằng email và mật khẩu.</p>
+                <p className="text-slate-600">Dùng email và mật khẩu đã được cấp. Hệ thống sẽ mở trang theo quyền của tài khoản.</p>
                 <label className="block font-bold">Email
                   <input type="email" autoComplete="username" required maxLength={254} value={staffEmail} onChange={e=>setStaffEmail(e.target.value)} className="mt-1 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100" />
                 </label>
@@ -673,10 +675,9 @@ export const LandingView: React.FC = () => {
                 </label>
                 {loginError && <p role="alert" className="p-3 rounded-xl bg-rose-50 text-rose-700">{loginError}</p>}
                 <p className="text-xs text-slate-500">Quên mật khẩu? Liên hệ quản trị nhà trường để được đặt lại.</p>
-                <button disabled={staffBusy} className={`h-11 w-full rounded-xl text-sm font-bold text-white shadow-sm disabled:opacity-50 ${adminLogin ? 'bg-sky-700 hover:bg-sky-800' : 'bg-emerald-700 hover:bg-emerald-800'}`}>{staffBusy ? 'Đang đăng nhập…' : 'Đăng nhập'}</button>
-                {!adminLogin && <button type="button" disabled={staffBusy} onClick={async()=>{setStaffBusy(true);setLoginError('');try{await enterTeacherDemo();setStaffPassword('');setShowRolePicker(false);}catch(error){setLoginError((error as Error).message);}finally{setStaffBusy(false);}}} className="h-9 w-full rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50">Khám phá tự do</button>}
-                <p className="text-center text-[10px] text-slate-400">Chế độ tự do không lưu dữ liệu lớp học trên máy chủ.</p>
-                <button type="button" disabled={staffBusy} onClick={()=>{setShowTeacherLogin(false);setStaffPassword('');setLoginError('');}} className="block w-full text-center text-xs font-semibold text-slate-500 hover:text-slate-800">← Chọn vai trò khác</button>
+                <button type="submit" disabled={staffBusy} className="h-11 w-full rounded-xl bg-emerald-700 text-sm font-bold text-white shadow-sm hover:bg-emerald-800 disabled:opacity-50">{staffBusy ? 'Đang đăng nhập…' : 'Đăng nhập'}</button>
+                <GoogleTeacherLogin onLogin={finishStaffLogin} />
+                <button type="button" disabled={staffBusy} onClick={()=>{setShowStaffLogin(false);setStaffPassword('');setLoginError('');}} className="block w-full text-center text-xs font-semibold text-slate-500 hover:text-slate-800">← Chọn vai trò khác</button>
               </form>
             )}
           </div>

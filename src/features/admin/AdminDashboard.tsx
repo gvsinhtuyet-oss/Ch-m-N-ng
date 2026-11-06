@@ -8,6 +8,7 @@ import { DEMO_CLASSROOMS, DEMO_STUDENTS } from '../../data/mockUsers';
 import { OFFICIAL_25_CATALOG } from '../../data/curriculumCatalog';
 import { authService } from '../../services/AuthService';
 import { ImplementationRecord } from '../../types';
+import { EffectivenessReport } from './EffectivenessReport';
 import { ProposalInbox } from './ProposalInbox';
 import { RealClassResults } from '../teacher/RealClassResults';
 import {
@@ -31,7 +32,8 @@ const AssistantQualityDashboard = React.lazy(() => import('./AssistantQualityDas
 
 export const AdminDashboard: React.FC = () => {
   const { allStationsInCurrentGrade, currentGrade } = useApp();
-  const [activeTab, setActiveTab] = useState<'overview' | 'tracking' | 'stations' | 'users' | 'reports' | 'theme' | 'gddp' | 'proposals' | 'assistant-qa'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'tracking' | 'stations' | 'users' | 'reports' | 'theme' | 'gddp' | 'proposals' | 'assistant-qa' | 'effectiveness'>('overview');
+  const [feedbackStation, setFeedbackStation] = useState<string>();
   const [gradeFilter, setGradeFilter] = useState<number>(0); // 0 = all
   const [selectedStationTab, setSelectedStationTab] = useState<string>('g2-station-4');
 
@@ -45,7 +47,8 @@ export const AdminDashboard: React.FC = () => {
       setCounts({teachers:teachers.length,active:teachers.filter(u=>u.active).length,classes:classes.length,students:classes.reduce((n,c)=>n+c.totalStudents,0),proposals:proposals.length});
     }catch(e){setWorkflowError((e as Error).message);}finally{setLoading(false);}
   };
-  useEffect(()=>{if(activeTab!=='proposals')void load();},[activeTab]);
+  const showOverviewData = activeTab === 'overview' || activeTab === 'tracking';
+  useEffect(()=>{if(showOverviewData)void load();},[activeTab]);
 
   const filteredImplementations = gradeFilter === 0
     ? implementations
@@ -81,7 +84,8 @@ export const AdminDashboard: React.FC = () => {
             { id: 'gddp', label: 'ĐỊA CHỈ GDĐP', icon: BookOpen },
             { id: 'proposals', label: 'ĐÁNH GIÁ & GÓP Ý', icon: MessageSquareText },
             { id: 'users', label: 'NGƯỜI DÙNG', icon: Users },
-            { id: 'reports', label: 'BÁO CÁO', icon: FileText },
+            { id: 'effectiveness', label: 'BÁO CÁO HIỆU QUẢ', icon: BarChart3 },
+            { id: 'reports', label: 'KẾT QUẢ THEO LỚP', icon: FileText },
             { id: 'assistant-qa', label: 'KIỂM ĐỊNH CHATBOT', icon: MessageSquareText },
           ].map(tab => {
             const Icon = tab.icon;
@@ -89,7 +93,7 @@ export const AdminDashboard: React.FC = () => {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => {setFeedbackStation(undefined);setActiveTab(tab.id as typeof activeTab);}}
                 className={`px-3 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ${
                   isActive ? 'bg-white text-slate-950 shadow-md' : 'text-white hover:bg-white/10'
                 }`}
@@ -102,12 +106,16 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      {activeTab !== 'proposals' && <>
+      {showOverviewData && <>
         {workflowError&&<p role="alert" className="bg-rose-50 text-rose-700 rounded-xl p-3">{workflowError}</p>}
         <button disabled={loading} onClick={()=>void load()} className="border rounded-xl bg-white px-4 py-2 text-sm">{loading?'Đang tải dữ liệu…':'Làm mới dữ liệu máy chủ'}</button>
       </>}
       {activeTab === 'assistant-qa' && <React.Suspense fallback={<p role="status" className="rounded-2xl bg-white p-5">Đang mở bảng kiểm định chatbot…</p>}><AssistantQualityDashboard /></React.Suspense>}
-      {activeTab === 'proposals' && <ProposalInbox />}
+      {activeTab === 'proposals' && <ProposalInbox initialStationId={feedbackStation} />}
+      {activeTab === 'effectiveness' && <EffectivenessReport
+        openProgress={() => setActiveTab('reports')}
+        openFeedback={stationId => {setFeedbackStation(stationId);setActiveTab('proposals');}}
+      />}
       {activeTab === 'theme' && <ThemeEditor />}
       {activeTab === 'gddp' && <GddpAdminEditor />}
 

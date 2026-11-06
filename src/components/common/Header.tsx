@@ -8,6 +8,7 @@ import { Globe, Wifi, WifiOff, User, Compass, Award, Heart, Map as MapIcon, Home
 export const Header: React.FC = () => {
   const { currentUser, role, isOnline, language, currentView, currentGrade, setCurrentGrade, toggleLanguage, setCurrentView, logout, t } = useApp();
   const student = role === 'student';
+  const adminArea = role === 'admin' && currentView === 'admin-view';
   const name = (currentUser as { displayName?: string } | null)?.displayName || currentUser?.name || 'Nhà phiêu lưu';
   const roleLabel = student ? 'Nhà phiêu lưu' : role === 'teacher' ? 'Giáo viên' : 'Quản trị';
   const home = student ? 'student-journey' : role === 'teacher' ? 'teacher-view' : 'admin-view';
@@ -19,26 +20,38 @@ export const Header: React.FC = () => {
     { label: 'Bộ sưu tập', icon: Heart, view: 'student-memories' },
   ] as const;
   return <header className="app-touch-header sticky top-0 z-40 border-b border-orange-100 bg-[#fffdf9]/95 shadow-sm backdrop-blur-xl">
-    <div className={`mx-auto flex ${currentView === 'station-view' ? 'h-[52px] sm:h-[56px]' : 'h-[68px]'} max-w-[1500px] items-center justify-between gap-2 px-3 sm:gap-4 sm:px-6`}>
+    <div className={`mx-auto flex ${adminArea ? 'h-[60px]' : currentView === 'station-view' ? 'h-[52px] sm:h-[56px]' : 'h-[68px]'} max-w-[1500px] items-center justify-between gap-2 px-3 sm:gap-4 sm:px-6`}>
       <button type="button" onClick={() => setCurrentView(home)} className="flex min-w-0 items-center gap-2.5 text-left" aria-label="CHẠM ĐÀ NẴNG – trang chính">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-white shadow-md shadow-orange-200/60"><Compass className="h-6 w-6" /></span>
         <span className="hidden min-w-0 sm:block"><span className="block whitespace-nowrap text-base font-black tracking-tight text-orange-600 lg:text-lg">CHẠM ĐÀ NẴNG</span><span className="block truncate text-[10px] font-medium text-slate-500">{t.schoolName}</span></span>
       </button>
-      {<nav aria-label="Điều hướng chính" className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto rounded-2xl bg-orange-50/70 p-1 lg:flex">{nav.map(item => {
+      {!adminArea && <nav aria-label="Điều hướng chính" className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto rounded-2xl bg-orange-50/70 p-1 lg:flex">{nav.map(item => {
         const Icon = item.icon; const active = currentView === item.view || (item.view === 'student-journey' && currentView === 'station-view');
         return <button type="button" key={item.view} onClick={() => setCurrentView(item.view)} className={`flex shrink-0 items-center gap-1 rounded-xl px-2 py-2 text-[11px] font-bold transition ${active ? 'bg-white text-orange-700 shadow-sm' : 'text-slate-600 hover:bg-white'}`}><Icon className="h-4 w-4" />{item.label}</button>;
       })}</nav>}
       <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-        <span title={isOnline ? t.online : t.offline} className={`hidden items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold md:flex ${isOnline ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-100 text-amber-800'}`}>{isOnline ? <Wifi className="h-3 w-3" /> : <WifiOff className="h-3 w-3" />}<span className="hidden lg:inline">{isOnline ? t.online : t.offline}</span></span>
-        <button type="button" onClick={toggleLanguage} aria-label="Đổi ngôn ngữ VI / EN" className="flex h-9 items-center gap-1 rounded-full px-2 text-xs font-bold text-slate-600 hover:bg-orange-50"><Globe className="h-4 w-4" />{language.toUpperCase()}</button>
+        {adminArea ? <button type="button" onClick={() => setCurrentView('student-journey')} className="inline-flex min-h-10 items-center gap-1 whitespace-nowrap rounded-xl px-2 text-sm font-semibold text-slate-700 hover:bg-orange-50">
+          <Home className="h-4 w-4 shrink-0" aria-hidden="true" />Về trang học
+        </button> : <>
+          <span title={isOnline ? t.online : t.offline} className={`hidden items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold md:flex ${isOnline ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-100 text-amber-800'}`}>{isOnline ? <Wifi className="h-3 w-3" /> : <WifiOff className="h-3 w-3" />}<span className="hidden lg:inline">{isOnline ? t.online : t.offline}</span></span>
+          <button type="button" onClick={toggleLanguage} aria-label="Đổi ngôn ngữ VI / EN" className="flex h-9 items-center gap-1 rounded-full px-2 text-xs font-bold text-slate-600 hover:bg-orange-50"><Globe className="h-4 w-4" />{language.toUpperCase()}</button>
+        </>}
         {student && <span className="hidden rounded-full bg-orange-100 px-2 py-1 text-[10px] font-bold text-orange-700 sm:block">Khối {currentGrade}</span>}
         <MusicControl />
-        <button type="button" className="header-touch-assistant rounded-xl border border-sky-200 bg-sky-50 px-2 text-xs font-bold text-sky-900" aria-label="Mở Trợ lý khám phá Đà Nẵng" onClick={()=>window.dispatchEvent(new Event('cham-open-assistant'))}>Trợ lý</button>
+        {!adminArea && <button type="button" className="header-touch-assistant rounded-xl border border-sky-200 bg-sky-50 px-2 text-xs font-bold text-sky-900" aria-label="Mở Trợ lý khám phá Đà Nẵng" onClick={()=>window.dispatchEvent(new Event('cham-open-assistant'))}>Trợ lý</button>}
         <details className="relative">
           <summary className="flex h-10 cursor-pointer list-none items-center gap-1.5 rounded-full border border-orange-200 bg-white px-2.5 text-xs font-bold text-slate-700 hover:bg-orange-50 [&::-webkit-details-marker]:hidden" aria-label="Menu tài khoản"><User className="h-4 w-4 text-orange-600" /><span className="hidden max-w-28 truncate md:block">{student ? name : roleLabel}</span><ChevronDown className="h-3.5 w-3.5" /></summary>
           <div className="absolute right-0 top-12 z-50 w-64 rounded-2xl border border-orange-100 bg-white p-3 shadow-xl">
             <div className="mb-2 border-b border-slate-100 px-2 pb-3"><p className="truncate text-sm font-bold text-slate-800">{name}</p><p className="mt-1 text-xs text-slate-500">{roleLabel}{student ? ` · Khối ${currentGrade}` : ''}</p></div>
-            {nav.map(item => <button type="button" key={item.view} className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-700 hover:bg-orange-50" onClick={e => { e.currentTarget.closest('details')?.removeAttribute('open'); setCurrentView(item.view); }}>{item.label}</button>)}
+            {adminArea ? <>
+              <button type="button" onClick={toggleLanguage} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm text-slate-700 hover:bg-orange-50">
+                <Globe className="h-4 w-4" aria-hidden="true" />Ngôn ngữ · {language.toUpperCase()}
+              </button>
+              <button type="button" className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-700 hover:bg-orange-50" onClick={event => {
+                event.currentTarget.closest('details')?.removeAttribute('open');
+                window.dispatchEvent(new Event('cham-open-assistant'));
+              }}>Mở Trợ lý khám phá</button>
+            </> : nav.map(item => <button type="button" key={item.view} className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-700 hover:bg-orange-50" onClick={e => { e.currentTarget.closest('details')?.removeAttribute('open'); setCurrentView(item.view); }}>{item.label}</button>)}
             {student && <button type="button" className="block w-full rounded-xl px-3 py-2 text-left text-sm hover:bg-orange-50" onClick={e => {e.currentTarget.closest('details')?.removeAttribute('open');setCurrentView('student-profile');}}>Hồ sơ của em</button>}
             {!student && <div className="my-2 border-t border-slate-100 px-2 pt-3"><p className="mb-2 text-xs font-semibold text-slate-500">Chọn khối lớp</p><div className="flex gap-1.5">{[1,2,3,4,5].map(grade => <button type="button" key={grade} onClick={()=>setCurrentGrade(grade)} aria-pressed={currentGrade===grade} className={`h-8 w-8 rounded-lg text-xs font-bold ${currentGrade===grade ? 'bg-orange-500 text-white' : 'bg-orange-50 text-orange-700 hover:bg-orange-100'}`}>{grade}</button>)}</div></div>}
             <StaffPassword />

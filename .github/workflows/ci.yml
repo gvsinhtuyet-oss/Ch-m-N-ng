@@ -145,3 +145,26 @@ jobs:
           name: stage2-mobile-screenshots
           path: stage2-qa-screenshots/
           if-no-files-found: ignore
+
+  verify-cloudflare-stage2-live:
+    name: Verify actual Cloudflare Stage 2 after deployment
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm install --no-save --no-package-lock --no-audit --no-fund puppeteer-core
+      - name: Test live 25 stations, mobile and desktop screenshot fixes
+        env:
+          STAGE2_QA_URL: https://chamdanang-gddp.pages.dev
+        run: node --import tsx stage2-browser-qa.mjs
+      - name: Save live screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-stage2-v12-v18-screenshots
+          path: stage2-qa-screenshots/
+          if-no-files-found: ignore

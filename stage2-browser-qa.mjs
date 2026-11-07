@@ -44,7 +44,11 @@ async function openGame(stationId, viewport) {
   if(viewport.width<=650 && await page.$('iframe[data-stage2-game-frame]')) {
     await page.waitForFunction(() => {
       const frame=document.querySelector('iframe[data-stage2-game-frame]');
-      return frame?.contentDocument?.documentElement.hasAttribute('data-stage2-portrait');
+      const doc=frame?.contentDocument;
+      const shell=doc?.querySelector('.scene .shell');
+      const hud=doc?.querySelector('.scene .hud');
+      return Boolean(doc?.documentElement.hasAttribute('data-stage2-portrait') &&
+        shell && hud?.parentElement===shell && doc.querySelector('.music-toggle'));
     },{timeout:40000});
   }
   const metrics=await page.evaluate(() => {

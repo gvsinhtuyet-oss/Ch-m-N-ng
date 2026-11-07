@@ -14,6 +14,13 @@ const grade4History = 'https://www.vietjack.com/lich-su-va-dia-li-4-kn/bai-2-thi
 const grade4LocalCulture = 'https://sachgiaokhoa.aistudybuddy.vn/sach-online/lop-4/lich-su-va-dia-li-4/bai-3-lich-su-va-van-hoa-truyen-thong-dia-phuong-em/';
 const grade5History = 'https://sgk.olm.vn/thu-vien-so/doc-sach/sgv-lich-su-va-dia-li-5.4502896326';
 const reviewEntries = {
+  '1-14': ["TNXH", "Bài 10: Cùng khám phá quang cảnh xung quanh", 'https://www.sachgiaokhoa247.com/sach-giao-khoa/lop-1-1/ket-noi-tri-thuc-voi-cuoc-song-3/chu-de-3-cong-dong-dia-phuong-1548/bai-10-cung-kham-pha-quang-canh-xung-quanh-5273.html'],
+  '1-15': ["TNXH", "Bài 14: Ôn tập chủ đề Cộng đồng địa phương", 'https://www.sachgiaokhoa247.com/sach-giao-khoa/lop-1-1/ket-noi-tri-thuc-voi-cuoc-song-3/chu-de-3-cong-dong-dia-phuong-1548/bai-14-on-tap-chu-de-cong-dong-dia-phuong-6734.html'],
+  '1-16': ["Tiếng Việt", "Bài 6: Giờ ra chơi", 'https://www.sachgiaokhoa247.com/sach-giao-khoa/lop-1-1/ket-noi-tri-thuc-voi-cuoc-song-3/chu-de-3-mai-truong-men-yeu-170/bai-6-gio-ra-choi-264.html'],
+  '1-17': ["TNXH", "Bài 8: Cùng vui ở trường", 'https://hoc24.vn/giai-bai-tap-sgk/bai-8-cung-vui-o-truong.997077'],
+  '1-18': ["HĐTN", "Bài 19: Thiên nhiên tươi đẹp quê em", 'https://www.sgkvn.com/lop-1-1/ket-noi-tri-thuc-voi-cuoc-song-3/chu-de-8-que-huong-tuoi-dep-2000/bai-19-thien-nhien-tuoi-dep-que-em-tiep-6608.html'],
+  '1-19': ["HĐTN", "Bài 20: Em bảo vệ cảnh quan thiên nhiên", 'https://www.sgkvn.com/lop-1-1/ket-noi-tri-thuc-voi-cuoc-song-3/chu-de-8-que-huong-tuoi-dep-2000/bai-20-em-bao-ve-canh-quan-thien-nhien-6609.html'],
+  '1-20': ["TNXH", "Bài 22: Ăn, uống hằng ngày", 'https://www.sgkvn.com/lop-1-1/ket-noi-tri-thuc-voi-cuoc-song-3/chu-de-5-con-nguoi-va-suc-khoe-2023/bai-22-an-uong-hang-ngay-6744.html'],
   '1-01': ['Tiếng Việt', 'Bài 1: Cậu bé thông minh', grade1Vietnamese],
   '1-02': ['Tiếng Việt', 'Bài 4: Ruộng bậc thang ở Sa Pa', grade1Vietnamese],
   '1-03': ['Tiếng Việt', 'Bài 6: Du lịch biển Việt Nam', 'https://vanvn.net/bai-6-du-lich-bien-viet-nam-tieng-viet-lop-1-ket-noi-tri-thuc/'],
@@ -91,6 +98,14 @@ export function reviewGddpTextbookAddress(row) {
 
 // Replace recognized stock records in older published catalogs without migrating stored drafts.
 const legacyReplacementIds = {
+  'gddp-2026-1-01': 'gddp-2026-1-16',
+  'gddp-2026-1-02': 'gddp-2026-1-18',
+  'gddp-2026-1-03': 'gddp-2026-1-19',
+  'gddp-2026-1-10': 'gddp-2026-1-17',
+  'gddp-2026-1-11': 'gddp-2026-1-14',
+  'gddp-2026-1-12': 'gddp-2026-1-15',
+  'gddp-2026-1-13': 'gddp-2026-1-20',
+
   'gddp-2026-2-05': 'gddp-2026-2-09',
   'gddp-2026-2-06': 'gddp-2026-2-10',
   'gddp-2026-3-10': 'gddp-2026-3-11',
@@ -102,9 +117,11 @@ export function publicGddpTextbookRecords(records) {
   const checked = new Map();
   for (const row of records) {
     const {status} = reviewGddpTextbookAddress(row);
-    if (status === 'title_checked') {
+    const replacementId = legacyReplacementIds[row.id];
+    const retiredGrade1 = row.grade === 1 && Boolean(replacementId);
+    if (status === 'title_checked' && !retiredGrade1) {
       checked.set(row.id, correctGddpTextbookAddress(row));
-    } else if (status === 'other_book') {
+    } else if (status === 'other_book' || (status === 'title_checked' && retiredGrade1)) {
       const replacement = bundledGddpData.records.find(candidate => candidate.id === legacyReplacementIds[row.id]);
       if (replacement && !checked.has(replacement.id)) checked.set(replacement.id, replacement);
     }

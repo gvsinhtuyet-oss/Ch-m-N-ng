@@ -5,11 +5,13 @@ import { GddpRecord } from './GddpService';
 // addresses. These are TOPIC links only; teachers must review the actual
 // hotspot and current textbook placement. Never infer a precise SGK page.
 export const CURATED_TOPIC_STATIONS:Readonly<Record<string,string>>=Object.freeze({
- 'gddp-2026-1-01':'g1-station-2',
- 'gddp-2026-1-10':'g1-station-2',
- 'gddp-2026-1-11':'g1-station-1',
- 'gddp-2026-1-12':'g1-station-4',
- 'gddp-2026-1-13':'g1-station-5',
+ 'gddp-2026-1-14':'g1-station-1',
+ 'gddp-2026-1-15':'g1-station-4',
+ 'gddp-2026-1-16':'g1-station-2',
+ 'gddp-2026-1-17':'g1-station-2',
+ 'gddp-2026-1-18':'g1-station-3',
+ 'gddp-2026-1-19':'g1-station-3',
+ 'gddp-2026-1-20':'g1-station-5',
  'gddp-2026-2-01':'g2-station-3',
  'gddp-2026-2-02':'g2-station-2',
  'gddp-2026-2-03':'g2-station-5',

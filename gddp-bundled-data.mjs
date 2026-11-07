@@ -3,74 +3,162 @@ export const bundledGddpData = {
   "year": "2026-2027",
   "records": [
     {
-      "id": "gddp-2026-1-01",
+      "id": "gddp-2026-1-14",
+      "grade": 1,
+      "subject": "TNXH",
+      "week": "",
+      "lesson": "Bài 10: Cùng khám phá quang cảnh xung quanh",
+      "integrationType": "Gợi ý tích hợp bộ phận",
+      "activity": "Vận dụng: giới thiệu nơi em sống và quang cảnh xung quanh; đối chiếu SGK trang 42–45.",
+      "content": "Chủ đề 1: Quê hương em. Gọi tên nơi em sống và một cảnh vật quen thuộc. Làm quen với phường Hội An, xã Nam Trà My, phường Hải Châu, xã Hiệp Đức và đặc khu Hoàng Sa theo biên bản. Nói tên trường, xã hoặc phường có trường và một địa điểm trên đường đến trường.",
+      "outcomes": "Nói được tên xã hoặc phường nơi em sống; giới thiệu một cảnh vật quen thuộc bằng lời nói hoặc tranh vẽ.",
+      "teachingSuggestion": "Dùng học liệu trong 5–10 phút tại vị trí đã ghi. Học sinh có thể chỉ tranh, nói một câu hoặc vẽ; giáo viên hỗ trợ đọc tên địa danh. Tuần dạy theo kế hoạch của nhà trường.",
+      "resourceLinks": [
+        {
+          "stationId": "g1-station-1",
+          "hotspotId": "g1-home-1"
+        },
+        {
+          "stationId": "g1-station-1",
+          "hotspotId": "g1-home-3"
+        }
+      ]
+    },
+    {
+      "id": "gddp-2026-1-15",
+      "grade": 1,
+      "subject": "TNXH",
+      "week": "",
+      "lesson": "Bài 14: Ôn tập chủ đề Cộng đồng địa phương",
+      "integrationType": "Gợi ý tích hợp bộ phận",
+      "activity": "Thực hành 1: lựa chọn tranh và giới thiệu cảnh vật địa phương, SGK trang 58.",
+      "content": "Chủ đề 2: Thành Điện Hải. Giới thiệu di tích ở phường Hải Châu, thành phố Đà Nẵng; quan sát cửa thành, tường thành, hào và súng thần công. Chia sẻ hiện vật em ấn tượng, tìm hiểu danh tướng Nguyễn Tri Phương và nói một việc giữ gìn di tích.",
+      "outcomes": "Giới thiệu được Thành Điện Hải là một di tích lịch sử ở Đà Nẵng; chỉ được một dấu tích và nêu một việc giữ gìn di tích.",
+      "teachingSuggestion": "Dùng học liệu trong 5–10 phút tại vị trí đã ghi. Học sinh có thể chỉ tranh, nói một câu hoặc vẽ; giáo viên hỗ trợ đọc tên địa danh. Tuần dạy theo kế hoạch của nhà trường.",
+      "resourceLinks": [
+        {
+          "stationId": "g1-station-4",
+          "hotspotId": "tdh-thanh-co"
+        },
+        {
+          "stationId": "g1-station-4",
+          "hotspotId": "tdh-dai-bac"
+        },
+        {
+          "stationId": "g1-station-4",
+          "hotspotId": "tdh-nguyen-tri-phuong"
+        }
+      ]
+    },
+    {
+      "id": "gddp-2026-1-16",
       "grade": 1,
       "subject": "Tiếng Việt",
-      "week": "33",
-      "lesson": "Bài 1: Cậu bé thông minh",
-      "integrationType": "Bộ phận",
-      "activity": "Khởi động",
-      "content": "Giáo viên cho học sinh quan sát hình ảnh 1 số trò chơi và đoán tên các trò chơi đó. HS kể thêm tên các trò chơi dân gian mà em biết."
+      "week": "",
+      "lesson": "Bài 6: Giờ ra chơi",
+      "integrationType": "Gợi ý tích hợp bộ phận",
+      "activity": "Khởi động: quan sát và chia sẻ hoạt động giờ ra chơi, Tiếng Việt 1 tập hai, SGK trang 60.",
+      "content": "Chủ đề 3: Trò chơi dân gian. Quan sát tranh bịt mắt bắt dê, kéo co hoặc nhảy bao bố; gọi tên một trò chơi em biết và chia sẻ cảm xúc khi chơi cùng bạn. Nội dung trò chơi theo tài liệu GDĐP Quảng Nam trang 10 được biên bản giữ nguyên.",
+      "outcomes": "Nói được tên một trò chơi dân gian và một câu về cảm xúc khi chơi cùng bạn.",
+      "teachingSuggestion": "Dùng học liệu trong 5–10 phút tại vị trí đã ghi. Học sinh có thể chỉ tranh, nói một câu hoặc vẽ; giáo viên hỗ trợ đọc tên địa danh. Tuần dạy theo kế hoạch của nhà trường.",
+      "resourceLinks": [
+        {
+          "stationId": "g1-station-2",
+          "hotspotId": "g1-game-1"
+        }
+      ]
     },
     {
-      "id": "gddp-2026-1-02",
-      "grade": 1,
-      "subject": "Tiếng Việt",
-      "week": "34",
-      "lesson": "Bài 4: Ruộng bậc thang ở Sa Pa",
-      "integrationType": "Bộ phận",
-      "activity": "Hoạt động Trả lời câu hỏi",
-      "content": "Trước khi vào phần TLCH, gv giới thiệu địa danh Sa Pa, trước đây là thị xã Sa Pa, sau sáp nhập trở thành phường Sa Pa thuộc tỉnh Lào Cai."
-    },
-    {
-      "id": "gddp-2026-1-03",
-      "grade": 1,
-      "subject": "Tiếng Việt",
-      "week": "34",
-      "lesson": "Bài 6: Du lịch biển Việt Nam",
-      "integrationType": "Bộ phận",
-      "activity": "Hoạt động Trả lời câu hỏi",
-      "content": "Sau khi HS trả lời câu hỏi a, GV giải thích thêm về các địa danh sau sáp nhập. Đà Nẵng được sáp nhập từ Đà Nẵng và Quảng Nam, Khánh Hòa được sáp nhập từ Khánh Hòa và Ninh Thuận, Mũi Né thuộc tỉnh Bình Thuận sáp nhập thành phường Mũi Né, tỉnh Lâm Đồng."
-    },
-    {
-      "id": "gddp-2026-1-10",
+      "id": "gddp-2026-1-17",
       "grade": 1,
       "subject": "TNXH",
-      "week": "1",
-      "lesson": "Chủ đề1: Gia đình",
-      "integrationType": "Bộ phận",
-      "activity": "Hoạt động Trả lời câu hỏi",
-      "content": "GV cho HS kể tên và cùng tham gia một trò chơi dân gian với người thân trong gia đình."
+      "week": "",
+      "lesson": "Bài 8: Cùng vui ở trường",
+      "integrationType": "Gợi ý tích hợp bộ phận",
+      "activity": "Thực hành: cùng chơi các trò chơi, SGK trang 36.",
+      "content": "Chủ đề 3: Trò chơi dân gian. Thống nhất phạm vi chơi, vai người bắt dê và các bạn làm dê; giải thích cách chơi trước khi tham gia. Chọn khoảng sân bằng phẳng, có người lớn hướng dẫn; chờ lượt và giúp bạn chơi an toàn.",
+      "outcomes": "Nói được cách tham gia bịt mắt bắt dê và thực hiện một quy tắc chơi an toàn, đoàn kết.",
+      "teachingSuggestion": "Dùng học liệu trong 5–10 phút tại vị trí đã ghi. Học sinh có thể chỉ tranh, nói một câu hoặc vẽ; giáo viên hỗ trợ đọc tên địa danh. Tuần dạy theo kế hoạch của nhà trường.",
+      "resourceLinks": [
+        {
+          "stationId": "g1-station-2",
+          "hotspotId": "g1-game-2"
+        },
+        {
+          "stationId": "g1-station-2",
+          "hotspotId": "g1-game-3"
+        },
+        {
+          "stationId": "g1-station-2",
+          "hotspotId": "g1-game-4"
+        }
+      ]
     },
     {
-      "id": "gddp-2026-1-11",
+      "id": "gddp-2026-1-18",
       "grade": 1,
-      "subject": "TNXH",
-      "week": "13",
-      "lesson": "Chủ đề 3: Cộng đồng, địa phương",
-      "integrationType": "Bộ phận",
-      "activity": "Hoạt động Trả lời câu hỏi",
-      "content": "Biết tên gọi nơi mình sinh sống: Xã, Phường, Đặc khu của Thànhphố Đà Nẵng."
+      "subject": "HĐTN",
+      "week": "",
+      "lesson": "Bài 19: Thiên nhiên tươi đẹp quê em",
+      "integrationType": "Gợi ý tích hợp bộ phận",
+      "activity": "Hoạt động 3–4: tìm hiểu và giới thiệu cảnh đẹp thiên nhiên nơi em sống, SGK trang 74.",
+      "content": "Chủ đề 4: Những dòng suối ở thành phố Đà Nẵng. Giới thiệu một suối hoặc thác theo biên bản. Phân biệt Suối Mơ ở xã Hà Nha với Suối Mơ ở xã Bà Nà. Tên địa danh được điều chỉnh gồm Suối Tiên ở xã Quế Sơn Trung, thác Ồ Ồ ở xã Sơn Cẩm Hà, Hố Giang Thơm ở xã Tam Mỹ, Suối Lương ở phường Hải Vân, thác Grăng ở xã Bến Giằng và thác Hòa Phú Thành ở xã Hòa Vang.",
+      "outcomes": "Gọi được tên và nơi có một suối hoặc thác; giới thiệu một nét đẹp bằng lời nói hoặc tranh vẽ.",
+      "teachingSuggestion": "Dùng học liệu trong 5–10 phút tại vị trí đã ghi. Học sinh có thể chỉ tranh, nói một câu hoặc vẽ; giáo viên hỗ trợ đọc tên địa danh. Tuần dạy theo kế hoạch của nhà trường.",
+      "resourceLinks": [
+        {
+          "stationId": "g1-station-3",
+          "hotspotId": "g1-stream-1"
+        },
+        {
+          "stationId": "g1-station-3",
+          "hotspotId": "g1-stream-4"
+        }
+      ]
     },
     {
-      "id": "gddp-2026-1-12",
+      "id": "gddp-2026-1-19",
       "grade": 1,
-      "subject": "TNXH",
-      "week": "17",
-      "lesson": "Chủ đề 3: Cộng đồng, địa phương",
-      "integrationType": "Bộ phận",
-      "activity": "Quan sát tranh và trả lời câu hỏi",
-      "content": "Biết được các di tích lịch sử nơi mình sinh sống."
+      "subject": "HĐTN",
+      "week": "",
+      "lesson": "Bài 20: Em bảo vệ cảnh quan thiên nhiên",
+      "integrationType": "Gợi ý tích hợp bộ phận",
+      "activity": "Hoạt động 2: nêu việc cần làm để bảo vệ thiên nhiên, SGK trang 77.",
+      "content": "Chủ đề 4: Những dòng suối ở thành phố Đà Nẵng. Dùng cảnh suối, thác trong biên bản để thảo luận việc giữ gìn nước và rừng cây: bỏ rác đúng nơi, giữ cây xanh, nghe người lớn hướng dẫn khi tham quan. Sưu tầm ảnh có chú thích tên địa điểm và giới thiệu với người thân.",
+      "outcomes": "Nêu được một việc giữ gìn cảnh quan suối, thác; chọn cách ứng xử an toàn khi tham quan.",
+      "teachingSuggestion": "Dùng học liệu trong 5–10 phút tại vị trí đã ghi. Học sinh có thể chỉ tranh, nói một câu hoặc vẽ; giáo viên hỗ trợ đọc tên địa danh. Tuần dạy theo kế hoạch của nhà trường.",
+      "resourceLinks": [
+        {
+          "stationId": "g1-station-3",
+          "hotspotId": "g1-stream-2"
+        },
+        {
+          "stationId": "g1-station-3",
+          "hotspotId": "g1-stream-3"
+        }
+      ]
     },
     {
-      "id": "gddp-2026-1-13",
+      "id": "gddp-2026-1-20",
       "grade": 1,
       "subject": "TNXH",
-      "week": "28",
-      "lesson": "Chủ đề 5: Con người và sức khoẻ",
-      "integrationType": "Bộ phận",
-      "activity": "Quan sát tranh và trả lời câu hỏi",
-      "content": "Biết được các món ăn truyền thống” (Mì quảng), ngoài ra còn có các món ăn bánh xèo, bánh bèo,…."
+      "week": "",
+      "lesson": "Bài 22: Ăn, uống hằng ngày",
+      "integrationType": "Gợi ý tích hợp bộ phận",
+      "activity": "Vận dụng: chọn thực đơn cho ba bữa ăn trong ngày, SGK trang 95; liên hệ ăn uống an toàn ở trang 97.",
+      "content": "Chủ đề 5: Món ăn truyền thống. Nhận biết mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo theo biên bản. Dùng tên bánh đập cho phần thực hành. Chọn món địa phương để liên hệ bữa ăn đa dạng, rửa tay và giữ vệ sinh khi ăn.",
+      "outcomes": "Kể được tên một món truyền thống; nêu một việc ăn uống vệ sinh và biết phối hợp món ăn trong bữa.",
+      "teachingSuggestion": "Dùng học liệu trong 5–10 phút tại vị trí đã ghi. Học sinh có thể chỉ tranh, nói một câu hoặc vẽ; giáo viên hỗ trợ đọc tên địa danh. Tuần dạy theo kế hoạch của nhà trường.",
+      "resourceLinks": [
+        {
+          "stationId": "g1-station-5",
+          "hotspotId": "g1-food-1"
+        },
+        {
+          "stationId": "g1-station-5",
+          "hotspotId": "g1-food-4"
+        }
+      ]
     },
     {
       "id": "gddp-2026-2-01",

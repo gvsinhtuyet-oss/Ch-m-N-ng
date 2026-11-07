@@ -29,14 +29,24 @@ export async function packageProduction(root=process.cwd()) {
   const source=resolve(root,file);
   try {await lstat(source);} catch(e) {if(e.code==='ENOENT'&&meta.optional)continue;throw e;}
   await mkdir(dirname(resolve(out,file)),{recursive:true});
-  await cp(source,resolve(out,file),{recursive:true,filter:p=>p===source || !relative(source,p).split('/').includes('node_modules')});
+  // Only ship executable runtime files. TypeScript declarations and source maps
+  // are developer/debugging aids; deleting them from this *generated copy*
+  // never touches source, approved artwork, browser assets or live data.
+  const runtimeFile = p => {
+   if(p===source)return true;
+   const rel=relative(source,p).replaceAll('\\\\','/');
+   if(rel.split('/').includes('node_modules'))return false;
+   if(/(?:\\.d\\.(?:ts|mts|cts)|\\.map)$/i.test(rel))return false;
+   return true;
+  };
+  await cp(source,resolve(out,file),{recursive:true,filter:runtimeFile});
   dependencies.push(file);
  }
  async function bytes(dir) {let total=0; for(const e of await readdir(dir,{withFileTypes:true})){const p=resolve(dir,e.name);if(e.isDirectory())total+=await bytes(p);else if(e.isFile())total+=(await lstat(p)).size;else throw new Error('Unexpected symbolic link in runtime package: '+p);}return total;}
  const sizes={dist:await bytes(resolve(out,'dist')),node_modules:await bytes(resolve(out,'node_modules')),total:await bytes(out)};
  // Leave headroom below the publishing limit. Container base layers are not counted here.
  if(sizes.total>200_000_000)throw new Error('Runtime package exceeds 200 MB safety budget: '+sizes.total);
- const manifest={sizes,backendModules:[...modules].sort(),dependencies:dependencies.sort(),excluded:['source files','devDependencies','public duplicate','content-data','.env','.git','npm cache']};
+ const manifest={sizes,backendModules:[...modules].sort(),dependencies:dependencies.sort(),excluded:['source files','devDependencies','public duplicate','content-data','.env','.git','npm cache','production dependency source maps','production dependency TypeScript declarations']};
  await writeFile(resolve(out,'runtime-manifest.json'),JSON.stringify(manifest,null,2)+'\n');
  console.log(JSON.stringify(manifest,null,2)); return out;
 }

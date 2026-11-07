@@ -40,10 +40,10 @@ export const Header: React.FC = () => {
             <a className="flex min-h-11 w-full items-center gap-2 rounded-xl px-3 text-sm font-semibold text-blue-950 hover:bg-blue-50" href="/teacher-preview.html" target="_blank" rel="noopener noreferrer">
               <BookOpen className="h-4 w-4 text-blue-600" aria-hidden="true" />Giáo viên <span className="ml-auto text-[10px] font-medium text-slate-500">Demo</span>
             </a>
-            <button type="button" onClick={e => { e.currentTarget.closest('details')?.removeAttribute('open'); setCurrentView('student-journey'); }} className="flex min-h-11 w-full items-center gap-2 rounded-xl px-3 text-left text-sm font-semibold text-blue-950 hover:bg-blue-50">
-              <Home className="h-4 w-4 text-blue-600" aria-hidden="true" />Xem hành trình học sinh
-            </button>
-            <p className="border-t border-slate-100 px-3 py-2 text-xs text-slate-500">Giáo viên: bản minh họa, không ghi dữ liệu. Học sinh: mở giao diện hành trình.</p>
+            <a href="/" target="_blank" rel="noopener noreferrer" className="flex min-h-11 w-full items-center gap-2 rounded-xl px-3 text-left text-sm font-semibold text-blue-950 hover:bg-blue-50">
+              <Home className="h-4 w-4 text-blue-600" aria-hidden="true" />Mở trang học sinh
+            </a>
+            <p className="border-t border-slate-100 px-3 py-2 text-xs text-slate-500">Giáo viên: xem demo không ghi dữ liệu. Học sinh: mở trang chủ ở tab riêng để chọn chế độ học, không thay đổi vai trò Quản trị.</p>
           </div>
         </details>}
         {!adminArea && <span title={isOnline ? t.online : t.offline} className={`hidden items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold md:flex ${isOnline ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-100 text-amber-800'}`}>{isOnline ? <Wifi className="h-3 w-3" /> : <WifiOff className="h-3 w-3" />}<span className="hidden lg:inline">{isOnline ? t.online : t.offline}</span></span>}

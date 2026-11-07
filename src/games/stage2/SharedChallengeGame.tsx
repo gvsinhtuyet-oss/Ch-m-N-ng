@@ -288,6 +288,67 @@ export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void
     overflow-y:visible!important;
   }
 }
+/* Tablet-only: V12 artwork is preserved, but the shared HUD must keep
+   all three controls on one line, and photo answers should not stretch
+   to ~300px high with large blank space above and below the images. */
+@media (min-width:651px) and (max-width:1023px) and (orientation:portrait) {
+  .scene.safe-layout.my-khe-game:not(.is-victory) .hud-right {
+    display:flex!important;
+    flex-direction:row!important;
+    justify-content:flex-end!important;
+    align-items:center!important;
+    flex-wrap:nowrap!important;
+    flex:0 0 auto!important;
+    width:auto!important;
+    max-width:none!important;
+    gap:8px!important;
+  }
+  .scene.safe-layout.my-khe-game:not(.is-victory) .hud-keys {
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    align-items:center!important;
+    max-width:none!important;
+    gap:3px!important;
+  }
+  .scene.safe-layout.my-khe-game:not(.is-victory) .music-toggle {
+    flex:0 0 44px!important;
+    width:44px!important;
+    height:44px!important;
+  }
+  .scene.safe-layout.my-khe-game:not(.is-victory) .panel .answers:has(.choice-photo) {
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    grid-auto-rows:min-content!important;
+    align-content:start!important;
+    align-items:start!important;
+    gap:12px!important;
+  }
+  .scene.safe-layout.my-khe-game:not(.is-victory) .panel .answers button:has(.choice-photo) {
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    align-self:start!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:216px!important;
+    padding:6px!important;
+    gap:6px!important;
+  }
+  .scene.safe-layout.my-khe-game:not(.is-victory) .panel .answers .choice-photo {
+    width:100%!important;
+    height:clamp(120px,18vw,150px)!important;
+    min-height:0!important;
+    max-height:150px!important;
+    object-fit:cover!important;
+    border-radius:9px!important;
+  }
+  .scene.safe-layout.my-khe-game:not(.is-victory) .panel .answers .choice-letter {
+    margin:0!important;
+    padding:2px 0!important;
+    line-height:1.2!important;
+  }
+}
 `;
   const victorySideFillCss=`@media(min-width:768px){.scene.is-victory{background-size:100% auto,cover!important;background-position:center top,center center!important;background-repeat:no-repeat,no-repeat!important}}`;
   const grade2Css=`@media(max-width:650px) and (orientation:portrait){.scene.safe-layout.grade2-game:not(.is-victory){--art-width:140vw;--banner-bottom:26.8vw}}`;

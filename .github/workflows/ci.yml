@@ -61,6 +61,9 @@ jobs:
       - name: Opt-in D1 effectiveness tests
         run: node --test effectiveness-test.mjs
 
+      - name: Student before-after pilot and teacher preparation time calculations
+        run: node --import tsx --test effectiveness-pilot-test.ts
+
       - name: GDĐP catalog validation tests
         run: node --test gddp-catalog-test.mjs gddp-ai-test.mjs
 

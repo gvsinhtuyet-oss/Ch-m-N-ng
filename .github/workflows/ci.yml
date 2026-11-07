@@ -146,3 +146,26 @@ jobs:
           name: stage2-mobile-screenshots
           path: stage2-qa-screenshots/
           if-no-files-found: ignore
+
+  verify-my-khe-raised-questions-live:
+    name: Verify My Khe questions moved upward on LIVE Cloudflare
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm install --no-save --no-package-lock --no-audit --no-fund puppeteer-core
+      - name: Check question 4 position and all answers on deployed Production
+        env:
+          STAGE2_QA_URL: https://chamdanang-gddp.pages.dev
+        run: node stage2-my-khe-intro-qa.mjs
+      - name: Save public site screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-khe-raised-question-live-screenshots
+          path: stage2-qa-screenshots/
+          if-no-files-found: ignore

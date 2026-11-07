@@ -41,7 +41,7 @@ async function openGame(stationId, viewport) {
   },{timeout:30000});
   // Legacy iframe's content appears before the iframe load event fires.
   // Wait for React's onLoad layout injection before measuring geometry.
-  if(await page.$('iframe[data-stage2-game-frame]')) {
+  if(viewport.width<=650 && await page.$('iframe[data-stage2-game-frame]')) {
     await page.waitForFunction(() => {
       const frame=document.querySelector('iframe[data-stage2-game-frame]');
       return frame?.contentDocument?.documentElement.hasAttribute('data-stage2-portrait');

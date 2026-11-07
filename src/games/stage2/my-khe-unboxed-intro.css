@@ -454,3 +454,15 @@
     box-shadow:0 5px 13px rgba(34,54,80,.12)!important;
   }
 }
+
+
+/* Override the original V12 quiz panel's 3px border only during introduction.
+   Stronger selector avoids touching the five actual question panels. */
+@media (max-width:650px) and (orientation:portrait) {
+  html[data-stage2-portrait] .scene:not(.is-victory):has(.shell > .top) .shell:has(.intro-screen) > .panel {
+    border-width:1.5px!important;
+    border-style:solid!important;
+    border-color:#d6a553!important;
+    padding:12px 10px 14px!important;
+  }
+}

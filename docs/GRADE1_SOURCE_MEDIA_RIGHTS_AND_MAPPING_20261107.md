@@ -6,10 +6,10 @@
 
 - Tài liệu Word do giáo viên cung cấp: `TLĐP 1. 08-8-2025 (Nhóm 1).docx` (195,5 MB).
 - Biên bản GDĐP lớp 1 ngày 31/7/2025: `31-01.LỚP 1. BIÊN BẢN GÓP Ý  TLGD ĐP.docx`.
-- Bản Word có **153 tệp ảnh bên trong**, gồm cả ảnh nội dung, icon, ảnh lặp và tranh; 126 lần hiển thị trong văn bản. Đã lựa chọn **37 tệp nguồn ứng viên**, nén WebP và lập manifest mã băm để không nhầm hình.
+- Bản Word có **153 tệp ảnh bên trong**, gồm cả ảnh nội dung, icon, ảnh lặp và tranh; 126 lần hiển thị trong văn bản. Đã lựa chọn **40 tệp nguồn ứng viên**, nén WebP và lập manifest mã băm để không nhầm hình.
 - Bản đóng gói nguồn: `Grade1_AnhGoc_DoiChieu_BienBan_ChuaXuatBan.zip`, tạo trong môi trường làm việc để người phụ trách kiểm duyệt.
 
-## Danh mục 37 ảnh nguồn ứng viên
+## Danh mục 40 ảnh nguồn ứng viên
 
 | Chủ đề | Ảnh trong tài liệu | Tệp imageXXX được chọn |
 |---|---|---|
@@ -19,7 +19,8 @@
 | Thành Điện Hải | Toàn cảnh, Cửa Nam, Cửa Đông, hào thành, súng thần công, Nguyễn Tri Phương | 44, 49, 51, 53, 55, 57 |
 | Trò chơi dân gian | Bịt mắt bắt dê, hoạt động vui chơi; ba ảnh chọn để đối chiếu nội dung bài | 66, 79, 74 |
 | Những dòng suối | Suối Tiên, Suối Mơ (Hà Nha), Thác Ồ Ồ, Hố Giang Thơm, Suối Mơ (Bà Nà), Suối Lương, Thác Grăng, Hòa Phú Thành | 92, 93, 96, 97, 100, 101, 110, 112 |
-| Món ăn | Mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo, bánh xèo, bánh đập | 117, 122, 118, 121, 125, 124, 147 |
+| Món ăn – Khởi động | Mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo, bánh xèo | 117, 122, 118, 121, 125, 124 |
+| Món ăn – Thực hành | Cao lầu, bê thui, bánh đập, cơm gà | 143, 144, 147, 148 |
 
 **Rà lại bằng mắt:** hai ảnh chụp thác ở cuối nhóm Suối (`image110.png`, `image112.jpeg`) cần giáo viên xác nhận khớp đúng nhãn Thác Grăng/Hòa Phú Thành trước khi đóng học liệu. Ảnh Trường Tiểu học Kim Đồng là **tư liệu 2025**, không phải xác nhận tên trường hiện hành. Không khẳng định nguồn ảnh nào có giấy phép mở chỉ vì ảnh nằm trong bản sách được gửi.
 

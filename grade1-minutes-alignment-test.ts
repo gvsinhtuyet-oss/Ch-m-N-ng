@@ -37,8 +37,12 @@ test('Citadel remains in Hai Chau and document-preserved lesson is not fabricate
   assert.match(p[0].instructions.join(' '),/phường Hải Châu/);
   assert.match(p[2].instructions.join(' '),/vị tướng nào/);
   assert.match(p[3].instructions.join(' '),/di tích lịch sử/);
-  assert.equal(p[3].requiresOriginalTextbook,true);
-  assert.match(byId('g1-station-2').editorialNotice!,/GIỮ NGUYÊN/);
+  assert.match(p[3].instructions.join(' '),/lập kế hoạch tham quan Thành Điện Hải/i);
+  assert.match(byId('g1-station-2').editorialNotice!,/giữ nguyên/i);
+  const folk=byId('g1-station-2').phases;
+  assert.match(folk[1].instructions.join(' '),/bịt kín mắt|bịt mắt/i);
+  assert.match(folk[1].instructions.join(' '),/kéo co/);
+  assert.match(folk[3].instructions.join(' '),/người thân/);
 });
 test('Six opening falls and two discovery falls match minutes without confusing two Suoi Mo sites',()=>{
   const p=byId('g1-station-3').phases;
@@ -54,7 +58,9 @@ test('Food opening exactly reflects six dishes and practical substitution Bánh 
   const p=byId('g1-station-5').phases;
   const names=['Mì Quảng','Bánh tráng cuốn thịt heo','Bánh sừng trâu','Bánh thuẫn','Bánh bèo','Bánh xèo'];
   assert.deepEqual(p[0].imageSubjects,names);
-  assert.deepEqual(p[2].imageSubjects,['Bánh đập']);
+  assert.deepEqual(p[2].imageSubjects,['Cao lầu','Bê thui','Bánh đập','Cơm gà']);
+  assert.match(p[1].instructions.join(' '),/mì Quảng/i);
+  assert.match(p[3].instructions.join(' '),/Đầu bếp siêu hạng/);
   assert.match(p[2].instructions.join(' '),/Bánh tráng chập/);
   assert.doesNotMatch(lesson('g1-station-5').points[0].narration,/cao lầu|bê thui|cơm gà|nem nướng/i);
   for(const name of names)assert.ok(lesson('g1-station-5').points[0].narration.toLowerCase().includes(name.toLowerCase()),name);

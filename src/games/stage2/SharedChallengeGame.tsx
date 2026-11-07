@@ -266,6 +266,12 @@ export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void
   .scene.safe-layout.my-khe-game:not(.is-victory):has(.prompt) .shell {
     padding-top:calc(var(--banner-bottom) + 12px)!important;
   }
+  /* Legacy panel centering still leaves a tall gap. CSS individual translate
+     shifts the complete question + options + confirm together while preserving
+     the panel's original horizontal positioning and scroll layout. */
+  .scene.safe-layout.my-khe-game:not(.is-victory) .panel:has(.prompt) {
+    translate:0 -90px!important;
+  }
 }
 `;
   const victorySideFillCss=`@media(min-width:768px){.scene.is-victory{background-size:100% auto,cover!important;background-position:center top,center center!important;background-repeat:no-repeat,no-repeat!important}}`;

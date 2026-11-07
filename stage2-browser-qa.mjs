@@ -162,12 +162,13 @@ try{
     }
     assertLayout(station.id,metrics,true);
     if(station.id==='g3-station-1'){
+      assert.equal(metrics.iframe,false,'My Khe must now use the shared renderer');
       const toggle=await page.evaluate(()=>{
-        const btn=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument?.querySelector('.music-toggle');
+        const btn=document.querySelector('[data-shared-stage2]')?.shadowRoot?.querySelector('.music-toggle');
         const before=btn?.getAttribute('aria-pressed');btn?.click();
         return {before,after:btn?.getAttribute('aria-pressed')};
       });
-      assert.ok(toggle.before!==null&&toggle.after!==toggle.before,'My Khe sound button should toggle');
+      assert.ok(toggle.before!==null&&toggle.after!==toggle.before,'My Khe shared sound control must toggle');
     }
     assert.deepEqual(errors,[],station.id+': JavaScript errors');
     console.log('PHONE OK',station.id,metrics.iframe?'HTML':'React',
@@ -192,48 +193,20 @@ try{
   }
 
 
-  // User screenshot regression: HTML titles and HUD never overlap; My Khe
-  // question card and answer buttons remain compact on mobile and desktop.
-  for (const [id,width,height] of [
-    ['g3-station-1',390,844],['g3-station-2',390,844],
-    ['g3-station-1',1366,768],['g3-station-2',1366,768]
-  ]) {
-    const {page,errors}=await openGame(id,{width,height});
-    const visual=await page.evaluate(() => {
+  // Hoang Dieu remains an approved HTML iframe; the newly migrated
+  // My Khe receives complete independent shared-engine browser checks.
+  for (const width of [390,1366]){
+    const {page,errors}=await openGame('g3-station-2',{width,height:width===390?844:768});
+    const visual=await page.evaluate(()=>{
       const frame=document.querySelector('iframe[data-stage2-game-frame]');
       const doc=frame?.contentDocument;
-      const panel=doc?.querySelector('.scene:not(.is-victory) .panel');
-      const hud=doc?.querySelector('.scene:not(.is-victory) .shell > .hud, .scene:not(.is-victory) .shell > .top');
-      const keys=doc?.querySelector('.hud-keys,.gems');
-      const question=doc?.querySelector('.panel .prompt');
-      const buttons=Array.from(doc?.querySelectorAll('.panel .answers button')??[]);
-      const shell=doc?.querySelector('.scene:not(.is-victory) .shell');
-      const pos=e=>{const r=e?.getBoundingClientRect();return r?{x:r.x,y:r.y,width:r.width,height:r.height,right:r.right}:null};
-      return {
-        panel:pos(panel),hud:pos(hud),keys:pos(keys),
-        question:pos(question),
-        questionFont:question?parseFloat(getComputedStyle(question).fontSize):null,
-        buttons:buttons.map(pos),heroBackground: shell?getComputedStyle(shell,'::before').backgroundPosition:null,
-        backgroundPosition:doc?.querySelector('.scene')?getComputedStyle(doc.querySelector('.scene')).backgroundPosition:null,
-        iframeWidth:frame?.contentWindow?.innerWidth,
-      };
+      const bar=doc?.querySelector('.hud-keys');
+      const b=bar?.getBoundingClientRect();
+      return {keysRight:b?.right??0,iframeWidth:frame?.contentWindow?.innerWidth??0};
     });
-    console.log('USER SCREENSHOT REGRESSION',id,width,JSON.stringify(visual));
-    if(id==='g3-station-1') {
-      assert.ok(visual.panel?.width <= (width===390?391:1102),'My Khe panel is too wide');
-      if(width===390) {
-        assert.ok(visual.questionFont!==null&&visual.questionFont<=20,'My Khe question text remains oversized');
-        assert.ok(visual.buttons.every(b=>b.height<=155),'My Khe image answer buttons are too tall');
-        assert.ok(visual.heroBackground?.includes('12px'),'My Khe banner needs safe top padding');
-      } else {
-        assert.ok(visual.backgroundPosition?.includes('30px'),'My Khe desktop banner clipped at frame top');
-      }
-    } else if(width===1366) {
-      assert.ok(visual.keys && visual.keys.right > visual.iframeWidth-125,
-        'Hoang Dieu keys should sit at the far right safe corner');
-    }
-    assert.deepEqual(errors,[],id+' visual JavaScript errors');
-    await page.screenshot({path:'stage2-qa-screenshots/'+id+'-user-fix-'+width+'.png',fullPage:true});
+    if(width===1366)assert.ok(visual.keysRight>visual.iframeWidth-125,'Hoang Dieu keys should sit in right corner');
+    assert.deepEqual(errors,[],'Hoang Dieu JavaScript errors');
+    await page.screenshot({path:'stage2-qa-screenshots/g3-station-2-user-fix-'+width+'.png',fullPage:true});
     await page.close();
   }
 

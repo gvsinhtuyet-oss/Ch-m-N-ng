@@ -420,10 +420,13 @@
   }
 
   .station-viewport[data-stage="4"] .stage-four {
-    aspect-ratio:1671 / 941;
+    /* Crop 58 px of sky and scale the remaining artwork to the lesson height. */
+    aspect-ratio:1671 / 883;
+    max-width:max(620px, calc((100dvh - 64px) * 1671 / 883));
     min-height:0!important;
+    margin-inline:auto;
     padding:0;
-    background:url('/images/stage4-danang-desktop.webp') center / 100% 100% no-repeat #f5e5bf;
+    background:url('/images/stage4-danang-desktop.webp') center bottom / 100% auto no-repeat #f5e5bf;
   }
 
   .stage-four .mobile-stamp-hero,
@@ -431,7 +434,8 @@
 
   .station-viewport[data-stage="4"] .stage-four .stamp-layout {
     position:absolute;
-    inset:0;
+    /* Keep the map, rating and stamp aligned to the uncropped artwork. */
+    inset:-6.57% 0 0;
     display:block;
     max-width:none;
   }
@@ -540,22 +544,44 @@
 
   .station-viewport[data-stage="4"] .stage-four .journey-controls {
     position:absolute;
-    inset:auto 25% 3.8% 25%!important;
-    margin:0;
-    gap:8px!important;
+    inset:auto 0 3.2%!important;
+    width:min(64%, 860px);
+    margin:0 auto;
+    gap:clamp(8px,1vw,14px)!important;
   }
 
   .stage-four .journey-controls button {
     min-height:44px!important;
-    padding:6px 8px;
-    border-radius:12px!important;
+    padding:7px 10px;
+    border-radius:14px!important;
     font-size:clamp(12px,1vw,16px);
+    box-shadow:inset 0 1px #fff9,0 3px 0 #a87125,0 6px 12px #51381045!important;
+  }
+
+  .stage-four .journey-control-review,
+  .stage-four:not([data-stamped="true"]) .journey-control-next {
+    border-color:#edb84f!important;
+    background:linear-gradient(#fff,#fff4d8);
+    color:#124c72;
+  }
+
+  .stage-four .journey-control-stamp,
+  .stage-four[data-stamped="true"] .journey-control-next {
+    border-color:#ca8a04!important;
+    background:linear-gradient(#fef08a,#f59e0b);
+    color:#451a03;
+  }
+
+  .stage-four .journey-controls button:not(:disabled):hover { filter:brightness(1.06); }
+  .stage-four .journey-controls button:not(:disabled):active {
+    transform:translateY(2px);
+    box-shadow:inset 0 1px #fff9,0 1px 0 #a87125!important;
   }
 
   .stage-four[data-stamped="true"] .journey-controls { grid-template-columns:repeat(2,minmax(0,1fr)); }
   .stage-four[data-stamped="true"] .journey-control-stamp { display:none; }
   .stage-four .journey-preview-note {
-    inset:25.6% auto auto 11.4%;
+    inset:20.7% auto auto 11.4%;
     padding:2px 6px;
     border-radius:6px;
     background:#fff9ed;

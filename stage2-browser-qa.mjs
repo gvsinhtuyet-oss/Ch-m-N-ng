@@ -163,12 +163,13 @@ try{
     assertLayout(station.id,metrics,true);
     if(station.id==='g3-station-1'){
       assert.equal(metrics.iframe,false,'My Khe must now use the shared renderer');
-      const toggle=await page.evaluate(()=>{
-        const btn=document.querySelector('[data-shared-stage2]')?.shadowRoot?.querySelector('.music-toggle');
-        const before=btn?.getAttribute('aria-pressed');btn?.click();
-        return {before,after:btn?.getAttribute('aria-pressed')};
-      });
-      assert.ok(toggle.before!==null&&toggle.after!==toggle.before,'My Khe shared sound control must toggle');
+      const before=await page.evaluate(()=>document.querySelector('[data-shared-stage2]')?.shadowRoot?.querySelector('.music-toggle')?.getAttribute('aria-pressed'));
+      assert.ok(before!==null,'My Khe sound toggle missing');
+      assert.equal(await shadowClick(page,'.music-toggle'),true);
+      await page.waitForFunction(previous=>{
+        const current=document.querySelector('[data-shared-stage2]')?.shadowRoot?.querySelector('.music-toggle')?.getAttribute('aria-pressed');
+        return current!==null&&current!==previous;
+      },{timeout:6000},before);
     }
     assert.deepEqual(errors,[],station.id+': JavaScript errors');
     console.log('PHONE OK',station.id,metrics.iframe?'HTML':'React',

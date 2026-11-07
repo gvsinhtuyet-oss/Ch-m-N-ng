@@ -45,8 +45,8 @@ export const Header: React.FC = () => {
             </button>
             <p className="border-t border-slate-100 px-3 py-2 text-xs text-slate-500">Giáo viên: bản minh họa, không ghi dữ liệu. Học sinh: mở giao diện hành trình.</p>
           </div>
-        </details>
-        <span title={isOnline ? t.online : t.offline} className={`hidden items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold md:flex ${isOnline ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-100 text-amber-800'}`}>{isOnline ? <Wifi className="h-3 w-3" /> : <WifiOff className="h-3 w-3" />}<span className="hidden lg:inline">{isOnline ? t.online : t.offline}</span></span>
+        </details>}
+        {!adminArea && <span title={isOnline ? t.online : t.offline} className={`hidden items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold md:flex ${isOnline ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-100 text-amber-800'}`}>{isOnline ? <Wifi className="h-3 w-3" /> : <WifiOff className="h-3 w-3" />}<span className="hidden lg:inline">{isOnline ? t.online : t.offline}</span></span>}
         {!adminArea && <button type="button" onClick={toggleLanguage} aria-label="Đổi ngôn ngữ VI / EN" className="flex h-9 items-center gap-1 rounded-full px-2 text-xs font-bold text-slate-600 hover:bg-orange-50"><Globe className="h-4 w-4" />{language.toUpperCase()}</button>}
         {student && <span className="hidden rounded-full bg-orange-100 px-2 py-1 text-[10px] font-bold text-orange-700 sm:block">Khối {currentGrade}</span>}
         {!adminArea && <MusicControl />}

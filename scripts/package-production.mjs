@@ -34,9 +34,9 @@ export async function packageProduction(root=process.cwd()) {
   // never touches source, approved artwork, browser assets or live data.
   const runtimeFile = p => {
    if(p===source)return true;
-   const rel=relative(source,p).replaceAll('\\\\','/');
+   const rel=relative(source,p).replaceAll('\\','/');
    if(rel.split('/').includes('node_modules'))return false;
-   if(/(?:\\.d\\.(?:ts|mts|cts)|\\.map)$/i.test(rel))return false;
+   if(/(?:\.d\.(?:ts|mts|cts)|\.map)$/i.test(rel))return false;
    return true;
   };
   await cp(source,resolve(out,file),{recursive:true,filter:runtimeFile});

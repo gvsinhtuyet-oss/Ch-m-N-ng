@@ -1,7 +1,8 @@
 import {isBundledAssetUrl} from '../../services/contentAssetUrls';
 import { optimizeImage, describeOptimization } from '../../services/ImageOptimizationService';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { journeyMapImage } from '../../data/journeyMapAssets';
 import { BookOpen, CloudUpload, Image as ImageIcon, Map as MapIcon, ShieldCheck } from 'lucide-react';
 import { ALL_25_STATIONS } from '../../data/allStations';
 import { contentService, StationContent, LearningResource } from '../../services/ContentService';
@@ -18,7 +19,7 @@ async function readFile(file: File): Promise<string> {
   });
 }
 
-export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = false}) => {
+export const ContentEditor: React.FC<{localOnly?: boolean; onDirtyChange?: (dirty: boolean) => void}> = ({localOnly = false, onDirtyChange}) => {
   const [stationId, setStationId] = useState(ALL_25_STATIONS[0].id);
   const station = ALL_25_STATIONS.find(s => s.id === stationId)!;
   const [draft, setDraft] = useState<StationContent>(() => structuredClone(contentService.get(station)));
@@ -29,6 +30,15 @@ export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = fals
   const [resourceKind, setResourceKind] = useState<LearningResource['kind']>('document');
   const fieldClass = 'staff-field w-full rounded-xl border border-slate-300 bg-white p-3 text-sm text-slate-900';
   const hasUnsavedChanges = JSON.stringify(draft) !== JSON.stringify(contentService.get(station));
+  const bundledMap = journeyMapImage(station.id);
+  // Navigation and browser-close warnings share the same editor dirty state.
+  useEffect(() => { onDirtyChange?.(hasUnsavedChanges); }, [hasUnsavedChanges, onDirtyChange]);
+  useEffect(() => {
+    if (!hasUnsavedChanges) return;
+    const warn = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ''; };
+    window.addEventListener('beforeunload', warn);
+    return () => window.removeEventListener('beforeunload', warn);
+  }, [hasUnsavedChanges]);
   const validLink = (value: string) => !value || isBundledAssetUrl(value) || /^https:\/\//i.test(value) || /^data:(image\/|application\/pdf|audio\/|video\/)/i.test(value);
 
   const upload = async (file: File | undefined, target: 'cover' | 'map' | number) => {
@@ -59,6 +69,9 @@ export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = fals
     setBusy(true); setMessage('');
     try {
       validate();
+      if (bundledMap && draft.mapImage !== bundledMap) {
+        throw new Error('Ảnh bản đồ nhận quà đã được đóng gói và duyệt sẵn. Bản xem thử không thể xuất bản ảnh bản đồ thay thế; cần cập nhật tài nguyên chuẩn trong bản phát hành riêng.');
+      }
       if (publish) {
         await contentService.login();
         await contentService.publish(station, draft);
@@ -90,7 +103,7 @@ export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = fals
       <label className="block font-bold text-sm text-blue-950">Chọn trạm
         <select className={fieldClass} value={stationId} onChange={e => {
           const selected = ALL_25_STATIONS.find(s => s.id === e.target.value)!;
-          if (hasUnsavedChanges && !window.confirm('Thay đổi ở trạm hiện tại chưa được lưu. Chuyển trạm và bỏ thay đổi?')) return;
+          if (hasUnsavedChanges && !window.confirm('Thay đổi ở trạm hiện tại chưa được lưu. Chuyển trạm và bỏ thay đổi?')) { e.currentTarget.value = stationId; return; }
           setStationId(selected.id); setDraft(structuredClone(contentService.get(selected))); setMessage('');
         }} disabled={busy}>
           {ALL_25_STATIONS.map(s => <option key={s.id} value={s.id}>Khối {s.grade} – {s.titleVi}</option>)}
@@ -105,10 +118,11 @@ export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = fals
                 {target === 'cover' ? <ImageIcon className="h-5 w-5 text-blue-600" /> : <MapIcon className="h-5 w-5 text-blue-600" />}
                 {target === 'cover' ? 'Ảnh bìa trạm' : 'Ảnh bản đồ nhận quà'}
               </h3>
-              <input className="admin-upload-field block w-full text-sm" aria-label={'Tải ' + target} type="file" accept="image/png,image/jpeg,image/webp,image/gif" disabled={busy} onChange={e => { void upload(e.target.files?.[0], target); e.target.value = ''; }} />
-              <input aria-label={'Đường dẫn ' + target} className={fieldClass} placeholder="Hoặc dán đường dẫn HTTPS" value={value.startsWith('data:') ? '' : value} onChange={e => setDraft(prev => ({ ...prev, [target === 'cover' ? 'coverImage' : 'mapImage']: e.target.value }))} />
+              {target === 'map' && bundledMap && <p role="note" className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-950">Bản đồ nhận quà của trạm này là tài nguyên đã kiểm duyệt và đóng gói theo ứng dụng. Xem trước được, nhưng chưa hỗ trợ thay ảnh trực tiếp trên website. Muốn cập nhật bản đồ cần duyệt và thay tệp nguồn ở bản phát hành riêng.</p>}
+              <input className="admin-upload-field block w-full text-sm" aria-label={'Tải ' + target} type="file" accept="image/png,image/jpeg,image/webp,image/gif" disabled={busy || (target === 'map' && Boolean(bundledMap))} onChange={e => { void upload(e.target.files?.[0], target); e.target.value = ''; }} />
+              <input aria-label={'Đường dẫn ' + target} className={fieldClass} disabled={target === 'map' && Boolean(bundledMap)} placeholder="Hoặc dán đường dẫn HTTPS" value={value.startsWith('data:') ? '' : value} onChange={e => setDraft(prev => ({ ...prev, [target === 'cover' ? 'coverImage' : 'mapImage']: e.target.value }))} />
               {value ? <div className="admin-image-preview flex min-h-36 items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-slate-50"><img src={value} alt={target === 'cover' ? 'Xem trước ảnh bìa trạm' : 'Xem trước bản đồ nhận quà'} className="max-h-56 w-full object-contain" /></div> : <p className="rounded-xl bg-slate-50 p-4 text-sm text-slate-600">Chưa có ảnh xem trước.</p>}
-              {value && <button type="button" className="text-red-700 text-xs underline" onClick={() => setDraft(prev => ({ ...prev, [target === 'cover' ? 'coverImage' : 'mapImage']: '' }))}>Gỡ ảnh</button>}
+              {value && !(target === 'map' && bundledMap) && <button type="button" className="text-red-700 text-xs underline" onClick={() => setDraft(prev => ({ ...prev, [target === 'cover' ? 'coverImage' : 'mapImage']: '' }))}>Gỡ ảnh</button>}
             </div>
           );
         })}

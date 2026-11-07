@@ -46,11 +46,27 @@ export const AdminDashboard: React.FC = () => {
   const [counts,setCounts]=useState({teachers:0,active:0,classes:0,students:0,proposals:0,pending:0});
   const [workflowError,setWorkflowError]=useState('');
   const [loading,setLoading]=useState(true);
-  const load=async()=>{setLoading(true);setWorkflowError('');
-    try{const [records,classes,users,proposals]=await Promise.all([authService.implementations(),authService.classes(),authService.users(),authService.proposals()]);
-      setImplementations(records);const teachers=users.filter(u=>u.role==='teacher');
-      setCounts({teachers:teachers.length,active:teachers.filter(u=>u.active).length,classes:classes.length,students:classes.reduce((n,c)=>n+c.totalStudents,0),proposals:proposals.length,pending:proposals.filter(proposal=>proposal.status==='pending').length});
-    }catch(e){setWorkflowError((e as Error).message);}finally{setLoading(false);}
+  const [readiness,setReadiness]=useState({implementations:false,classes:false,users:false,proposals:false});
+  const load=async()=>{
+    setLoading(true);setWorkflowError('');
+    try {
+      const [i,c,u,p]=await Promise.allSettled([
+        authService.implementations(),authService.classes(),authService.users(),authService.proposals(),
+      ]);
+      const ok={implementations:i.status==='fulfilled',classes:c.status==='fulfilled',users:u.status==='fulfilled',proposals:p.status==='fulfilled'};
+      setReadiness(ok);
+      const records=i.status==='fulfilled'?i.value:[];
+      const classes=c.status==='fulfilled'?c.value:[];
+      const users=u.status==='fulfilled'?u.value:[];
+      const proposals=p.status==='fulfilled'?p.value:[];
+      setImplementations(records);
+      const teachers=users.filter(user=>user.role==='teacher');
+      setCounts({teachers:teachers.length,active:teachers.filter(user=>user.active).length,
+        classes:classes.length,students:classes.reduce((n,room)=>n+room.totalStudents,0),
+        proposals:proposals.length,pending:proposals.filter(item=>item.status==='pending').length});
+      if(Object.values(ok).some(value=>!value))setWorkflowError('Một số chỉ số chưa tải được. Dữ liệu thiếu được hiển thị bằng dấu —; vui lòng thử Làm mới.');
+    } catch(error){setWorkflowError((error as Error).message);}
+    finally{setLoading(false);}
   };
   const showOverviewData = activeTab === 'overview' || activeTab === 'tracking';
   useEffect(()=>{void load();},[]);
@@ -157,7 +173,7 @@ export const AdminDashboard: React.FC = () => {
             <div className="mt-4 flex flex-wrap gap-2" aria-label="Lối tắt quản trị">
               <button type="button" onClick={() => navigate('tracking')} className="staff-button staff-primary"><Calendar className="h-4 w-4" aria-hidden="true" />Xem nhật ký</button>
               <button type="button" onClick={() => navigate('reports')} className="staff-button"><FileText className="h-4 w-4" aria-hidden="true" />Kết quả lớp</button>
-              <button type="button" onClick={() => navigate('proposals', '')} className="staff-button"><MessageSquareText className="h-4 w-4" aria-hidden="true" />Góp ý mới{!workflowError && counts.pending > 0 && <strong>({counts.pending})</strong>}</button>
+              <button type="button" onClick={() => navigate('proposals', '')} className="staff-button"><MessageSquareText className="h-4 w-4" aria-hidden="true" />Góp ý mới{readiness.proposals && counts.pending > 0 && <strong>({counts.pending})</strong>}</button>
               <button type="button" onClick={() => navigate('stations')} className="staff-button"><BookOpen className="h-4 w-4" aria-hidden="true" />Nội dung trạm</button>
             </div>
           </section>
@@ -167,14 +183,14 @@ export const AdminDashboard: React.FC = () => {
               ['Trạm GDĐP', OFFICIAL_25_CATALOG.length], ['Lượt triển khai', implementations.length], ['Góp ý & đề xuất', counts.proposals],
             ].map(([label, value]) => <div key={label} className="staff-panel p-3">
               <dt className="text-xs font-semibold text-slate-600">{label}</dt>
-              <dd className="mt-1 text-2xl font-black text-slate-900">{label === 'Trạm GDĐP' || (!loading && !workflowError) ? value : '—'}</dd>
+              <dd className="mt-1 text-2xl font-black text-slate-900">{label === 'Trạm GDĐP' || (!loading && (label === 'Giáo viên' ? readiness.users : label === 'Lớp học' || label === 'Học sinh' ? readiness.classes : label === 'Lượt triển khai' ? readiness.implementations : readiness.proposals)) ? value : '—'}</dd>
             </div>)}
           </dl>
           <div className="grid gap-4 xl:grid-cols-2">
             <section className="staff-panel p-4 sm:p-5">
               <h2 className="font-bold">Triển khai 6 tuần gần nhất</h2>
               <p className="mt-1 text-xs text-slate-600">Mỗi dòng tính số bản ghi trong tuần bắt đầu vào thứ Hai.</p>
-              {!loading && !workflowError && (weekly.some(row => row.count) ? <ul className="mt-4 space-y-2">
+              {!loading && readiness.implementations && (weekly.some(row => row.count) ? <ul className="mt-4 space-y-2">
                 {weekly.map(row => <li key={row.date} className="staff-bar-row">
                   <time dateTime={row.date}>{row.date.slice(5).split('-').reverse().join('/')}</time>
                   <progress aria-label={`Tuần bắt đầu ${row.date}`} value={row.count} max={Math.max(...weekly.map(item => item.count))} />
@@ -184,7 +200,7 @@ export const AdminDashboard: React.FC = () => {
             </section>
             <section className="staff-panel p-4 sm:p-5">
               <h2 className="font-bold">Tiết dạy gần đây</h2>
-              {!loading && !workflowError && (recent.length ? <ul className="mt-3 divide-y divide-slate-100">
+              {!loading && readiness.implementations && (recent.length ? <ul className="mt-3 divide-y divide-slate-100">
                 {recent.slice(0, 4).map(row => <li key={row.id} className="flex flex-wrap justify-between gap-2 py-3 text-sm">
                   <div className="min-w-0"><strong className="break-words">{row.stationName}</strong><p className="text-xs text-slate-600">{row.className} · {row.teacherName}</p></div>
                   <time className="text-xs text-slate-600">{row.implementationDate}</time>
@@ -206,7 +222,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
           <button type="button" className="staff-button" onClick={() => navigate('reports')}>Xem kết quả theo lớp</button>
           {loading ? <p role="status">Đang tải nhật ký…</p> : !workflowError && !journal.length && <p className="staff-empty">Chưa ghi nhận tiết dạy trong khối đã chọn.</p>}
-          {!loading && !workflowError && journal.length > 0 && <>
+          {!loading && readiness.implementations && journal.length > 0 && <>
             <p className="text-sm text-slate-600">{journal.length} tiết đã ghi nhận</p>
             <div className="space-y-2">
               {journal.slice(currentPage * pageSize, (currentPage + 1) * pageSize).map(row => <details key={row.id} className="rounded-xl border border-slate-200 bg-white">

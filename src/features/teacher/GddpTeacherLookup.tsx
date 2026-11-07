@@ -1,5 +1,5 @@
 import { reviewGddpTextbookAddress } from '../../../gddp-textbook-review.mjs';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { gddpService, GddpRecord, GddpCatalog } from '../../services/GddpService';
 import { bundledGddpCatalog } from '../../services/GddpBundledCatalog';
 import { Station } from '../../types';
@@ -13,6 +13,9 @@ interface Props {initialRecordId?:string; catalogSnapshot?:GddpCatalog; onOpenSt
 export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGradeChange,privateRecords,privateYear,privateSource,onOpenStudentStage1,initialRecordId,catalogSnapshot}) => {
   const [records, setRecords] = useState<GddpRecord[]>([]);
   const [grade, setGrade] = useState(currentGrade);
+  const [query, setQuery] = useState('');
+  const [limit, setLimit] = useState(12);
+  const lessonDetails = useRef<HTMLElement>(null);
   const [subject, setSubject] = useState('');
   const [week, setWeek] = useState('');
   const [selectedId, setSelectedId] = useState('');
@@ -55,11 +58,16 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
   const subjects = useMemo(() => [...new Set(byGrade.map(x=>x.subject))].sort(), [byGrade]);
   const bySubject = useMemo(() => byGrade.filter(x=>!subject || x.subject===subject), [byGrade,subject]);
   const weeks = useMemo(() => [...new Set(bySubject.map(x=>x.week).filter(Boolean))].sort((a,b)=>(parseInt(a.match(/\d+/)?.[0]||'0'))-(parseInt(b.match(/\d+/)?.[0]||'0'))), [bySubject]);
-  const filtered = useMemo(() => bySubject.filter(x=>!week || x.week===week), [bySubject,week]);
-  const selected = filtered.find(x => x.id === selectedId) || null;
+  const filtered = useMemo(() => {
+    const normalize = (value: string) => value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
+    const terms = normalize(query).trim().split(/\s+/).filter(Boolean);
+    return bySubject.filter(row => (!week || row.week === week) &&
+      terms.every(term => normalize(`${row.lesson} ${row.subject} ${row.content}`).includes(term)));
+  }, [bySubject, week, query]);
+  const selected = filtered.find(row => row.id === selectedId) || null;
+  useEffect(() => {setLimit(12);}, [grade, subject, week, query]);
   const textbookReview = selected ? reviewGddpTextbookAddress(selected) : null;
   const otherBook = textbookReview?.status === 'other_book';
-  useEffect(()=>setPreparedOpen(false),[selected?.id]);
   const preparedDeck = useMemo(()=>selected&&!otherBook?getGddpLessonDeck(selected):null,[selected,otherBook]);
   const teachingRecord=selected&&!otherBook?getGddpTeachingRecord(selected):null;
   const matchedResources = useMemo(()=>{
@@ -90,31 +98,47 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
     {!loading && !error && records.length>0 && <p className="hidden rounded-xl bg-sky-50 p-3 text-sm text-sky-900">Đã tải {records.length} địa chỉ GDĐP {privateRecords?'trong kế hoạch riêng':'của 5 khối' }. {privateRecords?'Do giáo viên nhập và xác nhận; liên kết là học liệu bổ sung.':published?'Dữ liệu do Admin xuất bản.':offlineSource?'Chế độ dữ liệu nguồn dự phòng (không kết nối máy chủ); vẫn có thể chọn bài, soạn và xuất KHBD. Dữ liệu này chưa được xác nhận là bản mới nhất do Admin xuất bản.':'Dữ liệu nguồn cài sẵn để tra cứu và dùng Demo KHBD; chưa xác nhận Admin đã xuất bản.'}</p>}
     {loading && <p role="status">Đang tải dữ liệu GDĐP…</p>}
     {error && <p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm text-rose-800">{error}</p>}
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+    <label className="block text-sm font-semibold text-slate-700">Tìm tên bài hoặc chủ đề
+      <input type="search" className="staff-field" value={query} placeholder="Gõ tên bài, môn học hoặc chủ đề"
+        onChange={event => {setQuery(event.target.value);setSelectedId('');setProjected(null);}} />
+    </label>
+    <div className="grid grid-cols-3 gap-2 sm:gap-3">
       <label className="space-y-1 text-sm font-semibold text-slate-700">Khối lớp
-        <select className="w-full rounded-xl border border-slate-300 bg-white p-3" value={grade} onChange={e=>{setGrade(Number(e.target.value));onGradeChange(Number(e.target.value));setProjected(null);setSubject('');setWeek('');setSelectedId('');}}>
+        <select className="staff-field px-2 text-sm" value={grade} onChange={e=>{setGrade(Number(e.target.value));onGradeChange(Number(e.target.value));setProjected(null);setSubject('');setWeek('');setSelectedId('');}}>
           {(privateRecords?[currentGrade]:[1,2,3,4,5]).map(x=><option key={x} value={x}>Lớp {x}</option>)}
         </select>
       </label>
       <label className="space-y-1 text-sm font-semibold text-slate-700">Môn học
-        <select className="w-full rounded-xl border border-slate-300 bg-white p-3" value={subject} onChange={e=>{setSubject(e.target.value);setWeek('');setSelectedId('');}}>
-          <option value="">Tất cả môn</option>{subjects.map(x=><option key={x} value={x}>{x}</option>)}
+        <select className="staff-field px-2 text-sm" value={subject} onChange={e=>{setSubject(e.target.value);setWeek('');setSelectedId('');}}>
+          <option value="">Tất cả</option>{subjects.map(x=><option key={x} value={x}>{x}</option>)}
         </select>
       </label>
       <label className="space-y-1 text-sm font-semibold text-slate-700">Tuần
-        <select className="w-full rounded-xl border border-slate-300 bg-white p-3" value={week} onChange={e=>{setWeek(e.target.value);setSelectedId('');}}>
-          <option value="">Tất cả tuần</option>{weeks.map(x=><option key={x} value={x}>{x}</option>)}
+        <select className="staff-field px-2 text-sm" value={week} onChange={e=>{setWeek(e.target.value);setSelectedId('');}}>
+          <option value="">Tất cả</option>{weeks.map(x=><option key={x} value={x}>{x}</option>)}
         </select>
       </label>
     </div>
-    {!loading && !filtered.length && <p className="rounded-xl bg-amber-50 p-4 text-sm text-amber-900">Chưa có địa chỉ tích hợp phù hợp với bộ lọc đang chọn. Vui lòng liên hệ Admin nếu cần bổ sung.</p>}
-    {!!filtered.length && (!initialRecordId || !selected) && <div className="grid gap-2 max-h-64 overflow-y-auto pr-1">
-      {filtered.map(x=><button key={x.id} type="button" onClick={()=>{setSelectedId(x.id);setSelectedHotspots([]);setManualChoice(false);setShowLessonDetails(false);setShowPreparation(false);setProjected(null);setCopied(false)}} className={`w-full rounded-xl border p-3 text-left text-sm transition ${selectedId===x.id?'border-emerald-600 bg-emerald-50':'border-slate-200 hover:bg-slate-50'}`}>
-        <span className="font-bold">{x.lesson}</span><span className="mt-1 block text-xs text-slate-500">{x.subject} · {x.week ? 'Tuần nguồn '+x.week.replace(/^Tuần\s+/i,'') : 'Tuần theo kế hoạch trường'}{reviewGddpTextbookAddress(x).status==='other_book' ? ' · Khác bộ sách' : ''}</span>
-      </button>)}
-    </div>}
-    {initialRecordId && selected && <button type="button" className="text-sm font-semibold text-sky-800 underline" onClick={()=>setSelectedId('')}>Chọn bài khác trong danh mục</button>}
-    {selected && <article className="space-y-4 rounded-2xl border border-sky-200 bg-sky-50/40 p-4">
+    {!loading && !filtered.length && <p className="staff-empty">Chưa tìm thấy bài phù hợp. Thử đổi từ khóa hoặc bộ lọc.</p>}
+    {!!filtered.length && !selected && <>
+      <p className="text-sm text-slate-600">{filtered.length} bài phù hợp</p>
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        {filtered.slice(0, limit).map(row => <article key={row.id} className="staff-panel flex min-w-0 flex-col items-start gap-2 p-3">
+          <p className="text-xs font-semibold text-sky-800">Lớp {row.grade} · {row.subject}</p>
+          <h3 className="break-words text-sm font-bold text-slate-900">{row.lesson}</h3>
+          <p className="text-xs text-slate-600">{row.week ? 'Tuần nguồn ' + row.week.replace(/^Tuần\s+/i, '') : 'Tuần theo kế hoạch trường'}{reviewGddpTextbookAddress(row).status === 'other_book' ? ' · Khác bộ sách' : ''}</p>
+          <button type="button" aria-label={`Mở bài ${row.lesson}`} className="staff-button mt-auto"
+            onClick={() => {
+              setSelectedId(row.id);setSelectedHotspots([]);setManualChoice(false);
+              setShowLessonDetails(false);setShowPreparation(false);setProjected(null);setCopied(false);
+              requestAnimationFrame(() => lessonDetails.current?.focus());
+            }}>Mở bài</button>
+        </article>)}
+      </div>
+      {limit < filtered.length && <button type="button" className="staff-button" onClick={() => setLimit(value => value + 12)}>Xem thêm bài</button>}
+    </>}
+    {selected && <button type="button" className="staff-button" onClick={() => {setSelectedId('');setProjected(null);}}>Về danh sách bài</button>}
+    {selected && <article ref={lessonDetails} tabIndex={-1} aria-label={selected.lesson} className="space-y-4 rounded-2xl border border-sky-200 bg-sky-50/40 p-4">
       <div><p className="text-xs font-bold uppercase text-sky-800">Địa chỉ tích hợp từ tài liệu nguồn</p><h3 className="font-black text-slate-900">{selected.lesson}</h3></div>
       <div className="space-y-1 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-950">
         <strong>{otherBook ? 'Khác bộ sách · Chân trời sáng tạo' : textbookReview?.status === 'title_checked' ? 'Đã đối chiếu mục lục SGK' : 'Gợi ý tham khảo · Chưa đối chiếu SGK'}</strong>

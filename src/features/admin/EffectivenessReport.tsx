@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+import {PilotMeasurement} from '../teacher/PilotMeasurement';
 import {OFFICIAL_25_CATALOG} from '../../data/curriculumCatalog';
 import {fetchWithTimeout} from '../../services/NetworkService';
 
@@ -13,10 +14,9 @@ type Report = {
 };
 const number = new Intl.NumberFormat('vi-VN');
 const reportTime = new Intl.DateTimeFormat('vi-VN', {timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit'});
-const refreshIntervalMs = 120_000;
 const date = (day: string) => day.split('-').reverse().join('/');
 const stages = ['stage1', 'stage2', 'stage3', 'stage4'] as const;
-const fieldClass = 'block w-full min-w-0 rounded-xl border bg-white px-3 py-2';
+const fieldClass = 'staff-field';
 const countLabel = (value: number) => number.format(value);
 const percent = (completed: number, started: number) => started
   ? `${Math.round(completed / started * 100)}%` : '—';
@@ -24,6 +24,7 @@ const percent = (completed: number, started: number) => started
 export function EffectivenessReport({openProgress, openFeedback}: {
   openProgress: () => void; openFeedback: (stationId: string) => void;
 }) {
+  const [view, setView] = useState<'usage' | 'learning'>('usage');
   const [days, setDays] = useState(30);
   const [grade, setGrade] = useState(0);
   const [stationId, setStationId] = useState('');
@@ -34,19 +35,14 @@ export function EffectivenessReport({openProgress, openFeedback}: {
   const [snapshot, setSnapshot] = useState<{days: number; report: Report; checkedAt: number} | null>(null);
   const currentSnapshot = snapshot?.days === days ? snapshot : null;
   const report = currentSnapshot?.report;
-  const [downloading, setDownloading] = useState(false);
-  const [downloadError, setDownloadError] = useState('');
-
   useEffect(() => {
     let active = true;
     let inFlight = false;
-    let lastAttempt = 0;
     setError('');
 
     const load = async () => {
       if (!active || inFlight) return;
       inFlight = true;
-      lastAttempt = Date.now();
       setLoading(true);
       try {
         const response = await fetchWithTimeout('/api/effectiveness?days=' + days, {
@@ -69,19 +65,8 @@ export function EffectivenessReport({openProgress, openFeedback}: {
       }
     };
 
-    const refreshWhenVisible = () => {
-      if (document.visibilityState === 'visible' && navigator.onLine &&
-          Date.now() - lastAttempt >= refreshIntervalMs) void load();
-    };
-
     void load();
-    const timer = window.setInterval(refreshWhenVisible, refreshIntervalMs);
-    document.addEventListener('visibilitychange', refreshWhenVisible);
-    return () => {
-      active = false;
-      window.clearInterval(timer);
-      document.removeEventListener('visibilitychange', refreshWhenVisible);
-    };
+    return () => { active = false; };
   }, [days, refresh]);
 
   const catalog = OFFICIAL_25_CATALOG.filter(station => !grade || station.grade === grade);
@@ -96,8 +81,10 @@ export function EffectivenessReport({openProgress, openFeedback}: {
   });
   const visitsByDay = new Map<string, number>();
   if (report) {
-    for (let i = 0; i < days; i++) {
-      const day = new Date(Date.parse(report.start) + i * 86400000).toISOString().slice(0, 10);
+    const start = Date.parse(report.start);
+    const end = Date.parse(report.end);
+    for (let i = 0; i < days && start + i * 86400000 <= end; i++) {
+      const day = new Date(start + i * 86400000).toISOString().slice(0, 10);
       visitsByDay.set(day, 0);
     }
     for (const row of report.visits) {
@@ -131,21 +118,15 @@ export function EffectivenessReport({openProgress, openFeedback}: {
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
-  async function downloadPilot() {
-    setDownloading(true);
-    setDownloadError('');
-    try {
-      const {downloadEffectivenessPilot} = await import('./effectivenessPilot');
-      await downloadEffectivenessPilot();
-    } catch { setDownloadError('Chưa tải được mẫu. Vui lòng thử lại.'); }
-    finally {setDownloading(false);}
-  }
-
-  return <section className="space-y-5 rounded-3xl border bg-white p-4 sm:p-6">
-    <header>
-      <h2 className="text-2xl font-black">Báo cáo hiệu quả</h2>
-      <p className="mt-1 text-sm text-slate-600">Theo dõi mức sử dụng và tiến độ của khách và học sinh. Báo cáo theo lớp và minh chứng học tập nằm ở cuối trang.</p>
-    </header>
+  return <section className="staff-panel space-y-4 p-4 sm:p-5">
+    <div className="flex flex-wrap gap-2" role="group" aria-label="Nội dung báo cáo">
+      <button type="button" aria-pressed={view === 'usage'} className={`staff-button ${view === 'usage' ? 'staff-primary' : ''}`} onClick={() => setView('usage')}>Mức sử dụng</button>
+      <button type="button" aria-pressed={view === 'learning'} className={`staff-button ${view === 'learning' ? 'staff-primary' : ''}`} onClick={() => setView('learning')}>Kết quả học tập</button>
+    </div>
+    {view === 'learning' ? <div className="space-y-4">
+      <button type="button" className="staff-button" onClick={openProgress}>Xem tiến độ theo lớp</button>
+      <PilotMeasurement />
+    </div> : <>
     <div className="grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4">
       <label>Thời gian
         <select className={fieldClass} value={days} onChange={event => setDays(Number(event.target.value))}>
@@ -171,7 +152,7 @@ export function EffectivenessReport({openProgress, openFeedback}: {
       </label>
     </div>
     <div className="flex flex-wrap items-center gap-3">
-      <button type="button" disabled={loading} onClick={() => setRefresh(value => value + 1)} className="rounded-xl border px-4 py-2 text-sm font-semibold">
+      <button type="button" disabled={loading} onClick={() => setRefresh(value => value + 1)} className="staff-button">
         {loading ? 'Đang tải số liệu…' : 'Làm mới số liệu'}
       </button>
       {currentSnapshot && <p className="text-xs text-slate-600">Cập nhật thành công lúc {reportTime.format(currentSnapshot.checkedAt)} · Giờ Việt Nam</p>}
@@ -184,9 +165,20 @@ export function EffectivenessReport({openProgress, openFeedback}: {
       <div className="grid gap-3 sm:grid-cols-3">
         <article className="rounded-2xl bg-sky-50 p-4"><h3 className="font-bold">Lượt truy cập website</h3><p className="text-2xl font-black">{countLabel(totalVisits)}</p><p className="text-xs">Toàn website · Một lượt mỗi phiên được ghi nhận</p></article>
         <article className="rounded-2xl bg-indigo-50 p-4"><h3 className="font-bold">Lượt bắt đầu trạm</h3><p className="text-2xl font-black">{countLabel(started)}</p><p className="text-xs">Một lượt cho mỗi trạm trong một phiên</p></article>
-        <article className="rounded-2xl bg-emerald-50 p-4"><h3 className="font-bold">Tỷ lệ đóng dấu</h3><p className="text-2xl font-black">{percent(completed, started)}</p><p className="text-xs">{countLabel(completed)}/{countLabel(started)} lượt{started > 0 && started < 10 ? ' · Dữ liệu còn ít' : ''}</p></article>
+        <article className="rounded-2xl bg-emerald-50 p-4"><h3 className="font-bold">Tỷ lệ đóng dấu</h3><p className="text-2xl font-black">{started > 0 && started < 10 ? `${completed}/${started}` : percent(completed, started)}</p><p className="text-xs">{started === 0 ? 'Chưa có lượt bắt đầu' : started < 10 ? 'Lượt đóng dấu · Mẫu còn nhỏ' : `${countLabel(completed)}/${countLabel(started)} lượt đóng dấu`}</p></article>
       </div>
-      {totalVisits > 0 ? <details open className="rounded-xl border p-4">
+      <section className="staff-panel p-4">
+        <h3 className="font-bold">Tiến độ qua các chặng</h3>
+        <p className="mt-1 text-xs text-slate-600">Số lượt ghi nhận theo mốc trạm trong cùng phiên, theo các bộ lọc đang chọn.</p>
+        {started > 0 ? <ul className="mt-3 space-y-2">
+          {[{label: 'Bắt đầu', count: started}, ...stages.map((stage, index) => ({
+            label: `Chặng ${index + 1}`, count: rows.reduce((sum, row) => sum + row[stage], 0),
+          }))].map(row => <li className="staff-bar-row" key={row.label}>
+            <span>{row.label}</span><progress aria-label={row.label} max={started} value={row.count} /><strong>{countLabel(row.count)}</strong>
+          </li>)}
+        </ul> : <p className="staff-empty mt-3">Chưa có lượt học trạm phù hợp với bộ lọc.</p>}
+      </section>
+      {totalVisits > 0 ? <details className="rounded-xl border border-slate-200 p-4">
         <summary className="cursor-pointer font-bold">Lượt truy cập theo ngày</summary>
         <div className="mt-3 grid max-h-56 gap-1.5 overflow-y-auto">
           {[...visitsByDay.entries()].reverse().map(([day, count]) => <div key={day} className="grid grid-cols-[5.5rem_minmax(0,1fr)_3rem] items-center gap-2 text-xs">
@@ -213,14 +205,6 @@ export function EffectivenessReport({openProgress, openFeedback}: {
         </details>)}
       </div>
     </>}
-    <section className="space-y-2 rounded-xl border p-4">
-      <h3 className="font-bold">Hiệu quả học sinh và giáo viên</h3>
-      <p className="text-sm text-slate-600">Mẫu thí điểm tính điểm trước–sau trên cùng nhóm học sinh và số phút chuẩn bị của giáo viên. Tệp do nhà trường giữ, phần mềm không tải dữ liệu trong tệp lên máy chủ.</p>
-      <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={openProgress} className="rounded-lg border px-3 py-2 text-sm font-semibold">Tiến độ đã đồng bộ theo lớp</button>
-        <button type="button" disabled={downloading} onClick={() => void downloadPilot()} className="rounded-lg border px-3 py-2 text-sm font-semibold">{downloading ? 'Đang tạo tệp…' : 'Tải mẫu đo hiệu quả (.xlsx)'}</button>
-      </div>
-      {downloadError && <p role="alert" className="text-sm text-rose-700">{downloadError}</p>}
-    </section>
+    </>}
   </section>;
 }

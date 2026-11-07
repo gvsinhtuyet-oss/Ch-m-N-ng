@@ -768,3 +768,34 @@ body:has(.journey-screen-fixed){overflow:hidden}
   .journey-phone-swipe svg { width: 15px; height: 15px; }
   .journey-extension { margin-top: 16px; scroll-snap-align: start; }
 }
+
+/* Quiet, readable work surfaces in the teacher and admin areas. */
+.game-content.staff-workspace { background: #f2f6fb; }
+.cham-staff { color: #172c43; overflow-wrap: anywhere; }
+.game-content .cham-staff .bg-white { background-color: #fff; }
+.game-content .cham-staff .bg-slate-50 { background-color: #f8fafc; }
+.cham-staff .staff-panel { min-width: 0; background: #fff; border: 1px solid #dce5ed; border-radius: 1rem; }
+.cham-staff .staff-hero { background: linear-gradient(115deg, #eff7ff, #fff8ed); }
+.cham-staff .staff-button {
+  display: inline-flex; align-items: center; gap: .45rem; min-height: 44px;
+  padding: .45rem .75rem; border: 1px solid #d6e0eb; border-radius: .7rem;
+  background: #fff; color: #123755; font-size: .875rem; font-weight: 700; text-align: left;
+}
+.cham-staff .staff-button:hover { background: #edf6ff; }
+.cham-staff .staff-primary { background: #9a3412; color: #fff; border-color: #9a3412; }
+.cham-staff .staff-primary:hover { background: #7c2d12; }
+.cham-staff .staff-button:disabled { opacity: .55; cursor: default; }
+.cham-staff .staff-field {
+  display: block; min-width: 0; width: 100%; min-height: 44px; margin-top: .25rem;
+  background: #fff; border: 1px solid #cbd5e1; border-radius: .7rem; padding: .5rem .75rem;
+}
+.cham-staff .staff-empty { padding: .8rem; border-radius: .75rem; background: #f1f5f9; color: #334155; font-size: .875rem; }
+.cham-staff .staff-bar-row { display: grid; grid-template-columns: minmax(3.5rem,auto) minmax(0,1fr) auto; align-items: center; gap: .6rem; font-size: .85rem; }
+.cham-staff .staff-bar-row progress { width: 100%; height: .65rem; accent-color: #0369a1; }
+.cham-staff .staff-bar-row strong { min-width: 2ch; text-align: right; font-variant-numeric: tabular-nums; }
+.cham-staff .staff-bar-row progress {
+  appearance: none; border: 0; background: #e2ebf3; border-radius: 99px; overflow: hidden;
+}
+.cham-staff .staff-bar-row progress::-webkit-progress-bar { background: #e2ebf3; }
+.cham-staff .staff-bar-row progress::-webkit-progress-value { background: #0369a1; border-radius: 99px; }
+.cham-staff .staff-bar-row progress::-moz-progress-bar { background: #0369a1; border-radius: 99px; }

@@ -1,5 +1,5 @@
 {
-  "commit": "4a7f2c8857f8e2044097205ee19203a817f26e00",
+  "commit": "42959c095eee36a625f7fdbb19a53c565056a7a7",
   "files": [
     {
       "path": "src/games/stage2/SharedStage2.tsx",
@@ -27,11 +27,11 @@
     },
     {
       "path": "src/games/stage2/Preview.tsx",
-      "sha256": "5ecb37ca3cbae321a24c258b223f160a748f4b4cbc7c1834e54bbc9f27cebba0"
+      "sha256": "c5e41e947e5038785fd964b611f97c2c785189dc26e5e01257074022638c8009"
     },
     {
       "path": "src/games/stage2/SharedChallengeGame.tsx",
-      "sha256": "3148179ddb3b63d465f25371cdf62080a8527ffb699596196038a0fe2c5c3f7c"
+      "sha256": "3e80d7d8679c88bf4cacd77d18afa9539dc65b25ca5723721c87bc92713d9d2e"
     },
     {
       "path": "src/games/stage2/grade1/shuffle.ts",
@@ -107,11 +107,11 @@
     },
     {
       "path": "src/services/AuthService.ts",
-      "sha256": "f21ba40e59c998c8c54ecd76e645b9b9de13055b4c8c0d56a9e3e6384c431707"
+      "sha256": "812201cdfb72a5370719ee6e302bd8c8270f972cc0a213c01fda4e2280b0f882"
     },
     {
       "path": "src/main.tsx",
-      "sha256": "18a5cf90a8ab011a5347d37ec31c7dd5bee81c8374d485121509395e7053f297"
+      "sha256": "5025ecf6fab102c94257773ce34e857ac43b2b5f116fefcab54eb41593c79bdf"
     },
     {
       "path": "src/games/stage2/rollout.ts",
@@ -127,7 +127,7 @@
     },
     {
       "path": "src/index.css",
-      "sha256": "0eb6f12517702f18925a8d04df6889f60b73a8b54b9529168d098a2085d9463e"
+      "sha256": "cde38fcafb9f8a8765ae5810b65ce09c28e416ca1cbf304289bd85d393404e14"
     },
     {
       "path": "src/services/GddpLessonDeckService.ts",
@@ -135,11 +135,11 @@
     },
     {
       "path": "src/services/GddpResourceMatcher.ts",
-      "sha256": "5c4edc05302af6656cfe4267d9d0810aa684ff144432114a03993f529919f8ac"
+      "sha256": "b6aff08bd54effc08871d27b5dcf5d11c560d5445fd6e858416ea8d37d4ac97f"
     },
     {
       "path": "src/services/GddpBundledCatalog.ts",
-      "sha256": "87efc3791bfbc778121c3c5e9dc480b04068658e3d32f5c6ff71732c046b5d39"
+      "sha256": "7e7681f41030b124af71811dc200687748f5201f930a52c13f30b7d81aa27387"
     },
     {
       "path": "src/services/ContentService.ts",
@@ -151,7 +151,7 @@
     },
     {
       "path": "src/services/GddpService.ts",
-      "sha256": "98b783ecec8409991ddb4799762c472ca33a38c76db694c0302ffbac0954684b"
+      "sha256": "1c1eff208c503a4b5422b00793d07a740bfc8d9d609402eb6d64e067b284869b"
     },
     {
       "path": "src/services/BackgroundMusic.ts",
@@ -227,11 +227,11 @@
     },
     {
       "path": "src/App.tsx",
-      "sha256": "ef69fb4a20c49a50ea73037eda552b8e0c4327f07e96d1582cba47f81852261d"
+      "sha256": "a0dd0928a45f19f90c0fc6f1a4f4c844ead4571915fdc7626a86ecf1d9add4a6"
     },
     {
       "path": "src/components/common/DanangAssistantChat.tsx",
-      "sha256": "fd7fc9e4fb8ebb639cbbefea34f1caaef4dab00d44df78dac53ff07d5eb5f2c9"
+      "sha256": "2c68fb28a5e5aaba9b832e35fa24740d6d04505881c6469e914af7ad0bc1746f"
     },
     {
       "path": "tsconfig.json",
@@ -243,15 +243,15 @@
     },
     {
       "path": "vite.config.ts",
-      "sha256": "511c495f8568375c2f740e1e016ec6c6403a0932c7ce1f690a66a07c1c7e185b"
+      "sha256": "976090e8f25bfe1c858338b78904988e41c5c8df1827b23bb60e4cbf456cec3f"
     },
     {
       "path": "src/types/index.ts",
-      "sha256": "46d42839074f7657e0287c2f583892563d82ab635b2c77a1093f539fad3e58dd"
+      "sha256": "a1294ae1514ebf052883669fa93fe25801a150a07a1210b1de1494926486212b"
     },
     {
       "path": "src/utils/assistantPosition.ts",
-      "sha256": "606a4db12c89de75dfbc6b339e29ff51cebe1b2ddce3a394c1a6f35eb11842c5"
+      "sha256": "3ca568981112ae255ae68e3303ee8f3b13cd07d1860a31a7579cae8c36e8e11b"
     },
     {
       "path": "src/utils/learningThumbnail.ts",
@@ -259,7 +259,7 @@
     },
     {
       "path": "src/components/common/Header.tsx",
-      "sha256": "b19b9cdf120ee456d345614311d9a2897421d0608265639f97b3cc26a2ed195d"
+      "sha256": "39e90cc6b84d58b244a9f8ce2292763139e50a10fbeb28200e37d610fa01d518"
     },
     {
       "path": "src/components/common/FeatureLoadBoundary.tsx",
@@ -267,15 +267,15 @@
     },
     {
       "path": "src/components/station/journey-stages.css",
-      "sha256": "969aa76d4055889d740f515bffe3d212057d7951040d0c3cd118b6a1d796089e"
+      "sha256": "8e993d58f8af09fab1542d546addab3d16be153aa614c26d3f5c5539f79459a9"
     },
     {
       "path": "src/features/stations/StationView.tsx",
-      "sha256": "e95ce4f9baf0e5a4dd933292170c12b62550ced3786a59d1b3161e3e896b684e"
+      "sha256": "b219ce856654dc41bcb79a068ef736df639e84ba2782fcc69a2e24bf6631ad23"
     },
     {
       "path": "src/components/station/Stage3CheckIn.tsx",
-      "sha256": "3c1ff53c05ef02aa0a9882d76e5fcbc3605302371f43d2daa11603f4b5351753"
+      "sha256": "36b66ca138b12f4af9c8e333f6d49e5006f07c7789a58917702b90f40b96aeb4"
     },
     {
       "path": "src/services/LocalEducationKnowledge.ts",
@@ -283,7 +283,7 @@
     },
     {
       "path": "src/features/student/StudentJourneyView.tsx",
-      "sha256": "401d918dd7384383a53c27f956ef48932ca5d37074d0c2f1b080a4489bb2be84"
+      "sha256": "6d1d77d02e791dd10c191af0479bb136196d834ae893a9aca33e50306cec1cc5"
     },
     {
       "path": "src/data/assistantKnowledge.json",
@@ -291,7 +291,7 @@
     },
     {
       "path": "src/features/teacher/GddpTeacherLookup.tsx",
-      "sha256": "bb5d6615546b187bdaf3a8410f8d8f124394743e6acc8b6cb05edb70e1135757"
+      "sha256": "d261a014f2478553874cc2f788fc625041d1e094c9223fc0444b71e3a1c7626e"
     },
     {
       "path": "src/features/teacher/TeacherAssistantLessonPanel.tsx",
@@ -324,6 +324,34 @@
     {
       "path": "src/data/assistantAssessmentBank.json",
       "sha256": "a3aff34f7c57bed5a00f092e8c51006824225b7c112ffbbcd3206276f3617dd2"
+    },
+    {
+      "path": "src/features/admin/AdminDashboard.tsx",
+      "sha256": "7f0a3b43a59e6890982ba19f211913bf97cf25953e64ef2955c8a85cea1222cf"
+    },
+    {
+      "path": "src/features/admin/EffectivenessReport.tsx",
+      "sha256": "c161877cb02dc1cd68692e9e32e1fb83a2ca64b43a242843f3ac8764073e4a5a"
+    },
+    {
+      "path": "src/features/admin/ProposalInbox.tsx",
+      "sha256": "6396a47024ecd2394114bdd6c0f53e1877ea212eb5a90e03209ebf9f8ee5d52d"
+    },
+    {
+      "path": "src/features/admin/effectivenessPilot.ts",
+      "sha256": "551c5a778751ac976e9740cf052df4e5d18f8a423d09948aa14d9e8e25574c2e"
+    },
+    {
+      "path": "src/features/teacher/RealClassResults.tsx",
+      "sha256": "c19a88d381eb397246b2261230db8d110be88fb08d406db5110e76d5af19f39f"
+    },
+    {
+      "path": "src/features/teacher/TeacherDashboard.tsx",
+      "sha256": "f7979013765f3a372798980e17e3095ee0bf6fafe94039aca3cef74a894b9047"
+    },
+    {
+      "path": "src/features/teacher/PilotMeasurement.tsx",
+      "sha256": "6d969795f30696ac4ff5fc4f66110def5d7c17ab9ca9abd4c2ae089dbb498e97"
     }
   ]
 }

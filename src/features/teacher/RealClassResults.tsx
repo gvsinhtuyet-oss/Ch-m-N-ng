@@ -1,3 +1,4 @@
+import {OFFICIAL_25_CATALOG} from '../../data/curriculumCatalog';
 import React, {useEffect,useState,useRef} from 'react';
 import {authService, ManagedClass, RealClassProgress} from '../../services/AuthService';
 
@@ -68,6 +69,15 @@ export const RealClassResults: React.FC = () => {
     if(!active)return;setClasses(list);setClassId(list[0]?.id||'');
   }).catch(e=>{if(active)setMessage(e.message);});return()=>{active=false;};},[]);
   useEffect(()=>{setReport(null);void load(classId);return()=>{requestId.current++;};},[classId]);
+  const progressByStation = new Map<string, {started: number; completed: number}>();
+  for (const student of report?.students ?? []) {
+    for (const station of student.stations) {
+      const row = progressByStation.get(station.stationId) ?? {started: 0, completed: 0};
+      row.started++;
+      if (station.completed) row.completed++;
+      progressByStation.set(station.stationId, row);
+    }
+  }
   return <section className="rounded-3xl bg-white border p-6 space-y-5">
     <div><h2 className="text-xl font-black">Kết quả học tập thực tế</h2>
       <p className="text-sm text-slate-600">Chỉ hiện dữ liệu đồng bộ từ thiết bị học sinh đã được liên kết với lớp. Không sử dụng học sinh hoặc kết quả minh họa.</p></div>
@@ -95,6 +105,23 @@ export const RealClassResults: React.FC = () => {
         <div className="rounded-xl border p-4"><span className="text-slate-600">Danh sách lớp</span><p className="text-2xl font-bold">{report.rosterCount}</p></div>
         <div className="rounded-xl border p-4"><span className="text-slate-600">Học sinh đã liên kết</span><p className="text-2xl font-bold">{report.linkedCount}</p></div>
       </div>
+      {progressByStation.size > 0 && <section className="staff-panel p-4">
+        <h3 className="font-bold">Hoàn thành theo trạm</h3>
+        <p className="mt-1 text-xs text-slate-600">Số học sinh hoàn thành trên số em có bản ghi tại từng trạm của lớp đã chọn.</p>
+        <ul className="mt-3 space-y-3">
+          {OFFICIAL_25_CATALOG.filter(station => progressByStation.has(station.id)).map(station => {
+            const row = progressByStation.get(station.id)!;
+            return <li key={station.id}>
+              <p className="mb-1 text-sm font-semibold">{station.titleVi}</p>
+              <div className="staff-bar-row">
+                <span className="text-xs text-slate-600">Hoàn thành</span>
+                <progress aria-label={`Hoàn thành ${station.titleVi}`} value={row.completed} max={row.started} />
+                <strong>{row.completed}/{row.started}</strong>
+              </div>
+            </li>;
+          })}
+        </ul>
+      </section>}
       <div className="flex flex-wrap gap-3"><button type="button" disabled={loading || busy || exporting} className="rounded-lg border px-4 py-2 text-sm disabled:opacity-50" onClick={()=>void load(classId)}>Làm mới dữ liệu</button><button type="button" disabled={loading || busy || exporting} onClick={()=>void exportExcel()} className="rounded-lg bg-emerald-700 text-white px-4 py-2 text-sm font-bold disabled:opacity-50">{exporting?'Đang xuất…':'Xuất Excel (.xlsx)'}</button></div>
       {report.students.length===0?<p className="text-sm text-slate-500">Chưa có kết quả thực đã liên kết. Đây không phải kết quả 0 điểm hoặc 0 lượt học.</p>:<div className="overflow-x-auto">
         <table className="w-full text-sm text-left"><thead><tr className="bg-slate-100"><th className="p-2">Học sinh</th><th className="p-2">Trạm hoàn thành</th><th className="p-2">Con dấu</th><th className="p-2">Chi tiết</th></tr></thead>

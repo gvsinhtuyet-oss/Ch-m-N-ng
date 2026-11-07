@@ -15,6 +15,7 @@ function fitMobileGameArtwork(event: React.SyntheticEvent<HTMLIFrameElement>) {
   if (!gameDocument?.querySelector('.scene')) return;
 
   const style = gameDocument.createElement('style');
+  style.id = 'cham-my-khe-layout-v12';
   style.textContent = `
     @media (max-width: 640px) {
       .scene, .scene.is-victory {

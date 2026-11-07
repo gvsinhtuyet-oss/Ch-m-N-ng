@@ -30,3 +30,55 @@ html[data-stage2-portrait] .scene.is-victory .victory-achievement,
 html[data-stage2-portrait] .scene.is-victory .victory-reward {
   color:#683b16!important;text-shadow:none!important;-webkit-text-stroke:0;
 }
+
+/* Content-sized phone play area; iframe height must not feed back into card spacing. */
+html[data-stage2-portrait] .scene:not(.is-victory) {
+ background-image:var(--game-artwork)!important;background-size:auto 100%!important;
+ background-position:center top!important;background-repeat:no-repeat!important;
+ min-height:0!important;height:auto!important;
+}
+html[data-stage2-portrait] .scene:not(.is-victory)::before {
+ display:none!important;content:none!important;
+}
+html[data-stage2-portrait] .scene:not(.is-victory) .shell {
+ display:flex!important;flex-direction:column!important;justify-content:flex-start!important;
+ align-items:stretch!important;height:auto!important;min-height:0!important;
+ grid-template-rows:none!important;gap:8px!important;
+ margin:0!important;padding:clamp(95px,30vw,135px) 8px 16px!important;
+}
+html[data-stage2-portrait] .scene:not(.is-victory) .panel {
+ flex:none!important;display:flex!important;flex-direction:column!important;
+ justify-content:flex-start!important;align-items:stretch!important;
+ position:relative!important;inset:auto!important;transform:none!important;
+ height:auto!important;min-height:0!important;max-height:none!important;
+ margin:0!important;padding:10px!important;gap:8px!important;
+}
+html[data-stage2-portrait] .scene:not(.is-victory) .panel>* {
+ flex-shrink:0!important;
+}
+html[data-stage2-portrait] .scene:not(.is-victory) .panel .match {
+ flex:none!important;position:relative!important;inset:auto!important;transform:none!important;
+ margin:0!important;padding:0!important;height:auto!important;min-height:0!important;max-height:none!important;
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ grid-template-rows:auto!important;align-content:start!important;align-items:start!important;
+ column-gap:20px!important;
+}
+html[data-stage2-portrait] .scene:not(.is-victory) .panel .matchcol {
+ height:auto!important;min-height:0!important;max-height:none!important;
+ display:grid!important;grid-template-rows:none!important;grid-auto-rows:minmax(56px,auto)!important;
+ align-content:start!important;gap:8px!important;
+}
+html[data-stage2-portrait] .scene:not(.is-victory) .panel .match button {
+ height:auto!important;min-height:44px!important;max-height:none!important;
+ padding:7px 8px!important;font-size:14px!important;line-height:1.35!important;
+ align-self:center!important;white-space:normal!important;
+}
+html[data-stage2-portrait] .scene:not(.is-victory) .panel .feedback:empty {display:none!important}
+html[data-stage2-portrait] .scene:not(.is-victory) .panel .controls {
+ flex:none!important;position:relative!important;inset:auto!important;
+ display:flex!important;justify-content:center!important;
+ margin:8px 0 0!important;padding:0!important;height:auto!important;min-height:0!important;
+}
+html[data-stage2-portrait] .scene:not(.is-victory) .panel .controls .btn {
+ min-height:48px!important;width:100%!important;font-size:16px!important;
+}

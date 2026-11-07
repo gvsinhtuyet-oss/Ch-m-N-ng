@@ -151,7 +151,7 @@
     },
     {
       "path": "src/services/GddpService.ts",
-      "sha256": "98b783ecec8409991ddb4799762c472ca33a38c76db694c0302ffbac0954684b"
+      "sha256": "1c1eff208c503a4b5422b00793d07a740bfc8d9d609402eb6d64e067b284869b"
     },
     {
       "path": "src/services/BackgroundMusic.ts",

@@ -97,12 +97,59 @@ try {
       };
     },root);
     console.log('MY KHE SHARED QUESTION',name,JSON.stringify(question));
+    if(width>=1024){
+      const layout=await page.evaluate(host=>{
+        const root=document.querySelector(host)?.shadowRoot;
+        const scene=root?.querySelector('.scene');
+        const panel=root?.querySelector('.panel');
+        const shell=root?.querySelector('.shell');
+        const css=scene?getComputedStyle(scene):null;
+        const r=panel?.getBoundingClientRect();
+        return {className:scene?.className,panelTop:r?.top,positionVar:css?.getPropertyValue('--banner-bottom').trim(),shellPadding:shell?getComputedStyle(shell).paddingTop:null};
+      },root);
+      console.log('MY KHE RAISED QUESTION',name,JSON.stringify(layout));
+      assert.match(layout.className??'',/my-khe-game/,'Mỹ Khê scoped layout marker missing');
+      assert.ok(layout.panelTop>=180 && layout.panelTop<=315,name+': question should sit close beneath title');
+    }
+
     assert.equal(question.prompt,config.questions[0].prompt);
     assert.equal(question.choices,3);
     assert.equal(question.images,3);
     assert.ok(question.panel?.width<=(width<=650?width+2:900),name+': question card too wide');
     assert.ok(question.panel?.height<=(width<=650?375:560),name+': question card too tall');
     await page.screenshot({path:'stage2-qa-screenshots/my-khe-shared-question-'+name+'.png',fullPage:true});
+    if(name==='desktop-1760'){
+      // Reproduce the supplied screenshot: matching task (question 4).
+      // Answer first 3 questions correctly, then check entire matching block.
+      for(let index=0;index<3;index++){
+        await page.waitForFunction(([host,n])=>{
+          const shadow=document.querySelector(host)?.shadowRoot;
+          return shadow?.querySelector('.hud-stage')?.textContent?.includes('CÂU '+(n+1)+'/5');
+        },{timeout:15000},[root,index]);
+        assert.equal(await click(page,'[data-choice="'+[0,0,1][index]+'"]'),true);
+      }
+      await page.waitForFunction(host=>{
+        const shadow=document.querySelector(host)?.shadowRoot;
+        return shadow?.querySelector('.hud-stage')?.textContent?.includes('CÂU 4/5') &&
+          !!shadow.querySelector('.match');
+      },{timeout:15000},root);
+      const matchGeometry=await page.evaluate(host=>{
+        const shadow=document.querySelector(host)?.shadowRoot;
+        const r=selector=>{
+          const el=shadow?.querySelector(selector);
+          const b=el?.getBoundingClientRect();
+          return b?{top:b.top,bottom:b.bottom,height:b.height}:null;
+        };
+        return {question:r('.prompt'),panel:r('.panel'),match:r('.match'),controls:r('.match-footer')};
+      },root);
+      console.log('MY KHE MATCH Q4 POSITION',JSON.stringify(matchGeometry));
+      assert.ok(matchGeometry.panel.top>=180 && matchGeometry.panel.top<=315,
+        'Question 4 and whole matching panel must move closer to the title');
+      assert.ok(matchGeometry.match.top>=matchGeometry.question.bottom &&
+        matchGeometry.match.bottom<=matchGeometry.panel.bottom+3,
+        'Matching answer cards should remain grouped below the prompt');
+      await page.screenshot({path:'stage2-qa-screenshots/my-khe-matching-q4-raised-1760.png',fullPage:true});
+    }
     if(name==='iphone-390') {
       // Finish the original five questions through the new shared game:
       // image -> true/false (2 choices) -> 3 choices -> match -> safe-behavior choice.

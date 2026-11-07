@@ -296,6 +296,14 @@ try{
           const root=frame?.contentDocument??document.querySelector('[data-shared-stage2]')?.shadowRoot;
           return !!root?.querySelector('.prompt');
         },{timeout:13000});
+        // Mobile 320px images often decode after the text prompt is mounted.
+        // Wait for the real image decoding before judging broken-image status.
+        await page.waitForFunction(()=>{
+          const frame=document.querySelector('iframe[data-stage2-game-frame]');
+          const root=frame?.contentDocument??document.querySelector('[data-shared-stage2]')?.shadowRoot;
+          const images=[...root?.querySelectorAll('.choice-photo')??[]];
+          return images.every(img=>img.complete&&img.naturalWidth>0);
+        },{timeout:20000});
         validateGeometry(await rectInPage(page),id,name,'question1');
         await page.screenshot({path:'production-stage2-audit/'+id+'-'+name+'.png',fullPage:true});
         assert.deepEqual(errors,[],id+' '+name+': page errors');

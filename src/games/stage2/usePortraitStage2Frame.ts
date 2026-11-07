@@ -31,6 +31,29 @@ export function usePortraitStage2Frame() {
     gameDocument.head.append(style);
 
     const media = window.matchMedia(portraitQuery);
+    // V12 keeps the live HUD inside .panel; V18 already keeps it in .shell.
+    // Move the actual DOM node, not a duplicate, so audio/rewards retain listeners.
+    let relocatedHud: HTMLElement | null = null;
+    let originalParent: Node | null = null;
+    let originalNext: Node | null = null;
+    const placeHud = () => {
+      const shell = scene.querySelector<HTMLElement>('.shell');
+      const hud = scene.querySelector<HTMLElement>('.hud');
+      if (!shell || !hud || hud.parentElement === shell) return;
+      originalParent = hud.parentNode;
+      originalNext = hud.nextSibling;
+      shell.insertBefore(hud, shell.firstChild);
+      relocatedHud = hud;
+    };
+    const restoreHud = () => {
+      if (relocatedHud && originalParent?.isConnected) {
+        const next = originalNext?.parentNode === originalParent ? originalNext : null;
+        originalParent.insertBefore(relocatedHud, next);
+      }
+      relocatedHud = null;
+      originalParent = null;
+      originalNext = null;
+    };
     const resize = () => {
       if (media.matches) {
         const height = Math.ceil(scene.getBoundingClientRect().height);
@@ -40,6 +63,7 @@ export function usePortraitStage2Frame() {
     const observer = new ResizeObserver(resize);
     const updateMode = () => {
       gameDocument.documentElement.toggleAttribute('data-stage2-portrait', media.matches);
+      if (media.matches) placeHud(); else restoreHud();
       observer.disconnect();
       if (media.matches) {
         observer.observe(scene);
@@ -57,6 +81,7 @@ export function usePortraitStage2Frame() {
       gameDocument.documentElement.removeAttribute('data-stage2-portrait');
       gameDocument.documentElement.removeAttribute('data-stage2-artwork-missing');
       frame.style.removeProperty('--stage2-frame-height');
+      restoreHud();
       style.remove();
     };
   };

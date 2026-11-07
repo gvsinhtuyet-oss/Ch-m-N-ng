@@ -159,6 +159,9 @@ jobs:
       - run: npm install --no-save --no-package-lock --no-audit --no-fund puppeteer-core
       - name: Inspect live iPhone Android iPad and desktop layouts
         run: node production-mobile-smoke.mjs
+      - name: Inspect LIVE Cloudflare Stage 2 games on phones and tablets
+        run: |
+          STAGE2_QA_URL=https://chamdanang-gddp.pages.dev node --import tsx stage2-browser-qa.mjs
       - name: Save screenshots
         if: always()
         uses: actions/upload-artifact@v4

@@ -26,7 +26,7 @@ export const GRADE1_MINUTES: Grade1MinuteTopic[] = [
     phases:[
       {name:'Khởi động',instructions:['Kể tên một số xã, phường, đặc khu của thành phố Đà Nẵng mà em biết.','Kết luận theo biên bản năm 2025: thành phố có 23 phường, 70 xã và 01 đặc khu (giáo viên rà lại theo thời điểm sử dụng).'],imageSubjects:['Phường Hội An','Xã Nam Trà My','Phường Hải Châu','Xã Hiệp Đức','Đặc khu Hoàng Sa']},
       {name:'Khám phá',instructions:['Em đang ở đâu? Quan sát từng hình, nhận biết tên địa điểm và khu vực; không yêu cầu tiết lộ địa chỉ nhà.'],imageSubjects:['Cổng thôn Thạch Bích – xã Quế Phước','Đường Trần Hưng Đạo – phường Bàn Thạch','Cổng chợ Việt An – xã Việt An','Nhà làng truyền thống – xã Tây Giang','Đài tưởng niệm liệt sĩ huyện Hòa Vang – theo biên bản: nay thuộc phường Cẩm Lệ','Ga Trà Kiệu – xã Duy Xuyên']},
-      {name:'Thực hành',instructions:['Trường của em tên là gì?','Trường của em ở xã hoặc phường nào?','Từ nhà đến trường, em đi qua những địa điểm nào?'],imageSubjects:['Trường Tiểu học Kim Đồng, phường Tam Kỳ (tên ghi trong tài liệu 2025)','Một trường tiểu học ở Đà Nẵng cũ (biên bản chưa định danh cụ thể)']},
+      {name:'Thực hành',instructions:['Trường của em tên là gì?','Trường của em ở xã hoặc phường nào?','Từ nhà đến trường, em đi qua những địa điểm nào?'],imageSubjects:['Trường Tiểu học Kim Đồng, phường Tam Kỳ (tên ghi trong tài liệu 2025)','Trường Tiểu học Võ Thị Sáu, phường Hòa Khánh (hình trong tài liệu 08/08/2025; biên bản chỉ yêu cầu một trường ở Đà Nẵng cũ)']},
       {name:'Vận dụng',instructions:['Hoạt động 1: Em hãy giới thiệu về nơi em ở.','Hoạt động 2: Em hãy kể tên xã hoặc phường của Đà Nẵng mà em đã được đến.']}
     ]
   },

@@ -30,11 +30,13 @@ function shuffleOptions<T>(options: readonly T[]): T[] {
 interface Props {
   station: Station;
   onCompleteStage: () => void;
+  /** Browser-only Stage 2 QA must never write student progress. */
+  previewReadOnly?: boolean;
 }
 
-export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) => {
+export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage, previewReadOnly = false }) => {
   const { currentUser, role } = useApp();
-  const isReadOnly = role !== 'student';
+  const isReadOnly = role !== 'student' || previewReadOnly;
   const challenge = station.challenge;
   const questions = useMemo(
     () => (challenge.questions || []).map(question => ({

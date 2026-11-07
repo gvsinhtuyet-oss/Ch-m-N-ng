@@ -1,6 +1,7 @@
 import {LearningFeedbackForm} from '../../components/station/LearningFeedbackForm';
 import {learningThumbnail} from '../../utils/learningThumbnail';
 import {TeacherWorkspace} from './TeacherWorkspace';
+import { PilotMeasurement } from './PilotMeasurement';
 import { ClassRoster } from './ClassRoster';
 import { RealClassResults } from './RealClassResults';
 import { GddpTeacherLookup } from './GddpTeacherLookup';
@@ -71,51 +72,30 @@ export const TeacherDashboard: React.FC = () => {
 
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 space-y-4">
+    <div className="cham-staff max-w-7xl mx-auto px-3 sm:px-6 py-4 space-y-4">
       {activeTab!=='gddp' && currentGrade>=4 && <aside className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Học liệu lớp {currentGrade} theo chủ đề – chờ kế hoạch tích hợp mới.</strong> Đã rà lời thuyết minh, câu hỏi, đáp án theo nguồn; chưa có xác nhận phê duyệt của tổ chuyên môn. Chưa gắn tuần/bài SGK. Ảnh tư liệu có chú thích nơi chụp, thời điểm và giấy phép. Ảnh Phước Kiều chưa rõ quyền tái sử dụng chỉ được dẫn tại nguồn, chưa nhúng vào app. <a className="underline" href="https://danang.gov.vn/vi/w/ghe-tham-lang-nghe-duc-dong-phuoc-kieu" target="_blank" rel="noopener noreferrer">Xem tư liệu Phước Kiều tại nguồn</a></aside>}
       {activeTab!=='gddp' && currentGrade === 3 && <aside className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Học liệu lớp 3 theo chủ đề – chờ duyệt tích hợp.</strong> Đủ 5 trạm tham khảo theo đề cương; chưa xác nhận tuần, bài và bộ sách của kế hoạch mới. Bảng tích hợp cũ ghi Hoàng Diệu – Phan Châu Trinh, khác đề cương Huỳnh Thúc Kháng – Phan Châu Trinh. Tư liệu nghề thúng chai Hội An chỉ dùng tham khảo chung, chưa thay cho quy trình riêng của Sơn Trà.</aside>}
       {activeTab!=='gddp' && currentUser?.id === 'teacher-demo' && <p className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">Chế độ giáo viên trải nghiệm dành cho giám khảo. Bạn có thể xem học liệu và trình chiếu bài học; đăng ảnh, tài liệu chung cần đăng nhập quản trị.</p>}
       {workflowError&&<p role="alert" className="rounded-xl bg-rose-50 p-3 text-rose-700">{workflowError}</p>}
-      {/* Teacher Profile Banner */}
-      <div className="bg-gradient-to-r from-emerald-600 via-teal-700 to-sky-800 text-white rounded-2xl p-3 sm:p-4 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div>
-          <div className="hidden md:flex items-center gap-2 mb-2">
-            <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-amber-300 font-bold text-xs uppercase tracking-wider">
-              Không Gian Dạy Học – Giáo Viên
-            </span>
-            <span className="px-3 py-1 rounded-full bg-amber-300 text-slate-950 font-black text-[10px] uppercase tracking-wide">
-              {currentUser?.id === 'teacher-demo' ? 'Tài khoản demo • Dữ liệu minh họa' : 'Tài khoản giáo viên'}
-            </span>
-            <span className="text-xs text-emerald-200">{teacher?.schoolName || 'Chọn trường trong kế hoạch của tôi'}</span>
-          </div>
-          <h1 className="text-base sm:text-xl font-black">
-            Chào mừng {teacher?.name || 'Cô Trương Sinh Tuyết'}!
-          </h1>
-          <p className="hidden md:block text-xs sm:text-sm text-emerald-100 mt-1 max-w-xl">
-            Hỗ trợ giáo viên tổ chức bài học demo, trình chiếu nội dung, theo dõi tiến độ và ghi nhận triển khai.
-          </p>
-          <button
-            type="button"
-            onClick={() => setCurrentView('student-maps')}
-            className="hidden md:inline-flex mt-3 items-center gap-2 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/15 text-xs font-black transition"
-          >
-            <MapIcon className="w-4 h-4 text-amber-300" />
-            <span>XEM TRƯỚC BẢN ĐỒ & RƯƠNG KHO BÁU</span>
-          </button>
-        </div>
-
-        {/* Four clear entry points; keep existing features in their original tabs. */}
-        <nav aria-label="Không gian giáo viên" className="grid grid-cols-2 gap-2 w-full md:w-auto md:min-w-[360px]">
+      <header className="staff-hero rounded-2xl border border-sky-100 p-4 sm:p-5">
+        <p className="text-xs font-bold text-sky-800">KHÔNG GIAN GIÁO VIÊN{isDemo && ' · BẢN TRẢI NGHIỆM'}</p>
+        <h1 className="mt-1 text-xl font-black text-slate-900 sm:text-2xl">Bàn làm việc chuyên môn</h1>
+        <p className="mt-1 text-sm text-slate-600">{teacher?.name || 'Giáo viên'}{teacher?.schoolName ? ` · ${teacher.schoolName}` : ''}</p>
+        <nav aria-label="Không gian giáo viên" className="mt-4 grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
           {([
-            {id:'gddp',label:'Dạy học ngay',Icon:Presentation},
-            {id:'workspace',label:'Kế hoạch bài dạy',Icon:FileEdit},
+            {id:'gddp',label:'Tìm bài & dạy',Icon:Presentation},
+            {id:'teaching',label:'Danh mục trạm',Icon:MapIcon},
+            {id:'workspace',label:'Kế hoạch dạy',Icon:FileEdit},
             {id:'resources',label:'Kho học liệu',Icon:BookOpen},
-            {id:'classrooms',label:'Lớp học của tôi',Icon:Users},
-          ] as const).map(({id,label,Icon})=><button key={id} type="button" onClick={()=>setActiveTab(id)} aria-current={activeTab===id?'page':undefined} className={`flex items-center justify-center gap-2 rounded-xl px-3 py-3 text-sm font-bold transition ${activeTab===id?'bg-white text-slate-900 shadow':'bg-white/15 text-white hover:bg-white/25'}`}><Icon className="h-4 w-4 shrink-0"/>{label}</button>)}
-          <button type="button" onClick={()=>setActiveTab('teaching')} className="col-span-2 text-xs text-white/90 underline underline-offset-2">Xem danh mục trạm và trình chiếu đầy đủ</button>
-          {activeTab==='classrooms'&&<button type="button" onClick={()=>setActiveTab('results')} className="col-span-2 rounded-lg bg-white/15 px-3 py-2 text-sm font-bold text-white">Xem kết quả học sinh</button>}
+            {id:'classrooms',label:'Lớp của tôi',Icon:Users},
+            {id:'results',label:'Kết quả & nhật ký',Icon:BarChart3},
+          ] as const).map(({id,label,Icon}) => <button key={id} type="button" onClick={() => setActiveTab(id)}
+            aria-current={activeTab === id ? 'page' : undefined} className={`staff-button ${activeTab === id ? 'staff-primary' : ''}`}>
+            <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />{label}
+          </button>)}
         </nav>
-      </div>
+        <button type="button" onClick={() => setCurrentView('student-maps')} className="mt-3 min-h-11 text-sm font-semibold text-sky-800 underline underline-offset-4">Xem bản đồ và rương kho báu</button>
+      </header>
 
       {activeTab === 'workspace' && <TeacherWorkspace />}
       {activeTab === 'gddp' && <GddpTeacherLookup stations={allStationsInCurrentGrade} currentGrade={currentGrade} onGradeChange={setCurrentGrade} onOpenStudentStage1={station=>openStation(station,1)} />}
@@ -338,7 +318,22 @@ export const TeacherDashboard: React.FC = () => {
       )}
 
       {/* TAB 3: KẾT QUẢ */}
-      {activeTab === 'results' && currentUser?.id !== 'teacher-demo' && <RealClassResults />}
+      {activeTab === 'results' && !isDemo && <>
+        <RealClassResults />
+        <section className="staff-panel space-y-3 p-4 sm:p-5">
+          <h2 className="font-bold">Nhật ký triển khai của tôi</h2>
+          {!workflowError && !implementations.length && <p className="staff-empty">Chưa ghi nhận tiết dạy.</p>}
+          {[...implementations].sort((a, b) => b.implementationDate.localeCompare(a.implementationDate)).slice(0, 12).map(row =>
+            <details key={row.id} className="rounded-xl border border-slate-200 p-3 text-sm">
+              <summary className="cursor-pointer"><strong>{row.stationName}</strong> · {row.className} · {row.implementationDate}</summary>
+              <p className="mt-2">{row.session} · {row.method}</p>
+              {row.note && <p className="mt-1 whitespace-pre-wrap break-words">{row.note}</p>}
+            </details>)}
+          {implementations.length > 12 && <p className="text-xs text-slate-600">Đang hiển thị 12 tiết gần nhất trong {implementations.length} tiết đã ghi.</p>}
+          <button type="button" className="staff-button" onClick={() => setActiveTab('teaching')}>Chọn trạm để ghi tiết dạy</button>
+        </section>
+        <PilotMeasurement />
+      </>}
 
       {activeTab === 'results' && currentUser?.id === 'teacher-demo' && (
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">

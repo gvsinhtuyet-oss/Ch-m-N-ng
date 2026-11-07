@@ -70,3 +70,69 @@ export async function downloadEffectivenessPilot() {
   link.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+
+export async function readEffectivenessPilot(file: File) {
+  if (!/\.xlsx$/i.test(file.name) || file.size > 512 * 1024) {
+    throw new Error('Hãy chọn tệp Excel .xlsx theo mẫu, tối đa 512 KB.');
+  }
+  const {default: ExcelJS} = await import('exceljs');
+  const workbook = new ExcelJS.Workbook();
+  try {
+    await workbook.xlsx.load(await file.arrayBuffer());
+  } catch {
+    throw new Error('Không đọc được tệp Excel. Hãy mở lại mẫu .xlsx và lưu tệp trước khi thử lại.');
+  }
+  const students = workbook.getWorksheet('Học sinh');
+  const teachers = workbook.getWorksheet('Giáo viên');
+  if (!students || !teachers || students.getCell('B1').text !== 'Điểm trước /5' ||
+      students.getCell('C1').text !== 'Điểm sau /5' ||
+      teachers.getCell('B1').text !== 'Phút cách thường' || teachers.getCell('C1').text !== 'Phút dùng Trợ lý') {
+    throw new Error('Tệp chưa đúng mẫu đo hiệu quả của CHẠM ĐÀ NẴNG.');
+  }
+  if (students.rowCount > 101 || teachers.rowCount > 101) {
+    throw new Error('Mỗi trang nhập tối đa 100 dòng. Hãy tách dữ liệu theo lớp và đợt đo.');
+  }
+
+  function pairs(sheet: NonNullable<typeof students>, maximum: number) {
+    const result: {before: number; after: number; usage: string}[] = [];
+    const ids = new Set<string>();
+    let skipped = 0;
+    for (let index = 2; index <= sheet.rowCount; index++) {
+      const row = sheet.getRow(index);
+      const id = row.getCell(1).text.trim();
+      const before = row.getCell(2).value;
+      const after = row.getCell(3).value;
+      if (!id && before == null && after == null) continue;
+      if (id && ids.has(id)) throw new Error(`Trang ${sheet.name} có mã trùng tại dòng ${index}. Mỗi mã chỉ dùng một lần.`);
+      if (id) ids.add(id);
+      if (!id || typeof before !== 'number' || typeof after !== 'number' ||
+          !Number.isFinite(before) || !Number.isFinite(after) ||
+          before < 0 || after < 0 || before > maximum || after > maximum) {
+        skipped++;
+        continue;
+      }
+      result.push({before, after, usage: row.getCell(4).text.trim()});
+    }
+    return {result, skipped};
+  }
+
+  const student = pairs(students, 5);
+  const teacher = pairs(teachers, Number.MAX_SAFE_INTEGER);
+  const mean = (values: number[]) => values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
+  const changes = teacher.result.map(row => row.before - row.after).sort((a, b) => a - b);
+  const midpoint = Math.floor(changes.length / 2);
+  const medianMinutes = changes.length
+    ? (changes.length % 2 ? changes[midpoint] : (changes[midpoint - 1] + changes[midpoint]) / 2)
+    : null;
+  return {
+    studentCount: student.result.length,
+    before: mean(student.result.map(row => row.before)),
+    after: mean(student.result.map(row => row.after)),
+    teacherCount: teacher.result.length,
+    medianMinutes,
+    usage: ['Dùng ngay', 'Sửa nhẹ', 'Sửa nhiều', 'Không dùng'].map(label => ({
+      label, count: teacher.result.filter(row => row.usage === label).length,
+    })),
+    skipped: student.skipped + teacher.skipped,
+  };
+}

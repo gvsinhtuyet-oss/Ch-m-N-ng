@@ -103,7 +103,7 @@ const AppContent: React.FC = () => {
     <div className={`game-shell min-h-screen flex flex-col text-slate-800 ${currentView === 'station-view' ? 'station-screen-fixed' : currentView === 'student-journey' ? 'journey-screen-fixed' : ''}`}>
       {currentView !== 'station-view' && <Header />}
 
-      <main className="game-content flex-1">
+      <main className={`game-content flex-1 ${currentView === 'admin-view' || currentView === 'teacher-view' ? 'staff-workspace' : ''}`}>
         {currentView === 'student-journey' && <StudentJourneyView />}
         {currentView === 'student-passport' && <StudentPassportView />}
         {currentView === 'student-maps' && <StudentJourneyMapsView />}

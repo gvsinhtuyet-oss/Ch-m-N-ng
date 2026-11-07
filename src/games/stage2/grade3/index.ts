@@ -1,10 +1,12 @@
 import type {GameConfig} from '../types';
 import {hoangDieuConfig} from '../hoangDieu';
+import {myKheBanThanConfig} from './myKheBanThan';
 import {station3Config} from './station3';
 import {station4Config} from './station4';
 import {station5Config} from './station5';
 export const grade3SharedConfigs: Record<string,GameConfig> = {
  [hoangDieuConfig.stationId]:hoangDieuConfig,
+ [myKheBanThanConfig.stationId]:myKheBanThanConfig,
  [station3Config.stationId]:station3Config,
  [station4Config.stationId]:station4Config,
  [station5Config.stationId]:station5Config,

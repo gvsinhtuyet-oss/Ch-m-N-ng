@@ -8,10 +8,10 @@ const stationView = read('./src/features/stations/StationView.tsx');
 const sharedCss = read('./src/games/stage2/mobile-portrait.css');
 const frameCss = read('./src/games/stage2/frame-portrait.css');
 const frameHook = read('./src/games/stage2/usePortraitStage2Frame.ts');
-const myKhe = read('./src/components/station/MyKheBanThanV12.tsx');
+const myKheConfig = read('./src/games/stage2/grade3/myKheBanThan.ts');
 const hoangDieu = read('./src/components/station/HoangDieuPhanChauTrinhV18.tsx');
 
-test('25 stations have an explicit Stage 2 renderer without losing the two approved HTML games', async () => {
+test('25 stations have Stage 2 renderer and My Khe shares the React engine', async () => {
   const { ALL_25_STATIONS } = await import('./src/data/allStations.ts');
   const { grade1SharedConfigs } = await import('./src/games/stage2/grade1/index.ts');
   const { grade2SharedConfigs } = await import('./src/games/stage2/grade2/index.ts');
@@ -22,13 +22,13 @@ test('25 stations have an explicit Stage 2 renderer without losing the two appro
     ...Object.keys(grade2SharedConfigs),
     ...Object.keys(grade3SharedConfigs),
     ...Object.keys(grade45SharedConfigs),
-    'g3-station-1',
     'g3-station-2',
   ]);
   const expected = new Set(ALL_25_STATIONS.map(station => station.id));
   assert.equal(expected.size, 25, '25 distinct stations are required');
   assert.deepEqual([...actual].sort(), [...expected].sort(), 'Every station must have an approved game');
-  assert.match(router, /<MyKheBanThanV12/);
+  assert.doesNotMatch(router, /<MyKheBanThanV12/);
+  assert.match(router, /config=\{grade3SharedConfigs\[station.id\]\} embedded/);
   assert.match(router, /<HoangDieuPhanChauTrinhV18/);
   assert.match(router, /<SharedStage2/);
 });
@@ -46,7 +46,7 @@ test('React games use the original working HUD above image and panel on a portra
   assert.match(sharedCss, /music-toggle[\s\S]*?min-width:44px!important/);
 });
 
-test('Both approved HTML games use the same phone layout without replacing their game logic', () => {
+test('Remaining approved Hoang Dieu HTML game uses phone layout without replacing its game logic', () => {
   assert.match(frameCss, /\.shell::before\s*\{[\s\S]*?order:2!important/);
   assert.match(frameCss, /\.shell > \.hud\s*\{[\s\S]*?order:1!important/);
   assert.match(frameCss, /\.shell > \.panel\s*\{[\s\S]*?order:3!important/);
@@ -58,14 +58,12 @@ test('Both approved HTML games use the same phone layout without replacing their
   assert.match(frameHook, /const placeHud = \(\) =>/);
   assert.match(frameHook, /shell\.insertBefore\(hud, shell\.firstChild\)/);
   assert.match(frameHook, /const restoreHud = \(\) =>/);
-  assert.match(myKhe, /grade3-my-khe-ban-than\/v12\/index\.html/);
   assert.match(hoangDieu, /grade3-hoang-dieu-phan-chau-trinh\/v18\/index\.html/);
-  assert.match(myKhe, /progressService\.completeStage2/);
-  assert.match(myKhe, /installLegacySoundControl/);
-  assert.match(myKhe, /button\.className = 'music-toggle'/);
   assert.match(hoangDieu, /progressService\.completeStage2/);
-  assert.match(myKhe, /onCompleteStage/);
   assert.match(hoangDieu, /onCompleteStage/);
+  assert.match(myKheConfig, /stationId:'g3-station-1'/);
+  assert.match(myKheConfig, /my-khe\/play.webp/);
+  assert.match(read('./package.json'), /extract-my-khe-v12-images.mjs/);
 });
 
 test('Wordwall has no active Stage 2 embed or reward flow', () => {

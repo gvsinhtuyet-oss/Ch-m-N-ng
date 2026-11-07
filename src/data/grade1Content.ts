@@ -33,11 +33,11 @@ export const GRADE1_CONTENT = [
         "title": "Từ nhà đến trường",
         "narration": "Mỗi ngày đến trường, em nhìn thấy những cảnh vật nào? Trong tài liệu có hình cổng thôn, đường phố, chợ, nhà làng truyền thống, đài tưởng niệm và ga tàu ở nhiều nơi của thành phố Đà Nẵng. Mỗi bạn có thể đi qua cảnh vật khác nhau. Em hãy kể tên một địa điểm quen thuộc mình từng nhìn thấy trên đường đến trường. Sau đó, em vẽ lại từ trí nhớ khi đã về lớp. Em không cần chia sẻ địa chỉ nhà hay đường đi cụ thể với người lạ nhé!",
         "fact": "Tài liệu giới thiệu các cảnh vật như cổng thôn, đường phố, chợ, nhà làng, đài tưởng niệm và ga tàu; em kể cảnh đã quan sát một cách an toàn.",
-        "q": "Trong tranh của tài liệu, em có thể quan sát địa điểm nào?",
+        "q": "Theo lời thuyết minh, tài liệu giới thiệu những địa điểm nào?",
         "answers": [
-          "Chợ hoặc ga tàu",
-          "Một món ăn chưa vẽ",
-          "Một đáp án trò chơi"
+          "Cổng thôn, chợ và ga tàu",
+          "Tàu vũ trụ trên Mặt Trăng",
+          "Sa mạc đầy tuyết"
         ]
       },
       {
@@ -459,7 +459,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-1",
         "title": "Món ngon quê hương",
-        "narration": "Các em cùng khám phá sáu món ăn truyền thống trong phần Khởi động của tài liệu giáo dục địa phương nhé! Đó là mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo. Mỗi món có hình dáng, nguyên liệu và hương vị riêng. Em hãy nhìn hình và nói tên món mà mình nhận ra. Nếu chưa từng ăn món đó, em có thể hỏi người lớn để tìm hiểu thêm. Bài học sẽ cùng em khám phá kĩ hơn về mì Quảng.",
+        "narration": "Các em cùng khám phá sáu món ăn truyền thống trong phần Khởi động của tài liệu giáo dục địa phương nhé! Đó là mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo. Mỗi món có hình dáng, nguyên liệu và hương vị riêng. Trên màn hình là món mì Quảng; những hình món ăn khác thuộc bộ ảnh của tài liệu và sẽ được giới thiệu khi có ảnh đúng nguồn. Em có thể kể tên món mình nhận ra từ lời giới thiệu. Nếu chưa từng ăn món đó, em có thể hỏi người lớn để tìm hiểu thêm. Bài học sẽ cùng em khám phá kĩ hơn về mì Quảng.",
         "fact": "Sáu món theo biên bản: mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo.",
         "q": "Món nào có trong sáu hình khởi động của tài liệu?",
         "answers": [

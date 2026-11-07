@@ -55,6 +55,9 @@ jobs:
       - name: Firestore authentication storage tests
         run: node --test auth-storage-test.mjs
 
+      - name: Live teacher and admin interface route regression
+        run: node --test live-workspace-regression-test.mjs
+
       - name: Admin interface, upload safeguards and rating access tests
         run: node --test admin-interface-regression-test.mjs
 

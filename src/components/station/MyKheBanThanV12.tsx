@@ -70,12 +70,10 @@ function installLegacySoundControl(frame: HTMLIFrameElement) {
     hud.appendChild(button);
   };
   attach();
-  const scene = doc.querySelector('.scene');
-  if (scene) {
-    const observer = new MutationObserver(attach);
-    observer.observe(scene, {childList:true,subtree:true});
-    frame.contentWindow?.addEventListener('pagehide', () => observer.disconnect(), {once:true});
-  }
+  // V12 may recreate its scene during setup or replay.
+  const observer = new MutationObserver(attach);
+  observer.observe(doc.documentElement, {childList:true,subtree:true});
+  frame.contentWindow?.addEventListener('pagehide', () => observer.disconnect(), {once:true});
 }
 
 /** Only mount this component for g3-station-1; the iframe contains approved V12. */

@@ -285,7 +285,7 @@ try{
       }finally {await page.close();}
     }
   }
-  for(const [grade,id] of [[1,'g1-station-1'],[2,'g2-station-1'],[3,'g3-station-1'],[3,'g3-station-2'],[4,'g4-station-1'],[5,'g5-station-1']]){
+  for(const [grade,id] of [[1,'g1-station-1'],[2,'g2-station-1'],[3,'g3-station-1'],[3,'g3-station-2'],[4,'g4-station-1'],[5,'g5-ky-anh-me-nhu']]){
     for(const [name,width,height] of [['small-phone',320,640],['android',412,915],['ipad',768,1024]]){
       let opened;
       for(let attempt=1;attempt<=3;attempt++){

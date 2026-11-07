@@ -73,8 +73,8 @@ export const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto grid max-w-[1500px] gap-4 px-3 py-4 sm:px-6 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-6 lg:py-6">
-      <aside className="self-start rounded-2xl border border-slate-200 bg-white p-2 shadow-sm lg:sticky lg:top-20">
+    <div className="cham-staff admin-workspace mx-auto grid max-w-[1500px] gap-4 px-3 py-4 sm:px-6 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-6 lg:py-6">
+      <aside className="admin-sidebar self-start rounded-2xl border border-slate-200 bg-white p-2 shadow-sm lg:sticky lg:top-20">
         <button type="button" className="flex min-h-11 w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-bold text-slate-800 lg:hidden"
           aria-expanded={menuOpen} aria-controls="admin-navigation" onClick={() => setMenuOpen(open => !open)}>
           <Menu className="h-5 w-5" aria-hidden="true" />
@@ -82,7 +82,7 @@ export const AdminDashboard: React.FC = () => {
           <span className="ml-auto text-xs font-medium text-slate-600">{activeGroup.label}</span>
           <ChevronDown className={`h-4 w-4 ${menuOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
         </button>
-        <nav id="admin-navigation" aria-label="Điều hướng quản trị" className={`${menuOpen ? 'block' : 'hidden'} lg:block`}>
+        <nav id="admin-navigation" id="admin-navigation" aria-label="Điều hướng quản trị" className={`${menuOpen ? 'block' : 'hidden'} lg:block`}>
           <ul className="space-y-1">
             {adminGroups.map(group => {
               const Icon = group.icon;
@@ -110,7 +110,7 @@ export const AdminDashboard: React.FC = () => {
       </aside>
 
       <div className="min-w-0 space-y-4">
-        <header className="rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm sm:px-5">
+        <header className="admin-page-hero rounded-2xl border border-slate-200 bg-white px-4 py-3 shadow-sm sm:px-5">
           <p className="text-xs font-semibold text-indigo-800">Quản trị CHẠM ĐÀ NẴNG{activeGroup.label !== activePage.label && ` · ${activeGroup.label}`}</p>
           <h1 ref={pageTitle} tabIndex={-1} className="mt-1 text-xl font-black text-slate-900 sm:text-2xl">{activePage.label}</h1>
         </header>

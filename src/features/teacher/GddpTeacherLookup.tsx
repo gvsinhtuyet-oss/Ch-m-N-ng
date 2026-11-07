@@ -110,12 +110,12 @@ export const GddpTeacherLookup: React.FC<Props> = ({stations,currentGrade,onGrad
       </label>
       <label className="space-y-1 text-sm font-semibold text-slate-700">Môn học
         <select className="staff-field px-2 text-sm" value={subject} onChange={e=>{setSubject(e.target.value);setWeek('');setSelectedId('');}}>
-          <option value="">Tất cả môn</option>{subjects.map(x=><option key={x} value={x}>{x}</option>)}
+          <option value="">Tất cả</option>{subjects.map(x=><option key={x} value={x}>{x}</option>)}
         </select>
       </label>
       <label className="space-y-1 text-sm font-semibold text-slate-700">Tuần
         <select className="staff-field px-2 text-sm" value={week} onChange={e=>{setWeek(e.target.value);setSelectedId('');}}>
-          <option value="">Tất cả tuần</option>{weeks.map(x=><option key={x} value={x}>{x}</option>)}
+          <option value="">Tất cả</option>{weeks.map(x=><option key={x} value={x}>{x}</option>)}
         </select>
       </label>
     </div>

@@ -122,7 +122,7 @@ function GameSurface({config:originalConfig,onComplete,embedded=false}:{config:G
     '--game-artwork': artwork,
     backgroundImage: victory ? `url("${config.victoryBackground}"),url("${config.victoryBackground}")` : artwork,
   } as React.CSSProperties;
-  return <main ref={sceneRef} className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${victory?'is-victory':''} ${grade45Question?'grade45-question':''} ${isGrade1?'grade1-game':''} ${/^g[12]-/.test(config.stationId)?'grade2-game':''}`} style={sceneStyle}>
+  return <main ref={sceneRef} className={`scene ${config.layout==='safe-v1'?'safe-layout':''} ${config.stationId==='g3-station-1'?'my-khe-game':''} ${victory?'is-victory':''} ${grade45Question?'grade45-question':''} ${isGrade1?'grade1-game':''} ${/^g[12]-/.test(config.stationId)?'grade2-game':''}`} style={sceneStyle}>
     <h1 className="preview-title">{config.title}</h1>
     {isGrade1&&state.phase==='intro'&&<button className="voice-question intro-voice" onClick={()=>playRecorded('intro')} aria-label="Nghe giới thiệu thử thách">🔊</button>}
     {isGrade1&&state.phase==='review'&&<button className="voice-question intro-voice" onClick={()=>playRecorded('review')} aria-label="Nghe lại hướng dẫn truy lại dấu vết">🔊</button>}
@@ -256,8 +256,26 @@ export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void
  .scene:not(.is-victory) .answers button[data-choice],.scene:not(.is-victory) .match button{height:auto!important;min-height:48px!important;max-height:none!important}
 }
 `;
+  const myKheQuestionPositionCss=`
+/* Keep all five My Khe question panels, including the matching cards, close
+   below the decorative title. Desktop only: the approved phone layout is kept. */
+@media (min-width:1024px) {
+  .scene.safe-layout.my-khe-game:not(.is-victory):has(.prompt) {
+    --banner-bottom:min(13.8vw,260px)!important;
+  }
+  .scene.safe-layout.my-khe-game:not(.is-victory):has(.prompt) .shell {
+    padding-top:calc(var(--banner-bottom) + 12px)!important;
+  }
+  /* Legacy panel centering still leaves a tall gap. CSS individual translate
+     shifts the complete question + options + confirm together while preserving
+     the panel's original horizontal positioning and scroll layout. */
+  .scene.safe-layout.my-khe-game:not(.is-victory) .panel:has(.prompt) {
+    translate:0 -90px!important;
+  }
+}
+`;
   const victorySideFillCss=`@media(min-width:768px){.scene.is-victory{background-size:100% auto,cover!important;background-position:center top,center center!important;background-repeat:no-repeat,no-repeat!important}}`;
   const grade2Css=`@media(max-width:650px) and (orientation:portrait){.scene.safe-layout.grade2-game:not(.is-victory){--art-width:140vw;--banner-bottom:26.8vw}}`;
   const embeddedCss=`:host([data-embedded]) .scene .intro-screen{padding:14px 20px!important;gap:6px!important;max-width:560px!important}:host([data-embedded]) .scene .intro-emblem{font-size:26px!important}:host([data-embedded]) .scene .intro-screen h2{font-size:clamp(18px,2vw,26px)!important;margin:0!important}:host([data-embedded]) .scene .intro-story{font-size:clamp(14px,1.5vw,17px)!important;line-height:1.4!important;margin:4px 0!important}:host([data-embedded]) .scene .intro-call{font-size:14px!important;margin:4px 0!important}:host([data-embedded]) .scene .intro-start{min-height:44px!important;padding:9px 18px!important;font-size:16px!important}:host([data-embedded]) .scene{height:var(--embedded-height,100dvh)!important;min-height:0!important}:host([data-embedded]) .scene .shell{height:100%!important;min-height:0!important}:host([data-embedded]) .scene.safe-layout.is-victory .panel,:host([data-embedded]) .scene.safe-layout.is-victory .victory{height:100%!important;min-height:0!important}`;
-  return <div ref={host} data-shared-stage2="v1" data-embedded={props.embedded?'':undefined}>{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss+'\n'+compactMatchCss+'\n'+voiceCss+'\n'+trueFalseCss+'\n'+compactVoiceCss+'\n'+grade2Css+'\n'+embeddedCss+'\n'+questionEmphasisCss+'\n'+victorySideFillCss+'\n'+mobilePortraitCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
+  return <div ref={host} data-shared-stage2="v1" data-embedded={props.embedded?'':undefined}>{root&&createPortal(<><style>{approvedCss+'\n'+fixes+'\n'+safeLayoutCss+'\n'+compactMatchCss+'\n'+voiceCss+'\n'+trueFalseCss+'\n'+compactVoiceCss+'\n'+grade2Css+'\n'+embeddedCss+'\n'+questionEmphasisCss+'\n'+victorySideFillCss+'\n'+mobilePortraitCss+'\n'+myKheQuestionPositionCss}</style><GameSurface key={props.config.stationId} {...props}/></>,root)}</div>;
 }

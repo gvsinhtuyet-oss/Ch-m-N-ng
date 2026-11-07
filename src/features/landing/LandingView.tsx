@@ -1,3 +1,4 @@
+import { AppFullscreenButton } from '../../components/common/AppFullscreen';
 import './landing-cover.css';
 import {GoogleTeacherLogin} from '../../components/auth/GoogleTeacherLogin';
 import React, { useEffect, useRef, useState } from 'react';
@@ -369,6 +370,7 @@ export const LandingView: React.FC = () => {
             <LogIn aria-hidden="true" className="h-4 w-4 text-amber-300" />
             <span>Đăng nhập</span>
           </button>
+          <AppFullscreenButton iconOnly className="flex min-h-10 shrink-0 items-center justify-center rounded-xl border border-white/20 bg-white/15 px-2.5 text-white hover:bg-white/25" />
         </div>
       </header>
 

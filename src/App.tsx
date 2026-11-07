@@ -1,3 +1,4 @@
+import { AppFullscreenProvider } from './components/common/AppFullscreen';
 import { FeatureLoadBoundary } from './components/common/FeatureLoadBoundary';
 import { effectivenessService } from './services/EffectivenessService';
 import type { Student } from './types';
@@ -142,10 +143,12 @@ const AppContent: React.FC = () => {
 export function App() {
   return (
     <AppProvider>
-      <AppBackground />
-      <FeatureLoadBoundary><Suspense fallback={<div role="status" className="relative z-10 flex min-h-screen items-center justify-center bg-amber-50 p-6 text-lg font-bold text-sky-900">Đang mở hành trình…</div>}>
-        <AppContent />
-      </Suspense></FeatureLoadBoundary>
+      <AppFullscreenProvider>
+        <AppBackground />
+        <FeatureLoadBoundary><Suspense fallback={<div role="status" className="relative z-10 flex min-h-screen items-center justify-center bg-amber-50 p-6 text-lg font-bold text-sky-900">Đang mở hành trình…</div>}>
+          <AppContent />
+        </Suspense></FeatureLoadBoundary>
+      </AppFullscreenProvider>
     </AppProvider>
   );
 }

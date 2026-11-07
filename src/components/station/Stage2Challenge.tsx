@@ -398,8 +398,7 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                           src={embedUrl}
                           title={challenge.externalGame.titleVi}
                           className="w-full h-[480px] sm:h-[600px] border-0"
-                          allow="fullscreen"
-                          allowFullScreen
+                          allow="fullscreen 'none'"
                         />
                       </div>
                       {externalGameReadyToComplete ? (

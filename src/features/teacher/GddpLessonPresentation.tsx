@@ -1,3 +1,4 @@
+import { AppFullscreenButton } from '../../components/common/AppFullscreen';
 import {LearningMediaCredit} from '../../components/LearningMediaCredit';
 import React, {useEffect, useState} from 'react';
 import {MatchedLessonResource} from '../../services/GddpResourceMatcher';
@@ -21,6 +22,7 @@ export const GddpLessonPresentation:React.FC<{record:GddpRecord;resource:Matched
       <div><p className="text-xs font-bold text-amber-300">TÍCH HỢP GDĐP · KHÔNG MỞ TOÀN BỘ TRẠM</p>
         <h2 className="text-xl font-black">{record.lesson}</h2>
         <p className="text-sm text-slate-300">{record.subject} · Lớp {record.grade} · {record.activity}</p></div>
+      <AppFullscreenButton className="inline-flex min-h-10 items-center gap-2 rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700" />
       <button type="button" onClick={close} className="rounded-xl bg-rose-700 px-5 py-3 font-bold">Đóng trình chiếu</button>
     </header>
     <div className="grid gap-5 lg:grid-cols-2">

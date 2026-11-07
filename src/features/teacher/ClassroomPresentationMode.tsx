@@ -1,3 +1,4 @@
+import { AppFullscreenButton } from '../../components/common/AppFullscreen';
 import {LearningMediaCredit} from '../../components/LearningMediaCredit';
 import React, { useState } from 'react';
 import { Station, ExplorationHotspot } from '../../types';
@@ -89,6 +90,7 @@ export const ClassroomPresentationMode: React.FC<Props> = ({ station, onExit }) 
             <span>{isSpeaking ? 'Dừng đọc' : 'Phát thuyết minh'}</span>
           </button>
 
+          <AppFullscreenButton className="inline-flex min-h-10 items-center gap-2 rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700" />
           <button
             onClick={onExit}
             className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-rose-900/80 text-white text-xs font-bold transition flex items-center gap-1.5"

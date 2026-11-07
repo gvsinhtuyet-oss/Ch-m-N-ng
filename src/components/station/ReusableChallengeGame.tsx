@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Maximize2, Minimize2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import type { Station } from '../../types';
 import { audioService } from '../../services/AudioService';
@@ -49,10 +48,6 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
   const [locked, setLocked] = useState(false);
   const [incorrect, setIncorrect] = useState(false);
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const gameRef = useRef<HTMLElement>(null);
-  const [fullscreen, setFullscreen] = useState(false);
-  useEffect(() => { const sync = () => setFullscreen(document.fullscreenElement === gameRef.current); document.addEventListener('fullscreenchange', sync); return () => document.removeEventListener('fullscreenchange', sync); }, []);
-  const toggleFullscreen = async () => { try { if(document.fullscreenElement === gameRef.current) await document.exitFullscreen(); else await gameRef.current?.requestFullscreen(); } catch { /* Remain in responsive embedded view if fullscreen is unavailable. */ } };
   const questionSet = station.challenge.questions || [];
   const questions = useMemo(() => questionSet.map(q => ({
     ...q, options: [...q.options].sort((a,b) => a.id.localeCompare(b.id)),
@@ -97,12 +92,12 @@ export const ReusableChallengeGame: React.FC<Props> = ({ station, studentId, isR
   // Every game works with tapping: no drag-only controls or small targets.
   const reveal = (id:string) => { if(!locked) {setRevealed(v=>v.includes(id)?v:[...v,id]);audioService.playSfx('click');} };
   const isRevealMode = mode==='flip'||mode==='treasure'||mode==='unlock';
-  return <section ref={gameRef} className={`relative mx-auto min-h-[min(600px,100dvh)] w-full max-w-5xl overflow-y-auto rounded-3xl bg-gradient-to-br ${palette} text-white shadow-xl`}
+  return <section className={`relative mx-auto min-h-[min(600px,100dvh)] w-full max-w-5xl overflow-y-auto rounded-3xl bg-gradient-to-br ${palette} text-white shadow-xl`}
     style={backdrop ? {backgroundImage:`linear-gradient(180deg,rgba(7,21,43,.52),rgba(7,21,43,.72)),url("${backdrop}")`,backgroundSize:'cover',backgroundPosition:'center'} : undefined}>
     <div className="relative mx-auto flex min-h-[min(600px,100dvh)] max-w-3xl flex-col p-3 sm:p-8">
       <header className="mb-5 flex items-center justify-between gap-3">
         <div><p className="text-xs font-black tracking-wide text-white/80">CHẶNG 2 · THỬ THÁCH KHÁM PHÁ</p><h2 className="mt-1 text-xl font-black sm:text-3xl">{theme.title}</h2></div>
-        <div className="flex shrink-0 flex-wrap gap-2"><button onClick={toggleFullscreen} type="button" aria-label={fullscreen ? "Thoát toàn màn hình" : "Toàn màn hình"} className="flex min-h-11 items-center gap-1 rounded-xl border border-white/40 bg-black/30 px-3 text-sm font-bold">{fullscreen?<Minimize2 size={18}/>:<Maximize2 size={18}/>}<span className="hidden sm:inline">{fullscreen?"Thu nhỏ":"Toàn màn hình"}</span></button><button onClick={reset} type="button" className="min-h-11 rounded-xl border border-white/40 bg-black/30 px-3 text-sm font-bold">↻ Chơi lại</button></div>
+        <div className="flex shrink-0 flex-wrap gap-2"><button onClick={reset} type="button" className="min-h-11 rounded-xl border border-white/40 bg-black/30 px-3 text-sm font-bold">↻ Chơi lại</button></div>
       </header>
       {screen==='intro' && <div className="my-auto rounded-3xl border border-white/40 bg-slate-950/65 p-6 text-center shadow-xl backdrop-blur-sm animate-in fade-in zoom-in-95 duration-500 sm:p-10">
         <div className="mb-3 text-6xl" aria-hidden="true">🗺️</div>

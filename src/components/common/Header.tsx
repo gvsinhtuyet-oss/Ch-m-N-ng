@@ -1,3 +1,4 @@
+import { AppFullscreenButton } from './AppFullscreen';
 import React from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { MusicControl } from './MusicControl';
@@ -54,6 +55,7 @@ export const Header: React.FC = () => {
             </> : nav.map(item => <button type="button" key={item.view} className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-700 hover:bg-orange-50" onClick={e => { e.currentTarget.closest('details')?.removeAttribute('open'); setCurrentView(item.view); }}>{item.label}</button>)}
             {student && <button type="button" className="block w-full rounded-xl px-3 py-2 text-left text-sm hover:bg-orange-50" onClick={e => {e.currentTarget.closest('details')?.removeAttribute('open');setCurrentView('student-profile');}}>Hồ sơ của em</button>}
             {!student && <div className="my-2 border-t border-slate-100 px-2 pt-3"><p className="mb-2 text-xs font-semibold text-slate-500">Chọn khối lớp</p><div className="flex gap-1.5">{[1,2,3,4,5].map(grade => <button type="button" key={grade} onClick={()=>setCurrentGrade(grade)} aria-pressed={currentGrade===grade} className={`h-8 w-8 rounded-lg text-xs font-bold ${currentGrade===grade ? 'bg-orange-500 text-white' : 'bg-orange-50 text-orange-700 hover:bg-orange-100'}`}>{grade}</button>)}</div></div>}
+            <AppFullscreenButton className="flex min-h-10 w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm text-slate-700 hover:bg-orange-50" />
             <StaffPassword />
             <div className="px-2 py-1"><PWAInstallButton /></div>
             <button type="button" onClick={() => void logout()} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-semibold text-rose-600 hover:bg-rose-50"><LogOut className="h-4 w-4" />{student ? 'Thoát hành trình' : 'Đăng xuất'}</button>

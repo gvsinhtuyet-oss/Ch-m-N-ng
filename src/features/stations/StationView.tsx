@@ -1,3 +1,4 @@
+import { AppFullscreenButton } from '../../components/common/AppFullscreen';
 import { effectivenessService } from '../../services/EffectivenessService';
 import {LearningFeedbackForm} from '../../components/station/LearningFeedbackForm';
 import '../../components/station/station-exploration-tools.css';
@@ -17,7 +18,7 @@ import { Stage3CheckIn } from '../../components/station/Stage3CheckIn';
 import { Stage4Stamp } from '../../components/station/Stage4Stamp';
 import { DEMO_STATION_IDS } from '../../data/demoStations';
 import { unlockedStage,visibleStage } from './stageAccess';
-import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles, Maximize2, LockKeyhole } from 'lucide-react';
+import { ArrowLeft, Download, CheckCircle2, Compass, Award, Heart, Sparkles, LockKeyhole } from 'lucide-react';
 
 interface Props {
   station: Station;
@@ -40,24 +41,8 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const progress = progressService.getStationProgress(studentId, station.id);
   const isPolishedJourney = DEMO_STATION_IDS.has(station.id);
 
-  const fullscreenRef = useRef<HTMLDivElement>(null);
-  const [isLessonFullscreen, setIsLessonFullscreen] = useState(false);
   const [feedbackOpen,setFeedbackOpen]=useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
-  const toggleLessonFullscreen = async () => {
-    const element = fullscreenRef.current;
-    if (!element) return;
-    try {
-      if (document.fullscreenElement === element) await document.exitFullscreen();
-      else if (!document.fullscreenElement && element.requestFullscreen) await element.requestFullscreen();
-      else setIsLessonFullscreen(v => !v);
-    } catch { setIsLessonFullscreen(v => !v); }
-  };
-  useEffect(() => {
-    const sync = () => setIsLessonFullscreen(document.fullscreenElement === fullscreenRef.current);
-    document.addEventListener('fullscreenchange', sync);
-    return () => document.removeEventListener('fullscreenchange', sync);
-  }, []);
   const lessonPanelRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState(false);
   const [offlinePkg, setOfflinePkg] = useState(offlineService.getPackage(station.id));
@@ -136,7 +121,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   );
 
   return (
-    <div ref={fullscreenRef} data-stage={currentStage} className={`station-immersive-root ${currentStage === 1 ? "station-stage1-compact" : ""} ${isLessonFullscreen ? "station-immersive-active" : ""} ${isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}`}>
+    <div data-stage={currentStage} className={`station-immersive-root ${currentStage === 1 ? "station-stage1-compact" : ""} ${isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}`}>
       {feedbackOpen&&<LearningFeedbackForm station={station} onClose={()=>setFeedbackOpen(false)}/>}
             {/* Top Station Header bar */}
       <div className="station-compact-header relative z-10">
@@ -148,11 +133,11 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         <button type="button" className="station-touch-assistant" onClick={()=>window.dispatchEvent(new Event('cham-open-assistant'))} aria-label="Mở Trợ lý khám phá Đà Nẵng">Trợ lý</button>
         <details className="station-touch-tools"><summary aria-label="Công cụ"><span className="station-tools-label">Công cụ</span><span className="station-tools-dots" aria-hidden="true">⋯</span></summary><div>
           <button type="button" onClick={()=>setFeedbackOpen(true)}>Góp ý cho trạm</button>
-          <button type="button" onClick={toggleLessonFullscreen}>{isLessonFullscreen?'Thu nhỏ bài học':'Toàn màn hình'}</button>
+          <AppFullscreenButton className="flex items-center gap-2" />
           <button type="button" disabled={downloading||Boolean(offlinePkg)} onClick={handleDownload}>{offlinePkg?'Đã lưu ngoại tuyến':downloading?'Đang tải…':'Tải demo offline'}</button>
         </div></details>
         <div className="station-compact-actions">
-          <button type="button" onClick={toggleLessonFullscreen} aria-label={isLessonFullscreen ? 'Thu nhỏ bài học' : 'Toàn màn hình'} title="Toàn màn hình" className="station-compact-action"><Maximize2 aria-hidden="true" /></button>
+          <AppFullscreenButton iconOnly className="station-compact-action" />
           <button type="button" onClick={handleDownload} disabled={downloading || Boolean(offlinePkg)} title={offlinePkg ? 'Demo offline đã lưu' : 'Tải demo offline'} aria-label="Tải demo offline" className="station-compact-action"><Download aria-hidden="true" /></button>
         </div>
       </div>

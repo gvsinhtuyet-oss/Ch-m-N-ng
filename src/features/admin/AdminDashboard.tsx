@@ -99,8 +99,8 @@ export const AdminDashboard: React.FC = () => {
   const activePage = activeGroup.pages.find(page => page.id === activeTab)!;
 
   const navigate = (page: AdminPage, stationId?: string, keepMenuOpen = false) => {
-    if (activeTab === 'stations' && page !== 'stations' && editorDirty) {
-      if (!window.confirm('Bạn đang có thay đổi học liệu chưa lưu. Rời trang và bỏ những thay đổi này?')) return;
+    if ((activeTab === 'stations' || activeTab === 'theme') && page !== activeTab && editorDirty) {
+      if (!window.confirm('Bạn đang có thay đổi chưa lưu. Rời trang và bỏ những thay đổi này?')) return;
       setEditorDirty(false);
     }
     setFeedbackStation(stationId);
@@ -167,7 +167,7 @@ export const AdminDashboard: React.FC = () => {
           openProgress={() => navigate('reports')}
           openFeedback={stationId => navigate('proposals', stationId)}
         />}
-        {activeTab === 'theme' && <ThemeEditor />}
+        {activeTab === 'theme' && <ThemeEditor onDirtyChange={setEditorDirty} />}
         {activeTab === 'gddp' && <GddpAdminEditor />}
 
         {activeTab === 'overview' && <div className="space-y-4">

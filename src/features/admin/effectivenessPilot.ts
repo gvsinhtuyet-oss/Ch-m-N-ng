@@ -129,6 +129,7 @@ export async function readEffectivenessPilot(file: File) {
     before: mean(student.result.map(row => row.before)),
     after: mean(student.result.map(row => row.after)),
     teacherCount: teacher.result.length,
+    averageMinutes: mean(changes),
     medianMinutes,
     usage: ['Dùng ngay', 'Sửa nhẹ', 'Sửa nhiều', 'Không dùng'].map(label => ({
       label, count: teacher.result.filter(row => row.usage === label).length,

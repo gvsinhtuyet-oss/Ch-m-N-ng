@@ -40,6 +40,7 @@ export const AdminDashboard: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const pageTitle = useRef<HTMLHeadingElement>(null);
   const [feedbackStation, setFeedbackStation] = useState<string>();
+  const [editorDirty, setEditorDirty] = useState(false);
   const [gradeFilter, setGradeFilter] = useState<number>(0); // 0 = all
 
   const [implementations,setImplementations]=useState<ImplementationRecord[]>([]);
@@ -98,6 +99,10 @@ export const AdminDashboard: React.FC = () => {
   const activePage = activeGroup.pages.find(page => page.id === activeTab)!;
 
   const navigate = (page: AdminPage, stationId?: string, keepMenuOpen = false) => {
+    if (activeTab === 'stations' && page !== 'stations' && editorDirty) {
+      if (!window.confirm('Bạn đang có thay đổi học liệu chưa lưu. Rời trang và bỏ những thay đổi này?')) return;
+      setEditorDirty(false);
+    }
     setFeedbackStation(stationId);
     setActiveTab(page);
     setMenuOpen(keepMenuOpen);
@@ -221,7 +226,7 @@ export const AdminDashboard: React.FC = () => {
             </label>
           </div>
           <button type="button" className="staff-button" onClick={() => navigate('reports')}>Xem kết quả theo lớp</button>
-          {loading ? <p role="status">Đang tải nhật ký…</p> : !workflowError && !journal.length && <p className="staff-empty">Chưa ghi nhận tiết dạy trong khối đã chọn.</p>}
+          {loading ? <p role="status">Đang tải nhật ký…</p> : readiness.implementations && !journal.length && <p className="staff-empty">Chưa ghi nhận tiết dạy trong khối đã chọn.</p>}
           {!loading && readiness.implementations && journal.length > 0 && <>
             <p className="text-sm text-slate-600">{journal.length} tiết đã ghi nhận</p>
             <div className="space-y-2">
@@ -247,7 +252,7 @@ export const AdminDashboard: React.FC = () => {
           </>}
         </section>}
 
-        {activeTab === 'stations' && <ContentEditor />}
+        {activeTab === 'stations' && <ContentEditor onDirtyChange={setEditorDirty} />}
 
         {activeTab === 'users' && <StaffAccounts />}
 

@@ -169,3 +169,42 @@ html[data-stage2-portrait] .scene:not(.is-victory) .panel .controls .btn {
     display:block!important;order:2!important;margin:0!important;
   }
 }
+
+/* V12 uses a dynamic .top rather than a .hud. Keep its real live counts,
+   gem rewards and interactive audio as three standalone original-style controls. */
+@media (max-width:650px) and (orientation:portrait) {
+ html[data-stage2-portrait] .scene:not(.is-victory) .shell > .top {
+   display:flex!important;position:static!important;order:1!important;
+   box-sizing:border-box!important;min-width:0!important;width:100%!important;
+   margin:0!important;padding:0 3px!important;
+   align-items:center!important;justify-content:space-between!important;
+   gap:4px!important;color:#fff7d7!important;font-size:clamp(10px,2.5vw,12px)!important;
+ }
+ html[data-stage2-portrait] .scene:not(.is-victory) .shell > .top > span:first-child {
+   flex:0 0 auto!important;max-width:35%!important;
+   padding:7px 8px!important;border:2px solid #f6c35c!important;
+   border-radius:13px!important;color:#fff7d7!important;
+   background:linear-gradient(145deg,#7d350f,#4b2514)!important;
+   box-shadow:0 3px 0 #412213!important;
+   overflow-wrap:anywhere!important;line-height:1.2!important;
+ }
+ html[data-stage2-portrait] .scene:not(.is-victory) .shell > .top .gems {
+   display:flex!important;flex:1 1 auto!important;min-width:0!important;max-width:calc(65% - 52px)!important;
+   justify-content:center!important;align-items:center!important;
+   white-space:nowrap!important;letter-spacing:0!important;
+   font-size:clamp(13px,3.5vw,18px)!important;line-height:1.3!important;
+   padding:7px 5px!important;border:2px solid #f6c35c!important;
+   border-radius:13px!important;color:#fff7d7!important;
+   background:linear-gradient(145deg,#7d350f,#4b2514)!important;
+   box-shadow:0 3px 0 #412213!important;
+ }
+ html[data-stage2-portrait] .scene:not(.is-victory) .shell > .top .music-toggle {
+   display:inline-flex!important;flex:0 0 44px!important;
+   align-items:center!important;justify-content:center!important;
+   width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;
+   border-radius:50%!important;border:2px solid #f6c35c!important;
+   background:linear-gradient(#17c5ff,#0065ce)!important;color:white!important;
+   font-size:23px!important;text-shadow:0 1px #045c99!important;
+   box-shadow:0 3px 0 #174d84!important;cursor:pointer!important;
+ }
+}

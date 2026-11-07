@@ -65,3 +65,66 @@
    line-height:1.25!important;white-space:normal!important;overflow-wrap:anywhere!important
  }
 }
+
+/* Phone matching cards use their content height, independent of the desktop play area. */
+@media (max-width:650px) and (orientation:portrait) {
+ :host([data-embedded]) .scene:not(.is-victory) .shell {
+  display:block!important;position:relative!important;
+  width:100%!important;min-height:0!important;
+ }
+ :host([data-embedded]) .scene:not(.is-victory) .panel {
+  display:flex!important;flex-direction:column!important;justify-content:flex-start!important;
+  top:auto!important;bottom:auto!important;left:auto!important;right:auto!important;
+  inset:auto!important;transform:none!important;min-height:0!important;gap:10px!important;
+ }
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match {
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  position:relative!important;flex:none!important;
+  width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;
+  margin:0!important;column-gap:22px!important;align-items:start!important;
+ }
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match .matchcol {
+  display:grid!important;grid-template-rows:none!important;grid-auto-rows:minmax(56px,auto)!important;
+  align-content:start!important;align-items:center!important;gap:8px!important;
+  height:auto!important;min-height:0!important;max-height:none!important;min-width:0!important;
+ }
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match button[data-left],
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match button[data-right] {
+  box-sizing:border-box!important;display:flex!important;align-items:center!important;justify-content:center!important;
+  flex:none!important;align-self:center!important;justify-self:center!important;
+  width:fit-content!important;min-width:0!important;max-width:100%!important;
+  height:auto!important;min-height:44px!important;max-height:none!important;
+  padding:7px 9px!important;font-size:14px!important;line-height:1.35!important;
+  white-space:normal!important;overflow-wrap:break-word!important;
+  border-width:2px!important;border-radius:12px!important;
+ }
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match .match-card {
+  min-width:0!important;height:auto!important;min-height:56px!important;
+ }
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match .match-card button[data-left],
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match .match-card button[data-right] {
+  padding-right:36px!important;
+ }
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match-footer {
+  display:flex!important;flex-direction:column!important;align-items:center!important;
+  position:sticky!important;bottom:0!important;z-index:5!important;
+  flex:none!important;width:100%!important;height:auto!important;min-height:0!important;
+  margin:0!important;padding:8px 0 max(10px,env(safe-area-inset-bottom))!important;
+  gap:8px!important;background:#fff9ee!important;border-radius:12px!important;
+ }
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match-footer .feedback,
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match-footer .controls {
+  grid-area:auto!important;position:static!important;inset:auto!important;transform:none!important;
+  height:auto!important;min-height:0!important;margin:0!important;
+ }
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match-footer .controls {
+  display:flex!important;justify-content:center!important;width:100%!important;padding:0!important;
+ }
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match-footer .controls .btn {
+  min-height:48px!important;width:100%!important;max-width:320px!important;
+  padding:10px 16px!important;font-size:16px!important;line-height:1.3!important;
+ }
+ :host([data-embedded]) .scene:not(.is-victory) .panel .match-footer .controls .btn:disabled {
+  opacity:.55!important;
+ }
+}

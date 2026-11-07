@@ -61,11 +61,18 @@ export function usePortraitStage2Frame() {
       }
     };
     const observer = new ResizeObserver(resize);
+    // Some approved HTML games render their HUD after the iframe load event.
+    // Keep the same live node in the top row even after question transitions.
+    const hudObserver = new MutationObserver(() => {
+      if (media.matches) placeHud();
+    });
     const updateMode = () => {
       gameDocument.documentElement.toggleAttribute('data-stage2-portrait', media.matches);
       if (media.matches) placeHud(); else restoreHud();
       observer.disconnect();
+      hudObserver.disconnect();
       if (media.matches) {
+        hudObserver.observe(scene, {childList:true,subtree:true});
         observer.observe(scene);
         resize();
       } else {
@@ -77,6 +84,7 @@ export function usePortraitStage2Frame() {
     media.addEventListener('change', updateMode);
     cleanup.current = () => {
       observer.disconnect();
+      hudObserver.disconnect();
       media.removeEventListener('change', updateMode);
       gameDocument.documentElement.removeAttribute('data-stage2-portrait');
       gameDocument.documentElement.removeAttribute('data-stage2-artwork-missing');

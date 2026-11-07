@@ -86,6 +86,14 @@ async function openGame(stationId, viewport) {
       throw error;
     }
   }
+  if(viewport.width>650 && await page.$('iframe[data-stage2-game-frame]')) {
+    // Do not measure the game before React's iframe onLoad injector runs.
+    await page.waitForFunction(() => {
+      const doc=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument;
+      return Boolean(doc?.getElementById('cham-my-khe-layout-v12') ||
+        doc?.getElementById('cham-danang-v18-hud-corners'));
+    },{timeout:30000});
+  }
   const metrics=await page.evaluate(() => {
     const frame=document.querySelector('iframe[data-stage2-game-frame]');
     const root=frame?.contentDocument ?? document.querySelector('[data-shared-stage2]')?.shadowRoot;

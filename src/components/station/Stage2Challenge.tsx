@@ -5,7 +5,6 @@ import { audioService } from '../../services/AudioService';
 import { progressService } from '../../services/ProgressService';
 import { ApprovedStationGame } from './ApprovedStationGame';
 import { ReusableChallengeGame } from './ReusableChallengeGame';
-import { MyKheBanThanV12 } from './MyKheBanThanV12';
 import { SharedStage2 } from '../../games/stage2/SharedStage2';
 import { grade3SharedConfigs } from '../../games/stage2/grade3';
 import { grade45SharedConfigs } from '../../games/stage2/grade45';
@@ -132,9 +131,10 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage, pre
     return <HoangDieuPhanChauTrinhV18 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} />;
   }
 
-  // Approved files are restored in this release, so preserve the reviewed My Khe game.
+  // Migrated My Khe – Ban Than: shared Stage 2 engine with the five approved V12 tasks.
+  // Keep the old standalone V12 HTML file in /public for emergency rollback only.
   if (station.id === 'g3-station-1') {
-    return <MyKheBanThanV12 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} />;
+    return <SharedStage2 station={station} studentId={studentId} isReadOnly={isReadOnly} onCompleteStage={onCompleteStage} config={grade3SharedConfigs[station.id]} embedded/>;
   }
 
   // Teacher-approved React games are now the default for these three stations.

@@ -62,7 +62,8 @@ export function PilotMeasurement() {
         </ul>
         <p className="text-sm">Chênh lệch trung bình {decimal.format(data.after - data.before)} điểm.</p>
       </> : <p className="staff-empty">Chưa có cặp điểm học sinh hợp lệ.</p>}
-      {data.medianMinutes !== null && <p className="text-sm">Trung vị số phút tiết kiệm <strong>{decimal.format(data.medianMinutes)}</strong> · {data.teacherCount} cặp thời gian chuẩn bị</p>}
+      {data.averageMinutes !== null && <p className="text-sm">Số phút tiết kiệm trung bình <strong>{decimal.format(data.averageMinutes)}</strong> · {data.teacherCount} cặp thời gian chuẩn bị</p>}
+      {data.medianMinutes !== null && <p className="text-xs text-slate-600">Trung vị: {decimal.format(data.medianMinutes)} phút. Trung bình khớp công thức trong bảng Excel mẫu.</p>
       {data.usage.some(row => row.count > 0) && <div>
         <p className="mb-2 text-sm font-semibold">Mức chỉnh sửa gợi ý trong các tiết có đủ hai lần đo</p>
         <ul className="flex flex-wrap gap-2 text-xs">{data.usage.map(row => <li key={row.label} className="rounded-lg bg-slate-50 px-2 py-1">{row.label} <strong>{row.count}</strong></li>)}</ul>

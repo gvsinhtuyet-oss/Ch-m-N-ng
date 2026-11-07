@@ -64,7 +64,8 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   const [showGrade2NatureMap, setShowGrade2NatureMap] = useState(false);
   const [natureMapPoint, setNatureMapPoint] = useState<'cham' | 'sontra'>('cham');
 
-  const grade1Minutes = station.grade === 1 ? grade1MinutesTopic(station.id) : undefined;
+  // The editorial source checklist belongs to teachers/Admin, never the pupil's compact journey.
+  const grade1Minutes = station.grade === 1 && (role === 'teacher' || role === 'admin') ? grade1MinutesTopic(station.id) : undefined;
   const hotspot: ExplorationHotspot = station.hotspots[currentHotspotIdx] || station.hotspots[0];
 
   const displayedOptions = useMemo(
@@ -222,7 +223,7 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
       {grade1Minutes && (
         <details className="rounded-2xl border border-amber-200 bg-amber-50/95 text-slate-900 shadow-sm">
           <summary className="cursor-pointer select-none px-4 py-3 text-sm font-extrabold text-amber-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600">
-            Nội dung theo biên bản GDĐP lớp 1 · {grade1Minutes.title}
+            Dành cho giáo viên · Đối chiếu GDĐP lớp 1 · {grade1Minutes.title}
           </summary>
           <div className="space-y-3 border-t border-amber-200 px-4 py-4 text-sm">
             <p className="text-xs text-amber-950">

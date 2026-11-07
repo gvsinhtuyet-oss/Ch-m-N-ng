@@ -3,7 +3,7 @@
  * "31-01.LỚP 1. BIÊN BẢN GÓP Ý TLGD ĐP.docx", dated 31/07/2025.
  *
  * Text-only reference. Photo labels are NOT representations of licensed photos.
- * The original source textbook and photographs must be checked separately.
+ * Source textbook text has been checked against the provided 08/08/2025 DOCX; photographs/public reuse rights need separate checks.
  * No effect on existing hotspot IDs, answers, assets, or progress.
  */
 export type Grade1MinutePhase = {
@@ -32,22 +32,22 @@ export const GRADE1_MINUTES: Grade1MinuteTopic[] = [
   },
   {
     stationId:'g1-station-4',title:'Thành Điện Hải',sourcePages:'Biên bản trang 2–3, mục II, Chủ đề 2',
-    editorialNotice:'Biên bản ghi cơ bản giữ nguyên tài liệu GDĐP Đà Nẵng trang 10. Những phần không diễn giải đầy đủ ở đây cần so với tài liệu gốc.',
+    editorialNotice:'Đã đối chiếu văn bản đầy đủ 08/08/2025: hoạt động Vận dụng 1 là lập kế hoạch tham quan Thành Điện Hải theo nhóm/lớp, không phải một ô trống hay lời nhắc chờ bổ sung.',
     phases:[
       {name:'Khởi động',instructions:['Di tích lịch sử Thành Điện Hải thuộc phường Hải Châu, thành phố Đà Nẵng.']},
       {name:'Khám phá',instructions:['Em thấy gì trong di tích Thành Điện Hải đã tham quan hoặc quan sát qua hình minh họa?','Hiện vật nào trong di tích Thành Điện Hải làm em ấn tượng nhất?']},
       {name:'Thực hành',instructions:['Thành Điện Hải được biết đến vì điều gì?','Thành Điện Hải gắn liền với vị tướng nào?']},
-      {name:'Vận dụng',instructions:['Hoạt động 1: Giữ nguyên theo tài liệu GDĐP Đà Nẵng trang 10 (biên bản không chép nội dung).','Hoạt động 2: Em hãy kể tên di tích lịch sử mà em biết.'],requiresOriginalTextbook:true}
+      {name:'Vận dụng',instructions:['Hoạt động 1: Lớp hoặc nhóm thảo luận xây dựng kế hoạch tham quan di tích Thành Điện Hải.','Khi nào tham quan, đi bằng phương tiện gì, đến Thành Điện Hải sẽ tìm hiểu những gì?','Hoạt động 2: Em hãy kể tên di tích lịch sử mà em biết.']}
     ]
   },
   {
     stationId:'g1-station-2',title:'Trò chơi dân gian',sourcePages:'Biên bản trang 3, mục II, Chủ đề 3',
-    editorialNotice:'Biên bản yêu cầu GIỮ NGUYÊN nội dung Tài liệu GDĐP Quảng Nam trang 10, nhưng không cung cấp lại nội dung trang đó. Chỉ được xác nhận khớp toàn bộ khi đã so với trang sách gốc.',
+    editorialNotice:'Biên bản ghi giữ nguyên tài liệu Quảng Nam trang 10; đã đối chiếu nội dung trong bản TLGDĐP Đà Nẵng lớp 1 ngày 08/08/2025 do giáo viên cung cấp. Các ảnh trò chơi vẫn cần rà nguồn và quyền sử dụng.',
     phases:[
-      {name:'Khởi động',instructions:['Thực hiện theo tài liệu GDĐP Quảng Nam trang 10; biên bản không ghi lại chi tiết.'],requiresOriginalTextbook:true},
-      {name:'Khám phá',instructions:['Giữ nguyên nội dung và trò chơi theo tài liệu GDĐP Quảng Nam trang 10.'],requiresOriginalTextbook:true},
-      {name:'Thực hành',instructions:['Giữ nguyên theo tài liệu GDĐP Quảng Nam trang 10.'],requiresOriginalTextbook:true},
-      {name:'Vận dụng',instructions:['Giữ nguyên theo tài liệu GDĐP Quảng Nam trang 10.'],requiresOriginalTextbook:true}
+      {name:'Khởi động',instructions:['Em đã biết những trò chơi dân gian nào? Kể tên trò chơi mà em từng tham gia.']},
+      {name:'Khám phá',instructions:['Tìm hiểu cách chơi, ý nghĩa của trò Bịt mắt bắt dê.','Người bắt dê bịt kín mắt bằng khăn; người cổ vũ không chỉ hướng; người chơi không ra khỏi phạm vi đã thống nhất.','Một số trò chơi dân gian khác: ô làng, kéo co, nhảy bao bố.']},
+      {name:'Thực hành',instructions:['Quan sát hình và nêu tên trò chơi dân gian em biết.','Kể tên trò chơi em từng tham gia, chơi cùng ai, điều em thích; giới thiệu cách chơi của một trò khác.']},
+      {name:'Vận dụng',instructions:['Hoạt động 1: Lựa chọn và chơi một trò dân gian mà nhóm yêu thích theo hướng dẫn an toàn.','Hoạt động 2: Cùng người thân trong gia đình tham gia một trò chơi dân gian phù hợp.']}
     ]
   },
   {
@@ -62,12 +62,12 @@ export const GRADE1_MINUTES: Grade1MinuteTopic[] = [
   },
   {
     stationId:'g1-station-5',title:'Món ăn truyền thống',sourcePages:'Biên bản trang 4, mục II, Chủ đề 5',
-    editorialNotice:'Khởi động phải gồm đúng sáu món theo biên bản. Cao lầu, bê thui, cơm gà và nem nướng chỉ dùng khi mở rộng, không thay bộ hình Khởi động.',
+    editorialNotice:'Khởi động phải có đúng sáu món theo biên bản. Bản sách 08/08/2025 còn có hình Cao lầu, Bê thui, Bánh đập, Cơm gà ở phần Thực hành; không được nhầm bốn món này với sáu món Khởi động.',
     phases:[
       {name:'Khởi động',instructions:['Quan sát sáu món ăn trong biên bản, gọi đúng tên món; bỏ hình Cá niên.'],imageSubjects:['Mì Quảng','Bánh tráng cuốn thịt heo','Bánh sừng trâu','Bánh thuẫn','Bánh bèo','Bánh xèo']},
-      {name:'Khám phá',instructions:['Giữ nguyên nội dung theo Tài liệu GDĐP Quảng Nam trang 2 (biên bản không ghi lại chi tiết).'],requiresOriginalTextbook:true},
-      {name:'Thực hành',instructions:['Thay hình Bánh tráng chập bằng hình Bánh đập.','Thay cụm từ “Bánh tráng chập” bằng “Bánh đập” trong kết luận.'],imageSubjects:['Bánh đập']},
-      {name:'Vận dụng',instructions:['Giữ nguyên theo Tài liệu GDĐP Quảng Nam trang 2 (biên bản không chép nội dung).'],requiresOriginalTextbook:true}
+      {name:'Khám phá',instructions:['Tìm hiểu về món mì Quảng: sợi mì, tôm, thịt ba chỉ, trứng, xương nấu nước dùng, bánh tráng nướng, đậu phụng, rau và gia vị.','Quan sát cách trình bày, thưởng thức mì Quảng, liên hệ an toàn thực phẩm và tránh tự dùng bếp nóng.']},
+      {name:'Thực hành',instructions:['Quan sát, nhận biết các món ăn được giới thiệu ở phần Thực hành: cao lầu, bê thui, bánh đập, cơm gà.','Thay hình và tên Bánh tráng chập bằng Bánh đập đúng biên bản.','Kể tên món truyền thống nơi em ở, nguyên liệu và điều em thích; tôn trọng sự khác biệt trong trải nghiệm ăn uống.'],imageSubjects:['Cao lầu','Bê thui','Bánh đập','Cơm gà']},
+      {name:'Vận dụng',instructions:['Hoạt động 1: Trò chơi Đầu bếp siêu hạng: nhóm chọn một món truyền thống, vẽ món và ghi lại các nguyên liệu, trình bày và giới thiệu trước lớp.','Hoạt động 2: Tham gia làm một món truyền thống cùng người thân ở nhà, chỉ làm những việc vừa sức và an toàn.']}
     ]
   },
 ];

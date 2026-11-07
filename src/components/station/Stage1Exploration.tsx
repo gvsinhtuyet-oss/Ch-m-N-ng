@@ -25,6 +25,7 @@ import {
 import { RewardClaimModal } from '../common/RewardClaimModal';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import { stage1Narration } from './stage1Narration';
+import { grade1MinutesTopic } from '../../data/grade1MinutesAlignment';
 import { NarrationButton } from './NarrationButton';
 
 
@@ -63,6 +64,8 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
   const [showGrade2NatureMap, setShowGrade2NatureMap] = useState(false);
   const [natureMapPoint, setNatureMapPoint] = useState<'cham' | 'sontra'>('cham');
 
+  // The editorial source checklist belongs to teachers/Admin, never the pupil's compact journey.
+  const grade1Minutes = station.grade === 1 && (role === 'teacher' || role === 'admin') ? grade1MinutesTopic(station.id) : undefined;
   const hotspot: ExplorationHotspot = station.hotspots[currentHotspotIdx] || station.hotspots[0];
 
   const displayedOptions = useMemo(
@@ -217,6 +220,49 @@ export const Stage1Exploration: React.FC<Props> = ({ station, onCompleteStage })
 
   return (
     <div className="stage-one-map-surface space-y-6">
+      {grade1Minutes && (
+        <details className="rounded-2xl border border-amber-200 bg-amber-50/95 text-slate-900 shadow-sm">
+          <summary className="cursor-pointer select-none px-4 py-3 text-sm font-extrabold text-amber-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600">
+            Dành cho giáo viên · Đối chiếu GDĐP lớp 1 · {grade1Minutes.title}
+          </summary>
+          <div className="space-y-3 border-t border-amber-200 px-4 py-4 text-sm">
+            <p className="text-xs text-amber-950">
+              Đối chiếu: Biên bản điều chỉnh tài liệu GDĐP lớp 1 ngày 31/7/2025, {grade1Minutes.sourcePages}.
+              Bốn hoạt động của tài liệu là Khởi động, Khám phá, Thực hành, Vận dụng;
+              khác với tên bốn chặng trải nghiệm số trong ứng dụng.
+            </p>
+            {grade1Minutes.editorialNotice && (
+              <p className="rounded-lg border border-amber-300 bg-white px-3 py-2 text-xs leading-relaxed text-amber-950">
+                Lưu ý giáo viên: {grade1Minutes.editorialNotice}
+              </p>
+            )}
+            <div className="grid gap-3 md:grid-cols-2">
+              {grade1Minutes.phases.map(phase => (
+                <section key={phase.name} className="rounded-xl border border-amber-100 bg-white p-3">
+                  <h3 className="mb-2 font-black text-sky-900">{phase.name}</h3>
+                  <ul className="list-disc space-y-1 pl-5 text-xs leading-relaxed text-slate-700">
+                    {phase.instructions.map(item => <li key={item}>{item}</li>)}
+                  </ul>
+                  {!!phase.imageSubjects?.length && (
+                    <div className="mt-3 space-y-1 rounded-lg bg-sky-50 px-3 py-2">
+                      <p className="text-xs font-bold text-sky-950">Các hình cần đối chiếu với tài liệu:</p>
+                      <ol className="list-decimal space-y-1 pl-4 text-xs text-sky-950">
+                        {phase.imageSubjects.map(label => <li key={label}>{label}</li>)}
+                      </ol>
+                      <p className="pt-1 text-[11px] italic text-slate-600">Đây là tên hình trong biên bản, không phải ảnh gốc. Chưa thay ảnh có bản quyền hoặc chưa xác minh vào học liệu.</p>
+                    </div>
+                  )}
+                  {phase.requiresOriginalTextbook && (
+                    <p className="mt-2 text-[11px] font-semibold text-amber-800">
+                      Phần này biên bản ghi “giữ nguyên”; cần xem trang sách gốc để xác nhận đúng từng hình và câu.
+                    </p>
+                  )}
+                </section>
+              ))}
+            </div>
+          </div>
+        </details>
+      )}
       {contentService.resources(station.id).length > 0 && (
         <section className="bg-white rounded-3xl p-5 border border-sky-200 space-y-3">
           <h3 className="font-black text-sky-950">Học liệu của trạm</h3>

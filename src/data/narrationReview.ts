@@ -7,15 +7,19 @@ export const NARRATION_REVIEW = {
   },
   "g1-home-2": {
     "before": "Trường học là nơi em học tập và vui chơi cùng thầy cô, bạn bè. Mỗi trường có tên gọi riêng. Em hãy quan sát tên trường trên cổng trường hoặc nhờ thầy cô đọc cùng. Sau đó, em nói tên trường và xã hoặc phường của trường mình. Tranh chỉ minh họa một ngôi trường, không ghi tên trường cụ thể; em tìm tên trường thật của mình trên cổng trường.",
-    "after": "Cùng tìm hiểu ngôi trường của em nhé! Chúng mình cùng tìm hiểu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Ảnh ở đây giúp em quan sát một ngôi trường; em hãy liên hệ với trường mình.",
+    "after": "Trong tài liệu giáo dục địa phương biên soạn năm 2025 có hình Trường Tiểu học Kim Đồng ở phường Tam Kỳ và một trường tiểu học ở Đà Nẵng cũ. Đến năm 2026, tên một số trường đã thay đổi sau khi sắp xếp. Vì vậy, em hãy nhờ thầy cô đọc tên trên cổng trường hiện nay, rồi nói tên trường và tên xã hoặc phường nơi trường tọa lạc. Khi giới thiệu ngôi trường, em chỉ cần nói những điều mình biết và yêu thích nhé!",
     "previousAfter": "Cùng tìm hiểu ngôi trường của em nhé! Sách giới thiệu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Tranh ở đây chỉ minh họa, không phải ảnh trường của em.",
     "previousNarrations": [
-      "Cùng tìm hiểu ngôi trường của em nhé! Chúng mình cùng tìm hiểu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Tranh ở đây chỉ minh họa, không phải ảnh trường của em."
+      "Cùng tìm hiểu ngôi trường của em nhé! Chúng mình cùng tìm hiểu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Tranh ở đây chỉ minh họa, không phải ảnh trường của em.",
+      "Cùng tìm hiểu ngôi trường của em nhé! Chúng mình cùng tìm hiểu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Ảnh ở đây giúp em quan sát một ngôi trường; em hãy liên hệ với trường mình."
     ]
   },
   "g1-home-3": {
     "before": "Trên đường từ nhà đến trường, em có thể đi qua hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn có đường đi khác nhau. Em hãy chọn một địa điểm mình thật sự nhìn thấy và kể với thầy cô. Em cũng có thể vẽ lại một đoạn đường quen thuộc. Ảnh cầu Sông Hàn gợi một cảnh để kể, không có nghĩa mọi bạn đều đi qua cây cầu này.",
-    "after": "Mỗi ngày đến trường, em đi qua những cảnh vật nào? Có thể là hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn ở một nơi nên đường đến trường cũng có thể khác nhau. Em hãy nhớ lại một địa điểm mình đã nhìn thấy, rồi kể với thầy cô và các bạn. Sau đó, em vẽ quang cảnh từ nhà đến trường. Hãy vẽ những điều quen thuộc trên đường của chính em nhé!"
+    "after": "Mỗi ngày đến trường, em nhìn thấy những cảnh vật nào? Trong tài liệu có hình cổng thôn, đường phố, chợ, nhà làng truyền thống, đài tưởng niệm và ga tàu ở nhiều nơi của thành phố Đà Nẵng. Mỗi bạn có thể đi qua cảnh vật khác nhau. Em hãy kể tên một địa điểm quen thuộc mình từng nhìn thấy trên đường đến trường. Sau đó, em vẽ lại từ trí nhớ khi đã về lớp. Em không cần chia sẻ địa chỉ nhà hay đường đi cụ thể với người lạ nhé!",
+    "previousNarrations": [
+      "Mỗi ngày đến trường, em đi qua những cảnh vật nào? Có thể là hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn ở một nơi nên đường đến trường cũng có thể khác nhau. Em hãy nhớ lại một địa điểm mình đã nhìn thấy, rồi kể với thầy cô và các bạn. Sau đó, em vẽ quang cảnh từ nhà đến trường. Hãy vẽ những điều quen thuộc trên đường của chính em nhé!"
+    ]
   },
   "g1-home-4": {
     "before": "Quê hương có cảnh vật và những người sống quanh em. Em có thể giới thiệu một nơi mình yêu thích bằng lời nói hoặc tranh vẽ. Giữ sân trường sạch, chăm cây và bỏ rác đúng chỗ là những việc nhỏ thể hiện tình yêu nơi mình sống.",
@@ -82,7 +86,12 @@ export const NARRATION_REVIEW = {
   },
   "g1-food-1": {
     "before": "Tài liệu giới thiệu mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng. Mỗi món có tên gọi, nguyên liệu và cách thưởng thức riêng. Em có thể kể món từng ăn, hoặc món vừa biết qua tài liệu. Không cần nói rằng em đã ăn nếu chưa từng thử.",
-    "after": "Quê hương Đà Nẵng có nhiều món ăn ngon như mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng. Trong đó, mì Quảng là món ăn nổi tiếng được bài học giới thiệu kĩ. Mỗi món có nguyên liệu và hương vị riêng. Em đã biết hoặc từng ăn món nào? Hãy gọi tên một món và chia sẻ điều em thích. Nếu chưa từng ăn, em vẫn có thể tìm hiểu món ấy qua tranh và lời kể nhé!"
+    "after": "Các em cùng khám phá sáu món ăn truyền thống trong phần Khởi động của tài liệu giáo dục địa phương nhé! Đó là mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo. Mỗi món có hình dáng, nguyên liệu và hương vị riêng. Trên màn hình là món mì Quảng. Em hãy cùng thầy cô tìm các món còn lại trong tài liệu, gọi tên và kể một điều em biết về món ăn ấy. Nếu chưa từng ăn món đó, em có thể hỏi người lớn để tìm hiểu thêm. Bài học sẽ cùng em khám phá kĩ hơn về mì Quảng.",
+    "previousNarrations": [
+      "Quê hương Đà Nẵng có nhiều món ăn ngon như mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng. Trong đó, mì Quảng là món ăn nổi tiếng được bài học giới thiệu kĩ. Mỗi món có nguyên liệu và hương vị riêng. Em đã biết hoặc từng ăn món nào? Hãy gọi tên một món và chia sẻ điều em thích. Nếu chưa từng ăn, em vẫn có thể tìm hiểu món ấy qua tranh và lời kể nhé!",
+      "Các em cùng khám phá sáu món ăn truyền thống trong phần Khởi động của tài liệu giáo dục địa phương nhé! Đó là mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo. Mỗi món có hình dáng, nguyên liệu và hương vị riêng. Em hãy nhìn hình và nói tên món mà mình nhận ra. Nếu chưa từng ăn món đó, em có thể hỏi người lớn để tìm hiểu thêm. Bài học sẽ cùng em khám phá kĩ hơn về mì Quảng.",
+      "Các em cùng khám phá sáu món ăn truyền thống trong phần Khởi động của tài liệu giáo dục địa phương nhé! Đó là mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo. Mỗi món có hình dáng, nguyên liệu và hương vị riêng. Trên màn hình là món mì Quảng; những hình món ăn khác thuộc bộ ảnh của tài liệu và sẽ được giới thiệu khi có ảnh đúng nguồn. Em có thể kể tên món mình nhận ra từ lời giới thiệu. Nếu chưa từng ăn món đó, em có thể hỏi người lớn để tìm hiểu thêm. Bài học sẽ cùng em khám phá kĩ hơn về mì Quảng."
+    ]
   },
   "g1-food-2": {
     "before": "Theo cách giới thiệu trong tài liệu, mì Quảng có sợi mì, tôm, thịt và trứng; có nước dùng, rau ăn kèm, đậu phụng và bánh tráng nướng. Cách nấu ở mỗi gia đình có thể khác. Khi ăn, em báo người lớn nếu có nguyên liệu mình không ăn được.",
@@ -95,7 +104,10 @@ export const NARRATION_REVIEW = {
   },
   "g1-food-4": {
     "before": "Cùng nhóm chọn một món truyền thống, vẽ món ăn, nhờ thầy cô viết tên nguyên liệu rồi giới thiệu trước lớp. Em có thể nói tên món và điều mình thích. Ở nhà, em tham gia việc vừa sức với người thân; người lớn làm việc với dao, bếp và nước nóng.",
-    "after": "Đến lượt nhóm em làm Đầu bếp siêu hạng! Cùng chọn một món truyền thống của Đà Nẵng, vẽ món ăn rồi nhờ thầy cô hỗ trợ ghi tên nguyên liệu. Khi giới thiệu, em nói: món gì, làm từ những nguyên liệu nào, em có thích món đó không và vì sao. Mỗi bạn có thể thích một món khác nhau. Ở nhà, em cùng người thân làm việc vừa sức; người lớn sử dụng dao, bếp và nước nóng. Nhớ cảm ơn người đã chuẩn bị món ăn nhé!"
+    "after": "Đến lượt nhóm em làm Đầu bếp siêu hạng! Cùng chọn một món truyền thống của Đà Nẵng, vẽ món ăn rồi nhờ thầy cô hỗ trợ ghi tên nguyên liệu. Trong tài liệu, phần Thực hành dùng hình bánh đập thay cho bánh tráng chập; đó là một món ăn riêng, không phải nguyên liệu của mì Quảng. Khi giới thiệu, em có thể nói tên món, điều em nhận ra qua tranh và điều em muốn tìm hiểu thêm. Ở nhà, em chỉ giúp việc vừa sức, tránh dao và bếp nóng nhé!",
+    "previousNarrations": [
+      "Đến lượt nhóm em làm Đầu bếp siêu hạng! Cùng chọn một món truyền thống của Đà Nẵng, vẽ món ăn rồi nhờ thầy cô hỗ trợ ghi tên nguyên liệu. Khi giới thiệu, em nói: món gì, làm từ những nguyên liệu nào, em có thích món đó không và vì sao. Mỗi bạn có thể thích một món khác nhau. Ở nhà, em cùng người thân làm việc vừa sức; người lớn sử dụng dao, bếp và nước nóng. Nhớ cảm ơn người đã chuẩn bị món ăn nhé!"
+    ]
   },
   "hoi-an-pho-co": {
     "before": "Phố cổ Hội An nổi bật với không gian cổ kính bên dòng sông Hoài. Năm 1999, Hội An được UNESCO công nhận là Di sản văn hóa thế giới.",

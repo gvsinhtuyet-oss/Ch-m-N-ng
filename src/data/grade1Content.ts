@@ -19,25 +19,25 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-home-2",
         "title": "Ngôi trường của em",
-        "narration": "Cùng tìm hiểu ngôi trường của em nhé! Chúng mình cùng tìm hiểu Trường Tiểu học Kim Đồng ở phường Tam Kỳ. Có hai trường cùng tên Võ Thị Sáu: một ở phường Liên Chiểu, một ở phường Hoà Khánh. Tên trường có thể giống nhau, nên em cần biết thêm tên xã hoặc phường có trường. Em hãy nhờ thầy cô đọc tên trên cổng trường, rồi nói tên trường và nơi có trường mình. Ảnh ở đây giúp em quan sát một ngôi trường; em hãy liên hệ với trường mình.",
-        "fact": "Biết tên trường và xã hoặc phường giúp em giới thiệu rõ trường mình.",
-        "q": "Theo bài nghe, hai trường nào có cùng tên?",
+        "narration": "Trong tài liệu giáo dục địa phương biên soạn năm 2025 có hình Trường Tiểu học Kim Đồng ở phường Tam Kỳ và một trường tiểu học ở Đà Nẵng cũ. Đến năm 2026, tên một số trường đã thay đổi sau khi sắp xếp. Vì vậy, em hãy nhờ thầy cô đọc tên trên cổng trường hiện nay, rồi nói tên trường và tên xã hoặc phường nơi trường tọa lạc. Khi giới thiệu ngôi trường, em chỉ cần nói những điều mình biết và yêu thích nhé!",
+        "fact": "Trong tư liệu năm 2025 có hình Trường Tiểu học Kim Đồng; em cần nhờ thầy cô xác nhận tên trường hiện nay và nơi có trường.",
+        "q": "Theo tài liệu năm 2025, hình minh họa Trường Tiểu học Kim Đồng thuộc địa phương nào?",
         "answers": [
-          "Hai trường Võ Thị Sáu",
-          "Màu chiếc cặp",
-          "Tên một món ăn"
+          "Phường Tam Kỳ",
+          "Một khu rừng xa",
+          "Một dòng suối"
         ]
       },
       {
         "id": "g1-home-3",
         "title": "Từ nhà đến trường",
-        "narration": "Mỗi ngày đến trường, em đi qua những cảnh vật nào? Có thể là hàng cây, cửa hàng, chợ hoặc một cây cầu. Mỗi bạn ở một nơi nên đường đến trường cũng có thể khác nhau. Em hãy nhớ lại một địa điểm mình đã nhìn thấy, rồi kể với thầy cô và các bạn. Sau đó, em vẽ quang cảnh từ nhà đến trường. Hãy vẽ những điều quen thuộc trên đường của chính em nhé!",
-        "fact": "Em kể và vẽ những cảnh vật đã quan sát trên đường từ nhà đến trường.",
-        "q": "Theo bài nghe, em có thể nhìn thấy gì trên đường đến trường?",
+        "narration": "Mỗi ngày đến trường, em nhìn thấy những cảnh vật nào? Trong tài liệu có hình cổng thôn, đường phố, chợ, nhà làng truyền thống, đài tưởng niệm và ga tàu ở nhiều nơi của thành phố Đà Nẵng. Mỗi bạn có thể đi qua cảnh vật khác nhau. Em hãy kể tên một địa điểm quen thuộc mình từng nhìn thấy trên đường đến trường. Sau đó, em vẽ lại từ trí nhớ khi đã về lớp. Em không cần chia sẻ địa chỉ nhà hay đường đi cụ thể với người lạ nhé!",
+        "fact": "Tài liệu giới thiệu các cảnh vật như cổng thôn, đường phố, chợ, nhà làng, đài tưởng niệm và ga tàu; em kể cảnh đã quan sát một cách an toàn.",
+        "q": "Theo lời thuyết minh, tài liệu giới thiệu những địa điểm nào?",
         "answers": [
-          "Hàng cây, cửa hàng hoặc cây cầu",
-          "Cảnh do em nói là có dù chưa thấy",
-          "Chỉ các món ăn"
+          "Cổng thôn, chợ và ga tàu",
+          "Tàu vũ trụ trên Mặt Trăng",
+          "Sa mạc đầy tuyết"
         ]
       },
       {
@@ -459,11 +459,11 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-1",
         "title": "Món ngon quê hương",
-        "narration": "Quê hương Đà Nẵng có nhiều món ăn ngon như mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng. Trong đó, mì Quảng là món ăn nổi tiếng được bài học giới thiệu kĩ. Mỗi món có nguyên liệu và hương vị riêng. Em đã biết hoặc từng ăn món nào? Hãy gọi tên một món và chia sẻ điều em thích. Nếu chưa từng ăn, em vẫn có thể tìm hiểu món ấy qua tranh và lời kể nhé!",
-        "fact": "Đà Nẵng có nhiều món ăn truyền thống; bài học tìm hiểu kĩ món mì Quảng.",
-        "q": "Món nào có trong danh sách vừa được giới thiệu?",
+        "narration": "Các em cùng khám phá sáu món ăn truyền thống trong phần Khởi động của tài liệu giáo dục địa phương nhé! Đó là mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo. Mỗi món có hình dáng, nguyên liệu và hương vị riêng. Trên màn hình là món mì Quảng. Em hãy cùng thầy cô tìm các món còn lại trong tài liệu, gọi tên và kể một điều em biết về món ăn ấy. Nếu chưa từng ăn món đó, em có thể hỏi người lớn để tìm hiểu thêm. Bài học sẽ cùng em khám phá kĩ hơn về mì Quảng.",
+        "fact": "Sáu món theo biên bản: mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo.",
+        "q": "Món nào có trong sáu hình khởi động của tài liệu?",
         "answers": [
-          "Cao lầu",
+          "Bánh sừng trâu",
           "Bánh sinh nhật",
           "Kẹo mút"
         ]
@@ -477,7 +477,7 @@ export const GRADE1_CONTENT = [
         "answers": [
           "Sợi mì, tôm, thịt và trứng",
           "Cơm và thịt gà",
-          "Bánh đập và nem nướng"
+          "Bột màu và giấy vẽ"
         ]
       },
       {
@@ -495,8 +495,8 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-4",
         "title": "Đầu bếp siêu hạng",
-        "narration": "Đến lượt nhóm em làm Đầu bếp siêu hạng! Cùng chọn một món truyền thống của Đà Nẵng, vẽ món ăn rồi nhờ thầy cô hỗ trợ ghi tên nguyên liệu. Khi giới thiệu, em nói: món gì, làm từ những nguyên liệu nào, em có thích món đó không và vì sao. Mỗi bạn có thể thích một món khác nhau. Ở nhà, em cùng người thân làm việc vừa sức; người lớn sử dụng dao, bếp và nước nóng. Nhớ cảm ơn người đã chuẩn bị món ăn nhé!",
-        "fact": "Giới thiệu món ăn bằng tên món, nguyên liệu và điều em thích hoặc chưa thích về món đó.",
+        "narration": "Đến lượt nhóm em làm Đầu bếp siêu hạng! Cùng chọn một món truyền thống của Đà Nẵng, vẽ món ăn rồi nhờ thầy cô hỗ trợ ghi tên nguyên liệu. Trong tài liệu, phần Thực hành dùng hình bánh đập thay cho bánh tráng chập; đó là một món ăn riêng, không phải nguyên liệu của mì Quảng. Khi giới thiệu, em có thể nói tên món, điều em nhận ra qua tranh và điều em muốn tìm hiểu thêm. Ở nhà, em chỉ giúp việc vừa sức, tránh dao và bếp nóng nhé!",
+        "fact": "Trong phần Thực hành của biên bản, hình và tên Bánh tráng chập được thay bằng Bánh đập; em giới thiệu món ăn qua tranh.",
         "q": "Nhóm em có thể làm gì để giới thiệu món ăn?",
         "answers": [
           "Vẽ món ăn",

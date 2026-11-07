@@ -6,7 +6,9 @@ import { ALL_25_STATIONS } from './src/data/allStations';
 import recordings from './src/data/stage1Recordings.json';
 import { stage1Narration } from './src/components/station/stage1Narration';
 
-test('121 unique recordings cover the actual 25 stations and exact point text', () => {
+const MINUTES_TEXT_UPDATES = new Set(['g1-home-2','g1-home-3','g1-food-1','g1-food-4']);
+
+test('121 unique recordings remain archived; changed Grade 1 texts use fresh TTS rather than stale audio', () => {
   assert.equal(ALL_25_STATIONS.length, 25);
   assert.equal(recordings.length, 121);
   assert.equal(new Set(recordings.map(r => r.pointId)).size, 121);
@@ -16,8 +18,13 @@ test('121 unique recordings cover the actual 25 stations and exact point text', 
     assert.ok(recording, point.id);
     assert.equal(recording.stationId, station.id);
     assert.equal(recording.title, point.titleVi);
-    assert.equal(recording.narration, point.narrationVi);
-    assert.equal(stage1Narration(station, point, 'vi'), recording.src);
+    if (MINUTES_TEXT_UPDATES.has(point.id)) {
+      assert.notEqual(recording.narration, point.narrationVi, 'Old audio must not be relabeled with new words');
+      assert.equal(stage1Narration(station, point, 'vi'), undefined, 'Never play old MP3 for corrected lesson');
+    } else {
+      assert.equal(recording.narration, point.narrationVi);
+      assert.equal(stage1Narration(station, point, 'vi'), recording.src);
+    }
     const bytes = readFileSync(`public${recording.src}`);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), recording.sha256);
     assert.ok(recording.src.includes(recording.sha256.slice(0, 12)));

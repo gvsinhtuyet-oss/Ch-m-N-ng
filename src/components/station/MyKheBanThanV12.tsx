@@ -28,6 +28,56 @@ function fitMobileGameArtwork(event: React.SyntheticEvent<HTMLIFrameElement>) {
   gameDocument.head.append(style);
 }
 
+/** Install the shared offline sound service only when the V12 game has no sound switch.
+ *  Keep the same live HUD and preserve its existing question/award logic. */
+function installLegacySoundControl(frame: HTMLIFrameElement) {
+  const doc = frame.contentDocument;
+  if (!doc?.documentElement) return;
+  if (!doc.getElementById('cham-danang-shared-audio')) {
+    const script = doc.createElement('script');
+    script.id = 'cham-danang-shared-audio';
+    script.src = '/games/shared/game-audio.js';
+    script.async = false;
+    doc.head.appendChild(script);
+  }
+  const attach = () => {
+    const hud = doc.querySelector<HTMLElement>('.hud');
+    if (!hud || hud.querySelector('.music-toggle,.sound-toggle,.audio-toggle')) return;
+    const button = doc.createElement('button');
+    button.type = 'button';
+    button.className = 'music-toggle';
+    const readEnabled = () => {
+      try { return frame.contentWindow?.localStorage.getItem('cham_danang_sound_enabled') !== 'false'; }
+      catch { return true; }
+    };
+    const update = () => {
+      const enabled = readEnabled();
+      button.setAttribute('aria-label', enabled ? 'Tắt âm thanh' : 'Bật âm thanh');
+      button.setAttribute('aria-pressed', String(enabled));
+      button.textContent = enabled ? '♫' : '♪̸';
+    };
+    button.addEventListener('click', () => {
+      const enabled = !readEnabled();
+      try { frame.contentWindow?.localStorage.setItem('cham_danang_sound_enabled', String(enabled)); }
+      catch { /* Private mode may block storage. */ }
+      const gameWindow = frame.contentWindow as (Window & {
+        ChamDaNangGameAudio?: { setMuted: (muted: boolean) => void };
+      }) | null;
+      gameWindow?.ChamDaNangGameAudio?.setMuted(!enabled);
+      update();
+    });
+    update();
+    hud.appendChild(button);
+  };
+  attach();
+  const scene = doc.querySelector('.scene');
+  if (scene) {
+    const observer = new MutationObserver(attach);
+    observer.observe(scene, {childList:true,subtree:true});
+    frame.contentWindow?.addEventListener('pagehide', () => observer.disconnect(), {once:true});
+  }
+}
+
 /** Only mount this component for g3-station-1; the iframe contains approved V12. */
 export const MyKheBanThanV12: React.FC<Props> = ({station,studentId,isReadOnly,onCompleteStage}) => {
   const fitPortrait = usePortraitStage2Frame();
@@ -49,5 +99,6 @@ export const MyKheBanThanV12: React.FC<Props> = ({station,studentId,isReadOnly,o
   return <iframe data-stage2-game-frame id="my-khe-v12-frame" title="Mật mã hai miền biển – Chặng 2" src="/games/grade3-my-khe-ban-than/v12/index.html" className="block h-[100dvh] min-h-[500px] w-full rounded-2xl border-0" allow="autoplay; fullscreen" onLoad={event => {
     fitMobileGameArtwork(event);
     fitPortrait(event);
+    installLegacySoundControl(event.currentTarget);
   }} />;
 };

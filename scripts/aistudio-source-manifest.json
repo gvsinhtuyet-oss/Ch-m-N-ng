@@ -31,7 +31,7 @@
     },
     {
       "path": "src/games/stage2/SharedChallengeGame.tsx",
-      "sha256": "3148179ddb3b63d465f25371cdf62080a8527ffb699596196038a0fe2c5c3f7c"
+      "sha256": "3e80d7d8679c88bf4cacd77d18afa9539dc65b25ca5723721c87bc92713d9d2e"
     },
     {
       "path": "src/games/stage2/grade1/shuffle.ts",

@@ -243,7 +243,7 @@
     },
     {
       "path": "vite.config.ts",
-      "sha256": "511c495f8568375c2f740e1e016ec6c6403a0932c7ce1f690a66a07c1c7e185b"
+      "sha256": "976090e8f25bfe1c858338b78904988e41c5c8df1827b23bb60e4cbf456cec3f"
     },
     {
       "path": "src/types/index.ts",
@@ -251,7 +251,7 @@
     },
     {
       "path": "src/utils/assistantPosition.ts",
-      "sha256": "606a4db12c89de75dfbc6b339e29ff51cebe1b2ddce3a394c1a6f35eb11842c5"
+      "sha256": "3ca568981112ae255ae68e3303ee8f3b13cd07d1860a31a7579cae8c36e8e11b"
     },
     {
       "path": "src/utils/learningThumbnail.ts",
@@ -259,7 +259,7 @@
     },
     {
       "path": "src/components/common/Header.tsx",
-      "sha256": "b19b9cdf120ee456d345614311d9a2897421d0608265639f97b3cc26a2ed195d"
+      "sha256": "80f3de234ff76a05da9d917f7707e6e687e72235471c5c203cd1fd0dab331c8e"
     },
     {
       "path": "src/components/common/FeatureLoadBoundary.tsx",
@@ -267,15 +267,15 @@
     },
     {
       "path": "src/components/station/journey-stages.css",
-      "sha256": "969aa76d4055889d740f515bffe3d212057d7951040d0c3cd118b6a1d796089e"
+      "sha256": "8e993d58f8af09fab1542d546addab3d16be153aa614c26d3f5c5539f79459a9"
     },
     {
       "path": "src/features/stations/StationView.tsx",
-      "sha256": "e95ce4f9baf0e5a4dd933292170c12b62550ced3786a59d1b3161e3e896b684e"
+      "sha256": "6938ded217f4a63760cf9b7542fb50b04cfa3a6b1a591d03ec5af71be304df95"
     },
     {
       "path": "src/components/station/Stage3CheckIn.tsx",
-      "sha256": "3c1ff53c05ef02aa0a9882d76e5fcbc3605302371f43d2daa11603f4b5351753"
+      "sha256": "36b66ca138b12f4af9c8e333f6d49e5006f07c7789a58917702b90f40b96aeb4"
     },
     {
       "path": "src/services/LocalEducationKnowledge.ts",
@@ -283,7 +283,7 @@
     },
     {
       "path": "src/features/student/StudentJourneyView.tsx",
-      "sha256": "401d918dd7384383a53c27f956ef48932ca5d37074d0c2f1b080a4489bb2be84"
+      "sha256": "6d1d77d02e791dd10c191af0479bb136196d834ae893a9aca33e50306cec1cc5"
     },
     {
       "path": "src/data/assistantKnowledge.json",

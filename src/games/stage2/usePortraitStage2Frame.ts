@@ -25,7 +25,7 @@ export function usePortraitStage2Frame() {
     // Layout still applies when a legacy game has no extractable artwork.
     // In that case show its existing heading instead of an empty banner.
     gameDocument.documentElement.toggleAttribute('data-stage2-artwork-missing', !artwork);
-    if (artwork) scene.style.setProperty('--game-artwork', artwork);
+    if (artwork) gameDocument.documentElement.style.setProperty('--game-artwork', artwork);
     const style = gameDocument.createElement('style');
     style.textContent = embeddedPortraitCss + framePortraitCss;
     gameDocument.head.append(style);
@@ -36,9 +36,11 @@ export function usePortraitStage2Frame() {
     let relocatedHud: HTMLElement | null = null;
     let originalParent: Node | null = null;
     let originalNext: Node | null = null;
+    const currentScene = () => gameDocument.querySelector<HTMLElement>('.scene') ?? scene;
     const placeHud = () => {
-      const shell = scene.querySelector<HTMLElement>('.shell');
-      const hud = scene.querySelector<HTMLElement>('.hud');
+      const active = currentScene();
+      const shell = active.querySelector<HTMLElement>('.shell');
+      const hud = active.querySelector<HTMLElement>('.hud');
       if (!shell || !hud || hud.parentElement === shell) return;
       originalParent = hud.parentNode;
       originalNext = hud.nextSibling;
@@ -56,15 +58,24 @@ export function usePortraitStage2Frame() {
     };
     const resize = () => {
       if (media.matches) {
-        const height = Math.ceil(scene.getBoundingClientRect().height);
+        const height = Math.ceil(currentScene().getBoundingClientRect().height);
         if (height > 0) frame.style.setProperty('--stage2-frame-height', `${height}px`);
       }
     };
     const observer = new ResizeObserver(resize);
-    // Some approved HTML games render their HUD after the iframe load event.
-    // Keep the same live node in the top row even after question transitions.
+    let observedScene = scene;
+    // Some approved HTML games replace the entire .scene after iframe load.
+    // Observe documentElement so the new scene and its HUD cannot escape layout.
     const hudObserver = new MutationObserver(() => {
-      if (media.matches) placeHud();
+      if (!media.matches) return;
+      const active = currentScene();
+      if (active !== observedScene) {
+        observer.disconnect();
+        observedScene = active;
+        observer.observe(active);
+      }
+      placeHud();
+      resize();
     });
     const updateMode = () => {
       gameDocument.documentElement.toggleAttribute('data-stage2-portrait', media.matches);
@@ -72,8 +83,9 @@ export function usePortraitStage2Frame() {
       observer.disconnect();
       hudObserver.disconnect();
       if (media.matches) {
-        hudObserver.observe(scene, {childList:true,subtree:true});
-        observer.observe(scene);
+        observedScene = currentScene();
+        hudObserver.observe(gameDocument.documentElement, {childList:true,subtree:true});
+        observer.observe(observedScene);
         resize();
       } else {
         frame.style.removeProperty('--stage2-frame-height');
@@ -88,6 +100,7 @@ export function usePortraitStage2Frame() {
       media.removeEventListener('change', updateMode);
       gameDocument.documentElement.removeAttribute('data-stage2-portrait');
       gameDocument.documentElement.removeAttribute('data-stage2-artwork-missing');
+      gameDocument.documentElement.style.removeProperty('--game-artwork');
       frame.style.removeProperty('--stage2-frame-height');
       restoreHud();
       style.remove();

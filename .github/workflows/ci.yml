@@ -146,3 +146,26 @@ jobs:
           name: stage2-mobile-screenshots
           path: stage2-qa-screenshots/
           if-no-files-found: ignore
+
+  my-khe-intro-production-qa:
+    name: Confirm unboxed Mỹ Khê intro on LIVE Cloudflare
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm install --no-save --no-package-lock --no-audit --no-fund puppeteer-core
+      - name: Test intro and first question against public Production
+        env:
+          STAGE2_QA_URL: https://chamdanang-gddp.pages.dev
+        run: node stage2-my-khe-intro-qa.mjs
+      - name: Preserve live mobile screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-khe-live-intro-screenshots
+          path: stage2-qa-screenshots/
+          if-no-files-found: ignore

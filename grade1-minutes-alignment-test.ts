@@ -37,7 +37,7 @@ test('Citadel remains in Hai Chau and document-preserved lesson is not fabricate
   assert.match(p[0].instructions.join(' '),/phường Hải Châu/);
   assert.match(p[2].instructions.join(' '),/vị tướng nào/);
   assert.match(p[3].instructions.join(' '),/di tích lịch sử/);
-  assert.match(p[3].instructions.join(' '),/lập kế hoạch tham quan Thành Điện Hải/i);
+  assert.match(p[3].instructions.join(' '),/kế hoạch tham quan di tích Thành Điện Hải/i);
   assert.match(byId('g1-station-2').editorialNotice!,/giữ nguyên/i);
   const folk=byId('g1-station-2').phases;
   assert.match(folk[1].instructions.join(' '),/bịt kín mắt|bịt mắt/i);

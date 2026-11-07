@@ -1,0 +1,47 @@
+{
+  "source": "Biên bản TLGDĐP lớp 1 ngày 31/07/2025 + tài liệu học liệu bản 08/08/2025",
+  "status": "needs_new_recordings_before_claiming_100_percent_voice_acceptance",
+  "instructions": "Record approved Vietnamese narration in the project’s existing voice style; review every syllable, normalize RMS and prevent clipping; do not silently use old MP3 for revised text.",
+  "recordings": [
+    {
+      "pointId": "g1-home-2",
+      "stationId": "g1-station-1",
+      "title": "2. Ngôi trường của em",
+      "text": "Trong tài liệu giáo dục địa phương biên soạn năm 2025 có hình Trường Tiểu học Kim Đồng ở phường Tam Kỳ và một trường tiểu học ở Đà Nẵng cũ. Đến năm 2026, tên một số trường đã thay đổi sau khi sắp xếp. Vì vậy, em hãy nhờ thầy cô đọc tên trên cổng trường hiện nay, rồi nói tên trường và tên xã hoặc phường nơi trường tọa lạc. Khi giới thiệu ngôi trường, em chỉ cần nói những điều mình biết và yêu thích nhé!",
+      "previousRecordingUrl": "/audio/stage1/grade1/g1-1-2.30b16a129215.mp3",
+      "recordingStatus": "not_recorded",
+      "newRecordingUrl": null,
+      "audioReviewer": null
+    },
+    {
+      "pointId": "g1-home-3",
+      "stationId": "g1-station-1",
+      "title": "3. Từ nhà đến trường",
+      "text": "Mỗi ngày đến trường, em nhìn thấy những cảnh vật nào? Trong tài liệu có hình cổng thôn, đường phố, chợ, nhà làng truyền thống, đài tưởng niệm và ga tàu ở nhiều nơi của thành phố Đà Nẵng. Mỗi bạn có thể đi qua cảnh vật khác nhau. Em hãy kể tên một địa điểm quen thuộc mình từng nhìn thấy trên đường đến trường. Sau đó, em vẽ lại từ trí nhớ khi đã về lớp. Em không cần chia sẻ địa chỉ nhà hay đường đi cụ thể với người lạ nhé!",
+      "previousRecordingUrl": "/audio/stage1/grade1/g1-1-3.6489651d9dce.mp3",
+      "recordingStatus": "not_recorded",
+      "newRecordingUrl": null,
+      "audioReviewer": null
+    },
+    {
+      "pointId": "g1-food-1",
+      "stationId": "g1-station-5",
+      "title": "1. Món ngon quê hương",
+      "text": "Các em cùng khám phá sáu món ăn truyền thống trong phần Khởi động của tài liệu giáo dục địa phương nhé! Đó là mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo. Mỗi món có hình dáng, nguyên liệu và hương vị riêng. Trên màn hình là món mì Quảng; những hình món ăn khác thuộc bộ ảnh của tài liệu và sẽ được giới thiệu khi có ảnh đúng nguồn. Em có thể kể tên món mình nhận ra từ lời giới thiệu. Nếu chưa từng ăn món đó, em có thể hỏi người lớn để tìm hiểu thêm. Bài học sẽ cùng em khám phá kĩ hơn về mì Quảng.",
+      "previousRecordingUrl": "/audio/stage1/grade1/g1-5-1.84df1b78c8c2.mp3",
+      "recordingStatus": "not_recorded",
+      "newRecordingUrl": null,
+      "audioReviewer": null
+    },
+    {
+      "pointId": "g1-food-4",
+      "stationId": "g1-station-5",
+      "title": "4. Đầu bếp siêu hạng",
+      "text": "Đến lượt nhóm em làm Đầu bếp siêu hạng! Cùng chọn một món truyền thống của Đà Nẵng, vẽ món ăn rồi nhờ thầy cô hỗ trợ ghi tên nguyên liệu. Trong tài liệu, phần Thực hành dùng hình bánh đập thay cho bánh tráng chập; đó là một món ăn riêng, không phải nguyên liệu của mì Quảng. Khi giới thiệu, em có thể nói tên món, điều em nhận ra qua tranh và điều em muốn tìm hiểu thêm. Ở nhà, em chỉ giúp việc vừa sức, tránh dao và bếp nóng nhé!",
+      "previousRecordingUrl": "/audio/stage1/grade1/g1-5-4.aad279ad1412.mp3",
+      "recordingStatus": "not_recorded",
+      "newRecordingUrl": null,
+      "audioReviewer": null
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "commit": "f9b57773b3304ea13add413c0546263dd4da4898",
+  "commit": "42959c095eee36a625f7fdbb19a53c565056a7a7",
   "files": [
     {
       "path": "src/games/stage2/SharedStage2.tsx",
@@ -291,7 +291,7 @@
     },
     {
       "path": "src/features/teacher/GddpTeacherLookup.tsx",
-      "sha256": "2f5c288677ee98d2c45830447503eb952bd0461597a64609ed9784da71e21691"
+      "sha256": "d261a014f2478553874cc2f788fc625041d1e094c9223fc0444b71e3a1c7626e"
     },
     {
       "path": "src/features/teacher/TeacherAssistantLessonPanel.tsx",

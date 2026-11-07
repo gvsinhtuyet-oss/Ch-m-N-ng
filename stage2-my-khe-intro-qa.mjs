@@ -105,7 +105,7 @@ try {
         const shell=root?.querySelector('.shell');
         const css=scene?getComputedStyle(scene):null;
         const r=panel?.getBoundingClientRect();
-        return {className:scene?.className,panelTop:r?.top,positionVar:css?.getPropertyValue('--banner-bottom').trim(),shellPadding:shell?getComputedStyle(shell).paddingTop:null};
+        return {className:scene?.className,panelTop:r?.top,positionVar:css?.getPropertyValue('--banner-bottom').trim(),shellPadding:shell?getComputedStyle(shell).paddingTop:null,panelPosition:panel?getComputedStyle(panel).position:null,panelMargin:panel?getComputedStyle(panel).margin:null,panelTopCss:panel?getComputedStyle(panel).top:null,shellDisplay:shell?getComputedStyle(shell).display:null,shellJustify:shell?getComputedStyle(shell).justifyContent:null,panelTransform:panel?getComputedStyle(panel).transform:null};
       },root);
       console.log('MY KHE RAISED QUESTION',name,JSON.stringify(layout));
       assert.match(layout.className??'',/my-khe-game/,'Mỹ Khê scoped layout marker missing');

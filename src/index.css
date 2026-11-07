@@ -768,3 +768,114 @@ body:has(.journey-screen-fixed){overflow:hidden}
   .journey-phone-swipe svg { width: 15px; height: 15px; }
   .journey-extension { margin-top: 16px; scroll-snap-align: start; }
 }
+
+
+/* Quiet, readable work surfaces in the teacher and admin areas. */
+.game-content.staff-workspace { background: transparent; }
+.cham-staff { color: #172c43; overflow-wrap: anywhere; }
+.game-content .cham-staff .bg-white { background-color: rgba(255,255,255,.96); }
+.game-content .cham-staff .bg-slate-50 { background-color: rgba(248,250,252,.96); }
+.cham-staff .staff-panel { min-width: 0; background: rgba(255,255,255,.97); border: 1px solid #dce5ed; border-radius: 1rem; }
+.cham-staff .staff-hero { background: linear-gradient(115deg, #eff7ff, #fff8ed); }
+.cham-staff .staff-button {
+  display: inline-flex; align-items: center; gap: .45rem; min-height: 44px;
+  padding: .45rem .75rem; border: 1px solid #d6e0eb; border-radius: .7rem;
+  background: #fff; color: #123755; font-size: .875rem; font-weight: 700; text-align: left;
+}
+.cham-staff .staff-button:hover { background: #edf6ff; }
+.cham-staff .staff-primary { background: #075dcb; color: #fff; border-color: #075dcb; }
+.cham-staff .staff-primary:hover { background: #06469c; }
+.cham-staff .staff-button:disabled { opacity: .55; cursor: default; }
+.cham-staff .staff-field {
+  display: block; min-width: 0; width: 100%; min-height: 44px; margin-top: .25rem;
+  background: #fff; border: 1px solid #cbd5e1; border-radius: .7rem; padding: .5rem .75rem;
+}
+.cham-staff .staff-empty { padding: .8rem; border-radius: .75rem; background: #f1f5f9; color: #334155; font-size: .875rem; }
+.cham-staff .staff-bar-row { display: grid; grid-template-columns: minmax(3.5rem,auto) minmax(0,1fr) auto; align-items: center; gap: .6rem; font-size: .85rem; }
+.cham-staff .staff-bar-row progress { width: 100%; height: .65rem; accent-color: #0369a1; }
+.cham-staff .staff-bar-row strong { min-width: 2ch; text-align: right; font-variant-numeric: tabular-nums; }
+.cham-staff .staff-bar-row progress {
+  appearance: none; border: 0; background: #e2ebf3; border-radius: 99px; overflow: hidden;
+}
+.cham-staff .staff-bar-row progress::-webkit-progress-bar { background: #e2ebf3; }
+.cham-staff .staff-bar-row progress::-webkit-progress-value { background: #0369a1; border-radius: 99px; }
+.cham-staff .staff-bar-row progress::-moz-progress-bar { background: #0369a1; border-radius: 99px; }
+
+/* Scoped admin competition design: does not affect the student journey. */
+.cham-admin-topbar {
+  background: linear-gradient(90deg,rgba(0,74,174,.94) 0%,rgba(3,74,160,.88) 43%,rgba(0,59,134,.3) 100%),
+    url('/images/admin-skyline.svg') right center / auto 100% no-repeat !important;
+  border-bottom: 2px solid #98d7ff !important;
+  box-shadow: 0 3px 16px #07367a38;
+}
+.cham-admin-topbar > div > button > span:last-child > span:first-child { color: #fff !important; }
+.cham-admin-topbar > div > button > span:last-child > span:last-child { color: #dcefff !important; }
+.cham-admin-topbar > div > div > button:first-child { color: #fff; }
+.cham-admin-topbar > div > div > button:first-child:hover { background: #ffffff1c; }
+.cham-admin-topbar .bg-gradient-to-br { box-shadow: 0 0 0 3px #ffffff8c; }
+/* The app-level AppBackground supplies the reviewed image for admin AND teacher. Do not cover it. */
+.game-content.staff-workspace { background: transparent; }
+.admin-workspace { --admin-blue: #075dcb; --admin-orange: #ff8700; }
+.admin-workspace .admin-sidebar { border:1px solid #d9e8ff; background:rgba(255,255,255,.97); border-radius: 1.5rem; box-shadow: 0 10px 30px #1c4a8320; }
+.admin-sidebar-brand { position:relative; display:flex; gap:.65rem; align-items:center; overflow:hidden; border-radius:1rem; background:linear-gradient(110deg,#1388ff,#0753be); color:#fff; font-size:.78rem; font-weight:900; letter-spacing:.02em; }
+.admin-sidebar-brand::after { content:''; position:absolute; right:-18px; bottom:-12px; width:130px; height:28px; transform:rotate(-12deg); background:#ff8a00; border-radius:80%; pointer-events:none; }
+.admin-sidebar-brand>* {position:relative;z-index:1}
+.admin-sidebar #admin-navigation>ul>li>button {width:100%; min-height:52px; margin:3px 0; border-radius:.9rem; color:#1d3556; background:#edf4fe; transition: background .18s, color .18s; }
+.admin-sidebar #admin-navigation>ul>li>button:hover { background:#dceafe; }
+.admin-sidebar #admin-navigation>ul>li>button[aria-current] { background:linear-gradient(100deg,#1689ff,#0750bf); color:#fff; box-shadow:inset 5px 0 0 #ff8b00, 0 4px 10px #0854bc30; }
+.admin-sidebar #admin-navigation>ul>li>ul { margin-left:1.35rem; border-left:2px solid #bfd8f8; }
+.admin-sidebar #admin-navigation>ul>li>ul button { width:100%; min-height:42px; text-align:left; border-radius:.75rem; color:#2f4869; padding-inline:10px; }
+.admin-sidebar #admin-navigation>ul>li>ul button[aria-current='page'] {background:#dceaff; color:#0752b6; font-weight:800; box-shadow:inset 3px 0 0 #ff8700; }
+.admin-page-hero { position:relative; overflow:hidden; min-height:105px; background:linear-gradient(115deg,#ffffff 0%,#fff9e9 70%,#ffd49a 100%) !important; border:1px solid #e3e7ef !important; border-radius:1.5rem !important; box-shadow:0 8px 20px #1c4a8314; }
+.admin-page-hero::after { content:''; position:absolute; width:37%; max-width:320px; height:9px; bottom:0; right:0; background:#ff8a00; border-radius:20px 0 0 0; transform:skewX(-24deg); pointer-events:none; }
+.admin-page-hero>div,.admin-page-hero>button {position:relative;z-index:1}
+.admin-page-hero h1 {font-size:clamp(1.55rem,2.3vw,2.25rem);line-height:1.22}
+.admin-workspace .staff-panel {border:1px solid #dbe9fb; border-radius:1.1rem; box-shadow:0 3px 12px #1f4a7920}
+.admin-workspace .staff-hero {background:linear-gradient(110deg,#edf7ff 0%,#fff9ef 100%)}
+.admin-workspace .staff-button:focus-visible,
+.admin-media-editor input:focus-visible,
+.admin-media-editor select:focus-visible,
+.admin-media-editor textarea:focus-visible {outline:3px solid #ff9c32;outline-offset:2px}
+.admin-workspace .staff-button.staff-primary {background:#075dcb;color:#fff;border-color:#075dcb}
+.admin-media-editor {background:linear-gradient(135deg,#f0f5ff,#e5f2ff);border-color:#b7d5ff;box-shadow:0 8px 30px #1c4a8320}
+.admin-media-title {background:linear-gradient(100deg,#cfe6ff,#aed7ff);border:1px solid #b4d8ff}
+.admin-media-title-icon {display:grid;place-items:center;width:46px;height:46px;flex-shrink:0;border-radius:15px;color:white;background:linear-gradient(135deg,#157fff,#074fb7)}
+.admin-image-card {border-color:#d7e5f9;box-shadow:0 5px 18px #204d7c14}
+.admin-upload-field::file-selector-button {margin:0 .8rem .35rem 0;padding:.55rem .8rem;border:1px solid #add0f6;border-radius:.7rem;background:#f2f8ff;color:#0752a8;font-weight:700;cursor:pointer}
+.admin-upload-field::file-selector-button:hover {background:#dbeaff}
+.admin-image-preview {background:#f8fbff}
+@media (max-width: 1023px) {
+  .admin-workspace {grid-template-columns:minmax(0,1fr)}
+  .admin-page-hero { min-height:90px; }
+}
+@media (max-width: 640px) {
+  .admin-workspace { padding-inline:.75rem; gap:.75rem }
+  .admin-sidebar-brand { display:none }
+  .admin-media-editor {padding:.75rem}
+  .admin-page-hero {border-radius:1.1rem !important}
+  .admin-image-card {padding:.85rem}
+  .cham-admin-topbar { background-position:right center; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .admin-sidebar #admin-navigation>ul>li>button {transition:none}
+}
+
+/* Approved blue teacher workspace, scoped to the real signed-in/demo route. */
+.teacher-workspace .teacher-page-hero {
+  background: linear-gradient(100deg, rgba(255,255,255,.98) 0%, rgba(245,251,255,.96) 55%, rgba(230,242,255,.75) 100%), url('/images/admin-skyline.svg') right center / auto 100% no-repeat;
+  border-color: #bfdbfe;
+  box-shadow: 0 7px 22px rgba(10,66,130,.09);
+}
+.teacher-workspace .teacher-sidebar {min-width:0;}
+.teacher-workspace .teacher-sidebar [aria-current="page"]{box-shadow:inset 4px 0 #ff9400, 0 2px 10px rgba(0,76,171,.12);}
+.teacher-workspace .teacher-sidebar button:focus-visible {outline:3px solid #ffb024;outline-offset:2px;}
+@media(max-width:1023px){.teacher-workspace .teacher-sidebar{position:relative;top:auto;}}
+
+/* Staff photo background: reuse the configured journey image; no new asset or file downloads. */
+.teacher-workspace .teacher-sidebar {background:rgba(255,255,255,.97);}
+.game-content.staff-workspace .cham-staff {position:relative; isolation:isolate;}
+@media (max-width: 640px) {
+  .game-content .cham-staff .bg-white,
+  .teacher-workspace .teacher-sidebar,
+  .admin-workspace .admin-sidebar {background-color:rgba(255,255,255,.98);}
+}

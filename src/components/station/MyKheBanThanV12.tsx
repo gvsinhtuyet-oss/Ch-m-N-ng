@@ -41,7 +41,7 @@ function installLegacySoundControl(frame: HTMLIFrameElement) {
     doc.head.appendChild(script);
   }
   const attach = () => {
-    const hud = doc.querySelector<HTMLElement>('.hud');
+    const hud = doc.querySelector<HTMLElement>('.panel > .hud, .panel > .top, .shell > .hud, .shell > .top');
     if (!hud || hud.querySelector('.music-toggle,.sound-toggle,.audio-toggle')) return;
     const button = doc.createElement('button');
     button.type = 'button';

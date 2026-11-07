@@ -1,116 +1,142 @@
+// End-to-end regression for the NEW shared React Mỹ Khê – Bàn Than engine.
+// The approved V12 HTML is not mounted; the same five tasks and images remain.
 import assert from 'node:assert/strict';
 import {existsSync,mkdirSync} from 'node:fs';
 import puppeteer from 'puppeteer-core';
+import {myKheBanThanConfig as config} from './src/games/stage2/grade3/myKheBanThan.ts';
+import {validateConfig} from './src/games/stage2/types.ts';
 
+validateConfig(config);
 const chrome=[process.env.CHROME_BIN,'/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium'].find(p=>p&&existsSync(p));
 assert.ok(chrome,'Chrome unavailable');
 const browser=await puppeteer.launch({executablePath:chrome,headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
 const base=process.env.STAGE2_QA_URL??'http://127.0.0.1:4173';
 mkdirSync('stage2-qa-screenshots',{recursive:true});
+const root='[data-shared-stage2]';
+const click=async (page,sel)=>page.evaluate(([host,selector])=>{
+  const node=document.querySelector(host)?.shadowRoot?.querySelector(selector);
+  if(!node)return false;
+  node.click();return true;
+},[root,sel]);
+const wait=async (page,sel)=>page.waitForFunction(([host,selector])=>!!document.querySelector(host)?.shadowRoot?.querySelector(selector),{timeout:25000},[root,sel]);
 
-try{
-  for(const [name,width,height] of [['iphone-375',375,667],['iphone-390',390,844],['android-412',412,915],['ipad-768',768,1024],['desktop-1366',1366,768],['desktop-1760',1760,900]]){
+try {
+  assert.equal(config.stationId,'g3-station-1');
+  assert.equal(config.questions.length,5);
+  assert.equal(config.questions[1].options.length,2,'Original true/false must stay two choices');
+  for(const [name,width,height] of [
+    ['iphone-375',375,667],['iphone-390',390,844],
+    ['android-412',412,915],['ipad-768',768,1024],
+    ['desktop-1366',1366,768],['desktop-1760',1760,900]
+  ]) {
     const page=await browser.newPage();
     const errors=[];
     page.on('pageerror',e=>errors.push(e.message));
     await page.setViewport({width,height,isMobile:width<=820,hasTouch:width<=820,deviceScaleFactor:1});
     await page.goto(base+'/?stage2-qa=g3-station-1',{waitUntil:'domcontentloaded',timeout:45000});
-    await page.waitForFunction(()=>{
-      const d=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument;
-      return !!d?.getElementById('cham-my-khe-unboxed-intro')&&!!d.querySelector('.intro-screen .intro-start');
-    },{timeout:30000});
-    const intro=await page.evaluate(()=>{
-      const f=document.querySelector('iframe[data-stage2-game-frame]');
-      const d=f?.contentDocument;
-      const scene=d?.querySelector('.scene');
-      const shell=d?.querySelector('.shell');
-      const panel=d?.querySelector('.panel');
-      const title=d?.querySelector('.intro-screen h2');
-      const button=d?.querySelector('.intro-start');
-      const r=e=>{const b=e?.getBoundingClientRect();return b?{x:b.x,y:b.y,right:b.right,bottom:b.bottom,width:b.width,height:b.height}:null};
-      const css=panel?getComputedStyle(panel):null;
-      const hero=shell?getComputedStyle(shell,'::before'):null;
-      return{
-        title: title?.textContent,panel:r(panel),button:r(button),shell:r(shell),
-        intro:r(d?.querySelector('.intro-screen')),
-        background:css?.backgroundColor,border:css?.borderTopWidth,shadow:css?.boxShadow,
-        heroHeight:parseFloat(hero?.height??'0')||0,heroDisplay:hero?.display,
-        artwork:hero?.backgroundImage?.includes('url('),viewport:f?.contentWindow?.innerWidth,
-        scrollWidth:d?.documentElement.scrollWidth,
-        sceneBackground:scene?getComputedStyle(scene).backgroundImage:'',
-        toolbar:r(d?.querySelector('.shell > .top')),
-        gems:r(d?.querySelector('.shell > .top .gems')),
-        music:r(d?.querySelector('.shell > .top .music-toggle')),
-        titleText:title?.textContent,
+    await wait(page,'.intro-start');
+    const intro=await page.evaluate(host=>{
+      const shadow=document.querySelector(host)?.shadowRoot;
+      const shell=shadow?.querySelector('.shell');
+      const panel=shadow?.querySelector('.panel');
+      const hud=shadow?.querySelector('.hud');
+      const art=shell?getComputedStyle(shell,'::before'):null;
+      const rect=(el)=>{const r=el?.getBoundingClientRect();return r?{x:r.x,y:r.y,width:r.width,height:r.height,bottom:r.bottom}:null};
+      return {
+        iframe:!!document.querySelector('iframe[data-stage2-game-frame]'),
+        heading:shadow?.querySelector('.intro-screen h2')?.textContent,
+        hud:rect(hud),panel:rect(panel),
+        artHeight:parseFloat(art?.height??'0')||0,
+        artDisplay:art?.display,
+        keys:shadow?.querySelectorAll('.hud-key').length,
+        music:!!shadow?.querySelector('.music-toggle'),
+        pageWidth:document.documentElement.scrollWidth,
+        viewportWidth:window.innerWidth,
       };
-    });
-    console.log('INTRO DESIGN',name,JSON.stringify(intro));
-    assert.match(intro.title??'',/HÀNH TRÌNH TÌM NGỌC BIỂN/,'intro heading retained');
-    assert.ok(parseFloat(intro.border)>0&&parseFloat(intro.border)<=2.1,name+': compact cream card border missing or excessive');
-    assert.equal(intro.background,'rgb(255, 249, 237)',name+': compact light card background missing');
-    assert.ok(intro.shadow!=='none',name+': gentle compact card shadow missing');
-    assert.ok(intro.panel&&intro.button,name+': intro and start control missing');
-    assert.ok(intro.panel.width<= (width<=650?width+1:662),name+': intro card is too wide');
-    assert.ok(intro.panel.height<= (width<=650?330:350),name+': intro card is too tall');
-    if(width<=650) {
-      assert.ok(intro.toolbar&&intro.gems&&intro.music,name+': three live V18-style toolbar controls missing');
-      assert.ok(intro.toolbar.bottom < intro.panel.y,name+': controls must appear above title and intro');
-      assert.ok(intro.music.right <= width+2,name+': music button exceeds viewport');
+    },root);
+    console.log('MY KHE SHARED INTRO',name,JSON.stringify(intro));
+    assert.equal(intro.iframe,false,'No HTML V12 iframe may be active');
+    assert.match(intro.heading??'',/HÀNH TRÌNH TÌM NGỌC BIỂN/);
+    assert.equal(intro.keys,5,'five shared gem slots');
+    assert.equal(intro.music,true);
+    assert.ok(intro.pageWidth<=intro.viewportWidth+4,name+': page overflow');
+    assert.ok(intro.panel?.height>0,name+': intro content missing');
+    if(width<=650){
+      assert.ok(intro.artHeight>80,name+': missing title illustration');
+      assert.ok(intro.panel.y>=intro.hud.bottom+70,name+': title covered by HUD or intro');
     }
-
-    assert.ok(intro.panel.y>=(width<=650?intro.heroHeight+35:285),name+': card overlaps banner title');
-    assert.ok(intro.scrollWidth<=(intro.viewport??0)+4,name+': horizontal overflow');
-    assert.ok(intro.button.bottom<=intro.panel.bottom+1,name+': Start button spills outside the card');
-    await page.screenshot({path:'stage2-qa-screenshots/my-khe-intro-'+name+'.png',fullPage:true});
-
-    const clicked=await page.evaluate(()=>{
-      const d=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument;
-      const button=d?.querySelector('.intro-start');
-      if(!button)return false;
-      button.click();return true;
-    });
-    assert.equal(clicked,true,name+': start button missing');
-    await page.waitForFunction(()=>{
-      const d=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument;
-      return !!d?.querySelector('.panel .prompt')&&!d.querySelector('.intro-screen');
-    },{timeout:10000});
-    const question=await page.evaluate(()=>{
-      const d=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument;
-      const panel=d?.querySelector('.panel');
-      const css=panel?getComputedStyle(panel):null;
-      return{
-        prompt:!!d?.querySelector('.panel .prompt'),
-        choices:d?.querySelectorAll('.panel .answers button').length??0,
-        border:css?.borderTopWidth,
-        background:css?.backgroundColor,
-        music:!!d?.querySelector('.music-toggle'),
+    const assets=await page.evaluate(async paths=>{
+      const entries=await Promise.all(paths.map(async url=>{
+        try {const response=await fetch(url,{cache:'no-store'});return {url,status:response.status,type:response.headers.get('content-type')};}
+        catch {return {url,status:0,type:null};}
+      }));
+      return entries;
+    },[config.background,config.victoryBackground,...config.questions[0].options.map(o=>o.image)]);
+    assert.equal(assets.length,5);
+    for(const image of assets)assert.ok(image.status===200&&image.type?.includes('image'),name+': required ORIGINAL image missing '+JSON.stringify(image));
+    await page.screenshot({path:'stage2-qa-screenshots/my-khe-shared-intro-'+name+'.png',fullPage:true});
+    assert.equal(await click(page,'.intro-start'),true,'start game');
+    await wait(page,'.prompt');
+    await page.waitForFunction(host=>{
+      const shadow=document.querySelector(host)?.shadowRoot;
+      const images=[...shadow?.querySelectorAll('.answers .choice-photo')??[]];
+      return images.length===3&&images.every(x=>x.complete&&x.naturalWidth>0);
+    },{timeout:15000},root);
+    const question=await page.evaluate(host=>{
+      const shadow=document.querySelector(host)?.shadowRoot;
+      const scene=shadow?.querySelector('.scene');
+      const panel=shadow?.querySelector('.panel');
+      const rect=(el)=>{const r=el?.getBoundingClientRect();return r?{y:r.y,width:r.width,height:r.height}:null};
+      return {
+        prompt:shadow?.querySelector('.prompt')?.textContent,
+        choices:shadow?.querySelectorAll('.answers [data-choice]').length,
+        images:shadow?.querySelectorAll('.choice-photo').length,
+        panel:rect(panel),
+        hud:rect(shadow?.querySelector('.hud')),
+        sceneBackground:scene?getComputedStyle(scene).backgroundImage:null,
       };
-    });
-    console.log('QUESTION INTACT',name,JSON.stringify(question));
-    const geometry=await page.evaluate(()=>{
-      const d=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument;
-      const panel=d?.querySelector('.scene:not(.is-victory) .panel');
-      const photos=Array.from(d?.querySelectorAll('.panel .choice-photo')??[]);
-      const prompt=d?.querySelector('.panel .prompt');
-      const r=e=>{const b=e?.getBoundingClientRect();return b?{y:b.y,width:b.width,height:b.height}:null};
-      return {card:r(panel),photos:photos.map(r),font:prompt?parseFloat(getComputedStyle(prompt).fontSize):null};
-    });
-    console.log('COMPACT QUESTION',name,JSON.stringify(geometry));
-    if(width>650) {
-      assert.ok(geometry.card?.width<=901,name+': card wider than standard Chặng 2');
-      assert.ok(geometry.card?.height<=400,name+': question card is too tall');
-      assert.ok(geometry.card?.y>=270,name+': question covers title artwork');
-      assert.ok(geometry.photos.every(x=>x.height<=166),name+': photo cards too tall');
-    } else {
-      assert.ok(geometry.card?.height<=355,name+': phone question too tall');
+    },root);
+    console.log('MY KHE SHARED QUESTION',name,JSON.stringify(question));
+    assert.equal(question.prompt,config.questions[0].prompt);
+    assert.equal(question.choices,3);
+    assert.equal(question.images,3);
+    assert.ok(question.panel?.width<=(width<=650?width+2:900),name+': question card too wide');
+    assert.ok(question.panel?.height<=(width<=650?375:560),name+': question card too tall');
+    await page.screenshot({path:'stage2-qa-screenshots/my-khe-shared-question-'+name+'.png',fullPage:true});
+    if(name==='iphone-390') {
+      // Finish the original five questions through the new shared game:
+      // image -> true/false (2 choices) -> 3 choices -> match -> safe-behavior choice.
+      const answers=[0,0,1,null,1];
+      for(let index=0;index<5;index++){
+        await page.waitForFunction(([host,q])=>{
+          const shadow=document.querySelector(host)?.shadowRoot;
+          return shadow?.querySelector('.hud-stage')?.textContent?.includes('CÂU '+(q+1)+'/5')&&!!shadow.querySelector('.prompt');
+        },{timeout:20000},[root,index]);
+        if(index===3){
+          for(let j=0;j<3;j++){
+            assert.equal(await click(page,'[data-left="'+j+'"]'),true);
+            assert.equal(await click(page,'[data-right="'+config.questions[3].solution[j]+'"]'),true);
+          }
+          assert.equal(await click(page,'.controls .btn'),true,'matching confirmation');
+        } else {
+          const length=await page.evaluate(host=>document.querySelector(host)?.shadowRoot?.querySelectorAll('[data-choice]').length,root);
+          assert.equal(length,config.questions[index].options.length,'answer count must match approved task');
+          assert.equal(await click(page,'[data-choice="'+answers[index]+'"]'),true,'correct answer '+index);
+        }
+      }
+      await wait(page,'.scene.is-victory');
+      const slots=await page.evaluate(host=>({
+        total:document.querySelector(host)?.shadowRoot?.querySelectorAll('.hud-key').length,
+        earned:document.querySelector(host)?.shadowRoot?.querySelectorAll('.hud-key.earned').length
+      }),root);
+      assert.deepEqual(slots,{total:5,earned:5},'all five original gems must be earned');
+      await page.screenshot({path:'stage2-qa-screenshots/my-khe-shared-victory-iphone.png',fullPage:true});
+      assert.equal(await click(page,'.continue-btn'),true,'continue to stage 3');
+      await page.waitForFunction(()=>document.body.textContent?.includes('Bản chơi thử · Chặng 3'),{timeout:15000});
+      console.log('MY KHE SHARED COMPLETION: five original tasks, five gems, Stage 3 OK');
     }
-
-    assert.ok(question.prompt&&question.choices>0,name+': first question is missing');
-    assert.notEqual(question.border,'0px',name+': question card border accidentally removed');
-    assert.ok(question.music,name+': sound control lost');
-    assert.deepEqual(errors,[],name+': JavaScript errors');
-    await page.screenshot({path:'stage2-qa-screenshots/my-khe-question-'+name+'.png',fullPage:true});
+    assert.deepEqual(errors,[],name+': page errors');
     await page.close();
   }
-  console.log('MY KHE UNBOXED INTRO QA PASSED: phone, tablet, desktop and question handoff');
-}finally{await browser.close()}
+  console.log('MY KHE SHARED ENGINE QA PASSED: exact original images + 5 tasks + rewards + responsive screens.');
+} finally {await browser.close()}

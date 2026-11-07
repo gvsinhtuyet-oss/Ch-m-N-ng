@@ -8,7 +8,8 @@ const TOPICS = Object.freeze({
   'gddp-2026-2-01': ['g2-station-3','Nhà thờ Nguyễn Văn Thoại – Nhà lưu niệm Huỳnh Thúc Kháng'],
   'gddp-2026-2-02': ['g2-station-2','Cù Lao Chàm – Khu bảo tồn thiên nhiên Sơn Trà'],
   'gddp-2026-2-04': ['g2-station-4','Di sản văn hóa thế giới Hội An'],
-  'gddp-2026-2-05': ['g2-station-5','Lễ hội truyền thống ở thành phố Đà Nẵng']
+  'gddp-2026-2-09': ['g2-station-2','Cù Lao Chàm – Khu bảo tồn thiên nhiên Sơn Trà'],
+  'gddp-2026-2-10': ['g2-station-2','Cù Lao Chàm – Khu bảo tồn thiên nhiên Sơn Trà']
 });
 export function getCuratedGddpLink(row) {
   const link=TOPICS[row.id];

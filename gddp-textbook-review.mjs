@@ -1,3 +1,5 @@
+import { bundledGddpData } from './gddp-bundled-data.mjs';
+
 // This review covers the textbook reference. Teaching placement and the school
 // calendar still need a separate review before a record is ready to teach.
 const grade2Vietnamese = 'https://sgkvn.com/lop-2-8/ket-noi-tri-thuc-voi-cuoc-song-3/tieng-viet-2-tap-hai-1023.html';
@@ -9,6 +11,7 @@ const grade1Vietnamese = 'https://sachgiaokhoa.aistudybuddy.vn/sach-online/lop-1
 const grade1Science = 'https://hoc24.vn/tu-nhien-va-xa-hoi/lop-1/ket-noi-tri-thuc-voi-cuoc-song';
 const grade4Vietnamese = 'https://vietjack.com/tieng-viet-4-kn/tieng-viet-lop-4-tap-2.jsp';
 const grade4History = 'https://www.vietjack.com/lich-su-va-dia-li-4-kn/bai-2-thien-nhien-va-con-nguoi-dia-phuong-em.jsp';
+const grade4LocalCulture = 'https://sachgiaokhoa.aistudybuddy.vn/sach-online/lop-4/lich-su-va-dia-li-4/bai-3-lich-su-va-van-hoa-truyen-thong-dia-phuong-em/';
 const grade5History = 'https://sgk.olm.vn/thu-vien-so/doc-sach/sgv-lich-su-va-dia-li-5.4502896326';
 const reviewEntries = {
   '1-01': ['Tiếng Việt', 'Bài 1: Cậu bé thông minh', grade1Vietnamese],
@@ -23,7 +26,9 @@ const reviewEntries = {
   '2-03': ['Tiếng Việt', 'Bài 30: Nghe- viết : Cánh đồng quê em', grade2Vietnamese],
   '2-04': ['Đạo đức', 'Bài 2: Em yêu quê hương (tiết 1)', 'https://sgkvn.com/lop-2-8/ket-noi-tri-thuc-voi-cuoc-song-3/dao-duc-2-1028.html', false, 'Bài 13: : Em yêu quê hương (tiết 1)'],
   '2-05': ['HĐTN', 'Chủ đề 4: Truyền thống quê em', 'https://www.sachgiaokhoa.online/lop-2-8/chan-troi-sang-tao-2/chu-de-4-truyen-thong-que-em-1402.html', true],
+  '2-09': ['HĐTN', 'Bài 28: Cảnh đẹp quê em', 'https://www.sgkvn.com/lop-2-8/ket-noi-tri-thuc-voi-cuoc-song-3/chu-de-moi-truong-quanh-em-2442/28-canh-dep-que-em-8422.html'],
   '2-06': ['HĐTN', 'Chủ đề 8: Môi trường xanh – Cuộc sống xanh', 'https://www.sachgiaokhoa.online/lop-2-8/chan-troi-sang-tao-2/chu-de-8-moi-truong-xanh-cuoc-song-xanh-1406.html', true],
+  '2-10': ['HĐTN', 'Bài 29: Bảo vệ cảnh quan quê em', 'https://www.sgkvn.com/lop-2-8/ket-noi-tri-thuc-voi-cuoc-song-3/chu-de-moi-truong-quanh-em-2442/29-bao-ve-canh-quan-que-em-8423.html'],
   '2-07': ['TNXH', 'Bài 2: Nghề nghiệp của người lớn trong gia đình', grade2Science],
   '2-08': ['TNXH', 'Bài 7: Ngày hội đọc sách của chúng em', grade2Science],
   '3-01': ['Tiếng Việt', 'Chủ đề: Những trải nghiệm thú vị. Bài 5: Nhật kí tập bơi', grade3Vietnamese1, false, 'Chủ đề : Những trải nghiệm thú vi. Bài 4: Nhật kí tập bơi'],
@@ -36,21 +41,24 @@ const reviewEntries = {
   '3-08': ['TNXH', 'Bài 10: Hoạt động sản xuất thủ công và công nghiệp', 'https://vietjack.com/tu-nhien-va-xa-hoi-3-kn/bai-10-hoat-dong-san-xuat-thu-cong-va-cong-nghiep.jsp'],
   '3-09': ['TNXH', 'Bài 11: Di tích lịch sử – văn hóa và cảnh quan thiên nhiên', 'https://sgkvn.com/lop-3-9/ket-noi-tri-thuc-voi-cuoc-song-3/chu-de-3-cong-dong-dia-phuong-1679/bai-11-di-tich-lich-su-van-hoa-va-canh-quan-thien-nhien-7323.html', false, 'Bài 11:Di tích lịch sử - vă hóa và cảnh quan thiên nhiên.'],
   '3-10': ['HĐTN', 'Chủ đề 4: Tự hào truyền thống quê em.', 'https://www.vietjack.com/hoat-dong-trai-nghiem-3-ct/chu-de-4-tu-hao-truyen-thong-que-em.jsp', true],
+  '3-11': ['HĐTN', 'Tuần 25: Truyền thống quê hương em', 'https://sgkvn.com/lop-3-9/ket-noi-tri-thuc-voi-cuoc-song-3/chu-de-hoat-dong-vi-cong-dong-2205/tuan-25-7515.html'],
   '4-01': ['Tiếng Việt', 'Bài 4: Đọc: Quả ngọt cuối mùa', grade4Vietnamese],
   '4-02': ['Tiếng Việt', 'Bài 19: Đọc: Đi hội Chùa Hương', grade4Vietnamese],
   '4-03': ['Tiếng Việt', 'Bài 21: Đọc: Những cánh buồm', grade4Vietnamese],
   '4-04': ['Lịch sử và Địa lí', 'Bài 2: Thiên nhiên và con người ở địa phương em (Tiết 1)', grade4History],
   '4-05': ['Lịch sử và Địa lí', 'Bài 2: Thiên nhiên và con người ở địa phương em (Tiết 2)', grade4History],
-  '4-06': ['Lịch sử và Địa lí', 'Bài 3: Lịch sử và văn hoá truyền thống địa phương em (Tiết 1)', grade4History],
-  '4-07': ['Lịch sử và Địa lí', 'Bài 3: Lịch sử và văn hoá truyền thống địa phương em (Tiết 2)', grade4History],
+  '4-06': ['Lịch sử và Địa lí', 'Bài 3: Lịch sử và văn hoá truyền thống địa phương em (Tiết 1)', grade4LocalCulture],
+  '4-07': ['Lịch sử và Địa lí', 'Bài 3: Lịch sử và văn hoá truyền thống địa phương em (Tiết 2)', grade4LocalCulture],
   '4-08': ['Hoạt động trải nghiệm', 'Chủ đề 4: Em yêu truyền thống quê hương', grade4Experience, true],
+  '4-10': ['Hoạt động trải nghiệm', 'Tuần 29: Cảnh quan thiên nhiên quê hương em', 'https://www.sgkvn.com/lop-4-7/ket-noi-tri-thuc-voi-cuoc-song-3/chu-de-que-huong-em-tuoi-dep-2326/tuan-29-7973.html'],
   '4-09': ['Hoạt động trải nghiệm', 'Chủ đề 9: Những người sống quanh em và nghề truyền thống quê hương', 'https://www.findu.vn/hoat-dong-trai-nghiem-4-ct/chu-de-9-nhung-nguoi-song-quanh-em-va-nghe-truyen-thong-que-huong-ct', true],
-  '5-01': ['Tiếng Việt', 'Bài 8: Nói và nghe: Những điểm vui chơi lí thú', 'https://www.thivien.org/tieng-viet-5-kn/bai-8-hanh-tinh-ki-la.jsp'],
+  '4-11': ['Hoạt động trải nghiệm', 'Tuần 32: Trải nghiệm nghề truyền thống', 'https://www.sgkvn.com/lop-4-7/ket-noi-tri-thuc-voi-cuoc-song-3/chu-de-trai-nghiem-nghe-truyen-thong-2328/tuan-32-7988.html'],
+  '5-01': ['Tiếng Việt', 'Bài 8: Nói và nghe: Những điểm vui chơi lí thú', 'https://mndongcotienhai.thuviennhatruong.edu.vn/giaibaitap_sgk/moi-sgk-tiengviet-5-t1'],
   '5-02': ['Tiếng Việt', 'Bài 11: Đọc: Hang Sơn Đoòng - Những điều kì thú', 'https://giaokhoaonline.com/tieng-viet-lop-5-tap-1-ket-noi-tri-thuc'],
   '5-03': ['Tiếng Việt', 'Bài 16: Nói và nghe: Cảnh đẹp thiên nhiên', 'https://loigiaihay.com/bai-16-canh-dep-thien-nhien-trang-79-sgk-tieng-viet-lop-5-tap-1-ket-noi-tri-thuc-a162876.html', false, 'Bài 16: Nói và nghe: Giới thiệu một cảnh đẹp thiên nhiên của đất nước ta'],
   '5-04': ['Tiếng Việt', 'Bài 25: Đọc: Tiếng đàn ba-la-lai-ca trên sông Đà', 'https://vanvn.net/tieng-dan-ba-la-lai-ca-tren-song-da/'],
   '5-05': ['Tiếng Việt', 'Bài 12: Nói và nghe: Địa điểm tham quan, du lịch', 'https://loigiaihay.com/bai-12-dia-diem-tham-quan-du-lich-trang-60-sgk-tieng-viet-lop-5-tap-2-ket-noi-tri-thuc-a165361.html'],
-  '5-06': ['Tiếng Việt', 'Nói và nghe: Di tích lịch sử', 'https://www.findu.vn/tieng-viet-5-kn/'],
+  '5-06': ['Tiếng Việt', 'Nói và nghe: Di tích lịch sử', 'https://vanvn.net/bai-24-viet-nam-que-huong-ta-tieng-viet-lop-5-ket-noi-tri-thuc/'],
   '5-07': ['Lịch sử Địa Lý', 'Bài 4: Dân cư và dân tộc ở Việt Nam', grade5History],
   '5-08': ['Lịch sử Địa Lý', 'Bài 14: Cách mạng tháng Tám năm 1945 (Tiết 1)', grade5History],
 };
@@ -79,4 +87,27 @@ export function reviewGddpTextbookAddress(row) {
   const entry = matchingEntry(row);
   if (!entry) return {status:'reference', source:null};
   return {status:entry[3] ? 'other_book' : 'title_checked', source:entry[2]};
+}
+
+// Replace recognized stock records in older published catalogs without migrating stored drafts.
+const legacyReplacementIds = {
+  'gddp-2026-2-05': 'gddp-2026-2-09',
+  'gddp-2026-2-06': 'gddp-2026-2-10',
+  'gddp-2026-3-10': 'gddp-2026-3-11',
+  'gddp-2026-4-08': 'gddp-2026-4-10',
+  'gddp-2026-4-09': 'gddp-2026-4-11',
+};
+
+export function publicGddpTextbookRecords(records) {
+  const checked = new Map();
+  for (const row of records) {
+    const {status} = reviewGddpTextbookAddress(row);
+    if (status === 'title_checked') {
+      checked.set(row.id, correctGddpTextbookAddress(row));
+    } else if (status === 'other_book') {
+      const replacement = bundledGddpData.records.find(candidate => candidate.id === legacyReplacementIds[row.id]);
+      if (replacement && !checked.has(replacement.id)) checked.set(replacement.id, replacement);
+    }
+  }
+  return [...checked.values()];
 }

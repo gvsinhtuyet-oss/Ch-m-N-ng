@@ -11,6 +11,7 @@ import { firestoreConfiguration } from './deployment-config.mjs';
 import { GDDP_COLLECTION, GDDP_DOCUMENT, GDDP_YEAR, cleanGddpCatalog } from './gddp-catalog.mjs';
 import { gddpPrompt, cleanGddpAiSuggestion } from './gddp-ai.mjs';
 import { bundledGddpData } from './gddp-bundled-data.mjs';
+import { publicGddpTextbookRecords } from './gddp-textbook-review.mjs';
 import { mkdir, readFile, writeFile, rename } from 'node:fs/promises';
 import { randomBytes, createHash } from 'node:crypto';
 import path from 'node:path';
@@ -263,8 +264,9 @@ const server = createServer(async (req,res) => {
       if (!cloudStore) return json(res,200,{...bundledGddpCatalog,published:false,source:'bundled-reference'});
       try {
         const saved = await cloudStore.get(GDDP_COLLECTION,GDDP_DOCUMENT);
-        if (saved?.published) return json(res,200,{...saved.catalog,published:true,updatedAt:saved.updatedAt});
-        if (saved?.previousPublishedCatalog) return json(res,200,{...saved.previousPublishedCatalog,published:true});
+        const publishedCatalog = saved?.published ? saved.catalog : saved?.previousPublishedCatalog;
+        if (publishedCatalog) return json(res,200,{...publishedCatalog,records:publicGddpTextbookRecords(publishedCatalog.records),published:true,
+          ...(saved.published ? {updatedAt:saved.updatedAt} : {})});
         return json(res,200,{...bundledGddpCatalog,published:false,source:'bundled-reference'});
       } catch (error) {
         // Public read-only demo must remain usable during Firestore outages or permission errors in preview.

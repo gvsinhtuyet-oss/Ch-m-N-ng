@@ -7,10 +7,11 @@ import { GRADE2_LESSON_DECKS } from './src/data/teacher/grade2LessonDecks';
 import { getGddpLessonDeck } from './src/services/GddpLessonDeckService';
 import { GddpPreparedPresentation } from './src/features/teacher/GddpPreparedPresentation';
 const grade2 = bundledGddpCatalog.records.filter(record => record.grade === 2);
-test('all eight imported grade-2 addresses have exactly one distinct complete five-page deck', () => {
+const preparedGrade2 = grade2.filter(record => !['gddp-2026-2-09','gddp-2026-2-10'].includes(record.id));
+test('six original Kết nối tri thức grade-2 addresses retain their complete five-page decks', () => {
   assert.equal(grade2.length, 8);
-  assert.equal(new Set(GRADE2_LESSON_DECKS.map(deck=>deck.recordId)).size, 8);
-  for (const record of grade2) {
+  assert.equal(new Set(GRADE2_LESSON_DECKS.map(deck=>deck.recordId)).size, 6);
+  for (const record of preparedGrade2) {
     const deck=getGddpLessonDeck(record);
     assert.ok(deck,record.lesson);assert.equal(deck.recordId,record.id);assert.equal(deck.slides.length,5);
     assert.ok(deck.sources.length);assert.ok(deck.outcomes.length);
@@ -32,13 +33,13 @@ test('harmless whitespace and composed Unicode do not break exact source links; 
  assert.ok(getGddpLessonDeck({...row,lesson:('  '+row.lesson+'  ').normalize('NFD'),outcomes:'Teacher edited',teachingSuggestion:'New note'}));
 });
 test('source gaps are disclosed instead of asserting approval or fabricated local details',()=>{
- for(const id of ['gddp-2026-2-03','gddp-2026-2-06','gddp-2026-2-08']){
+ for(const id of ['gddp-2026-2-03','gddp-2026-2-08']){
   const deck=GRADE2_LESSON_DECKS.find(deck=>deck.recordId===id)!;
   assert.ok(deck.reviewNotes.length,id);assert.equal(deck.status,'source-aligned-draft');
  }
 });
 test('each quick presentation renders its opening content and navigation with discussion and answers initially hidden',()=>{
- for(const row of grade2){
+ for(const row of preparedGrade2){
   const deck=getGddpLessonDeck(row)!;
   const html=renderToStaticMarkup(React.createElement(GddpPreparedPresentation,{record:row,deck,onExit:()=>{}}));
   // Quick view starts Hoi An on the observation slide; other decks start at zero.
@@ -56,4 +57,8 @@ test('quick view opens Bop nat qua cam with three stages and five-minute timing'
  assert.match(html,/Tích hợp nhanh/);
  assert.match(html,/5 phút/);
  assert.match(html,/Trang 1 \/ 3/);
+});
+
+test('new grade-2 suggestions do not open a legacy prepared deck',()=>{
+ for (const row of grade2.filter(record => !preparedGrade2.includes(record))) assert.equal(getGddpLessonDeck(row),null);
 });

@@ -32,7 +32,7 @@ test('curated references point to existing same-grade stations',()=>{
 });
 
 test('textbook corrections preserve stable IDs, legacy source weeks and editor changes',async()=>{
- const {correctGddpTextbookAddress,reviewGddpTextbookAddress}=await import('./gddp-textbook-review.mjs');
+ const {correctGddpTextbookAddress,reviewGddpTextbookAddress,publicGddpTextbookRecords}=await import('./gddp-textbook-review.mjs');
  const current=bundledGddpCatalog.records.find(r=>r.id==='gddp-2026-2-04')!;
  assert.equal(current.lesson,'Bài 2: Em yêu quê hương (tiết 1)');
  const legacy={...current,lesson:'Bài 13: : Em yêu quê hương (tiết 1)'};
@@ -41,7 +41,13 @@ test('textbook corrections preserve stable IDs, legacy source weeks and editor c
  assert.equal(correctGddpTextbookAddress(edited),edited);
  assert.equal(reviewGddpTextbookAddress(edited).status,'reference');
  assert.equal(reviewGddpTextbookAddress(current).status,'title_checked');
- const grade2=bundledGddpCatalog.records.filter(r=>r.grade===2);
- assert.equal(grade2.filter(r=>reviewGddpTextbookAddress(r).status==='other_book').length,2);
- assert.ok(grade2.every(r=>reviewGddpTextbookAddress(r).source));
+ const rows=bundledGddpCatalog.records;
+ assert.ok(rows.every(row=>reviewGddpTextbookAddress(row).status==='title_checked'));
+ assert.deepEqual(publicGddpTextbookRecords(rows),rows);
+ const foreign={...rows.find(r=>r.id==='gddp-2026-2-09')!,id:'gddp-2026-2-05',lesson:'Chủ đề 4:  Truyền thống quê em'};
+ const replacement=rows.find(r=>r.id==='gddp-2026-2-09')!;
+ assert.deepEqual(publicGddpTextbookRecords([foreign,edited,replacement]),[replacement]);
+ assert.deepEqual(publicGddpTextbookRecords([replacement,foreign]),[replacement]);
+ assert.deepEqual(publicGddpTextbookRecords([foreign]),[replacement]);
+ assert.deepEqual(publicGddpTextbookRecords([]),[]);
 });

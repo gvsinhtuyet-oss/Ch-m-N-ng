@@ -1,4 +1,5 @@
-import { correctGddpTextbookAddress } from '../../gddp-textbook-review.mjs';
+import { publicGddpTextbookRecords } from '../../gddp-textbook-review.mjs';
+import { bundledGddpCatalog } from './GddpBundledCatalog';
 import { fetchWithTimeout } from './NetworkService';
 
 export interface GddpRecord {
@@ -32,8 +33,10 @@ async function call<T>(path: string, method = 'GET', data?: unknown): Promise<T>
 }
 export const gddpService = {
   publicCatalog: async () => {
-    const catalog = await call<GddpCatalog>('/api/gddp/catalog');
-    return {...catalog, records: catalog.records.map(correctGddpTextbookAddress)};
+    const catalog = await call<GddpCatalog & {source?: string}>('/api/gddp/catalog');
+    const records = catalog.published === false && catalog.source?.startsWith('bundled-')
+      ? bundledGddpCatalog.records : catalog.records;
+    return {...catalog, records: publicGddpTextbookRecords(records)};
   },
   adminCatalog: () => call<{published:boolean;catalog:GddpCatalog}>('/api/admin/gddp/catalog'),
   saveDraft: (data: GddpCatalog) => call<{saved:boolean;records:number}>('/api/admin/gddp/catalog','PUT',data),

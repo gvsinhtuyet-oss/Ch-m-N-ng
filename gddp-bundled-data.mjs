@@ -1,4 +1,4 @@
-// Static school-supplied GDĐP integration catalog (not account data).
+// Static reference catalog for Kết nối tri thức với cuộc sống.
 export const bundledGddpData = {
   "year": "2026-2027",
   "records": [
@@ -113,24 +113,24 @@ export const bundledGddpData = {
       "content": "Chủ đề 2: Di sản văn hóa thế giới Hội An"
     },
     {
-      "id": "gddp-2026-2-05",
-      "grade": 2,
-      "subject": "HĐTN",
-      "week": "14",
-      "lesson": "Chủ đề 4:  Truyền thống quê em",
-      "integrationType": "Toàn phần",
-      "activity": "Khám phá (GDĐP)\nSinh hoạt lớp (HĐTN)",
-      "content": "Chủ đề 3: Lễ hội truyền thống"
-    },
-    {
-      "id": "gddp-2026-2-06",
+      "id": "gddp-2026-2-09",
       "grade": 2,
       "subject": "HĐTN",
       "week": "28",
-      "lesson": "Chủ đề 8:  \nMôi trường xanh – Cuộc sống xanh",
-      "integrationType": "Bộ phận",
-      "activity": "Khám phá (GDĐP)\nHoạt động 2 (HĐTN)",
-      "content": "Chủ đề 1:  Công trình công cộng"
+      "lesson": "Bài 28: Cảnh đẹp quê em",
+      "integrationType": "Gợi ý tích hợp bộ phận",
+      "activity": "Hoạt động giáo dục theo chủ đề, hoạt động 1.",
+      "content": "Quan sát ảnh Sơn Trà, nêu hai đặc điểm để các bạn đoán tên cảnh đẹp."
+    },
+    {
+      "id": "gddp-2026-2-10",
+      "grade": 2,
+      "subject": "HĐTN",
+      "week": "29",
+      "lesson": "Bài 29: Bảo vệ cảnh quan quê em",
+      "integrationType": "Gợi ý tích hợp bộ phận",
+      "activity": "Hoạt động giáo dục theo chủ đề, hoạt động 2, trang 76.",
+      "content": "Chọn một cảnh quan ở Cù Lao Chàm cần giữ gìn và giải thích vì sao."
     },
     {
       "id": "gddp-2026-2-07",
@@ -157,7 +157,7 @@ export const bundledGddpData = {
       "grade": 3,
       "subject": "Tiếng Việt",
       "week": "3",
-      "lesson": "Chủ đề : Những trải nghiệm thú vi. \nBài 4: Nhật kí tập bơi",
+      "lesson": "Chủ đề: Những trải nghiệm thú vị. Bài 5: Nhật kí tập bơi",
       "integrationType": "Bộ phận",
       "activity": "Đọc : Nhật kí tập bơi ( khởi động) (trang 26)",
       "content": "Chủ đề 3:  Bãi biển Mỹ Khuê – Bàn Thàn \n- Nêu những việc cần thực hiện để đảm bảo an toàn khi tham gia tắm biển."
@@ -243,14 +243,14 @@ export const bundledGddpData = {
       "content": "Chủ đề 1:  Hoàng Diệu- Phan Châu Trinh\n-  Kể những điều em biết về nhà yêu nước Hoàng Diệu hoặc Phan Châu Trinh.\n- Xem video hoặc tham quan thực tế Nhà lưu niệm Phan Châu Trinh tại xã Tây Hồ hoặc phường Hải Châu, Đà Nẵng.\n- Chia sẻ cảm xúc của em khi được xem video hoặc tham quan Nhà lưu niệm Phan Châu Trinh."
     },
     {
-      "id": "gddp-2026-3-10",
+      "id": "gddp-2026-3-11",
       "grade": 3,
       "subject": "HĐTN",
-      "week": "15",
-      "lesson": "Chủ đề 4: Tự hào truyền thống quê em.",
-      "integrationType": "Bộ phận",
-      "activity": "Sinh hoạt dưới cờ: Tham gia thi tìm hiểu về truyền thống quê hương. (trang 41)",
-      "content": "Chủ đề 2:  Cộng đồng các dân tộc ở thành phố Đà Nẵng\n-Nét văn hóa đặc sắc của cộng đồng các dân tộc ở thành phố Đà Nẵng.\n- Kể tên những cộng đồng dân tộc ở địa phương em?\n -Kể tên một số sinh hoạt văn hoá đặc sắc của cộng đồng các dân tộc nơi em ở.\n - Hãy kể về hoạt động văn hóa của cộng đồng mà em thích nhất ở địa phương em."
+      "week": "25",
+      "lesson": "Tuần 25: Truyền thống quê hương em",
+      "integrationType": "Gợi ý tích hợp bộ phận",
+      "activity": "Hoạt động giáo dục theo chủ đề, hoạt động 1.",
+      "content": "Xem hình ảnh sinh hoạt văn hóa của các dân tộc ở Đà Nẵng và đặt một câu đố cho bạn."
     },
     {
       "id": "gddp-2026-4-01",
@@ -323,24 +323,24 @@ export const bundledGddpData = {
       "content": "Khu đúc đồng Phước Kiểu"
     },
     {
-      "id": "gddp-2026-4-08",
+      "id": "gddp-2026-4-10",
       "grade": 4,
       "subject": "Hoạt động trải nghiệm",
-      "week": "15",
-      "lesson": "Chủ đề 4:  Em yêu truyền thống quê hương:  Hoạt động giáo dục theo chủ đề: Nhận diện về hoạt động đền ơn đáp nghĩa và giáo dục truyền thống quê hương. Xây dựng dự án đền ơn đáp nghĩa và giáo dục truyền thống quê hương ở địa phương.",
-      "integrationType": "Tích hợp bộ phận",
-      "activity": "Hoạt động khám phá",
-      "content": "Kể tên một số việc làm thể hiện đền ơn đáp nghĩa"
+      "week": "29",
+      "lesson": "Tuần 29: Cảnh quan thiên nhiên quê hương em",
+      "integrationType": "Gợi ý tích hợp bộ phận",
+      "activity": "Hoạt động giáo dục theo chủ đề, hoạt động 2.",
+      "content": "Làm một trang sổ tay giới thiệu vị trí và nét đặc trưng của Sông Thu Bồn – Hòn Kẽm Đá Dừng."
     },
     {
-      "id": "gddp-2026-4-09",
+      "id": "gddp-2026-4-11",
       "grade": 4,
       "subject": "Hoạt động trải nghiệm",
       "week": "32",
-      "lesson": "Chủ đề 9:  Những người sống quanh em và nghề truyền thống quê hương:  Hoạt động giáo dục theo chủ đề: Nhận diện về nghề truyền thống. Xây dựng phiếu thu thập thông tin về nghề truyền thống của địa phương.",
-      "integrationType": "Tích hợp bộ phận",
-      "activity": "Hoạt động khám phá",
-      "content": "Kể tên một số nghề truyền thống tại địa phương."
+      "lesson": "Tuần 32: Trải nghiệm nghề truyền thống",
+      "integrationType": "Gợi ý tích hợp bộ phận",
+      "activity": "Hoạt động giáo dục theo chủ đề, hoạt động 2, trang 81.",
+      "content": "Lập kế hoạch tìm hiểu nguyên liệu, công đoạn và sản phẩm của nghề đúc đồng ở Phước Kiều."
     },
     {
       "id": "gddp-2026-5-01",

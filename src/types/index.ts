@@ -131,7 +131,7 @@ export interface Challenge {
   id: string;
   titleVi: string;
   titleEn?: string;
-  platform: 'internal_interactive' | 'wayground' | 'wordwall' | 'quizizz' | 'external';
+  platform: 'internal_interactive' | 'wayground' | 'quizizz' | 'external';
   url?: string;
   instructionsVi: string;
   instructionsEn?: string;
@@ -139,7 +139,7 @@ export interface Challenge {
   passingScore?: number;
   questions?: ChallengeQuestion[];
   externalGame?: {
-    platform: 'wordwall' | 'wayground' | 'external';
+    platform: 'wayground' | 'external';
     titleVi: string;
     url: string;
     noteVi?: string;

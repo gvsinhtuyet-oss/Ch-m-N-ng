@@ -42,14 +42,38 @@ async function openGame(stationId, viewport) {
   // Legacy iframe's content appears before the iframe load event fires.
   // Wait for React's onLoad layout injection before measuring geometry.
   if(viewport.width<=650 && await page.$('iframe[data-stage2-game-frame]')) {
-    await page.waitForFunction(() => {
-      const frame=document.querySelector('iframe[data-stage2-game-frame]');
-      const doc=frame?.contentDocument;
-      const shell=doc?.querySelector('.scene .shell');
-      const hud=doc?.querySelector('.scene .hud');
-      return Boolean(doc?.documentElement.hasAttribute('data-stage2-portrait') &&
-        shell && hud?.parentElement===shell && doc.querySelector('.music-toggle'));
-    },{timeout:40000});
+    try {
+      await page.waitForFunction(() => {
+        const frame=document.querySelector('iframe[data-stage2-game-frame]');
+        const doc=frame?.contentDocument;
+        const shell=doc?.querySelector('.scene .shell');
+        const hud=doc?.querySelector('.scene .hud');
+        return Boolean(doc?.documentElement.hasAttribute('data-stage2-portrait') &&
+          shell && hud?.parentElement===shell && doc.querySelector('.music-toggle'));
+      },{timeout:40000});
+    } catch(error) {
+      const debug=await page.evaluate(()=>{
+        const frame=document.querySelector('iframe[data-stage2-game-frame]');
+        const doc=frame?.contentDocument;
+        const scene=doc?.querySelector('.scene');
+        const hud=doc?.querySelector('.hud');
+        return {
+          readyState:doc?.readyState,portrait:doc?.documentElement.hasAttribute('data-stage2-portrait'),
+          parentMatches:window.matchMedia('(max-width: 650px) and (orientation: portrait)').matches,
+          sceneCount:doc?.querySelectorAll('.scene').length,
+          hudCount:doc?.querySelectorAll('.hud').length,
+          hudParent:hud?.parentElement?.className,
+          rootChildren:Array.from(scene?.querySelector('.shell')?.children??[]).map(x=>x.className),
+          buttonClasses:Array.from(doc?.querySelectorAll('button')??[]).slice(0,25).map(x=>({cls:x.className,id:x.id,text:x.textContent?.slice(0,25)})),
+          script:!!doc?.getElementById('cham-danang-shared-audio'),
+          gameAudio:!!frame?.contentWindow?.ChamDaNangGameAudio,
+          sourceHref:frame?.contentWindow?.location.href,
+        };
+      });
+      console.error('LEGACY TIMEOUT DEBUG',stationId,JSON.stringify(debug));
+      await page.screenshot({path:'stage2-qa-screenshots/'+stationId+'-timeout.png',fullPage:true});
+      throw error;
+    }
   }
   const metrics=await page.evaluate(() => {
     const frame=document.querySelector('iframe[data-stage2-game-frame]');

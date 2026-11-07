@@ -227,11 +227,11 @@
     },
     {
       "path": "src/App.tsx",
-      "sha256": "ef69fb4a20c49a50ea73037eda552b8e0c4327f07e96d1582cba47f81852261d"
+      "sha256": "72e723aa0a675dbac99827bf35555d1e5490da7bc605fa76bf9f6746f4300cbe"
     },
     {
       "path": "src/components/common/DanangAssistantChat.tsx",
-      "sha256": "fd7fc9e4fb8ebb639cbbefea34f1caaef4dab00d44df78dac53ff07d5eb5f2c9"
+      "sha256": "2c68fb28a5e5aaba9b832e35fa24740d6d04505881c6469e914af7ad0bc1746f"
     },
     {
       "path": "tsconfig.json",

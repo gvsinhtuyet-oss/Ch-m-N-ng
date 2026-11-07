@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import { progressService } from '../../services/ProgressService';
 import { usePortraitStage2Frame } from '../../games/stage2/usePortraitStage2Frame';
 import introLayoutCss from '../../games/stage2/my-khe-unboxed-intro.css?raw';
+import compactQuestionsCss from '../../games/stage2/my-khe-compact-questions.css?raw';
 import type { Station } from '../../types';
 
 interface Props {
@@ -133,6 +134,12 @@ export const MyKheBanThanV12: React.FC<Props> = ({station,studentId,isReadOnly,o
       introStyle.id = 'cham-my-khe-unboxed-intro';
       introStyle.textContent = introLayoutCss;
       doc.head.appendChild(introStyle);
+    }
+    if (doc && !doc.getElementById('cham-my-khe-compact-questions')) {
+      const questionsStyle = doc.createElement('style');
+      questionsStyle.id = 'cham-my-khe-compact-questions';
+      questionsStyle.textContent = compactQuestionsCss;
+      doc.head.appendChild(questionsStyle);
     }
     installLegacySoundControl(event.currentTarget);
   }} />;

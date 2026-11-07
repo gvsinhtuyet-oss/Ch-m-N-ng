@@ -47,10 +47,12 @@ export const HoangDieuPhanChauTrinhV18: React.FC<Props> = ({ station, studentId,
       corners.textContent = `
         @media (min-width: 1024px) {
           .scene:not(.is-victory) .hud {
-            position: fixed !important;
+            /* Fixed is scoped by the animated game shell on some engines.
+               Use a relative-to-shell offset that reaches the iframe edges. */
+            position: absolute !important;
             top: clamp(12px,2vh,22px) !important;
-            left: clamp(12px,2vw,30px) !important;
-            right: clamp(12px,2vw,30px) !important;
+            left: calc((100% - 100vw) / 2 + clamp(12px,2vw,30px)) !important;
+            right: calc((100% - 100vw) / 2 + clamp(12px,2vw,30px)) !important;
             width: auto !important;
             max-width: none !important;
             justify-content: space-between !important;

@@ -37,6 +37,7 @@ export const authService = {
   async saveImplementation(data: Pick<ImplementationRecord,'classId'|'grade'|'stationId'|'stationName'|'implementationDate'|'session'|'method'|'note'>): Promise<ImplementationRecord> {return (await request('/api/teacher/implementations','POST',data)).record;},
   async reviewProposal(id:string,status:'accepted'|'rejected'){await request('/api/teacher/proposals','PUT',{id,status});},
   async proposals(): Promise<LearningProposal[]> {return (await request('/api/teacher/proposals')).records;},
+  async stationRatings(): Promise<Record<string, number[]>> { return (await request('/api/admin/station-ratings')).ratings; },
   async submitProposal(data: Pick<LearningProposal,'stationId'|'stationName'|'grade'|'text'>): Promise<LearningProposal> {return (await request('/api/teacher/proposals','POST',data)).record;},
   async health(): Promise<AuthHealth> { return await request('/api/health'); },
   async classProgress(classId: string): Promise<RealClassProgress> { return await request('/api/teacher/progress?classId='+encodeURIComponent(classId)); },

@@ -7,6 +7,8 @@ const categories=['Kiến thức','Hình ảnh/âm thanh','Câu hỏi/trò chơi
 // bypass the limit. Configure Firestore TTL on expireAt for this collection.
 export function createLearningFeedback({store,auth,secureCookie=true}) {
   const ingress=new Map();
+  let ratingsCache=null;
+  let ratingsCacheUntil=0;
   function throttle(key,max) {
     const now=Date.now();
     for(const [k,v] of ingress)if(v.until<=now)ingress.delete(k);
@@ -44,6 +46,21 @@ export function createLearningFeedback({store,auth,secureCookie=true}) {
     return {id,kind:'guest'};
   }
   return async function handle(req,res,pathname,body,json) {
+    if(pathname==='/api/admin/station-ratings') {
+      if(req.method!=='GET')throw fail(405,'Phương thức không hỗ trợ.');
+      if(!store)throw fail(503,'Máy chủ phản hồi chưa được cấu hình.');
+      await auth.requireAdmin(req);
+      if(!ratingsCache || Date.now() >= ratingsCacheUntil){
+        const countsByStation=new Map(FEEDBACK_STATIONS.map(({id})=>[id,[0,0,0,0,0]]));
+        for(const {stationId,stars} of await store.list('cham_journey_ratings')) {
+          const counts=countsByStation.get(stationId);
+          if(counts&&Number.isInteger(stars)&&stars>=1&&stars<=5)counts[stars-1]++;
+        }
+        ratingsCache=Object.fromEntries(countsByStation);
+        ratingsCacheUntil=Date.now()+120000;
+      }
+      json(res,200,{ratings:ratingsCache});return true;
+    }
     if(!['/api/learning/rating','/api/learning/proposals'].includes(pathname))return false;
     if(req.method!=='POST')throw fail(405,'Phương thức không hỗ trợ.');
     auth.sameOrigin(req);
@@ -69,6 +86,7 @@ export function createLearningFeedback({store,auth,secureCookie=true}) {
       if(old?.stars===data.stars){json(res,200,{saved:true,stars:old.stars});return true;}
       await quota('rating:'+actorKey,20,60000);
       await store.put('cham_journey_ratings',id,{id,actorId:actorKey,actorKind:actor.kind,stationId:station.id,stationName:station.titleVi,grade:station.grade,stars:data.stars,createdAt:old?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()});
+      ratingsCache=null;
       json(res,200,{saved:true,stars:data.stars});return true;
     }
     const text=data.text.trim(),source=(data.source||'').trim();

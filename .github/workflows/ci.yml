@@ -146,3 +146,27 @@ jobs:
           name: stage2-mobile-screenshots
           path: stage2-qa-screenshots/
           if-no-files-found: ignore
+
+  stage2-final-production-audit:
+    name: Final live 25 games, phone + desktop + tablet regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm install --no-save --no-package-lock --no-audit --no-fund puppeteer-core
+      - name: Confirm additional 320px 412px iPad screens after 50 successful full-game runs
+        env:
+          STAGE2_QA_URL: https://chamdanang-gddp.pages.dev
+          EXTRA_ONLY: '1'
+        run: node --import tsx production-stage2-all25-audit.mjs
+      - name: Save screenshots and measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage2-final-live-all25-audit
+          path: production-stage2-audit/
+          if-no-files-found: ignore

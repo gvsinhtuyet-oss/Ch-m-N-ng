@@ -86,6 +86,7 @@ function assertLayout(id,metrics,isPhone) {
     id+': horizontal page overflow '+metrics.documentWidth+' > '+metrics.width);
   if(isPhone){
     assert.ok(metrics.hud,id+': missing live HUD controls');
+    assert.ok(metrics.musicButton,id+': missing working sound control');
     assert.equal(metrics.hudOrder,'1',id+': HUD must precede artwork');
     assert.equal(metrics.panelOrder,'3',id+': question panel must follow artwork');
     assert.ok(metrics.heroHeight>=80,id+': 16:9 artwork not visible ('+metrics.heroHeight+')');
@@ -113,6 +114,14 @@ try{
       await page.screenshot({path:'stage2-qa-screenshots/'+station.id+'-before-assert.png',fullPage:true});
     }
     assertLayout(station.id,metrics,true);
+    if(station.id==='g3-station-1'){
+      const toggle=await page.evaluate(()=>{
+        const btn=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument?.querySelector('.music-toggle');
+        const before=btn?.getAttribute('aria-pressed');btn?.click();
+        return {before,after:btn?.getAttribute('aria-pressed')};
+      });
+      assert.ok(toggle.before!==null&&toggle.after!==toggle.before,'My Khe sound button should toggle');
+    }
     assert.deepEqual(errors,[],station.id+': JavaScript errors');
     console.log('PHONE OK',station.id,metrics.iframe?'HTML':'React',
       'hero',metrics.heroHeight,'gap',metrics.gap);

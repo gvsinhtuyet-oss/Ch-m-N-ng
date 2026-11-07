@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { progressService } from '../../services/ProgressService';
 import { usePortraitStage2Frame } from '../../games/stage2/usePortraitStage2Frame';
+import introLayoutCss from '../../games/stage2/my-khe-unboxed-intro.css?raw';
 import type { Station } from '../../types';
 
 interface Props {
@@ -125,6 +126,14 @@ export const MyKheBanThanV12: React.FC<Props> = ({station,studentId,isReadOnly,o
   return <iframe data-stage2-game-frame id="my-khe-v12-frame" title="Mật mã hai miền biển – Chặng 2" src="/games/grade3-my-khe-ban-than/v12/index.html" className="block h-[100dvh] min-h-[500px] w-full rounded-2xl border-0" allow="autoplay; fullscreen" onLoad={event => {
     fitMobileGameArtwork(event);
     fitPortrait(event);
+    // Intro-only treatment: never change game questions, rewards, or victory.
+    const doc = event.currentTarget.contentDocument;
+    if (doc && !doc.getElementById('cham-my-khe-unboxed-intro')) {
+      const introStyle = doc.createElement('style');
+      introStyle.id = 'cham-my-khe-unboxed-intro';
+      introStyle.textContent = introLayoutCss;
+      doc.head.appendChild(introStyle);
+    }
     installLegacySoundControl(event.currentTarget);
   }} />;
 };

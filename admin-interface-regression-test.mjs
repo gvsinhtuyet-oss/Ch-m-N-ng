@@ -29,6 +29,12 @@ test('admin design keeps a single real station editor, accessible navigation and
   assert.match(editor,/Ảnh bản đồ nhận quà đã được đóng gói và duyệt sẵn/);
   assert.match(css,/\.admin-sidebar .*\[aria-current\]/);
   assert.match(css,/\.cham-admin-topbar/);
+  const theme=read('src/features/admin/ThemeEditor.tsx');
+  assert.match(dashboard,/onDirtyChange=\{setEditorDirty\}/);
+  assert.match(dashboard,/activeTab === 'stations' \|\| activeTab === 'theme'/);
+  assert.match(theme,/onDirtyChange/);
+  assert.match(theme,/beforeunload/);
+  assert.match(theme,/window\.confirm/,'Theme publishing must require an explicit confirmation');
   assert.match(header,/adminArea/);
 });
 

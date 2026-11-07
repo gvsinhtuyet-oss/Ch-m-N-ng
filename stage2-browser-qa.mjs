@@ -60,6 +60,11 @@ async function openGame(stationId, viewport) {
       gap:panelRect&&hudRect?panelRect.top-hudRect.bottom:null,
       musicButton:!!root?.querySelector('.music-toggle'),
       prompt:!!root?.querySelector('.intro-start, .intro-screen'),
+      htmlPortrait:frame?.contentDocument?.documentElement.hasAttribute('data-stage2-portrait'),
+      hudParent:hud?.parentElement?.className,
+      shellChildren:shell?Array.from(shell.children).map(x=>({tag:x.tagName,cls:x.className})):[],
+      hudPosition:hud?getComputedStyle(hud).position:'',
+      shellDisplay:shell?getComputedStyle(shell).display:'',
     };
   });
   return {page,metrics,errors};
@@ -93,6 +98,10 @@ try{
   const phone={width:390,height:844};
   for(const station of ALL_25_STATIONS){
     const {page,metrics,errors}=await openGame(station.id,phone);
+    if(station.id==='g3-station-1'||station.id==='g3-station-2') {
+      console.log('LEGACY DEBUG',station.id,JSON.stringify(metrics));
+      await page.screenshot({path:'stage2-qa-screenshots/'+station.id+'-before-assert.png',fullPage:true});
+    }
     assertLayout(station.id,metrics,true);
     assert.deepEqual(errors,[],station.id+': JavaScript errors');
     console.log('PHONE OK',station.id,metrics.iframe?'HTML':'React',

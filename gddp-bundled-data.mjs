@@ -107,7 +107,7 @@ export const bundledGddpData = {
       "grade": 2,
       "subject": "Đạo đức",
       "week": "31",
-      "lesson": "Bài 13: : Em yêu quê hương (tiết 1)",
+      "lesson": "Bài 2: Em yêu quê hương (tiết 1)",
       "integrationType": "Bộ phận",
       "activity": "Khám phá, Yêu cầu 3 (GDĐP)\nKhám phá Yêu cầu 2 (Đạo đức)",
       "content": "Chủ đề 2: Di sản văn hóa thế giới Hội An"
@@ -237,7 +237,7 @@ export const bundledGddpData = {
       "grade": 3,
       "subject": "TNXH",
       "week": "",
-      "lesson": "Bài 11:Di tích lịch sử - vă hóa và cảnh quan thiên nhiên.",
+      "lesson": "Bài 11: Di tích lịch sử – văn hóa và cảnh quan thiên nhiên",
       "integrationType": "Bộ phận",
       "activity": "Hoạt động 2: Kể tên một số di tích lịch sử - văn háo hoặc cảnh quan thiên nhiên ở địa phương em ( trang 49)",
       "content": "Chủ đề 1:  Hoàng Diệu- Phan Châu Trinh\n-  Kể những điều em biết về nhà yêu nước Hoàng Diệu hoặc Phan Châu Trinh.\n- Xem video hoặc tham quan thực tế Nhà lưu niệm Phan Châu Trinh tại xã Tây Hồ hoặc phường Hải Châu, Đà Nẵng.\n- Chia sẻ cảm xúc của em khi được xem video hoặc tham quan Nhà lưu niệm Phan Châu Trinh."
@@ -367,7 +367,7 @@ export const bundledGddpData = {
       "grade": 5,
       "subject": "Tiếng Việt",
       "week": "Tuần 8",
-      "lesson": "Bài 16: Nói và nghe: Giới thiệu một cảnh đẹp thiên nhiên của đất nước ta",
+      "lesson": "Bài 16: Nói và nghe: Cảnh đẹp thiên nhiên",
       "integrationType": "Bộ phận",
       "activity": "HĐ khởi động",
       "content": "Giới thiệu danh lam thắng cảnh Ngũ Hành Sơn"

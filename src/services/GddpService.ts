@@ -1,3 +1,4 @@
+import { correctGddpTextbookAddress } from '../../gddp-textbook-review.mjs';
 import { fetchWithTimeout } from './NetworkService';
 
 export interface GddpRecord {
@@ -30,7 +31,10 @@ async function call<T>(path: string, method = 'GET', data?: unknown): Promise<T>
   return json as T;
 }
 export const gddpService = {
-  publicCatalog: () => call<GddpCatalog>('/api/gddp/catalog'),
+  publicCatalog: async () => {
+    const catalog = await call<GddpCatalog>('/api/gddp/catalog');
+    return {...catalog, records: catalog.records.map(correctGddpTextbookAddress)};
+  },
   adminCatalog: () => call<{published:boolean;catalog:GddpCatalog}>('/api/admin/gddp/catalog'),
   saveDraft: (data: GddpCatalog) => call<{saved:boolean;records:number}>('/api/admin/gddp/catalog','PUT',data),
   publish: () => call<{published:boolean;records:number}>('/api/admin/gddp/publish','POST',{}),

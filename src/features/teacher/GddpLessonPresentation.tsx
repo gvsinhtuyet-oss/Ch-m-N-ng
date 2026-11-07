@@ -9,8 +9,8 @@ import {DEFAULT_APP_BACKGROUND_DATA_URL} from '../../assets/defaultAppBackground
 // Deliberately separate from StationView and ClassroomPresentationMode:
 // only the single selected lesson hotspot renders, without stage navigation,
 // student rewards, station challenge or whole-station narration.
-export const GddpLessonPresentation:React.FC<{record:GddpRecord;resource:MatchedLessonResource;onExit:()=>void}> =
-({record,resource,onExit})=>{
+export const GddpLessonPresentation:React.FC<{record:GddpRecord;resource:MatchedLessonResource;onExit:()=>void;onOpenStation?:()=>void}> =
+({record,resource,onExit,onOpenStation})=>{
   const [showAnswer,setShowAnswer]=useState(false);
   const [show360,setShow360]=useState(false);
   useEffect(()=>()=>audioService.stopNarration(),[]);
@@ -23,6 +23,7 @@ export const GddpLessonPresentation:React.FC<{record:GddpRecord;resource:Matched
         <h2 className="text-xl font-black">{record.lesson}</h2>
         <p className="text-sm text-slate-300">{record.subject} · Lớp {record.grade} · {record.activity}</p></div>
       <AppFullscreenButton className="inline-flex min-h-10 items-center gap-2 rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700" />
+      {onOpenStation && <button type="button" className="rounded-xl bg-sky-700 px-4 py-2 font-bold" onClick={()=>{audioService.stopNarration();onOpenStation();}}>Mở cả trạm</button>}
       <button type="button" onClick={close} className="rounded-xl bg-rose-700 px-5 py-3 font-bold">Đóng trình chiếu</button>
     </header>
     <div className="grid gap-5 lg:grid-cols-2">

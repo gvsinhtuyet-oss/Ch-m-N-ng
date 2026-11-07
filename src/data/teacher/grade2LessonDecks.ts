@@ -424,7 +424,7 @@ export const GRADE2_LESSON_DECKS: LessonDeckDefinition[] = [
       "grade": 2,
       "subject": "Đạo đức",
       "week": "31",
-      "lesson": "Bài 13: : Em yêu quê hương (tiết 1)",
+      "lesson": "Bài 2: Em yêu quê hương (tiết 1)",
       "integrationType": "Bộ phận",
       "activity": "Khám phá, Yêu cầu 3 (GDĐP)\nKhám phá Yêu cầu 2 (Đạo đức)",
       "content": "Chủ đề 2: Di sản văn hóa thế giới Hội An"

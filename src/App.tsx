@@ -1,4 +1,6 @@
 import { FeatureLoadBoundary } from './components/common/FeatureLoadBoundary';
+import { effectivenessService } from './services/EffectivenessService';
+import type { Student } from './types';
 import { backgroundMusic } from './services/BackgroundMusic';
 import { audioService } from './services/AudioService';
 import { AppBackground } from './components/common/AppBackground';
@@ -59,6 +61,16 @@ const AppContent: React.FC = () => {
     return () => document.removeEventListener('click', soundOnActivation);
   }, []);
 
+  const analyticsAudience = currentUser && role !== 'student' ? 2
+    : currentUser && !(currentUser as Student).isGuest ? 1 : 0;
+  useEffect(() => { effectivenessService.visit(analyticsAudience); }, [analyticsAudience]);
+  useEffect(() => {
+    const visible = () => { if (document.visibilityState === 'hidden') effectivenessService.flush(); else effectivenessService.refreshVisit(); };
+    window.addEventListener('online', effectivenessService.flush);
+    document.addEventListener('visibilitychange', visible);
+    return () => { window.removeEventListener('online', effectivenessService.flush); document.removeEventListener('visibilitychange', visible); };
+  }, []);
+
   const [storageWarning, setStorageWarning] = useState(false);
   useEffect(() => {
     const notify = () => setStorageWarning(true);
@@ -82,7 +94,7 @@ const AppContent: React.FC = () => {
     <div className={`game-shell min-h-screen flex flex-col text-slate-800 ${currentView === 'station-view' ? 'station-screen-fixed' : currentView === 'student-journey' ? 'journey-screen-fixed' : ''}`}>
       {currentView !== 'station-view' && <Header />}
 
-      <main className="game-content flex-1">
+      <main className={`game-content flex-1 ${currentView === 'admin-view' || currentView === 'teacher-view' ? 'staff-workspace' : ''}`}>
         {currentView === 'student-journey' && <StudentJourneyView />}
         {currentView === 'student-passport' && <StudentPassportView />}
         {currentView === 'student-maps' && <StudentJourneyMapsView />}

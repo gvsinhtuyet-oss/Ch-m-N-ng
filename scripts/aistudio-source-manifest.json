@@ -1,5 +1,5 @@
 {
-  "commit": "4a7f2c8857f8e2044097205ee19203a817f26e00",
+  "commit": "eae28503d95d1728d80fd48c03a1dd4ae4297537",
   "files": [
     {
       "path": "src/games/stage2/SharedStage2.tsx",
@@ -147,7 +147,7 @@
     },
     {
       "path": "src/services/Grade1ContentPolicy.ts",
-      "sha256": "dbe3623098bda745f717a44feed343dcda2c6e4a717c8319e308017f3cf45f11"
+      "sha256": "14c442cef1699a39442971cfe6eb6284762c7bdfb4c3a0a35d9d4b69b120dbee"
     },
     {
       "path": "src/services/GddpService.ts",
@@ -324,6 +324,22 @@
     {
       "path": "src/data/assistantAssessmentBank.json",
       "sha256": "a3aff34f7c57bed5a00f092e8c51006824225b7c112ffbbcd3206276f3617dd2"
+    },
+    {
+      "path": "src/data/grade1MinutesAlignment.ts",
+      "sha256": "357ac57edab5d23345105e47ca2fd16836e7b3a58acc6d145b44fbbc33615fa2"
+    },
+    {
+      "path": "src/data/grade1Content.ts",
+      "sha256": "f48d95c89f8d09b5e6efa7c43ade4bb4c6b0b4b3a4fab1626f4d621af2259664"
+    },
+    {
+      "path": "src/data/grade1Stations.ts",
+      "sha256": "aed74c08896966d8ff5e39773c58ce75ecf6c3cc4bfa3175f87662505648fb79"
+    },
+    {
+      "path": "src/components/station/Stage1Exploration.tsx",
+      "sha256": "19362e25fdbea0b3140eba3ad2292aebd5664c989d6426395f7e6d75197dc96f"
     }
   ]
 }

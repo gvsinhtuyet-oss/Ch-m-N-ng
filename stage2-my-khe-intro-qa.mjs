@@ -115,6 +115,23 @@ try {
     assert.equal(question.prompt,config.questions[0].prompt);
     assert.equal(question.choices,3);
     assert.equal(question.images,3);
+    if(width===768) {
+      const tablet=await page.evaluate(host=>{
+        const root=document.querySelector(host)?.shadowRoot;
+        const rect=el=>{const r=el?.getBoundingClientRect();return r?{top:r.top,bottom:r.bottom,height:r.height,width:r.width,mid:r.top+r.height/2}:null};
+        return {
+          keys:rect(root?.querySelector('.hud-keys')),
+          music:rect(root?.querySelector('.music-toggle')),
+          cards:[...root?.querySelectorAll('.answers button:has(.choice-photo)')??[]].map(rect),
+        };
+      },root);
+      console.log('MY KHE TABLET HUD/PHOTO CARDS',JSON.stringify(tablet));
+      assert.ok(tablet.keys&&tablet.music,'iPad keys/music missing');
+      assert.ok(Math.abs(tablet.keys.mid-tablet.music.mid)<=8,'iPad audio button must stay on the same row as keys');
+      assert.equal(tablet.cards.length,3,'iPad photo-choice count');
+      assert.ok(tablet.cards.every(card=>card.height>=120&&card.height<=216),'iPad answer image cards should not stretch with blank space');
+    }
+
     assert.ok(question.panel?.width<=(width<=650?width+2:900),name+': question card too wide');
     assert.ok(question.panel?.height<=(width<=650?375:560),name+': question card too tall');
     await page.screenshot({path:'stage2-qa-screenshots/my-khe-shared-question-'+name+'.png',fullPage:true});

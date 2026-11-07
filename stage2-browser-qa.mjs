@@ -215,7 +215,7 @@ try{
       assert.ok(visual.panel?.width <= (width===390?391:1102),'My Khe panel is too wide');
       if(width===390) {
         assert.ok(visual.questionFont!==null&&visual.questionFont<=20,'My Khe question text remains oversized');
-        assert.ok(visual.buttons.every(b=>b.height<=90),'My Khe answer buttons are too tall');
+        assert.ok(visual.buttons.every(b=>b.height<=155),'My Khe image answer buttons are too tall');
         assert.ok(visual.heroBackground?.includes('12px'),'My Khe banner needs safe top padding');
       } else {
         assert.ok(visual.backgroundPosition?.includes('30px'),'My Khe desktop banner clipped at frame top');

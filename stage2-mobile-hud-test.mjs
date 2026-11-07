@@ -60,6 +60,8 @@ test('Both approved HTML games use the same phone layout without replacing their
   assert.match(myKhe, /grade3-my-khe-ban-than\/v12\/index\.html/);
   assert.match(hoangDieu, /grade3-hoang-dieu-phan-chau-trinh\/v18\/index\.html/);
   assert.match(myKhe, /progressService\.completeStage2/);
+  assert.match(myKhe, /installLegacySoundControl/);
+  assert.match(myKhe, /button\.className = 'music-toggle'/);
   assert.match(hoangDieu, /progressService\.completeStage2/);
   assert.match(myKhe, /onCompleteStage/);
   assert.match(hoangDieu, /onCompleteStage/);

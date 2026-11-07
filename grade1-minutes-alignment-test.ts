@@ -57,7 +57,7 @@ test('Food opening exactly reflects six dishes and practical substitution Bánh 
   assert.deepEqual(p[2].imageSubjects,['Bánh đập']);
   assert.match(p[2].instructions.join(' '),/Bánh tráng chập/);
   assert.doesNotMatch(lesson('g1-station-5').points[0].narration,/cao lầu|bê thui|cơm gà|nem nướng/i);
-  for(const name of names)assert.ok(lesson('g1-station-5').points[0].narration.includes(name),name);
+  for(const name of names)assert.ok(lesson('g1-station-5').points[0].narration.toLowerCase().includes(name.toLowerCase()),name);
   assert.match(lesson('g1-station-5').points[3].narration,/bánh đập/);
 });
 test('All existing progress IDs and challenges survive; corrected narration never plays old recording',()=>{

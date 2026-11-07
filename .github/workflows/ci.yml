@@ -158,9 +158,10 @@ jobs:
           node-version: '22'
       - run: npm install --no-audit --no-fund
       - run: npm install --no-save --no-package-lock --no-audit --no-fund puppeteer-core
-      - name: Play all 25 LIVE games on phone and desktop; check mobile/tablet overflow and photos
+      - name: Confirm additional 320px 412px iPad screens after 50 successful full-game runs
         env:
           STAGE2_QA_URL: https://chamdanang-gddp.pages.dev
+          EXTRA_ONLY: '1'
         run: node --import tsx production-stage2-all25-audit.mjs
       - name: Save screenshots and measurements
         if: always()

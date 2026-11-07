@@ -20,9 +20,12 @@ export function usePortraitStage2Frame() {
     const scene = gameDocument?.querySelector<HTMLElement>('.scene');
     if (!gameDocument || !scene) return;
 
-    const artwork = frame.contentWindow?.getComputedStyle(scene).backgroundImage.match(/url\("[^"]+"\)/)?.[0];
-    if (!artwork) return;
-    scene.style.setProperty('--game-artwork', artwork);
+    const originalBackground = frame.contentWindow?.getComputedStyle(scene).backgroundImage ?? '';
+    const artwork = originalBackground.match(/url\((?:"[^"]+"|'[^']+'|[^)]+)\)/)?.[0];
+    // Layout still applies when a legacy game has no extractable artwork.
+    // In that case show its existing heading instead of an empty banner.
+    gameDocument.documentElement.toggleAttribute('data-stage2-artwork-missing', !artwork);
+    if (artwork) scene.style.setProperty('--game-artwork', artwork);
     const style = gameDocument.createElement('style');
     style.textContent = embeddedPortraitCss + framePortraitCss;
     gameDocument.head.append(style);
@@ -52,6 +55,7 @@ export function usePortraitStage2Frame() {
       observer.disconnect();
       media.removeEventListener('change', updateMode);
       gameDocument.documentElement.removeAttribute('data-stage2-portrait');
+      gameDocument.documentElement.removeAttribute('data-stage2-artwork-missing');
       frame.style.removeProperty('--stage2-frame-height');
       style.remove();
     };

@@ -142,7 +142,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
         </div>
       </div>
 
-      {currentStage < 3 && <p className="station-phone-stage-name">{stages[currentStage - 1].name}</p>}
+      {currentStage === 1 && <p className="station-phone-stage-name">{stages[0].name}</p>}
       <div ref={lessonPanelRef} className="station-lesson-panel min-h-0 flex-1 overflow-y-auto space-y-3">
       <div className={currentStage === 1 && stationHasExplorationTools(station) ? 'station-exploration-layout' : ''}>
 

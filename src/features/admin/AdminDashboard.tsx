@@ -82,7 +82,7 @@ export const AdminDashboard: React.FC = () => {
           <span className="ml-auto text-xs font-medium text-slate-600">{activeGroup.label}</span>
           <ChevronDown className={`h-4 w-4 ${menuOpen ? 'rotate-180' : ''}`} aria-hidden="true" />
         </button>
-        <nav id="admin-navigation" id="admin-navigation" aria-label="Điều hướng quản trị" className={`${menuOpen ? 'block' : 'hidden'} lg:block`}>
+        <nav id="admin-navigation" aria-label="Điều hướng quản trị" className={`${menuOpen ? 'block' : 'hidden'} lg:block`}>
           <ul className="space-y-1">
             {adminGroups.map(group => {
               const Icon = group.icon;

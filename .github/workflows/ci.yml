@@ -88,6 +88,9 @@ jobs:
       - name: Grade 1 content consistency with July 2025 review minutes
         run: node --import tsx --test grade1-minutes-alignment-test.ts
 
+      - name: Grade 1 teaching content and game coherence
+        run: node --import tsx --test grade1-pedagogy-coherence-test.ts
+
       - name: Grade 1 authored content and no-network regression
         run: node --import tsx --test grade1-content-test.ts stage-access-test.ts stage2-distinct-test.ts
 

@@ -277,3 +277,180 @@
     min-height:52px!important;
   }
 }
+
+
+/* FINAL approved introduction: small, self-sized cream content card BELOW
+   the ENTIRE title artwork, never a huge overlay on the beach.  Keep
+   question-state .panel untouched: selectors require .intro-screen. */
+.scene:not(.is-victory) .shell:has(.intro-screen) {
+  box-sizing:border-box!important;
+}
+.scene:not(.is-victory) .shell:has(.intro-screen) > .panel {
+  display:block!important;
+  box-sizing:border-box!important;
+  position:relative!important;
+  width:min(calc(100% - 24px),660px)!important;
+  max-width:660px!important;
+  min-width:0!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  margin:0 auto 20px!important;
+  padding:16px 20px 19px!important;
+  border:2px solid #d6a553!important;
+  border-radius:20px!important;
+  background:#fff9ed!important;
+  background-color:#fff9ed!important;
+  background-image:none!important;
+  box-shadow:0 5px 13px rgba(34,54,80,.12)!important;
+  -webkit-backdrop-filter:none!important;
+  backdrop-filter:none!important;
+  overflow:visible!important;
+}
+.scene:not(.is-victory) .shell:has(.intro-screen) .intro-screen {
+  display:flex!important;
+  width:100%!important;
+  max-width:620px!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  gap:7px!important;
+  padding:0!important;
+  margin:0 auto!important;
+}
+.scene:not(.is-victory) .shell:has(.intro-screen) .intro-emblem {
+  font-size:27px!important;
+  line-height:1!important;
+}
+.scene:not(.is-victory) .shell:has(.intro-screen) .intro-screen h2 {
+  margin:1px 0 3px!important;
+  font-size:clamp(20px,2.5vw,28px)!important;
+  line-height:1.22!important;
+  color:#773e17!important;
+  text-shadow:none!important;
+}
+.scene:not(.is-victory) .shell:has(.intro-screen) .intro-story {
+  margin:0!important;
+  max-width:600px!important;
+  padding:0!important;
+  font-size:clamp(14px,1.55vw,17px)!important;
+  line-height:1.4!important;
+  color:#183d5c!important;
+  text-shadow:none!important;
+}
+.scene:not(.is-victory) .shell:has(.intro-screen) .intro-rules {
+  display:flex!important;
+  justify-content:center!important;
+  flex-wrap:wrap!important;
+  max-width:100%!important;
+  gap:6px!important;
+  margin:4px 0 0!important;
+}
+.scene:not(.is-victory) .shell:has(.intro-screen) .intro-rules span {
+  font-size:clamp(11px,1.25vw,13px)!important;
+  padding:5px 9px!important;
+  border-radius:99px!important;
+}
+.scene:not(.is-victory) .shell:has(.intro-screen) .intro-call {
+  display:none!important; /* redundant with instructions and pushes Start below fold */
+}
+.scene:not(.is-victory) .shell:has(.intro-screen) .intro-start {
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:min(100%,295px)!important;
+  min-width:0!important;
+  min-height:48px!important;
+  height:auto!important;
+  margin:6px auto 0!important;
+  padding:9px 12px!important;
+  font-size:clamp(14px,1.5vw,17px)!important;
+  line-height:1.2!important;
+  border-radius:15px!important;
+}
+@media (max-width:650px) and (orientation:portrait) {
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) {
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:flex-start!important;
+    align-items:stretch!important;
+    gap:5px!important;
+    padding:8px 7px max(15px,env(safe-area-inset-bottom,0px))!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) > .top {
+    order:1!important;
+    margin:0!important;
+    min-height:44px!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen)::before {
+    content:""!important;
+    display:block!important;
+    order:2!important;
+    align-self:stretch!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    aspect-ratio:16/9!important;
+    height:auto!important;
+    margin:0!important;
+    background:var(--game-artwork) center top / contain no-repeat!important;
+    border-radius:9px!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) > .panel {
+    order:3!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    max-width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:3px 0 10px!important;
+    padding:12px 10px 14px!important;
+    border:1.5px solid #d6a553!important;
+    border-radius:16px!important;
+    background:#fff9ed!important;
+    background-color:#fff9ed!important;
+    background-image:none!important;
+    box-shadow:0 3px 10px rgba(34,54,80,.12)!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-screen {
+    gap:5px!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-emblem {
+    font-size:23px!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-screen h2 {
+    font-size:clamp(18px,4.9vw,22px)!important;
+    line-height:1.18!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-story {
+    font-size:clamp(12px,3.45vw,14px)!important;
+    line-height:1.35!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-rules {
+    gap:4px!important;
+    margin:2px 0!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-rules span {
+    padding:4px 6px!important;
+    font-size:clamp(9px,2.5vw,11px)!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-start {
+    min-height:46px!important;
+    width:min(100%,280px)!important;
+    margin:4px auto 0!important;
+    font-size:14px!important;
+  }
+}
+@media (min-width:651px) {
+  .scene:not(.is-victory) .shell:has(.intro-screen) {
+    padding-top:clamp(300px,39vh,390px)!important;
+  }
+  .scene:not(.is-victory) .shell:has(.intro-screen) > .panel {
+    width:min(calc(100% - 24px),660px)!important;
+    max-width:660px!important;
+    margin:0 auto 20px!important;
+    padding:14px 18px 17px!important;
+    background:#fff9ed!important;
+    border:2px solid #d6a553!important;
+    border-radius:20px!important;
+    box-shadow:0 5px 13px rgba(34,54,80,.12)!important;
+  }
+}

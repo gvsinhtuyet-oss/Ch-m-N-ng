@@ -146,3 +146,26 @@ jobs:
           name: stage2-mobile-screenshots
           path: stage2-qa-screenshots/
           if-no-files-found: ignore
+
+  stage2-all25-production-audit:
+    name: LIVE 25 Stage 2 games, every question, phone and desktop
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm install --no-save --no-package-lock --no-audit --no-fund puppeteer-core
+      - name: Check every Stage 2 game end to end on public Cloudflare
+        env:
+          STAGE2_QA_URL: https://chamdanang-gddp.pages.dev
+        run: node --import tsx production-stage2-all25-audit.mjs
+      - name: Archive game screenshots, audit metrics and failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-all25-phone-desktop-qa
+          path: production-stage2-audit/
+          if-no-files-found: ignore

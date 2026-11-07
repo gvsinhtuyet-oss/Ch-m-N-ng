@@ -40,8 +40,14 @@ export function usePortraitStage2Frame() {
     const placeHud = () => {
       const active = currentScene();
       const shell = active.querySelector<HTMLElement>('.shell');
-      const hud = active.querySelector<HTMLElement>('.hud');
-      if (!shell || !hud || hud.parentElement === shell) return;
+      if (!shell) return;
+      // V18 uses .hud; the approved My Khe V12 generates a .top each
+      // time it renders a new question. Prefer the newest live game control.
+      const newHud = active.querySelector<HTMLElement>('.panel > .hud, .panel > .top');
+      const existing = shell.querySelector<HTMLElement>(':scope > .hud, :scope > .top');
+      const hud = newHud ?? existing;
+      if (!hud || hud.parentElement === shell) return;
+      if (existing && existing !== hud) existing.remove();
       originalParent = hud.parentNode;
       originalNext = hud.nextSibling;
       shell.insertBefore(hud, shell.firstChild);

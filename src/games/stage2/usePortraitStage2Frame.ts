@@ -20,26 +20,81 @@ export function usePortraitStage2Frame() {
     const scene = gameDocument?.querySelector<HTMLElement>('.scene');
     if (!gameDocument || !scene) return;
 
-    const artwork = frame.contentWindow?.getComputedStyle(scene).backgroundImage.match(/url\("[^"]+"\)/)?.[0];
-    if (!artwork) return;
-    scene.style.setProperty('--game-artwork', artwork);
+    const originalBackground = frame.contentWindow?.getComputedStyle(scene).backgroundImage ?? '';
+    const artwork = originalBackground.match(/url\((?:"[^"]+"|'[^']+'|[^)]+)\)/)?.[0];
+    // Layout still applies when a legacy game has no extractable artwork.
+    // In that case show its existing heading instead of an empty banner.
+    gameDocument.documentElement.toggleAttribute('data-stage2-artwork-missing', !artwork);
+    if (artwork) gameDocument.documentElement.style.setProperty('--game-artwork', artwork);
     const style = gameDocument.createElement('style');
     style.textContent = embeddedPortraitCss + framePortraitCss;
     gameDocument.head.append(style);
 
     const media = window.matchMedia(portraitQuery);
+    // V12 keeps the live HUD inside .panel; V18 already keeps it in .shell.
+    // Move the actual DOM node, not a duplicate, so audio/rewards retain listeners.
+    let relocatedHud: HTMLElement | null = null;
+    let originalParent: Node | null = null;
+    let originalNext: Node | null = null;
+    const currentScene = () => gameDocument.querySelector<HTMLElement>('.scene') ?? scene;
+    const placeHud = () => {
+      const active = currentScene();
+      const shell = active.querySelector<HTMLElement>('.shell');
+      if (!shell) return;
+      // V18 uses .hud; the approved My Khe V12 generates a .top each
+      // time it renders a new question. Prefer the newest live game control.
+      // V18 can also render a legacy .top, but its native .hud owns
+      // question count, keys and music. Always prefer that live .hud.
+      const originalHud = active.querySelector<HTMLElement>('.hud');
+      const newHud = originalHud ?? active.querySelector<HTMLElement>('.panel > .top');
+      const existing = shell.querySelector<HTMLElement>(':scope > .hud, :scope > .top');
+      const hud = newHud ?? existing;
+      if (!hud || hud.parentElement === shell) return;
+      if (existing && existing !== hud) existing.remove();
+      originalParent = hud.parentNode;
+      originalNext = hud.nextSibling;
+      shell.insertBefore(hud, shell.firstChild);
+      relocatedHud = hud;
+    };
+    const restoreHud = () => {
+      if (relocatedHud && originalParent?.isConnected) {
+        const next = originalNext?.parentNode === originalParent ? originalNext : null;
+        originalParent.insertBefore(relocatedHud, next);
+      }
+      relocatedHud = null;
+      originalParent = null;
+      originalNext = null;
+    };
     const resize = () => {
       if (media.matches) {
-        const height = Math.ceil(scene.getBoundingClientRect().height);
+        const height = Math.ceil(currentScene().getBoundingClientRect().height);
         if (height > 0) frame.style.setProperty('--stage2-frame-height', `${height}px`);
       }
     };
     const observer = new ResizeObserver(resize);
+    let observedScene = scene;
+    // Some approved HTML games replace the entire .scene after iframe load.
+    // Observe documentElement so the new scene and its HUD cannot escape layout.
+    const hudObserver = new MutationObserver(() => {
+      if (!media.matches) return;
+      const active = currentScene();
+      if (active !== observedScene) {
+        observer.disconnect();
+        observedScene = active;
+        observer.observe(active);
+      }
+      placeHud();
+      resize();
+    });
     const updateMode = () => {
       gameDocument.documentElement.toggleAttribute('data-stage2-portrait', media.matches);
+      if (media.matches) placeHud(); else restoreHud();
       observer.disconnect();
+      hudObserver.disconnect();
       if (media.matches) {
-        observer.observe(scene);
+        observedScene = currentScene();
+        hudObserver.observe(gameDocument.documentElement, {childList:true,subtree:true});
+        observer.observe(observedScene);
         resize();
       } else {
         frame.style.removeProperty('--stage2-frame-height');
@@ -50,9 +105,13 @@ export function usePortraitStage2Frame() {
     media.addEventListener('change', updateMode);
     cleanup.current = () => {
       observer.disconnect();
+      hudObserver.disconnect();
       media.removeEventListener('change', updateMode);
       gameDocument.documentElement.removeAttribute('data-stage2-portrait');
+      gameDocument.documentElement.removeAttribute('data-stage2-artwork-missing');
+      gameDocument.documentElement.style.removeProperty('--game-artwork');
       frame.style.removeProperty('--stage2-frame-height');
+      restoreHud();
       style.remove();
     };
   };

@@ -1,8 +1,7 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Station } from '../../types';
 import { useApp } from '../../contexts/AppContext';
 import { audioService } from '../../services/AudioService';
-import { backgroundMusic } from '../../services/BackgroundMusic';
 import { progressService } from '../../services/ProgressService';
 import { ApprovedStationGame } from './ApprovedStationGame';
 import { ReusableChallengeGame } from './ReusableChallengeGame';
@@ -15,7 +14,7 @@ import { grade1SharedConfigs } from '../../games/stage2/grade1';
 import { hoangDieuConfig } from '../../games/stage2/hoangDieu';
 import { HoangDieuPhanChauTrinhV18 } from './HoangDieuPhanChauTrinhV18';
 import { Grade3V12StyleGame, isGrade3V12StyleStation } from './Grade3V12StyleGame';
-import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle, Gamepad2 } from 'lucide-react';
+import { CheckCircle2, XCircle, RotateCcw, Award, ChevronRight, HelpCircle } from 'lucide-react';
 
 
 // Shuffle a copy so option IDs and correctness stay unchanged.
@@ -28,23 +27,16 @@ function shuffleOptions<T>(options: readonly T[]): T[] {
   return shuffled;
 }
 
-// Official embed URLs returned by Wordwall's oEmbed API.
-const WORDWALL_EMBED_URLS: Record<string, string> = {
-  "120604647": "https://wordwall.net/embed/9bf5318dbfc94898902ef662795c3973?themeId=65&ref=oembed",
-  "120605543": "https://wordwall.net/embed/998e4ceb735f4333b8e89dc347a8ac33?themeId=46&ref=oembed",
-  "120606175": "https://wordwall.net/embed/2c3810ecb9834a54b8196a88658f54c6?themeId=62&ref=oembed",
-  "120606516": "https://wordwall.net/embed/9c87d7fd21d84cc5a27008f055576960?themeId=49&ref=oembed",
-  "120607731": "https://wordwall.net/embed/5e9f990113d24b5bac54f5738b1f9915?themeId=1&ref=oembed"
-};
-
 interface Props {
   station: Station;
   onCompleteStage: () => void;
+  /** Browser-only Stage 2 QA must never write student progress. */
+  previewReadOnly?: boolean;
 }
 
-export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) => {
-  const { currentUser, role, isOnline } = useApp();
-  const isReadOnly = role !== 'student';
+export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage, previewReadOnly = false }) => {
+  const { currentUser, role } = useApp();
+  const isReadOnly = role !== 'student' || previewReadOnly;
   const challenge = station.challenge;
   const questions = useMemo(
     () => (challenge.questions || []).map(question => ({
@@ -59,69 +51,12 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [passed, setPassed] = useState<boolean | null>(null);
-  const [bonusClaimed, setBonusClaimed] = useState<boolean>(false);
-  const [externalGameOpened, setExternalGameOpened] = useState<boolean>(false);
-  const [externalGameReadyToComplete, setExternalGameReadyToComplete] = useState(false);
-  const [externalGameCountdown, setExternalGameCountdown] = useState(45);
-  const [useInternalChallenge, setUseInternalChallenge] = useState(false);
-  const [embedRound, setEmbedRound] = useState(0);
-  const resourceId = challenge.externalGame?.url.match(/\/resource\/(\d+)/)?.[1];
-  const embedUrl = resourceId ? WORDWALL_EMBED_URLS[resourceId] : undefined;
 
-  useEffect(() => {
-    if (!isOnline && challenge.externalGame) setUseInternalChallenge(true);
-  }, [isOnline, challenge]);
-
-  useEffect(() => {
-    if (!externalGameOpened || useInternalChallenge || !isOnline || !embedUrl) return;
-    backgroundMusic.setForegroundSource('wordwall', true);
-    return () => backgroundMusic.setForegroundSource('wordwall', false);
-  }, [externalGameOpened, useInternalChallenge, isOnline, embedUrl]);
-
-  useEffect(() => {
-    if (!externalGameOpened || useInternalChallenge || !isOnline || !embedUrl) return;
-
-    setExternalGameReadyToComplete(false);
-    setExternalGameCountdown(45);
-
-    const countdownTimer = window.setInterval(() => {
-      setExternalGameCountdown(value => {
-        if (value <= 1) {
-          window.clearInterval(countdownTimer);
-          setExternalGameReadyToComplete(true);
-          return 0;
-        }
-        return value - 1;
-      });
-    }, 1000);
-
-    const handleWordwallMessage = (event: MessageEvent) => {
-      if (typeof event.origin !== 'string' || !/wordwall\.net$/i.test(new URL(event.origin).hostname)) return;
-      let payload = '';
-      try {
-        payload = typeof event.data === 'string' ? event.data : JSON.stringify(event.data);
-      } catch {
-        payload = '';
-      }
-      if (/complete|completed|finish|finished|result|score/i.test(payload)) {
-        setExternalGameReadyToComplete(true);
-        setExternalGameCountdown(0);
-      }
-    };
-
-    window.addEventListener('message', handleWordwallMessage);
-    return () => {
-      window.clearInterval(countdownTimer);
-      window.removeEventListener('message', handleWordwallMessage);
-    };
-  }, [externalGameOpened, useInternalChallenge, isOnline, embedUrl, embedRound]);
 
 
   const studentId = currentUser?.id || 'guest';
   const progress = progressService.getStationProgress(studentId, station.id);
   const mainReward = station.rewards.find(r => r.stage === 2) || station.rewards[1];
-  const bonusRewardId = `${station.id}-wordwall-star`;
-  const wordwallBonusAlreadyClaimed = progress.rewardsCollected.includes(bonusRewardId) || bonusClaimed;
   const activeQuestions = retryQuestionIds === null
     ? questions
     : retryQuestionIds.map(id => questions.find(q => q.id === id)).filter((q): q is typeof questions[number] => !!q);
@@ -162,15 +97,6 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
         audioService.playSfx('wrong');
       }
     }
-  };
-
-  const handleExternalGameComplete = () => {
-    if (!externalGameOpened || !externalGameReadyToComplete || wordwallBonusAlreadyClaimed) return;
-    audioService.playSfx('treasure');
-    if (!isReadOnly) {
-      progressService.claimReward(studentId, station.id, bonusRewardId);
-    }
-    setBonusClaimed(true);
   };
 
   const wrongQuestions = questions.filter(q =>
@@ -358,74 +284,6 @@ export const Stage2Challenge: React.FC<Props> = ({ station, onCompleteStage }) =
                   ✓ Phần thưởng Chặng 2 đã được tự động lưu vào hành trình.
                 </p>
               </div>
-
-              {challenge.externalGame && isOnline && embedUrl && (
-                <div className="rounded-3xl border border-violet-200 bg-violet-50/70 p-4 sm:p-5 text-left">
-                  <div className="flex items-start gap-3">
-                    <div className="w-11 h-11 rounded-2xl bg-violet-100 text-violet-700 flex items-center justify-center shrink-0">
-                      <Gamepad2 className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <p className="text-[10px] font-black uppercase tracking-wide text-violet-700">Thử thách mở rộng</p>
-                      <h4 className="font-black text-slate-900">Thử sức thêm nhé!</h4>
-                      <p className="mt-1 text-xs text-slate-600">
-                        Chơi thêm Wordwall để nhận ⭐ Ngôi sao khám phá. Phần này không bắt buộc để qua chặng.
-                      </p>
-                    </div>
-                  </div>
-
-                  {!externalGameOpened && !wordwallBonusAlreadyClaimed && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        audioService.playSfx('click');
-                        setExternalGameOpened(true);
-                        setExternalGameReadyToComplete(false);
-                        setExternalGameCountdown(45);
-                        setEmbedRound(round => round + 1);
-                      }}
-                      className="mt-4 w-full rounded-2xl bg-violet-600 px-5 py-3 text-sm font-black text-white shadow-md hover:bg-violet-700"
-                    >
-                      CHƠI THÊM WORDWALL
-                    </button>
-                  )}
-
-                  {externalGameOpened && !wordwallBonusAlreadyClaimed && (
-                    <div className="mt-4 space-y-3">
-                      <div className="overflow-hidden rounded-2xl border border-violet-200 bg-white">
-                        <iframe
-                          key={`bonus-${station.id}-${embedRound}`}
-                          src={embedUrl}
-                          title={challenge.externalGame.titleVi}
-                          className="w-full h-[480px] sm:h-[600px] border-0"
-                          allow="fullscreen 'none'"
-                        />
-                      </div>
-                      {externalGameReadyToComplete ? (
-                        <button
-                          type="button"
-                          onClick={handleExternalGameComplete}
-                          className="w-full rounded-2xl bg-amber-500 px-5 py-3.5 text-sm font-black text-slate-950 shadow-md hover:bg-amber-600"
-                        >
-                          ⭐ NHẬN NGÔI SAO KHÁM PHÁ
-                        </button>
-                      ) : (
-                        <p className="rounded-xl bg-amber-50 px-3 py-2 text-center text-[11px] font-bold text-amber-800">
-                          Hãy chơi thêm một chút nhé
-                          {externalGameCountdown > 0 ? ` • còn ${externalGameCountdown}s` : ''}.
-                        </p>
-                      )}
-                    </div>
-                  )}
-
-                  {wordwallBonusAlreadyClaimed && (
-                    <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-center">
-                      <p className="font-black text-amber-900">⭐ Đã nhận Ngôi sao khám phá!</p>
-                      <p className="mt-1 text-[11px] text-amber-700">Mỗi trạm chỉ nhận phần thưởng mở rộng này một lần.</p>
-                    </div>
-                  )}
-                </div>
-              )}
 
               <button
                 type="button"

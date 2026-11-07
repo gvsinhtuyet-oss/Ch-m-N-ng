@@ -135,12 +135,6 @@ export const CANONICAL_HOI_AN_STATION: Station = {
     instructionsVi:'Trả lời đúng 5 câu để hoàn thành phần thực hành về Hội An.',
     completionMode:'AUTO',
     passingScore:5,
-    externalGame:{
-      platform:'wordwall',
-      titleVi:'KHÁM PHÁ HỘI AN',
-      url:'https://wordwall.net/resource/120605543?wwmethod=link',
-      noteVi:'Wordwall là hoạt động luyện tập bổ sung khi có mạng; không bắt buộc để hoàn thành chặng.'
-    },
     questions:[
   {
     "id": "q1",

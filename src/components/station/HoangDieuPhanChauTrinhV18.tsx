@@ -35,7 +35,10 @@ export const HoangDieuPhanChauTrinhV18: React.FC<Props> = ({ station, studentId,
 
   const prepareGame = (event: React.SyntheticEvent<HTMLIFrameElement>) => {
     const doc = frameRef.current?.contentDocument;
-    if (!doc?.querySelector('.scene') || doc.getElementById('cham-danang-shared-audio')) return;
+    if (!doc?.querySelector('.scene')) return;
+    // Layout is independent of whether the approved HTML already loaded audio.
+    fitPortrait(event);
+    if (doc.getElementById('cham-danang-shared-audio')) return;
     const mobileLayout = doc.createElement('style');
     mobileLayout.textContent = `
       @media (max-width: 650px) {
@@ -50,7 +53,6 @@ export const HoangDieuPhanChauTrinhV18: React.FC<Props> = ({ station, studentId,
       }
     `;
     doc.head.append(mobileLayout);
-    fitPortrait(event);
     const script = doc.createElement('script');
     script.id = 'cham-danang-shared-audio';
     script.src = '/games/shared/game-audio.js';

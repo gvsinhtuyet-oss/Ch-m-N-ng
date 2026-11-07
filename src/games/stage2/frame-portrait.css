@@ -263,6 +263,25 @@ html[data-stage2-portrait] .scene:not(.is-victory) .panel .controls .btn {
     margin:0!important;padding:0!important;
     grid-template-columns:minmax(0,1fr)!important;
   }
+  html[data-stage2-portrait] .scene:not(.is-victory):has(.shell > .top) .panel .answers:has(.choice-photo) {
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:5px!important;
+    align-items:stretch!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory):has(.shell > .top) .panel .answers button:has(.choice-photo) {
+    display:flex!important;flex-direction:column!important;align-items:center!important;
+    min-height:0!important;height:auto!important;max-height:155px!important;
+    gap:3px!important;padding:3px!important;
+    border-width:2px!important;overflow:hidden!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory):has(.shell > .top) .panel .answers .choice-photo {
+    display:block!important;width:100%!important;height:clamp(80px,25vw,112px)!important;
+    max-height:112px!important;min-height:0!important;
+    object-fit:cover!important;border-radius:7px!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory):has(.shell > .top) .panel .answers .choice-letter {
+    font-size:15px!important;line-height:1.1!important;padding:0 0 3px!important;
+  }
   html[data-stage2-portrait] .scene:not(.is-victory):has(.shell > .top) .panel .answers.two {
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
   }

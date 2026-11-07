@@ -54,6 +54,9 @@ test('Both approved HTML games use the same phone layout without replacing their
   assert.match(frameCss, /data-stage2-artwork-missing/);
   assert.match(frameHook, /style\.textContent = embeddedPortraitCss \+ framePortraitCss/);
   assert.match(frameHook, /observer\.observe\(scene\)/);
+  assert.match(frameHook, /const placeHud = \(\) =>/);
+  assert.match(frameHook, /shell\.insertBefore\(hud, shell\.firstChild\)/);
+  assert.match(frameHook, /const restoreHud = \(\) =>/);
   assert.match(myKhe, /grade3-my-khe-ban-than\/v12\/index\.html/);
   assert.match(hoangDieu, /grade3-hoang-dieu-phan-chau-trinh\/v18\/index\.html/);
   assert.match(myKhe, /progressService\.completeStage2/);

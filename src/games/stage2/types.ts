@@ -26,6 +26,6 @@ export function validateConfig(c: GameConfig): void {
     if (!q.prompt || !q.hint) throw new Error('Thiếu câu hỏi hoặc gợi ý');
     if(q.kind === 'match') {
       const n=c.stationId.startsWith('g1-')?2:3; if(q.left.length!==n || q.right.length!==n || q.solution.length!==n || new Set(q.solution).size!==n || q.solution.some(i=>!Number.isInteger(i)||i<0||i>=n)) throw new Error('Số cặp nối không hợp lệ');
-    } else if((c.stationId.startsWith('g1-') && q.id==='q2'?q.options.length!==2:q.options.length!==3) || !Number.isInteger(q.answer) || q.answer<0 || q.answer>=q.options.length || (q.kind==='image' && q.options.some(o=>!o.image))) throw new Error('Lựa chọn không hợp lệ');
+    } else if((c.stationId.startsWith('g1-') && q.id==='q2' || c.stationId==='g3-station-1' && q.id==='q2'?q.options.length!==2:q.options.length!==3) || !Number.isInteger(q.answer) || q.answer<0 || q.answer>=q.options.length || (q.kind==='image' && q.options.some(o=>!o.image))) throw new Error('Lựa chọn không hợp lệ');
   }
 }

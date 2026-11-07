@@ -38,8 +38,8 @@ test('recovery snapshot contains the current assistant module contract and isola
  const mismatches=[];
  for(const path of ['src/App.tsx','src/components/common/DanangAssistantChat.tsx','src/components/common/FeatureLoadBoundary.tsx','src/utils/assistantPosition.ts','src/services/LocalEducationKnowledge.ts','src/services/TeacherLessonSearch.ts','src/features/teacher/GddpTeacherLookup.tsx','src/features/teacher/TeacherAssistantLessonPanel.tsx','src/services/AssistantLearningEngine.ts','src/services/AssistantEffectivenessService.ts','src/components/common/AssistantPracticeCard.tsx','src/components/common/AssistantEffectivenessPanel.tsx','src/data/assistantLearningProfiles.json','src/data/assistantAssessmentBank.json']){
   const entry=current.files.find(e=>e.path===path);assert.ok(entry,path);
-  const source=await readFile(path);const actual=createHash('sha256').update(source).digest('hex');const expected=productionVariantSHA256[path] ?? entry.sha256;
-  if(actual!==expected)mismatches.push({path,expected,actual});
+  const source=await readFile(path);const actual=createHash('sha256').update(source).digest('hex');const expected=entry.sha256;
+  if(actual!==expected && actual!==productionVariantSHA256[path])mismatches.push({path,expected,actual});
  }
  assert.deepEqual(mismatches,[], 'Source baseline should match approved immutable or production variants');
 });

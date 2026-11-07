@@ -160,3 +160,12 @@ html[data-stage2-portrait] .scene:not(.is-victory) .panel .controls .btn {
     margin:0!important;
   }
 }
+
+
+/* Fallback for standalone HTML layouts that use a real heading, not a bitmap title. */
+@media (max-width:650px) and (orientation:portrait) {
+  html[data-stage2-portrait][data-stage2-artwork-missing] .scene:not(.is-victory) .shell::before {display:none!important;content:none!important}
+  html[data-stage2-portrait][data-stage2-artwork-missing] .scene:not(.is-victory) .shell > .head {
+    display:block!important;order:2!important;margin:0!important;
+  }
+}

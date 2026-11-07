@@ -477,7 +477,7 @@ export const GRADE1_CONTENT = [
         "answers": [
           "Sợi mì, tôm, thịt và trứng",
           "Cơm và thịt gà",
-          "Bánh đập và nem nướng"
+          "Bột màu và giấy vẽ"
         ]
       },
       {

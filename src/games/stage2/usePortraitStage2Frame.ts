@@ -43,7 +43,10 @@ export function usePortraitStage2Frame() {
       if (!shell) return;
       // V18 uses .hud; the approved My Khe V12 generates a .top each
       // time it renders a new question. Prefer the newest live game control.
-      const newHud = active.querySelector<HTMLElement>('.panel > .hud, .panel > .top');
+      // V18 can also render a legacy .top, but its native .hud owns
+      // question count, keys and music. Always prefer that live .hud.
+      const originalHud = active.querySelector<HTMLElement>('.hud');
+      const newHud = originalHud ?? active.querySelector<HTMLElement>('.panel > .top');
       const existing = shell.querySelector<HTMLElement>(':scope > .hud, :scope > .top');
       const hud = newHud ?? existing;
       if (!hud || hud.parentElement === shell) return;

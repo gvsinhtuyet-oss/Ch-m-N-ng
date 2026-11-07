@@ -38,6 +38,10 @@ try{
         artwork:hero?.backgroundImage?.includes('url('),viewport:f?.contentWindow?.innerWidth,
         scrollWidth:d?.documentElement.scrollWidth,
         sceneBackground:scene?getComputedStyle(scene).backgroundImage:'',
+        toolbar:r(d?.querySelector('.shell > .top')),
+        gems:r(d?.querySelector('.shell > .top .gems')),
+        music:r(d?.querySelector('.shell > .top .music-toggle')),
+        titleText:title?.textContent,
       };
     });
     console.log('INTRO DESIGN',name,JSON.stringify(intro));
@@ -46,6 +50,12 @@ try{
     assert.equal(intro.background,'rgba(0, 0, 0, 0)',name+': large cream background remains');
     assert.equal(intro.shadow,'none',name+': large frame shadow remains');
     assert.ok(intro.panel&&intro.button,name+': intro and start control missing');
+    if(width<=650) {
+      assert.ok(intro.toolbar&&intro.gems&&intro.music,name+': three live V18-style toolbar controls missing');
+      assert.ok(intro.toolbar.bottom < intro.panel.y,name+': controls must appear above title and intro');
+      assert.ok(intro.music.right <= width+2,name+': music button exceeds viewport');
+    }
+
     assert.ok(intro.panel.y>=(width<=650?intro.heroHeight+35:245),name+': intro covers bitmap title');
     assert.ok(intro.scrollWidth<=(intro.viewport??0)+4,name+': horizontal overflow');
     await page.screenshot({path:'stage2-qa-screenshots/my-khe-intro-'+name+'.png',fullPage:true});

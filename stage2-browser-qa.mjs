@@ -72,6 +72,8 @@ async function openGame(stationId, viewport) {
       hudParent:hud?.parentElement?.className,
       shellChildren:shell?Array.from(shell.children).map(x=>({tag:x.tagName,cls:x.className})):[],
       hudPosition:hud?getComputedStyle(hud).position:'',
+      hudText:hud?.textContent?.slice(0,160),
+      hudButtons:hud?Array.from(hud.querySelectorAll('button')).map(b=>({cls:b.className,aria:b.getAttribute('aria-label'),text:b.textContent?.slice(0,30)})):[],
       shellDisplay:shell?getComputedStyle(shell).display:'',
     };
   });

@@ -42,6 +42,17 @@ async function openGame(stationId, viewport) {
   // Legacy iframe's content appears before the iframe load event fires.
   // Wait for React's onLoad layout injection before measuring geometry.
   if(viewport.width<=650 && await page.$('iframe[data-stage2-game-frame]')) {
+    // The V12 intro has no live question HUD; it is created after Start.
+    if (stationId==='g3-station-1') {
+      await page.waitForFunction(() => document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument?.documentElement.hasAttribute('data-stage2-portrait'),{timeout:30000});
+      const started=await page.evaluate(()=>{
+        const doc=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument;
+        const button=doc?.querySelector('.intro-start');
+        if(!button)return false;
+        button.click();return true;
+      });
+      assert.ok(started,'V12 intro must have a working Start button');
+    }
     try {
       await page.waitForFunction(() => {
         const frame=document.querySelector('iframe[data-stage2-game-frame]');

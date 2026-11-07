@@ -53,7 +53,8 @@ test('Both approved HTML games use the same phone layout without replacing their
   assert.match(frameCss, /background:var\(--game-artwork\) center top \/ contain no-repeat!important/);
   assert.match(frameCss, /data-stage2-artwork-missing/);
   assert.match(frameHook, /style\.textContent = embeddedPortraitCss \+ framePortraitCss/);
-  assert.match(frameHook, /observer\.observe\(scene\)/);
+  assert.match(frameHook, /observer\.observe\(observedScene\)/);
+  assert.match(frameHook, /hudObserver\.observe\(gameDocument\.documentElement/);
   assert.match(frameHook, /const placeHud = \(\) =>/);
   assert.match(frameHook, /shell\.insertBefore\(hud, shell\.firstChild\)/);
   assert.match(frameHook, /const restoreHud = \(\) =>/);

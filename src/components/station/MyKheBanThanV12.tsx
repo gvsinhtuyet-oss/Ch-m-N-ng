@@ -15,6 +15,7 @@ function fitMobileGameArtwork(event: React.SyntheticEvent<HTMLIFrameElement>) {
   if (!gameDocument?.querySelector('.scene')) return;
 
   const style = gameDocument.createElement('style');
+  style.id = 'cham-my-khe-layout-v12';
   style.textContent = `
     @media (max-width: 640px) {
       .scene, .scene.is-victory {
@@ -22,6 +23,33 @@ function fitMobileGameArtwork(event: React.SyntheticEvent<HTMLIFrameElement>) {
         background-position: center top !important;
         background-repeat: no-repeat;
         background-color: #07547d;
+      }
+    }
+    /* On wide screens the original bitmap title touched the frame edge,
+       and its quiz panel consumed too much of the background illustration. */
+    @media (min-width: 1024px) {
+      .scene:not(.is-victory) {
+        background-position: center 30px !important;
+        background-repeat: no-repeat !important;
+        background-size: 100% auto !important;
+      }
+      .scene:not(.is-victory) .panel {
+        box-sizing: border-box !important;
+        width: min(88vw, 1100px) !important;
+        max-width: 1100px !important;
+        align-self: center !important;
+        margin: auto 0 !important;
+        padding: clamp(14px, 1.8vw, 22px) !important;
+      }
+      .scene:not(.is-victory) .panel .prompt {
+        font-size: clamp(19px, 2vw, 26px) !important;
+        line-height: 1.3 !important;
+        margin: 7px 0 12px !important;
+      }
+      .scene:not(.is-victory) .panel .answers button {
+        min-height: 62px !important;
+        padding: 9px 14px !important;
+        font-size: clamp(16px, 1.5vw, 21px) !important;
       }
     }
   `;

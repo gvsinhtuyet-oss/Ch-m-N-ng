@@ -86,6 +86,14 @@ async function openGame(stationId, viewport) {
       throw error;
     }
   }
+  if(viewport.width>650 && await page.$('iframe[data-stage2-game-frame]')) {
+    // Do not measure the game before React's iframe onLoad injector runs.
+    await page.waitForFunction(() => {
+      const doc=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument;
+      return Boolean(doc?.getElementById('cham-my-khe-layout-v12') ||
+        doc?.getElementById('cham-danang-v18-hud-corners'));
+    },{timeout:30000});
+  }
   const metrics=await page.evaluate(() => {
     const frame=document.querySelector('iframe[data-stage2-game-frame]');
     const root=frame?.contentDocument ?? document.querySelector('[data-shared-stage2]')?.shadowRoot;
@@ -181,6 +189,52 @@ try{
       await page.close();
       console.log('DEVICE OK',label,id);
     }
+  }
+
+
+  // User screenshot regression: HTML titles and HUD never overlap; My Khe
+  // question card and answer buttons remain compact on mobile and desktop.
+  for (const [id,width,height] of [
+    ['g3-station-1',390,844],['g3-station-2',390,844],
+    ['g3-station-1',1366,768],['g3-station-2',1366,768]
+  ]) {
+    const {page,errors}=await openGame(id,{width,height});
+    const visual=await page.evaluate(() => {
+      const frame=document.querySelector('iframe[data-stage2-game-frame]');
+      const doc=frame?.contentDocument;
+      const panel=doc?.querySelector('.scene:not(.is-victory) .panel');
+      const hud=doc?.querySelector('.scene:not(.is-victory) .shell > .hud, .scene:not(.is-victory) .shell > .top');
+      const keys=doc?.querySelector('.hud-keys,.gems');
+      const question=doc?.querySelector('.panel .prompt');
+      const buttons=Array.from(doc?.querySelectorAll('.panel .answers button')??[]);
+      const shell=doc?.querySelector('.scene:not(.is-victory) .shell');
+      const pos=e=>{const r=e?.getBoundingClientRect();return r?{x:r.x,y:r.y,width:r.width,height:r.height,right:r.right}:null};
+      return {
+        panel:pos(panel),hud:pos(hud),keys:pos(keys),
+        question:pos(question),
+        questionFont:question?parseFloat(getComputedStyle(question).fontSize):null,
+        buttons:buttons.map(pos),heroBackground: shell?getComputedStyle(shell,'::before').backgroundPosition:null,
+        backgroundPosition:doc?.querySelector('.scene')?getComputedStyle(doc.querySelector('.scene')).backgroundPosition:null,
+        iframeWidth:frame?.contentWindow?.innerWidth,
+      };
+    });
+    console.log('USER SCREENSHOT REGRESSION',id,width,JSON.stringify(visual));
+    if(id==='g3-station-1') {
+      assert.ok(visual.panel?.width <= (width===390?391:1102),'My Khe panel is too wide');
+      if(width===390) {
+        assert.ok(visual.questionFont!==null&&visual.questionFont<=20,'My Khe question text remains oversized');
+        assert.ok(visual.buttons.every(b=>b.height<=155),'My Khe image answer buttons are too tall');
+        assert.ok(visual.heroBackground?.includes('12px'),'My Khe banner needs safe top padding');
+      } else {
+        assert.ok(visual.backgroundPosition?.includes('30px'),'My Khe desktop banner clipped at frame top');
+      }
+    } else if(width===1366) {
+      assert.ok(visual.keys && visual.keys.right > visual.iframeWidth-125,
+        'Hoang Dieu keys should sit at the far right safe corner');
+    }
+    assert.deepEqual(errors,[],id+' visual JavaScript errors');
+    await page.screenshot({path:'stage2-qa-screenshots/'+id+'-user-fix-'+width+'.png',fullPage:true});
+    await page.close();
   }
 
   // One real in-app React interaction path: wrong feedback, mute, keys, replay, Stage 3.

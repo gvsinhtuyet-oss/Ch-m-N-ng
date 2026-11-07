@@ -38,6 +38,47 @@ export const HoangDieuPhanChauTrinhV18: React.FC<Props> = ({ station, studentId,
     if (!doc?.querySelector('.scene')) return;
     // Layout is independent of whether the approved HTML already loaded audio.
     fitPortrait(event);
+    // On wide screens, the original HUD was constrained to the centered
+    // game shell and overlapped the banner text. Place the same live controls
+    // in the two safe upper corners of the iframe viewport instead.
+    if (!doc.getElementById('cham-danang-v18-hud-corners')) {
+      const corners = doc.createElement('style');
+      corners.id = 'cham-danang-v18-hud-corners';
+      corners.textContent = `
+        @media (min-width: 1024px) {
+          .scene:not(.is-victory) .hud {
+            /* Fixed is scoped by the animated game shell on some engines.
+               Use a relative-to-shell offset that reaches the iframe edges. */
+            position: absolute !important;
+            top: clamp(12px,2vh,22px) !important;
+            left: calc((100% - 100vw) / 2 + clamp(12px,2vw,30px)) !important;
+            right: calc((100% - 100vw) / 2 + clamp(12px,2vw,30px)) !important;
+            width: auto !important;
+            max-width: none !important;
+            justify-content: space-between !important;
+            align-items: flex-start !important;
+            z-index: 20 !important;
+          }
+          .scene:not(.is-victory) .hud-right {
+            margin-left: auto !important;
+            flex: 0 0 auto !important;
+          }
+          .scene:not(.is-victory) .hud-keys {
+            flex-wrap: nowrap !important;
+            white-space: nowrap !important;
+          }
+        }
+        @media (min-width: 651px) and (max-width: 1023px) {
+          .scene:not(.is-victory) .hud {
+            position: relative !important;
+            inset: auto !important;
+            width: 100% !important;
+            margin: 6px auto 10px !important;
+          }
+        }
+      `;
+      doc.head.appendChild(corners);
+    }
     if (doc.getElementById('cham-danang-shared-audio')) return;
     const mobileLayout = doc.createElement('style');
     mobileLayout.textContent = `

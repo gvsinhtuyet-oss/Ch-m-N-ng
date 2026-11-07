@@ -86,9 +86,10 @@ export const NARRATION_REVIEW = {
   },
   "g1-food-1": {
     "before": "Tài liệu giới thiệu mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng. Mỗi món có tên gọi, nguyên liệu và cách thưởng thức riêng. Em có thể kể món từng ăn, hoặc món vừa biết qua tài liệu. Không cần nói rằng em đã ăn nếu chưa từng thử.",
-    "after": "Các em cùng khám phá sáu món ăn truyền thống trong phần Khởi động của tài liệu giáo dục địa phương nhé! Đó là mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo. Mỗi món có hình dáng, nguyên liệu và hương vị riêng. Em hãy nhìn hình và nói tên món mà mình nhận ra. Nếu chưa từng ăn món đó, em có thể hỏi người lớn để tìm hiểu thêm. Bài học sẽ cùng em khám phá kĩ hơn về mì Quảng.",
+    "after": "Các em cùng khám phá sáu món ăn truyền thống trong phần Khởi động của tài liệu giáo dục địa phương nhé! Đó là mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo. Mỗi món có hình dáng, nguyên liệu và hương vị riêng. Trên màn hình là món mì Quảng; những hình món ăn khác thuộc bộ ảnh của tài liệu và sẽ được giới thiệu khi có ảnh đúng nguồn. Em có thể kể tên món mình nhận ra từ lời giới thiệu. Nếu chưa từng ăn món đó, em có thể hỏi người lớn để tìm hiểu thêm. Bài học sẽ cùng em khám phá kĩ hơn về mì Quảng.",
     "previousNarrations": [
-      "Quê hương Đà Nẵng có nhiều món ăn ngon như mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng. Trong đó, mì Quảng là món ăn nổi tiếng được bài học giới thiệu kĩ. Mỗi món có nguyên liệu và hương vị riêng. Em đã biết hoặc từng ăn món nào? Hãy gọi tên một món và chia sẻ điều em thích. Nếu chưa từng ăn, em vẫn có thể tìm hiểu món ấy qua tranh và lời kể nhé!"
+      "Quê hương Đà Nẵng có nhiều món ăn ngon như mì Quảng, cao lầu, bê thui, bánh đập, cơm gà và nem nướng. Trong đó, mì Quảng là món ăn nổi tiếng được bài học giới thiệu kĩ. Mỗi món có nguyên liệu và hương vị riêng. Em đã biết hoặc từng ăn món nào? Hãy gọi tên một món và chia sẻ điều em thích. Nếu chưa từng ăn, em vẫn có thể tìm hiểu món ấy qua tranh và lời kể nhé!",
+      "Các em cùng khám phá sáu món ăn truyền thống trong phần Khởi động của tài liệu giáo dục địa phương nhé! Đó là mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo. Mỗi món có hình dáng, nguyên liệu và hương vị riêng. Em hãy nhìn hình và nói tên món mà mình nhận ra. Nếu chưa từng ăn món đó, em có thể hỏi người lớn để tìm hiểu thêm. Bài học sẽ cùng em khám phá kĩ hơn về mì Quảng."
     ]
   },
   "g1-food-2": {

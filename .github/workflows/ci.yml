@@ -146,3 +146,26 @@ jobs:
           name: stage2-mobile-screenshots
           path: stage2-qa-screenshots/
           if-no-files-found: ignore
+
+  verify-my-khe-fixed-anchor-live:
+    name: Verify five fixed My Khe question positions on LIVE Cloudflare
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm install --no-save --no-package-lock --no-audit --no-fund puppeteer-core
+      - name: Check all five questions share same vertical position on deployed site
+        env:
+          STAGE2_QA_URL: https://chamdanang-gddp.pages.dev
+        run: node stage2-my-khe-intro-qa.mjs
+      - name: Save public site screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-khe-stable-anchor-live-screenshots
+          path: stage2-qa-screenshots/
+          if-no-files-found: ignore

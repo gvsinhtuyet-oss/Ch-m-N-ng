@@ -257,20 +257,35 @@ export function SharedChallengeGame(props:{config:GameConfig;onComplete:()=>void
 }
 `;
   const myKheQuestionPositionCss=`
-/* Keep all five My Khe question panels, including the matching cards, close
-   below the decorative title. Desktop only: the approved phone layout is kept. */
+/* Only g3-station-1. Every question (including long matching tasks) is
+   anchored at the same point below the illustrated title. Never center
+   the panel vertically or translate it based on its changing height. */
 @media (min-width:1024px) {
-  .scene.safe-layout.my-khe-game:not(.is-victory):has(.prompt) {
-    --banner-bottom:min(13.8vw,260px)!important;
-  }
   .scene.safe-layout.my-khe-game:not(.is-victory):has(.prompt) .shell {
-    padding-top:calc(var(--banner-bottom) + 12px)!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:flex-start!important;
+    align-items:center!important;
+    padding-top:clamp(235px,16.5vw,285px)!important;
+    padding-bottom:24px!important;
+    min-height:100dvh!important;
+    height:auto!important;
   }
-  /* Legacy panel centering still leaves a tall gap. CSS individual translate
-     shifts the complete question + options + confirm together while preserving
-     the panel's original horizontal positioning and scroll layout. */
   .scene.safe-layout.my-khe-game:not(.is-victory) .panel:has(.prompt) {
-    translate:0 -90px!important;
+    position:relative!important;
+    inset:auto!important;
+    top:auto!important;
+    bottom:auto!important;
+    translate:none!important;
+    transform:none!important;
+    align-self:center!important;
+    flex:0 0 auto!important;
+    margin:0 auto!important;
+    max-width:min(860px,78vw)!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    overflow-y:visible!important;
   }
 }
 `;

@@ -119,6 +119,16 @@ try {
     assert.ok(question.panel?.height<=(width<=650?375:560),name+': question card too tall');
     await page.screenshot({path:'stage2-qa-screenshots/my-khe-shared-question-'+name+'.png',fullPage:true});
     if(name==='desktop-1760'){
+      const positions=[question.panel.y];
+      const track=async label=>{
+        const panelTop=await page.evaluate(host=>{
+          const root=document.querySelector(host)?.shadowRoot;
+          return root?.querySelector('.panel')?.getBoundingClientRect().top;
+        },root);
+        positions.push(panelTop);
+        console.log('MY KHE FIXED QUESTION ANCHOR',label,panelTop);
+        assert.ok(Math.abs(panelTop-positions[0])<=2,'Question '+label+' moved vertically as content height changed');
+      };
       // Reproduce the supplied screenshot: matching task (question 4).
       // Answer first 3 questions correctly, then check entire matching block.
       for(let index=0;index<3;index++){
@@ -127,6 +137,10 @@ try {
           return shadow?.querySelector('.hud-stage')?.textContent?.includes('CÂU '+(n+1)+'/5');
         },{timeout:15000},[root,index]);
         assert.equal(await click(page,'[data-choice="'+[0,0,1][index]+'"]'),true);
+        await page.waitForFunction(([host,n])=>
+          document.querySelector(host)?.shadowRoot?.querySelector('.hud-stage')?.textContent?.includes('CÂU '+(n+2)+'/5'),
+          {timeout:15000},[root,index]);
+        await track(index+2);
       }
       await page.waitForFunction(host=>{
         const shadow=document.querySelector(host)?.shadowRoot;
@@ -149,6 +163,17 @@ try {
         matchGeometry.match.bottom<=matchGeometry.panel.bottom+3,
         'Matching answer cards should remain grouped below the prompt');
       await page.screenshot({path:'stage2-qa-screenshots/my-khe-matching-q4-raised-1760.png',fullPage:true});
+      for(let j=0;j<3;j++){
+        assert.equal(await click(page,'[data-left="'+j+'"]'),true);
+        assert.equal(await click(page,'[data-right="'+config.questions[3].solution[j]+'"]'),true);
+      }
+      assert.equal(await click(page,'.controls .btn'),true,'matching confirmation desktop');
+      await page.waitForFunction(host=>
+        document.querySelector(host)?.shadowRoot?.querySelector('.hud-stage')?.textContent?.includes('CÂU 5/5'),
+        {timeout:15000},root);
+      await track(5);
+      assert.equal(positions.length,5,'all five question positions were sampled');
+      console.log('MY KHE FIVE FIXED POSITIONS',JSON.stringify(positions));
     }
     if(name==='iphone-390') {
       // Finish the original five questions through the new shared game:

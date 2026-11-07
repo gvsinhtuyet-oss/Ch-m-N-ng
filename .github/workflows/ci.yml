@@ -4,7 +4,7 @@ on:
   push:
     branches: [main, feature/gddp-teacher-2026-2027]
   pull_request:
-    branches: [main]
+    branches: [main, deploy/cloudflare-preserve-api-20261028]
 
 permissions:
   contents: read
@@ -39,6 +39,9 @@ jobs:
 
       - name: Mobile portrait layout contracts (cover, journey, four stages)
         run: node --test mobile-layout-regression-test.mjs
+
+      - name: Stage 2 mobile toolbar, standalone HTML and all 25 route contracts
+        run: node --import tsx --test stage2-mobile-hud-test.mjs
 
       - name: Server syntax check
         run: node --check auth-server.mjs && node --check content-server.mjs && node --check content-storage.mjs

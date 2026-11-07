@@ -9,7 +9,7 @@ const base=process.env.STAGE2_QA_URL??'http://127.0.0.1:4173';
 mkdirSync('stage2-qa-screenshots',{recursive:true});
 
 try{
-  for(const [name,width,height] of [['iphone-375',375,667],['iphone-390',390,844],['android-412',412,915],['ipad-768',768,1024],['desktop-1366',1366,768]]){
+  for(const [name,width,height] of [['iphone-375',375,667],['iphone-390',390,844],['android-412',412,915],['ipad-768',768,1024],['desktop-1366',1366,768],['desktop-1760',1760,900]]){
     const page=await browser.newPage();
     const errors=[];
     page.on('pageerror',e=>errors.push(e.message));
@@ -87,6 +87,24 @@ try{
       };
     });
     console.log('QUESTION INTACT',name,JSON.stringify(question));
+    const geometry=await page.evaluate(()=>{
+      const d=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument;
+      const panel=d?.querySelector('.scene:not(.is-victory) .panel');
+      const photos=Array.from(d?.querySelectorAll('.panel .choice-photo')??[]);
+      const prompt=d?.querySelector('.panel .prompt');
+      const r=e=>{const b=e?.getBoundingClientRect();return b?{y:b.y,width:b.width,height:b.height}:null};
+      return {card:r(panel),photos:photos.map(r),font:prompt?parseFloat(getComputedStyle(prompt).fontSize):null};
+    });
+    console.log('COMPACT QUESTION',name,JSON.stringify(geometry));
+    if(width>650) {
+      assert.ok(geometry.card?.width<=901,name+': card wider than standard Chặng 2');
+      assert.ok(geometry.card?.height<=400,name+': question card is too tall');
+      assert.ok(geometry.card?.y>=270,name+': question covers title artwork');
+      assert.ok(geometry.photos.every(x=>x.height<=166),name+': photo cards too tall');
+    } else {
+      assert.ok(geometry.card?.height<=355,name+': phone question too tall');
+    }
+
     assert.ok(question.prompt&&question.choices>0,name+': first question is missing');
     assert.notEqual(question.border,'0px',name+': question card border accidentally removed');
     assert.ok(question.music,name+': sound control lost');

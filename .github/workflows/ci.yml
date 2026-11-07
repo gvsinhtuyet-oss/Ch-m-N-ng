@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, feature/gddp-teacher-2026-2027]
+    branches: [main, feature/gddp-teacher-2026-2027, feature/gddp-textbook-review, release/production-staff-ui-20261108]
   pull_request:
-    branches: [main]
+    branches: [main, feature/gddp-textbook-review]
 
 permissions:
   contents: read
@@ -99,6 +99,9 @@ jobs:
 
       - name: Teacher Google access and private plans
         run: node teacher-workspace-test.mjs && node --test google-identity-test.mjs && node --import tsx --test teacher-plan-import-test.ts
+
+      - name: Staff routes, protected demos and image background
+        run: node --test production-staff-ui-test.mjs
 
       - name: Production build
         run: npm run build

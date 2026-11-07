@@ -1,5 +1,5 @@
 {
-  "commit": "d16f2207ed0aac2561a7afc91e42da6100d92968",
+  "commit": "a48e60024127993e10ff1362195bb95a36cdb090",
   "files": [
     {
       "path": "src/games/stage2/SharedStage2.tsx",
@@ -327,11 +327,11 @@
     },
     {
       "path": "src/data/grade1MinutesAlignment.ts",
-      "sha256": "357ac57edab5d23345105e47ca2fd16836e7b3a58acc6d145b44fbbc33615fa2"
+      "sha256": "e74c9a2a32df6acec9f411811af911bb6d9770de1b7c6c6d13a507d1d4e114d7"
     },
     {
       "path": "src/data/grade1Content.ts",
-      "sha256": "49cea03a80460b38b975a09948b1936d912a532b77e614e8d900dac4fd2a6871"
+      "sha256": "873351318b312614388b72f3d5e70354dab171849a94dcd5b5f70dc83a216d76"
     },
     {
       "path": "src/data/grade1Stations.ts",

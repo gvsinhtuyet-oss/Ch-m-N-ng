@@ -46,18 +46,21 @@ try{
     });
     console.log('INTRO DESIGN',name,JSON.stringify(intro));
     assert.match(intro.title??'',/HÀNH TRÌNH TÌM NGỌC BIỂN/,'intro heading retained');
-    assert.equal(intro.border,'0px',name+': large cream frame border remains');
-    assert.equal(intro.background,'rgba(0, 0, 0, 0)',name+': large cream background remains');
-    assert.equal(intro.shadow,'none',name+': large frame shadow remains');
+    assert.ok(parseFloat(intro.border)>0&&parseFloat(intro.border)<=2.1,name+': compact cream card border missing or excessive');
+    assert.equal(intro.background,'rgb(255, 249, 237)',name+': compact light card background missing');
+    assert.ok(intro.shadow!=='none',name+': gentle compact card shadow missing');
     assert.ok(intro.panel&&intro.button,name+': intro and start control missing');
+    assert.ok(intro.panel.width<= (width<=650?width+1:662),name+': intro card is too wide');
+    assert.ok(intro.panel.height<= (width<=650?330:350),name+': intro card is too tall');
     if(width<=650) {
       assert.ok(intro.toolbar&&intro.gems&&intro.music,name+': three live V18-style toolbar controls missing');
       assert.ok(intro.toolbar.bottom < intro.panel.y,name+': controls must appear above title and intro');
       assert.ok(intro.music.right <= width+2,name+': music button exceeds viewport');
     }
 
-    assert.ok(intro.panel.y>=(width<=650?intro.heroHeight+35:245),name+': intro covers bitmap title');
+    assert.ok(intro.panel.y>=(width<=650?intro.heroHeight+35:285),name+': card overlaps banner title');
     assert.ok(intro.scrollWidth<=(intro.viewport??0)+4,name+': horizontal overflow');
+    assert.ok(intro.button.bottom<=intro.panel.bottom+1,name+': Start button spills outside the card');
     await page.screenshot({path:'stage2-qa-screenshots/my-khe-intro-'+name+'.png',fullPage:true});
 
     const clicked=await page.evaluate(()=>{

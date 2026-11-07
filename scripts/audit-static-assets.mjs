@@ -1,7 +1,7 @@
 // Read-only audit. Never removes, recompresses or renames an approved image, game or background.
 // Run after Vite build: node scripts/audit-static-assets.mjs
 import {readdir, stat, readFile} from 'node:fs/promises';
-import {join,relative,extname} from 'node:path';
+import {join,relative} from 'node:path';
 import {createHash} from 'node:crypto';
 
 async function inventory(root,dir=root,items=[]) {

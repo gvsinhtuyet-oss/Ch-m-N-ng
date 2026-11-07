@@ -152,3 +152,128 @@
     font-size:15px!important;
   }
 }
+
+
+/* Match the approved Hoàng Diệu – Phan Châu Trinh V18 visual rhythm.
+   Keep V12's native artwork, 5 gems, questions and no-box intro.
+   Three discrete game controls stay ABOVE the full title artwork. */
+@media (max-width:650px) and (orientation:portrait) {
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) {
+    gap:9px!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) > .top {
+    position:static!important;
+    order:1!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    width:100%!important;
+    min-height:44px!important;
+    margin:0!important;
+    padding:0 2px!important;
+    gap:5px!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) > .top > span:first-child {
+    flex:0 0 auto!important;
+    max-width:34%!important;
+    font-size:clamp(10px,2.6vw,12px)!important;
+    line-height:1.2!important;
+    padding:8px 7px!important;
+    text-align:center!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) > .top .gems {
+    flex:1 1 auto!important;
+    max-width:calc(66% - 50px)!important;
+    text-align:center!important;
+    justify-content:center!important;
+    letter-spacing:0!important;
+    gap:2px!important;
+    padding:7px 5px!important;
+    font-size:clamp(13px,3.4vw,17px)!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) > .top .music-toggle {
+    flex:0 0 44px!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen)::before {
+    order:2!important;
+    width:100%!important;
+    margin:4px 0 0!important;
+    background-position:center top!important;
+    background-size:contain!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) > .panel {
+    order:3!important;
+    padding:1px 9px 20px!important;
+    width:100%!important;
+    max-width:100%!important;
+    border:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-screen {
+    max-width:650px!important;
+    gap:7px!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-emblem {
+    font-size:clamp(28px,7vw,35px)!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-screen h2 {
+    font-size:clamp(20px,5.2vw,25px)!important;
+    line-height:1.25!important;
+    margin:0!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-story {
+    max-width:590px!important;
+    font-size:clamp(13px,3.55vw,16px)!important;
+    line-height:1.42!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-rules {
+    gap:6px!important;
+    margin:5px 0!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-call {
+    margin:5px 0!important;
+  }
+  html[data-stage2-portrait] .scene:not(.is-victory) .shell:has(.intro-screen) .intro-start {
+    width:min(100%,310px)!important;
+    min-height:52px!important;
+    border-radius:17px!important;
+    margin:5px auto 0!important;
+  }
+}
+@media (min-width:651px) {
+  /* V18 uses a centered mission description rather than a huge frame. */
+  .scene:not(.is-victory) .shell:has(.intro-screen) {
+    padding-top:clamp(300px,37vh,385px)!important;
+  }
+  .scene:not(.is-victory) .shell:has(.intro-screen) > .panel {
+    width:min(100%,760px)!important;
+    max-width:760px!important;
+    margin:0 auto!important;
+    padding:0 20px 20px!important;
+    background:transparent!important;
+    border:0!important;
+    box-shadow:none!important;
+  }
+  .scene:not(.is-victory) .shell:has(.intro-screen) .intro-screen {
+    max-width:650px!important;
+    gap:8px!important;
+  }
+  .scene:not(.is-victory) .shell:has(.intro-screen) .intro-screen h2 {
+    font-size:clamp(23px,3.1vw,30px)!important;
+    line-height:1.25!important;
+  }
+  .scene:not(.is-victory) .shell:has(.intro-screen) .intro-story {
+    max-width:590px!important;
+    font-size:clamp(16px,2.1vw,19px)!important;
+    line-height:1.5!important;
+  }
+  .scene:not(.is-victory) .shell:has(.intro-screen) .intro-rules span {
+    font-size:clamp(12px,1.55vw,15px)!important;
+    padding:7px 11px!important;
+  }
+  .scene:not(.is-victory) .shell:has(.intro-screen) .intro-start {
+    width:min(100%,330px)!important;
+    min-height:52px!important;
+  }
+}

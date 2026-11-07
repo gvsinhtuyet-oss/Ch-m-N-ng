@@ -214,6 +214,10 @@ async function runHtml(page,id,label){
       const root=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument;
       return !!root?.querySelector('.prompt')&&root.querySelector('#hud-stage')?.textContent?.includes('CÂU '+(n+1)+'/');
     },{timeout:18000},i);
+    await page.waitForFunction(()=>{
+      const doc=document.querySelector('iframe[data-stage2-game-frame]')?.contentDocument;
+      return [...doc?.querySelectorAll('.choice-photo')??[]].every(x=>x.complete&&x.naturalWidth>0);
+    },{timeout:15000});
     const g=await rectInPage(page);
     validateGeometry(g,id,label,'q'+(i+1));
     if(i===0||i===3)await page.screenshot({path:'production-stage2-audit/'+id+'-'+label+'-q'+(i+1)+'.png',fullPage:true});

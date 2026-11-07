@@ -39,6 +39,14 @@ async function openGame(stationId, viewport) {
     if(frame)return Boolean(frame.contentDocument?.querySelector('.scene'));
     return Boolean(document.querySelector('[data-shared-stage2]')?.shadowRoot?.querySelector('.scene'));
   },{timeout:30000});
+  // Legacy iframe's content appears before the iframe load event fires.
+  // Wait for React's onLoad layout injection before measuring geometry.
+  if(await page.$('iframe[data-stage2-game-frame]')) {
+    await page.waitForFunction(() => {
+      const frame=document.querySelector('iframe[data-stage2-game-frame]');
+      return frame?.contentDocument?.documentElement.hasAttribute('data-stage2-portrait');
+    },{timeout:40000});
+  }
   const metrics=await page.evaluate(() => {
     const frame=document.querySelector('iframe[data-stage2-game-frame]');
     const root=frame?.contentDocument ?? document.querySelector('[data-shared-stage2]')?.shadowRoot;

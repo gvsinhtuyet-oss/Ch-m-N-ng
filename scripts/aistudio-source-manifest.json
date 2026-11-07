@@ -107,7 +107,7 @@
     },
     {
       "path": "src/services/AuthService.ts",
-      "sha256": "f21ba40e59c998c8c54ecd76e645b9b9de13055b4c8c0d56a9e3e6384c431707"
+      "sha256": "812201cdfb72a5370719ee6e302bd8c8270f972cc0a213c01fda4e2280b0f882"
     },
     {
       "path": "src/main.tsx",
@@ -127,7 +127,7 @@
     },
     {
       "path": "src/index.css",
-      "sha256": "0eb6f12517702f18925a8d04df6889f60b73a8b54b9529168d098a2085d9463e"
+      "sha256": "ec7b3c7590ab814f5d8613e1221f74837cc605541a86aa1178ed50c6412841e5"
     },
     {
       "path": "src/services/GddpLessonDeckService.ts",
@@ -135,11 +135,11 @@
     },
     {
       "path": "src/services/GddpResourceMatcher.ts",
-      "sha256": "5c4edc05302af6656cfe4267d9d0810aa684ff144432114a03993f529919f8ac"
+      "sha256": "b6aff08bd54effc08871d27b5dcf5d11c560d5445fd6e858416ea8d37d4ac97f"
     },
     {
       "path": "src/services/GddpBundledCatalog.ts",
-      "sha256": "87efc3791bfbc778121c3c5e9dc480b04068658e3d32f5c6ff71732c046b5d39"
+      "sha256": "7e7681f41030b124af71811dc200687748f5201f930a52c13f30b7d81aa27387"
     },
     {
       "path": "src/services/ContentService.ts",

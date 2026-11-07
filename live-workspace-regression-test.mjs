@@ -39,3 +39,18 @@ test('production does not substitute static teacher/admin preview pages for the 
  const app=read('src/App.tsx');
  assert.doesNotMatch(app,/teacher-preview\.html|admin-preview\.html/);
 });
+
+test('admin and teacher use the global approved background without opaque workspace overlay',()=>{
+ const css=read('src/index.css');
+ const app=read('src/App.tsx');
+ const backdrop=read('src/components/common/AppBackground.tsx');
+ assert.match(app,/<AppBackground \/>/);
+ assert.match(backdrop,/chamdanang-journey-orange\.webp/);
+ assert.match(backdrop,/setUseBundledSource\(true\)/);
+ const selectors=[...css.matchAll(/\.game-content\.staff-workspace\s*\{([^}]*)\}/g)];
+ assert.ok(selectors.length>0,'Staff workspace needs a shared transparent background');
+ assert.ok(selectors.every(s=>/background:\s*transparent/.test(s[1])),'No staff workspace rule may cover approved background');
+ assert.match(css,/\.game-content \.cham-staff \.bg-white \{ background-color: rgba\(255,255,255,\.96\)/);
+ assert.match(css,/\.teacher-workspace \.teacher-sidebar \{background:rgba\(255,255,255,\.97\)/);
+ assert.match(css,/\.admin-workspace \.admin-sidebar \{[^}]*background:rgba\(255,255,255,\.97\)/);
+});

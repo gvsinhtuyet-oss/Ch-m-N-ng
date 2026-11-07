@@ -18,7 +18,7 @@ export const Header: React.FC = () => {
     { label: 'Bản đồ', icon: MapIcon, view: 'student-maps' },
     { label: 'Bộ sưu tập', icon: Heart, view: 'student-memories' },
   ] as const;
-  return <header className="app-touch-header sticky top-0 z-40 border-b border-orange-100 bg-[#fffdf9]/95 shadow-sm backdrop-blur-xl">
+  return <header className={`app-touch-header sticky top-0 z-40 border-b border-orange-100 bg-[#fffdf9]/95 shadow-sm backdrop-blur-xl ${adminArea ? "cham-admin-topbar" : ""}`}>
     <div className={`mx-auto flex ${currentView === 'station-view' ? 'h-[52px] sm:h-[56px]' : 'h-[68px]'} max-w-[1500px] items-center justify-between gap-2 px-3 sm:gap-4 sm:px-6`}>
       <button type="button" onClick={() => setCurrentView(home)} className="flex min-w-0 items-center gap-2.5 text-left" aria-label="CHẠM ĐÀ NẴNG – trang chính">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-white shadow-md shadow-orange-200/60"><Compass className="h-6 w-6" /></span>

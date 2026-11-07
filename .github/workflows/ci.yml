@@ -146,3 +146,26 @@ jobs:
           name: stage2-mobile-screenshots
           path: stage2-qa-screenshots/
           if-no-files-found: ignore
+
+  live-my-khe-react-qa:
+    name: LIVE Cloudflare My Khe React game verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm install --no-save --no-package-lock --no-audit --no-fund puppeteer-core
+      - name: Verify deployed React game, original assets and five questions
+        env:
+          STAGE2_QA_URL: https://chamdanang-gddp.pages.dev
+        run: node stage2-my-khe-intro-qa.mjs
+      - name: Save live screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-my-khe-react-stage2-screenshots
+          path: stage2-qa-screenshots/
+          if-no-files-found: ignore

@@ -112,5 +112,8 @@ jobs:
       - name: Production build
         run: npm run build
 
+      - name: Audit static size and preserve approved backgrounds and maps
+        run: node scripts/audit-static-assets.mjs
+
       - name: Measure and smoke-test isolated production runtime
         run: node scripts/package-production.mjs && node --test production-package-test.mjs && node --test production-package-audit-test.mjs

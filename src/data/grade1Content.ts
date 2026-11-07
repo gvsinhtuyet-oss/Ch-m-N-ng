@@ -459,7 +459,7 @@ export const GRADE1_CONTENT = [
       {
         "id": "g1-food-1",
         "title": "Món ngon quê hương",
-        "narration": "Các em cùng khám phá sáu món ăn truyền thống trong phần Khởi động của tài liệu giáo dục địa phương nhé! Đó là mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo. Mỗi món có hình dáng, nguyên liệu và hương vị riêng. Trên màn hình là món mì Quảng; những hình món ăn khác thuộc bộ ảnh của tài liệu và sẽ được giới thiệu khi có ảnh đúng nguồn. Em có thể kể tên món mình nhận ra từ lời giới thiệu. Nếu chưa từng ăn món đó, em có thể hỏi người lớn để tìm hiểu thêm. Bài học sẽ cùng em khám phá kĩ hơn về mì Quảng.",
+        "narration": "Các em cùng khám phá sáu món ăn truyền thống trong phần Khởi động của tài liệu giáo dục địa phương nhé! Đó là mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo. Mỗi món có hình dáng, nguyên liệu và hương vị riêng. Trên màn hình là món mì Quảng. Em hãy cùng thầy cô tìm các món còn lại trong tài liệu, gọi tên và kể một điều em biết về món ăn ấy. Nếu chưa từng ăn món đó, em có thể hỏi người lớn để tìm hiểu thêm. Bài học sẽ cùng em khám phá kĩ hơn về mì Quảng.",
         "fact": "Sáu món theo biên bản: mì Quảng, bánh tráng cuốn thịt heo, bánh sừng trâu, bánh thuẫn, bánh bèo và bánh xèo.",
         "q": "Món nào có trong sáu hình khởi động của tài liệu?",
         "answers": [

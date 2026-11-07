@@ -1,5 +1,5 @@
 import { optimizeImage, describeOptimization } from '../../services/ImageOptimizationService';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ThemeSettings, DEFAULT_THEME, readTheme, saveTheme } from '../../services/ThemeService';
 import { contentService } from '../../services/ContentService';
 
@@ -38,10 +38,18 @@ const groups: Array<{
   },
 ];
 
-export const ThemeEditor: React.FC<{localOnly?: boolean}> = ({localOnly = false}) => {
+export const ThemeEditor: React.FC<{localOnly?: boolean; onDirtyChange?: (dirty: boolean) => void}> = ({localOnly = false, onDirtyChange}) => {
   const [draft, setDraft] = useState<ThemeSettings>(readTheme);
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
+  const hasUnsavedChanges = JSON.stringify(draft) !== JSON.stringify(readTheme());
+  useEffect(() => { onDirtyChange?.(hasUnsavedChanges); }, [hasUnsavedChanges, onDirtyChange]);
+  useEffect(() => {
+    if (!hasUnsavedChanges) return;
+    const warn = (event: BeforeUnloadEvent) => { event.preventDefault(); event.returnValue = ''; };
+    window.addEventListener('beforeunload', warn);
+    return () => window.removeEventListener('beforeunload', warn);
+  }, [hasUnsavedChanges]);
   const set = (patch: Partial<ThemeSettings>) => setDraft(prev => ({ ...prev, ...patch }));
 
   const upload = async (file: File | undefined, target: ThemeImageKey) => {
@@ -73,6 +81,7 @@ export const ThemeEditor: React.FC<{localOnly?: boolean}> = ({localOnly = false}
 
   const publish = async () => {
     if (localOnly) return;
+    if (!window.confirm('Bạn có chắc muốn xuất bản nền giao diện cho tất cả học sinh và giáo viên? Hãy kiểm tra bản xem trước trên cả điện thoại và máy tính.')) return;
     setBusy(true);
     setMessage('');
     try {

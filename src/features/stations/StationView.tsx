@@ -1,3 +1,4 @@
+import { effectivenessService } from '../../services/EffectivenessService';
 import {LearningFeedbackForm} from '../../components/station/LearningFeedbackForm';
 import '../../components/station/station-exploration-tools.css';
 import './station-stage1-compact.css';
@@ -26,6 +27,7 @@ interface Props {
 export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const { currentUser, role, currentStage: requestedStage, setCurrentStage } = useApp();
   const isReadOnly = role !== 'student';
+  useEffect(() => { if (!isReadOnly) effectivenessService.stage(station.id, 0); }, [isReadOnly, station.id]);
   const studentId = currentUser?.id || 'guest';
   const [, refreshProgress] = useState(0);
   useEffect(() => {
@@ -80,7 +82,10 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
   const finishStage=(stage:1|2|3)=>{
     if(stage>highestAccessibleStage)return;
     const next=(stage+1) as 2|3|4;
-    if (!isReadOnly) setSessionUnlockedStage(highest=>Math.max(highest,next));
+    if (!isReadOnly) {
+      setSessionUnlockedStage(highest=>Math.max(highest,next));
+      effectivenessService.stage(station.id, stage);
+    }
     setCurrentStage(next);
   };
 

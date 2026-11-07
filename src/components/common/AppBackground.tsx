@@ -21,9 +21,12 @@ export const AppBackground: React.FC = () => {
       theme.coverMobile ||
       theme.roleDesktop ||
       theme.roleMobile;
-  const source = customSource || '/images/chamdanang-journey-orange.webp';
+  const bundledSource = '/images/chamdanang-journey-orange.webp';
+  const source = customSource || bundledSource;
+  const [useBundledSource, setUseBundledSource] = useState(false);
+  const imageSource = useBundledSource ? bundledSource : source;
 
-  useEffect(() => { setImageFailed(false); }, [source]);
+  useEffect(() => { setImageFailed(false); setUseBundledSource(false); }, [source]);
   useEffect(() => {
     const refresh = () => setTheme(readTheme());
     const query = window.matchMedia('(max-width: 767px)');
@@ -42,11 +45,15 @@ export const AppBackground: React.FC = () => {
   return (
     <div className="adventure-background" aria-hidden="true">
       <div className="adventure-default" />
-      {source && !imageFailed && (
+      {imageSource && !imageFailed && (
         <img
-          src={source}
+          src={imageSource}
           alt=""
-          onError={() => setImageFailed(true)}
+          onError={() => {
+            // A stale local/remote preview must not hide the approved background.
+            if (imageSource !== bundledSource) setUseBundledSource(true);
+            else setImageFailed(true); // Existing illustrated SVG remains visible.
+          }}
           className="adventure-custom"
           style={{ filter: 'blur(' + theme.blur + 'px)' }}
         />

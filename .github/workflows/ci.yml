@@ -55,6 +55,15 @@ jobs:
       - name: Firestore authentication storage tests
         run: node --test auth-storage-test.mjs
 
+      - name: Admin interface, upload safeguards and rating access tests
+        run: node --test admin-interface-regression-test.mjs
+
+      - name: Opt-in D1 effectiveness tests
+        run: node --test effectiveness-test.mjs
+
+      - name: Student before-after pilot and teacher preparation time calculations
+        run: node --import tsx --test effectiveness-pilot-test.ts
+
       - name: GDĐP catalog validation tests
         run: node --test gddp-catalog-test.mjs gddp-ai-test.mjs
 
@@ -102,6 +111,9 @@ jobs:
 
       - name: Production build
         run: npm run build
+
+      - name: Audit static size and preserve approved backgrounds and maps
+        run: node scripts/audit-static-assets.mjs
 
       - name: Measure and smoke-test isolated production runtime
         run: node scripts/package-production.mjs && node --test production-package-test.mjs && node --test production-package-audit-test.mjs

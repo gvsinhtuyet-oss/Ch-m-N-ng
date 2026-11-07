@@ -84,11 +84,25 @@ export const LandingView: React.FC = () => {
       : theme.coverDesktop || theme.coverMobile
   ) || (mobileBackground ? '/images/landing/river-mobile.webp' : '/images/landing/river-desktop.webp');
 
+  const bundledLandingBackground = mobileBackground
+    ? '/images/landing/river-mobile.webp'
+    : '/images/landing/river-desktop.webp';
   const roleBackground = (
     mobileBackground
       ? theme.roleMobile || theme.roleDesktop
       : theme.roleDesktop || theme.roleMobile
   ) || coverBackground || DEFAULT_APP_BACKGROUND_DATA_URL;
+  // Uploaded or cached theme URLs can disappear between releases.
+  // Keep the reviewed bundled background as a final, immutable fallback.
+  const restoreBundledBackground = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const image = event.currentTarget;
+    if (!image.src.endsWith(bundledLandingBackground)) {
+      image.src = bundledLandingBackground;
+      return;
+    }
+    image.onerror = null;
+    image.src = DEFAULT_APP_BACKGROUND_DATA_URL;
+  };
 
   useEffect(() => {
     try {
@@ -305,6 +319,7 @@ export const LandingView: React.FC = () => {
       {/* Nền trang bìa do Quản trị cài riêng. */}
       <img
         src={coverBackground}
+        onError={restoreBundledBackground}
         alt=""
         aria-hidden="true"
         className="landing-cover-background absolute inset-0 h-full w-full object-cover"
@@ -424,6 +439,7 @@ export const LandingView: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 overflow-hidden">
           <img
             src={roleBackground}
+            onError={restoreBundledBackground}
             alt=""
             aria-hidden="true"
             className="absolute inset-0 h-full w-full object-cover"

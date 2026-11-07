@@ -32,8 +32,11 @@ test('recovery snapshot contains the current assistant module contract and isola
  const productionVariantSHA256 = {
    'src/App.tsx': '72e723aa0a675dbac99827bf35555d1e5490da7bc605fa76bf9f6746f4300cbe',
  };
+ const mismatches=[];
  for(const path of ['src/App.tsx','src/components/common/DanangAssistantChat.tsx','src/components/common/FeatureLoadBoundary.tsx','src/utils/assistantPosition.ts','src/services/LocalEducationKnowledge.ts','src/services/TeacherLessonSearch.ts','src/features/teacher/GddpTeacherLookup.tsx','src/features/teacher/TeacherAssistantLessonPanel.tsx','src/services/AssistantLearningEngine.ts','src/services/AssistantEffectivenessService.ts','src/components/common/AssistantPracticeCard.tsx','src/components/common/AssistantEffectivenessPanel.tsx','src/data/assistantLearningProfiles.json','src/data/assistantAssessmentBank.json']){
   const entry=current.files.find(e=>e.path===path);assert.ok(entry,path);
-  const source=await readFile(path);assert.equal(createHash('sha256').update(source).digest('hex'),productionVariantSHA256[path] ?? entry.sha256,path);
+  const source=await readFile(path);const actual=createHash('sha256').update(source).digest('hex');const expected=productionVariantSHA256[path] ?? entry.sha256;
+  if(actual!==expected)mismatches.push({path,expected,actual});
  }
+ assert.deepEqual(mismatches,[], 'Source baseline should match approved immutable or production variants');
 });

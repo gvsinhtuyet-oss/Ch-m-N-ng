@@ -18,6 +18,13 @@ test('Admin stars draw only from server ratings and show unavailable state',()=>
   const inbox=source('src/features/admin/ProposalInbox.tsx');
   assert.match(inbox,/authService\.stationRatings\(\)/);
   assert.match(inbox,/ratingsError/);
+  assert.match(inbox,/ratingsStatus===404/);
+  assert.match(inbox,/Thống kê sao đang chờ đồng bộ/);
+  assert.match(inbox,/Tải lại thống kê/);
+  assert.match(inbox,/Chi tiết trạng thái dữ liệu dành cho quản trị/);
+  assert.match(inbox,/Không coi dữ liệu chưa truy xuất được là 0 đánh giá/);
+  assert.doesNotMatch(inbox,/bg-rose-50 p-3 text-sm text-rose-800/,'No conspicuous red banner for a missing ratings API');
+  assert.doesNotMatch(inbox,/API thống kê sao chưa có trên máy chủ đang chạy/,'Technical incident must not dominate dashboard');
   assert.match(inbox,/Biểu đồ sao của 25 trạm/);
   assert.match(inbox,/Đánh giá Chặng 4/);
   assert.match(inbox,/const \[stationId,setStationId\]=useState\(initialStationId \?\? ''\)/);

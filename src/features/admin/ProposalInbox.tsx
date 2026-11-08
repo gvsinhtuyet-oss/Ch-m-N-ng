@@ -10,18 +10,24 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
  useEffect(()=>{if(initialStationId!==undefined)setStationId(initialStationId);},[initialStationId]);
  const [ratings,setRatings]=useState<Record<string,number[]>>({});
  const [ratingsError,setRatingsError]=useState('');
+ const [ratingsStatus,setRatingsStatus]=useState<number|null>(null);
  const [ratingsBusy,setRatingsBusy]=useState(true);
  const load=async()=>{setBusy(true);setError('');try{setRecords(await authService.proposals());}catch(e){setError((e as Error).message);}finally{setBusy(false);}};
  const loadRatings=async()=>{
   setRatingsBusy(true);
   setRatingsError('');
-  try{setRatings(await authService.stationRatings());}
-  catch(error){
+  setRatingsStatus(null);
+  try{
+   const response=await authService.stationRatings();
+   setRatings(response);
+  } catch(error){
    const status=(error as {status?:number})?.status;
-   if(status===404) setRatingsError('API thống kê sao chưa có trên máy chủ đang chạy (HTTP 404). Cần đồng bộ backend; không thể coi đây là 0 đánh giá.');
-   else if(status===401) setRatingsError('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại để xem đánh giá sao.');
-   else if(status===403) setRatingsError('Chỉ tài khoản quản trị mới xem được đánh giá sao.');
-   else setRatingsError('Chưa tải được đánh giá sao từ máy chủ. Vui lòng thử lại.');
+   setRatings({});
+   setRatingsStatus(typeof status==='number'?status:0);
+   if(status===404) setRatingsError('Dữ liệu thống kê sao chưa được đồng bộ từ máy chủ.');
+   else if(status===401) setRatingsError('Phiên đăng nhập đã hết hạn. Đăng nhập lại để xem đánh giá sao.');
+   else if(status===403) setRatingsError('Tài khoản hiện tại chưa có quyền xem thống kê sao.');
+   else setRatingsError('Chưa kết nối được số liệu đánh giá. Bạn có thể thử tải lại.');
   }
   finally{setRatingsBusy(false);}
  };
@@ -74,9 +80,24 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
       <h3 className="font-extrabold text-slate-900">{stationId?'Biểu đồ sao của trạm':'Biểu đồ sao của 25 trạm'}</h3>
       <span className="text-xs text-slate-600">Chặng 4 · 1 đến 5 sao</span>
     </div>
-    {ratingsBusy?<p role="status">Đang tải đánh giá từ máy chủ…</p>
-    :ratingsError?<p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm text-rose-800">{ratingsError}</p>
-    :!counts?<p role="alert" className="text-slate-600">Máy chủ không trả dữ liệu đánh giá cho trạm này.</p>
+    {ratingsBusy?<p role="status" className="rounded-xl bg-slate-50 p-4 text-sm text-slate-700">Đang tải số liệu đánh giá…</p>
+    :ratingsError?<div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 sm:px-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="min-w-0">
+          <p role="status" className="text-sm font-bold text-slate-800">{ratingsStatus===404 ? 'Thống kê sao đang chờ đồng bộ' : 'Chưa có số liệu đánh giá được xác minh'}</p>
+          <p className="mt-1 text-sm text-slate-600">Các lượt đánh giá vẫn cần dữ liệu từ máy chủ để tổng hợp chính xác. Phần góp ý bên dưới được quản lý riêng.</p>
+        </div>
+        <button type="button" disabled={ratingsBusy} onClick={()=>void loadRatings()}
+          className="min-h-10 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-100 disabled:opacity-50">
+          Tải lại thống kê
+        </button>
+      </div>
+      <details className="mt-3 text-xs text-slate-500">
+        <summary className="cursor-pointer font-medium">Chi tiết trạng thái dữ liệu dành cho quản trị</summary>
+        <p className="mt-2">{ratingsError}{ratingsStatus===404?' Máy chủ chưa có API tổng hợp đánh giá (HTTP 404).':ratingsStatus?' Mã phản hồi: '+ratingsStatus+'.':''} Không coi dữ liệu chưa truy xuất được là 0 đánh giá.</p>
+      </details>
+    </div>
+    :!counts?<p role="status" className="rounded-xl bg-slate-50 p-3 text-sm text-slate-600">Dữ liệu đánh giá của trạm này chưa được trả về. Vui lòng kiểm tra lại bộ lọc.</p>
     :!total?<p className="rounded-xl bg-slate-50 p-3 text-sm text-slate-600">Chưa có lượt đánh giá nào được ghi nhận cho lựa chọn này.</p>
     :<div className="space-y-2" aria-label="Phân bố đánh giá từ 5 sao tới 1 sao">
       {[4,3,2,1,0].map(index=><div key={index} className="grid grid-cols-[4.5rem_minmax(0,1fr)_4rem] items-center gap-2 text-sm">
@@ -91,7 +112,10 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
     </div>}
   </section>
   <h3 className="font-bold">{stationId?'Góp ý cho trạm':'Tất cả góp ý và đề xuất'}{!busy&&!error&&` (${visibleRecords.length})`}</h3>
-  {error&&<p role="alert" className="text-rose-700">{error}</p>}
+  {error&&<div role="status" className="rounded-xl border border-slate-200 bg-slate-50 p-3 text-sm text-slate-700">
+    <p className="font-semibold">Chưa tải được danh sách góp ý. Bạn có thể thử lại bằng nút Làm mới.</p>
+    <details className="mt-1 text-xs text-slate-500"><summary className="cursor-pointer">Chi tiết kết nối</summary><p className="mt-1">{error}</p></details>
+   </div>}
   {!busy&&!error&&!visibleRecords.length&&<p>{stationId?'Trạm này chưa có góp ý.':'Chưa có góp ý hoặc đề xuất.'}</p>}
   {visibleRecords.map(r=><article key={r.id} className="border rounded-xl p-4 space-y-2">
    <h3 className="font-bold">{r.stationName} · Khối {r.grade}</h3>

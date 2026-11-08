@@ -10,7 +10,7 @@ test('Admin effectiveness charts use API response and never demo metrics',()=>{
   assert.match(report,/VisitTrendChart entries=\{\[\.\.\.visitsByDay\.entries\(\)\]\}/);
   assert.match(report,/StageProgressChart values=\{stageTotals\}/);
   assert.match(report,/Lượt truy cập theo ngày/);
-  assert.match(report,/Chặng 4/);
+  assert.match(report,/const stageTotals = \[/);
   assert.doesNotMatch(report,/Math\.random\(/,'Reports must not fabricate metrics');
 });
 

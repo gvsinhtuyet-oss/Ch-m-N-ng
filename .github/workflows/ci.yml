@@ -171,3 +171,19 @@ jobs:
         env:
           PUBLIC_URL: https://chamdanang-gddp.pages.dev/
         run: node admin-live-backend-diagnostics.mjs
+
+  live-rating-release-verification:
+    name: Released Admin ratings frontend asset on Cloudflare (read-only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare exact frontend asset hashes
+        run: npm ci --no-audit --no-fund && npm run build
+      - name: Verify new Admin fallback UI is on public Production and backend remains identified
+        env:
+          PUBLIC_URL: https://chamdanang-gddp.pages.dev/
+        run: node qa-live-admin-ratings-release.mjs

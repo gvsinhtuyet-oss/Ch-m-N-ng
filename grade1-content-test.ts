@@ -25,7 +25,7 @@ test('source-specific facts, two Suoi Mo sites, no invented fieldtrip/photo clai
  const byId=(id:string)=>GRADE_1_STATIONS.find(s=>s.id===id)!;
  const stream=byId('g1-station-3').hotspots.map(h=>h.narrationVi+narrationTeacherNote(h.id)).join(' ');assert.match(stream,/Hà Nha/);assert.match(stream,/Bà Nà/);assert.match(stream,/Quế Sơn Trung/);assert.match(stream,/rừng cây xanh/);assert.match(stream,/thác.*hồ/);assert.match(stream,/không có nghĩa.*an toàn/);
  const citadel=byId('g1-station-4').hotspots.map(h=>h.narrationVi+narrationTeacherNote(h.id)).join(' ');for(const fact of ['2017','cửa phía nam','cửa phía đông','Pháp','Tây Ban Nha','Nguyễn Tri Phương'])assert.ok(citadel.includes(fact));
- const food=byId('g1-station-5').hotspots.map(h=>h.narrationVi+narrationTeacherNote(h.id)).join(' ');for(const fact of ['mì Quảng','cao lầu','bê thui','bánh đập','cơm gà','nem nướng','đậu phụng','bánh tráng'])assert.ok(food.includes(fact));
+ const food=byId('g1-station-5').hotspots.map(h=>h.narrationVi+narrationTeacherNote(h.id)).join(' ');for(const fact of ['mì Quảng','bánh tráng cuốn thịt heo','bánh sừng trâu','bánh thuẫn','bánh bèo','bánh xèo','bánh đập','đậu phụng','bánh tráng'])assert.ok(food.includes(fact));
 });
 test('all 20 learning points use local reviewed photographs with source metadata',()=>{
  for(const station of GRADE_1_STATIONS){

@@ -20,6 +20,8 @@ Các mốc giờ trong báo cáo dùng **UTC+7 (Việt Nam)**.
 | Kết nối **ghi** Firestore | **CHƯA KIỂM ĐỊNH ĐƯỢC – BLOCKER** | `firestoreWriteConnected=false`; phép thử ghi không thực hiện vì đọc đã hỏng |
 | `auth.ready` trên Production | **FAIL – BLOCKER** | `false` |
 | Lưu nội dung được cấu hình dùng Firestore | CONFIG PASS, RUNTIME CHƯA ĐẠT | `contentStorage=firestore`, nhưng dịch vụ đang từ chối đọc |
+| GET `/api/gddp/catalog` | FALLBACK – không có dữ liệu mới từ Firestore | 10:51 ICT: HTTP 200, `bundled-fallback=true`, phản hồi có `published:false` |
+| GET `/api/content` | **FAIL** | 10:51 ICT: HTTP 503, không đọc được nội dung chung từ máy chủ |
 | Đăng nhập Admin thật | CHƯA PASS | Màn đăng nhập hiện báo Firestore chạm hạn mức; không đoán mật khẩu |
 | Đăng nhập Google tài khoản Giáo viên thật | CHƯA PASS | Bước tạo challenge, tài khoản và phiên đều phụ thuộc Firestore |
 | Lưu/đọc lại lớp, kế hoạch, học liệu sau đăng xuất | CHƯA PASS Production | Chỉ có kiểm thử bộ nhớ / Firestore REST giả lập |
@@ -32,6 +34,7 @@ Lưu ý: `/api/health` vốn có phép thử ghi/xóa nội bộ đối với co
 - 10:37 ICT: 6 phép thử anonymous API PASS.
 - 10:46 ICT: health FAIL do Firestore không kết nối.
 - 10:48 ICT: ghi nhận HTTP 429 / `RESOURCE_EXHAUSTED` khi đọc Firestore; không phải `PERMISSION_DENIED`.
+- 10:51 ICT: GDĐP chuyển sang `bundled-fallback`, nội dung chung HTTP 503, `RESOURCE_EXHAUSTED` tiếp diễn.
 
 ## 2. Nguyên nhân có bằng chứng và điều chưa biết
 

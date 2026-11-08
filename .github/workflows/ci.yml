@@ -146,3 +146,27 @@ jobs:
           name: stage2-mobile-screenshots
           path: stage2-qa-screenshots/
           if-no-files-found: ignore
+
+  live-production-mobile:
+    name: Verify actual Cloudflare page in mobile Chromium
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm install --no-save --no-package-lock --no-audit --no-fund puppeteer-core
+      - name: Inspect live iPhone Android iPad and desktop layouts
+        run: node production-mobile-smoke.mjs
+      - name: Inspect LIVE Cloudflare Stage 2 games on phones and tablets
+        run: |
+          STAGE2_QA_URL=https://chamdanang-gddp.pages.dev node --import tsx stage2-browser-qa.mjs
+      - name: Save screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare-live-mobile-screenshots
+          path: production-mobile-qa/
+          if-no-files-found: ignore

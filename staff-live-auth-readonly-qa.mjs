@@ -20,6 +20,17 @@ for(const route of ['/api/admin/users','/api/admin/gddp/catalog','/api/teacher/w
   assert.equal(out.status,401,route+' unexpectedly accessible without login (or backend unavailable)');
   console.log('READ-ONLY LIVE: protected route denied unauthenticated request',route);
 }
+// Read-only content checks: detect temporary bundled fallback versus Admin-published data.
+const gddp=await probe('/api/gddp/catalog');
+console.log('LIVE GDĐP CATALOG',{
+  http:gddp.status,
+  bundledFallback:gddp.body.temporaryFallback===true,
+  published:gddp.body.published===true,
+  source:typeof gddp.body.source==='string'?gddp.body.source:null
+});
+const content=await probe('/api/content');
+console.log('LIVE SHARED CONTENT',{http:content.status,available:content.status===200,serverError:content.status>=500});
+
 // This endpoint is an explicit health probe. The backend performs a short-lived
 // Firestore write/delete against its dedicated health-check collection only.
 const health=await probe('/api/health');

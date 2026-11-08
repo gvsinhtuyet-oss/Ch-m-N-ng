@@ -106,6 +106,9 @@ jobs:
       - name: Actual Teacher/Admin role routes and approved CSS regression
         run: node --test production-staff-ui-test.mjs
 
+      - name: Admin charts and feedback visual regression
+        run: node --test admin-report-visual-regression-test.mjs
+
       - name: Production build
         run: npm run build
 

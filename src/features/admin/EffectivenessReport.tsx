@@ -262,7 +262,21 @@ export function EffectivenessReport({openProgress, openFeedback}: {
       <div className="grid gap-3 sm:grid-cols-3">
         <article className="rounded-2xl bg-sky-50 p-4"><h3 className="font-bold">Lượt truy cập website</h3><p className="text-2xl font-black">{countLabel(totalVisits)}</p><p className="text-xs">Toàn website · Một lượt mỗi phiên được ghi nhận</p></article>
         <article className="rounded-2xl bg-indigo-50 p-4"><h3 className="font-bold">Lượt bắt đầu trạm</h3><p className="text-2xl font-black">{countLabel(started)}</p><p className="text-xs">Một lượt cho mỗi trạm trong một phiên</p></article>
-        <article className="rounded-2xl bg-emerald-50 p-4"><h3 className="font-bold">Tỷ lệ đóng dấu</h3><p className="text-2xl font-black">{percent(completed, started)}</p><p className="text-xs">{countLabel(completed)}/{countLabel(started)} lượt{started > 0 && started < 10 ? ' · Dữ liệu còn ít' : ''}</p></article>
+        <article className="flex items-center justify-between gap-3 rounded-2xl bg-emerald-50 p-4">
+          <div className="min-w-0">
+            <h3 className="font-bold">Tỷ lệ đóng dấu</h3>
+            <p className="mt-1 text-2xl font-black">{percent(completed, started)}</p>
+            <p className="text-xs">{countLabel(completed)}/{countLabel(started)} lượt{started > 0 && started < 10 ? ' · Dữ liệu còn ít' : ''}</p>
+          </div>
+          <svg viewBox="0 0 100 100" className="h-20 w-20 shrink-0" role="img"
+            aria-label={`Biểu đồ tròn tỷ lệ đóng dấu ${percent(completed, started)}`}>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#a7f3d0" strokeWidth="11"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#059669" strokeWidth="11"
+              pathLength="100" strokeDasharray={`${started ? Math.min(100,completed/started*100) : 0} 100`}
+              strokeLinecap="round" transform="rotate(-90 50 50)"/>
+            <text x="50" y="56" textAnchor="middle" fill="#065f46" fontSize="19" fontWeight="800">{percent(completed,started)}</text>
+          </svg>
+        </article>
       </div>
       {totalVisits > 0 ? <>
         <VisitTrendChart entries={[...visitsByDay.entries()]} />

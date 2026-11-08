@@ -1,7 +1,7 @@
 import {isBundledAssetUrl} from '../../services/contentAssetUrls';
 import { optimizeImage, describeOptimization } from '../../services/ImageOptimizationService';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ALL_25_STATIONS } from '../../data/allStations';
 import { contentService, StationContent, LearningResource } from '../../services/ContentService';
 
@@ -17,10 +17,25 @@ async function readFile(file: File): Promise<string> {
   });
 }
 
-export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = false}) => {
+export const ContentEditor: React.FC<{localOnly?: boolean;onDirtyChange?: (dirty:boolean)=>void}> = ({localOnly = false, onDirtyChange}) => {
   const [stationId, setStationId] = useState(ALL_25_STATIONS[0].id);
   const station = ALL_25_STATIONS.find(s => s.id === stationId)!;
   const [draft, setDraft] = useState<StationContent>(() => structuredClone(contentService.get(station)));
+  const [savedSnapshot, setSavedSnapshot] = useState(() => JSON.stringify(contentService.get(station)));
+  const hasUnsavedChanges = JSON.stringify(draft) !== savedSnapshot;
+  useEffect(() => {
+    onDirtyChange?.(hasUnsavedChanges);
+    return () => onDirtyChange?.(false);
+  }, [hasUnsavedChanges, onDirtyChange]);
+  useEffect(() => {
+    if (!hasUnsavedChanges) return;
+    const warnBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+    window.addEventListener('beforeunload', warnBeforeUnload);
+    return () => window.removeEventListener('beforeunload', warnBeforeUnload);
+  }, [hasUnsavedChanges]);
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
   const [resourceTitle, setResourceTitle] = useState('');
@@ -64,6 +79,7 @@ export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = fals
         contentService.saveLocal(station, draft);
         setMessage('Đã lưu bản xem thử trên máy này. Bấm Xuất bản để chia sẻ cho học sinh.');
       }
+      setSavedSnapshot(JSON.stringify(draft));
     } catch (e) {
       setMessage((e as Error).name === 'QuotaExceededError'
         ? 'Bộ nhớ máy đã đầy. Dùng đường dẫn ảnh hoặc xuất bản vào kho học liệu trực tuyến.'
@@ -78,11 +94,22 @@ export const ContentEditor: React.FC<{localOnly?: boolean}> = ({localOnly = fals
 
   return (
     <section className="rounded-3xl border-2 border-indigo-200 bg-indigo-50 p-4 sm:p-6 space-y-5">
-      <h3 className="font-black text-xl text-indigo-950">Thêm ảnh và học liệu</h3>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h3 className="font-black text-xl text-indigo-950">Thêm ảnh và học liệu</h3>
+        <span role="status" className={`rounded-full px-3 py-1 text-xs font-bold ${hasUnsavedChanges ? 'bg-amber-100 text-amber-900' : 'bg-emerald-100 text-emerald-800'}`}>
+          {hasUnsavedChanges ? 'Có thay đổi chưa lưu' : 'Không có thay đổi chưa lưu'}
+        </span>
+      </div>
       <label className="block font-bold text-sm">Chọn trạm
         <select className={fieldClass} value={stationId} onChange={e => {
           const selected = ALL_25_STATIONS.find(s => s.id === e.target.value)!;
-          setStationId(selected.id); setDraft(structuredClone(contentService.get(selected))); setMessage('');
+          if (selected.id === stationId) return;
+          if (hasUnsavedChanges && !window.confirm('Nội dung trạm chưa lưu. Bạn muốn bỏ các thay đổi này để chuyển trạm?')) {
+            e.currentTarget.value = stationId;
+            return;
+          }
+          const nextDraft = structuredClone(contentService.get(selected));
+          setStationId(selected.id); setDraft(nextDraft); setSavedSnapshot(JSON.stringify(nextDraft)); setMessage('');
         }} disabled={busy}>
           {ALL_25_STATIONS.map(s => <option key={s.id} value={s.id}>Khối {s.grade} – {s.titleVi}</option>)}
         </select>

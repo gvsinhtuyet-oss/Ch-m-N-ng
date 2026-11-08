@@ -54,6 +54,8 @@ jobs:
 
       - name: Authentication tests
         run: node --test auth-test.mjs
+      - name: Verified feedback API, 25 ratings and Admin permission tests
+        run: node --test learning-feedback-test.mjs
 
       - name: Firestore authentication storage tests
         run: node --test auth-storage-test.mjs

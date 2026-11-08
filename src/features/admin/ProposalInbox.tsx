@@ -16,7 +16,7 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
   try{setRatings(await authService.stationRatings());}
   catch(error){
    const status=(error as {status?:number})?.status;
-   if(status===404) setRatingsError('Máy chủ chưa có bản cập nhật thống kê sao. Mục góp ý được tải riêng bên dưới.');
+   if(status===404) setRatingsError('API thống kê sao chưa có trên máy chủ đang chạy (HTTP 404). Cần đồng bộ backend; không thể coi đây là 0 đánh giá.');
    else if(status===401) setRatingsError('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại để xem đánh giá sao.');
    else if(status===403) setRatingsError('Chỉ tài khoản quản trị mới xem được đánh giá sao.');
    else setRatingsError('Chưa tải được đánh giá sao từ máy chủ. Vui lòng thử lại.');
@@ -25,9 +25,15 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
  };
  useEffect(()=>{void load();void loadRatings();},[]);
  const visibleRecords=stationId?records.filter(record=>record.stationId===stationId):records;
- const counts=ratings[stationId];
+ const allCounts=[0,0,0,0,0];
+ for(const values of Object.values(ratings)){
+   values.forEach((value,index)=>{if(index<5 && Number.isFinite(value))allCounts[index]+=value;});
+ }
+ const counts=stationId?ratings[stationId]:allCounts;
  const total=counts?.reduce((sum,count)=>sum+count,0)||0;
- const average=total?counts.reduce((sum,count,index)=>sum+count*(index+1),0)/total:0;
+ const average=total&&counts?counts.reduce((sum,count,index)=>sum+count*(index+1),0)/total:0;
+ const waiting=visibleRecords.filter(record=>record.status==='pending').length;
+ const ratingAvailable=!ratingsBusy&&!ratingsError&&!!counts;
  return <section className="rounded-3xl bg-white border p-6 space-y-4">
   <h2 className="text-xl font-bold">Đánh giá và góp ý theo trạm</h2>
   <div className="flex flex-wrap items-end gap-3">
@@ -44,19 +50,44 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
     {busy||ratingsBusy?'Đang tải…':'Làm mới'}
    </button>
   </div>
-  {stationId&&<section className="rounded-xl bg-amber-50 border border-amber-200 p-4 space-y-2">
-   <h3 className="font-bold">Đánh giá ở Chặng 4</h3>
-   {ratingsBusy?<p role="status" className="text-sm">Đang tải đánh giá…</p>
-    :ratingsError?<p role="alert" className="text-sm text-rose-700">{ratingsError}</p>
-    :!counts?<p role="alert" className="text-sm text-rose-700">Máy chủ chưa trả dữ liệu cho trạm này.</p>
-    :!total?<p className="text-sm">Trạm này chưa có đánh giá sao.</p>
-    :<>
-      <p className="font-bold">{average.toLocaleString('vi-VN',{maximumFractionDigits:2})}/5 sao · {total.toLocaleString('vi-VN')} lượt đánh giá</p>
-      <ul aria-label="Số lượt theo mức sao" className="flex flex-wrap gap-2 text-sm">
-       {counts.map((count,index)=><li key={index} className="rounded-lg border border-amber-200 bg-white px-2 py-1">{index+1} sao · {count.toLocaleString('vi-VN')} lượt</li>)}
-      </ul>
-     </>}
-  </section>}
+  <div className="grid gap-3 sm:grid-cols-3" aria-label="Tổng hợp đánh giá và góp ý">
+    <div className="rounded-2xl border border-amber-100 bg-amber-50 p-4">
+      <p className="text-sm font-semibold text-amber-900">Sao trung bình</p>
+      <p className="mt-1 text-2xl font-black text-slate-900">{ratingAvailable ? total ? average.toLocaleString('vi-VN',{maximumFractionDigits:1})+' / 5' : 'Chưa có' : '—'}</p>
+      <p className="text-xs text-slate-600">Đánh giá Chặng 4</p>
+    </div>
+    <div className="rounded-2xl border border-sky-100 bg-sky-50 p-4">
+      <p className="text-sm font-semibold text-sky-900">Lượt đánh giá</p>
+      <p className="mt-1 text-2xl font-black text-slate-900">{ratingAvailable ? total.toLocaleString('vi-VN') : '—'}</p>
+      <p className="text-xs text-slate-600">Theo bộ lọc trạm</p>
+    </div>
+    <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-4">
+      <p className="text-sm font-semibold text-emerald-900">Góp ý chờ xử lý</p>
+      <p className="mt-1 text-2xl font-black text-slate-900">{!busy&&!error ? waiting.toLocaleString('vi-VN') : '—'}</p>
+      <p className="text-xs text-slate-600">Theo bộ lọc trạm</p>
+    </div>
+  </div>
+  <section className="rounded-2xl border border-amber-200 bg-white p-4 sm:p-5">
+    <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+      <h3 className="font-extrabold text-slate-900">{stationId?'Biểu đồ sao của trạm':'Biểu đồ sao của 25 trạm'}</h3>
+      <span className="text-xs text-slate-600">Chặng 4 · 1 đến 5 sao</span>
+    </div>
+    {ratingsBusy?<p role="status">Đang tải đánh giá từ máy chủ…</p>
+    :ratingsError?<p role="alert" className="rounded-xl bg-rose-50 p-3 text-sm text-rose-800">{ratingsError}</p>
+    :!counts?<p role="alert" className="text-slate-600">Máy chủ không trả dữ liệu đánh giá cho trạm này.</p>
+    :!total?<p className="rounded-xl bg-slate-50 p-3 text-sm text-slate-600">Chưa có lượt đánh giá nào được ghi nhận cho lựa chọn này.</p>
+    :<div className="space-y-2" aria-label="Phân bố đánh giá từ 5 sao tới 1 sao">
+      {[4,3,2,1,0].map(index=><div key={index} className="grid grid-cols-[4.5rem_minmax(0,1fr)_4rem] items-center gap-2 text-sm">
+        <span className="whitespace-nowrap font-bold text-amber-800">{index+1} ★</span>
+        <div className="h-4 overflow-hidden rounded-full bg-slate-100" role="meter" aria-label={`${index+1} sao`}
+          aria-valuemin={0} aria-valuemax={total} aria-valuenow={counts[index]}>
+          <div className="h-full rounded-full bg-amber-400" style={{width:`${counts[index]/total*100}%`}}/>
+        </div>
+        <span className="text-right tabular-nums text-slate-700">{counts[index].toLocaleString('vi-VN')}</span>
+      </div>)}
+      <p className="pt-2 text-sm font-semibold text-amber-900">{average.toLocaleString('vi-VN',{maximumFractionDigits:2})}/5 sao từ {total.toLocaleString('vi-VN')} lượt đánh giá thực tế</p>
+    </div>}
+  </section>
   <h3 className="font-bold">{stationId?'Góp ý cho trạm':'Tất cả góp ý và đề xuất'}{!busy&&!error&&` (${visibleRecords.length})`}</h3>
   {error&&<p role="alert" className="text-rose-700">{error}</p>}
   {!busy&&!error&&!visibleRecords.length&&<p>{stationId?'Trạm này chưa có góp ý.':'Chưa có góp ý hoặc đề xuất.'}</p>}

@@ -365,7 +365,7 @@ export const TeacherDashboard: React.FC = () => {
               </p>
             </div>
             <span className="px-3 py-1 rounded-xl bg-slate-100 text-slate-600 text-xs font-semibold">
-              Nhật ký minh họa · Tất cả thời gian
+              Kỳ học 2026 - 2027
             </span>
           </div>
 

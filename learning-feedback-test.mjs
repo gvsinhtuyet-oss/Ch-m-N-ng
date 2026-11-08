@@ -98,3 +98,27 @@ test('durable create-only quotas enforce concurrent proposals with different bod
  assert.equal(responses.filter(r=>r.status===200).length,1);
  assert.equal([...docs.keys()].filter(k=>k.startsWith('cham_learning_proposals/')).length,1);
 });
+
+
+test('Admin five-star cache reduces Firestore scans while preserving auth on every request',async()=>{
+ const rating={stationId:'g1-station-1',stars:5};
+ let reads=0,verified=0;
+ const store={list:async collection=>{assert.equal(collection,'cham_journey_ratings');reads++;return [rating];}};
+ const auth={requireAdmin:async()=>{verified++;}};
+ const handle=createLearningFeedback({store,auth});
+ const results=[];
+ const json=(_res,status,payload)=>results.push({status,payload});
+ const req={method:'GET'};
+ assert.equal(await handle(req,{},'/api/admin/station-ratings',null,json),true);
+ assert.equal(await handle(req,{},'/api/admin/station-ratings',null,json),true);
+ assert.equal(verified,2,'Reauthenticate every Admin API read');
+ assert.equal(reads,1,'Do not repeatedly scan Firestore during cache TTL');
+ assert.equal(results[0].payload.ratings['g1-station-1'][4],1);
+});
+
+test('Teacher cannot read cached Admin star aggregation',async()=>{
+ const auth={requireAdmin:async()=>{throw Object.assign(new Error('Forbidden'),{status:403});}};
+ const store={list:async()=>{throw Error('Unauthorized request must not read Firestore');}};
+ const handle=createLearningFeedback({store,auth});
+ await assert.rejects(()=>handle({method:'GET'},{},'/api/admin/station-ratings',null,()=>{}),/Forbidden/);
+});

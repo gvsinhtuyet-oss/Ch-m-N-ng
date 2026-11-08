@@ -31,3 +31,24 @@ test('Admin header remains readable after programmatic focus navigation',()=>{
   assert.match(dashboard,/pageTitle\.current\?\.focus\(/);
   assert.match(css,/\.admin-page-hero h1:focus \{outline:none;box-shadow:none\}/);
 });
+
+test('Admin station editing warns before abandoning an unpublished change',()=>{
+  const editor=source('src/features/admin/ContentEditor.tsx');
+  const dashboard=source('src/features/admin/AdminDashboard.tsx');
+  assert.match(editor,/hasUnsavedChanges/);
+  assert.match(editor,/window\.confirm\('Nội dung trạm chưa lưu/);
+  assert.match(editor,/e\.currentTarget\.value = stationId/);
+  assert.match(editor,/beforeunload/);
+  assert.match(editor,/onDirtyChange\?\.\(hasUnsavedChanges\)/);
+  assert.match(dashboard,/window\.confirm\('Bạn có nội dung trạm chưa lưu/);
+  assert.match(dashboard,/<ContentEditor onDirtyChange=\{setEditorDirty\} \/>/);
+  assert.doesNotMatch(dashboard,/Xuất bản chuẩn/,'Never claim catalog entries published without server confirmation');
+});
+
+test('Admin overview never substitutes zeros for an unavailable source',()=>{
+  const dashboard=source('src/features/admin/AdminDashboard.tsx');
+  assert.match(dashboard,/Promise\.allSettled/);
+  assert.match(dashboard,/Các chỉ số chưa xác minh hiển thị “—”/);
+  assert.match(dashboard,/available\.implementations\?implementations\.length:'—'/);
+  assert.match(dashboard,/available\.users\?counts\.teachers:'—'/);
+});

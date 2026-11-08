@@ -365,7 +365,7 @@ export const TeacherDashboard: React.FC = () => {
               </p>
             </div>
             <span className="px-3 py-1 rounded-xl bg-slate-100 text-slate-600 text-xs font-semibold">
-              Kỳ học 2025 - 2026
+              Nhật ký minh họa · Tất cả thời gian
             </span>
           </div>
 
@@ -379,7 +379,7 @@ export const TeacherDashboard: React.FC = () => {
             <div className="p-5 rounded-2xl bg-sky-50 border border-sky-100">
               <span className="text-xs font-bold text-sky-800 uppercase">Lượt triển khai dạy</span>
               <div className="text-3xl font-black text-sky-700 mt-1">{implementations.length} lượt</div>
-              <p className="text-[11px] text-sky-600 mt-1">Đã được giáo viên xác nhận trong học kỳ</p>
+              <p className="text-[11px] text-sky-600 mt-1">Số lượt trong nhật ký minh họa bên dưới</p>
             </div>
 
             <div className="p-5 rounded-2xl bg-amber-50 border border-amber-100">

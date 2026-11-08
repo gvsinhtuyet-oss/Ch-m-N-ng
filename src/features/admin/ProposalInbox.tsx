@@ -104,17 +104,17 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
       </details>
     </div>
     :!summary.available?<p role="status" className="rounded-xl bg-slate-50 p-3 text-sm text-slate-600">Dữ liệu đánh giá của trạm này chưa được trả về. Vui lòng kiểm tra lại bộ lọc.</p>
-    :!total?<p className="rounded-xl bg-slate-50 p-3 text-sm text-slate-600">Chưa có lượt đánh giá nào được ghi nhận cho lựa chọn này.</p>
     :<div className="space-y-2" aria-label="Phân bố đánh giá từ 5 sao tới 1 sao">
+      {!total&&<p className="rounded-xl bg-slate-50 p-3 text-sm text-slate-600">Chưa có lượt đánh giá nào được ghi nhận cho lựa chọn này.</p>}
       {[4,3,2,1,0].map(index=><div key={index} className="grid grid-cols-[4.5rem_minmax(0,1fr)_4rem] items-center gap-2 text-sm">
         <span className="whitespace-nowrap font-bold text-amber-800">{index+1} ★</span>
         <div className="h-4 overflow-hidden rounded-full bg-slate-100" role="meter" aria-label={`${index+1} sao`}
-          aria-valuemin={0} aria-valuemax={total} aria-valuenow={counts[index]}>
-          <div className="h-full rounded-full bg-amber-400" style={{width:`${counts[index]/total*100}%`}}/>
+          aria-valuemin={0} aria-valuemax={Math.max(1,total)} aria-valuenow={counts[index]}>
+          <div className="h-full rounded-full bg-amber-400" style={{width:`${counts[index]/Math.max(1,total)*100}%`}}/>
         </div>
         <span className="text-right tabular-nums text-slate-700">{counts[index].toLocaleString('vi-VN')}</span>
       </div>)}
-      <p className="pt-2 text-sm font-semibold text-amber-900">{formatRating(average)}/5 sao từ {total.toLocaleString('vi-VN')} lượt đánh giá thực tế</p>
+      {total>0&&<p className="pt-2 text-sm font-semibold text-amber-900">{formatRating(average)}/5 sao từ {total.toLocaleString('vi-VN')} lượt đánh giá thực tế</p>}
     </div>}
   </section>
   {!stationId&&<section aria-label="Đánh giá theo 25 bài học" className="space-y-3">

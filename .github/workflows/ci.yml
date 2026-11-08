@@ -169,3 +169,26 @@ jobs:
         env:
           PUBLIC_URL: https://chamdanang-gddp.pages.dev/
         run: node admin-live-backend-diagnostics.mjs
+
+  live-admin-production-smoke:
+    name: Cloudflare Production Admin Demo desktop and phone (read only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test dependency
+        run: npm install --no-audit --no-fund && npm install --no-save --no-package-lock --no-audit --no-fund puppeteer-core
+      - name: Verify actual Production Admin Demo and user entry
+        env:
+          QA_URL: https://chamdanang-gddp.pages.dev/
+        run: node staff-admin-demo-qa.mjs
+      - name: Keep production browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-admin-production-desktop-phone
+          path: staff-admin-qa/
+          if-no-files-found: ignore

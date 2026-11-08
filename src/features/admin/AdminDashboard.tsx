@@ -3,7 +3,6 @@ import { GddpAdminEditor } from './GddpAdminEditor';
 import { ThemeEditor } from './ThemeEditor';
 import { ContentEditor } from './ContentEditor';
 import React, { useEffect, useRef, useState } from 'react';
-import { OFFICIAL_25_CATALOG } from '../../data/curriculumCatalog';
 import { authService } from '../../services/AuthService';
 import { ImplementationRecord } from '../../types';
 import { EffectivenessReport } from './EffectivenessReport';
@@ -40,17 +39,43 @@ export const AdminDashboard: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const pageTitle = useRef<HTMLHeadingElement>(null);
   const [feedbackStation, setFeedbackStation] = useState<string>();
+  const [editorDirty,setEditorDirty] = useState(false);
   const [gradeFilter, setGradeFilter] = useState<number>(0); // 0 = all
 
   const [implementations,setImplementations]=useState<ImplementationRecord[]>([]);
   const [counts,setCounts]=useState({teachers:0,active:0,classes:0,students:0,proposals:0,pending:0});
+  const [available,setAvailable]=useState({implementations:false,classes:false,users:false,proposals:false});
   const [workflowError,setWorkflowError]=useState('');
   const [loading,setLoading]=useState(false);
-  const load=async()=>{setLoading(true);setWorkflowError('');
-    try{const [records,classes,users,proposals]=await Promise.all([authService.implementations(),authService.classes(),authService.users(),authService.proposals()]);
-      setImplementations(records);const teachers=users.filter(u=>u.role==='teacher');
-      setCounts({teachers:teachers.length,active:teachers.filter(u=>u.active).length,classes:classes.length,students:classes.reduce((n,c)=>n+c.totalStudents,0),proposals:proposals.length,pending:proposals.filter(proposal=>proposal.status==='pending').length});
-    }catch(e){setWorkflowError((e as Error).message);}finally{setLoading(false);}
+  const load=async()=>{
+    setLoading(true);setWorkflowError('');
+    // An unavailable endpoint must not hide the other successfully loaded reports,
+    // or turn unknown school data into a misleading zero.
+    const [implementationResult,classResult,userResult,proposalResult]=await Promise.allSettled([
+      authService.implementations(),authService.classes(),authService.users(),authService.proposals(),
+    ]);
+    const ready={
+      implementations:implementationResult.status==='fulfilled',
+      classes:classResult.status==='fulfilled',
+      users:userResult.status==='fulfilled',
+      proposals:proposalResult.status==='fulfilled',
+    };
+    setAvailable(ready);
+    const unavailable:string[]=[];
+    if(implementationResult.status==='fulfilled')setImplementations(implementationResult.value);
+    else {setImplementations([]);unavailable.push('nhật ký triển khai');}
+    if(classResult.status==='fulfilled')setCounts(prev=>({...prev,classes:classResult.value.length,students:classResult.value.reduce((sum,room)=>sum+room.totalStudents,0)}));
+    else unavailable.push('danh sách lớp');
+    if(userResult.status==='fulfilled'){
+      const teachers=userResult.value.filter(user=>user.role==='teacher');
+      setCounts(prev=>({...prev,teachers:teachers.length,active:teachers.filter(user=>user.active).length}));
+    }else unavailable.push('tài khoản giáo viên');
+    if(proposalResult.status==='fulfilled')setCounts(prev=>({...prev,proposals:proposalResult.value.length,pending:proposalResult.value.filter(record=>record.status==='pending').length}));
+    else unavailable.push('góp ý và đề xuất');
+    setWorkflowError(unavailable.length
+      ? 'Chưa tải được: '+unavailable.join(', ')+'. Các chỉ số chưa xác minh hiển thị “—”, không tính là 0.'
+      : '');
+    setLoading(false);
   };
   const showOverviewData = activeTab === 'overview' || activeTab === 'tracking';
   useEffect(()=>{if(showOverviewData)void load();},[activeTab]);
@@ -63,6 +88,8 @@ export const AdminDashboard: React.FC = () => {
   const activePage = activeGroup.pages.find(page => page.id === activeTab)!;
 
   const navigate = (page: AdminPage, stationId?: string, keepMenuOpen = false) => {
+    if (activeTab==='stations' && page!=='stations' && editorDirty &&
+        !window.confirm('Bạn có nội dung trạm chưa lưu. Rời trang sẽ bỏ các chỉnh sửa đó. Vẫn tiếp tục?')) return;
     setFeedbackStation(stationId);
     setActiveTab(page);
     setMenuOpen(keepMenuOpen);
@@ -138,16 +165,19 @@ export const AdminDashboard: React.FC = () => {
               </span>
             </div>
 
-            <div aria-label="Lối tắt quản trị" className="grid gap-2 sm:grid-cols-3">
+            <div aria-label="Lối tắt quản trị" className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
               <button type="button" onClick={() => navigate('reports')} className="flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-sm font-bold text-indigo-900 hover:bg-indigo-50">
                 <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />Xem kết quả lớp
               </button>
               <button type="button" onClick={() => navigate('proposals', '')} className="flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-sm font-bold text-indigo-900 hover:bg-indigo-50">
                 <MessageSquareText className="h-4 w-4 shrink-0" aria-hidden="true" />Xem góp ý mới
-                {!loading && !workflowError && counts.pending > 0 && <span className="ml-auto rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-900" aria-label={`${counts.pending} góp ý chờ xử lý`}>{counts.pending}</span>}
+                {!loading && available.proposals && counts.pending > 0 && <span className="ml-auto rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-900" aria-label={`${counts.pending} góp ý chờ xử lý`}>{counts.pending}</span>}
               </button>
               <button type="button" onClick={() => navigate('stations')} className="flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-sm font-bold text-indigo-900 hover:bg-indigo-50">
                 <BookOpen className="h-4 w-4 shrink-0" aria-hidden="true" />Sửa nội dung trạm
+              </button>
+              <button type="button" onClick={() => navigate('effectiveness')} className="flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-sm font-bold text-indigo-900 hover:bg-indigo-50">
+                <BarChart3 className="h-4 w-4 shrink-0" aria-hidden="true" />Xem biểu đồ hiệu quả
               </button>
             </div>
 
@@ -155,17 +185,17 @@ export const AdminDashboard: React.FC = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 2xl:grid-cols-6 gap-3 sm:gap-4">
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
                 <span className="text-[11px] font-bold text-slate-500 uppercase">Giáo viên</span>
-                <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">{loading?'…':counts.teachers}</div>
-                <span className="text-[10px] text-emerald-600 font-semibold">{counts.active} tài khoản đang hoạt động</span>
+                <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">{loading?'…':available.users?counts.teachers:'—'}</div>
+                <span className="text-[10px] text-emerald-600 font-semibold">{available.users?counts.active.toLocaleString('vi-VN'):'—'} tài khoản đang hoạt động</span>
               </div>
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
                 <span className="text-[11px] font-bold text-slate-500 uppercase">Lớp học</span>
-                <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">{loading?'…':counts.classes}</div>
+                <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">{loading?'…':available.classes?counts.classes:'—'}</div>
                 <span className="text-[10px] text-slate-500">Khối 1 đến Khối 5</span>
               </div>
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
                 <span className="text-[11px] font-bold text-slate-500 uppercase">Học sinh</span>
-                <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">{loading?'…':counts.students}</div>
+                <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">{loading?'…':available.classes?counts.students:'—'}</div>
                 <span className="text-[10px] text-sky-600 font-semibold">Theo danh sách lớp đã lưu</span>
               </div>
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
@@ -175,13 +205,13 @@ export const AdminDashboard: React.FC = () => {
               </div>
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
                 <span className="text-[11px] font-bold text-slate-500 uppercase">Lượt triển khai</span>
-                <div className="text-2xl sm:text-3xl font-black text-emerald-600 mt-1">{loading?'…':implementations.length}</div>
+                <div className="text-2xl sm:text-3xl font-black text-emerald-600 mt-1">{loading?'…':available.implementations?implementations.length:'—'}</div>
                 <span className="text-[10px] text-slate-500">Nhật ký đã được máy chủ lưu</span>
               </div>
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
                 <span className="text-[11px] font-bold text-slate-500 uppercase">Đề xuất học liệu</span>
-                <div className="text-2xl sm:text-3xl font-black text-sky-600 mt-1">{loading?'…':counts.proposals}</div>
-                <span className="text-[10px] text-emerald-600 font-semibold">{loading || workflowError ? 'Theo dữ liệu máy chủ' : `${counts.pending} chờ quản trị rà soát`}</span>
+                <div className="text-2xl sm:text-3xl font-black text-sky-600 mt-1">{loading?'…':available.proposals?counts.proposals:'—'}</div>
+                <span className="text-[10px] text-emerald-600 font-semibold">{loading||!available.proposals?'Chưa có dữ liệu xác minh':`${counts.pending} chờ quản trị rà soát`}</span>
               </div>
             </div>
 
@@ -190,10 +220,11 @@ export const AdminDashboard: React.FC = () => {
               <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-4">
                 <h3 className="font-extrabold text-base text-slate-900 flex items-center justify-between">
                   <span>Triển khai theo khối lớp</span>
-                  <span className="text-xs text-slate-400 font-medium">Học kỳ 1</span>
+                  <span className="text-xs text-slate-400 font-medium">Theo nhật ký đã tải</span>
                 </h3>
                 <div className="space-y-3">
-                  {[1,2,3,4,5].map(grade=>{const taught=new Set(implementations.filter(r=>r.grade===grade).map(r=>r.stationId)).size;return {grade,percent:Math.min(100,taught/5*100),label:`Khối ${grade}: ${taught} bài có nhật ký triển khai`};}).map((item) => (
+                  {!available.implementations && <p className="text-sm text-amber-900">Chưa tải được nhật ký triển khai. Không thể tính tỷ lệ theo khối.</p>}
+                  {available.implementations && [1,2,3,4,5].map(grade=>{const taught=new Set(implementations.filter(r=>r.grade===grade).map(r=>r.stationId)).size;return {grade,percent:Math.min(100,taught/5*100),label:`Khối ${grade}: ${taught} bài có nhật ký triển khai`};}).map((item) => (
                     <div key={item.grade} className="space-y-1">
                       <div className="flex justify-between text-xs font-semibold">
                         <span className="text-slate-700">{item.label}</span>
@@ -210,10 +241,12 @@ export const AdminDashboard: React.FC = () => {
               <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs space-y-4">
                 <h3 className="font-extrabold text-base text-slate-900 flex items-center justify-between">
                   <span>Hoạt động triển khai gần đây</span>
-                  <span className="text-xs text-emerald-700 font-bold">Cập nhật tức thời</span>
+                  <span className="text-xs text-emerald-700 font-bold">Theo nhật ký máy chủ</span>
                 </h3>
                 <div className="space-y-3">
-                  {implementations.slice(0, 4).map(imp => (
+                  {!available.implementations && <p className="text-sm text-amber-900">Chưa tải được hoạt động từ máy chủ.</p>}
+                  {available.implementations && implementations.length===0 && <p className="text-sm text-slate-600">Chưa có nhật ký triển khai.</p>}
+                  {available.implementations && implementations.slice(0, 4).map(imp => (
                     <div key={imp.id} className="p-3 rounded-2xl bg-slate-50 border border-slate-100 text-xs flex items-center justify-between">
                       <div>
                         <span className="font-bold text-slate-900">{imp.teacherName}</span>
@@ -300,55 +333,10 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {activeTab === 'stations' && <ContentEditor />}
+        {activeTab === 'stations' && <ContentEditor onDirtyChange={setEditorDirty} />}
 
-        {/* TAB 3: NỘI DUNG TRẠM (25 Stations & Versioning) */}
-        {activeTab === 'stations' && (
-          <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <h2 className="text-xl font-black text-slate-900">Khung 25 Trạm Cấp Tiểu Học (Theo Đề Cương SGDĐT)</h2>
-                <p className="text-xs text-slate-500">
-                  Quản lý phiên bản biên soạn (Bản thảo → Gửi duyệt → Bản mẫu xuất bản)
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
-                  Quy trình Thông tư 41/2026/TT-BGDĐT
-                </span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {OFFICIAL_25_CATALOG.map((cat) => (
-                <div
-                  key={cat.id}
-                  className="p-4 rounded-2xl border border-slate-200 bg-slate-50/60 hover:bg-white hover:border-indigo-300 transition space-y-2 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <span className="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[10px] font-bold">
-                        Khối {cat.grade} • Bài {cat.lessonNumber}
-                      </span>
-                      <span className="text-[10px] font-bold text-slate-400">{cat.periods>0?`${cat.periods} tiết`:'Chưa xác nhận số tiết'}</span>
-                    </div>
-                    <h4 className="font-extrabold text-sm text-slate-900 mt-1">{cat.titleVi}</h4>
-                    <p className="text-[11px] text-indigo-900 font-semibold">{cat.themeNameVi}</p>
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-2">{cat.knowGoalVi}</p>
-                  </div>
-
-                  <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between text-xs">
-                    <span className="inline-flex items-center gap-1 text-emerald-700 font-bold text-[11px]">
-                      <CheckCircle2 className="w-3 h-3" /> Xuất bản chuẩn
-                    </span>
-                    <span className="text-slate-400 font-mono text-[10px]">v1.2</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
+        {/* A single real station editor above; no static publish-status badges.
+            Published state must come from a successful server write. */}
         {activeTab === 'users' && <StaffAccounts />}
 
         {/* TAB 5: BÁO CÁO */}

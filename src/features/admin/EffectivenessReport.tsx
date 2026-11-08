@@ -21,6 +21,80 @@ const countLabel = (value: number) => number.format(value);
 const percent = (completed: number, started: number) => started
   ? `${Math.round(completed / started * 100)}%` : '—';
 
+/**
+ * Draw aggregated visit data returned by /api/effectiveness, never sample data.
+ * SVG stays responsive and contains a text equivalent for screen readers.
+ */
+function VisitTrendChart({entries}: {entries: [string, number][]}) {
+  const width = 720;
+  const left = 48;
+  const right = 22;
+  const top = 20;
+  const plotHeight = 152;
+  const bottom = top + plotHeight;
+  const highest = Math.max(1, ...entries.map(([, count]) => count));
+  const x = (index: number) => left + index / Math.max(1, entries.length - 1) * (width - left - right);
+  const y = (count: number) => bottom - count / highest * plotHeight;
+  const points = entries.map(([, count], index) => `${x(index)},${y(count)}`).join(' ');
+  const area = entries.length
+    ? `M ${x(0)} ${bottom} L ${entries.map(([, count], index) => `${x(index)} ${y(count)}`).join(' L ')} L ${x(entries.length - 1)} ${bottom} Z`
+    : '';
+  const labelStep = Math.max(1, Math.ceil(entries.length / 6));
+  const labelIndices = entries.map((_, index) => index)
+    .filter(index => index === 0 || index === entries.length - 1 || index % labelStep === 0);
+
+  return <figure className="rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 to-white p-3 sm:p-5">
+    <figcaption className="mb-1 flex flex-wrap items-center justify-between gap-2">
+      <span className="font-extrabold text-slate-900">Biểu đồ lượt truy cập theo ngày</span>
+      <span className="text-xs text-slate-600">Dữ liệu thực · giờ Việt Nam</span>
+    </figcaption>
+    <svg className="h-auto w-full" viewBox="0 0 720 226" role="img"
+      aria-label={`Biểu đồ ${entries.length} ngày, cao nhất ${highest} lượt; tổng lượt theo ngày được ghi trong bảng chi tiết phía dưới.`}>
+      <defs>
+        <linearGradient id="cham-admin-traffic-fill" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#0284c7" stopOpacity=".25"/>
+          <stop offset="100%" stopColor="#0284c7" stopOpacity=".02"/>
+        </linearGradient>
+      </defs>
+      {[0, 0.5, 1].map(fraction => {
+        const lineY = bottom - plotHeight * fraction;
+        return <g key={fraction}>
+          <line x1={left} y1={lineY} x2={width - right} y2={lineY} stroke="#cbd5e1" strokeDasharray="4 5" />
+          <text x={left - 10} y={lineY + 4} fill="#475569" fontSize="12" textAnchor="end">{Math.round(highest * fraction)}</text>
+        </g>;
+      })}
+      <path d={area} fill="url(#cham-admin-traffic-fill)"/>
+      <polyline points={points} fill="none" stroke="#0284c7" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
+      {entries.map(([, count], index) => count > 0
+        ? <circle key={index} cx={x(index)} cy={y(count)} r="3.5" fill="#0759b7" stroke="white" strokeWidth="1.4"/>
+        : null)}
+      {labelIndices.map(index => <text key={index} x={x(index)} y="203" fontSize="12" fill="#475569"
+        textAnchor={index === 0 ? 'start' : index === entries.length - 1 ? 'end' : 'middle'}>{date(entries[index][0]).slice(0,5)}</text>)}
+    </svg>
+  </figure>;
+}
+
+function StageProgressChart({values}: {values: {label: string; value: number}[]}) {
+  const baseline = Math.max(1, values[0]?.value ?? 0);
+  return <section className="rounded-2xl border border-indigo-100 bg-white p-4 sm:p-5" aria-label="Biểu đồ tiến độ bốn chặng">
+    <h3 className="font-extrabold text-slate-900">Biểu đồ tiến độ qua 4 chặng</h3>
+    <p className="mb-4 mt-1 text-xs text-slate-600">Số lượt ghi nhận theo các mốc của trạm, trên nhóm và thời gian đã lọc.</p>
+    <div className="space-y-3">
+      {values.map(({label, value}, index) => <div key={label} className="grid grid-cols-[6rem_minmax(0,1fr)_3.5rem] items-center gap-3 text-sm sm:grid-cols-[9rem_minmax(0,1fr)_4.5rem]">
+        <span className="font-semibold text-slate-700">{label}</span>
+        <div className="h-4 overflow-hidden rounded-full bg-slate-100" role="meter" aria-label={label}
+          aria-valuemin={0} aria-valuemax={baseline} aria-valuenow={Math.min(value, baseline)}>
+          <div className="h-full rounded-full transition-[width]" style={{
+            width: `${Math.min(100, value / baseline * 100)}%`,
+            backgroundColor: ['#0b7bce','#16a0a6','#8b5cf6','#f59e0b','#16a34a'][index],
+          }}/>
+        </div>
+        <strong className="text-right tabular-nums text-slate-900">{countLabel(value)}</strong>
+      </div>)}
+    </div>
+  </section>;
+}
+
 export function EffectivenessReport({openProgress, openFeedback}: {
   openProgress: () => void; openFeedback: (stationId: string) => void;
 }) {
@@ -112,6 +186,10 @@ export function EffectivenessReport({openProgress, openFeedback}: {
   const started = rows.reduce((sum, row) => sum + row.started, 0);
   const completed = rows.reduce((sum, row) => sum + row.stage4, 0);
   const sorted = [...rows].sort((a, b) => b.started - a.started);
+  const stageTotals = [
+    {label:'Bắt đầu',value:started},
+    ...stages.map((stage, index) => ({label:`Chặng ${index + 1}`,value:rows.reduce((sum, row) => sum + row[stage], 0)})),
+  ];
 
   function exportStationStats() {
     if (!report) return;
@@ -186,7 +264,9 @@ export function EffectivenessReport({openProgress, openFeedback}: {
         <article className="rounded-2xl bg-indigo-50 p-4"><h3 className="font-bold">Lượt bắt đầu trạm</h3><p className="text-2xl font-black">{countLabel(started)}</p><p className="text-xs">Một lượt cho mỗi trạm trong một phiên</p></article>
         <article className="rounded-2xl bg-emerald-50 p-4"><h3 className="font-bold">Tỷ lệ đóng dấu</h3><p className="text-2xl font-black">{percent(completed, started)}</p><p className="text-xs">{countLabel(completed)}/{countLabel(started)} lượt{started > 0 && started < 10 ? ' · Dữ liệu còn ít' : ''}</p></article>
       </div>
-      {totalVisits > 0 ? <details open className="rounded-xl border p-4">
+      {totalVisits > 0 ? <>
+        <VisitTrendChart entries={[...visitsByDay.entries()]} />
+        <details className="rounded-xl border p-4">
         <summary className="cursor-pointer font-bold">Lượt truy cập theo ngày</summary>
         <div className="mt-3 grid max-h-56 gap-1.5 overflow-y-auto">
           {[...visitsByDay.entries()].reverse().map(([day, count]) => <div key={day} className="grid grid-cols-[5.5rem_minmax(0,1fr)_3rem] items-center gap-2 text-xs">
@@ -194,7 +274,9 @@ export function EffectivenessReport({openProgress, openFeedback}: {
             <span className="text-right">{countLabel(count)}</span>
           </div>)}
         </div>
-      </details> : <p className="text-sm text-slate-600">Chưa có lượt truy cập được ghi nhận trong khoảng thời gian và nhóm đã chọn.</p>}
+        </details>
+      </> : <p className="text-sm text-slate-600">Chưa có lượt truy cập được ghi nhận trong khoảng thời gian và nhóm đã chọn.</p>}
+      <StageProgressChart values={stageTotals} />
       <div className="space-y-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h3 className="font-bold">Tiến độ theo trạm</h3>

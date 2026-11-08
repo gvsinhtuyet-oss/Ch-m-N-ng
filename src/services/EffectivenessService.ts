@@ -18,7 +18,7 @@ function currentVisit(now: number): Visit {
     if (saved && /^[a-f0-9]{32}$/.test(saved.id) && Number.isFinite(saved.lastActivity) &&
         (!visit || saved.lastActivity > visit.lastActivity)) visit = saved;
   } catch { /* Continue in memory. */ }
-  if (!visit || now - visit.lastActivity >= idleMs || (visit.staff && audience === 1)) {
+  if (!visit || now - visit.lastActivity >= idleMs || (visit.staff && audience !== 2)) {
     const id = Array.from(crypto.getRandomValues(new Uint8Array(16)), byte => byte.toString(16).padStart(2, '0')).join('');
     visit = {id, lastActivity: now};
   }

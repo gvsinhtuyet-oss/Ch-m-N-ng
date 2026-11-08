@@ -78,7 +78,7 @@ function StageProgressChart({values}: {values: {label: string; value: number}[]}
   const baseline = Math.max(1, values[0]?.value ?? 0);
   return <section className="rounded-2xl border border-indigo-100 bg-white p-4 sm:p-5" aria-label="Biểu đồ tiến độ bốn chặng">
     <h3 className="font-extrabold text-slate-900">Biểu đồ tiến độ qua 4 chặng</h3>
-    <p className="mb-4 mt-1 text-xs text-slate-600">Số lượt ghi nhận theo các mốc của trạm, trên nhóm và thời gian đã lọc.</p>
+    <p className="mb-4 mt-1 text-xs text-slate-600">Gồm khám phá tự do và học sinh đăng nhập theo bộ lọc. Đây là mức sử dụng, không tự suy ra tiến bộ học tập.</p>
     <div className="space-y-3">
       {values.map(({label, value}, index) => <div key={label} className="grid grid-cols-[6rem_minmax(0,1fr)_3.5rem] items-center gap-3 text-sm sm:grid-cols-[9rem_minmax(0,1fr)_4.5rem]">
         <span className="font-semibold text-slate-700">{label}</span>
@@ -195,7 +195,7 @@ export function EffectivenessReport({openProgress, openFeedback}: {
     if (!report) return;
     const csvRows = [
       ['Từ ngày', 'Đến ngày', 'Nhóm', 'Khối', 'Trạm', 'Bắt đầu', 'Chặng 1', 'Chặng 2', 'Chặng 3', 'Đóng dấu'],
-      ...sorted.map(row => [report.start, report.end, audience === -1 ? 'Tất cả' : audience === 0 ? 'Khách' : 'Học sinh',
+      ...sorted.map(row => [report.start, report.end, audience === -1 ? 'Tất cả người khám phá' : audience === 0 ? 'Khám phá tự do' : 'Học sinh đăng nhập',
         row.grade, row.titleVi, row.started, row.stage1, row.stage2, row.stage3, row.stage4]),
     ];
     const csv = csvRows.map(row => row.map(value => '"' + String(value).replaceAll('"', '""') + '"').join(',')).join('\r\n');
@@ -222,7 +222,7 @@ export function EffectivenessReport({openProgress, openFeedback}: {
   return <section className="space-y-5 rounded-3xl border bg-white p-4 sm:p-6">
     <header>
       <h2 className="text-2xl font-black">Báo cáo hiệu quả</h2>
-      <p className="mt-1 text-sm text-slate-600">Theo dõi mức sử dụng và tiến độ của khách và học sinh. Báo cáo theo lớp và minh chứng học tập nằm ở cuối trang.</p>
+      <p className="mt-1 text-sm text-slate-600">Thống kê chung mọi người khám phá, gồm khám phá tự do và học sinh đăng nhập. Tiến độ theo lớp chỉ áp dụng cho học sinh đã liên kết lớp.</p>
     </header>
     <div className="grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4">
       <label>Thời gian
@@ -232,7 +232,7 @@ export function EffectivenessReport({openProgress, openFeedback}: {
       </label>
       <label>Nhóm người dùng
         <select className={fieldClass} value={audience} onChange={event => setAudience(Number(event.target.value))}>
-          <option value={-1}>Tất cả</option><option value={0}>Khách</option><option value={1}>Học sinh</option>
+          <option value={-1}>Tất cả người khám phá</option><option value={0}>Khám phá tự do</option><option value={1}>Học sinh đăng nhập</option>
         </select>
       </label>
       <label>Khối
@@ -260,7 +260,7 @@ export function EffectivenessReport({openProgress, openFeedback}: {
     {report && <>
       <p className="text-xs text-slate-500">Từ {date(report.start)} đến {date(report.end)} · Giờ Việt Nam</p>
       <div className="grid gap-3 sm:grid-cols-3">
-        <article className="rounded-2xl bg-sky-50 p-4"><h3 className="font-bold">Lượt truy cập website</h3><p className="text-2xl font-black">{countLabel(totalVisits)}</p><p className="text-xs">Toàn website · Một lượt mỗi phiên được ghi nhận</p></article>
+        <article className="rounded-2xl bg-sky-50 p-4"><h3 className="font-bold">Lượt truy cập website</h3><p className="text-2xl font-black">{countLabel(totalVisits)}</p><p className="text-xs">Gồm khám phá tự do và học sinh theo bộ lọc · Một lượt mỗi phiên, không phải số người duy nhất</p></article>
         <article className="rounded-2xl bg-indigo-50 p-4"><h3 className="font-bold">Lượt bắt đầu trạm</h3><p className="text-2xl font-black">{countLabel(started)}</p><p className="text-xs">Một lượt cho mỗi trạm trong một phiên</p></article>
         <article className="flex items-center justify-between gap-3 rounded-2xl bg-emerald-50 p-4">
           <div className="min-w-0">

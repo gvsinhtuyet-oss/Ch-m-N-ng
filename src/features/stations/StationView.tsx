@@ -122,7 +122,7 @@ export const StationView: React.FC<Props> = ({ station, onBack }) => {
 
   return (
     <div data-stage={currentStage} className={`station-immersive-root ${currentStage === 1 ? "station-stage1-compact" : ""} ${isPolishedJourney ? "station-viewport mx-auto max-w-[1600px] px-2 py-2 sm:px-4 space-y-3" : "station-viewport max-w-7xl mx-auto px-3 sm:px-5 py-4 space-y-4"}`}>
-      {feedbackOpen&&<LearningFeedbackForm station={station} onClose={()=>setFeedbackOpen(false)}/>}
+      {feedbackOpen&&<LearningFeedbackForm stage={requestedStage} station={station} onClose={()=>setFeedbackOpen(false)}/>}
             {/* Top Station Header bar */}
       <div className="station-compact-header relative z-10">
         <button type="button" onClick={() => { audioService.playSfx('click'); onBack(); }} aria-label="Quay lại danh sách trạm" className="station-compact-back"><ArrowLeft aria-hidden="true" /></button>

@@ -47,6 +47,21 @@ export const AdminDashboard: React.FC = () => {
   const [available,setAvailable]=useState({implementations:false,classes:false,users:false,proposals:false});
   const [workflowError,setWorkflowError]=useState('');
   const [loading,setLoading]=useState(false);
+  const [healthLoading,setHealthLoading]=useState(false);
+  const [health,setHealth]=useState<{connected:boolean;ready:boolean;writable:boolean}|null>(null);
+  const checkHealth=async()=>{
+    setHealthLoading(true);
+    try {
+      const status=await authService.health();
+      setHealth({
+        connected:status.firestore==='connected',
+        ready:status.auth?.ready===true,
+        writable:status.firestoreWrite==='connected',
+      });
+    } catch {
+      setHealth({connected:false,ready:false,writable:false});
+    } finally {setHealthLoading(false);}
+  };
   const load=async()=>{
     setLoading(true);setWorkflowError('');
     // An unavailable endpoint must not hide the other successfully loaded reports,
@@ -79,6 +94,7 @@ export const AdminDashboard: React.FC = () => {
   };
   const showOverviewData = activeTab === 'overview' || activeTab === 'tracking';
   useEffect(()=>{if(showOverviewData)void load();},[activeTab]);
+  useEffect(()=>{if(activeTab==='overview')void checkHealth();},[activeTab]);
 
   const filteredImplementations = gradeFilter === 0
     ? implementations
@@ -144,7 +160,10 @@ export const AdminDashboard: React.FC = () => {
 
         {showOverviewData && <>
           {workflowError&&<p role="alert" className="bg-rose-50 text-rose-700 rounded-xl p-3">{workflowError}</p>}
-          <button disabled={loading} onClick={()=>void load()} className="border rounded-xl bg-white px-4 py-2 text-sm">{loading?'Đang tải dữ liệu…':'Làm mới dữ liệu máy chủ'}</button>
+          <div className="flex flex-wrap gap-2">
+            <button type="button" disabled={loading} onClick={()=>void load()} className="border rounded-xl bg-white px-4 py-2 text-sm font-semibold">{loading?'Đang tải dữ liệu…':'Làm mới dữ liệu máy chủ'}</button>
+            {activeTab==='overview' && <button type="button" disabled={healthLoading} onClick={()=>void checkHealth()} className="border rounded-xl bg-white px-4 py-2 text-sm font-semibold">{healthLoading?'Đang kiểm tra kết nối…':'Kiểm tra kết nối máy chủ'}</button>}
+          </div>
         </>}
         {activeTab === 'assistant-qa' && <React.Suspense fallback={<p role="status" className="rounded-2xl bg-white p-5">Đang mở bảng kiểm định chatbot…</p>}><AssistantQualityDashboard /></React.Suspense>}
         {activeTab === 'proposals' && <ProposalInbox initialStationId={feedbackStation} />}
@@ -160,8 +179,8 @@ export const AdminDashboard: React.FC = () => {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-black text-slate-900">Tổng Quan Toàn Trường (Năm học 2026–2027)</h2>
-              <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold">
-                Dữ liệu máy chủ
+              <span role="status" className={`px-2.5 py-1 rounded-full text-xs font-bold ${health?.connected && health.ready && health.writable ? 'bg-emerald-100 text-emerald-800' : !health || healthLoading ? 'bg-slate-100 text-slate-700' : 'bg-rose-100 text-rose-800'}`}>
+                {!health || healthLoading ? 'Đang kiểm tra kho dữ liệu' : health.connected && health.ready && health.writable ? 'Kho dữ liệu: sẵn sàng' : 'Kho dữ liệu: cần kiểm tra'}
               </span>
             </div>
 

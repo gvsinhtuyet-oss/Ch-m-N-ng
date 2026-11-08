@@ -23,7 +23,19 @@ import {
   FileEdit,
   Clock,
   Map as MapIcon,
+  Menu,
+  ChevronDown,
 } from 'lucide-react';
+
+const teacherSections = [
+  {id:'gddp',label:'Dạy học ngay',icon:Presentation,description:'Tra cứu kế hoạch tích hợp và mở bài học đúng khối'},
+  {id:'workspace',label:'Kế hoạch bài dạy',icon:FileEdit,description:'Quản lý kế hoạch và hoạt động đã chuẩn bị'},
+  {id:'classrooms',label:'Lớp của tôi',icon:Users,description:'Danh sách và tiến độ học tập theo lớp'},
+  {id:'results',label:'Kết quả học tập',icon:BarChart3,description:'Báo cáo kết quả, mức độ tham gia và triển khai'},
+  {id:'resources',label:'Kho học liệu',icon:BookOpen,description:'Tư liệu và nguồn học liệu đã kiểm chứng'},
+  {id:'teaching',label:'Danh mục 25 trạm',icon:MapIcon,description:'Mở bài, trình chiếu và ghi nhận tiết dạy'},
+] as const;
+type TeacherSection = typeof teacherSections[number]['id'];
 
 export const TeacherDashboard: React.FC = () => {
   const {
@@ -36,7 +48,10 @@ export const TeacherDashboard: React.FC = () => {
     setCurrentView,
   } = useApp();
 
-  const [activeTab, setActiveTab] = useState<'teaching' | 'classrooms' | 'results' | 'resources' | 'gddp' | 'workspace'>('gddp');
+  const [activeTab, setActiveTab] = useState<TeacherSection>('gddp');
+  const [menuOpen,setMenuOpen] = useState(false);
+  const currentSection = teacherSections.find(section => section.id===activeTab)!;
+  const navigateSection = (id:TeacherSection) => {setActiveTab(id);setMenuOpen(false);};
   const [selectedStationForImp, setSelectedStationForImp] = useState<Station | null>(null);
   const [selectedClassId, setSelectedClassId] = useState<string>('class-2-24');
   const [proposalStation, setProposalStation] = useState<Station | null>(null);
@@ -71,51 +86,46 @@ export const TeacherDashboard: React.FC = () => {
 
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 space-y-4">
+    <div className="cham-staff teacher-workspace mx-auto grid max-w-[1500px] grid-cols-1 items-start gap-4 px-3 py-4 sm:px-6 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-6 lg:py-6">
+      <aside className="teacher-sidebar rounded-2xl border border-sky-100 bg-white p-2 shadow-sm lg:sticky lg:top-20">
+        <div className="teacher-sidebar-brand hidden items-center gap-2 rounded-xl bg-gradient-to-r from-blue-700 to-sky-600 px-3 py-4 text-sm font-black text-white lg:flex">
+          <BookOpen className="h-5 w-5 shrink-0" aria-hidden="true" />
+          <span>KHÔNG GIAN GIÁO VIÊN</span>
+        </div>
+        <button type="button" className="flex min-h-11 w-full items-center gap-2 rounded-xl px-3 text-sm font-bold text-blue-950 lg:hidden"
+          aria-controls="teacher-navigation" aria-expanded={menuOpen} onClick={()=>setMenuOpen(value=>!value)}>
+          <Menu className="h-5 w-5" aria-hidden="true" />Menu Giáo viên
+          <span className="ml-auto max-w-[45%] truncate text-xs font-medium text-slate-600">{currentSection.label}</span>
+          <ChevronDown className={`h-4 w-4 transition-transform ${menuOpen?'rotate-180':''}`} aria-hidden="true" />
+        </button>
+        <nav id="teacher-navigation" aria-label="Điều hướng giáo viên" className={`${menuOpen?'block':'hidden'} lg:block`}>
+          <ul className="space-y-1 pt-2">
+            {teacherSections.map(({id,label,icon:Icon})=><li key={id}>
+              <button type="button" aria-current={activeTab===id?'page':undefined} onClick={()=>navigateSection(id)}
+                className={`flex min-h-11 w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm font-bold ${activeTab===id?'bg-blue-700 text-white shadow-sm':'text-slate-700 hover:bg-sky-50 hover:text-blue-800'}`}>
+                <Icon className="h-4 w-4 shrink-0" aria-hidden="true"/><span>{label}</span>
+              </button>
+            </li>)}
+          </ul>
+        </nav>
+        <p className="hidden px-3 py-3 text-xs leading-relaxed text-slate-600 lg:block">CHẠM ĐÀ NẴNG · Giáo dục địa phương tiểu học</p>
+      </aside>
+      <div className="min-w-0 space-y-4">
       {activeTab!=='gddp' && currentGrade>=4 && <aside className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Học liệu lớp {currentGrade} theo chủ đề – chờ kế hoạch tích hợp mới.</strong> Đã rà lời thuyết minh, câu hỏi, đáp án theo nguồn; chưa có xác nhận phê duyệt của tổ chuyên môn. Chưa gắn tuần/bài SGK. Ảnh tư liệu có chú thích nơi chụp, thời điểm và giấy phép. Ảnh Phước Kiều chưa rõ quyền tái sử dụng chỉ được dẫn tại nguồn, chưa nhúng vào app. <a className="underline" href="https://danang.gov.vn/vi/w/ghe-tham-lang-nghe-duc-dong-phuoc-kieu" target="_blank" rel="noopener noreferrer">Xem tư liệu Phước Kiều tại nguồn</a></aside>}
       {activeTab!=='gddp' && currentGrade === 3 && <aside className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950"><strong>Học liệu lớp 3 theo chủ đề – chờ duyệt tích hợp.</strong> Đủ 5 trạm tham khảo theo đề cương; chưa xác nhận tuần, bài và bộ sách của kế hoạch mới. Bảng tích hợp cũ ghi Hoàng Diệu – Phan Châu Trinh, khác đề cương Huỳnh Thúc Kháng – Phan Châu Trinh. Tư liệu nghề thúng chai Hội An chỉ dùng tham khảo chung, chưa thay cho quy trình riêng của Sơn Trà.</aside>}
       {activeTab!=='gddp' && currentUser?.id === 'teacher-demo' && <p className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900">Chế độ giáo viên trải nghiệm dành cho giám khảo. Bạn có thể xem học liệu và trình chiếu bài học; đăng ảnh, tài liệu chung cần đăng nhập quản trị.</p>}
       {workflowError&&<p role="alert" className="rounded-xl bg-rose-50 p-3 text-rose-700">{workflowError}</p>}
-      {/* Teacher Profile Banner */}
-      <div className="bg-gradient-to-r from-emerald-600 via-teal-700 to-sky-800 text-white rounded-2xl p-3 sm:p-4 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div>
-          <div className="hidden md:flex items-center gap-2 mb-2">
-            <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-amber-300 font-bold text-xs uppercase tracking-wider">
-              Không Gian Dạy Học – Giáo Viên
-            </span>
-            <span className="px-3 py-1 rounded-full bg-amber-300 text-slate-950 font-black text-[10px] uppercase tracking-wide">
-              {currentUser?.id === 'teacher-demo' ? 'Tài khoản demo • Dữ liệu minh họa' : 'Tài khoản giáo viên'}
-            </span>
-            <span className="text-xs text-emerald-200">{teacher?.schoolName || 'Chọn trường trong kế hoạch của tôi'}</span>
-          </div>
-          <h1 className="text-base sm:text-xl font-black">
-            Chào mừng {teacher?.name || 'Cô Trương Sinh Tuyết'}!
-          </h1>
-          <p className="hidden md:block text-xs sm:text-sm text-emerald-100 mt-1 max-w-xl">
-            Hỗ trợ giáo viên tổ chức bài học demo, trình chiếu nội dung, theo dõi tiến độ và ghi nhận triển khai.
-          </p>
-          <button
-            type="button"
-            onClick={() => setCurrentView('student-maps')}
-            className="hidden md:inline-flex mt-3 items-center gap-2 px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/15 text-xs font-black transition"
-          >
-            <MapIcon className="w-4 h-4 text-amber-300" />
-            <span>XEM TRƯỚC BẢN ĐỒ & RƯƠNG KHO BÁU</span>
-          </button>
+      <header className="teacher-page-hero overflow-hidden rounded-2xl border border-sky-100 bg-white p-4 shadow-sm sm:p-6">
+        <p className="text-xs font-extrabold uppercase tracking-wide text-blue-800">CHẠM ĐÀ NẴNG · Không gian Giáo viên</p>
+        <h1 className="mt-2 text-xl font-black text-blue-950 sm:text-2xl">{currentSection.label}</h1>
+        <p className="mt-1 max-w-2xl text-sm text-slate-700">{currentSection.description}</p>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-900">{teacher?.name || 'Giáo viên'}</span>
+          <span className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-blue-900">Khối {currentGrade}</span>
+          {isDemo && <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-950">Trải nghiệm · Dữ liệu minh họa</span>}
+          {activeTab==='teaching' && <button type="button" onClick={()=>setCurrentView('student-maps')} className="ml-auto rounded-xl border border-blue-300 bg-white px-3 py-2 text-xs font-bold text-blue-800 hover:bg-blue-50">Xem bản đồ học sinh</button>}
         </div>
-
-        {/* Four clear entry points; keep existing features in their original tabs. */}
-        <nav aria-label="Không gian giáo viên" className="grid grid-cols-2 gap-2 w-full md:w-auto md:min-w-[360px]">
-          {([
-            {id:'gddp',label:'Dạy học ngay',Icon:Presentation},
-            {id:'workspace',label:'Kế hoạch bài dạy',Icon:FileEdit},
-            {id:'resources',label:'Kho học liệu',Icon:BookOpen},
-            {id:'classrooms',label:'Lớp học của tôi',Icon:Users},
-          ] as const).map(({id,label,Icon})=><button key={id} type="button" onClick={()=>setActiveTab(id)} aria-current={activeTab===id?'page':undefined} className={`flex items-center justify-center gap-2 rounded-xl px-3 py-3 text-sm font-bold transition ${activeTab===id?'bg-white text-slate-900 shadow':'bg-white/15 text-white hover:bg-white/25'}`}><Icon className="h-4 w-4 shrink-0"/>{label}</button>)}
-          <button type="button" onClick={()=>setActiveTab('teaching')} className="col-span-2 text-xs text-white/90 underline underline-offset-2">Xem danh mục trạm và trình chiếu đầy đủ</button>
-          {activeTab==='classrooms'&&<button type="button" onClick={()=>setActiveTab('results')} className="col-span-2 rounded-lg bg-white/15 px-3 py-2 text-sm font-bold text-white">Xem kết quả học sinh</button>}
-        </nav>
-      </div>
+      </header>
 
       {activeTab === 'workspace' && <TeacherWorkspace />}
       {activeTab === 'gddp' && <GddpTeacherLookup stations={allStationsInCurrentGrade} currentGrade={currentGrade} onGradeChange={setCurrentGrade} onOpenStudentStage1={station=>openStation(station,1)} />}
@@ -472,6 +482,7 @@ export const TeacherDashboard: React.FC = () => {
       )}
 
       {proposalStation && <LearningFeedbackForm station={proposalStation} onClose={()=>setProposalStation(null)}/>}
+      </div>
     </div>
   );
 };

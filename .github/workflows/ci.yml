@@ -141,11 +141,28 @@ jobs:
             sleep 1
           done
           node --import tsx stage2-browser-qa.mjs
+          node staff-admin-demo-qa.mjs
           node stage2-my-khe-intro-qa.mjs
       - name: Preserve screenshots (including failure evidence)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: stage2-mobile-screenshots
-          path: stage2-qa-screenshots/
+          path: |
+            stage2-qa-screenshots/
+            staff-admin-qa/
           if-no-files-found: ignore
+
+  live-public-auth-readonly:
+    name: Production Google config and anonymous role guards (read only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check public OAuth configuration and protected endpoints without credentials
+        env:
+          PUBLIC_URL: https://chamdanang-gddp.pages.dev/
+        run: node staff-live-auth-readonly-qa.mjs

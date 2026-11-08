@@ -32,6 +32,14 @@ for(let attempt=1;attempt<=4&&!productionVerified;attempt++){
 }
 assert.ok(productionVerified,'Cloudflare Production still serves an older Admin release; GitHub merge alone does not publish new website');
 console.log('PRODUCTION ADMIN UI RELEASE VERIFIED: new neutral honest ratings state is served');
+const releaseResponse=await fetch(new URL('/cham-deployment.json',base),{cache:'no-store',signal:AbortSignal.timeout(25000)});
+assert.equal(releaseResponse.status,200,'Public deployment marker must be present');
+assert.ok(releaseResponse.headers.get('content-type')?.includes('json'),
+  'Production deployment marker must be JSON, not the old HTML app fallback');
+const releaseMeta=await releaseResponse.json();
+assert.equal(releaseMeta.frontendRelease,'admin-feedback-2026-11-08');
+console.log('PRODUCTION DEPLOYMENT MARKER VERIFIED',releaseMeta.frontendRelease);
+
 const ratings=await fetch(new URL('/api/admin/station-ratings',base),{cache:'no-store',signal:AbortSignal.timeout(25000)});
 console.log('PRODUCTION RATINGS BACKEND STATUS',ratings.status,
   ratings.status===404?'ROUTE STILL MISSING':ratings.status===401?'AUTH GATE PRESENT':'Check Admin authentication separately');

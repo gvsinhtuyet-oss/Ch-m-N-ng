@@ -14,7 +14,7 @@ try {
     page.on('pageerror',e=>errors.push(e.message));
     page.on('request',r=>{
       const p=new URL(r.url()).pathname;
-      if(['POST','PUT','PATCH','DELETE'].includes(r.method()) && /^\\/api\\/(admin|teacher|content|auth)\\//.test(p))
+      if(['POST','PUT','PATCH','DELETE'].includes(r.method()) && new RegExp('^/api/(admin|teacher|content|auth)/').test(p))
         protectedWrites.push(r.method()+' '+p);
     });
     await page.setViewport({width,height,isMobile:width<800,hasTouch:width<800,deviceScaleFactor:1});

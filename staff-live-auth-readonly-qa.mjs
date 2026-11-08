@@ -29,7 +29,12 @@ const summary={
   firestoreWriteConnected:health.body.firestoreWrite==='connected',
   adminReady:health.body.auth?.ready===true,
   adminAccountExists:health.body.auth?.adminAccountExists===true,
-  persistentContent:health.body.contentStorage==='firestore'
+  persistentContent:health.body.contentStorage==='firestore',
+  // Only expose standardized error categories, never credentials, IDs or storage paths.
+  readErrorStatus:health.body.firestoreError?.status??null,
+  readErrorCode:health.body.firestoreError?.code??null,
+  writeErrorStatus:health.body.firestoreWriteError?.status??null,
+  writeErrorCode:health.body.firestoreWriteError?.code??null
 };
 console.log('LIVE HEALTH (non-sensitive booleans only)',JSON.stringify(summary));
 assert.ok(summary.firestoreConnected,'Production Firestore read not connected');

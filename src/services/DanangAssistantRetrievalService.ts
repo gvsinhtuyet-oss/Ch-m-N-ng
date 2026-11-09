@@ -435,7 +435,7 @@ function friendlyStudentConversation(rawQuery:string,context:AssistantRetrievalC
   return reply('Nghe có chuyện vui rồi nè! ✨ Em muốn kể mình nghe điều gì vừa xảy ra không?');
  }
  if(/^(?:(?:vi sao|tai sao) (?:troi (?:lai )?mua|co mua)|mua tu dau ra|mua la gi|vi sao co mua)$/.test(q)){
-  return reply('Em thử nhìn những đám mây nhé! Hơi nước gặp lạnh tạo thành các giọt nước nhỏ. Khi các giọt kết hợp lại và đủ nặng, chúng rơi xuống thành mưa. Em có muốn biết nước trên mây đến từ đâu không? ☁️',{
+  return reply('Em thử nhìn những đám mây nhé! Hơi nước gặp lạnh ngưng tụ thành các giọt nước nhỏ. Khi các giọt kết hợp lại và đủ nặng, chúng rơi xuống thành mưa. Em có muốn biết nước trên mây đến từ đâu không? ☁️',{
    topic:'mưa',sources:[{label:'NOAA – What Makes It Rain?',url:'https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/what-makes-it-rain'}],
   });
  }

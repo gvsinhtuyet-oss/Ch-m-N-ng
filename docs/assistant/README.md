@@ -106,3 +106,20 @@ Dữ liệu: `src/data/assistantKnowledge.json`, `src/data/assistantStationGuide
 - Hoàn thành sáu điểm Hội An ở tài khoản học sinh demo, nhận vật phẩm và chuyển Chặng 2 thành công.
 - Hỏi “Hội An được UNESCO công nhận năm nào?” trong Chặng 2: chỉ gợi hướng ôn bài, không trả số năm; các nút hỏi nhanh đổi sang hướng dẫn quan sát/ôn bài.
 - Bản ứng dụng commit `77efb0a` đã được Cloudflare triển khai production thành công ở deployment `7ef720ff-f9f0-45c5-9def-ef36b6f4ddf6` (32 giây). Thay đổi cuối điều chỉnh riêng các gợi ý nhanh Chặng 2, giữ nguyên 46 mục tri thức.
+
+
+## Kiểm thử an toàn học sinh — cập nhật 09/11/2026
+
+**Phạm vi:** Chatbot tra cứu cục bộ, không tự gọi Gemini hay dịch vụ tạo sinh từ tài khoản học sinh. Câu trả lời không xác minh được phải nói rõ giới hạn, thay vì điền thông tin tưởng tượng. Kiểm thử tự động chỉ xác minh các điều kiện kỹ thuật; không thay cho nghiệm thu nội dung bởi giáo viên và đánh giá độc lập về bảo vệ trẻ em.
+
+**Nguồn đã đối chiếu:**
+- Lịch sử chống liên quân Pháp – Tây Ban Nha 1858–1860 và vai trò Nguyễn Tri Phương: [Bảo tàng Đà Nẵng](https://baotangdanang.vn/thanh-dien-hai/thong-tin-gioi-thieu).
+- Mốc dựng đồn năm 1813, xây lại bằng gạch từ năm 1823: [Cổng thông tin thành phố](https://cttdt.danangportal.gov.vn/vi/web/dng/w/thanh-dien-hai-i).
+- Chính sách vé của **Bảo tàng Đà Nẵng**, không mặc nhiên áp dụng cho riêng Thành Điện Hải: [Quy định phí tham quan có hiệu lực từ 10/6/2026](https://cttdt.danangportal.gov.vn/vi/web/dng/w/muc-thu-phi-tham-quan-cac-cong-trinh-van-hoa-thuoc-bao-tang-da-nang-va-bao-tang-dieu-khac-cham-da-nang).
+- Đường dây bảo vệ trẻ em Việt Nam: [Tổng đài 111](https://tongdai111.vn/sites/gioi-thieu).
+
+**Các trường hợp kiểm thử:** phân biệt lịch sử xây thành với cuộc kháng chiến; vé/giờ tham quan chưa xác minh; câu hỏi lặp qua 25 trạm; ngữ cảnh tiếp diễn; câu hỏi ngoài bài; không làm hộ Chặng 2; phát ngôn tự hại, bạo lực, bị lạc, tiết lộ mật khẩu, tên, số điện thoại, địa chỉ, email; nhắc gặp riêng; yêu cầu hướng dẫn nguy hiểm hoặc bỏ qua quy tắc. Kiểm tra trên mã nguồn và Chrome mô phỏng iPhone/Android/iPad qua CI.
+
+**Giới hạn còn lại:** Chatbot cho học sinh vẫn là hệ thống tra cứu kiến thức cục bộ có mẫu hội thoại, không phải chatbot tạo sinh có thể biết và giải thích mọi chủ đề. Giá vé/giờ mở cửa không tự tra cứu thời gian thực; nguồn bên ngoài có thể thay đổi. Quy tắc lọc nội dung không bảo đảm phát hiện mọi cách diễn đạt. Không khẳng định hệ thống đã đạt chứng nhận an toàn cho trẻ em. AI mở rộng của giáo viên là chức năng có điều kiện, không được tự bật cho học sinh.
+
+**Quy trình vận hành:** giáo viên/Admin tiếp tục rà soát kết quả qua bảng Kiểm định chatbot; khi một nguồn thay đổi phải sửa câu trả lời và bổ sung kiểm thử tương ứng. Mọi mở rộng có liên quan trẻ vị thành niên và mô hình AI bên thứ ba cần xem xét điều khoản nhà cung cấp, chính sách dữ liệu, quyền của cha mẹ/người giám hộ và thử nghiệm giám sát trước khi vận hành.

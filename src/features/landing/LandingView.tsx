@@ -3,7 +3,7 @@ import './landing-cover.css';
 import {GoogleTeacherLogin} from '../../components/auth/GoogleTeacherLogin';
 import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
-import { DEMO_STUDENTS, DEMO_CLASSROOMS } from '../../data/mockUsers';
+import { DEMO_STUDENTS } from '../../data/mockUsers';
 import { authService, type StaffUser } from '../../services/AuthService';
 import { audioService } from '../../services/AudioService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
@@ -47,12 +47,6 @@ export const LandingView: React.FC = () => {
   const [staffPassword, setStaffPassword] = useState('');
   const [staffBusy, setStaffBusy] = useState(false);
   const [showStaffLogin, setShowStaffLogin] = useState<boolean>(false);
-  const [selectedClass, setSelectedClass] = useState<string>('2/24');
-  const [studentName, setStudentName] = useState<string>('');
-  const [savedStudentId, setSavedStudentId] = useState<string>('');
-  const [savedStudentName, setSavedStudentName] = useState<string>('');
-  const [savedStudentClass, setSavedStudentClass] = useState<string>('');
-  const [savedStudentGrade, setSavedStudentGrade] = useState<number | null>(null);
   const [savedSyncCode, setSavedSyncCode] = useState<string>('');
   const [restoreCode,setRestoreCode] = useState('');
   const [restoreBusy,setRestoreBusy] = useState(false);
@@ -101,30 +95,12 @@ export const LandingView: React.FC = () => {
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STUDENT_PROFILE_KEY);
-      if (!raw) return;
-      const saved = JSON.parse(raw);
-      if (typeof saved?.name === 'string') {
-        setStudentName(saved.name);
-        setSavedStudentName(saved.name);
-      }
-      if (typeof saved?.className === 'string') {
-        setSelectedClass(saved.className);
-        setSavedStudentClass(saved.className);
-      }
-      if (typeof saved?.id === 'string') setSavedStudentId(saved.id);
-      if (typeof saved?.syncCode === 'string') setSavedSyncCode(saved.syncCode);
-      const storedGrade = Number(saved?.grade);
-      const inferredGrade = typeof saved?.className === 'string'
-        ? Number(saved.className.split('/')[0])
-        : NaN;
-      const validGrade = Number.isInteger(storedGrade) && storedGrade >= 1 && storedGrade <= 5
-        ? storedGrade
-        : inferredGrade;
-      if (Number.isInteger(validGrade) && validGrade >= 1 && validGrade <= 5) {
-        setSavedStudentGrade(validGrade);
+      const saved = raw ? JSON.parse(raw) : null;
+      if (typeof saved?.syncCode === 'string' && /^[A-Z0-9-]{12,20}$/i.test(saved.syncCode)) {
+        setSavedSyncCode(saved.syncCode);
       }
     } catch {
-      // Dữ liệu cũ không hợp lệ thì cho học sinh nhập lại.
+      // Invalid or legacy local data never creates an extra student identity.
     }
   }, []);
 
@@ -462,16 +438,7 @@ export const LandingView: React.FC = () => {
                           key={grade}
                           type="button"
                           onClick={() => {
-                            if (guestMode) {
-                              enterGuestJourney(grade);
-                              return;
-                            }
-                            setChosenGrade(grade);
-                            setLoginError('');
-                            if (Number(selectedClass.split('/')[0]) !== grade) {
-                              const classroom = DEMO_CLASSROOMS.find(item => item.grade === grade);
-                              setSelectedClass(classroom?.name.replace('Lớp ', '') || `${grade}/1`);
-                            }
+                            enterGuestJourney(grade);
                           }}
                           className={`min-w-0 min-h-[68px] last:col-span-2 sm:last:col-span-1 rounded-2xl bg-gradient-to-br ${color} px-2 py-3 sm:px-2 sm:py-3 text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-sky-300 ${
                             active

@@ -11,7 +11,7 @@ test('duplicate names have separate stable identities; codes are private, rotati
  async function call(data,method='POST',staff){let output;await handle({method,url:'/api/teacher/student-access?classId='+classId,staff},{},'/api/teacher/student-access',async()=>data,(_r,status,body)=>output={status,body});return output.body;}
  const slots=rosterSlots(classroom);assert.notEqual(slots[0].id,slots[1].id);
  const first=await call({classId,studentId:slots[0].id,action:'issue'}),second=await call({classId,studentId:slots[1].id,action:'issue'});
- assert.notEqual(first.profile.id,second.profile.id);
+ assert.notEqual(first.profile.id,second.profile.id);assert.equal(first.profile.classId,classId);assert.equal(second.profile.classId,classId);
  const saved=await resolveStudentSync(store,hash(first.syncCode));saved.saved.progress={'hoi-an':{stationCompleted:true}};await store.put('cham_student_sync',saved.key,saved.saved);
  const rotated=await call({classId,studentId:slots[0].id,action:'rotate'});
  assert.equal(await resolveStudentSync(store,hash(first.syncCode)),null);

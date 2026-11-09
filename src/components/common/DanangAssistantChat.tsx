@@ -56,7 +56,7 @@ interface ChatMessage {
 }
 
 const WELCOME =
-  'Chào em! Em muốn khám phá điều gì hôm nay?';
+  'Chào em! Mình là Trợ lý khám phá nè. Em muốn kể chuyện hay cùng mình tìm hiểu điều gì hôm nay? 😊';
 
 const MAX_VISIBLE_MESSAGES = 10;
 
@@ -110,9 +110,9 @@ export function buildAssistantFollowUps({audience,stage,topic,stationTitle,hotsp
   {label:'Đố em một câu nhé!',query:'Hỏi em một câu để kiểm tra về '+focus},
  ];
  return [
-  {label:'Đà Nẵng có làng nghề gì nhỉ?',query:'Đà Nẵng có làng nghề gì?'},
+  {label:'Chào bạn, mình trò chuyện nhé!',query:'Chào bạn, mình muốn trò chuyện một chút!'},
   {label:'San hô là con vật à?',query:'San hô là động vật hay thực vật?'},
-  {label:'Em giữ gìn quê hương thế nào?',query:'Em nên làm gì để giữ gìn quê hương?'},
+  {label:'Đà Nẵng có làng nghề gì nhỉ?',query:'Đà Nẵng có làng nghề gì?'},
  ];
 }
 
@@ -452,7 +452,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         <span id="assistant-drag-hint" className="sr-only">{mobile ? "Chạm để mở Trợ lý khám phá." : "Giữ và kéo biểu tượng để tránh che nội dung."}</span>
       </div>
 
-      {measurementMounted && <Suspense fallback={null}><EffectivenessPanel key={storageScope} open={measurementOpen} audience={audience} grade={currentGrade || station?.grade || 2} scope={storageScope} initialTopic={messages.filter(message=>message.role==='assistant').at(-1)?.topic} onClose={()=>{setMeasurementOpen(false);setOpen(true);}} /></Suspense>}
+      {measurementMounted && <Suspense fallback={null}><EffectivenessPanel key={storageScope} open={measurementOpen} audience={isAdmin?'teacher':audience} grade={currentGrade || station?.grade || 2} scope={storageScope} initialTopic={messages.filter(message=>message.role==='assistant').at(-1)?.topic} onClose={()=>{setMeasurementOpen(false);setOpen(true);}} /></Suspense>}
       {isTeacher && lessonPanel && <Suspense fallback={<div role="status" className="fixed inset-4 z-[70] rounded-2xl bg-white p-6 shadow-xl">Đang mở bài học…</div>}>
         <TeacherLessonPanel catalog={lessonPanel.catalog} recordId={lessonPanel.recordId} source={lessonPanel.source} stations={ALL_25_STATIONS} onClose={() => {setLessonPanel(null);setOpen(true);}} onOpenStation={station => {setLessonPanel(null);onOpenTeacherStation?.(station);}} />
       </Suspense>}

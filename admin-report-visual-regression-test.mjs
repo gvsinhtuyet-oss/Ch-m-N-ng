@@ -25,8 +25,8 @@ test('Admin stars draw only from server ratings and show unavailable state',()=>
   assert.match(inbox,/Không coi dữ liệu chưa truy xuất được là 0 đánh giá/);
   assert.doesNotMatch(inbox,/bg-rose-50 p-3 text-sm text-rose-800/,'No conspicuous red banner for a missing ratings API');
   assert.doesNotMatch(inbox,/API thống kê sao chưa có trên máy chủ đang chạy/,'Technical incident must not dominate dashboard');
-  assert.match(inbox,/Biểu đồ sao của 25 trạm/);
-  assert.match(inbox,/Đánh giá Chặng 4/);
+  assert.match(inbox,/aria-label="Đánh giá theo 25 bài học"/);
+  assert.match(inbox,/Đánh giá cả bài · 1 đến 5 sao/);
   assert.match(inbox,/const \[stationId,setStationId\]=useState\(initialStationId \?\? ''\)/);
   assert.match(inbox,/initialStationId!==undefined\)setStationId\(initialStationId\)/);
   assert.doesNotMatch(inbox,/Math\.random\(/);

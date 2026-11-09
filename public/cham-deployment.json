@@ -1,6 +1,7 @@
 {
   "application": "CHẠM ĐÀ NẴNG",
   "frontendRelease": "admin-feedback-2026-11-08",
-  "verifiedSourceCommit": "73b61413b59671a7976faa1ca71c31d720cad7f9",
+  "verifiedSourceCommit": "cc154e8f3c4c6d7067b3b530075b29967ea73af0",
+  "googleTeacherLoginRelease": "mounted-google-button-2026-11-09",
   "purpose": "Public frontend deployment identity; does not include data or credentials"
 }

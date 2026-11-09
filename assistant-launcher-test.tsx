@@ -100,6 +100,9 @@ test('pupil transcript hides sensitive input before retention but preserves ordi
  assert.equal(maskStudentPrivateQuestion('Địa chỉ nhà em là 123 ABC'),'Em đã nhập thông tin riêng tư (đã ẩn để bảo vệ em).');
  assert.equal(maskStudentPrivateQuestion('Mật khẩu của em là 123456'),'Em đã nhập thông tin riêng tư (đã ẩn để bảo vệ em).');
  assert.equal(maskStudentPrivateQuestion('Số điện thoại em là 0123456789'),'Em đã nhập thông tin riêng tư (đã ẩn để bảo vệ em).');
+ assert.equal(maskStudentPrivateQuestion('Em tên là Nguyễn Văn A'),'Em đã nhập thông tin riêng tư (đã ẩn để bảo vệ em).');
+ assert.equal(maskStudentPrivateQuestion('Thư của em là abc@example.com'),'Em đã nhập thông tin riêng tư (đã ẩn để bảo vệ em).');
+ assert.equal(maskStudentPrivateQuestion('Gọi em ở 0901234567'),'Em đã nhập thông tin riêng tư (đã ẩn để bảo vệ em).');
  assert.equal(maskStudentPrivateQuestion('Thành Điện Hải được xây năm 1813?'),'Thành Điện Hải được xây năm 1813?');
 
 });

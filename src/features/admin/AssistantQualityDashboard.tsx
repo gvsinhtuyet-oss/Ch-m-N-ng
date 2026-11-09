@@ -9,6 +9,22 @@ import {
 
 const pill = 'rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900';
 const dimensionIds=Object.keys(QUALITY_DIMENSIONS) as QualityDimension[];
+const QA_HISTORY_KEY = 'cham-danang-chatbot-quality-history:v1:';
+const MAX_AUDITS = 8;
+type SavedAudit = {
+  id:string;createdAt:string;grade:number;stationId:string;
+  results:Record<string,QualityResult>;ratings:Record<string,QualityRating>;
+};
+function loadHistory(userId:string):SavedAudit[] {
+  if (!userId) return [];
+  try {
+    const stored = JSON.parse(window.localStorage.getItem(QA_HISTORY_KEY+userId)||'[]') as unknown;
+    if (!Array.isArray(stored)) return [];
+    return stored.filter((x):x is SavedAudit => Boolean(x && typeof x==='object'
+      && typeof x.id==='string' && typeof x.createdAt==='string'
+      && x.results && x.ratings)).slice(0,MAX_AUDITS);
+  } catch { return []; }
+}
 
 function saveJson(filename:string, data:unknown):void {
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json;charset=utf-8'});
@@ -31,6 +47,10 @@ export const AssistantQualityDashboard:React.FC=()=>{
   const [processed,setProcessed]=useState(0);
   const [targetCount,setTargetCount]=useState(0);
   const [limit,setLimit]=useState(12);
+  const [history,setHistory]=useState<SavedAudit[]>([]);
+  const [historyError,setHistoryError]=useState('');
+  const [attentionLimit,setAttentionLimit]=useState(12);
+  useEffect(()=>{setHistory(loadHistory(currentUser?.id||''));setHistoryError('');},[currentUser?.id]);
   const stopRef=useRef(false);
   useEffect(()=>()=>{stopRef.current=true;},[]);
   const accessible=role==='admin' && Boolean(currentUser) && currentUser?.id!=='admin-demo';
@@ -52,27 +72,69 @@ export const AssistantQualityDashboard:React.FC=()=>{
   const routeTotal=scopeCases.filter(c=>c.check==='context').length;
   const routePass=scopeCases.filter(c=>c.check==='context'&&results[c.id]?.autoStatus==='pass').length;
   const completedRoute=scopeCases.filter(c=>c.check==='context'&&results[c.id]).length;
+  const allCases=ASSISTANT_QUALITY_CASES;
+  const inspectedStations=new Set(allCases.filter(c=>results[c.id]).map(c=>c.stationId)).size;
+  const gradeStats=useMemo(()=>[1,2,3,4,5].map(gradeNumber=>{
+    const ids=new Set(ALL_25_STATIONS.filter(st=>st.grade===gradeNumber).map(st=>st.id));
+    const rows=allCases.filter(c=>ids.has(c.stationId));
+    const technical=rows.filter(c=>results[c.id] && ['context','guard','unknown'].includes(c.check));
+    const passed=technical.filter(c=>results[c.id].autoStatus==='pass').length;
+    const reviewed=rows.filter(c=>ratings[c.id]!==undefined);
+    const correct=reviewed.filter(c=>ratings[c.id]===2).length;
+    const flagged=rows.filter(c=>results[c.id]?.autoStatus==='flag'||ratings[c.id]===0).length;
+    const stationsTested=new Set(rows.filter(c=>results[c.id]).map(c=>c.stationId)).size;
+    return {grade:gradeNumber,stationsTested,passed,checked:technical.length,
+      technicalPct:technical.length?Math.round(100*passed/technical.length):null,
+      reviewed:reviewed.length,correct,expertPct:reviewed.length?Math.round(100*correct/reviewed.length):null,flagged};
+  }),[allCases,results,ratings]);
+  const attention=useMemo(()=>allCases.filter(c=>
+    Boolean(results[c.id]) && (results[c.id].autoStatus==='flag'||ratings[c.id]===0||ratings[c.id]===1)
+  ),[allCases,results,ratings]);
+  const hasAnyResult=Object.keys(results).length>0;
 
-  async function runChecks(){
+  function storeHistory(nextResults:Record<string,QualityResult>,nextRatings:Record<string,QualityRating>,scopeGrade=grade,scopeStation=stationId) {
+    if(!accessible||!currentUser?.id||Object.keys(nextResults).length===0)return;
+    const audit:SavedAudit={id:Date.now()+'-'+Math.random().toString(36).slice(2,8),
+      createdAt:new Date().toISOString(),grade:scopeGrade,stationId:scopeStation,
+      results:nextResults,ratings:nextRatings};
+    const updated=[audit,...history].slice(0,MAX_AUDITS);
+    try {
+      window.localStorage.setItem(QA_HISTORY_KEY+currentUser.id,JSON.stringify(updated));
+      setHistory(updated);setHistoryError('');
+    } catch {setHistoryError('Thiết bị không lưu được lịch sử. Hãy xuất báo cáo JSON để giữ kết quả.');}
+  }
+  function restoreAudit(audit:SavedAudit) {
+    if(!accessible)return;
+    setResults(audit.results);setRatings(audit.ratings);
+    setGrade(audit.grade);setStationId(audit.stationId);setDimension('all');
+    setResultFilter('all');setLimit(12);setAttentionLimit(12);
+  }
+
+  async function runChecks(entireProgram=false){
     if(busy||!accessible)return;
+    const selected=entireProgram?allCases:testCases;
     stopRef.current=false;
-    setBusy(true);setProcessed(0);setTargetCount(testCases.length);
+    setBusy(true);setProcessed(0);setTargetCount(selected.length);
     const next:Record<string,QualityResult>={};
     try{
-      for(let i=0;i<testCases.length;i++){
+      for(let i=0;i<selected.length;i++){
         if(stopRef.current)break;
-        const item=testCases[i];
+        const item=selected[i];
         try{next[item.id]=evaluateAssistantQualityCase(item);}
         catch(error){
           next[item.id]={caseId:item.id,answer:'',sources:[],found:false,layer:'error',confidence:'low',
             durationMs:0,autoStatus:'flag',diagnostic:'Lỗi kiểm định: '+(error instanceof Error?error.message:String(error))};
         }
-        if(i%6===5||i===testCases.length-1){
+        if(i%6===5||i===selected.length-1){
           setResults(old=>({...old,...next}));
           setProcessed(i+1);
           // Yield to rendering on mobile rather than blocking the main thread.
           await new Promise<void>(resolve=>window.setTimeout(resolve,0));
         }
+      }
+      if(!stopRef.current && Object.keys(next).length){
+        // Each complete run becomes a dated local audit. Save again after manual grading.
+        storeHistory({...results,...next},ratings,entireProgram?0:grade,entireProgram?'all':stationId);
       }
     }finally{if(!stopRef.current)setBusy(false);}
   }
@@ -131,12 +193,18 @@ export const AssistantQualityDashboard:React.FC=()=>{
     <div className="flex flex-wrap gap-2">
       <button type="button" disabled={busy||!testCases.length} onClick={()=>void runChecks()}
         className="rounded-xl bg-indigo-700 px-4 py-2.5 text-sm font-bold text-white disabled:opacity-50">
-        {busy?'Đang kiểm tra '+processed+'/'+targetCount:'Chạy '+testCases.length+' ca kiểm định'}
+        {busy?'Đang kiểm tra '+processed+'/'+targetCount:'Chạy '+testCases.length+' ca theo bộ lọc'}
       </button>
+      <button type="button" disabled={busy} onClick={()=>void runChecks(true)}
+        className="rounded-xl bg-sky-700 px-4 py-2.5 text-sm font-bold text-white disabled:opacity-50">Kiểm tra toàn bộ 25 trạm</button>
+      <button type="button" disabled={busy||!hasAnyResult} onClick={()=>storeHistory(results,ratings)}
+        className="rounded-xl border border-sky-300 bg-white px-4 py-2.5 text-sm font-bold text-sky-800 disabled:opacity-50">Lưu kết quả sau khi chấm</button>
       <button type="button" disabled={busy||!evaluated.length} onClick={download}
         className="rounded-xl border border-indigo-300 bg-white px-4 py-2.5 text-sm font-bold text-indigo-800 disabled:opacity-50">Xuất báo cáo JSON</button>
       {busy&&<span role="status" className="self-center text-xs text-slate-600">Đang xử lý trên thiết bị này, không gửi dữ liệu ra máy chủ.</span>}
     </div>
+    {historyError&&<p role="alert" className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900">{historyError}</p>}
+    <p className="text-xs text-slate-600">Kiểm tra toàn bộ gồm tất cả 25 trạm, các điểm khám phá và câu hỏi mẫu. Lịch sử tự lưu sau mỗi lượt chạy trên <strong>trình duyệt đang dùng</strong>; sau khi giáo viên chấm, bấm “Lưu kết quả sau khi chấm”. Chưa đồng bộ lịch sử lên tài khoản hoặc máy chủ.</p>
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
       {[
         ['Ca đã chạy',evaluated.length+'/'+scopeCases.length],
@@ -146,6 +214,24 @@ export const AssistantQualityDashboard:React.FC=()=>{
       ].map(([name,value])=><div key={name} className="rounded-xl border bg-white p-4">
         <div className="text-xs text-slate-600">{name}</div><div className="mt-1 text-2xl font-black text-slate-900">{value}</div>
       </div>)}
+    </div>
+    <div className="rounded-2xl border bg-white p-4 sm:p-5 space-y-3">
+      <h3 className="font-extrabold text-slate-900">Biểu đồ chất lượng theo 5 khối</h3>
+      <p className="text-xs text-slate-600">Cột màu xanh biểu thị <strong>đạt kiểm tra kỹ thuật</strong> trên số ca đã chạy. Điểm chuyên môn chỉ tính các câu đã được giáo viên chấm; không gộp hai tỷ lệ làm một.</p>
+      <p className="text-sm font-bold text-sky-800">Đã kiểm tra {inspectedStations}/25 trạm</p>
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+        {gradeStats.map(g=><div key={g.grade} className="min-w-0 rounded-xl border border-slate-200 bg-slate-50 p-3">
+          <div className="flex justify-between gap-2 text-sm font-extrabold"><span>Khối {g.grade}</span><span>{g.stationsTested}/5 trạm</span></div>
+          <p className="mt-3 text-xs text-slate-600">Kỹ thuật: {g.technicalPct===null?'Chưa chạy':g.technicalPct+'%'} ({g.passed}/{g.checked} ca)</p>
+          <div role="img" aria-label={`Khối ${g.grade}: ${g.technicalPct===null?'chưa kiểm tra':g.technicalPct+' phần trăm ca kỹ thuật đạt'}`}
+            className="mt-1 h-3 overflow-hidden rounded-full bg-slate-200">
+            <div className="h-full rounded-full bg-sky-600" style={{width:(g.technicalPct??0)+'%'}}/>
+          </div>
+          <p className="mt-3 text-xs text-slate-600">Chuyên môn: {g.expertPct===null?'Chưa chấm':g.expertPct+'%'} ({g.correct}/{g.reviewed} câu đúng)</p>
+          <div className="mt-1 h-2.5 overflow-hidden rounded-full bg-slate-200"><div className="h-full rounded-full bg-emerald-600" style={{width:(g.expertPct??0)+'%'}}/></div>
+          <p className="mt-2 text-xs font-semibold text-rose-700">Cần xem lại: {g.flagged} ca</p>
+        </div>)}
+      </div>
     </div>
     <div className="rounded-2xl border bg-white p-4 sm:p-5 space-y-3">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -170,6 +256,41 @@ export const AssistantQualityDashboard:React.FC=()=>{
         </div>)}
       </div>
       <p className="text-xs text-slate-500">Quy ước: Đúng 2 điểm, một phần 1 điểm, sai 0 điểm. Cần đối chiếu nguồn trước khi chấm.</p>
+    </div>
+    <div className="space-y-3 rounded-2xl border border-rose-100 bg-white p-4 sm:p-5">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h3 className="text-lg font-extrabold text-slate-900">Danh sách câu trả lời cần sửa / cần đối chiếu</h3>
+        <span className="rounded-lg bg-rose-50 px-3 py-1 text-sm font-bold text-rose-700">{attention.length} ca</span>
+      </div>
+      <p className="text-xs text-slate-600">Gồm ca tự động báo lỗi hoặc được người kiểm duyệt chấm Sai/Một phần. Báo lỗi kỹ thuật chưa chắc là sai kiến thức; cần đọc nguồn và sửa học liệu trước khi xác nhận.</p>
+      {attention.length===0?<p className="rounded-lg bg-slate-50 p-3 text-sm text-slate-600">{hasAnyResult?'Chưa phát hiện ca cần sửa trong số ca đã chạy; các câu chưa chấm vẫn cần giáo viên đối chiếu.':'Chưa có kết quả. Hãy chạy kiểm định trước.'}</p>
+        :attention.slice(0,attentionLimit).map(c=>{
+          const answer=results[c.id];
+          const station=ALL_25_STATIONS.find(s=>s.id===c.stationId);
+          return <article key={c.id} className="min-w-0 rounded-xl border border-rose-200 bg-rose-50/40 p-3">
+            <div className="flex flex-wrap gap-2 text-xs font-bold text-rose-800"><span>Khối {station?.grade} · {station?.titleVi}</span><span>· {ratings[c.id]===0?'Giáo viên chấm Sai':ratings[c.id]===1?'Giáo viên chấm Một phần':'Tự động phát hiện dấu hiệu lỗi'}</span></div>
+            <p className="mt-1 break-words text-sm font-bold text-slate-900">{c.question}</p>
+            <p className="mt-1 whitespace-pre-wrap break-words text-sm text-slate-700">{answer?.answer||'(Không có câu trả lời)'}</p>
+            <p className="mt-1 break-words text-xs text-slate-500">{answer?.diagnostic}</p>
+          </article>;
+        })}
+      {attentionLimit<attention.length&&<button type="button" onClick={()=>setAttentionLimit(n=>n+12)} className="rounded-lg border border-rose-200 px-3 py-2 text-sm font-bold text-rose-800">Xem thêm 12 ca</button>}
+    </div>
+    <div className="space-y-3 rounded-2xl border bg-white p-4 sm:p-5">
+      <h3 className="text-lg font-extrabold">Lịch sử kiểm định trên thiết bị này</h3>
+      <p className="text-xs text-slate-600">Tự lưu tối đa {MAX_AUDITS} phiên gần nhất trong trình duyệt hiện tại, theo tài khoản Admin. Muốn lưu lâu dài hoặc chuyển máy, xuất báo cáo JSON. Xóa dữ liệu trình duyệt sẽ mất lịch sử tại đây.</p>
+      {history.length===0?<p className="text-sm text-slate-500">Chưa có lượt kiểm định nào được lưu.</p>
+        :<div className="grid gap-2 sm:grid-cols-2">{history.map(h=>{
+          const done=Object.keys(h.results).length;
+          const reviewed=Object.keys(h.ratings).length;
+          const failed=allCases.filter(c=>h.results[c.id]?.autoStatus==='flag'||h.ratings[c.id]===0).length;
+          return <div key={h.id} className="flex min-w-0 flex-wrap items-center justify-between gap-2 rounded-xl border bg-slate-50 p-3">
+            <div><p className="text-sm font-bold text-slate-900">{new Date(h.createdAt).toLocaleString('vi-VN')}</p>
+              <p className="text-xs text-slate-600">{done} ca đã chạy · {reviewed} câu đã chấm · {failed} ca cần kiểm tra</p>
+            </div>
+            <button type="button" onClick={()=>restoreAudit(h)} disabled={busy} className="min-h-10 rounded-lg bg-sky-700 px-3 py-2 text-xs font-bold text-white disabled:opacity-50">Xem lại</button>
+          </div>;
+        })}</div>}
     </div>
     <div className="space-y-3">
       <div className="flex flex-wrap items-baseline justify-between gap-2">

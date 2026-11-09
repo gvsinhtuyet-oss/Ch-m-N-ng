@@ -243,84 +243,6 @@ export const LandingView: React.FC = () => {
     }, 320);
   };
 
-  const handleStudentSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    audioService.playSfx('click');
-    setLoginError('');
-
-    const normalizedName = guestMode ? 'Nhà phiêu lưu tự do' : studentName.trim().replace(/\s+/g,' ').normalize('NFC');
-    if (!normalizedName || !chosenGrade) {
-      setLoginError('Vui lòng chọn khối và nhập họ tên.');
-      return;
-    }
-    if (!guestMode && !new RegExp(`^${chosenGrade}/[1-9][0-9]{0,2}$`).test(selectedClass)) {
-      setLoginError(`Vui lòng chọn lớp thuộc Khối ${chosenGrade}.`);
-      return;
-    }
-    let guestId = '';
-    if (guestMode) { try { guestId = localStorage.getItem('cham_danang_guest_id_v1') || ''; } catch {} }
-
-    const isSameSavedStudent =
-      !guestMode &&
-      !!savedStudentId &&
-      savedStudentName.trim().replace(/\s+/g,' ').normalize('NFC').toLocaleLowerCase('vi-VN') === normalizedName.toLocaleLowerCase('vi-VN') &&
-      savedStudentClass === selectedClass &&
-      (savedStudentGrade === null || savedStudentGrade === chosenGrade);
-
-    const id = (guestMode ? guestId : (isSameSavedStudent ? savedStudentId : '')) ||
-      `${guestMode ? 'guest' : 'local-student'}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
-
-    const student = {
-      ...DEMO_STUDENTS[0],
-      id,
-      studentCode: id,
-      isGuest: guestMode,
-      classId: guestMode ? 'guest' : `class-${selectedClass.replace('/', '-')}`,
-      className: guestMode ? 'Khách trải nghiệm' : selectedClass,
-      grade: chosenGrade,
-      displayName: normalizedName,
-      name: normalizedName,
-      pinHash: undefined,
-    };
-
-    try {
-      if (guestMode) {
-        localStorage.setItem('cham_danang_guest_id_v1', id);
-        localStorage.setItem('cham_danang_guest_grade_v1', String(chosenGrade));
-      } else {
-        let syncCode = isSameSavedStudent ? savedSyncCode : '';
-        if (!syncCode) {
-          try {
-            const registered = await studentSyncService.register({
-              id,
-              name: normalizedName,
-              className: selectedClass,
-              grade: chosenGrade,
-            });
-            syncCode = registered.syncCode;
-          } catch {
-            // Máy chủ đồng bộ có thể chưa sẵn sàng; vẫn cho phép học và lưu cục bộ.
-          }
-        }
-        localStorage.setItem(
-          STUDENT_PROFILE_KEY,
-          JSON.stringify({ id, name: normalizedName, className: selectedClass, grade: chosenGrade, syncCode })
-        );
-        setSavedStudentId(id);
-        setSavedStudentName(normalizedName);
-        setSavedStudentClass(selectedClass);
-        setSavedStudentGrade(chosenGrade);
-        setSavedSyncCode(syncCode);
-      }
-    } catch {
-      // Nếu không lưu được cục bộ, vẫn cho phép vào học.
-    }
-
-    try {
-      if (authService.current()) await authService.logout();
-      loginAsStudent(student);
-    } catch (error) { setLoginError((error as Error).message); }
-  };
 
   return (
     <div className="landing-art-shell text-white select-none">
@@ -513,11 +435,11 @@ export const LandingView: React.FC = () => {
               </div>
             ) : showStudentLogin ? (
               /* Student Login Form: chọn khối và nhập thông tin ngay trên cùng một màn hình */
-              <form onSubmit={handleStudentSubmit} className="space-y-4 text-xs">
+              <form onSubmit={event=>event.preventDefault()} className="space-y-4 text-xs">
                 <div>
                   <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                     <h4 className="text-sm font-bold text-slate-900">
-                      {guestMode ? 'Khám phá tự do · Chọn khối lớp' : 'Chọn khối lớp của em'}
+                      {guestMode ? 'Khám phá tự do · Chọn khối lớp' : 'Vào học bằng mã của em'}
                     </h4>
                     <button
                       type="button"
@@ -528,7 +450,7 @@ export const LandingView: React.FC = () => {
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-5 sm:gap-3 max-sm:[&>button:last-child]:col-span-2 max-sm:[&>button:last-child]:w-[calc((100%-0.75rem)/2)] max-sm:[&>button:last-child]:justify-self-center" aria-label="Chọn một trong năm khối lớp">
+                  {guestMode && <div className="grid grid-cols-2 gap-3 sm:grid-cols-5 sm:gap-3 max-sm:[&>button:last-child]:col-span-2 max-sm:[&>button:last-child]:w-[calc((100%-0.75rem)/2)] max-sm:[&>button:last-child]:justify-self-center" aria-label="Chọn một trong năm khối lớp">
                     {[
                       'from-sky-500 to-blue-700', 'from-emerald-500 to-teal-700',
                       'from-amber-400 to-orange-600', 'from-rose-500 to-pink-700', 'from-violet-500 to-indigo-700',
@@ -569,13 +491,13 @@ export const LandingView: React.FC = () => {
                         </button>
                       );
                     })}
-                  </div>
+                  </div>}
                 </div>
 
                 {!guestMode && <details open className="rounded-xl border border-sky-100 bg-sky-50 p-3 text-slate-800">
-                  <summary className="cursor-pointer font-bold">Em có mã học sinh? Đăng nhập tại đây</summary>
+                  <summary className="cursor-pointer font-bold">Mã học sinh do giáo viên cấp</summary>
                   <label className="block mt-3">Mã học sinh hoặc mã đồng bộ cũ<input type="password" autoComplete="off" value={restoreCode} onChange={e=>setRestoreCode(e.target.value)} maxLength={20} className="block w-full mt-1 border rounded-xl p-3 bg-white" /></label>
-                  <p className="text-xs my-2">Nhập mã cô/thầy đã cấp. Không cần nhập lại tên, lớp hoặc mật khẩu. Mã đồng bộ cũ vẫn dùng được.</p>
+                  <p className="text-xs my-2">Nhập mã cô/thầy cấp hoặc mã hành trình cũ. Hệ thống tự xác định tên, khối và lớp; không cần mật khẩu. Mã đã được cấp lại không còn hiệu lực.</p>
                   <button type="button" disabled={restoreBusy || !restoreCode.trim()} onClick={async()=>{
                     if(restoreBusy)return;setRestoreBusy(true);setLoginError('');
                     try{
@@ -592,89 +514,15 @@ export const LandingView: React.FC = () => {
                   {loginError && <p role="alert" className="mt-2 text-rose-700">{loginError}</p>}
                 </details>}
 
-                {chosenGrade && !guestMode && (
-                  <div className="animate-in fade-in slide-in-from-top-2 duration-200 space-y-4 rounded-2xl border border-sky-100 bg-sky-50/60 p-4 sm:p-5">
-                    <>
-                        <div>
-                          <p className="font-bold text-sky-900 mb-3">Chưa có mã? Tạo hồ sơ khám phá cá nhân</p>
-                          <label className="font-bold text-slate-700 block mb-2">
-                            Lớp cụ thể của em
-                          </label>
-                          <div className="flex flex-wrap gap-2 mb-2">
-                            {DEMO_CLASSROOMS.filter(item => item.grade === chosenGrade).map(item => {
-                              const name = item.name.replace('Lớp ', '');
-                              return (
-                                <button
-                                  key={item.id}
-                                  type="button"
-                                  onClick={() => {
-                                    setSelectedClass(name);
-                                    setLoginError('');
-                                  }}
-                                  className={`px-4 py-2.5 rounded-xl border-2 font-bold transition ${
-                                    selectedClass === name
-                                      ? 'bg-sky-600 border-sky-600 text-white shadow-sm'
-                                      : 'bg-white border-sky-200 text-sky-800 hover:bg-sky-50'
-                                  }`}
-                                >
-                                  {item.name}
-                                </button>
-                              );
-                            })}
-                          </div>
-                          <input
-                            value={selectedClass}
-                            onChange={event => {
-                              setSelectedClass(event.target.value);
-                              setLoginError('');
-                            }}
-                            required
-                            maxLength={5}
-                            placeholder={`Ví dụ: ${chosenGrade}/24`}
-                            className="w-full p-3 rounded-xl border border-slate-200 bg-white font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                            aria-label="Lớp cụ thể"
-                          />
-                        </div>
-
-                        <div>
-                          <label htmlFor="student-name" className="font-bold text-slate-700 block mb-1">
-                            Họ và tên học sinh
-                          </label>
-                          <input
-                            id="student-name"
-                            type="text"
-                            maxLength={100}
-                            value={studentName}
-                            onChange={event => {
-                              setStudentName(event.target.value);
-                              setLoginError('');
-                            }}
-                            placeholder="Ví dụ: Nguyễn Minh Khang"
-                            required
-                            className="w-full p-3 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                          />
-                        </div>
-                      </>
-
-                    <div className="rounded-xl bg-white/90 border border-sky-100 px-3 py-2.5 text-[10px] text-sky-800 leading-relaxed">
-                      Đây là hồ sơ khám phá cá nhân. Nếu cô/thầy đã cấp mã, hãy dùng mục “Vào học bằng mã” phía trên để vào đúng hồ sơ của lớp, tránh tạo hồ sơ trùng.
-                    </div>
-
-                    {loginError && (
-                      <div className="p-2.5 rounded-xl bg-rose-50 text-rose-700 text-xs font-semibold">
-                        {loginError}
-                      </div>
-                    )}
-
-                    <button
-                      type="submit"
-                      className="w-full py-3.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-sm font-black shadow-md shadow-sky-600/30 transition active:scale-[0.99]"
-                    >
-                      KHÁM PHÁ NGAY
-                    </button>
-                  </div>
-                )}
-                {!guestMode && <button type="button" onClick={()=>{setGuestMode(true);setChosenGrade(null);setLoginError('');}} className="h-9 w-full rounded-xl border border-orange-200 text-xs font-bold text-orange-700 hover:bg-orange-50">Khám phá tự do</button>}
+                {!guestMode && <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-amber-900 font-semibold">
+                   Chưa có mã? Nhờ cô/thầy tạo hồ sơ ở mục “Lớp của tôi” và cấp thẻ mã hoặc QR. Em không cần tự nhập tên hay lớp, tránh hồ sơ trùng.
+                 </div>}
+                 {!guestMode && savedSyncCode && <button type="button"
+                   onClick={()=>{setRestoreCode(savedSyncCode);setLoginError('');}}
+                   className="w-full rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-900 font-bold">
+                   Dùng mã đã lưu trên thiết bị này
+                 </button>}
+                 {!guestMode && <button type="button" onClick={()=>{setGuestMode(true);setChosenGrade(null);setLoginError('');}} className="h-9 w-full rounded-xl border border-orange-200 text-xs font-bold text-orange-700 hover:bg-orange-50">Khám phá tự do</button>}
               </form>
             ) : (
               <form className="space-y-4 text-sm" onSubmit={async e => {

@@ -183,3 +183,27 @@ test('comparison presents both sourced concepts and keeps challenge protection',
   }
  });
 
+
+
+test('video rehearsal: exact five questions across student, teacher and admin contexts',()=>{
+ const get=(id:string)=>ALL_25_STATIONS.find(s=>s.id===id)!;
+ const dienhai=get('g1-station-4');
+ const hoian=get('g2-station-4');
+ const coral=get('g2-station-2');
+ const cases=[
+  {role:'Học sinh – Thành Điện Hải / Chặng 1',question:'Nơi ni có chi đặc biệt?',context:{audience:'student' as const,grade:1,stage:1,station:dienhai,hotspot:dienhai.hotspots[0],stations:ALL_25_STATIONS}},
+  {role:'Học sinh – Hội An / Chặng 1',question:'Hội An được UNESCO công nhận năm nào?',context:{audience:'student' as const,grade:2,stage:1,station:hoian,stations:ALL_25_STATIONS}},
+  {role:'Học sinh – Thử thách / Chặng 2',question:'Đáp án đúng là gì?',context:{audience:'student' as const,grade:1,stage:2,station:dienhai,stations:ALL_25_STATIONS}},
+  {role:'Giáo viên',question:'Gợi ý một hoạt động dạy học 5 phút về bảo vệ san hô cho học sinh lớp 2.',context:{audience:'teacher' as const,grade:2,station:coral,stations:ALL_25_STATIONS}},
+  {role:'Giáo viên',question:'Tình hình học tập của học sinh thế nào? Những em nào cần hỗ trợ thêm?',context:{audience:'teacher' as const,grade:2,station:coral,stations:ALL_25_STATIONS}},
+ ];
+ for(const [index,item] of cases.entries()){
+  const answer=ask(item.question,item.context);
+  console.log('VIDEO_PROMPT_REHEARSAL '+JSON.stringify({number:index+1,role:item.role,question:item.question,found:answer.found,layer:answer.layer,confidence:answer.confidence,answer:answer.answer,sources:answer.sources,task:answer.task,relatedStationId:answer.relatedStationId}));
+  if(index===0) { assert.ok(answer.found);assert.equal(answer.relatedStationId,dienhai.id); }
+  if(index===1) { assert.ok(answer.found);assert.match(answer.answer,/1999/); }
+  if(index===2) { assert.equal(answer.layer,'help');assert.match(answer.answer,/không chọn đáp án thay em/); }
+  if(index===3) { assert.match(answer.answer,/Hoạt động.*5 phút/i); }
+  if(index===4) { assert.doesNotMatch(answer.answer,/\b(?:39|40) học sinh|đã hoàn thành \d+ bài/); }
+ }
+});

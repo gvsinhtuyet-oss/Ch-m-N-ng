@@ -147,6 +147,7 @@ jobs:
           done
           node --import tsx stage2-browser-qa.mjs
           node staff-admin-demo-qa.mjs
+          node assistant-mobile-browser-qa.mjs
           node stage2-my-khe-intro-qa.mjs
       - name: Preserve screenshots (including failure evidence)
         if: always()

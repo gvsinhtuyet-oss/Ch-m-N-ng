@@ -74,4 +74,17 @@ test('quality UI only mounts under real admin dashboard; demo does not expose it
   assert.doesNotMatch(demo,/AssistantQualityDashboard|assistant-qa/);
   assert.match(panel,/currentUser\?\.id!=='admin-demo'/);
   assert.doesNotMatch(panel,/\bfetch\s*\(|authService\./);
+  assert.match(panel,/Kiểm tra toàn bộ 25 trạm/);
+  assert.match(panel,/Biểu đồ chất lượng theo 5 khối/);
+  assert.match(panel,/Danh sách câu trả lời cần sửa/);
+  assert.match(panel,/Lịch sử kiểm định trên thiết bị này/);
+  assert.match(panel,/localStorage\.setItem\(QA_HISTORY_KEY/);
+});
+test('mobile chatbot is not hidden by CSS and has a touch-safe visible launcher',()=>{
+  const styles=readFileSync('src/index.css','utf8');
+  const widget=readFileSync('src/components/common/DanangAssistantChat.tsx','utf8');
+  assert.doesNotMatch(styles,/body:has\([^)]*\) \.discovery-assistant\{display:none\}/);
+  assert.match(widget,/max\(18px, calc\(env\(safe-area-inset-bottom\)/);
+  assert.match(widget,/Trợ lý<\/span>/);
+  assert.match(widget,/mobile \|\| !event\.isPrimary/);
 });

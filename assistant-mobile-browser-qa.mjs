@@ -22,10 +22,10 @@ try {
     await page.evaluate(()=>document.querySelector('button[aria-label="Khám phá tự do dành cho học sinh"]').click());
     await page.waitForFunction(()=>!![...document.querySelectorAll('button')].find(b=>b.textContent?.includes('Khối 2')),{timeout:15000});
     await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('Khối 2'))?.click());
-    await page.waitForSelector('button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]',{timeout:25000});
+    await page.waitForSelector('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]',{visible:true,timeout:30000});
     const visibility=await page.evaluate(()=>{
       const wrapper=document.querySelector('.discovery-assistant');
-      const button=document.querySelector('button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]');
+      const button=wrapper?.querySelector('button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]');
       const css=getComputedStyle(wrapper),r=button.getBoundingClientRect();
       return {display:css.display,visibility:css.visibility,label:wrapper.textContent?.includes('Trợ lý'),
         left:r.left,right:r.right,top:r.top,bottom:r.bottom,viewportWidth:innerWidth,viewportHeight:innerHeight};
@@ -35,7 +35,7 @@ try {
     assert.ok(visibility.label,name+' missing assistant label');
     assert.ok(visibility.left>=0 && visibility.right<=visibility.viewportWidth+2
       && visibility.top>=0 && visibility.bottom<=visibility.viewportHeight+2,name+' launcher outside viewport: '+JSON.stringify(visibility));
-    await page.click('button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]');
+    await page.click('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]');
     await page.waitForSelector('[role="dialog"][aria-label="Trợ lý khám phá Đà Nẵng"]',{visible:true,timeout:10000});
     assert.ok(await page.$('textarea[aria-label="Nhập câu hỏi"]'),name+' assistant question input missing');
     await page.screenshot({path:'stage2-qa-screenshots/assistant-'+name+'.png'});

@@ -28,7 +28,8 @@ interface Props {
   hotspot?: ExplorationHotspot | null;
   compactGame?: boolean;
   docked?: boolean;
-  audience?: 'student' | 'teacher';
+  audience?: 'student' | 'teacher' | 'admin';
+  adminDemo?: boolean;
   stage?: number;
   storageScope?: string;
   currentGrade?: number;
@@ -48,6 +49,7 @@ interface ChatMessage {
   practice?: PracticeQuestion;
   pendingTask?: LearningTask;
   topic?: string;
+  found?: boolean;
   lessons?: TeacherLessonHit[];
   lessonCatalog?: GddpCatalog;
   catalogSource?: string;
@@ -58,35 +60,59 @@ const WELCOME =
 
 const MAX_VISIBLE_MESSAGES = 10;
 
-export interface AssistantSuggestion {label:string;query:string;draft?:boolean;}
-/** Contextual prompts run entirely in the local knowledge-based chatbot. */
-export function buildAssistantFollowUps({audience,stage,topic,stationTitle,hotspotTitle,unknown=false}:{
- audience:'student'|'teacher';stage?:number;topic?:string;stationTitle?:string;hotspotTitle?:string;unknown?:boolean;
+export interface AssistantSuggestion {
+  label:string;
+  query:string;
+  draft?:boolean;
+  adminPage?:'assistant-qa'|'effectiveness'|'reports'|'content'|'theme';
+}
+/** Friendly labels, explicit source-grounded queries; admin actions open real pages. */
+export function buildAssistantFollowUps({audience,stage,topic,stationTitle,hotspotTitle,unknown=false,adminDemo=false}:{
+ audience:'student'|'teacher'|'admin';stage?:number;topic?:string;stationTitle?:string;hotspotTitle?:string;unknown?:boolean;adminDemo?:boolean;
 }):AssistantSuggestion[]{
+ if(audience==='admin')return adminDemo?[
+  {label:'Mình xem tiến độ học nhé!',query:'',adminPage:'reports'},
+  {label:'Mở kho 25 trạm nào!',query:'',adminPage:'content'},
+  {label:'Thử đổi giao diện nhé!',query:'',adminPage:'theme'},
+ ]:[
+  {label:'Có câu nào cần kiểm tra lại không?',query:'',adminPage:'assistant-qa'},
+  {label:'Việc học đang hiệu quả ra sao?',query:'',adminPage:'effectiveness'},
+  {label:'Xem kết quả từng lớp nhé!',query:'',adminPage:'reports'},
+ ];
  if(audience==='student'&&stage===2)return [
-  {label:'Quan sát gì?',query:'Em nên quan sát gì?'},
-  {label:'Ôn bài ở đâu?',query:'Em ôn lại bài ở đâu?'},
-  {label:'Khi phân vân?',query:'Nếu phân vân thì làm gì?'},
+  {label:'Cho em một gợi ý nhé!',query:'Em nên quan sát gì?'},
+  {label:'Em xem lại ở đâu nhỉ?',query:'Em ôn lại bài ở đâu?'},
+  {label:'Nếu em chưa chắc thì sao?',query:'Nếu phân vân thì làm gì?'},
  ];
  const clean=(x?:string)=>x?.replace(/^\d+[.)]\s*/,'').replace(/\s+/g,' ').trim().slice(0,90)||'';
  const focus=clean(unknown?undefined:topic)||clean(hotspotTitle)||clean(stationTitle);
  if(audience==='teacher')return focus?[
-  {label:'Soạn 3 câu hỏi',query:'Tạo 3 câu hỏi kèm đáp án về '+focus},
-  {label:'Hoạt động 5 phút',query:'Gợi ý hoạt động 5 phút về '+focus},
-  {label:'Giải thích dễ hiểu',query:'Nói dễ hiểu hơn về '+focus},
+  {label:'Gợi ý vài câu hỏi cho lớp nhé!',query:'Tạo 3 câu hỏi kèm đáp án về '+focus},
+  {label:'Bài này dạy sao cho thú vị?',query:'Gợi ý hoạt động 5 phút về '+focus},
+  {label:'Giải thích đơn giản hơn được không?',query:'Nói dễ hiểu hơn về '+focus},
  ]:[
-  {label:'Tìm bài học',query:'Mở bài ',draft:true},
-  {label:'Soạn 3 câu hỏi',query:'Tạo 3 câu hỏi kèm đáp án về ',draft:true},
-  {label:'Hoạt động 5 phút',query:'Gợi ý hoạt động 5 phút về ',draft:true},
+  {label:'Soạn vài câu hỏi về Hội An nhé!',query:'Tạo 3 câu hỏi kèm đáp án về Hội An'},
+  {label:'Có hoạt động nào về san hô không?',query:'Gợi ý hoạt động 5 phút về bảo vệ san hô cho học sinh lớp 2'},
+  {label:'Giải thích vòng tuần hoàn nước nhé!',query:'Vòng tuần hoàn nước là gì?'},
  ];
- return focus?[
-  {label:'Nói dễ hiểu hơn',query:'Nói dễ hiểu hơn về '+focus},
-  {label:'Cho em ví dụ',query:'Cho ví dụ về '+focus},
-  {label:'Em thử trả lời',query:'Hỏi em một câu để kiểm tra về '+focus},
+ if(stage===1&&stationTitle&&!topic&&!unknown)return [
+  {label:'Nơi ni có chi hay vậy?',query:'Nơi ni có chi đặc biệt?'},
+  {label:'Kể em nghe thêm đi!',query:'Nói dễ hiểu hơn về '+focus},
+  {label:'Đố em một câu nhé!',query:'Hỏi em một câu để kiểm tra về '+focus},
+ ];
+ if(focus)return stage===3||stage===4?[
+  {label:'Em còn nhớ gì nhỉ?',query:'Hỏi em một câu để kiểm tra về '+focus},
+  {label:'Kể em nghe thêm đi!',query:'Nói dễ hiểu hơn về '+focus},
+  {label:'Em giúp gì được cho quê hương?',query:'Em nên làm gì để giữ gìn quê hương?'},
  ]:[
-  {label:'Làng nghề Đà Nẵng',query:'Đà Nẵng có làng nghề gì?'},
-  {label:'Khám phá san hô',query:'San hô là động vật hay thực vật?'},
-  {label:'Giữ gìn quê hương',query:'Em nên làm gì để giữ gìn quê hương?'},
+  {label:'Kể em nghe thêm đi!',query:'Nói dễ hiểu hơn về '+focus},
+  {label:'Cho em một ví dụ nhé!',query:'Cho ví dụ về '+focus},
+  {label:'Đố em một câu nhé!',query:'Hỏi em một câu để kiểm tra về '+focus},
+ ];
+ return [
+  {label:'Đà Nẵng có làng nghề gì nhỉ?',query:'Đà Nẵng có làng nghề gì?'},
+  {label:'San hô là con vật à?',query:'San hô là động vật hay thực vật?'},
+  {label:'Em giữ gìn quê hương thế nào?',query:'Em nên làm gì để giữ gìn quê hương?'},
  ];
 }
 
@@ -111,9 +137,10 @@ const AssistantEmblem=({className}:{className?:string})=>(
   </svg>
 );
 
-export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '' }) => {
-  const isTeacher = audience === 'teacher';
-  const welcome = isTeacher ? 'Thầy cô cần tìm bài học hay chuẩn bị nội dung nào?' : WELCOME;
+export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '', adminDemo = false }) => {
+  const isTeacher = audience !== 'student';
+  const isAdmin = audience === 'admin';
+  const welcome = isAdmin ? 'Chào thầy cô! Mình cùng xem các mục quản trị nhé.' : isTeacher ? 'Thầy cô muốn chuẩn bị nội dung nào hôm nay?' : WELCOME;
   const [open, setOpen] = useState(false);
   const [showSuggestions,setShowSuggestions]=useState(true);
   const panelRef=useRef<HTMLElement|null>(null);
@@ -255,11 +282,11 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     if (open) endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, [messages, open, showSuggestions]);
 
-  const context = useMemo(() => ({ station, hotspot, stations: ALL_25_STATIONS, audience, stage, grade:currentGrade || station?.grade }), [station, hotspot, audience, stage, currentGrade]);
+  const context = useMemo(() => ({ station, hotspot, stations: ALL_25_STATIONS, audience:audience==='admin'?'teacher' as const:audience, stage, grade:currentGrade || station?.grade }), [station, hotspot, audience, stage, currentGrade]);
   const latestAnswer=messages.filter(m=>m.role==='assistant'&&m.id!=='welcome').at(-1);
   const suggestedPrompts=buildAssistantFollowUps({
     audience,stage,topic:latestAnswer?.topic,stationTitle:station?.titleVi,hotspotTitle:hotspot?.titleVi,
-    unknown:!!latestAnswer&&!latestAnswer.topic&&!latestAnswer.lessons&&!latestAnswer.relatedStationTitle,
+    unknown:latestAnswer?.found===false,adminDemo,
   });
 
   const append = (message: ChatMessage) => {
@@ -341,7 +368,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         role: 'assistant',
         text: result.answer,
         relatedStationTitle: result.relatedStationTitle,
-        task:result.task,practice:result.practice,pendingTask:result.pendingTask,topic:result.topic, sources: result.sources, teachingExample: result.teachingExample, followUp: result.followUp,
+        task:result.task,practice:result.practice,pendingTask:result.pendingTask,topic:result.topic, found:result.found, sources: result.sources, teachingExample: result.teachingExample, followUp: result.followUp,
       });
     } catch {
       append({ id: `error-${Date.now()}`, role: 'assistant', text: 'Mình chưa đọc được nội dung này. Bạn thử hỏi lại hoặc chọn một câu hỏi gợi ý nhé!' });
@@ -513,7 +540,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             </div>
 
              {showSuggestions&&<div className="mt-4 flex flex-wrap gap-2" aria-label="Gợi ý hỏi tiếp theo">
-               {suggestedPrompts.slice(0,3).map(item=><button key={item.label} type="button" disabled={aiBusy||lookupBusy} onClick={()=>{if(item.draft){setInput(item.query);inputRef.current?.focus();}else void ask(item.query);}} className="min-h-11 rounded-2xl border border-sky-100 bg-white px-3 py-2 text-xs font-semibold text-sky-800 transition hover:border-sky-200 hover:bg-sky-50 disabled:opacity-40">{item.label}</button>)}
+               {suggestedPrompts.slice(0,3).map(item=><button key={item.label} type="button" disabled={aiBusy||lookupBusy} onClick={()=>{if(item.adminPage){window.dispatchEvent(new CustomEvent('cham-admin-open-page',{detail:{page:item.adminPage}}));setOpen(false);}else if(item.draft){setInput(item.query);inputRef.current?.focus();}else void ask(item.query);}} className="min-h-11 rounded-2xl border border-sky-100 bg-white px-3 py-2 text-xs font-semibold text-sky-800 transition hover:border-sky-200 hover:bg-sky-50 disabled:opacity-40">{item.label}</button>)}
              </div>}
             <div ref={endRef} />
           </div>

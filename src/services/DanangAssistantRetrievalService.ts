@@ -434,12 +434,12 @@ function friendlyStudentConversation(rawQuery:string,context:AssistantRetrievalC
  if(/^(?:em|minh|toi) (?:vui|dang vui|vui qua|rat vui|co chuyen vui)(?: lam| qua)?$/.test(q)){
   return reply('Nghe có chuyện vui rồi nè! ✨ Em muốn kể mình nghe điều gì vừa xảy ra không?');
  }
- if(/^(?:vi sao|tai sao) (?:troi (?:lai )?mua|co mua)|mua tu dau ra|mua la gi|vi sao co mua)$/.test(q)){
+ if(/^(?:(?:vi sao|tai sao) (?:troi (?:lai )?mua|co mua)|mua tu dau ra|mua la gi|vi sao co mua)$/.test(q)){
   return reply('Em thử nhìn những đám mây nhé! Hơi nước gặp lạnh tạo thành các giọt nước nhỏ. Khi các giọt kết hợp lại và đủ nặng, chúng rơi xuống thành mưa. Em có muốn biết nước trên mây đến từ đâu không? ☁️',{
    topic:'mưa',sources:[{label:'NOAA – What Makes It Rain?',url:'https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/what-makes-it-rain'}],
   });
  }
- if(/^(?:vi sao|tai sao) (?:co )?cau vong|cau vong (?:la gi|hinh thanh the nao|tu dau ra)|sao co cau vong)$/.test(q)){
+ if(/^(?:(?:vi sao|tai sao) (?:co )?cau vong|cau vong (?:la gi|hinh thanh the nao|tu dau ra)|sao co cau vong)$/.test(q)){
   return reply('Cầu vồng xuất hiện khi ánh nắng đi qua những giọt nước trong không khí và tách thành nhiều màu. Em thường thấy cầu vồng sau mưa phải không? 🌈',{
    topic:'cầu vồng',sources:[{label:'NOAA – What Causes a Rainbow?',url:'https://www.nesdis.noaa.gov/about/k-12-education/optical-phenomena/what-causes-rainbow'}],
   });

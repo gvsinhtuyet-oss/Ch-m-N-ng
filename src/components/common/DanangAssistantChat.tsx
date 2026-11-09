@@ -64,7 +64,9 @@ const MAX_VISIBLE_MESSAGES = 10;
 // the in-memory turn history. Question processing remains entirely local.
 export function maskStudentPrivateQuestion(question:string):string {
  const normalized=question.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/đ/g,'d');
- if(/\b(?:dia chi nha|so dien thoai|so di dong|mat khau|password|ma otp|can cuoc|cccd|ten that cua em|ten day du cua em)\b/.test(normalized))
+ if(/\b(?:dia chi nha|so dien thoai|so di dong|mat khau|password|ma otp|can cuoc|cccd|ten that cua em|ten day du cua em|ten cua em la|em ten la|ho va ten)\b/.test(normalized)
+   || /[\w.+-]+@[\w.-]+\.[a-z]{2,}/i.test(question)
+   || /(?:^|\D)(?:\+84|0)\d{9,10}(?:\D|$)/.test(question))
   return 'Em đã nhập thông tin riêng tư (đã ẩn để bảo vệ em).';
  return question;
 }

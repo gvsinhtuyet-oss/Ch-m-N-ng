@@ -161,7 +161,7 @@ export const AssistantQualityDashboard:React.FC=()=>{
         Kiểm thử đúng tuyến 121 điểm khám phá chỉ là kiểm tra kỹ thuật.
         Câu hỏi kiến thức, phương ngữ và hỗ trợ giáo viên vẫn cần được thẩm định thủ công.
       </p>
-      <p className="mt-2 text-xs text-indigo-900">Kết quả chỉ lưu trong phiên mở trang này; tải báo cáo JSON trước khi thoát. Không lưu vào Firestore.</p>
+      <p className="mt-2 text-xs text-indigo-900">Kết quả kiểm định tự lưu tối đa 8 phiên trên trình duyệt Admin hiện tại. Không lưu lên máy chủ/Firestore; hãy xuất báo cáo JSON khi cần chuyển máy hoặc lưu hồ sơ lâu dài.</p>
     </div>
     <div className="grid gap-3 rounded-2xl border bg-white p-4 sm:grid-cols-2 lg:grid-cols-4">
       <label className="flex flex-col gap-1 text-xs font-bold">Khối lớp

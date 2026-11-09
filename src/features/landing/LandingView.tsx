@@ -687,6 +687,7 @@ export const LandingView: React.FC = () => {
                 finally { setStaffBusy(false); }
               }}>
                 <p className="text-slate-600">Dùng email và mật khẩu đã được cấp. Hệ thống sẽ mở trang theo quyền của tài khoản.</p>
+                <button type="button" disabled={staffBusy} onClick={async()=>{if(staffBusy)return;setStaffBusy(true);setLoginError('');try{const user=await authService.restore();if(user)finishStaffLogin(user);else setLoginError('Phiên đăng nhập đã hết hạn. Hãy đăng nhập bằng Google hoặc mật khẩu.');}catch(e){setLoginError((e as Error).message);}finally{setStaffBusy(false);}}} className="w-full min-h-11 rounded-xl border border-sky-200 bg-sky-50 p-3 font-bold text-sky-800 disabled:opacity-50">Tiếp tục phiên đăng nhập trên máy này</button>
                 <label className="block font-bold">Email
                   <input type="email" autoComplete="username" required maxLength={254} value={staffEmail} onChange={e=>setStaffEmail(e.target.value)} className="mt-1 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100" />
                 </label>

@@ -13,6 +13,13 @@ test('covers all 25 stations and every real Stage 1 exploration point, with uniq
   assert.equal(new Set(ASSISTANT_QUALITY_CASES.map(row=>row.id)).size,ASSISTANT_QUALITY_CASES.length);
   const context=ASSISTANT_QUALITY_CASES.filter(row=>row.check==='context');
   assert.equal(context.length,121);
+  const evidence=ASSISTANT_QUALITY_CASES.filter(row=>row.check==='evidence');
+  assert.equal(evidence.length,121,'all 121 hotspots need an evidence audit');
+  assert.equal(new Set(evidence.map(row=>row.hotspotId)).size,121);
+  for(const row of evidence){
+    assert.equal(row.dimension,'accuracy');
+    assert.equal(row.question,'Nơi ni có chi đặc biệt?');
+  }
   for(const s of ALL_25_STATIONS){
     assert.equal(context.filter(row=>row.stationId===s.id).length,s.hotspots.length,s.id);
     assert.ok(ASSISTANT_QUALITY_CASES.some(row=>row.stationId===s.id&&row.dimension==='extension'),s.id);
@@ -107,4 +114,23 @@ test('four formerly flagged knowledge cases have sourced, grade-appropriate resp
     assert.ok(result.sources.some(source=>source.url?.startsWith('https://')),id+' missing cited source');
   }
   // Flagging is technical only; even fully sourced facts still require educator review.
+});
+
+test('121 content-grounding checks never certify factual accuracy automatically',()=>{
+  const evidence=ASSISTANT_QUALITY_CASES.filter(row=>row.check==='evidence');
+  const flagged:string[]=[];
+  for(const row of evidence){
+    const result=evaluateAssistantQualityCase(row);
+    assert.ok(['review','flag'].includes(result.autoStatus),row.id);
+    assert.notEqual(result.autoStatus,'pass',row.id+' must require educator validation');
+    assert.ok(result.diagnostic.length>40,row.id);
+    if(result.autoStatus==='flag')flagged.push(row.id);
+  }
+  console.log('Grounding audit: '+(evidence.length-flagged.length)+'/'+evidence.length+' responses contain a matching passage; flagged IDs: '+flagged.slice(0,25).join(', '));
+});
+test('admin displays distinct evidence bar and distinguishes it from technical and expert grades',()=>{
+  const panel=readFileSync('src/features/admin/AssistantQualityDashboard.tsx','utf8');
+  assert.match(panel,/Đối chiếu học liệu 121 điểm khám phá/);
+  assert.match(panel,/không xác nhận nguồn gốc hay sự chính xác/);
+  assert.match(panel,/evidenceFound/);
 });

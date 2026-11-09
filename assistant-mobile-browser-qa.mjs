@@ -38,6 +38,13 @@ try {
     await page.click('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]');
     await page.waitForSelector('[role="dialog"][aria-label="Trợ lý khám phá Đà Nẵng"]',{visible:true,timeout:10000});
     assert.ok(await page.$('textarea[aria-label="Nhập câu hỏi"]'),name+' assistant question input missing');
+    await page.type('textarea[aria-label="Nhập câu hỏi"]','San hô là động vật hay thực vật?');
+    await page.click('button[aria-label="Gửi câu hỏi"]');
+    await page.waitForSelector('button[aria-label="Nghe đọc câu trả lời"]',{visible:true,timeout:12000});
+    const answerVisible=await page.evaluate(()=>document.querySelector('[role="dialog"][aria-label="Trợ lý khám phá Đà Nẵng"]')?.textContent?.includes('động vật'));
+    assert.ok(answerVisible,name+' expected a reviewed science answer');
+    await page.click('button[aria-label="Nghe đọc câu trả lời"]');
+    await page.waitForFunction(()=>!!document.querySelector('[role="dialog"][aria-label="Trợ lý khám phá Đà Nẵng"]'),{timeout:5000});
     await page.screenshot({path:'stage2-qa-screenshots/assistant-'+name+'.png'});
     await page.click('button[aria-label="Đóng trợ lý"]');
     await page.waitForFunction(()=>!document.querySelector('[role="dialog"][aria-label="Trợ lý khám phá Đà Nẵng"]'),{timeout:10000});

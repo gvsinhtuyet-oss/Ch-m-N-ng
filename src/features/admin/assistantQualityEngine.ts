@@ -15,7 +15,7 @@ export const QUALITY_DIMENSIONS = {
 } as const;
 
 export type QualityDimension = keyof typeof QUALITY_DIMENSIONS;
-export type QualityCheck = 'context' | 'fact' | 'guard' | 'unknown' | 'manual';
+export type QualityCheck = 'context' | 'evidence' | 'fact' | 'guard' | 'unknown' | 'manual';
 export type QualityRating = 0 | 1 | 2;
 export interface QualityCase {
   id: string;
@@ -70,6 +70,11 @@ for (const station of ALL_25_STATIONS) {
       question:'Nơi ni có chi đặc biệt?', dimension:'context', check:'context',
       note:'Kiểm tra truy hồi đúng điểm đang mở, KHÔNG chứng minh câu trả lời đúng kiến thức.',
     });
+    qualityCases.push({
+      id:'evidence-' + hotspot.id, stationId:station.id, hotspotId:hotspot.id,
+      question:'Nơi ni có chi đặc biệt?', dimension:'accuracy', check:'evidence',
+      note:'Đối chiếu xem câu trả lời có bám một cụm thông tin trong lời thuyết minh/ý chính của điểm khám phá hay không. Chỉ là bằng chứng liên hệ học liệu, KHÔNG tự xác nhận độ chính xác lịch sử/khoa học.',
+    });
   }
   qualityCases.push({
     id:'dialect-' + station.id, stationId:station.id, hotspotId:station.hotspots[0]?.id,
@@ -115,7 +120,21 @@ export function evaluateAssistantQualityCase(row:QualityCase):QualityResult {
   });
   let autoStatus: QualityResult['autoStatus'] = 'review';
   let diagnostic = 'Cần người kiểm duyệt đọc câu trả lời và đối chiếu nguồn.';
-  if (row.check==='context') {
+  if (row.check==='evidence') {
+    const lessonText=[hotspot?.narrationVi,hotspot?.keyFactVi].filter(Boolean).join(' ');
+    const words=(text:string)=>foldQualityText(text).replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim().split(' ').filter(Boolean);
+    const lessonWords=words(lessonText);
+    const answerWords=words(result.answer);
+    const answerPhrases=new Set<string>();
+    for(let i=0;i+5<=answerWords.length;i++)answerPhrases.add(answerWords.slice(i,i+5).join(' '));
+    const hasGroundedPassage=lessonWords.some((_,i)=>i+5<=lessonWords.length
+      && answerPhrases.has(lessonWords.slice(i,i+5).join(' ')));
+    const grounded=result.found && result.relatedStationId===row.stationId && hasGroundedPassage;
+    autoStatus=grounded?'review':'flag';
+    diagnostic=grounded
+      ?'Câu trả lời có đoạn trùng với lời thuyết minh của điểm khám phá. Giáo viên vẫn phải đối chiếu nguồn gốc và độ đúng nội dung.'
+      :'Chưa tìm thấy đoạn liên hệ đủ rõ với lời thuyết minh của đúng điểm khám phá. Cần kiểm tra câu trả lời, điểm chạm và học liệu.';
+  } else if (row.check==='context') {
     const passed = result.found && result.relatedStationId===row.stationId;
     autoStatus=passed?'pass':'flag';
     diagnostic=passed?'Đúng mã trạm/điểm (chưa đánh giá kiến thức).':'Không truy hồi đúng trạm đang mở.';

@@ -60,6 +60,17 @@ const WELCOME =
 
 const MAX_VISIBLE_MESSAGES = 10;
 
+// Do not retain private details in pupil chat bubbles, screenshots or
+// the in-memory turn history. Question processing remains entirely local.
+export function maskStudentPrivateQuestion(question:string):string {
+ const normalized=question.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/đ/g,'d');
+ if(/\b(?:dia chi nha|so dien thoai|so di dong|mat khau|password|ma otp|can cuoc|cccd|ten that cua em|ten day du cua em|ten cua em la|em ten la|ho va ten)\b/.test(normalized)
+   || /[\w.+-]+@[\w.-]+\.[a-z]{2,}/i.test(question)
+   || /(?:^|\D)(?:\+84|0)\d{9,10}(?:\D|$)/.test(question))
+  return 'Em đã nhập thông tin riêng tư (đã ẩn để bảo vệ em).';
+ return question;
+}
+
 export interface AssistantSuggestion {
   label:string;
   query:string;
@@ -346,7 +357,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
     const epoch=chatEpoch.current;
     setShowSuggestions(false);
-    append({ id: `q-${Date.now()}`, role: 'student', text: question });
+    append({ id: `q-${Date.now()}`, role: 'student', text: isTeacher ? question : maskStudentPrivateQuestion(question) });
     try {
       const pending=messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask;
       if (isTeacher && detectLearningTask(question)==='knowledge'&&(!pending||/^(?:mở|tìm|tra cứu|mo|tim)(?:\s|$)/i.test(question))) {

@@ -462,9 +462,97 @@ function friendlyStudentConversation(rawQuery:string,context:AssistantRetrievalC
  return null;
 }
 
+// Guardrails are local and deterministic. Pupil messages never call a
+// generative-model provider, and unverified live facts are never guessed.
+const DIEN_HAI_HISTORY_SOURCE = {
+ label:'Bảo tàng Đà Nẵng – Lịch sử Thành Điện Hải',
+ url:'https://baotangdanang.vn/thanh-dien-hai/thong-tin-gioi-thieu',
+};
+const DIEN_HAI_CIVIC_SOURCE = {
+ label:'Cổng thông tin thành phố Đà Nẵng – Thành Điện Hải',
+ url:'https://cttdt.danangportal.gov.vn/vi/web/dng/w/thanh-dien-hai-i',
+};
+const MUSEUM_FEE_SOURCE = {
+ label:'Cổng thông tin Đà Nẵng – Phí tham quan từ 10/6/2026',
+ url:'https://cttdt.danangportal.gov.vn/vi/web/dng/w/muc-thu-phi-tham-quan-cac-cong-trinh-van-hoa-thuoc-bao-tang-da-nang-va-bao-tang-dieu-khac-cham-da-nang',
+};
+
+function childSafetyResponse(rawQuery:string):AssistantRetrievalResult|null {
+ const q=normalizeForSearch(rawQuery);
+ const respond=(answer:string)=>makeResult('help',normalizeDanangDialect(rawQuery),answer,'high');
+ // Safety takes precedence over challenge mode. Never ask for identifying data.
+ if(/\b(?:muon chet|tu tu|tu hai|tu lam dau|khong muon song|muon bien mat mai mai)\b/.test(q))
+  return respond('Mình rất lo khi nghe em nói vậy. Em hãy đến ngay với bố mẹ, thầy cô hoặc một người lớn đáng tin và nói rõ rằng em đang không an toàn. Đừng ở một mình nếu em có thể bị thương. Nếu nguy hiểm ngay lúc này, hãy nhờ người lớn gọi cấp cứu hoặc số khẩn cấp địa phương.');
+ if(/\b(?:bi xam hai|bi bat coc|bi danh|bi de doa|bi bat nat|nguoi lon lam dau|nguoi la dua di)\b/.test(q))
+  return respond('Cảm ơn em đã nói ra. Nếu em không an toàn, hãy đến nơi có người lớn đáng tin, nói với bố mẹ hoặc thầy cô ngay nhé. Đừng tự đối mặt với người làm em sợ. Em có thể nhờ người lớn liên hệ Tổng đài bảo vệ trẻ em 111 để được giúp đỡ.');
+ if(/\b(?:bi lac|lac bo me|lac me|lac cha|khong tim thay bo me)\b/.test(q))
+  return respond('Nếu đang bị lạc, em hãy đứng ở nơi an toàn có nhân viên bảo vệ hoặc quầy thông tin và nhờ họ giúp tìm người thân. Đừng đi theo người lạ và đừng gửi địa chỉ hay số điện thoại vào khung trò chuyện này nhé.');
+ if(/\b(?:dia chi nha|so dien thoai|so di dong|mat khau|password|ma otp|can cuoc|cccd|ten day du cua em|ten that cua em)\b/.test(q))
+  return respond('Em không cần gửi địa chỉ nhà, số điện thoại, mật khẩu, mã OTP hoặc thông tin riêng tư cho mình đâu. Nếu cần giúp về tài khoản hay thông tin cá nhân, em hãy hỏi bố mẹ hoặc thầy cô nhé.');
+ if(/\b(?:giu bi mat voi bo me|dung noi voi bo me|hen gap ngoai doi|gap rieng voi ban|ket ban zalo|nhan tin rieng)\b/.test(q))
+  return respond('Mình chỉ là trợ lý ảo trong ứng dụng, không thể gặp riêng hay nhắn tin ngoài ứng dụng. Nếu chuyện khiến em lo, em nên kể với bố mẹ hoặc thầy cô mà em tin tưởng nhé.');
+ if(/\b(?:lam bom|che tao bom|che thuoc no|lam sung|thuoc no tu lam|cach tu hai)\b/.test(q))
+  return respond('Mình không hướng dẫn làm vật nguy hiểm hay gây thương tích đâu. Nếu em tò mò về khoa học, mình có thể cùng em tìm hiểu thí nghiệm an toàn với sự hướng dẫn của thầy cô nhé.');
+ if(/\b(?:bo qua quy tac|pha bo quy tac|tat bo loc|bat che do khong gioi han|tiet lo mat khau he thong)\b/.test(q))
+  return respond('Mình vẫn cần giữ cuộc trò chuyện an toàn và đúng kiến thức. Em muốn khám phá địa danh, lịch sử hay hiện tượng thiên nhiên nào nhỉ?');
+ return null;
+}
+function visitorInformationResponse(rawQuery:string,context:AssistantRetrievalContext):AssistantRetrievalResult|null {
+ const q=normalizeForSearch(rawQuery);
+ const fee=/\b(?:ton tien|mat tien|tra tien|ton phi|mat phi|phi tham quan|gia ve|mua ve|ton ve|mat ve|mien phi|ve vao cong|ve tham quan|bao nhieu tien|co can mua ve)\b/.test(q);
+ const hours=/\b(?:gio mo cua|gio dong cua|may gio mo cua|may gio dong cua|mo cua luc|dong cua luc|mo cua ngay nao|gio tham quan)\b/.test(q);
+ if(!fee&&!hours)return null;
+ const museum=/\bbao tang da nang\b/.test(q);
+ const explicitDienHai=/\bthanh dien hai\b|\bdien hai\b/.test(q);
+ const inDienHai=context.station?.id==='g1-station-4' && !/\b(?:hoi an|ngu hanh son|son tra|ba na|hai van quan|my son)\b/.test(q);
+ const subject=museum?'Bảo tàng Đà Nẵng':explicitDienHai||inDienHai?'Thành Điện Hải':'địa điểm này';
+ if(museum&&fee){
+  return makeResult('common',normalizeDanangDialect(rawQuery),
+   'Em hỏi về vé Bảo tàng Đà Nẵng phải không? Theo quy định thành phố có hiệu lực từ ngày 10/6/2026, trẻ em dưới 16 tuổi và học sinh thuộc diện miễn phí. Người lớn có thể phải trả vé theo đối tượng. Đây là quy định của **bảo tàng**, không tự động là quy định vé của Thành Điện Hải. Trước khi đi, em nên nhờ người lớn xem thông báo mới nhất nhé!','high',{sources:[MUSEUM_FEE_SOURCE],topic:'vé Bảo tàng Đà Nẵng'});
+ }
+ return makeResult('unknown',normalizeDanangDialect(rawQuery),
+  hours
+   ?'Em muốn biết giờ tham quan '+subject+' đúng không? Mình chưa có lịch mở cửa hiện hành đã xác minh, nên không muốn đoán sai. Em hãy nhờ thầy cô hoặc người lớn kiểm tra thông báo chính thức trước khi đến nhé!'
+   :'Em hỏi vào '+subject+' có phải mua vé không, đúng không? Mình chưa xác minh được chính sách vé vào **riêng địa điểm này** ở thời điểm hiện tại, nên không dám nói chắc là miễn phí hay có thu phí. Em hãy nhờ thầy cô hoặc người lớn kiểm tra thông báo của nơi quản lý trước khi đi nhé!','low');
+}
+function dienHaiHistoricalResponse(rawQuery:string,context:AssistantRetrievalContext):AssistantRetrievalResult|null {
+ const q=normalizeForSearch(rawQuery), previous=normalizeForSearch(context.previousTopic||'');
+ const explicit=/\b(?:thanh dien hai|dien hai)\b/.test(q);
+ const inStation=context.station?.id==='g1-station-4';
+ const ongoing=previous.includes('thanh dien hai');
+ const otherPlace=/\b(?:hoi an|ngu hanh son|hai van quan|my son|son tra|ba na|cau rong)\b/.test(q);
+ if(!(explicit||inStation||ongoing)||(!explicit&&otherPlace))return null;
+ const history=/\b(?:lich su|gan voi|cuoc chien|tran danh|khang chien|chong phap|chong quan|gianh giu|nam 1858|nam 1859|nam 1860|bao ve que huong)\b/.test(q);
+ const importance=/\b(?:vi sao quan trong|tai sao quan trong|co y nghia gi|y nghia gi|dac biet the nao)\b/.test(q);
+ const followup=ongoing && /^(?:ke (?:em |minh )?nghe them(?: di| nhe)?|noi tiep di|con gi nua|tai sao vay|vi sao vay)$/.test(q);
+ // Founding/building dates are a different intent from the 1858–1860 battle.
+ if(/\b(?:xay|xay dung|hinh thanh|bat dau|khoi dau|ra doi)\b/.test(q)&&/\b(?:nam nao|lich su)\b/.test(q))return null;
+ if(/\b(?:duoc cong nhan|xep hang|di tich quoc gia nam nao)\b/.test(q))return null;
+ const sources=[DIEN_HAI_HISTORY_SOURCE,DIEN_HAI_CIVIC_SOURCE];
+ if(history||importance)
+  return makeResult('common',normalizeDanangDialect(rawQuery),
+   'Thành Điện Hải gắn với cuộc chiến đấu bảo vệ Đà Nẵng trước liên quân Pháp – Tây Ban Nha trong những năm **1858–1860**. Dưới sự chỉ huy của các tướng lĩnh, trong đó có **Nguyễn Tri Phương**, quân và dân ta đã kiên cường chống lại cuộc tấn công. Di tích nhắc chúng ta nhớ đến lòng yêu nước của cha ông. Em muốn biết những khẩu súng thần công được dùng làm gì không?','high',
+   {sources,topic:'Thành Điện Hải',relatedStationId:'g1-station-4',relatedStationTitle:'Thành Điện Hải'});
+ if(followup)
+  return makeResult('common',normalizeDanangDialect(rawQuery),
+   'Mình kể thêm nhé! Thành Điện Hải có tường thành, hào bảo vệ và những vị trí đặt súng đại bác. Những dấu tích còn lại giúp chúng ta hình dung cách cha ông bảo vệ Đà Nẵng ngày xưa. Khi tham quan, em nhớ quan sát và giữ gìn di tích nhé! 😊','high',
+   {sources:[DIEN_HAI_CIVIC_SOURCE],topic:'Thành Điện Hải',relatedStationId:'g1-station-4',relatedStationTitle:'Thành Điện Hải'});
+ return null;
+}
+
 export function retrieveDanangAssistantAnswer(rawQuery:string, context:AssistantRetrievalContext={}):AssistantRetrievalResult {
-  if(context.stage===2 && context.audience!=='teacher')return retrieveSingleAnswer(rawQuery,context);
   const query=rawQuery.trim().slice(0,context.audience==='teacher'?600:220);
+  // Child protection has precedence even when a challenge is on screen.
+  if(context.audience!=='teacher'){
+   const safety=childSafetyResponse(query);
+   if(safety)return safety;
+  }
+  if(context.stage===2 && context.audience!=='teacher')return retrieveSingleAnswer(query,context);
+  // Time-sensitive visit facts must be handled before fuzzy station passages.
+  const visitor=visitorInformationResponse(query,context);
+  if(visitor)return visitor;
+  const history=dienHaiHistoricalResponse(query,context);
+  if(history)return history;
   const friendly=friendlyStudentConversation(query,context);
   if(friendly)return friendly;
   const learning=handleLearningRequest(query,context);

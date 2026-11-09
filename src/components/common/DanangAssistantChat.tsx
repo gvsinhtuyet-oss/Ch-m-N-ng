@@ -381,11 +381,11 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
           aria-expanded={open}
           aria-controls="danang-assistant-panel"
           aria-describedby="assistant-drag-hint"
-          title="Bấm để trò chuyện · Giữ và kéo để di chuyển">
+          title={mobile ? "Chạm để trò chuyện" : "Bấm để trò chuyện · Giữ và kéo để di chuyển"}>
           <AssistantEmblem className={compactGame||mobile?'h-9 w-9':'h-12 w-12'}/>
         </button>
         {mobile && <span aria-hidden="true" className="pointer-events-none rounded-lg bg-sky-900 px-1.5 py-0.5 text-[10px] font-bold leading-tight text-white shadow-sm">Trợ lý</span>}
-        <span id="assistant-drag-hint" className="sr-only">Giữ và kéo biểu tượng để tránh che nội dung.</span>
+        <span id="assistant-drag-hint" className="sr-only">{mobile ? "Chạm để mở Trợ lý khám phá." : "Giữ và kéo biểu tượng để tránh che nội dung."}</span>
       </div>
 
       {measurementMounted && <Suspense fallback={null}><EffectivenessPanel key={storageScope} open={measurementOpen} audience={audience} grade={currentGrade || station?.grade || 2} scope={storageScope} initialTopic={messages.filter(message=>message.role==='assistant').at(-1)?.topic} onClose={()=>{setMeasurementOpen(false);setOpen(true);}} /></Suspense>}

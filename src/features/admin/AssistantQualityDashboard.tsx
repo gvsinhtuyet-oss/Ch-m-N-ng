@@ -72,6 +72,9 @@ export const AssistantQualityDashboard:React.FC=()=>{
   const routeTotal=scopeCases.filter(c=>c.check==='context').length;
   const routePass=scopeCases.filter(c=>c.check==='context'&&results[c.id]?.autoStatus==='pass').length;
   const completedRoute=scopeCases.filter(c=>c.check==='context'&&results[c.id]).length;
+  const evidenceTotal=scopeCases.filter(c=>c.check==='evidence').length;
+  const evidenceChecked=scopeCases.filter(c=>c.check==='evidence'&&results[c.id]).length;
+  const evidenceFound=scopeCases.filter(c=>c.check==='evidence'&&results[c.id]?.autoStatus==='review').length;
   const allCases=ASSISTANT_QUALITY_CASES;
   const inspectedStations=new Set(allCases.filter(c=>results[c.id]).map(c=>c.stationId)).size;
   const gradeStats=useMemo(()=>[1,2,3,4,5].map(gradeNumber=>{
@@ -159,6 +162,7 @@ export const AssistantQualityDashboard:React.FC=()=>{
       <p className="mt-2 text-sm text-slate-700">
         Chạy trực tiếp công cụ truy hồi nội bộ, không gọi AI/API và không ghi dữ liệu học sinh.
         Kiểm thử đúng tuyến 121 điểm khám phá chỉ là kiểm tra kỹ thuật.
+        Bộ đối chiếu bổ sung kiểm tra sự liên hệ giữa câu trả lời và lời thuyết minh ở đủ 121 điểm.
         Câu hỏi kiến thức, phương ngữ và hỗ trợ giáo viên vẫn cần được thẩm định thủ công.
       </p>
       <p className="mt-2 text-xs text-indigo-900">Kết quả kiểm định tự lưu tối đa 8 phiên trên trình duyệt Admin hiện tại. Không lưu lên máy chủ/Firestore; hãy xuất báo cáo JSON khi cần chuyển máy hoặc lưu hồ sơ lâu dài.</p>
@@ -242,6 +246,16 @@ export const AssistantQualityDashboard:React.FC=()=>{
         <div className="h-full bg-indigo-600" style={{width:(completedRoute?routePass/completedRoute*100:0)+'%'}}/>
       </div>
       <p className="text-xs text-slate-500">Có {routeTotal} ca theo bộ lọc. Đúng tuyến không xác nhận tính đúng đắn của kiến thức.</p>
+    </div>
+    <div className="rounded-2xl border bg-white p-4 sm:p-5 space-y-3">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h3 className="font-extrabold">Đối chiếu học liệu 121 điểm khám phá</h3>
+        <span className="font-bold text-amber-800">{evidenceFound}/{evidenceChecked} ca có đoạn bám học liệu</span>
+      </div>
+      <div className="h-2 overflow-hidden rounded-full bg-slate-100">
+        <div className="h-full bg-amber-500" style={{width:(evidenceChecked?evidenceFound/evidenceChecked*100:0)+'%'}}/>
+      </div>
+      <p className="text-xs text-slate-600">Có {evidenceTotal} điểm theo bộ lọc. Bài kiểm tra chỉ tìm đoạn nội dung có liên hệ với lời thuyết minh, không xác nhận nguồn gốc hay sự chính xác của dữ kiện. Các trường hợp khớp được đánh dấu <strong>Cần kiểm duyệt</strong>, không tự động công nhận đạt chuyên môn.</p>
     </div>
     <div className="rounded-2xl border bg-white p-4 sm:p-5 space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2">

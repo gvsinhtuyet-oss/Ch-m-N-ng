@@ -223,7 +223,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     return()=>document.removeEventListener('pointerdown',dismiss,true);
   },[open]);
 
-  const mobile=viewport.width<640;
+  const mobile=viewport.width<1024;
   const panelHeight=Math.min(mobile?viewport.height*.82:viewport.height*.78,mobile?680:620,viewport.height-24);
   const panelWidth=Math.min(400,viewport.width-24);
   const panelLeft=mobile?12:Math.max(12,Math.min(launcherPosition.x,viewport.width-panelWidth-12));
@@ -343,13 +343,13 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
   return (
     <>
-      <div ref={launcherRef} aria-hidden={open||measurementOpen||!!lessonPanel} className={`discovery-assistant fixed z-[58] pointer-events-none flex flex-col items-end justify-end select-none ${compactGame ? 'h-12 w-12' : 'h-[122px] w-[156px] gap-2'}`}
-        style={{left: launcherPosition.x, top: launcherPosition.y,visibility:open||measurementOpen||lessonPanel?'hidden':'visible'}}>
+      <div ref={launcherRef} aria-hidden={open||measurementOpen||!!lessonPanel} className={`discovery-assistant fixed z-[68] pointer-events-none flex flex-col items-end justify-end select-none ${mobile ? 'h-[78px] w-[68px] gap-1' : compactGame ? 'h-12 w-12' : 'h-[122px] w-[156px] gap-2'}`}
+        style={{...(mobile ? {right:'max(12px, env(safe-area-inset-right))',bottom:'max(18px, calc(env(safe-area-inset-bottom) + 12px))',left:'auto',top:'auto'} : {left:launcherPosition.x, top:launcherPosition.y}),visibility:open||measurementOpen||lessonPanel?'hidden':'visible'}}>
         <span className="sr-only">Trợ lý Khám phá</span>
         <button
           type="button"
           onPointerDown={event => {
-            if (!event.isPrimary || event.button !== 0) return;
+            if (mobile || !event.isPrimary || event.button !== 0) return;
             suppressClick.current = false;
             drag.current = {pointerId:event.pointerId, startX:event.clientX, startY:event.clientY, origin:launcherPosition};
             event.currentTarget.setPointerCapture(event.pointerId);
@@ -375,16 +375,17 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             audioService.playSfx('unlock');
             setOpen(value => !value);
           }}
-          style={{touchAction:'none', ...(compactGame ? {width:48,height:48} : {})}}
+          style={{touchAction:mobile?'manipulation':'none', ...(compactGame ? {width:48,height:48} : {})}}
           className={`discovery-chat-launcher pointer-events-auto relative inline-flex ${compactGame||mobile?'h-12 w-12':'h-16 w-16'} shrink-0 cursor-grab items-center justify-center overflow-hidden rounded-full border-2 border-white bg-gradient-to-br from-cyan-500 via-sky-600 to-sky-800 text-white shadow-[0_8px_24px_rgba(3,105,161,0.3)] transition-[box-shadow,transform] hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(3,105,161,0.4)] focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-sky-800 active:cursor-grabbing motion-reduce:transform-none`}
           aria-label={open ? 'Đóng Trợ lý khám phá Đà Nẵng' : 'Mở Trợ lý khám phá Đà Nẵng'}
           aria-expanded={open}
           aria-controls="danang-assistant-panel"
           aria-describedby="assistant-drag-hint"
-          title="Bấm để trò chuyện · Giữ và kéo để di chuyển">
+          title={mobile ? "Chạm để trò chuyện" : "Bấm để trò chuyện · Giữ và kéo để di chuyển"}>
           <AssistantEmblem className={compactGame||mobile?'h-9 w-9':'h-12 w-12'}/>
         </button>
-        <span id="assistant-drag-hint" className="sr-only">Giữ và kéo biểu tượng để tránh che nội dung.</span>
+        {mobile && <span aria-hidden="true" className="pointer-events-none rounded-lg bg-sky-900 px-1.5 py-0.5 text-[10px] font-bold leading-tight text-white shadow-sm">Trợ lý</span>}
+        <span id="assistant-drag-hint" className="sr-only">{mobile ? "Chạm để mở Trợ lý khám phá." : "Giữ và kéo biểu tượng để tránh che nội dung."}</span>
       </div>
 
       {measurementMounted && <Suspense fallback={null}><EffectivenessPanel key={storageScope} open={measurementOpen} audience={audience} grade={currentGrade || station?.grade || 2} scope={storageScope} initialTopic={messages.filter(message=>message.role==='assistant').at(-1)?.topic} onClose={()=>{setMeasurementOpen(false);setOpen(true);}} /></Suspense>}

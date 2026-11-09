@@ -14,7 +14,7 @@ test('dragged assistant stays fully visible on phone and desktop, including afte
   }
  }
 });
-test('round exploration launcher has an accessible label and exposes open state and touch drag',()=>{
+test('round exploration launcher stays visible and easy to tap on phones',()=>{
  const previous=(globalThis as any).window;
  (globalThis as any).window={innerWidth:390,innerHeight:844};
  try{
@@ -25,7 +25,9 @@ test('round exploration launcher has an accessible label and exposes open state 
   assert.match(html,/h-12 w-12/);
   assert.doesNotMatch(html,/discovery-robot|discovery-assistant-button|rounded-none/);
   assert.match(html,/aria-expanded="false"/);
-  assert.match(html,/touch-action:none/);
+  assert.match(html,/touch-action:manipulation/);
+  assert.match(html,/Trợ lý<\/span>/);
+  assert.match(html,/right:max\(12px/);
   assert.doesNotMatch(html,/group-hover:flex/);
  }finally{(globalThis as any).window=previous;}
 });

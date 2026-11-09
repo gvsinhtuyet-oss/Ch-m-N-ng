@@ -525,6 +525,8 @@ function dienHaiHistoricalResponse(rawQuery:string,context:AssistantRetrievalCon
  const history=/\b(?:lich su|gan voi|cuoc chien|tran danh|khang chien|chong phap|chong quan|gianh giu|nam 1858|nam 1859|nam 1860|bao ve que huong)\b/.test(q);
  const importance=/\b(?:vi sao quan trong|tai sao quan trong|co y nghia gi|y nghia gi|dac biet the nao)\b/.test(q);
  const followup=ongoing && /^(?:ke (?:em |minh )?nghe them(?: di| nhe)?|noi tiep di|con gi nua|tai sao vay|vi sao vay)$/.test(q);
+ // Founding/building dates are a different intent from the 1858–1860 battle.
+ if(/\b(?:xay|xay dung|hinh thanh|bat dau|khoi dau|ra doi)\b/.test(q)&&/\b(?:nam nao|lich su)\b/.test(q))return null;
  if(/\b(?:duoc cong nhan|xep hang|di tich quoc gia nam nao)\b/.test(q))return null;
  const sources=[DIEN_HAI_HISTORY_SOURCE,DIEN_HAI_CIVIC_SOURCE];
  if(history||importance)

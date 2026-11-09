@@ -115,6 +115,15 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
+  useEffect(()=>{
+    const openPage=(event:Event)=>{
+      const page=(event as CustomEvent<{page:string}>).detail?.page;
+      if(page==='assistant-qa'||page==='effectiveness'||page==='reports')navigate(page);
+    };
+    window.addEventListener('cham-admin-open-page',openPage);
+    return()=>window.removeEventListener('cham-admin-open-page',openPage);
+  },[activeTab,editorDirty]);
+
   return (
     <div className="cham-staff admin-workspace mx-auto grid max-w-[1500px] gap-4 px-3 py-4 sm:px-6 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-6 lg:py-6">
       <aside className="admin-sidebar self-start rounded-2xl border border-slate-200 bg-white p-2 shadow-sm lg:sticky lg:top-20">

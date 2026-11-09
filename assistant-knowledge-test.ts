@@ -183,3 +183,42 @@ test('comparison presents both sourced concepts and keeps challenge protection',
   }
  });
 
+
+
+test('students can chat warmly across turns without implying the assistant is human',()=>{
+ const greeting=ask('Chào bạn, mình muốn trò chuyện một chút!',{audience:'student'});
+ assert.equal(greeting.found,true);assert.match(greeting.answer,/Chào em|trò chuyện/);
+ assert.match(ask('Mình muốn tâm sự một chút',{audience:'student'}).answer,/lắng nghe/);
+ assert.match(ask('Hôm nay bạn thế nào?',{audience:'student'}).answer,/trợ lý ảo/);
+ assert.match(ask('Bạn có phải người thật không?',{audience:'student'}).answer,/không phải người thật/);
+ assert.match(ask('Em buồn quá',{audience:'student'}).answer,/bố mẹ|thầy cô/);
+ assert.match(ask('Em vui quá',{audience:'student'}).answer,/chuyện vui/);
+ assert.match(ask('Cảm ơn bạn',{audience:'student'}).answer,/Không có chi/);
+ assert.match(ask('Tạm biệt',{audience:'student'}).answer,/Hẹn gặp/);
+ const unclear=ask('Kể em nghe thêm đi',{audience:'student'});
+ assert.match(unclear.answer,/Em muốn nghe thêm về/);
+ assert.ok(!unclear.sources?.length);
+});
+
+test('outside-lesson science is gentle, cited, conversational and topic-safe',()=>{
+ const rainy=ask('Vì sao trời mưa?',{audience:'student',grade:2});
+ assert.equal(rainy.found,true);assert.equal(rainy.topic,'mưa');
+ assert.match(rainy.answer,/hơi nước|giọt nước/);
+ assert.ok(rainy.sources?.[0].url?.includes('noaa.gov'));
+ const detail=ask('Kể em nghe thêm đi',{audience:'student',previousTopic:rainy.topic,previousQuery:'Vì sao trời mưa?'});
+ assert.match(detail.answer,/vòng tuần hoàn nước/);assert.equal(detail.topic,'mưa');
+ const follow=ask('Nước trên mây từ đâu ra?',{audience:'student',previousTopic:rainy.topic});
+ assert.match(follow.answer,/bốc hơi/);assert.ok(follow.sources?.[0].url?.includes('nasa.gov'));
+ const rainbow=ask('Vì sao có cầu vồng?',{audience:'student',grade:2});
+ assert.match(rainbow.answer,/ánh nắng|giọt nước/);
+ assert.ok(rainbow.sources?.[0].url?.includes('noaa.gov'));
+ const more=ask('Nói tiếp đi',{audience:'student',previousTopic:rainbow.topic});
+ assert.match(more.answer,/hai cầu vồng/);
+ const offTopic=ask('Mặt trời cách Trái Đất bao xa?',{audience:'student'});
+ assert.equal(offTopic.found,false);
+ assert.doesNotMatch(offTopic.answer,/150 triệu km/);
+ const stage2=ask('Vì sao trời mưa?',{audience:'student',stage:2});
+ assert.equal(stage2.layer,'help');
+ assert.match(stage2.answer,/không chọn đáp án thay em/);
+});
+

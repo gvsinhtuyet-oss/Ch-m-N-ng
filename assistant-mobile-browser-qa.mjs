@@ -38,6 +38,12 @@ try {
     await page.click('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]');
     await page.waitForSelector('[role="dialog"][aria-label="Trợ lý khám phá Đà Nẵng"]',{visible:true,timeout:10000});
     assert.ok(await page.$('textarea[aria-label="Nhập câu hỏi"]'),name+' assistant question input missing');
+    const quickLabels=await page.evaluate(()=>[...document.querySelectorAll('[aria-label="Gợi ý hỏi tiếp theo"] button')].map(b=>b.textContent?.trim()));
+    assert.equal(quickLabels.length,3,name+' should show exactly 3 natural quick suggestions');
+    assert.ok(quickLabels.includes('San hô là con vật à?'),name+' missing friendly, grounded quick suggestion');
+    await page.evaluate(()=>[...document.querySelectorAll('[aria-label="Gợi ý hỏi tiếp theo"] button')].find(b=>b.textContent?.includes('San hô là con vật à?'))?.click());
+    await page.waitForFunction(()=>document.querySelector('[role="dialog"][aria-label="Trợ lý khám phá Đà Nẵng"]')?.textContent?.includes('động vật'),{timeout:12000});
+
     await page.type('textarea[aria-label="Nhập câu hỏi"]','San hô là động vật hay thực vật?');
     await page.click('button[aria-label="Gửi câu hỏi"]');
     await page.waitForSelector('button[aria-label="Nghe đọc câu trả lời"]',{visible:true,timeout:12000});

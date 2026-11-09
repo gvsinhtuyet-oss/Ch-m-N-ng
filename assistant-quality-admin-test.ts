@@ -88,3 +88,23 @@ test('mobile chatbot is not hidden by CSS and has a touch-safe visible launcher'
   assert.match(widget,/Trợ lý<\/span>/);
   assert.match(widget,/mobile \|\| !event\.isPrimary/);
 });
+
+
+test('four formerly flagged knowledge cases have sourced, grade-appropriate responses',()=>{
+  const expectations:ReadonlyArray<[string,RegExp,RegExp]>=[
+    ['fact-hoian-1999',/1999/,/Di sản thế giới|Di sản văn hóa thế giới/],
+    ['fact-culaoc-2009',/2009/,/dự trữ sinh quyển/],
+    ['fact-dienhai-1813',/1813.*1823/s,/đất.*gạch/s],
+    ['fact-vong-nuoc',/bốc hơi/,/ngưng tụ.*mưa/s],
+  ];
+  for(const [id,yearOrProcess,meaning] of expectations){
+    const question=ASSISTANT_QUALITY_CASES.find(x=>x.id===id);
+    assert.ok(question,'missing audit case '+id);
+    const result=evaluateAssistantQualityCase(question);
+    assert.equal(result.autoStatus,'review',id+': '+result.answer+' '+result.diagnostic);
+    assert.match(result.answer,yearOrProcess,id);
+    assert.match(result.answer,meaning,id);
+    assert.ok(result.sources.some(source=>source.url?.startsWith('https://')),id+' missing cited source');
+  }
+  // Flagging is technical only; even fully sourced facts still require educator review.
+});

@@ -1,3 +1,4 @@
+import {StudentAccessCards} from './StudentAccessCards';
 import React, { useEffect, useState } from 'react';
 import { authService, ManagedClass } from '../../services/AuthService';
 export const ClassRoster: React.FC = () => {
@@ -39,6 +40,7 @@ export const ClassRoster: React.FC = () => {
         <button className="rounded-xl bg-emerald-700 text-white px-5 py-3 font-bold">{busy?'Đang lưu…':selected?'Lưu danh sách':'Tạo lớp và lưu danh sách'}</button>
       </fieldset>
     </form>
+    {selected&&<StudentAccessCards key={selected+classes.find(c=>c.id===selected)?.students.join("|")} classId={selected} className={name}/>}
     {message && <p role="status" className="rounded-xl bg-slate-100 p-3">{message}</p>}
   </section>;
 };

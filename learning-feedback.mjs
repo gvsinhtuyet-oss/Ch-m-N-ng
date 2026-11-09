@@ -1,3 +1,4 @@
+import {resolveStudentSync} from './auth-server.mjs';
 import {randomBytes,createHash} from 'node:crypto';
 import {FEEDBACK_STATIONS} from './learning-feedback-catalog.mjs';
 const hash=x=>createHash('sha256').update(x).digest('hex');
@@ -32,7 +33,8 @@ export function createLearningFeedback({store,auth,secureCookie=true}) {
     if(data.syncCode) {
       const code=String(data.syncCode).toUpperCase().replace(/[^A-Z0-9]/g,'');
       if(code.length!==12)throw fail(401,'Mã đồng bộ học sinh chưa hợp lệ.');
-      const key=hash(code),saved=await store.get('cham_student_sync',key);
+      const resolved=await resolveStudentSync(store,hash(code));
+      const key=resolved?.key,saved=resolved?.saved;
       if(!saved?.profile)throw fail(401,'Không xác minh được tài khoản học sinh.');
       return {id:key,kind:'student'};
     }

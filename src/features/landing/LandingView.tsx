@@ -63,6 +63,13 @@ export const LandingView: React.FC = () => {
   const introFrameRef = useRef<HTMLIFrameElement | null>(null);
 
   const STUDENT_PROFILE_KEY = 'cham_danang_student_profile_v1';
+  useEffect(()=>{
+    const match=/^#student-code=([A-Z0-9-]{12,20})$/i.exec(window.location.hash);
+    if(!match)return;
+    setRestoreCode(match[1]);setGuestMode(false);setShowRolePicker(true);setShowStudentLogin(true);setIntroActive(false);
+    window.history.replaceState(null,'',window.location.pathname+window.location.search);
+  },[]);
+
 
   useEffect(() => {
     const refresh = () => setTheme(readTheme());
@@ -565,10 +572,10 @@ export const LandingView: React.FC = () => {
                   </div>
                 </div>
 
-                {!guestMode && <details className="rounded-xl border border-sky-100 bg-sky-50 p-3 text-slate-800">
-                  <summary className="cursor-pointer font-bold">Em đã có mã đồng bộ? Tiếp tục trên thiết bị khác</summary>
-                  <label className="block mt-3">Mã đồng bộ của em<input type="password" autoComplete="off" value={restoreCode} onChange={e=>setRestoreCode(e.target.value)} maxLength={20} className="block w-full mt-1 border rounded-xl p-3 bg-white" /></label>
-                  <p className="text-xs my-2">Giữ mã riêng, nhờ cô giáo hoặc phụ huynh hỗ trợ khi cần.</p>
+                {!guestMode && <details open className="rounded-xl border border-sky-100 bg-sky-50 p-3 text-slate-800">
+                  <summary className="cursor-pointer font-bold">Em có mã học sinh? Đăng nhập tại đây</summary>
+                  <label className="block mt-3">Mã học sinh hoặc mã đồng bộ cũ<input type="password" autoComplete="off" value={restoreCode} onChange={e=>setRestoreCode(e.target.value)} maxLength={20} className="block w-full mt-1 border rounded-xl p-3 bg-white" /></label>
+                  <p className="text-xs my-2">Nhập mã cô/thầy đã cấp. Không cần nhập lại tên, lớp hoặc mật khẩu. Mã đồng bộ cũ vẫn dùng được.</p>
                   <button type="button" disabled={restoreBusy || !restoreCode.trim()} onClick={async()=>{
                     if(restoreBusy)return;setRestoreBusy(true);setLoginError('');
                     try{
@@ -581,7 +588,7 @@ export const LandingView: React.FC = () => {
                       loginAsStudent({...DEMO_STUDENTS[0],...profile,studentCode:profile.id,displayName:profile.name,classId:`class-${profile.className.replace('/','-')}`,isGuest:false});
                       setRestoreCode('');setShowRolePicker(false);
                     }catch(error){setLoginError((error as Error).message);}finally{setRestoreBusy(false);}
-                  }} className="rounded-xl bg-sky-700 text-white px-4 py-2 font-bold disabled:opacity-50">{restoreBusy?'Đang khôi phục…':'Khôi phục hành trình'}</button>
+                  }} className="rounded-xl bg-sky-700 text-white px-4 py-2 font-bold disabled:opacity-50">{restoreBusy?'Đang mở hồ sơ…':'Vào học bằng mã'}</button>
                   {loginError && <p role="alert" className="mt-2 text-rose-700">{loginError}</p>}
                 </details>}
 
@@ -589,6 +596,7 @@ export const LandingView: React.FC = () => {
                   <div className="animate-in fade-in slide-in-from-top-2 duration-200 space-y-4 rounded-2xl border border-sky-100 bg-sky-50/60 p-4 sm:p-5">
                     <>
                         <div>
+                          <p className="font-bold text-sky-900 mb-3">Chưa có mã? Tạo hồ sơ khám phá cá nhân</p>
                           <label className="font-bold text-slate-700 block mb-2">
                             Lớp cụ thể của em
                           </label>
@@ -649,7 +657,7 @@ export const LandingView: React.FC = () => {
                       </>
 
                     <div className="rounded-xl bg-white/90 border border-sky-100 px-3 py-2.5 text-[10px] text-sky-800 leading-relaxed">
-                      App sẽ ghi nhớ tên, lớp và tiến độ của em trên thiết bị này. Dữ liệu đồng bộ được xử lý tự động, em không cần nhập mã.
+                      Đây là hồ sơ khám phá cá nhân. Nếu cô/thầy đã cấp mã, hãy dùng mục “Vào học bằng mã” phía trên để vào đúng hồ sơ của lớp, tránh tạo hồ sơ trùng.
                     </div>
 
                     {loginError && (

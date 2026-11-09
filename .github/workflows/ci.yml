@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main, feature/gddp-teacher-2026-2027]
+    branches: [main, feature/gddp-teacher-2026-2027, deploy/cloudflare-preserve-api-20261028]
   pull_request:
     branches: [main, deploy/cloudflare-preserve-api-20261028]
 
@@ -47,7 +47,7 @@ jobs:
         run: node --check auth-server.mjs && node --check content-server.mjs && node --check content-storage.mjs
 
       - name: Production packaging and database isolation tests
-        run: node --test deployment-test.mjs production-api-test.mjs
+        run: node --test deployment-test.mjs production-api-test.mjs student-access-test.mjs
 
       - name: Student reconnect and pending-sync tests
         run: node --test student-sync-test.cjs

@@ -5,7 +5,7 @@ import {getCuratedGddpLink,textbookReviewStatus} from './gddp-curriculum-links.m
 import { isDeepStrictEqual } from 'node:util';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'node:http';
-import { createAuth, firestoreStoreWithFallback } from './auth-server.mjs';
+import { createAuth, firestoreStoreWithFallback,createStudentAccess,resolveStudentSync } from './auth-server.mjs';
 import { contentStorage } from './content-storage.mjs';
 import { firestoreConfiguration } from './deployment-config.mjs';
 import { GDDP_COLLECTION, GDDP_DOCUMENT, GDDP_YEAR, cleanGddpCatalog } from './gddp-catalog.mjs';
@@ -29,6 +29,7 @@ const auth = createAuth({
   adminEmail: process.env.AUTH_ADMIN_EMAIL, adminPassword: process.env.AUTH_ADMIN_PASSWORD,
   secureCookie: process.env.AUTH_LOCAL_HTTP !== 'true' || !!process.env.K_SERVICE,
 });
+const studentAccess=createStudentAccess({store:cloudStore,auth});
 const learningFeedback = createLearningFeedback({store:cloudStore,auth,secureCookie:process.env.AUTH_LOCAL_HTTP !== 'true' || !!process.env.K_SERVICE});
 const educationAssistant = createEducationAssistant({auth,generate:async(input)=>{
   const {GoogleGenAI}=await import('@google/genai');
@@ -396,6 +397,7 @@ const server = createServer(async (req,res) => {
       const current = await loadSharedContent();
       return json(res,200,{ schemaVersion:1,...current });
     }
+    if(await studentAccess(req,res,pathname,body,json))return;
     if (pathname === '/api/student/sync/register' && req.method === 'POST') {
       if (!cloudStore) return json(res,503,{error:'Đồng bộ học sinh chưa được cấu hình trên máy chủ.'});
       auth.sameOrigin(req);
@@ -417,7 +419,8 @@ const server = createServer(async (req,res) => {
       auth.sameOrigin(req);
       const data=await body(req), code=cleanSyncCode(data.syncCode);
       if(code.length!==12) return json(res,400,{error:'Mã đồng bộ chưa đúng.'});
-      const saved=await cloudStore.get('cham_student_sync',studentSyncKey(code));
+      const resolved=await resolveStudentSync(cloudStore,studentSyncKey(code));
+      const saved=resolved?.saved;
       if(!saved?.profile) return json(res,404,{error:'Không tìm thấy mã đồng bộ.'});
       return json(res,200,{profile:saved.profile,progress:saved.progress || {}});
     }
@@ -427,7 +430,8 @@ const server = createServer(async (req,res) => {
       const data=await body(req), code=cleanSyncCode(data.syncCode);
       if(code.length!==12 || !data.progress || typeof data.progress!=='object' || Array.isArray(data.progress))
         return json(res,400,{error:'Dữ liệu đồng bộ chưa hợp lệ.'});
-      const key=studentSyncKey(code), saved=await cloudStore.get('cham_student_sync',key);
+      const resolved=await resolveStudentSync(cloudStore,studentSyncKey(code));
+      const key=resolved?.key,saved=resolved?.saved;
       if(!saved?.profile || !validStudentProfile(saved.profile)) return json(res,404,{error:'Không tìm thấy mã đồng bộ.'});
       const incomingEntries=Object.entries(data.progress);
       if(incomingEntries.length>30) return json(res,400,{error:'Có quá nhiều bản ghi tiến độ.'});

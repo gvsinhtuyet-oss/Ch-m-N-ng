@@ -2,6 +2,79 @@ import {googleClientId,verifyGoogleCredential,newGoogleChallenge} from './google
 import {cleanGddpCatalog} from './gddp-catalog.mjs';
 import { randomBytes, createHash, scrypt as scryptCallback, timingSafeEqual } from 'node:crypto';
 import { promisify } from 'node:util';
+
+// Teacher-issued learner identities and code rotation share the auth boundary.
+export const {rosterAccessId,rosterSlots,resolveStudentSync,createStudentAccess}=(()=>{
+const hash=v=>createHash('sha256').update(v).digest('hex');
+const norm=v=>String(v||'').trim().replace(/\s+/g,' ').normalize('NFC').toLocaleLowerCase('vi');
+const clean=v=>String(v||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+const fail=(status,message)=>Object.assign(Error(message),{status});
+const newCode=()=>{const alphabet='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';return [...randomBytes(12)].map(b=>alphabet[b%32]).join('').match(/.{4}/g).join('-');};
+function rosterAccessId(classId,name,occurrence){return hash(classId+':'+norm(name)+':'+occurrence);}
+function rosterSlots(classroom){
+ const counts=new Map();return classroom.students.map((name,index)=>{const key=norm(name),occurrence=counts.get(key)||0;counts.set(key,occurrence+1);return {id:rosterAccessId(classroom.id,name,occurrence),name,index,occurrence};});
+}
+// Codes only locate a stable progress document. Rotating a code never copies or
+// resets progress, and old codes are rejected even if a browser kept them.
+async function resolveStudentSync(store,key){
+ const saved=await store.get('cham_student_sync',key);if(!saved?.profile)return null;
+ if(!saved.accessId)return {key,saved};
+ const access=await store.get('cham_student_access',saved.accessId);
+ if(!access||access.activeKey!==key)return null;
+ const canonical=access.canonicalKey===key?saved:await store.get('cham_student_sync',access.canonicalKey);
+ if(!canonical?.profile||canonical.accessId!==saved.accessId)return null;
+ return {key:access.canonicalKey,saved:canonical};
+}
+function createStudentAccess({store,auth}){
+ return async function handle(req,res,pathname,body,json){
+  if(pathname!=='/api/teacher/student-access')return false;
+  const staff=await auth.requireTeacher(req);
+  if(!['GET','POST'].includes(req.method))throw fail(405,'Phương thức không hỗ trợ.');
+  if(req.method==='POST')auth.sameOrigin(req);
+  const data=req.method==='GET'?Object.fromEntries(new URL(req.url,'https://app.local').searchParams):await body(req);
+  if(!/^[a-f0-9]{64}$/.test(data.classId||''))throw fail(400,'Vui lòng chọn lớp.');
+  const classroom=await store.get('cham_classes',data.classId);
+  if(!classroom)throw fail(404,'Không tìm thấy lớp.');
+  if(staff.role!=='admin'&&classroom.teacherId!==staff.id)throw fail(403,'Bạn chỉ được quản lý học sinh của lớp mình.');
+  const slots=rosterSlots(classroom);
+  if(req.method==='GET'){
+   const students=await Promise.all(slots.map(async slot=>{const access=await store.get('cham_student_access',slot.id);return {...slot,issued:!!access?.activeKey,studentId:access?.profile?.id||null};}));
+   json(res,200,{students});return true;
+  }
+  const slot=slots.find(s=>s.id===data.studentId);if(!slot)throw fail(404,'Học sinh không còn trong danh sách lớp. Hãy tải lại.');
+  if(!['issue','rotate','adopt'].includes(data.action))throw fail(400,'Thao tác chưa hợp lệ.');
+  let access=await store.get('cham_student_access',slot.id);
+  if(data.action==='issue'&&access?.activeKey)throw fail(409,'Em đã có mã. Dùng mã đã cấp hoặc chọn Cấp lại mã.');
+  if(data.action==='rotate'&&!access?.activeKey)throw fail(409,'Em chưa có mã để cấp lại.');
+  if(data.action==='adopt'&&access?.activeKey)throw fail(409,'Em đã có hồ sơ. Không tự gộp tiến độ; vui lòng liên hệ quản trị.');
+  let canonicalKey=access?.canonicalKey,profile=access?.profile,code,key;
+  if(data.action==='adopt'){
+   code=clean(data.syncCode);if(code.length!==12)throw fail(400,'Mã cũ cần đủ 12 ký tự.');key=hash(code);
+   const old=await store.get('cham_student_sync',key);
+   if(!old?.profile||old.accessId)throw fail(409,'Mã không tồn tại hoặc đã thuộc một hồ sơ được quản lý.');
+   if(norm(old.profile.name)!==norm(slot.name)||old.profile.grade!==classroom.grade||norm(old.profile.className)!==norm(classroom.name))throw fail(400,'Tên, khối và lớp của mã cũ không khớp. Không ghép hồ sơ.');
+   try{await store.put('cham_student_claims',key,{accessId:slot.id},true);}catch(e){if(e.status!==409)throw e;const claim=await store.get('cham_student_claims',key);if(claim?.accessId!==slot.id)throw fail(409,'Mã cũ đã được liên kết với một học sinh khác.');}
+   profile=old.profile;canonicalKey=key;
+   await store.put('cham_student_sync',key,{...old,accessId:slot.id});
+  }else{
+   for(let n=0;n<6;n++){code=newCode();key=hash(clean(code));if(!await store.get('cham_student_sync',key))break;key=null;}
+   if(!key)throw fail(503,'Chưa cấp được mã, vui lòng thử lại.');
+   if(!canonicalKey){
+    canonicalKey=hash('managed-student:'+slot.id);
+    profile={id:'student-'+slot.id,name:slot.name,className:classroom.name,grade:classroom.grade};
+    try{await store.put('cham_student_sync',canonicalKey,{profile,progress:{},accessId:slot.id,createdAt:Date.now(),updatedAt:Date.now()},true);}catch(e){if(e.status!==409)throw e;const existing=await store.get('cham_student_sync',canonicalKey);if(existing?.accessId!==slot.id)throw fail(409,'Hồ sơ vừa thay đổi. Hãy tải lại.');profile=existing.profile;}
+   }
+   await store.put('cham_student_sync',key,{profile,accessId:slot.id,managedRef:canonicalKey},true);
+  }
+  access={id:slot.id,classId:classroom.id,teacherId:classroom.teacherId,profile,canonicalKey,activeKey:key,updatedAt:Date.now()};
+  await store.put('cham_student_access',slot.id,access);
+  await store.put('cham_teacher_progress_links',hash(classroom.id+':'+canonicalKey),{classId:classroom.id,syncKey:canonicalKey,name:slot.name,studentId:profile.id,linkedAt:Date.now()});
+  json(res,200,{syncCode:code,profile,studentId:slot.id});return true;
+ };
+}
+
+return {rosterAccessId,rosterSlots,resolveStudentSync,createStudentAccess};
+})();
 const scrypt = promisify(scryptCallback);
 const hash = value => createHash('sha256').update(value).digest('hex');
 const emailOf = value => typeof value === 'string' ? value.trim().toLowerCase() : '';
@@ -428,8 +501,9 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       if(req.method==='POST') {
         const code=String(data.syncCode||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
         if(!/^[A-Z0-9]{12}$/.test(code)) throw fail(400,'Mã đồng bộ chưa hợp lệ.');
-        const key=hash(code);
-        const saved=await store.get('cham_student_sync',key);
+        const resolved=await resolveStudentSync(store,hash(code));
+        const key=resolved?.key,saved=resolved?.saved;
+        if(saved?.accessId){const access=await store.get('cham_student_access',saved.accessId);if(access?.classId!==id)throw fail(403,'Mã này thuộc lớp khác.');}
         if(!saved?.profile) throw fail(404,'Không tìm thấy mã học sinh.');
         const student=saved.profile;
         if(student.grade!==classroom.grade || norm(student.className)!==norm(classroom.name) ||
@@ -482,6 +556,13 @@ export function createAuth({ store, adminEmail, adminPassword, secureCookie=true
       if(req.method === 'POST' && existing) throw fail(409,'Lớp đã tồn tại. Chọn lớp để cập nhật danh sách.');
       if(req.method === 'PUT' && !existing) throw fail(404,'Không tìm thấy lớp.');
       const names=data.students.map(n=>n.trim());
+      if(existing){
+        const nextIds=new Set(rosterSlots({...existing,students:names}).map(s=>s.id));
+        for(const slot of rosterSlots(existing)){
+          if(!nextIds.has(slot.id)&&(await store.get('cham_student_access',slot.id))?.activeKey)
+            throw fail(409,'Không xóa hoặc đổi tên em đã có mã bằng danh sách này. Giữ nguyên hồ sơ để bảo toàn tiến độ.');
+        }
+      }
       const classroom={id,name:data.name,grade:data.grade,academicYear:data.academicYear,
         teacherId:existing?.teacherId || staff.id,teacherName:existing?.teacherName || staff.name,
         students:names,totalStudents:names.length,updatedAt:Date.now()};

@@ -66,6 +66,34 @@ for (const runtime of (productionRoot?['production']:['production','vite'])) tes
  const report=await call('/api/teacher/progress?classId='+id,'GET',undefined,teacher.cookie);assert.equal(report.data.linkedCount,1);assert.equal(report.data.students[0].completedStations,1);
  assert.equal((await call('/api/teacher/classes','PUT',{...roster,students:[...roster.students,'Bạn giả lập thứ hai']},teacher.cookie)).status,200);
  assert.equal((await call('/api/teacher/classes','GET',undefined,teacher.cookie)).data.classes[0].totalStudents,2);
+
+ // Teacher-issued access: legacy adoption, unique identities for duplicate names,
+ // automatic class reporting, rotation without lost progress and revoked writes.
+ const accessPath='/api/teacher/student-access';
+ assert.equal((await call(accessPath+'?classId='+id)).status,401);
+ let rosterAccess=await call(accessPath+'?classId='+id,'GET',undefined,teacher.cookie);
+ assert.equal(rosterAccess.data.students.length,2);
+ const firstSlot=rosterAccess.data.students[0].id,secondSlot=rosterAccess.data.students[1].id;
+ const adopted=await call(accessPath,'POST',{classId:id,studentId:firstSlot,action:'adopt',syncCode},teacher.cookie);
+ assert.equal(adopted.status,200);assert.equal(adopted.data.profile.id,'synthetic-student');
+ assert.equal((await call('/api/student/sync/restore','POST',{syncCode})).data.progress['hoi-an'].stationCompleted,true);
+ const issued=await call(accessPath,'POST',{classId:id,studentId:secondSlot,action:'issue'},teacher.cookie);
+ assert.equal(issued.status,200);const newCode=issued.data.syncCode,newStudentId=issued.data.profile.id;
+ assert.equal((await call(accessPath,'POST',{classId:id,studentId:secondSlot,action:'issue'},teacher.cookie)).status,409);
+ assert.equal((await call('/api/student/sync/progress','PUT',{syncCode:newCode,progress})).status,200);
+ const rotated=await call(accessPath,'POST',{classId:id,studentId:secondSlot,action:'rotate'},teacher.cookie);
+ assert.equal(rotated.status,200);assert.equal(rotated.data.profile.id,newStudentId);
+ assert.equal((await call('/api/student/sync/restore','POST',{syncCode:newCode})).status,404);
+ assert.equal((await call('/api/student/sync/progress','PUT',{syncCode:newCode,progress})).status,404);
+ const restoredManaged=await call('/api/student/sync/restore','POST',{syncCode:rotated.data.syncCode});
+ assert.equal(restoredManaged.data.profile.id,newStudentId);assert.equal(restoredManaged.data.progress['hoi-an'].stationCompleted,true);
+ const managedReport=await call('/api/teacher/progress?classId='+id,'GET',undefined,teacher.cookie);
+ assert.equal(managedReport.data.linkedCount,2);assert.equal(managedReport.data.students[1].completedStations,1);
+ assert.equal((await call('/api/teacher/classes','PUT',{...roster,students:['Học sinh giả lập']},teacher.cookie)).status,409);
+ assert.equal((await call('/api/teacher/classes','PUT',{...roster,students:['Bạn giả lập thứ hai','Học sinh giả lập']},teacher.cookie)).status,200);
+ rosterAccess=await call(accessPath+'?classId='+id,'GET',undefined,teacher.cookie);
+ assert.equal(rosterAccess.data.students[0].id,secondSlot);assert.equal(rosterAccess.data.students[0].issued,true);
+ assert.ok(!JSON.stringify(rosterAccess.data).includes(rotated.data.syncCode));
  // Server-side teaching logs and proposals, including author and class isolation.
  const implementation={classId:id,grade:2,stationId:'hoi-an',stationName:'Hội An',implementationDate:'2026-10-09',session:'Tiết 1',method:'Dạy trực tiếp trên lớp',note:'Lớp học thử',teacherId:'spoofed-id',teacherName:'Giả mạo'};
  assert.equal((await call('/api/teacher/implementations','POST',implementation)).status,401);
@@ -83,6 +111,10 @@ for (const runtime of (productionRoot?['production']:['production','vite'])) tes
  assert.equal((await call('/api/admin/users','POST',{email:'second@example.com',name:'GV thứ hai',password:'Synthetic-second-password-42'},admin.cookie)).status,200);
  const second=await call('/api/auth/login','POST',{email:'second@example.com',password:'Synthetic-second-password-42'});
  assert.equal((await call('/api/teacher/implementations','POST',implementation,second.cookie)).status,403);
+ assert.equal((await call(accessPath+'?classId='+id,'GET',undefined,second.cookie)).status,403);
+ assert.equal((await call(accessPath,'POST',{classId:id,studentId:secondSlot,action:'rotate'},second.cookie)).status,403);
+ assert.equal((await call('/api/admin/users','GET',undefined,teacher.cookie)).status,403);
+
  assert.equal((await call('/api/teacher/implementations','GET',undefined,second.cookie)).data.records.length,0);
  assert.equal((await call('/api/teacher/proposals','GET',undefined,second.cookie)).data.records.length,0);
  assert.equal((await call('/api/auth/logout','POST',{},teacher.cookie)).status,200);

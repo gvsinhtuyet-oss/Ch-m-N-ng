@@ -63,7 +63,7 @@ const MAX_VISIBLE_MESSAGES = 10;
 // Do not retain private details in pupil chat bubbles, screenshots or
 // the in-memory turn history. Question processing remains entirely local.
 export function maskStudentPrivateQuestion(question:string):string {
- const normalized=question.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').toLowerCase();
+ const normalized=question.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/đ/g,'d');
  if(/\b(?:dia chi nha|so dien thoai|so di dong|mat khau|password|ma otp|can cuoc|cccd|ten that cua em|ten day du cua em)\b/.test(normalized))
   return 'Em đã nhập thông tin riêng tư (đã ẩn để bảo vệ em).';
  return question;

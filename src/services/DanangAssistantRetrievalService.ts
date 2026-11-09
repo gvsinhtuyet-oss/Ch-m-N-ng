@@ -401,9 +401,72 @@ const topicCards = (query:string) => {
 };
 const followUpRequest = (q:string) => /^(?:(?:vay|the|rua|con) )?(?:no |dieu do |cai do |noi nay |tro nay )?(?:cho vi du|vi du|noi (?:ro|them|don gian|de hieu)|giai thich (?:them|ro|don gian)|de hieu hon|day (?:the nao|ra sao)|ap dung|goi y (?:bai day|hoat dong)|co y nghia gi|o dau|cach choi|choi the nao|choi ra sao|vi sao|tai sao)\b/.test(q);
 
+/**
+ * Friendly, bounded conversation for primary-school pupils.
+ * The assistant does not claim human feelings or invent answers to open-domain
+ * questions. The science mini-lessons below cite reviewed public sources.
+ */
+function friendlyStudentConversation(rawQuery:string,context:AssistantRetrievalContext):AssistantRetrievalResult|null {
+ const q=normalizeForSearch(rawQuery).replace(/^(?:ban oi|tro ly oi) /,'').trim();
+ const reply=(answer:string,extra:Partial<AssistantRetrievalResult>={})=>
+  makeResult('common',normalizeDanangDialect(rawQuery),answer,'high',extra);
+ if(/^(?:xin chao|chao|hello|hi)(?: ban| tro ly| minh| em)?(?: minh muon (?:noi chuyen|tro chuyen|tam su)(?: mot chut)?)?$/.test(q)){
+  return reply('Chào em! Rất vui được trò chuyện cùng em. Hôm nay em muốn kể chuyện vui, hỏi một điều mới, hay khám phá Đà Nẵng nhỉ? 😊');
+ }
+ if(/^(?:(?:minh|em) muon )?(?:noi chuyen|tro chuyen|tam su)(?: voi ban| mot chut| nhe| di)?$/.test(q)){
+  return reply('Được chứ! Mình đang lắng nghe nè. Hôm nay em có chuyện gì thú vị muốn kể không?');
+ }
+ if(/^(?:cam on|cam on ban|cam on nhe|thank you|thanks)(?: rat nhieu| nha| nhe| a)?$/.test(q)){
+  return reply('Không có chi đâu! 😊 Em còn tò mò điều gì nữa không?');
+ }
+ if(/^(?:tam biet|bye|goodbye|hen gap lai|chao tam biet)(?: ban| nhe| nha)?$/.test(q)){
+  return reply('Hẹn gặp lại em nhé! Chúc em có thêm nhiều điều vui để khám phá hôm nay. 👋');
+ }
+ if(/^(?:ban la ai|ban co phai nguoi that|ban la nguoi hay may|ban co phai robot)(?: khong)?$/.test(q)){
+  return reply('Mình là Trợ lý khám phá, một chương trình trò chuyện giúp em tìm hiểu và ôn bài. Mình không phải người thật đâu. Em muốn mình kể về điều gì?');
+ }
+ if(/^(?:ban (?:co khoe|khoe|the nao|co vui|dang lam gi)|hom nay ban (?:the nao|co vui khong|khoe khong))(?: khong)?$/.test(q)){
+  return reply('Mình là trợ lý ảo nên không có một ngày giống em, nhưng mình luôn sẵn sàng giúp em tìm hiểu điều mới. Hôm nay em thế nào?');
+ }
+ if(/^(?:em|minh|toi) (?:buon|dang buon|lo lang|dang lo lang|so|dang so|chan qua|co chuyen buon)(?: lam| qua| qua di)?$/.test(q)){
+  return reply('Mình nghe em nè. Có chuyện gì làm em buồn hoặc lo không? Nếu cần, em có thể kể với bố mẹ hay thầy cô mà em tin tưởng nhé.');
+ }
+ if(/^(?:em|minh|toi) (?:vui|dang vui|vui qua|rat vui|co chuyen vui)(?: lam| qua)?$/.test(q)){
+  return reply('Nghe có chuyện vui rồi nè! ✨ Em muốn kể mình nghe điều gì vừa xảy ra không?');
+ }
+ if(/^(?:vi sao|tai sao) (?:troi (?:lai )?mua|co mua)|mua tu dau ra|mua la gi|vi sao co mua)$/.test(q)){
+  return reply('Em thử nhìn những đám mây nhé! Hơi nước gặp lạnh tạo thành các giọt nước nhỏ. Khi các giọt kết hợp lại và đủ nặng, chúng rơi xuống thành mưa. Em có muốn biết nước trên mây đến từ đâu không? ☁️',{
+   topic:'mưa',sources:[{label:'NOAA – What Makes It Rain?',url:'https://www.nesdis.noaa.gov/about/k-12-education/atmosphere/what-makes-it-rain'}],
+  });
+ }
+ if(/^(?:vi sao|tai sao) (?:co )?cau vong|cau vong (?:la gi|hinh thanh the nao|tu dau ra)|sao co cau vong)$/.test(q)){
+  return reply('Cầu vồng xuất hiện khi ánh nắng đi qua những giọt nước trong không khí và tách thành nhiều màu. Em thường thấy cầu vồng sau mưa phải không? 🌈',{
+   topic:'cầu vồng',sources:[{label:'NOAA – What Causes a Rainbow?',url:'https://www.nesdis.noaa.gov/about/k-12-education/optical-phenomena/what-causes-rainbow'}],
+  });
+ }
+ if(/^(?:nuoc tren may (?:tu dau ra|den tu dau)|hoi nuoc (?:tu dau ra|den tu dau))$/.test(q)&&context.previousTopic==='mưa'){
+  return reply('Nắng làm nước ở biển, sông, hồ bốc hơi lên không khí. Hơi nước gặp lạnh ngưng tụ thành mây. Khi giọt nước đủ nặng, mưa lại rơi xuống. Em có muốn thử kể lại ba bước này không?',{
+   topic:'mưa',sources:[{label:'NASA – The Water Cycle',url:'https://science.nasa.gov/kids/earth/what-is-the-water-cycle/'}],
+  });
+ }
+ if(/^(?:ke (?:em |minh )?nghe them(?: di| nhe)?|noi tiep di|noi them (?:di|nhe)|con gi nua khong)$/.test(q)){
+  if(context.previousTopic==='mưa')return reply('Có một điều thú vị nè: nước mưa rơi xuống đất, chảy về sông biển, rồi lại có thể bốc hơi để tạo mây. Quá trình này gọi là vòng tuần hoàn nước. Em có muốn thử kể lại không?',{
+   topic:'mưa',sources:[{label:'NASA – The Water Cycle',url:'https://science.nasa.gov/kids/earth/what-is-the-water-cycle/'}]});
+  if(context.previousTopic==='cầu vồng')return reply('Thêm một điều thú vị: đôi khi em có thể thấy hai cầu vồng cùng lúc đấy! Những giọt nước và ánh sáng tạo nên cảnh tượng này. Em đã từng nhìn thấy chưa?',{
+   topic:'cầu vồng',sources:[{label:'NOAA – What Causes a Rainbow?',url:'https://www.nesdis.noaa.gov/about/k-12-education/optical-phenomena/what-causes-rainbow'}]});
+  if(!context.previousTopic&&!context.station)return reply('Được chứ! Em muốn nghe thêm về thiên nhiên, con vật, hay một địa danh ở Đà Nẵng nào?');
+ }
+ if(/^(?:em chua hieu|minh chua hieu|khong hieu|giai thich lai di|noi lai di)(?: nhe| nha)?$/.test(q)){
+  return reply('Không sao, mình có thể nói ngắn và dễ hơn. Em muốn mình giải thích lại điều nào nhỉ?'+(context.previousTopic?' Có phải về '+context.previousTopic+' không?':''),{topic:context.previousTopic});
+ }
+ return null;
+}
+
 export function retrieveDanangAssistantAnswer(rawQuery:string, context:AssistantRetrievalContext={}):AssistantRetrievalResult {
   if(context.stage===2 && context.audience!=='teacher')return retrieveSingleAnswer(rawQuery,context);
   const query=rawQuery.trim().slice(0,context.audience==='teacher'?600:220);
+  const friendly=friendlyStudentConversation(query,context);
+  if(friendly)return friendly;
   const learning=handleLearningRequest(query,context);
   if(learning)return learning;
   return adaptLearningResult(retrieveLegacyAnswer(query,context),query,context);

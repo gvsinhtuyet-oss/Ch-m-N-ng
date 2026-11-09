@@ -54,14 +54,14 @@ function createStudentAccess({store,auth}){
    if(!old?.profile||old.accessId)throw fail(409,'Mã không tồn tại hoặc đã thuộc một hồ sơ được quản lý.');
    if(norm(old.profile.name)!==norm(slot.name)||old.profile.grade!==classroom.grade||norm(old.profile.className)!==norm(classroom.name))throw fail(400,'Tên, khối và lớp của mã cũ không khớp. Không ghép hồ sơ.');
    try{await store.put('cham_student_claims',key,{accessId:slot.id},true);}catch(e){if(e.status!==409)throw e;const claim=await store.get('cham_student_claims',key);if(claim?.accessId!==slot.id)throw fail(409,'Mã cũ đã được liên kết với một học sinh khác.');}
-   profile=old.profile;canonicalKey=key;
-   await store.put('cham_student_sync',key,{...old,accessId:slot.id});
+   profile={...old.profile,classId:classroom.id};canonicalKey=key;
+   await store.put('cham_student_sync',key,{...old,profile,accessId:slot.id});
   }else{
    for(let n=0;n<6;n++){code=newCode();key=hash(clean(code));if(!await store.get('cham_student_sync',key))break;key=null;}
    if(!key)throw fail(503,'Chưa cấp được mã, vui lòng thử lại.');
    if(!canonicalKey){
     canonicalKey=hash('managed-student:'+slot.id);
-    profile={id:'student-'+slot.id,name:slot.name,className:classroom.name,grade:classroom.grade};
+    profile={id:'student-'+slot.id,name:slot.name,className:classroom.name,grade:classroom.grade,classId:classroom.id};
     try{await store.put('cham_student_sync',canonicalKey,{profile,progress:{},accessId:slot.id,createdAt:Date.now(),updatedAt:Date.now()},true);}catch(e){if(e.status!==409)throw e;const existing=await store.get('cham_student_sync',canonicalKey);if(existing?.accessId!==slot.id)throw fail(409,'Hồ sơ vừa thay đổi. Hãy tải lại.');profile=existing.profile;}
    }
    await store.put('cham_student_sync',key,{profile,accessId:slot.id,managedRef:canonicalKey},true);

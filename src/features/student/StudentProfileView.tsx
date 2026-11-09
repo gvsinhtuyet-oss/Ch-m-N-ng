@@ -36,12 +36,12 @@ export const StudentProfileView: React.FC = () => {
             <h2 className="text-xl sm:text-2xl font-black text-slate-900">
               {student?.displayName || student?.name || 'Học sinh khám phá'}
             </h2>
-            <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black uppercase tracking-wide">
-              Dữ liệu minh họa
+            <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-wide">
+              {student?.isGuest ? 'Khám phá tự do' : /^student-[a-f0-9]{64}$/.test(student?.id || '') ? 'Hồ sơ lớp học' : 'Hành trình cá nhân cũ'}
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-0.5">
-            Mã định danh: {student?.studentCode || 'HS_DEMO_2026'} • Lớp {student?.className || `Khối ${currentGrade}`}
+            Lớp {student?.className || `Khối ${currentGrade}`} · Khối {currentGrade}
           </p>
         </div>
 

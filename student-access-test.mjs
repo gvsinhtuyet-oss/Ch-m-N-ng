@@ -1,6 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {createStudentAccess,resolveStudentSync,rosterSlots} from './auth-server.mjs';
 import {createHash} from 'node:crypto';
+import {readFileSync} from 'node:fs';
 const hash=v=>createHash('sha256').update(v.replace(/-/g,'')).digest('hex');
 test('duplicate names have separate stable identities; codes are private, rotating preserves progress, legacy adoption cannot cross classes',async()=>{
  const docs=new Map();const store={async get(c,k){return structuredClone(docs.get(c+'/'+k)||null)},async put(c,k,v,create){if(create&&docs.has(c+'/'+k))throw Object.assign(Error(),{status:409});docs.set(c+'/'+k,structuredClone(v));},async list(c){return [...docs].filter(([k])=>k.startsWith(c+'/')).map(([,v])=>v)}};
@@ -11,7 +12,7 @@ test('duplicate names have separate stable identities; codes are private, rotati
  async function call(data,method='POST',staff){let output;await handle({method,url:'/api/teacher/student-access?classId='+classId,staff},{},'/api/teacher/student-access',async()=>data,(_r,status,body)=>output={status,body});return output.body;}
  const slots=rosterSlots(classroom);assert.notEqual(slots[0].id,slots[1].id);
  const first=await call({classId,studentId:slots[0].id,action:'issue'}),second=await call({classId,studentId:slots[1].id,action:'issue'});
- assert.notEqual(first.profile.id,second.profile.id);
+ assert.notEqual(first.profile.id,second.profile.id);assert.equal(first.profile.classId,classId);assert.equal(second.profile.classId,classId);
  const saved=await resolveStudentSync(store,hash(first.syncCode));saved.saved.progress={'hoi-an':{stationCompleted:true}};await store.put('cham_student_sync',saved.key,saved.saved);
  const rotated=await call({classId,studentId:slots[0].id,action:'rotate'});
  assert.equal(await resolveStudentSync(store,hash(first.syncCode)),null);
@@ -22,4 +23,18 @@ test('duplicate names have separate stable identities; codes are private, rotati
  await assert.rejects(()=>call({classId,studentId:slots[1].id,action:'adopt',syncCode:rotated.syncCode}),{status:409});
  await store.put('cham_classes',otherId,{...classroom,id:otherId,students:['Nguyễn An']});
  await assert.rejects(()=>call({classId:otherId,studentId:rosterSlots({...classroom,id:otherId})[0].id,action:'adopt',syncCode:rotated.syncCode}),{status:409});
+});
+
+test('student landing only admits managed profiles through teacher code, preserving guest access',()=>{
+ const landing=readFileSync(new URL('./src/features/landing/LandingView.tsx',import.meta.url),'utf8');
+ const teacher=readFileSync(new URL('./src/features/teacher/StudentAccessCards.tsx',import.meta.url),'utf8');
+ const profile=readFileSync(new URL('./src/features/student/StudentProfileView.tsx',import.meta.url),'utf8');
+ assert.match(landing,/Mã học sinh do giáo viên cấp/);
+ assert.match(landing,/studentSyncService\.restore\(restoreCode\)/);
+ assert.match(landing,/guestMode && <div/);
+ assert.doesNotMatch(landing,/studentSyncService\.register\(/);
+ assert.doesNotMatch(landing,/handleStudentSubmit/);
+ assert.doesNotMatch(landing,/Tạo hồ sơ khám phá cá nhân/);
+ assert.match(teacher,/action:'issue'\|'rotate'\|'adopt'/);
+ assert.match(profile,/Hồ sơ lớp học/);
 });

@@ -6,6 +6,8 @@ export interface StudentSyncProfile {
   name: string;
   className: string;
   grade: number;
+  /** Authoritative class ID from the teacher roster, when managed. */
+  classId?: string;
 }
 
 async function request(path: string, method: 'POST' | 'PUT', data: unknown) {

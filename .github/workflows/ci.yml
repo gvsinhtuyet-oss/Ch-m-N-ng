@@ -158,6 +158,18 @@ jobs:
             staff-admin-qa/
           if-no-files-found: ignore
 
+  live-student-identity-readonly:
+    name: LIVE Student ID backend route (anonymous read-only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify teacher student-code route on Pages and existing AI Studio backend
+        run: node scripts/student-identity-live-preflight.mjs
+
   live-admin-backend-readonly:
     name: LIVE Admin ratings/backend routing (diagnostic, read-only)
     runs-on: ubuntu-latest

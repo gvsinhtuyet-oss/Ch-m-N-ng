@@ -1,7 +1,7 @@
 import {audioService} from '../../services/AudioService';
 import {constrainAssistantPosition, type AssistantPosition} from '../../utils/assistantPosition';
 import React, { useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
-import { MapPin, Send, MoreHorizontal, Plus, X } from 'lucide-react';
+import { MapPin, Send, MoreHorizontal, Plus, X, Volume2, Square } from 'lucide-react';
 import {detectLearningTask,type PracticeQuestion,type LearningTask} from '../../services/AssistantLearningEngine';
 import {AssistantPracticeCard} from './AssistantPracticeCard';
 const EffectivenessPanel = lazy(() => import('./AssistantEffectivenessPanel'));
@@ -128,6 +128,10 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const [input, setInput] = useState('');
   const [copiedMessage,setCopiedMessage]=useState('');
   const [copyError,setCopyError]=useState('');
+  const [spokenMessageId,setSpokenMessageId]=useState<string|null>(null);
+  const [speechError,setSpeechError]=useState('');
+  const ownSpeechActive=useRef(false);
+  useEffect(()=>()=>{if(ownSpeechActive.current)audioService.stopNarration();},[]);
   const practiceCounts=useRef<Record<string,number>>({});
   const [measurementOpen,setMeasurementOpen]=useState(false);
   const [measurementMounted,setMeasurementMounted]=useState(false);
@@ -263,6 +267,30 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     if(message.role==='assistant')setShowSuggestions(true);
   };
 
+  const readAnswer=(message:ChatMessage)=>{
+    if(spokenMessageId===message.id){
+      ownSpeechActive.current=false;
+      audioService.stopNarration();
+      setSpokenMessageId(null);
+      return;
+    }
+    const text=message.text.replace(/\*\*/g,'').replace(/https?:\/\/\S+/g,'').trim();
+    if(!text)return;
+    ownSpeechActive.current=true;
+    setSpeechError('');
+    setSpokenMessageId(message.id);
+    audioService.speakNarration(text,'vi-VN',
+      ()=>{ownSpeechActive.current=false;setSpokenMessageId(null);},
+      reason=>{
+        ownSpeechActive.current=false;
+        setSpokenMessageId(null);
+        setSpeechError(reason==='muted'
+          ?'Âm thanh đang tắt. Hãy bật tiếng để nghe câu trả lời.'
+          :reason==='voice-unavailable'
+          ?'Máy chưa có giọng đọc tiếng Việt. Em vẫn có thể đọc câu trả lời trên màn hình.'
+          :'Thiết bị chưa phát được giọng đọc. Hãy thử lại trên trình duyệt khác.');
+      });
+  };
   const copyAnswer=async(message:ChatMessage)=>{
     try {
       const sources=(message.sources||[]).map(source=>'Nguồn: '+source.label+(source.url?' — '+source.url:''));
@@ -270,7 +298,16 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
       setCopiedMessage(message.id);setCopyError('');
     } catch {setCopyError('Chưa sao chép được. Thầy cô có thể chọn nội dung câu trả lời để sao chép.');}
   };
+  useEffect(()=>{
+    if(!open && ownSpeechActive.current){
+      ownSpeechActive.current=false;
+      audioService.stopNarration();
+      setSpokenMessageId(null);
+    }
+  },[open]);
   const resetConversation=()=>{
+    if(ownSpeechActive.current){ownSpeechActive.current=false;audioService.stopNarration();setSpokenMessageId(null);}
+    setSpeechError('');
     if(aiLock.current||lookupLock.current)return;
     practiceCounts.current={};setShowSuggestions(true);if(menuRef.current)menuRef.current.open=false;setCopiedMessage('');setCopyError('');setInput('');
     setMessages([{id:'welcome',role:'assistant',text:welcome}]);
@@ -450,6 +487,13 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                       <details className="text-[11px] text-slate-500"><summary className="cursor-pointer py-1">Nguồn học liệu</summary><p>{message.catalogSource}</p></details>
                     </div>}
                     {message.practice && <AssistantPracticeCard practice={message.practice} onNext={()=>void ask(`Hỏi em câu tiếp theo về ${message.practice!.topic}`,message.practice!.topic)} />}
+                    {message.role==='assistant'&&message.id!=='welcome'&&!message.lessons&&<button
+                      type="button" onClick={()=>readAnswer(message)}
+                      aria-label={spokenMessageId===message.id?'Dừng đọc câu trả lời':'Nghe đọc câu trả lời'}
+                      className="mt-2 mr-2 inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-xs font-bold text-sky-800 hover:bg-sky-100">
+                      {spokenMessageId===message.id?<Square className="h-4 w-4" aria-hidden="true"/>:<Volume2 className="h-4 w-4" aria-hidden="true"/>}
+                      {spokenMessageId===message.id?'Dừng đọc':'Nghe câu trả lời'}
+                    </button>
 
                     {isTeacher&&message.role==='assistant'&&message.id!=='welcome'&&!message.lessons&&<button type="button" aria-label="Sao chép kèm nguồn" onClick={()=>void copyAnswer(message)} className="mt-2 min-h-11 rounded-lg border border-sky-200 px-3 py-2 text-xs font-bold text-sky-800">{copiedMessage===message.id?'Đã sao chép':'Sao chép'}</button>}
                     {message.ai && <p className="mt-2 text-[11px] text-amber-800">AI tham khảo</p>}
@@ -465,7 +509,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                   </div>
                 </div>
               ))}
-              <div role="status" aria-live="polite">{copyError&&<p className="text-sm text-amber-800">{copyError}</p>}{(aiBusy || lookupBusy) && <p className="text-sm text-sky-800">Đang trả lời…</p>}</div>
+              <div role="status" aria-live="polite">{speechError&&<p className="text-sm text-amber-800">{speechError}</p>}{copyError&&<p className="text-sm text-amber-800">{copyError}</p>}{(aiBusy || lookupBusy) && <p className="text-sm text-sky-800">Đang trả lời…</p>}</div>
             </div>
 
              {showSuggestions&&<div className="mt-4 flex flex-wrap gap-2" aria-label="Gợi ý hỏi tiếp theo">

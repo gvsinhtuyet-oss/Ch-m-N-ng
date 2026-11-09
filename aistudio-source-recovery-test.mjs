@@ -31,7 +31,7 @@ test('recovery snapshot contains the current assistant module contract and isola
  // with the older immutable AI Studio snapshot when validating recovery.
  const productionVariantSHA256 = {
    'src/App.tsx': '72e723aa0a675dbac99827bf35555d1e5490da7bc605fa76bf9f6746f4300cbe',
-   'src/components/common/DanangAssistantChat.tsx': '2c68fb28a5e5aaba9b832e35fa24740d6d04505881c6469e914af7ad0bc1746f',
+   'src/components/common/DanangAssistantChat.tsx': 'ef8bd12078127561361231601ab6e248cd8e472f22feeaa13f2459459fbac9a5',
    'src/utils/assistantPosition.ts': '3ca568981112ae255ae68e3303ee8f3b13cd07d1860a31a7579cae8c36e8e11b',
    'src/features/teacher/GddpTeacherLookup.tsx': '84a2d4f593ba981f3ce688dcb8d4d099399851b6ad958fa4403fe52f9a65bcbe',
  };

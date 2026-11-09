@@ -222,3 +222,15 @@ test('outside-lesson science is gentle, cited, conversational and topic-safe',()
  assert.match(stage2.answer,/không chọn đáp án thay em/);
 });
 
+
+
+test('rehearse exact chat questions at Thanh Dien Hai without assuming ChatGPT answers',()=>{
+ const station=ALL_25_STATIONS.find(s=>s.id==='g1-station-4')!;
+ const hotspot=station.hotspots[0];
+ const first=ask('Thành Điện Hải gắn với lịch sử nào?',{audience:'student',grade:1,stage:1,station,hotspot,stations:ALL_25_STATIONS});
+ const second=ask('Vào đây chơi có tốn vé tham quan ko?',{audience:'student',grade:1,stage:1,station,hotspot,stations:ALL_25_STATIONS,previousQuery:'Thành Điện Hải gắn với lịch sử nào?',previousTopic:first.topic});
+ console.log('EXACT_REAL_ASSISTANT_TEST '+JSON.stringify({question:'Thành Điện Hải gắn với lịch sử nào?',answer:first.answer,found:first.found,confidence:first.confidence,layer:first.layer,sources:first.sources}));
+ console.log('EXACT_REAL_ASSISTANT_TEST '+JSON.stringify({question:'Vào đây chơi có tốn vé tham quan ko?',answer:second.answer,found:second.found,confidence:second.confidence,layer:second.layer,sources:second.sources}));
+ assert.ok(first.answer.trim());
+ assert.ok(second.answer.trim());
+});

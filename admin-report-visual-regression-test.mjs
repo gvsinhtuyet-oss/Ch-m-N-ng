@@ -28,7 +28,7 @@ test('Admin stars draw only from server ratings and show unavailable state',()=>
   assert.match(inbox,/aria-label="Đánh giá theo 25 bài học"/);
   assert.match(inbox,/Đánh giá cả bài · 1 đến 5 sao/);
   assert.match(inbox,/const \[stationId,setStationId\]=useState\(initialStationId \?\? ''\)/);
-  assert.match(inbox,/initialStationId!==undefined\)setStationId\(initialStationId\)/);
+  assert.match(inbox,/initialStationId!==undefined\)\{setStationId\(initialStationId\);setGrade\(0\);\}/);
   assert.doesNotMatch(inbox,/Math\.random\(/);
 });
 

@@ -493,7 +493,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                       className="mt-2 mr-2 inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-xs font-bold text-sky-800 hover:bg-sky-100">
                       {spokenMessageId===message.id?<Square className="h-4 w-4" aria-hidden="true"/>:<Volume2 className="h-4 w-4" aria-hidden="true"/>}
                       {spokenMessageId===message.id?'Dừng đọc':'Nghe câu trả lời'}
-                    </button>
+                    </button>}
 
                     {isTeacher&&message.role==='assistant'&&message.id!=='welcome'&&!message.lessons&&<button type="button" aria-label="Sao chép kèm nguồn" onClick={()=>void copyAnswer(message)} className="mt-2 min-h-11 rounded-lg border border-sky-200 px-3 py-2 text-xs font-bold text-sky-800">{copiedMessage===message.id?'Đã sao chép':'Sao chép'}</button>}
                     {message.ai && <p className="mt-2 text-[11px] text-amber-800">AI tham khảo</p>}

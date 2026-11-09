@@ -507,7 +507,7 @@ export const LandingView: React.FC = () => {
                       const syncCode=restoreCode.toUpperCase().replace(/[^A-Z0-9]/g,'');
                       localStorage.setItem(STUDENT_PROFILE_KEY,JSON.stringify({...profile,syncCode}));
                       progressService.mergeStudentProgressRecords(profile.id,restored.progress);
-                      loginAsStudent({...DEMO_STUDENTS[0],...profile,studentCode:profile.id,displayName:profile.name,classId:`class-${profile.className.replace('/','-')}`,isGuest:false});
+                      loginAsStudent({...DEMO_STUDENTS[0],...profile,studentCode:profile.id,displayName:profile.name,classId:profile.classId || `class-${profile.className.replace('/','-')}`,isGuest:false});
                       setRestoreCode('');setShowRolePicker(false);
                     }catch(error){setLoginError((error as Error).message);}finally{setRestoreBusy(false);}
                   }} className="rounded-xl bg-sky-700 text-white px-4 py-2 font-bold disabled:opacity-50">{restoreBusy?'Đang mở hồ sơ…':'Vào học bằng mã'}</button>

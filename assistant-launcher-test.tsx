@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {constrainAssistantPosition,compactAssistantPosition} from './src/utils/assistantPosition';
-import {DanangAssistantChat,buildAssistantFollowUps} from './src/components/common/DanangAssistantChat';
+import {DanangAssistantChat,buildAssistantFollowUps,maskStudentPrivateQuestion} from './src/components/common/DanangAssistantChat';
 
 test('dragged assistant stays fully visible on phone and desktop, including after rotation',()=>{
  for(const [width,height] of [[390,844],[844,390],[1920,1080]]){
@@ -94,4 +94,12 @@ test('collapsed panel retains input draft and exposes same icon for close; AI is
  assert.doesNotMatch(source,/setOpen\(false\);setInput\(''\)/);
  assert.doesNotMatch(source,/if\(!result\.found && aiAvailable/);
  assert.match(source,/suggestedPrompts\.slice\(0,3\)/);
+});
+
+test('pupil transcript hides sensitive input before retention but preserves ordinary learning questions',()=>{
+ assert.equal(maskStudentPrivateQuestion('Địa chỉ nhà em là 123 ABC'),'Em đã nhập thông tin riêng tư (đã ẩn để bảo vệ em).');
+ assert.equal(maskStudentPrivateQuestion('Mật khẩu của em là 123456'),'Em đã nhập thông tin riêng tư (đã ẩn để bảo vệ em).');
+ assert.equal(maskStudentPrivateQuestion('Số điện thoại em là 0123456789'),'Em đã nhập thông tin riêng tư (đã ẩn để bảo vệ em).');
+ assert.equal(maskStudentPrivateQuestion('Thành Điện Hải được xây năm 1813?'),'Thành Điện Hải được xây năm 1813?');
+
 });

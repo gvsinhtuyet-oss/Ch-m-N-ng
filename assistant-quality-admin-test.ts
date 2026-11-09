@@ -118,12 +118,15 @@ test('four formerly flagged knowledge cases have sourced, grade-appropriate resp
 
 test('121 content-grounding checks never certify factual accuracy automatically',()=>{
   const evidence=ASSISTANT_QUALITY_CASES.filter(row=>row.check==='evidence');
+  const flagged:string[]=[];
   for(const row of evidence){
     const result=evaluateAssistantQualityCase(row);
     assert.ok(['review','flag'].includes(result.autoStatus),row.id);
     assert.notEqual(result.autoStatus,'pass',row.id+' must require educator validation');
     assert.ok(result.diagnostic.length>40,row.id);
+    if(result.autoStatus==='flag')flagged.push(row.id);
   }
+  console.log('Grounding audit: '+(evidence.length-flagged.length)+'/'+evidence.length+' responses contain a matching passage; flagged IDs: '+flagged.slice(0,25).join(', '));
 });
 test('admin displays distinct evidence bar and distinguishes it from technical and expert grades',()=>{
   const panel=readFileSync('src/features/admin/AssistantQualityDashboard.tsx','utf8');

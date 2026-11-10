@@ -75,7 +75,7 @@ try{
  await regular.goto(origin,{waitUntil:'domcontentloaded',timeout:45000});
  await regular.waitForFunction(()=>document.body.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'),{timeout:30000});
  await regular.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'))?.click());
- await regular.waitForFunction(()=>document.body.textContent?.includes('GIÁO VIÊN / QUẢN TRỊ'),{timeout:15000});
+ await regular.waitForSelector('[role="dialog"][aria-label="Chọn vai trò"] .cham-access-role-card.teacher',{timeout:15000});
  console.log('REGULAR ENTRY PASS: non-QR guest/teacher/admin role selection preserved');
  await regular.close();
 }finally{

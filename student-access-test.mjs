@@ -37,6 +37,9 @@ test('student landing only admits managed profiles through teacher code, preserv
  assert.match(landing,/await restoreStudentByCode\(restoreCode\)/);
  assert.match(teacher,/downloadStudentCardsZip\(cards,className\)/);
  assert.match(teacher,/downloadStudentCardPng\(card,className\)/);
+ assert.match(teacher,/confirm==='rotate-batch'/);
+ assert.match(teacher,/Tôi hiểu, cấp lại mã đã cấp/);
+ assert.match(teacher,/tiến độ học của các em vẫn được giữ nguyên/i);
  const downloads=readFileSync(new URL('./src/features/teacher/TeacherQrDownloads.ts',import.meta.url),'utf8');
  assert.match(downloads,/archive\.file\(/);
  assert.match(downloads,/canvas\.toBlob\(/);

@@ -42,13 +42,19 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
  const {counts,total,average}=summary;
  const waiting=scopedRecords.filter(record=>record.status==='pending').length;
  const ratingAvailable=!ratingsBusy&&!ratingsError&&summary.available;
+ const gradeSummaries=[1,2,3,4,5].map(value=>({
+  grade:value,summary:summarizeRatings(ratings,OFFICIAL_25_CATALOG.filter(station=>station.grade===value).map(station=>station.id)),
+ }));
+ const highestGradeTotal=Math.max(1,...gradeSummaries.map(({summary:gradeSummary})=>gradeSummary.total));
  const openStation=(id:string)=>{setStationId(id);setStatusFilter('');};
- return <section className="rounded-3xl bg-white border p-4 sm:p-6 space-y-4">
-  <header className="space-y-2">
-   {stationId&&<button type="button" className="text-sm font-semibold text-sky-800 underline" onClick={()=>{setStationId('');setGrade(0);setStatusFilter('');}}>← Tổng quan tất cả bài học</button>}
-   <h2 className="text-xl font-bold">{selectedStation?selectedStation.titleVi:'Đánh giá chung toàn ứng dụng'}</h2>
-   <p className="text-sm text-slate-600">Tính đầy đủ người khám phá tự do và học sinh đăng nhập. Mỗi bài có một đánh giá chung cho cả hành trình; góp ý được tiếp nhận ở cả bốn chặng.</p>
+ return <section className="rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 space-y-5">
+  <header className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-950 via-blue-900 to-sky-800 px-5 py-6 text-white sm:px-7">
+   <div className="pointer-events-none absolute -right-8 -top-10 h-40 w-40 rounded-full border-[23px] border-white/10" aria-hidden="true"/>
+   <p className="relative text-xs font-extrabold uppercase tracking-[.18em] text-sky-200">CHẠM ĐÀ NẴNG · LẮNG NGHE NGƯỜI KHÁM PHÁ</p>
+   <h2 className="relative mt-2 text-2xl font-black sm:text-3xl">{selectedStation?selectedStation.titleVi:'Đánh giá và góp ý toàn ứng dụng'}</h2>
+   <p className="relative mt-2 max-w-2xl text-sm leading-6 text-sky-100">Tổng hợp các lượt đánh giá sao và ý kiến đã được máy chủ tiếp nhận, gồm người khám phá tự do và học sinh đăng nhập.</p>
   </header>
+  {stationId&&<button type="button" className="text-sm font-semibold text-sky-800 underline underline-offset-4" onClick={()=>{setStationId('');setGrade(0);setStatusFilter('');}}>← Xem toàn bộ 25 bài học</button>}
   <div className="flex flex-wrap items-end gap-3">
    <label className="min-w-0 w-full sm:max-w-md">
     <span className="block text-sm font-semibold mb-1">Chọn bài học</span>
@@ -65,17 +71,17 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
    </button>
   </div>
   <div className="grid gap-3 sm:grid-cols-3" aria-label="Tổng hợp đánh giá và góp ý">
-    <div className="rounded-2xl border border-amber-100 bg-amber-50 p-4">
+    <div className="rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50 to-white p-4">
       <p className="text-sm font-semibold text-amber-900">Sao trung bình</p>
       <p className="mt-1 text-2xl font-black text-slate-900">{ratingAvailable ? total ? '★ '+formatRating(average)+' / 5' : 'Chưa có' : '—'}</p>
       <p className="text-xs text-slate-600">Trải nghiệm cả hành trình</p>
     </div>
-    <div className="rounded-2xl border border-sky-100 bg-sky-50 p-4">
+    <div className="rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 to-white p-4">
       <p className="text-sm font-semibold text-sky-900">Lượt đánh giá</p>
       <p className="mt-1 text-2xl font-black text-slate-900">{ratingAvailable ? total.toLocaleString('vi-VN') : '—'}</p>
       <p className="text-xs text-slate-600">Khám phá tự do + học sinh đăng nhập</p>
     </div>
-    <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-4">
+    <div className="rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white p-4">
       <p className="text-sm font-semibold text-emerald-900">Góp ý</p>
       <p className="mt-1 text-2xl font-black text-slate-900">{!busy&&!error ? scopedRecords.length.toLocaleString('vi-VN') : '—'}</p>
       <p className="text-xs text-slate-600">{!busy&&!error?`${waiting} góp ý chờ xử lý`:"Đang kiểm tra dữ liệu"}</p>
@@ -117,9 +123,30 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
       {total>0&&<p className="pt-2 text-sm font-semibold text-amber-900">{formatRating(average)}/5 sao từ {total.toLocaleString('vi-VN')} lượt đánh giá thực tế</p>}
     </div>}
   </section>
+  {!stationId&&<section aria-label="Thống kê đánh giá theo khối lớp" className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
+   <h3 className="font-extrabold text-slate-900">Đánh giá theo 5 khối lớp</h3>
+   <p className="mb-4 mt-1 text-xs text-slate-600">Mỗi khối tổng hợp từ 5 bài học, theo lượt đánh giá đã lưu trên máy chủ.</p>
+   <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-5">
+    {gradeSummaries.map(({grade:value,summary:gradeSummary})=><button key={value} type="button"
+      onClick={()=>{setGrade(value);setStationId('');setStatusFilter('');}}
+      className="group rounded-2xl border border-slate-200 bg-gradient-to-b from-slate-50 to-white p-4 text-left transition hover:border-sky-300 hover:bg-sky-50">
+      <span className="block text-xs font-bold uppercase tracking-wide text-slate-600">Khối {value}</span>
+      <span className="mt-1 block text-2xl font-black tabular-nums text-slate-900">{ratingAvailable&&gradeSummary.available?gradeSummary.total.toLocaleString('vi-VN'):'—'}</span>
+      <span className="block text-xs text-slate-600">lượt đánh giá</span>
+      <div className="my-3 h-2 overflow-hidden rounded-full bg-slate-200">
+       <div className="h-full rounded-full bg-gradient-to-r from-sky-500 to-indigo-500"
+         style={{width:`${ratingAvailable&&gradeSummary.available?gradeSummary.total/highestGradeTotal*100:0}%`}}/>
+      </div>
+      <span className="text-sm font-bold text-amber-800">{ratingAvailable&&gradeSummary.available?(gradeSummary.total?'★ '+formatRating(gradeSummary.average)+'/5':'Chưa có đánh giá'):'Chờ số liệu'}</span>
+    </button>)}
+   </div>
+  </section>}
   {!stationId&&<section aria-label="Đánh giá theo 25 bài học" className="space-y-3">
-   <h3 className="font-bold">Chọn bài để xem chi tiết</h3>
-   {catalog.map(station=>{const stats=summarizeRatings(ratings,[station.id]);const feedback=records.filter(record=>record.stationId===station.id);return <button key={station.id} type="button" onClick={()=>openStation(station.id)} className="flex w-full min-w-0 flex-wrap items-center justify-between gap-3 rounded-2xl border p-4 text-left hover:bg-sky-50">
+   <div className="flex flex-wrap items-baseline justify-between gap-2">
+    <h3 className="text-lg font-extrabold text-slate-900">Chi tiết theo bài học</h3>
+    <span className="text-xs text-slate-500">{catalog.length} bài · Chọn để xem đánh giá và góp ý</span>
+   </div>
+   {catalog.map(station=>{const stats=summarizeRatings(ratings,[station.id]);const feedback=records.filter(record=>record.stationId===station.id);return <button key={station.id} type="button" onClick={()=>openStation(station.id)} className="flex w-full min-w-0 flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-4 text-left transition hover:border-sky-300 hover:bg-sky-50">
     <span className="min-w-0 flex-1 basis-52"><strong className="block break-words">{station.titleVi}</strong><span className="text-xs text-slate-500">Khối {station.grade}</span></span>
     <span className="text-sm"><strong className="text-amber-800">{ratingAvailable&&stats.available?stats.total?'★ '+formatRating(stats.average)+'/5':'Chưa có đánh giá':'—'}</strong><span className="block text-xs text-slate-600">{ratingAvailable&&stats.available?`${stats.total} lượt đánh giá`:'Chưa có số liệu xác minh'}</span></span>
     <span className="text-xs text-slate-600">{!busy&&!error?`${feedback.length} góp ý · ${feedback.filter(record=>record.status==='pending').length} chờ xử lý`:'Đang tải góp ý'} →</span>

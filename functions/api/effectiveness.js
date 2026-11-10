@@ -84,7 +84,9 @@ export async function effectiveness(request, env, authorize = proxyApi, now = Da
     if (user.role !== 'admin') return json({error: 'Chức năng này dành cho quản trị.'}, 403);
 
     const days = Number(new URL(request.url).searchParams.get('days') ?? 30);
-    if (![7, 30, 90].includes(days)) return json({error: 'Khoảng thời gian không hợp lệ.'}, 400);
+    // A precise October-to-present range must be possible while preventing
+    // unbounded historical scans. Valid read windows are 1–90 whole days.
+    if (!Number.isInteger(days) || days < 1 || days > 90) return json({error: 'Khoảng thời gian không hợp lệ.'}, 400);
     const start = vietnamDay(now - (days - 1) * dayMs);
     const end = vietnamDay(now);
     const [visits, stations] = await db.batch([

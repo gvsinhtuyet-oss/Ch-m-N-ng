@@ -53,7 +53,7 @@ export const AssistantQualityDashboard:React.FC=()=>{
   useEffect(()=>{setHistory(loadHistory(currentUser?.id||''));setHistoryError('');},[currentUser?.id]);
   const stopRef=useRef(false);
   useEffect(()=>()=>{stopRef.current=true;},[]);
-  const accessible=role==='admin' && Boolean(currentUser) && currentUser?.id!=='admin-demo';
+  const accessible=role==='admin' && currentUser?.role==='admin';
 
   const availableStations=useMemo(()=>ALL_25_STATIONS.filter(s=>!grade||s.grade===grade),[grade]);
   const scopeCases=useMemo(()=>ASSISTANT_QUALITY_CASES.filter(c=>

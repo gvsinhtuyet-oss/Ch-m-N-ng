@@ -30,7 +30,7 @@ try{
       assert.ok(box.docWidth<=box.viewport+5,name+' '+view+' horizontal overflow: '+JSON.stringify(box));
       if(name==='iphone'||name==='desktop') await page.screenshot({path:`access-portal-qa/${view}-${name}.png`,fullPage:true});
     };
-    assert.equal((await page.$('.cham-access-role-card')).length,2,'Only HS/GV roles should be public');
+    assert.equal(await page.evaluate(()=>document.querySelectorAll('.cham-access-role-card').length),2,'Only HS/GV roles should be public');
     await verify('roles');
     await page.click('.cham-access-role-card.student');
     await page.waitForSelector('[role="dialog"][aria-label="Đăng nhập học sinh"]',{timeout:15000});

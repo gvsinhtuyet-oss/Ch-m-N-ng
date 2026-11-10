@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, Check, Compass, Eye, EyeOff, GraduationCap, KeyRound, LockKeyhole, QrCode, UserRound, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Check, Compass, Eye, EyeOff, GraduationCap, KeyRound, LockKeyhole, QrCode, X } from 'lucide-react';
 import { GoogleTeacherLogin } from '../../components/auth/GoogleTeacherLogin';
 import type { StaffUser } from '../../services/AuthService';
 import './access-portal.css';

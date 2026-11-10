@@ -24,7 +24,20 @@ try {
     page.on('pageerror',e=>errors.push(e.message));
     await page.setViewport({width,height,isMobile:true,hasTouch:true,deviceScaleFactor:1});
     const response=await page.goto(origin+'?qa-assistant-mobile=20261109',{waitUntil:'domcontentloaded',timeout:50000});
-    assert.equal(response?.status(),200);
+    if(response) assert.equal(response.status(),200,'Production navigation returned an HTTP error');
+    else {
+      // A previously installed PWA service worker may serve an app shell
+      // without a navigation HTTPResponse in subsequent browser pages.
+      // The separate strict preflight already requires HTTP 200 on /.
+      const navigation=await page.evaluate(()=>({
+        pathname:location.pathname,title:document.title,
+        loaded:document.readyState!=='loading',
+      }));
+      assert.equal(navigation.pathname,'/','missing Production page navigation');
+      assert.match(navigation.title,/CHẠM ĐÀ NẴNG/);
+      assert.ok(navigation.loaded,'PWA app shell was not loaded');
+      console.log('LIVE PWA SHELL',name,navigation.title);
+    }
     await page.waitForFunction(()=>document.body.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'),{timeout:30000});
     await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'))?.click());
     await page.waitForSelector('button[aria-label="Khám phá tự do dành cho học sinh"]',{timeout:15000});

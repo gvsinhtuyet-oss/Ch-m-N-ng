@@ -4,10 +4,10 @@ import { useApp } from '../../contexts/AppContext';
 import { MusicControl } from './MusicControl';
 import { PWAInstallButton } from './PWAInstallButton';
 import { StaffPassword } from './StaffPassword';
-import { Globe, Wifi, WifiOff, User, Compass, Award, Heart, Map as MapIcon, Home, BookOpen, ChevronDown, LogOut, Sparkles } from 'lucide-react';
+import { Wifi, WifiOff, User, Compass, Award, Heart, Map as MapIcon, Home, BookOpen, ChevronDown, LogOut, Sparkles } from 'lucide-react';
 
 export const Header: React.FC = () => {
-  const { currentUser, role, isOnline, language, currentView, currentGrade, setCurrentGrade, toggleLanguage, setCurrentView, logout, t } = useApp();
+  const { currentUser, role, isOnline, currentView, currentGrade, setCurrentGrade, setCurrentView, logout, t } = useApp();
   const student = role === 'student';
   const adminArea = role === 'admin' && currentView === 'admin-view';
   const name = (currentUser as { displayName?: string } | null)?.displayName || currentUser?.name || 'Nhà phiêu lưu';
@@ -41,7 +41,6 @@ export const Header: React.FC = () => {
           </div>
         </details> : <>
           <span title={isOnline ? t.online : t.offline} className={`hidden items-center gap-1 rounded-full px-2 py-1 text-[10px] font-semibold md:flex ${isOnline ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-100 text-amber-800'}`}>{isOnline ? <Wifi className="h-3 w-3" /> : <WifiOff className="h-3 w-3" />}<span className="hidden lg:inline">{isOnline ? t.online : t.offline}</span></span>
-          <button type="button" onClick={toggleLanguage} aria-label="Đổi ngôn ngữ VI / EN" className="header-language-toggle flex h-9 items-center gap-1 rounded-full px-2 text-xs font-bold text-slate-600 hover:bg-orange-50"><Globe className="h-4 w-4" />{language.toUpperCase()}</button>
         </>}
         {student && <span className="hidden rounded-full bg-orange-100 px-2 py-1 text-[10px] font-bold text-orange-700 sm:block">Khối {currentGrade}</span>}
         {!adminArea && <div className="header-audio-control"><MusicControl /></div>}
@@ -51,9 +50,6 @@ export const Header: React.FC = () => {
           <div className="absolute right-0 top-12 z-50 w-64 rounded-2xl border border-orange-100 bg-white p-3 shadow-xl">
             <div className="mb-2 border-b border-slate-100 px-2 pb-3"><p className="truncate text-sm font-bold text-slate-800">{name}</p><p className="mt-1 text-xs text-slate-500">{roleLabel}{student ? ` · Khối ${currentGrade}` : ''}</p></div>
             {adminArea ? <>
-              <button type="button" onClick={toggleLanguage} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm text-slate-700 hover:bg-orange-50">
-                <Globe className="h-4 w-4" aria-hidden="true" />Ngôn ngữ · {language.toUpperCase()}
-              </button>
               <button type="button" className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-700 hover:bg-orange-50" onClick={event => {
                 event.currentTarget.closest('details')?.removeAttribute('open');
                 window.dispatchEvent(new Event('cham-open-assistant'));

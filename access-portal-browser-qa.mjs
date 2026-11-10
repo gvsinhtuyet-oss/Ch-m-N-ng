@@ -7,7 +7,7 @@ const chrome=[process.env.CHROME_BIN,'/usr/bin/google-chrome','/usr/bin/google-c
 assert.ok(chrome,'Chromium needed to audit the three CHẠM ĐÀ NẴNG access screens');
 mkdirSync('access-portal-qa',{recursive:true});
 const browser=await puppeteer.launch({executablePath:chrome,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
-const sizes=[['iphone-small',320,640],['iphone',390,844],['android',412,915],['ipad',810,1080],['desktop',1366,768]];
+const sizes=[['iphone-small',320,640],['iphone',390,844],['android',412,915],['ipad',810,1080],['ipad-landscape',1024,768],['desktop',1366,768]];
 try{
   for(const [name,width,height]of sizes){
     const page=await browser.newPage();
@@ -21,14 +21,29 @@ try{
     await page.waitForSelector('[role="dialog"][aria-label="Chọn vai trò"] .cham-access-role-card.student',{timeout:30000});
     const verify=async view=>{
       await page.waitForSelector('.cham-access-sheet',{visible:true,timeout:15000});
-      await page.waitForFunction(()=>[...document.querySelectorAll('.cham-access-logo,.cham-access-role-card img,.cham-access-hero-picture')].every(img=>img.complete&&img.naturalWidth>0),{timeout:15000});
+      await page.waitForFunction(()=>{
+        const art=document.querySelector('.cham-ill-image');
+        if(art)return art.complete&&art.naturalWidth>0;
+        return [...document.querySelectorAll('.cham-access-logo,.cham-access-role-card img,.cham-access-hero-picture')].every(img=>img.complete&&img.naturalWidth>0);
+      },{timeout:20000});
       const box=await page.evaluate(()=>{
         const sheet=document.querySelector('.cham-access-sheet'),r=sheet.getBoundingClientRect();
         return {x:r.left,right:r.right,docWidth:document.documentElement.scrollWidth,viewport:innerWidth};
       });
       assert.ok(box.x>=-2&&box.right<=box.viewport+2,name+' '+view+' modal clipped: '+JSON.stringify(box));
       assert.ok(box.docWidth<=box.viewport+5,name+' '+view+' horizontal overflow: '+JSON.stringify(box));
-      if(name==='iphone'||name==='desktop') await page.screenshot({path:`access-portal-qa/${view}-${name}.png`,fullPage:true});
+      if(width<=1023){
+        const geom=await page.evaluate(()=>{
+          const outer=document.querySelector('.cham-ill-shell'),stage=document.querySelector('.cham-ill-frame');
+          const pict=document.querySelector('.cham-ill-image'),r=stage.getBoundingClientRect();
+          return {shellScroll:outer.scrollHeight-outer.clientHeight,stageScroll:stage.scrollHeight-stage.clientHeight,top:r.top,bottom:r.bottom,viewport:innerHeight,imageWidth:pict.getBoundingClientRect().width,imageHeight:pict.getBoundingClientRect().height,stageWidth:r.width,stageHeight:r.height};
+        });
+        assert.equal(geom.shellScroll,0,name+' '+view+' has scrollable outer shell');
+        assert.equal(geom.stageScroll,0,name+' '+view+' has scrollable image stage');
+        assert.ok(geom.top>=-2&&geom.bottom<=geom.viewport+2,name+' '+view+' image clipped vertically: '+JSON.stringify(geom));
+        assert.ok(Math.abs(geom.imageWidth-geom.stageWidth)<2&&Math.abs(geom.imageHeight-geom.stageHeight)<2,name+' '+view+' image not fully visible: '+JSON.stringify(geom));
+      }
+      if(name==='iphone'||name==='ipad'||name==='ipad-landscape'||name==='desktop') await page.screenshot({path:`access-portal-qa/${view}-${name}.png`,fullPage:true});
     };
     assert.equal(await page.evaluate(()=>document.querySelectorAll('.cham-access-role-card').length),2,'Only HS/GV roles should be public');
     await verify('roles');

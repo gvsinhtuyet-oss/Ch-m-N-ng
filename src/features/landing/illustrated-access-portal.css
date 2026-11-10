@@ -1,0 +1,61 @@
+/* Approved static art + coordinate-matched live controls.
+   No cropping, no scrolling, same visual proportions on portrait iPad and landscape iPad.
+   For extra-tall phones we expand the art height by ~25% to keep text legible. */
+.cham-ill-shell{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;overflow:hidden;overscroll-behavior:none;touch-action:manipulation;background:#32b7f2;isolation:isolate}
+.cham-ill-ambient{position:absolute;inset:-60px;background-size:cover;background-position:center;filter:blur(28px) saturate(1.12);opacity:.58;pointer-events:none;z-index:-1}
+.cham-ill-shell .cham-access-sheet.cham-ill-frame{position:relative;display:block;flex:none;width:min(100vw,75dvh);height:min(100dvh,168vw);min-height:0;max-width:none;max-height:100dvh;padding:0;border:0;border-radius:0;overflow:hidden;overscroll-behavior:none;background:transparent;box-shadow:0 0 45px #034b8348;isolation:isolate}
+.cham-ill-frame:before{display:none!important}
+.cham-ill-image{display:block;width:100%;height:100%;object-fit:fill;user-select:none;pointer-events:none}
+.cham-ill-frame .cham-ill-hit{position:absolute;z-index:4;display:block;margin:0;padding:0;min-width:0;min-height:0;width:auto;height:auto;border:0;border-radius:999px;box-shadow:none;color:transparent;background:transparent;cursor:pointer;font-size:0;line-height:0;transition:transform .14s,box-shadow .14s,background .14s}
+.cham-ill-frame .cham-ill-hit:not(:disabled):active{transform:scale(.975);background:#ffffff1b}
+.cham-ill-frame .cham-ill-hit:hover{background:#ffffff12;box-shadow:0 0 0 2px #fff8,0 0 20px #fff7}
+.cham-ill-frame button:focus-visible,.cham-ill-frame input:focus-visible{outline:3px solid #ffe04f;outline-offset:2px}
+.cham-ill-frame .cham-ill-hit:disabled{opacity:1;cursor:default}
+.cham-ill-frame .cham-ill-close,.cham-ill-frame .cham-ill-more{position:absolute;z-index:9;right:2%;top:1%;display:grid;place-items:center;width:clamp(31px,4.3vw,45px);height:clamp(31px,4.3vw,45px);min-height:0;padding:4px;border:1px solid #ffffffc9;border-radius:50%;color:#14528f;background:#f2faffd9;box-shadow:0 3px 9px #115d9a38}
+.cham-ill-frame .cham-ill-more{top:6%;width:clamp(30px,4vw,42px);height:clamp(30px,4vw,42px)}
+.cham-ill-frame .cham-ill-role-student{left:12%;top:39.7%;width:76%;height:11.5%}
+.cham-ill-frame .cham-ill-role-teacher{left:12%;top:51.9%;width:76%;height:12%}
+.cham-ill-student-field{position:absolute;z-index:5;left:11.8%;top:34.5%;width:61%;height:4.7%;display:flex;align-items:center;border-radius:999px;background:linear-gradient(105deg,#f2f9ffed,#edfaffed);box-shadow:inset 0 1px 4px #1889c725}
+.cham-ill-student-field input{width:100%;height:100%;border:0;outline:0;padding:0 7% 0 3%;font:italic 600 clamp(12px,3.45vw,22px)/1.2 system-ui,sans-serif;color:#214777;background:transparent;min-width:0}
+.cham-ill-student-field input::placeholder{color:#607996;opacity:1}
+.cham-ill-frame .cham-ill-show-code,.cham-ill-frame .cham-ill-show-password{position:absolute;z-index:7;display:grid;place-items:center;left:70%;top:34.1%;width:7%;height:5.5%;padding:0;border:0;border-radius:50%;background:#ffffffb3;color:#155dab}
+.cham-ill-frame .cham-ill-qr{left:77%;top:32%;width:15%;height:8.5%}
+.cham-ill-frame .cham-ill-student-start{left:9%;top:41.6%;width:82%;height:9.4%}
+.cham-ill-frame .cham-access-student-secondary{display:contents}
+.cham-ill-frame .cham-ill-student-guest{left:9%;top:51.8%;width:82%;height:9.8%}
+.cham-ill-frame .cham-access-back.cham-ill-student-back{position:absolute;z-index:5;left:30%;top:62%;width:40%;height:5.6%;min-height:0;margin:0;padding:0;display:block;text-decoration:none}
+.cham-ill-frame .cham-access-google.cham-ill-google{position:absolute;z-index:5;left:14%;top:31.3%;width:72%;height:7.5%;margin:0;padding:0}
+.cham-ill-google>div{height:100%;width:100%;padding:0!important;margin:0!important;border:0!important;border-radius:999px!important;background:transparent!important;box-shadow:none}
+.cham-ill-google>div>p:first-child,.cham-ill-google>div>p:nth-child(2){display:none}
+.cham-ill-google [data-testid=google-signin-host]{height:100%;width:100%}
+.cham-ill-google [data-testid=google-signin-host]>button{position:relative;display:flex;align-items:center;justify-content:center;gap:4px;width:100%;height:100%;min-height:0;margin:0;padding:2px 10px 2px 22%;border:2px solid #87e9ff;border-radius:999px;background:linear-gradient(170deg,#0a9af7,#0661d8);box-shadow:0 4px 9px #0055ac4a;color:white!important;font-size:clamp(12px,3.1vw,22px);font-weight:850;line-height:1.1;text-align:center;white-space:normal}
+.cham-ill-google [data-testid=google-signin-host]>button:before{content:"G";position:absolute;left:8%;top:21%;display:grid;place-items:center;width:13%;height:58%;border-radius:50%;background:white;color:#4285f4;font-size:clamp(18px,5vw,32px);font-weight:900;box-shadow:0 1px 5px #00497c33}
+.cham-ill-google [role=alert]{position:absolute;z-index:10;left:0;top:95%;max-height:100px;overflow:auto;padding:7px;background:#fff3f3;border:1px solid #e97171;border-radius:12px;font-size:12px;color:#9b2538}
+.cham-ill-google>div>p:not(:first-child):not(:nth-child(2)):not([role=alert]){position:absolute;left:0;top:101%;padding:5px;color:#17508c;font-size:12px;background:#ecf9ffff;border-radius:10px}
+.cham-ill-frame .cham-ill-account-trigger{left:25%;top:39%;width:51%;height:4%}
+.cham-ill-frame .cham-ill-teacher-form{position:absolute;z-index:6;left:21%;top:43%;width:57%;height:8.3%;margin:0;padding:0;background:transparent}
+.cham-ill-teacher-form input{position:absolute;left:0;width:100%;height:40%;padding:2px 9px;border:0;border-radius:999px;background:linear-gradient(105deg,#fffefaee,#ecfafff2);color:#213d64;box-shadow:inset 0 1px 4px #368bb63c;font:600 clamp(12px,3vw,21px)/1.2 system-ui,sans-serif}
+.cham-ill-teacher-form input::placeholder{color:#647894;opacity:1}
+.cham-ill-teacher-form .cham-ill-email{top:0%}
+.cham-ill-teacher-form .cham-ill-password{top:55%}
+.cham-ill-frame .cham-ill-teacher-form .cham-ill-account-submit{left:100%;top:-43%;width:17%;height:49%}
+.cham-ill-frame .cham-ill-show-password{left:73%;top:47.1%;width:8%;height:4.4%;background:transparent;color:transparent}
+.cham-ill-show-password svg{opacity:0}
+.cham-ill-frame .cham-access-teacher-guest.cham-ill-teacher-guest{left:12%;top:54%;width:76%;height:8.1%;min-height:0;padding:0;border:0}
+.cham-ill-frame .cham-access-back.cham-ill-teacher-back{left:33%;top:63.8%;width:34%;height:5%;min-height:0;margin:0;padding:0}
+.cham-ill-dialog-backdrop{position:absolute;inset:0;z-index:18;display:grid;place-items:center;padding:6%;background:#063b75a8;backdrop-filter:blur(5px)}
+.cham-ill-dialog{width:100%;max-width:460px;padding:clamp(15px,4vw,24px);border:3px solid #fff;border-radius:24px;background:linear-gradient(170deg,#effaff,#fff7da);box-shadow:0 12px 35px #013f7b77;color:#124577;text-align:center}
+.cham-ill-dialog h2{margin:0 0 10px;color:#0a5ca5;font-size:clamp(18px,4vw,26px);font-weight:900}
+.cham-ill-dialog p{margin:0 0 14px;font-size:clamp(13px,3vw,16px);line-height:1.5}
+.cham-ill-dialog .cham-access-grade-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 18px}
+.cham-ill-dialog .cham-access-grade-grid button{min-height:56px}
+.cham-ill-dialog-dismiss{margin-top:5px;padding:10px 19px;border:1px solid #46a5dd;border-radius:15px;background:#fff;color:#08579c;font-weight:900}
+.cham-ill-more-panel{position:absolute;z-index:16;right:3%;top:12%;width:min(250px,85%);padding:9px;border:2px solid white;border-radius:18px;background:#f4fcffff;box-shadow:0 9px 25px #033c7399}
+.cham-ill-more-panel button{display:block;width:100%;padding:10px 8px;text-align:left;font-size:13px;color:#15558b;font-weight:800;border-radius:8px}
+.cham-ill-more-panel button:hover{background:#dff2ff}
+.cham-ill-error{position:absolute;z-index:20;left:6%;right:6%;top:43%;padding:15px;border:2px solid #faafaf;border-radius:15px;background:#fff8f8;box-shadow:0 10px 26px #8b1a3a40;color:#9d1733;font-weight:750;text-align:center;font-size:clamp(12px,3vw,17px)}
+.cham-ill-error p{margin:0 0 10px}
+.cham-ill-error button{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:10px;background:#fff;color:#9a1733}
+@media (max-width:360px){.cham-ill-student-field input{font-size:12px}.cham-ill-teacher-form input{font-size:11px}.cham-ill-google [data-testid=google-signin-host]>button{font-size:12px}}
+@media (max-height:530px) and (orientation:landscape){.cham-ill-frame .cham-ill-close,.cham-ill-frame .cham-ill-more{width:28px;height:28px}.cham-ill-student-field input,.cham-ill-teacher-form input{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.cham-ill-frame .cham-ill-hit{transition:none}}

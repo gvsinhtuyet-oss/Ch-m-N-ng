@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { IllustratedAccessPortal } from './IllustratedAccessPortal';
 import { ArrowLeft, ArrowRight, BookOpen, Check, Compass, Eye, EyeOff, GraduationCap, KeyRound, LockKeyhole, QrCode, X } from 'lucide-react';
 import { GoogleTeacherLogin } from '../../components/auth/GoogleTeacherLogin';
 import type { StaffUser } from '../../services/AuthService';
 import './access-portal.css';
 
-interface Props {
+export interface AccessPortalProps {
   view: 'role' | 'student' | 'teacher';
   guestMode: boolean;
   chosenGrade: number | null;
@@ -38,7 +39,8 @@ const students = '/images/landing/cham-access-students.webp';
 const teacher = '/images/landing/cham-access-teacher.webp';
 const grades = [1, 2, 3, 4, 5];
 
-export const AccessPortal: React.FC<Props> = ({
+export const AccessPortal: React.FC<AccessPortalProps> = (props) => {
+  const {
   view, guestMode, chosenGrade, roleBackground, themeBlur,
   restoreCode, onRestoreCodeChange, savedSyncCode, restoreBusy,
   staffBusy, staffEmail, staffPassword, onStaffEmailChange,
@@ -46,10 +48,20 @@ export const AccessPortal: React.FC<Props> = ({
   onTeacher, onStudentGuest, onStudentGrade, onStudentSubmit,
   onSavedCode, onTeacherDemo, onStaffLogin, onRestoreStaff,
   onGoogleLogin,
-}) => {
+  } = props;
   const [accountExpanded, setAccountExpanded] = useState(false);
   const [showCode, setShowCode] = useState(false);
   const [qrHelp, setQrHelp] = useState(false);
+
+  const [showApprovedArt, setShowApprovedArt] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 1023px)').matches);
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 1023px)');
+    const onChange = () => setShowApprovedArt(media.matches);
+    onChange();
+    media.addEventListener('change', onChange);
+    return () => media.removeEventListener('change', onChange);
+  }, []);
+  if (showApprovedArt) return <IllustratedAccessPortal {...props} />;
   return (
     <div className="cham-access-overlay" data-screen={view}>
       <img className="cham-access-backdrop" src={roleBackground} alt="" aria-hidden="true" style={{filter:`blur(${Math.min(3,themeBlur)}px)`}} />

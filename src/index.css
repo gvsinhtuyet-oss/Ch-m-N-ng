@@ -512,7 +512,7 @@ body:has(.journey-screen-fixed){overflow:hidden}
  .app-touch-header details>div{max-height:calc(100dvh - 84px);overflow-y:auto;overscroll-behavior:contain}
  /* Mobile chatbot remains available; touch header shortcuts are complementary. */
 }
-@media(max-width:839px){.app-touch-header>div>button>span:nth-child(2){display:none}}
+/* The brand name must remain visible on phone widths; responsive sizing below replaces the old hidden label. */
 
 
 /* Mobile audit 2026-11-04: a single readable layout for the journey and common toolbar.
@@ -883,4 +883,156 @@ body:has(.journey-screen-fixed){overflow:hidden}
   .game-content .cham-staff .bg-white,
   .teacher-workspace .teacher-sidebar,
   .admin-workspace .admin-sidebar {background-color:rgba(255,255,255,.98);}
+}
+
+/* Mobile brand / toolbar refinement (2026-11-10).
+   Only the shared mobile header is changed; tablet/desktop tools stay as before. */
+@media (max-width: 767px) {
+  .app-touch-header:not(.cham-admin-topbar) {
+    background: linear-gradient(105deg, rgba(255,255,255,.98), rgba(239,248,255,.97) 68%, rgba(255,250,242,.98));
+    border-bottom: 1px solid #d7e8f8;
+    box-shadow: 0 3px 13px rgba(20,71,135,.09);
+  }
+  .app-touch-header .header-bar-inner {
+    height: 60px !important;
+    min-height: 60px;
+    max-width: 100%;
+    gap: 4px !important;
+    padding-inline: 8px !important;
+  }
+  .app-touch-header .header-brand {
+    min-width: 0;
+    flex: 0 1 auto;
+    gap: 6px !important;
+    overflow: hidden;
+  }
+  .app-touch-header .header-brand-icon {
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: 11px;
+    box-shadow: 0 2px 8px rgba(17,89,179,.22);
+  }
+  .app-touch-header .header-brand-copy {
+    display: block !important;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .app-touch-header .header-brand-title {
+    display: block;
+    font-size: clamp(11px, 3.1vw, 13px);
+    line-height: 1.2;
+    letter-spacing: -.025em;
+    color: #125195;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .app-touch-header .header-brand-subtitle { display: none !important; }
+  .app-touch-header.cham-admin-topbar .header-brand-title { color: #fff; }
+  .app-touch-header .header-actions {
+    flex: 0 0 auto;
+    gap: 4px !important;
+    min-width: 0;
+  }
+  .app-touch-header .header-language-toggle {
+    height: 44px !important;
+    min-height: 44px !important;
+    min-width: 43px;
+    justify-content: center;
+    gap: 3px;
+    padding-inline: 5px;
+    border: 1px solid #d3e5f9;
+    border-radius: 14px;
+    background: #f0f7ff;
+    color: #175b9d;
+    box-shadow: 0 1px 3px rgba(17,78,146,.06);
+  }
+  .app-touch-header .header-language-toggle svg { width: 15px; height: 15px; }
+  .app-touch-header .header-audio-control button[aria-label="Điều chỉnh âm thanh"] {
+    width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    border-radius: 14px;
+    background: #fff9f3;
+    border-color: #ffdec5;
+  }
+  .app-touch-header .header-touch-assistant {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 44px;
+    min-height: 44px !important;
+    min-width: 66px;
+    padding-inline: 7px;
+    border-radius: 14px;
+    background: #e9f4ff;
+    color: #125f9d;
+    border-color: #b7dcff;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .app-touch-header .header-account-toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 44px !important;
+    min-height: 44px !important;
+    min-width: 44px;
+    width: 44px;
+    padding: 0 !important;
+    gap: 0;
+    border-radius: 14px;
+    background: #fff9f3;
+    border-color: #f9d6bc;
+  }
+  .app-touch-header .header-account-name,
+  .app-touch-header .header-account-chevron { display: none !important; }
+  .app-touch-header .header-account-menu > div { top: 49px; }
+  .app-touch-header .header-role-switch {
+    gap: 4px;
+    min-height: 44px;
+    padding-inline: 7px;
+    font-size: 11px;
+  }
+  .app-touch-header .header-role-switch-full { display: none; }
+  .app-touch-header .header-role-switch-short { display: inline; }
+  .app-touch-header .header-language-toggle:focus-visible,
+  .app-touch-header .header-touch-assistant:focus-visible,
+  .app-touch-header .header-account-toggle:focus-visible,
+  .app-touch-header .header-audio-control button:focus-visible {
+    outline: 3px solid #0ea5e9;
+    outline-offset: 2px;
+  }
+  /* The sound menu must not extend off the left edge of a narrow iPhone. */
+  .app-touch-header .header-audio-popover {
+    position: fixed !important;
+    top: 65px !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%);
+    width: min(360px, calc(100vw - 24px)) !important;
+    max-height: calc(100dvh - 80px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+@media (max-width: 400px) {
+  .app-touch-header .header-brand-title { font-size: 11.5px; }
+  .app-touch-header .header-language-toggle {
+    min-width: 35px;
+    width: 35px;
+    font-size: 11px;
+    padding-inline: 0;
+  }
+  .app-touch-header .header-language-toggle svg { display: none; }
+}
+@media (max-width: 360px) {
+  .app-touch-header .header-bar-inner { padding-inline: 6px !important; gap: 3px !important; }
+  .app-touch-header .header-actions { gap: 3px !important; }
+  .app-touch-header .header-brand-icon { width: 32px !important; height: 32px !important; }
+  .app-touch-header .header-brand { gap: 4px !important; }
+  .app-touch-header .header-brand-title { font-size: 10.5px; }
+  .app-touch-header .header-touch-assistant { min-width: 44px; width: 44px; padding: 0; }
+  .app-touch-header .header-assistant-label { display: none; }
 }

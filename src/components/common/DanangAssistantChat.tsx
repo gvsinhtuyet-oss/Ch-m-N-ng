@@ -30,6 +30,7 @@ interface Props {
   docked?: boolean;
   audience?: 'student' | 'teacher' | 'admin';
   adminDemo?: boolean;
+  openRequestId?: number;
   stage?: number;
   storageScope?: string;
   currentGrade?: number;
@@ -148,11 +149,14 @@ const AssistantEmblem=({className}:{className?:string})=>(
   </svg>
 );
 
-export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '', adminDemo = false }) => {
+export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '', adminDemo = false, openRequestId = 0 }) => {
   const isTeacher = audience !== 'student';
   const isAdmin = audience === 'admin';
   const welcome = isAdmin ? 'Chào thầy cô! Mình cùng xem các mục quản trị nhé.' : isTeacher ? 'Thầy cô muốn chuẩn bị nội dung nào hôm nay?' : WELCOME;
   const [open, setOpen] = useState(false);
+  // Header/station shortcuts can be tapped before this lazy-loaded module mounts.
+  // The parent keeps the request ID, so the first tap is not lost on slow networks.
+  useEffect(() => { if (openRequestId > 0) setOpen(true); }, [openRequestId]);
   const [showSuggestions,setShowSuggestions]=useState(true);
   const panelRef=useRef<HTMLElement|null>(null);
   const launcherRef=useRef<HTMLDivElement|null>(null);

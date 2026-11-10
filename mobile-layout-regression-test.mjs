@@ -91,3 +91,15 @@ test('onboarding keeps only Học sinh / Giáo viên roles, real student and tea
  // QR remains a Camera/scanned-link flow; never display a fake camera-scan button.
  assert.doesNotMatch(landing,/onClick=\{[^}]*openCamera/);
 });
+
+test('approved logo and responsive role artwork are locally bundled, no remote login images',()=>{
+ const logo=read('./public/images/landing/cham-approved-logo.svg');
+ const studentArt=read('./public/images/landing/cham-students.svg');
+ const teacherArt=read('./public/images/landing/cham-teacher.svg');
+ assert.match(logo,/data:image\/webp;base64,/);
+ assert.match(studentArt,/<svg[\s\S]*Học sinh khám phá Đà Nẵng/);
+ assert.match(teacherArt,/<svg[\s\S]*Giáo viên khám phá học liệu/);
+ assert.match(landing,/src="\/images\/landing\/cham-approved-logo.svg"/);
+ assert.match(landing,/src="\/images\/landing\/cham-students.svg"/);
+ assert.match(landing,/src="\/images\/landing\/cham-teacher.svg"/);
+});

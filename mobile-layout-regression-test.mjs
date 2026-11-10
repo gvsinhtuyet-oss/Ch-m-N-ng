@@ -54,3 +54,22 @@ test('Stage 3 keeps emotion, memory, action and persistence while Stage 4 shows 
  assert.match(journey,/station-viewport\[data-stage="3"\][\s\S]*?checkin-pages/);
  assert.match(journey,/station-viewport\[data-stage="4"\][\s\S]*?journey-photo-main/);
 });
+
+test('mobile shared header keeps the CHẠM ĐÀ NẴNG name and all 4 accessible controls',()=>{
+ const header=read('./src/components/common/Header.tsx');
+ const audio=read('./src/components/common/MusicControl.tsx');
+ assert.match(header,/header-brand-title[^>]*>CHẠM ĐÀ NẴNG/);
+ assert.match(header,/header-brand-copy block min-w-0/);
+ assert.match(header,/header-language-toggle/);
+ assert.match(header,/header-audio-control/);
+ assert.match(header,/header-touch-assistant[^>]*aria-label="Mở Trợ lý khám phá Đà Nẵng"/);
+ assert.match(header,/header-account-toggle/);
+ assert.match(index,/@media \(max-width: 767px\)\s*\{/);
+ assert.match(index,/\.app-touch-header \.header-brand-copy\s*\{\s*display: block !important/);
+ assert.match(index,/\.app-touch-header \.header-touch-assistant\s*\{\s*display: inline-flex/);
+ assert.match(index,/\.app-touch-header \.header-account-toggle[\s\S]*?min-height: 44px !important/);
+ assert.match(index,/@media \(max-width: 360px\)[\s\S]*?\.header-assistant-label \{ display: none; \}/);
+ assert.match(audio,/header-audio-popover/);
+ assert.match(index,/\.app-touch-header \.header-audio-popover[\s\S]*?width: min\(360px, calc\(100vw - 24px\)\)/);
+ assert.doesNotMatch(index, /@media\(max-width:839px\)\{\.app-touch-header>div>button>span:nth-child\(2\)\{display:none\}\}/);
+});

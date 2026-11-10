@@ -207,3 +207,16 @@ jobs:
           node-version: '22'
       - name: Check rating write route, proposal route, admin stats route without mutation
         run: node scripts/rating-backend-preflight.mjs
+
+  qa-current-production:
+    name: Strict read-only check live Cloudflare Production JS
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+      - run: node qa-production-post-retry.mjs

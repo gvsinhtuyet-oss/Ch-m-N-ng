@@ -30,7 +30,17 @@ test('student landing only admits managed profiles through teacher code, preserv
  const teacher=readFileSync(new URL('./src/features/teacher/StudentAccessCards.tsx',import.meta.url),'utf8');
  const profile=readFileSync(new URL('./src/features/student/StudentProfileView.tsx',import.meta.url),'utf8');
  assert.match(landing,/Mã học sinh do giáo viên cấp/);
- assert.match(landing,/studentSyncService\.restore\(restoreCode\)/);
+ assert.match(landing,/studentSyncService\.restore\(code\)/);
+ assert.match(landing,/await restoreStudentByCode\(qrEntryCode\)/);
+ assert.match(landing,/setIntroActive\(true\)/);
+ assert.match(landing,/window\.history\.replaceState/);
+ assert.match(landing,/await restoreStudentByCode\(restoreCode\)/);
+ assert.match(teacher,/downloadStudentCardsZip\(cards,className\)/);
+ assert.match(teacher,/downloadStudentCardPng\(card,className\)/);
+ const downloads=readFileSync(new URL('./src/features/teacher/TeacherQrDownloads.ts',import.meta.url),'utf8');
+ assert.match(downloads,/archive\.file\(/);
+ assert.match(downloads,/canvas\.toBlob\(/);
+ assert.doesNotMatch(downloads,/fetch\(|axios|XMLHttpRequest/,'Private QR cards must not be uploaded to an external API');
  assert.match(landing,/guestMode && <div/);
  assert.doesNotMatch(landing,/studentSyncService\.register\(/);
  assert.doesNotMatch(landing,/handleStudentSubmit/);

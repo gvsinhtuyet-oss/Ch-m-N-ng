@@ -168,7 +168,13 @@ export const AdminDashboard: React.FC = () => {
         </header>
 
         {showOverviewData && <>
-          {workflowError&&<p role="alert" className="bg-rose-50 text-rose-700 rounded-xl p-3">{workflowError}</p>}
+          {workflowError&&<div role="status" className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
+            <p className="font-semibold">Một số báo cáo chưa được đồng bộ. Những chỉ số chưa xác minh sẽ hiển thị “—”.</p>
+            <details className="mt-2 text-xs text-slate-500">
+              <summary className="cursor-pointer">Chi tiết kết nối dành cho quản trị</summary>
+              <p className="mt-2">{workflowError}</p>
+            </details>
+          </div>}
           <div className="flex flex-wrap gap-2">
             <button type="button" disabled={loading} onClick={()=>void load()} className="border rounded-xl bg-white px-4 py-2 text-sm font-semibold">{loading?'Đang tải dữ liệu…':'Làm mới dữ liệu máy chủ'}</button>
             {activeTab==='overview' && <button type="button" disabled={healthLoading} onClick={()=>void checkHealth()} className="border rounded-xl bg-white px-4 py-2 text-sm font-semibold">{healthLoading?'Đang kiểm tra kết nối…':'Kiểm tra kết nối máy chủ'}</button>}
@@ -187,8 +193,12 @@ export const AdminDashboard: React.FC = () => {
         {activeTab === 'overview' && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-black text-slate-900">Tổng Quan Toàn Trường (Năm học 2026–2027)</h2>
-              <span role="status" className={`px-2.5 py-1 rounded-full text-xs font-bold ${health?.connected && health.ready && health.writable ? 'bg-emerald-100 text-emerald-800' : !health || healthLoading ? 'bg-slate-100 text-slate-700' : 'bg-rose-100 text-rose-800'}`}>
+              <div>
+                <p className="text-xs font-extrabold uppercase tracking-widest text-indigo-600">NĂM HỌC 2026–2027</p>
+                <h2 className="mt-1 text-xl font-black text-slate-900 sm:text-2xl">Tổng quan hoạt động toàn trường</h2>
+                <p className="mt-1 text-xs text-slate-500">Theo tài khoản, lớp học và hoạt động đã được hệ thống ghi nhận</p>
+              </div>
+              <span role="status" className={`px-2.5 py-1 rounded-full text-xs font-bold ${health?.connected && health.ready && health.writable ? 'bg-emerald-100 text-emerald-800' : !health || healthLoading ? 'bg-slate-100 text-slate-700' : 'bg-slate-100 text-slate-700'}`}>
                 {!health || healthLoading ? 'Đang kiểm tra kho dữ liệu' : health.connected && health.ready && health.writable ? 'Kho dữ liệu: sẵn sàng' : 'Kho dữ liệu: cần kiểm tra'}
               </span>
             </div>
@@ -198,14 +208,14 @@ export const AdminDashboard: React.FC = () => {
                 <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />Xem kết quả lớp
               </button>
               <button type="button" onClick={() => navigate('proposals', '')} className="flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-sm font-bold text-indigo-900 hover:bg-indigo-50">
-                <MessageSquareText className="h-4 w-4 shrink-0" aria-hidden="true" />Xem góp ý mới
+                <MessageSquareText className="h-4 w-4 shrink-0" aria-hidden="true" />Xem đánh giá sao và góp ý
                 {!loading && available.proposals && counts.pending > 0 && <span className="ml-auto rounded-full bg-amber-100 px-2 py-0.5 text-xs text-amber-900" aria-label={`${counts.pending} góp ý chờ xử lý`}>{counts.pending}</span>}
               </button>
               <button type="button" onClick={() => navigate('stations')} className="flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-sm font-bold text-indigo-900 hover:bg-indigo-50">
                 <BookOpen className="h-4 w-4 shrink-0" aria-hidden="true" />Sửa nội dung trạm
               </button>
               <button type="button" onClick={() => navigate('effectiveness')} className="flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-sm font-bold text-indigo-900 hover:bg-indigo-50">
-                <BarChart3 className="h-4 w-4 shrink-0" aria-hidden="true" />Xem biểu đồ hiệu quả
+                <BarChart3 className="h-4 w-4 shrink-0" aria-hidden="true" />Biểu đồ sử dụng và hiệu quả
               </button>
             </div>
 

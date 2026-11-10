@@ -51,7 +51,7 @@ export const MusicControl: React.FC = () => {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-11 z-[70] w-72 rounded-2xl border border-orange-100 bg-white p-3.5 shadow-2xl">
+        <div className="header-audio-popover absolute right-0 top-11 z-[70] w-72 rounded-2xl border border-orange-100 bg-white p-3.5 shadow-2xl">
           <div className="mb-3">
             <p className="text-sm font-extrabold text-slate-900">Âm thanh</p>
             <p className="mt-0.5 text-[10px] leading-4 text-slate-500">

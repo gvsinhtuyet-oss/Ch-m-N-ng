@@ -27,14 +27,15 @@ test('duplicate names have separate stable identities; codes are private, rotati
 
 test('student landing only admits managed profiles through teacher code, preserving guest access',()=>{
  const landing=readFileSync(new URL('./src/features/landing/LandingView.tsx',import.meta.url),'utf8');
+ const portal=readFileSync(new URL('./src/features/landing/AccessPortal.tsx',import.meta.url),'utf8');
  const teacher=readFileSync(new URL('./src/features/teacher/StudentAccessCards.tsx',import.meta.url),'utf8');
  const profile=readFileSync(new URL('./src/features/student/StudentProfileView.tsx',import.meta.url),'utf8');
- assert.match(landing,/Mã học sinh do giáo viên cấp/);
+ assert.match(portal,/Mã học sinh của em/);
  assert.match(landing,/studentSyncService\.restore\(code\)/);
  assert.match(landing,/await restoreStudentByCode\(qrEntryCode\)/);
  assert.match(landing,/setIntroActive\(true\)/);
  assert.match(landing,/window\.history\.replaceState/);
- assert.match(landing,/await restoreStudentByCode\(restoreCode\)/);
+ assert.match(landing,/restoreStudentByCode\(restoreCode\)/);
  assert.match(teacher,/downloadStudentCardsZip\(cards,className\)/);
  assert.match(teacher,/downloadStudentCardPng\(card,className\)/);
  assert.match(teacher,/confirm==='rotate-batch'/);
@@ -44,7 +45,8 @@ test('student landing only admits managed profiles through teacher code, preserv
  assert.match(downloads,/archive\.file\(/);
  assert.match(downloads,/canvas\.toBlob\(/);
  assert.doesNotMatch(downloads,/fetch\(|axios|XMLHttpRequest/,'Private QR cards must not be uploaded to an external API');
- assert.match(landing,/guestMode && <div/);
+ assert.match(portal,/guestMode \? \(/);
+ assert.match(portal,/cham-access-grade-grid/);
  assert.doesNotMatch(landing,/studentSyncService\.register\(/);
  assert.doesNotMatch(landing,/handleStudentSubmit/);
  assert.doesNotMatch(landing,/Tạo hồ sơ khám phá cá nhân/);

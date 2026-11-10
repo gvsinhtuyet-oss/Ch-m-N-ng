@@ -1,9 +1,11 @@
 import React,{useEffect,useRef,useState} from 'react';
 import {authService,StudentAccess} from '../../services/AuthService';
+import {downloadStudentCardsZip,downloadStudentCardPng} from './TeacherQrDownloads';
 type Card={id:string;name:string;code:string;qr:string};
 export function StudentAccessCards({classId,className}:{classId:string;className:string}){
  const [students,setStudents]=useState<StudentAccess[]>([]),[cards,setCards]=useState<Card[]>([]);
  const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[confirm,setConfirm]=useState('');
+ const [downloadBusy,setDownloadBusy]=useState(false);
  const [oldCodes,setOldCodes]=useState<Record<string,string>>({});
  const generation=useRef(0),inFlight=useRef(false);
  useEffect(()=>{const version=++generation.current;setCards([]);setStudents([]);setOldCodes({});setMessage('');setConfirm('');
@@ -24,7 +26,7 @@ export function StudentAccessCards({classId,className}:{classId:string;className
     const card={id:row.id,name:result.profile.name,code:result.syncCode,qr:''};
     setCards(prev=>[...prev.filter(c=>c.id!==row.id),card]);
     setStudents(prev=>prev.map(s=>s.id===row.id?{...s,issued:true,studentId:result.profile.id}:s));completed++;
-    try{const qr=await QRCode.toDataURL(window.location.origin+'/#student-code='+encodeURIComponent(result.syncCode),{width:180,margin:2,errorCorrectionLevel:'M'});if(version===generation.current)setCards(prev=>prev.map(c=>c.id===row.id?{...c,qr}:c));}catch{setMessage('Đã cấp mã. Chưa tạo được QR; có thể dùng mã in trên thẻ.');}
+    try{const qr=await QRCode.toDataURL(window.location.origin+'/#student-code='+encodeURIComponent(result.syncCode),{width:300,margin:2,errorCorrectionLevel:'M'});if(version===generation.current)setCards(prev=>prev.map(c=>c.id===row.id?{...c,qr}:c));}catch{setMessage('Đã cấp mã. Chưa tạo được QR; có thể dùng mã in trên thẻ.');}
    }
    if(version===generation.current){setConfirm('');setMessage(`Đã xử lý ${completed} học sinh. Hãy in hoặc lưu thẻ trước khi rời trang.`);}
   }catch(e){if(version===generation.current){setMessage(`${completed?`Đã cấp ${completed} mã. `:''}${(e as Error).message} Nếu kết nối bị ngắt, tải lại danh sách trước khi thử tiếp.`);try{setStudents(await authService.studentAccess(classId));}catch{}}}
@@ -42,9 +44,27 @@ export function StudentAccessCards({classId,className}:{classId:string;className
    {confirm===row.id&&<div className="rounded-lg bg-amber-50 p-3"><p>Mã cũ của {row.name} sẽ ngừng sử dụng. Hồ sơ và tiến độ giữ nguyên. Thiết bị đang học cần nhập mã mới.</p><button type="button" disabled={busy} onClick={()=>void issue([row],'rotate')} className="m-2 rounded-lg bg-amber-700 p-2 text-white">Xác nhận cấp lại</button><button type="button" disabled={busy} onClick={()=>setConfirm('')}>Hủy</button></div>}
   </div>)}</div>
   {message&&<p role="status" className="rounded-xl bg-slate-100 p-3">{message}</p>}
-  {!!cards.length&&<><p className="text-sm font-bold">Thẻ chỉ hiện trong lượt cấp này. In hoặc lưu PDF ngay; phát riêng cho từng em.</p><button type="button" onClick={()=>window.print()} className="rounded-xl bg-slate-800 p-3 text-white font-bold">In / lưu PDF thẻ đã cấp</button>
-   <div id="student-access-print" className="grid sm:grid-cols-2 gap-3">{cards.map(card=><article key={card.id} className="student-access-card rounded-xl border-2 border-sky-200 bg-white p-4 text-center break-inside-avoid"><p className="text-sm font-bold">CHẠM ĐÀ NẴNG · Lớp {className}</p><p className="font-black text-lg">{card.name}</p>{card.qr&&<img src={card.qr} alt={'QR vào học của '+card.name} width={180} height={180} className="mx-auto"/>}<p className="font-mono text-lg font-bold tracking-wider">{card.code}</p><p className="text-xs">Quét QR hoặc mở {window.location.host}, chọn Học sinh → Vào học bằng mã. Giữ thẻ riêng.</p></article>)}</div>
-   <style>{`@media print{body *{visibility:hidden!important}#student-access-print,#student-access-print *{visibility:visible!important}#student-access-print{position:absolute;left:0;top:0;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px}.student-access-card{break-inside:avoid;box-shadow:none!important}}`}</style>
+  {!!cards.length&&<>
+   <p className="text-sm font-bold">Thẻ chỉ hiện trong lượt cấp này. Hãy lưu thẻ trước khi rời trang.</p>
+   <div className="flex flex-wrap gap-2">
+    <button type="button" disabled={busy||downloadBusy} onClick={async()=>{
+      setDownloadBusy(true);setMessage('');
+      try{await downloadStudentCardsZip(cards,className);setMessage('Đã chuẩn bị ZIP gồm '+cards.length+' thẻ PNG riêng. Hãy phát đúng thẻ cho từng gia đình.');}
+      catch(error){setMessage((error as Error).message);}
+      finally{setDownloadBusy(false);}
+    }} className="rounded-xl bg-sky-700 p-3 text-white font-bold disabled:opacity-60">{downloadBusy?'Đang chuẩn bị thẻ…':'Tải trọn bộ thẻ QR (ZIP)'}</button>
+    <button type="button" disabled={busy||downloadBusy} onClick={()=>window.print()} className="rounded-xl bg-slate-800 p-3 text-white font-bold disabled:opacity-60">In / lưu PDF thẻ đã cấp</button>
+   </div>
+   <p className="rounded-xl bg-amber-50 border border-amber-200 p-3 text-sm text-amber-900">Mỗi ảnh PNG chứa mã đăng nhập riêng của một học sinh. Không gửi toàn bộ ZIP vào nhóm phụ huynh; hãy gửi từng ảnh cho đúng gia đình. Nếu rời trang trước khi tải, mã đã cấp không thể xem lại dạng rõ để bảo vệ học sinh.</p>
+   <div id="student-access-print" className="grid sm:grid-cols-2 gap-3">{cards.map(card=><article key={card.id} className="student-access-card rounded-xl border-2 border-sky-200 bg-white p-4 text-center break-inside-avoid"><p className="text-sm font-bold">CHẠM ĐÀ NẴNG · Lớp {className}</p><p className="font-black text-lg">{card.name}</p>{card.qr&&<img src={card.qr} alt={'QR vào học của '+card.name} width={180} height={180} className="mx-auto"/>}<p className="font-mono text-lg font-bold tracking-wider">{card.code}</p><p className="text-xs">Quét QR → xem video chào mừng → CHẠM ĐỂ KHÁM PHÁ → tự vào lớp. Giữ thẻ riêng.</p>
+   <button type="button" disabled={busy||downloadBusy||!card.qr} onClick={async()=>{
+      setDownloadBusy(true);setMessage('');
+      try{await downloadStudentCardPng(card,className);}
+      catch(error){setMessage((error as Error).message);}
+      finally{setDownloadBusy(false);}
+    }} className="student-card-download mt-3 rounded-lg border border-sky-300 bg-sky-50 px-4 py-2 text-sm font-semibold text-sky-900 disabled:opacity-50">Tải thẻ PNG riêng</button>
+  </article>)}</div>
+   <style>{`@media print{body *{visibility:hidden!important}#student-access-print,#student-access-print *{visibility:visible!important}#student-access-print{position:absolute;left:0;top:0;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px}.student-access-card{break-inside:avoid;box-shadow:none!important}#student-access-print .student-card-download{display:none!important}}`}</style>
   </>}
  </section>;
 }

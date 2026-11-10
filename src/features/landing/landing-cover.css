@@ -424,3 +424,103 @@
  .landing-top-actions > button.landing-staff-login { width:auto!important; padding-inline:10px!important; white-space:nowrap; }
  .landing-top-actions > button.landing-staff-login > span { display:inline!important; }
 }
+
+
+/* CHẠM ĐÀ NẴNG role / student / teacher screens, consistent at every viewport.
+   Only background illustrations are raster; all names, help, fields and buttons are live HTML. */
+.cham-onboard-overlay { isolation:isolate; color:#12385f; -webkit-overflow-scrolling:touch; }
+.cham-onboard-background {position:fixed;z-index:-3;filter:saturate(1.15);object-position:center}
+.cham-onboard-screen {position:fixed;z-index:-2;background:linear-gradient(135deg,rgba(10,107,196,.36),rgba(193,236,255,.28) 40%,rgba(12,101,185,.3)),rgba(6,43,100,.12);backdrop-filter:blur(3px)}
+.cham-onboard-center {min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:24px 16px max(24px,env(safe-area-inset-bottom));}
+.cham-onboard-card {width:min(100%,960px);border-radius:30px;border:2px solid #edf9ff;background:linear-gradient(155deg,rgba(255,255,255,.985),rgba(244,252,255,.975));padding:20px clamp(18px,3vw,34px) 26px;box-shadow:0 20px 75px #043c77a0,0 0 0 5px #b6e8ff45;position:relative;}
+.cham-onboard-card:has(.cham-onboard-content--student),.cham-onboard-card:has(.cham-onboard-content--teacher){max-width:830px}
+.cham-onboard-close {position:absolute;right:15px;top:15px;z-index:2;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#e8f4ff;color:#194c79;transition:background .2s}
+.cham-onboard-close:hover{background:#cbe8ff}
+.cham-onboard-close:focus-visible,.cham-onboard-card button:focus-visible,.cham-onboard-card input:focus-visible{outline:3px solid #ff991b;outline-offset:2px}
+.cham-onboard-brand {margin:0 auto 10px;text-align:center;max-width:320px}
+.cham-onboard-brand img {display:block;width:min(100%,235px);height:auto;aspect-ratio:237/87;object-fit:contain;margin:auto}
+.cham-onboard-brand p {margin-top:3px;font-size:clamp(12px,1.9vw,15px);font-weight:800;color:#185788}
+.cham-onboard-headline {margin:6px 0 4px;font-size:clamp(23px,3.2vw,32px);font-weight:950;line-height:1.18;letter-spacing:-.03em;color:#104986;text-align:center;}
+.cham-onboard-intro {margin:0 auto 18px;text-align:center;color:#51718c;font-size:clamp(13px,1.55vw,15px);line-height:1.5}
+.cham-onboard-choice-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:15px auto 0;max-width:850px}
+.cham-onboard-choice {display:grid;grid-template-rows:145px auto;position:relative;min-width:0;overflow:hidden;border:2px solid #d7eafb;border-radius:25px;box-shadow:0 5px 16px #094d8a18;background:linear-gradient(180deg,#dff3ff,#f7fcff);transition:transform .2s,box-shadow .2s}
+.cham-onboard-choice:hover{transform:translateY(-3px);box-shadow:0 10px 25px #094d8a30}
+.cham-onboard-choice--teacher{background:linear-gradient(180deg,#fff0d9,#fffdf9);border-color:#ffe3b4}
+.cham-onboard-choice>img{display:block;width:100%;height:145px;object-fit:cover;object-position:center 42%}
+.cham-onboard-choice-copy{display:grid;align-content:center;justify-items:start;min-height:74px;padding:12px 52px 14px 18px}
+.cham-onboard-choice-copy strong{font-size:clamp(22px,2.6vw,27px);line-height:1.2;font-weight:950;color:#0962bb}
+.cham-onboard-choice--teacher .cham-onboard-choice-copy strong{color:#d75c0c}
+.cham-onboard-choice-copy small{font-size:12px;color:#4f6980;line-height:1.4;margin-top:3px;text-align:left}
+.cham-onboard-choice-arrow {position:absolute;right:15px;bottom:23px;color:white;border-radius:50%;background:#1481e1;width:37px;height:37px;padding:8px}
+.cham-onboard-choice--teacher .cham-onboard-choice-arrow{background:#f18518}
+.cham-onboard-content--student,.cham-onboard-content--teacher {display:grid;grid-template-columns:minmax(150px,230px) minmax(0,1fr);grid-template-rows:auto auto 1fr auto;column-gap:25px;align-items:start}
+.cham-onboard-hero-art {grid-column:1;grid-row:1/5;display:block;width:100%;height:auto;max-height:410px;object-fit:contain;align-self:center;border-radius:24px}
+.cham-onboard-content--student>.cham-onboard-headline,.cham-onboard-content--teacher>.cham-onboard-headline{grid-column:2;margin:6px 0 8px;text-align:left}
+.cham-onboard-content--student>.cham-onboard-intro,.cham-onboard-content--teacher>.cham-onboard-intro{grid-column:2;text-align:left;margin:0 0 16px}
+.cham-onboard-student-form,.cham-onboard-grade-selector,.cham-onboard-teacher-actions{grid-column:2;min-width:0}
+.cham-onboard-field-label{display:flex;align-items:center;gap:7px;margin-bottom:7px;font-size:14px;font-weight:850;color:#194e85}
+.cham-onboard-student-form input,.cham-onboard-password-form input{display:block;width:100%;min-width:0;height:52px;border:2px solid #b5dbf8;background:white;border-radius:15px;padding:12px 15px;color:#183e60;font-size:16px;outline:none}
+.cham-onboard-student-form input:focus,.cham-onboard-password-form input:focus{border-color:#1586df;box-shadow:0 0 0 3px #b1e3ff}
+.cham-onboard-primary {width:100%;min-height:50px;display:flex;align-items:center;justify-content:center;gap:10px;border-radius:15px;padding:12px;background:linear-gradient(135deg,#ffbf31,#ff8214);border-bottom:4px solid #d55d05;color:#16395c;font-weight:950;font-size:clamp(14px,1.9vw,18px);margin-top:12px;box-shadow:0 4px 9px #f5a32d33}
+.cham-onboard-primary:disabled{opacity:.52;cursor:not-allowed;filter:grayscale(.2)}
+.cham-onboard-secondary-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.cham-onboard-secondary {display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:47px;border-radius:13px;padding:10px 12px;font-size:13px;font-weight:800;flex:1 1 150px;line-height:1.25;text-align:center}
+.cham-onboard-secondary--saved{background:#e6fbf2;color:#096845;border:1px solid #a5e8c9}
+.cham-onboard-secondary--guest{background:#fff2db;color:#9c4809;border:1px solid #ffdd99}
+.cham-onboard-hint{color:#58728b;font-size:12px;line-height:1.48;margin:12px 0 0}
+.cham-onboard-back {display:block;grid-column:2;min-height:40px;margin:12px auto 0;padding:7px 12px;text-align:center;color:#1762a0;font-weight:850;font-size:13px}
+.cham-onboard-error{grid-column:2;background:#fff2f1;border:1px solid #f5b7ac;color:#aa382a;padding:10px 12px;border-radius:12px;margin-top:8px;font-size:13px;line-height:1.4}
+.cham-onboard-grade-selector h3{font-weight:850;margin-bottom:11px;font-size:15px}
+.cham-onboard-grades{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.cham-onboard-grades button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:0;min-height:67px;border-radius:14px;color:#fff;background:linear-gradient(145deg,#299de7,#1265be);font-weight:850;font-size:13px;box-shadow:0 4px 8px #135baf28}
+.cham-onboard-grades button:disabled{opacity:.55}
+.cham-onboard-text-button{color:#125f99;font-size:12px;font-weight:800;padding:10px;margin:auto;display:block}
+.cham-onboard-teacher-actions {display:flex;flex-direction:column;gap:10px}
+.cham-onboard-google>div {background:transparent;border:0;padding:0;box-shadow:none}
+.cham-onboard-google>div>p:nth-child(-n+2) {display:none}
+.cham-onboard-google [data-testid="google-signin-host"] button {background:linear-gradient(145deg,#2595ef,#0b5cc7);border:1px solid #75c2ff;color:white;font-weight:900;min-height:52px;box-shadow:0 3px 8px #0a53ab2f}
+.cham-onboard-google [data-testid="google-signin-host"] button::before{content:"G";font-family:Arial,sans-serif;font-size:21px;font-weight:950;color:#fff;display:inline-block;margin-right:9px}
+.cham-onboard-account-button {display:flex;align-items:center;justify-content:center;gap:9px;min-height:50px;width:100%;border:2px solid #b4d4ed;border-radius:15px;background:#fafdff;color:#14568f;font-size:15px;font-weight:900}
+.cham-onboard-divider{display:flex;align-items:center;gap:12px;text-align:center;color:#7d8fa1;font-size:12px;font-weight:750}
+.cham-onboard-divider:before,.cham-onboard-divider:after{content:"";height:1px;flex:1;background:#c4d7e8}
+.cham-onboard-secondary--guest-teacher{width:100%;padding:11px 14px;justify-content:flex-start;gap:10px;background:linear-gradient(100deg,#fff8e8,#ffebce);color:#975112;border:1px solid #ffd59a}
+.cham-onboard-secondary--guest-teacher span{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;flex:1}
+.cham-onboard-secondary--guest-teacher strong{font-size:15px}
+.cham-onboard-secondary--guest-teacher small{font-weight:500;font-size:12px;color:#805a36}
+.cham-onboard-password-form{padding:13px;border:1px solid #cae3f6;border-radius:15px;background:#f1faff;display:grid;gap:10px}
+.cham-onboard-password-form label {display:grid;gap:5px;font-size:13px;font-weight:800;color:#175083}
+.cham-onboard-password-form p{font-size:11px;color:#57728c}
+.cham-onboard-password-form .cham-onboard-primary{margin-top:0}
+@media(max-width:650px){
+ .cham-onboard-center{align-items:flex-start;padding:10px 8px max(14px,env(safe-area-inset-bottom))}
+ .cham-onboard-card{margin:auto;max-width:460px;padding:14px 15px 16px;border-radius:25px}
+ .cham-onboard-brand{margin-bottom:8px}
+ .cham-onboard-brand img{width:min(100%,190px)}
+ .cham-onboard-brand p{font-size:12px}
+ .cham-onboard-headline{font-size:clamp(21px,6vw,26px);margin-top:6px}
+ .cham-onboard-intro{font-size:13px;margin-bottom:10px}
+ .cham-onboard-close{right:9px;top:9px;width:38px;height:38px}
+ .cham-onboard-choice-grid{grid-template-columns:1fr;gap:12px;margin-top:12px}
+ .cham-onboard-choice{grid-template-columns:112px minmax(0,1fr);grid-template-rows:118px;align-items:center;border-radius:20px}
+ .cham-onboard-choice>img{width:112px;height:118px;object-fit:cover}
+ .cham-onboard-choice-copy{padding:10px 40px 10px 11px;min-height:0}
+ .cham-onboard-choice-copy strong{font-size:23px}
+ .cham-onboard-choice-copy small{font-size:11px}
+ .cham-onboard-choice-arrow{width:30px;height:30px;right:8px;bottom:43px;padding:7px}
+ .cham-onboard-content--student,.cham-onboard-content--teacher{display:flex;flex-direction:column;align-items:stretch;gap:0}
+ .cham-onboard-hero-art{display:block;width:min(100%,250px);height:116px;object-fit:cover;object-position:center 35%;margin:0 auto 5px;border-radius:18px}
+ .cham-onboard-content--student>.cham-onboard-headline,.cham-onboard-content--teacher>.cham-onboard-headline{text-align:center;margin:4px 0}
+ .cham-onboard-content--student>.cham-onboard-intro,.cham-onboard-content--teacher>.cham-onboard-intro{text-align:center;margin:0 0 12px}
+ .cham-onboard-back{width:100%;margin-top:10px}
+ .cham-onboard-secondary-row{flex-wrap:wrap}
+ .cham-onboard-grades{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:360px){
+ .cham-onboard-card{padding:12px 11px 14px}
+ .cham-onboard-choice{grid-template-columns:98px minmax(0,1fr);grid-template-rows:106px}
+ .cham-onboard-choice>img{width:98px;height:106px}
+ .cham-onboard-choice-copy strong{font-size:20px}
+ .cham-onboard-choice-copy small{font-size:10px}
+ .cham-onboard-hero-art{height:92px}
+}
+@media(prefers-reduced-motion:reduce){.cham-onboard-choice{transition:none}.cham-onboard-choice:hover{transform:none}}

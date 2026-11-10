@@ -47,6 +47,13 @@ test('staff-only read, opt-in, bounded date ranges and input', async () => {
   assert.equal((await read(null)).status, 401);
   assert.equal((await read('teacher')).status, 403);
   assert.equal((await read('admin',token,started,'?days=999')).status, 400);
+  assert.equal((await read('admin',token,started,'?days=0')).status, 400);
+  assert.equal((await read('admin',token,started,'?days=10.5')).status, 400);
+  assert.equal((await read('admin',token,started,'?days=-1')).status, 400);
+  assert.equal((await read('admin',token,started,'?days=91')).status, 400);
+  assert.deepEqual(await (await read('admin',token,started,'?days=37')).json(), {
+    start:'2026-10-01',end:'2026-11-06',visits:[],stations:[],
+  },'Precise October-to-present range must be accepted without inventing visits');
   assert.equal((await write({}, started, 'https://other.test')).status, 403);
   assert.equal((await write({session:'a'.repeat(5000)})).status, 413);
   assert.equal((await write({session:'a'.repeat(32), audience:0, stations:[{id:'unknown',stage:1}]})).status, 400);

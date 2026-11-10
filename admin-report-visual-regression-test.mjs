@@ -12,6 +12,15 @@ test('Admin effectiveness charts use API response and never demo metrics',()=>{
   assert.match(report,/Lượt truy cập theo ngày/);
   assert.match(report,/const stageTotals = \[/);
   assert.doesNotMatch(report,/Math\.random\(/,'Reports must not fabricate metrics');
+  assert.match(report,/showOctoberPeriod\?daysFromOctober:30/);
+  assert.match(report,/Từ 01\/10\/2026 đến nay/);
+  assert.match(report,/monthlyVisits = new Map/);
+  assert.match(report,/So sánh lượt truy cập theo tháng/);
+  assert.match(report,/monthlyVisits\.entries\(\)/);
+  assert.match(report,/Dữ liệu được tổng hợp từ hoạt động đã ghi nhận trên máy chủ/);
+  assert.match(report,/Chưa kết nối được báo cáo hiệu quả/);
+  assert.doesNotMatch(report,/bg-amber-50 p-3 text-sm text-amber-900/,'Technical errors must not dominate the report');
+  assert.doesNotMatch(report,/300 lượt|100 lượt|dữ liệu minh họa|dữ liệu mô phỏng/i);
 });
 
 test('Admin stars draw only from server ratings and show unavailable state',()=>{
@@ -30,6 +39,10 @@ test('Admin stars draw only from server ratings and show unavailable state',()=>
   assert.match(inbox,/const \[stationId,setStationId\]=useState\(initialStationId \?\? ''\)/);
   assert.match(inbox,/initialStationId!==undefined\)\{setStationId\(initialStationId\);setGrade\(0\);\}/);
   assert.doesNotMatch(inbox,/Math\.random\(/);
+  assert.match(inbox,/Đánh giá theo 5 khối lớp/);
+  assert.match(inbox,/gradeSummaries=\[1,2,3,4,5\]/);
+  assert.match(inbox,/highestGradeTotal/);
+  assert.doesNotMatch(inbox,/300 lượt|100 lượt|dữ liệu minh họa|dữ liệu mô phỏng/i);
 });
 
 test('Admin header remains readable after programmatic focus navigation',()=>{
@@ -58,4 +71,14 @@ test('Admin overview never substitutes zeros for an unavailable source',()=>{
   assert.match(dashboard,/Các chỉ số chưa xác minh hiển thị “—”/);
   assert.match(dashboard,/available\.implementations\?implementations\.length:'—'/);
   assert.match(dashboard,/available\.users\?counts\.teachers:'—'/);
+});
+
+test('Admin overview presents source failures without red technical alerts or false numbers',()=>{
+  const dashboard=source('src/features/admin/AdminDashboard.tsx');
+  assert.match(dashboard,/Một số báo cáo chưa được đồng bộ/);
+  assert.match(dashboard,/Chi tiết kết nối dành cho quản trị/);
+  assert.match(dashboard,/Biểu đồ sử dụng và hiệu quả/);
+  assert.match(dashboard,/Xem đánh giá sao và góp ý/);
+  assert.doesNotMatch(dashboard,/role="alert" className="bg-rose-50/);
+  assert.doesNotMatch(dashboard,/Math\.random\(/);
 });

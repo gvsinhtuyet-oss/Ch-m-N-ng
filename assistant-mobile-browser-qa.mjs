@@ -40,8 +40,10 @@ try {
     }
     await page.waitForFunction(()=>document.body.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'),{timeout:30000});
     await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'))?.click());
-    await page.waitForSelector('button[aria-label="Khám phá tự do dành cho học sinh"]',{timeout:15000});
-    await page.evaluate(()=>document.querySelector('button[aria-label="Khám phá tự do dành cho học sinh"]').click());
+    await page.waitForSelector('.cham-access-role-card.student',{timeout:15000});
+    await page.click('.cham-access-role-card.student');
+    await page.waitForSelector('.cham-access-student-secondary button',{timeout:15000});
+    await page.evaluate(()=>[...document.querySelectorAll('.cham-access-student-secondary button')].find(b=>b.textContent?.includes('Khám phá tự do'))?.click());
     await page.waitForFunction(()=>!![...document.querySelectorAll('button')].find(b=>b.textContent?.includes('Khối 2')),{timeout:15000});
     await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('Khối 2'))?.click());
     await page.waitForSelector('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]',{visible:true,timeout:30000});

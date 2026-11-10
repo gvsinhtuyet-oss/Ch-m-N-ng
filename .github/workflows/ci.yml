@@ -149,6 +149,13 @@ jobs:
           node staff-admin-demo-qa.mjs
           node assistant-mobile-browser-qa.mjs
           node stage2-my-khe-intro-qa.mjs
+      - name: LIVE public guest and Admin Demo UI (read-only, no writes)
+        env:
+          QA_URL: https://chamdanang-gddp.pages.dev/
+          LIVE_READ_ONLY: 'true'
+        run: |
+          node assistant-mobile-browser-qa.mjs
+          node staff-admin-demo-qa.mjs
       - name: Preserve screenshots (including failure evidence)
         if: always()
         uses: actions/upload-artifact@v4

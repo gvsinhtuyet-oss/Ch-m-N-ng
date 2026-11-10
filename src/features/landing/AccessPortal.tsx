@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { IllustratedAccessPortal } from './IllustratedAccessPortal';
 import { ArrowLeft, ArrowRight, BookOpen, Check, Compass, Eye, EyeOff, GraduationCap, KeyRound, LockKeyhole, QrCode, X } from 'lucide-react';
 import { GoogleTeacherLogin } from '../../components/auth/GoogleTeacherLogin';
 import type { StaffUser } from '../../services/AuthService';
 import './access-portal.css';
 
-interface Props {
+export interface AccessPortalProps {
   view: 'role' | 'student' | 'teacher';
   guestMode: boolean;
   chosenGrade: number | null;
@@ -38,7 +39,8 @@ const students = '/images/landing/cham-access-students.webp';
 const teacher = '/images/landing/cham-access-teacher.webp';
 const grades = [1, 2, 3, 4, 5];
 
-export const AccessPortal: React.FC<Props> = ({
+export const AccessPortal: React.FC<AccessPortalProps> = (props) => {
+  const {
   view, guestMode, chosenGrade, roleBackground, themeBlur,
   restoreCode, onRestoreCodeChange, savedSyncCode, restoreBusy,
   staffBusy, staffEmail, staffPassword, onStaffEmailChange,
@@ -46,56 +48,22 @@ export const AccessPortal: React.FC<Props> = ({
   onTeacher, onStudentGuest, onStudentGrade, onStudentSubmit,
   onSavedCode, onTeacherDemo, onStaffLogin, onRestoreStaff,
   onGoogleLogin,
-}) => {
+  } = props;
   const [accountExpanded, setAccountExpanded] = useState(false);
   const [showCode, setShowCode] = useState(false);
   const [qrHelp, setQrHelp] = useState(false);
 
-  const [mobileReveal, setMobileReveal] = useState(false);
-  const art = view === 'role' ? '/images/landing/approved-access-role.png' : view === 'student' ? '/images/landing/approved-access-student.png' : '/images/landing/approved-access-teacher.png';
-  const qrInstructions = 'Dùng camera điện thoại quét thẻ QR do cô thầy cấp, sau đó bấm đường dẫn CHẠM ĐÀ NẴNG để vào học. Không cần cài ứng dụng.';
-  const hotspot = (kind: string, title: string, callback: () => void, disabled = false) =>
-    <button type="button" className={`cham-art-hit cham-art-${kind}`} aria-label={title} title={title} onClick={callback} disabled={disabled}><span className="sr-only">{title}</span></button>;
-
+  const [showApprovedArt, setShowApprovedArt] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 1023px)').matches);
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 1023px)');
+    const onChange = () => setShowApprovedArt(media.matches);
+    onChange();
+    media.addEventListener('change', onChange);
+    return () => media.removeEventListener('change', onChange);
+  }, []);
+  if (showApprovedArt) return <IllustratedAccessPortal {...props} />;
   return (
     <div className="cham-access-overlay" data-screen={view}>
-      <div className="cham-art-mobile">
-        <div className={`cham-art-canvas cham-art-screen-${view}`} style={{aspectRatio: view==='student'?'941 / 1670':'1086 / 1448'}}>
-          <img src={art} className="cham-art-picture" alt={view==='role'?'CHẠM ĐÀ NẴNG – Chọn vai trò Học sinh hoặc Giáo viên':view==='student'?'Học sinh – Chào Nhà phiêu lưu!':'Giáo viên – Chào thầy cô!'} draggable={false}/>
-          {view === 'role' && <>
-            {hotspot('choose-student','Chọn vai trò Học sinh',onStudent)}
-            {hotspot('choose-teacher','Chọn vai trò Giáo viên',onTeacher)}
-          </>}
-          {view === 'student' && <>
-            {!guestMode ? <>
-              <label htmlFor="cham-art-student-code" className="sr-only">Mã học sinh</label>
-              <input id="cham-art-student-code" className="cham-art-text cham-art-student-code" type={mobileReveal?'text':'password'} value={restoreCode} onChange={event=>onRestoreCodeChange(event.target.value)} spellCheck={false} autoComplete="off" maxLength={20} placeholder="Nhập mã do thầy cô cấp..." onKeyDown={event=>{if(event.key==='Enter'&&restoreCode.trim())onStudentSubmit();}}/>
-              {hotspot('eye','Hiện hoặc ẩn mã học sinh',()=>setMobileReveal(!mobileReveal))}
-              {hotspot('qr','Hướng dẫn vào học bằng mã QR',()=>setQrHelp(!qrHelp))}
-              {hotspot('begin','Bắt đầu khám phá bằng mã học sinh',onStudentSubmit,restoreBusy||!restoreCode.trim())}
-              {hotspot('free','Khám phá tự do',onStudentGuest)}
-              {hotspot('back-student','Chọn vai trò khác',onBack)}
-              {qrHelp&&<div className="cham-art-popover" role="note"><button aria-label="Đóng hướng dẫn QR" type="button" onClick={()=>setQrHelp(false)}><X size={18}/></button><strong>Vào học bằng mã QR</strong><p>{qrInstructions}</p></div>}
-            </> : <div className="cham-art-grade-modal" role="group" aria-label="Chọn khối lớp khám phá tự do"><strong>Em chọn khối lớp để khám phá nhé!</strong><div>{grades.map(grade=><button key={grade} type="button" onClick={()=>onStudentGrade(grade)} disabled={restoreBusy}>Khối {grade}</button>)}</div><button type="button" onClick={onStudent}>Trở lại nhập mã</button></div>}
-          </>}
-          {view === 'teacher' && <>
-            <div className="cham-art-google"><GoogleTeacherLogin onLogin={onGoogleLogin}/></div>
-            <label htmlFor="cham-art-teacher-email" className="sr-only">Email giáo viên</label>
-            <input id="cham-art-teacher-email" className="cham-art-text cham-art-teacher-email" type="email" autoComplete="username" value={staffEmail} onChange={e=>onStaffEmailChange(e.target.value)} placeholder="Email"/>
-            <label htmlFor="cham-art-teacher-password" className="sr-only">Mật khẩu giáo viên</label>
-            <input id="cham-art-teacher-password" className="cham-art-text cham-art-teacher-password" type={showCode?'text':'password'} autoComplete="current-password" value={staffPassword} onChange={e=>onStaffPasswordChange(e.target.value)} placeholder="Mật khẩu" onKeyDown={e=>{if(e.key==='Enter'&&staffEmail&&staffPassword){e.preventDefault();document.getElementById('cham-art-teacher-submit')?.click();}}}/>
-            {hotspot('password-eye','Hiện hoặc ẩn mật khẩu',()=>setShowCode(!showCode))}
-            <button id="cham-art-teacher-submit" type="button" className="cham-art-hit cham-art-login" aria-label="Đăng nhập bằng email và mật khẩu" disabled={staffBusy} onClick={()=>{const form=document.getElementById('cham-art-teacher-form') as HTMLFormElement|null;form?.requestSubmit();}}/>
-            <form id="cham-art-teacher-form" className="sr-only" onSubmit={onStaffLogin}><button type="submit">Đăng nhập</button></form>
-            {hotspot('teacher-free','Giáo viên tự do',onTeacherDemo,staffBusy)}
-            {hotspot('back-teacher','Chọn vai trò khác',onBack)}
-          </>}
-          {loginError&&view!=='role'&&<div className="cham-art-error" role="alert">{loginError}</div>}
-        </div>
-        <button type="button" className="cham-art-close" onClick={onClose} aria-label="Đóng cửa sổ"><X size={18}/></button>
-      </div>
-      <div className="cham-access-desktop">
-
       <img className="cham-access-backdrop" src={roleBackground} alt="" aria-hidden="true" style={{filter:`blur(${Math.min(3,themeBlur)}px)`}} />
       <div className="cham-access-colorveil" aria-hidden="true" />
       <section className="cham-access-sheet" role="dialog" aria-modal="true" aria-label={view === 'role' ? 'Chọn vai trò' : view === 'student' ? 'Đăng nhập học sinh' : 'Đăng nhập giáo viên'}>
@@ -190,7 +158,6 @@ export const AccessPortal: React.FC<Props> = ({
           )}
         </div>
       </section>
-      </div>
     </div>
   );
 };

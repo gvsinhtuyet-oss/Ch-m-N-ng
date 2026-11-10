@@ -30,8 +30,8 @@ test('recovery snapshot contains the current assistant module contract and isola
  // Effectiveness analytics around AppContent; do not overwrite those changes
  // with the older immutable AI Studio snapshot when validating recovery.
  const productionVariantSHA256 = {
-   'src/App.tsx': '4d17b64aa134685a7a70253b2fd76c4428cb0577ea12389cb9aad2c0b5b75356',
-   'src/components/common/DanangAssistantChat.tsx': 'b142680ea628a22498d13fcb197b89028b0322eb40e98fc6e58ef505b6627aed',
+   'src/App.tsx': 'b81df39dd21e0bd39b65f147c68703fa7665201d97934cc985b50e6d4beb3f5d',
+   'src/components/common/DanangAssistantChat.tsx': '236b8edc098dc90fd90222e5ef6f3316a9da10f9d29ad61c232dfeba83c5ab26',
    'src/data/assistantLearningProfiles.json': '86b06df95e4486d82b7445408f249ba3f0976f81783f62bfb09021dfb6f3d524',
    'src/utils/assistantPosition.ts': '3ca568981112ae255ae68e3303ee8f3b13cd07d1860a31a7579cae8c36e8e11b',
    'src/features/teacher/GddpTeacherLookup.tsx': '84a2d4f593ba981f3ce688dcb8d4d099399851b6ad958fa4403fe52f9a65bcbe',

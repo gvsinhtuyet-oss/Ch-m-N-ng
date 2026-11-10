@@ -26,6 +26,13 @@ const DanangAssistantChat = lazy(() => import('./components/common/DanangAssista
 
 const AppContent: React.FC = () => {
   const { currentUser, role, currentView, currentStation, currentAssistantHotspot, currentStage, currentGrade, setCurrentGrade, openStation, isOnline, closeStation, exitPresentationMode } = useApp();
+  const [assistantOpenRequest, setAssistantOpenRequest] = useState(0);
+  useEffect(() => {
+    // Preserve the first tap while the lazily loaded chatbot bundle is still downloading.
+    const requestOpen = () => setAssistantOpenRequest(count => count + 1);
+    window.addEventListener('cham-open-assistant', requestOpen);
+    return () => window.removeEventListener('cham-open-assistant', requestOpen);
+  }, []);
 
   useEffect(() => {
     const unlock = () => { void backgroundMusic.unlock(); };
@@ -87,11 +94,18 @@ const AppContent: React.FC = () => {
     return () => window.removeEventListener('cham-progress-storage-error', notify);
   }, []);
 
+  const assistantLoading = assistantOpenRequest > 0
+    ? <div role="status" className="fixed bottom-4 left-3 right-3 z-[80] mx-auto max-w-sm rounded-2xl bg-sky-900 px-4 py-3 text-center text-sm font-semibold text-white shadow-lg">Đang mở Trợ lý khám phá…</div>
+    : null;
+  const assistantUnavailable = assistantOpenRequest > 0
+    ? <div role="alert" className="fixed bottom-4 left-3 right-3 z-[80] mx-auto max-w-sm rounded-2xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950 shadow-lg">Trợ lý chưa tải được trên thiết bị này. <button type="button" className="font-bold underline" onClick={() => window.location.reload()}>Tải lại trang</button></div>
+    : null;
+
   if (!currentUser && currentView !== 'landing') return <LandingView />;
 
   // If in Presentation Mode, render full-screen projection without header/footer
   if (currentView === 'presentation-view' && currentStation && (role === 'teacher' || role === 'admin')) {
-    return <><ClassroomPresentationMode key={currentStation.id} station={currentStation} onExit={exitPresentationMode} /><FeatureLoadBoundary fallback={null}><Suspense fallback={null}><DanangAssistantChat storageScope={currentUser?role+':'+currentUser.id:''} currentGrade={currentGrade} onOpenTeacherStation={station=>{setCurrentGrade(station.grade);openStation(station,1);}} audience="teacher" station={currentStation} hotspot={currentAssistantHotspot} /></Suspense></FeatureLoadBoundary></>;
+    return <><ClassroomPresentationMode key={currentStation.id} station={currentStation} onExit={exitPresentationMode} /><FeatureLoadBoundary fallback={assistantUnavailable}><Suspense fallback={assistantLoading}><DanangAssistantChat openRequestId={assistantOpenRequest} storageScope={currentUser?role+':'+currentUser.id:''} currentGrade={currentGrade} onOpenTeacherStation={station=>{setCurrentGrade(station.grade);openStation(station,1);}} audience="teacher" station={currentStation} hotspot={currentAssistantHotspot} /></Suspense></FeatureLoadBoundary></>;
   }
 
   // If on Landing Cover Page, render full-screen immersive cover
@@ -119,7 +133,7 @@ const AppContent: React.FC = () => {
       {currentView !== 'student-journey' && currentView !== 'station-view' && <Footer />}
 
       {(role === 'student' || role === 'teacher' || role === 'admin') && currentUser && currentView !== 'presentation-view' && (
-        <FeatureLoadBoundary fallback={null}><Suspense fallback={null}><DanangAssistantChat storageScope={currentUser?role+':'+currentUser.id:''} currentGrade={currentGrade} onOpenTeacherStation={role === 'student' ? undefined : station=>{setCurrentGrade(station.grade);openStation(station,1);}} docked={currentView === 'student-journey'} audience={currentView === 'admin-view' && role === 'admin' ? 'admin' : role === 'student' ? 'student' : 'teacher'} adminDemo={role === 'admin' && currentUser.id === 'admin-demo'} stage={currentView === 'station-view' ? currentStage : undefined} compactGame={currentView === 'station-view' && (currentStage === 1 || currentStage === 2)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense></FeatureLoadBoundary>
+        <FeatureLoadBoundary fallback={assistantUnavailable}><Suspense fallback={assistantLoading}><DanangAssistantChat openRequestId={assistantOpenRequest} storageScope={currentUser?role+':'+currentUser.id:''} currentGrade={currentGrade} onOpenTeacherStation={role === 'student' ? undefined : station=>{setCurrentGrade(station.grade);openStation(station,1);}} docked={currentView === 'student-journey'} audience={currentView === 'admin-view' && role === 'admin' ? 'admin' : role === 'student' ? 'student' : 'teacher'} adminDemo={role === 'admin' && currentUser.id === 'admin-demo'} stage={currentView === 'station-view' ? currentStage : undefined} compactGame={currentView === 'station-view' && (currentStage === 1 || currentStage === 2)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense></FeatureLoadBoundary>
       )}
 
       {storageWarning && (

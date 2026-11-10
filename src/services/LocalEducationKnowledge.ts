@@ -74,5 +74,12 @@ export function answerLocalEducationQuestion(query:string):LocalKnowledgeAnswer|
   }
   if(/la gi|nghia la/.test(q)) return {found:true,answer:group.definition,sources:[g==='craft'?craftSource:gamesSource]};
  }
+ // Handle clear, common geography questions before unrelated station text.
+ if (/\bda nang\b/.test(q) && /\bco (?:bai )?bien (?:khong|ko|k)\b/.test(q)) {
+  return {found:true,answer:'Có! Đà Nẵng là thành phố ven biển. Em có thể tìm hiểu các bãi biển Mỹ Khê và Non Nước. Khi đến biển, hãy giữ vệ sinh và chú ý an toàn nhé.',sources:[]};
+ }
+ if (/\bcau rong\b/.test(q) && /\b(?:o dau|nam o dau|nam dau|thuoc dau)\b/.test(q)) {
+  return {found:true,answer:'Cầu Rồng bắc qua sông Hàn ở thành phố Đà Nẵng. Cầu nổi bật với hình dáng một con rồng.',sources:[]};
+ }
  return null;
 }

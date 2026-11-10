@@ -3,7 +3,7 @@
    For extra-tall phones we expand the art height by ~25% to keep text legible. */
 .cham-ill-shell{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;overflow:hidden;overscroll-behavior:none;touch-action:manipulation;background:#32b7f2;isolation:isolate}
 .cham-ill-ambient{position:absolute;inset:-60px;background-size:cover;background-position:center;filter:blur(28px) saturate(1.12);opacity:.58;pointer-events:none;z-index:-1}
-.cham-ill-shell .cham-access-sheet.cham-ill-frame{position:relative;display:block;flex:none;width:min(100vw,75dvh);height:min(100dvh,calc(100vw * 1.68));min-height:0;max-width:none;max-height:100dvh;padding:0;border:0;border-radius:0;overflow:hidden;overscroll-behavior:none;background:transparent;box-shadow:0 0 45px #034b8348;isolation:isolate}
+.cham-ill-shell .cham-access-sheet.cham-ill-frame{position:relative;display:block;flex:none;width:min(100vw,75dvh);height:min(100dvh,168vw);min-height:0;max-width:none;max-height:100dvh;padding:0;border:0;border-radius:0;overflow:hidden;overscroll-behavior:none;background:transparent;box-shadow:0 0 45px #034b8348;isolation:isolate}
 .cham-ill-frame:before{display:none!important}
 .cham-ill-image{display:block;width:100%;height:100%;object-fit:fill;user-select:none;pointer-events:none}
 .cham-ill-frame .cham-ill-hit{position:absolute;z-index:4;display:block;margin:0;padding:0;min-width:0;min-height:0;width:auto;height:auto;border:0;border-radius:999px;box-shadow:none;color:transparent;background:transparent;cursor:pointer;font-size:0;line-height:0;transition:transform .14s,box-shadow .14s,background .14s}

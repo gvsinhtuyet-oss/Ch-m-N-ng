@@ -24,7 +24,8 @@ test('portrait destination selection snaps vertically one station at a time',()=
  assert.match(phone,/min-height: var\(--station-page-height\) !important/);
  assert.match(phone,/scroll-snap-stop: always/);
  assert.match(phone,/journey-extension .*scroll-snap-align: start/);
- assert.match(landing,/grid-cols-2 gap-3 sm:grid-cols-5/);
+ assert.match(landing,/cham-onboard-grades/);
+ assert.match(cover,/\.cham-onboard-grades\{display:grid;grid-template-columns:repeat\(5,minmax\(0,1fr\)\)/);
 });
 test('cover keeps 2-row identity, fixed 16:9 video and accessible buttons',()=>{
  assert.match(cover,/landing-cover-title\s*\{[\s\S]*?flex-direction:column!important/);
@@ -73,4 +74,20 @@ test('mobile shared header keeps brand, audio, assistant and account accessible'
  assert.match(audio,/header-audio-popover/);
  assert.match(index,/\.app-touch-header \.header-audio-popover[\s\S]*?width: min\(360px, calc\(100vw - 24px\)\)/);
  assert.doesNotMatch(index, /@media\(max-width:839px\)\{\.app-touch-header>div>button>span:nth-child\(2\)\{display:none\}\}/);
+});
+
+test('onboarding keeps only Học sinh / Giáo viên roles, real student and teacher entry points',()=>{
+ assert.match(landing,/Chào nhà khám phá nhỏ!/);
+ assert.match(landing,/Chào mừng thầy cô!/);
+ assert.match(landing,/cham-onboard-choice--student/);
+ assert.match(landing,/cham-onboard-choice--teacher/);
+ assert.match(landing,/GoogleTeacherLogin onLogin=\{finishStaffLogin\}/);
+ assert.match(landing,/await enterTeacherDemo\(\)/);
+ assert.match(landing,/await restoreStudentByCode\(restoreCode\)/);
+ assert.match(landing,/await restoreStudentByCode\(savedSyncCode\)/);
+ assert.match(landing,/enterGuestJourney\(grade\)/);
+ assert.match(landing,/cham-onboard-primary/);
+ assert.match(cover,/@media\(max-width:650px\)/);
+ // QR remains a Camera/scanned-link flow; never display a fake camera-scan button.
+ assert.doesNotMatch(landing,/onClick=\{[^}]*openCamera/);
 });

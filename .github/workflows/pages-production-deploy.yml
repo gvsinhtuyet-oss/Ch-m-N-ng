@@ -1,0 +1,67 @@
+name: Publish Cloudflare Pages Production (trusted branch only)
+
+# Recovery path if the Cloudflare Pages Git webhook stops deploying merges.
+# This runs only after a trusted merge to the real Pages production branch.
+on:
+  push:
+    branches:
+      - deploy/cloudflare-preserve-api-20261028
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chamdanang-pages-production-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Build and publish exactly the merged Production commit
+    if: github.ref == 'refs/heads/deploy/cloudflare-preserve-api-20261028'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout trusted Production commit
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Verify Cloudflare Pages deployment credentials are configured
+        id: credentials
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::Missing CLOUDFLARE_API_TOKEN. Add a restricted token with Cloudflare Pages Edit permission in GitHub Settings > Secrets and variables > Actions. Never put the token in repository files or chat."
+            exit 1
+          fi
+          echo "Cloudflare API token is configured (value not printed)."
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: TypeScript quality gate
+        run: npm run lint
+
+      - name: Build and preserve existing Pages Functions
+        run: |
+          npm run build
+          test -f 'functions/api/[[path]].js'
+          test -f dist/index.html
+
+      - name: Deploy to existing chamdanang-gddp Production
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: aaa9a25aacbd44596b54af8f82cbd1cc
+          command: pages deploy dist --project-name=chamdanang-gddp --branch=deploy/cloudflare-preserve-api-20261028 --commit-hash=${{ github.sha }}
+          quiet: false
+
+      - name: Verify live domain has this exact frontend build
+        run: node scripts/verify-cloudflare-production-assets.mjs

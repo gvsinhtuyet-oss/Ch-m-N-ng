@@ -49,6 +49,8 @@ export const LandingView: React.FC = () => {
   const [showStaffLogin, setShowStaffLogin] = useState<boolean>(false);
   const [savedSyncCode, setSavedSyncCode] = useState<string>('');
   const [restoreCode,setRestoreCode] = useState('');
+  const [qrEntryCode,setQrEntryCode] = useState('');
+  const qrEntryInFlight=useRef(false);
   const [restoreBusy,setRestoreBusy] = useState(false);
   const [loginError, setLoginError] = useState<string>('');
   const [introActive, setIntroActive] = useState(true);
@@ -58,10 +60,22 @@ export const LandingView: React.FC = () => {
 
   const STUDENT_PROFILE_KEY = 'cham_danang_student_profile_v1';
   useEffect(()=>{
-    const match=/^#student-code=([A-Z0-9-]{12,20})$/i.exec(window.location.hash);
-    if(!match)return;
-    setRestoreCode(match[1]);setGuestMode(false);setShowRolePicker(true);setShowStudentLogin(true);setIntroActive(false);
-    window.history.replaceState(null,'',window.location.pathname+window.location.search);
+    const readStudentQr=()=>{
+      const match=/^#student-code=([A-Z0-9-]{12,20})$/i.exec(window.location.hash);
+      if(!match)return;
+      setQrEntryCode(match[1].toUpperCase());
+      setRestoreCode('');
+      setLoginError('');
+      setGuestMode(false);
+      setShowRolePicker(false);
+      setShowStudentLogin(false);
+      setIntroActive(true);
+      // The QR contains a student login credential: strip it from browser history.
+      window.history.replaceState(null,'',window.location.pathname+window.location.search);
+    };
+    readStudentQr();
+    window.addEventListener('hashchange',readStudentQr);
+    return ()=>window.removeEventListener('hashchange',readStudentQr);
   },[]);
 
 
@@ -168,7 +182,50 @@ export const LandingView: React.FC = () => {
     setShowRolePicker(false);
   };
 
-  const handleStartJourney = () => {
+  const restoreStudentByCode=async (code:string)=>{
+    const restored=await studentSyncService.restore(code);
+    if(authService.current())await authService.logout();
+    const profile=restored.profile;
+    const syncCode=code.toUpperCase().replace(/[^A-Z0-9]/g,'');
+    localStorage.setItem(STUDENT_PROFILE_KEY,JSON.stringify({...profile,syncCode}));
+    progressService.mergeStudentProgressRecords(profile.id,restored.progress);
+    loginAsStudent({
+      ...DEMO_STUDENTS[0],...profile,
+      studentCode:profile.id,displayName:profile.name,
+      classId:profile.classId || `class-${profile.className.replace('/','-')}`,
+      isGuest:false,
+    });
+    setRestoreCode('');
+    setQrEntryCode('');
+    setShowRolePicker(false);
+  };
+
+  const handleStartJourney = async () => {
+    if(qrEntryCode){
+      if(qrEntryInFlight.current)return;
+      qrEntryInFlight.current=true;
+      setRestoreBusy(true);
+      setLoginError('');
+      try{
+        // Scan -> original cover and intro video -> tap -> enter the student's own class.
+        await restoreStudentByCode(qrEntryCode);
+        stopIntroVideo();
+        audioService.playSfx('click');
+      }catch(error){
+        // Rotated, expired or offline QR: allow retry with the already scanned code.
+        setRestoreCode(qrEntryCode);
+        setQrEntryCode('');
+        stopIntroVideo();
+        setShowRolePicker(true);
+        setShowStudentLogin(true);
+        setGuestMode(false);
+        setLoginError((error as Error).message || 'Chưa mở được hồ sơ. Em có thể thử lại mã cô/thầy đã cấp.');
+      }finally{
+        qrEntryInFlight.current=false;
+        setRestoreBusy(false);
+      }
+      return;
+    }
     stopIntroVideo();
     audioService.playSfx('click');
     openRolePicker();
@@ -311,8 +368,8 @@ export const LandingView: React.FC = () => {
 
         <div className="landing-cover-actions">
           <p className="landing-action-invitation">Mỗi điểm đến,<br /><strong>một điều kỳ diệu</strong></p>
-          <button onClick={handleStartJourney} className="group flex items-center gap-2 rounded-[22px] border-b-[6px] border-amber-700 bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 px-5 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg font-black text-slate-950 shadow-[0_8px_25px_rgba(0,0,0,.35)] transition hover:scale-105 active:translate-y-1 active:border-b-2">
-            <Compass className="h-6 w-6 text-blue-900 group-hover:rotate-45 transition-transform"/> CHẠM ĐỂ KHÁM PHÁ <ArrowRight className="h-5 w-5"/>
+          <button onClick={()=>void handleStartJourney()} disabled={restoreBusy} aria-label={qrEntryCode&&restoreBusy?'Đang mở hồ sơ học sinh':'CHẠM ĐỂ KHÁM PHÁ'} className="group flex items-center gap-2 rounded-[22px] border-b-[6px] border-amber-700 bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 px-5 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg font-black text-slate-950 shadow-[0_8px_25px_rgba(0,0,0,.35)] transition hover:scale-105 active:translate-y-1 active:border-b-2 disabled:cursor-wait disabled:opacity-80">
+            <Compass className="h-6 w-6 text-blue-900 group-hover:rotate-45 transition-transform"/> {qrEntryCode&&restoreBusy?'ĐANG MỞ LỚP CỦA EM…':'CHẠM ĐỂ KHÁM PHÁ'} <ArrowRight className="h-5 w-5"/>
           </button>
           <div className="landing-feature-pills">
             <span><Layers aria-hidden="true" />5 khối tiểu học</span>
@@ -468,14 +525,7 @@ export const LandingView: React.FC = () => {
                   <button type="button" disabled={restoreBusy || !restoreCode.trim()} onClick={async()=>{
                     if(restoreBusy)return;setRestoreBusy(true);setLoginError('');
                     try{
-                      const restored=await studentSyncService.restore(restoreCode);
-                      if(authService.current())await authService.logout();
-                      const profile=restored.profile;
-                      const syncCode=restoreCode.toUpperCase().replace(/[^A-Z0-9]/g,'');
-                      localStorage.setItem(STUDENT_PROFILE_KEY,JSON.stringify({...profile,syncCode}));
-                      progressService.mergeStudentProgressRecords(profile.id,restored.progress);
-                      loginAsStudent({...DEMO_STUDENTS[0],...profile,studentCode:profile.id,displayName:profile.name,classId:profile.classId || `class-${profile.className.replace('/','-')}`,isGuest:false});
-                      setRestoreCode('');setShowRolePicker(false);
+                      await restoreStudentByCode(restoreCode);
                     }catch(error){setLoginError((error as Error).message);}finally{setRestoreBusy(false);}
                   }} className="rounded-xl bg-sky-700 text-white px-4 py-2 font-bold disabled:opacity-50">{restoreBusy?'Đang mở hồ sơ…':'Vào học bằng mã'}</button>
                   {loginError && <p role="alert" className="mt-2 text-rose-700">{loginError}</p>}

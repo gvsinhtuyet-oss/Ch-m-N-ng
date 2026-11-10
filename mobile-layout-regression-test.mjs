@@ -55,12 +55,13 @@ test('Stage 3 keeps emotion, memory, action and persistence while Stage 4 shows 
  assert.match(journey,/station-viewport\[data-stage="4"\][\s\S]*?journey-photo-main/);
 });
 
-test('mobile shared header keeps the CHẠM ĐÀ NẴNG name and all 4 accessible controls',()=>{
+test('mobile shared header keeps brand, audio, assistant and account accessible',()=>{
  const header=read('./src/components/common/Header.tsx');
  const audio=read('./src/components/common/MusicControl.tsx');
  assert.match(header,/header-brand-title[^>]*>CHẠM ĐÀ NẴNG/);
  assert.match(header,/header-brand-copy block min-w-0/);
- assert.match(header,/header-language-toggle/);
+ assert.doesNotMatch(header,/header-language-toggle|toggleLanguage|Đổi ngôn ngữ|Ngôn ngữ ·/);
+ assert.match(read('./src/contexts/AppContext.tsx'),/const toggleLanguage =/); // Keep language infrastructure for future fully reviewed bilingual mode.
  assert.match(header,/header-audio-control/);
  assert.match(header,/header-touch-assistant[^>]*aria-label="Mở Trợ lý khám phá Đà Nẵng"/);
  assert.match(header,/header-account-toggle/);

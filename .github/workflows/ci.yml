@@ -207,3 +207,17 @@ jobs:
           node-version: '22'
       - name: Check rating write route, proposal route, admin stats route without mutation
         run: node scripts/rating-backend-preflight.mjs
+
+  live-admin-real-report-release:
+    name: Check merged Admin report assets on live Production (read only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build exact current release
+        run: npm install --no-audit --no-fund && npm run build
+      - name: Compare live Cloudflare root and Admin JavaScript chunks with built release
+        run: node qa-admin-real-report-production.mjs

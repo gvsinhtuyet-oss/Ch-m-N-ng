@@ -11,6 +11,15 @@ const browser=await puppeteer.launch({executablePath:chrome,headless:true,args:[
 try {
   for(const [name,width,height] of [['iphone',390,844],['android',412,915],['ipad',810,1080]]){
     const page=await browser.newPage();
+    // For live Production QA, intercept all mutating requests.
+    // This proves public UX without writing analytics, ratings or school data.
+    if(process.env.LIVE_READ_ONLY==='true'){
+      await page.setRequestInterception(true);
+      page.on('request',request=>{
+        if(['POST','PUT','PATCH','DELETE'].includes(request.method()))request.abort('blockedbyclient');
+        else request.continue();
+      });
+    }
     const errors=[];
     page.on('pageerror',e=>errors.push(e.message));
     await page.setViewport({width,height,isMobile:true,hasTouch:true,deviceScaleFactor:1});

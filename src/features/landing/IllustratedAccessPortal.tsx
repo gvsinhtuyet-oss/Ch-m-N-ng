@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Eye, EyeOff, X, MoreHorizontal, ChevronLeft } from 'lucide-react';
 import { GoogleTeacherLogin } from '../../components/auth/GoogleTeacherLogin';
 import type { AccessPortalProps } from './AccessPortal';
+import './illustrated-access-portal.css';
 
 const art = {
   role: '/images/landing/cham-access-approved-role.png',

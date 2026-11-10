@@ -1,6 +1,6 @@
 import { AppFullscreenButton } from '../../components/common/AppFullscreen';
 import './landing-cover.css';
-import {GoogleTeacherLogin} from '../../components/auth/GoogleTeacherLogin';
+import { AccessPortal } from './AccessPortal';
 import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { DEMO_STUDENTS } from '../../data/mockUsers';
@@ -14,8 +14,6 @@ import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackgrou
 import {
   Compass,
   LogIn,
-  GraduationCap,
-  Presentation,
   Globe,
   ArrowRight,
   Volume2,
@@ -24,7 +22,6 @@ import {
   CircleHelp,
   Award,
   Play,
-  X,
 } from 'lucide-react';
 
 export const LandingView: React.FC = () => {
@@ -388,178 +385,63 @@ export const LandingView: React.FC = () => {
 
       </div>
 
-      {/* Role Picker Modal */}
-      {showRolePicker && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 overflow-hidden">
-          <img
-            src={roleBackground}
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 h-full w-full object-cover"
-            style={{ filter: 'blur(' + theme.blur + 'px)', transform: 'scale(1.025)' }}
-          />
-          <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
-          <div className="absolute inset-0 bg-slate-950/38 backdrop-blur-[2px] pointer-events-none" />
-          <div role="dialog" aria-modal="true" aria-label={showStaffLogin ? "Đăng nhập quản trị và giáo viên" : "Chọn vai trò và đăng nhập"} className={`relative z-10 w-full max-h-[94dvh] overflow-y-auto rounded-[22px] border border-white/30 p-3 text-slate-800 shadow-[0_28px_90px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:p-5 space-y-3 ${showStaffLogin || showStudentLogin ? 'max-w-[460px] bg-[#fffdf9]/95' : 'max-w-[780px] bg-gradient-to-br from-[#102b45]/95 via-[#123a53]/95 to-[#064e52]/95'}`}>
-            <div className="flex items-center justify-between">
-              <div>
-                <span className={`px-3 py-1 rounded-full text-[11px] font-bold tracking-widest ${!showStudentLogin && !showStaffLogin ? 'bg-amber-300/15 text-amber-200 ring-1 ring-amber-200/25' : 'bg-sky-100 text-sky-800'}`}>
-                  CHẠM ĐÀ NẴNG
-                </span>
-                <h3 className={`mt-1.5 font-black tracking-tight ${!showStudentLogin && !showStaffLogin ? 'text-lg sm:text-2xl text-white' : 'text-xl text-slate-900'}`}>{showStaffLogin ? 'Đăng nhập quản trị và giáo viên' : showStudentLogin ? 'Chào Nhà phiêu lưu!' : 'Bạn muốn bắt đầu hành trình nào?'}</h3>
-                {!showStudentLogin && !showStaffLogin && <p className="mt-2 text-sm text-sky-100/85">Mỗi hành trình là một cách chạm vào di sản quê hương</p>}
-              </div>
-              <button
-                onClick={() => {
-                  setShowRolePicker(false);
-                  setIntroActive(true);
-                  setShowStudentLogin(false);
-                  setShowStaffLogin(false);
-                  setStaffPassword('');
-                  setLoginError('');
-                }}
-                aria-label="Đóng khung đăng nhập" className={`w-9 h-9 shrink-0 rounded-xl flex items-center justify-center transition ${!showStudentLogin && !showStaffLogin ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-slate-100 hover:bg-slate-200 text-slate-600'}`}
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {!showStudentLogin && !showStaffLogin ? (
-              <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-0">
-                {[
-                  {id:'student',name:'HỌC SINH',demo:'Khám phá tự do dành cho học sinh',Icon:Compass,color:'bg-orange-600',description:'Nhà thám hiểm nhí · Khám phá di sản, tích lũy dấu ấn.'},
-                  {id:'teacher',name:'GIÁO VIÊN / QUẢN TRỊ',demo:'Khám phá tự do dành cho giáo viên',Icon:Presentation,color:'bg-emerald-700',description:'Một cửa đăng nhập cho giáo viên và quản trị.'},
-                ].map(({id,name,demo,Icon,color,description})=><section key={id} className={`group relative flex flex-col overflow-hidden rounded-[16px] border bg-white shadow-[0_12px_35px_rgba(0,0,0,0.16)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_rgba(0,0,0,0.28)] motion-reduce:transform-none ${id==='student' ? 'border-orange-200 hover:border-orange-400' : 'border-emerald-200 hover:border-emerald-400'}`}>
-                  <div className={`relative flex h-[90px] sm:h-[112px] items-end overflow-hidden p-2 sm:p-3 ${id==='student' ? 'bg-gradient-to-br from-orange-500 via-amber-400 to-sky-500' : 'bg-gradient-to-br from-emerald-800 via-teal-500 to-sky-400'}`}>
-                    <div className="absolute inset-0 opacity-30" style={{backgroundImage:'radial-gradient(circle at 80% 15%, white 0%, transparent 42%), repeating-linear-gradient(125deg, transparent 0px, transparent 24px, rgba(255,255,255,.22) 25px, transparent 26px)'}} />
-                    <div className="hidden sm:block absolute right-3 top-2 rounded-full border border-white/40 bg-white/15 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white backdrop-blur-md">{id==='student' ? 'Hành trình khám phá' : 'Không gian sáng tạo'}</div>
-                    <div className="relative flex flex-col sm:flex-row items-center gap-1 sm:gap-2">
-                      <div className="flex h-9 w-9 sm:h-12 sm:w-12 items-center justify-center rounded-2xl border border-white/60 bg-white/20 text-white shadow-xl backdrop-blur-md transition-transform duration-300 group-hover:rotate-[-5deg] group-hover:scale-110"><Icon className="h-6 w-6 sm:h-7 sm:w-7" /></div>
-                      <div className="text-white"><div className="text-[12px] sm:text-lg font-black tracking-wide drop-shadow-md">{name}</div><div className="text-xs font-medium opacity-90">CHẠM ĐÀ NẴNG</div></div>
-                    </div>
-                  </div>
-                  <div className="flex flex-1 flex-col gap-1.5 bg-gradient-to-b from-white to-slate-50 p-2 sm:p-3">
-                    <p className="hidden sm:block min-h-[30px] text-xs leading-snug text-slate-600">{description}</p>
-                    <button type="button" onClick={()=>{
-                      if (id !== 'student') { openStaffLogin(); return; }
-                      audioService.playSfx('click');setLoginError('');
-                      setGuestMode(false);setChosenGrade(null);setShowStudentLogin(true);
-                    }} className={`min-h-10 rounded-lg ${color} px-1 sm:px-3 text-[11px] sm:text-sm font-black text-white shadow-md transition hover:brightness-110 active:scale-[.99]`}>Đăng nhập <span aria-hidden="true">→</span></button>
-                    <button type="button" disabled={staffBusy} onClick={async()=>{
-                      setLoginError('');
-                      if(id==='student'){setGuestMode(true);setChosenGrade(null);setShowStudentLogin(true);return;}
-                      setStaffBusy(true);
-                      try{await enterTeacherDemo();setShowRolePicker(false);}
-                      catch(error){setLoginError((error as Error).message);}finally{setStaffBusy(false);}
-                    }} aria-label={demo} className={`min-h-10 rounded-lg border px-1 sm:px-3 text-[11px] sm:text-sm font-bold transition hover:bg-slate-100 disabled:opacity-50 ${id==='student' ? 'border-orange-200 text-orange-700' : 'border-emerald-200 text-emerald-700'}`}>Khám phá tự do</button>
-
-                  </div>
-                </section>)}
-                {loginError && <p role="alert" className="md:col-span-2 rounded-xl bg-rose-50 p-3 text-rose-700">{loginError}</p>}
-              </div>
-            ) : showStudentLogin ? (
-              /* Student Login Form: chọn khối và nhập thông tin ngay trên cùng một màn hình */
-              <form onSubmit={event=>event.preventDefault()} className="space-y-4 text-xs">
-                <div>
-                  <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                    <h4 className="text-sm font-bold text-slate-900">
-                      {guestMode ? 'Khám phá tự do · Chọn khối lớp' : 'Vào học bằng mã của em'}
-                    </h4>
-                    <button
-                      type="button"
-                      onClick={() => setShowStudentLogin(false)}
-                      className="text-xs font-bold text-slate-500 hover:text-sky-700"
-                    >
-                      ← Chọn vai trò khác
-                    </button>
-                  </div>
-
-                  {guestMode && <div className="grid grid-cols-2 gap-3 sm:grid-cols-5 sm:gap-3 max-sm:[&>button:last-child]:col-span-2 max-sm:[&>button:last-child]:w-[calc((100%-0.75rem)/2)] max-sm:[&>button:last-child]:justify-self-center" aria-label="Chọn một trong năm khối lớp">
-                    {[
-                      'from-sky-500 to-blue-700', 'from-emerald-500 to-teal-700',
-                      'from-amber-400 to-orange-600', 'from-rose-500 to-pink-700', 'from-violet-500 to-indigo-700',
-                    ].map((color, index) => {
-                      const grade = index + 1;
-                      const active = chosenGrade === grade;
-                      return (
-                        <button
-                          key={grade}
-                          type="button"
-                          onClick={() => {
-                            enterGuestJourney(grade);
-                          }}
-                          className={`min-w-0 min-h-[68px] last:col-span-2 sm:last:col-span-1 rounded-2xl bg-gradient-to-br ${color} px-2 py-3 sm:px-2 sm:py-3 text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl focus-visible:ring-4 focus-visible:ring-sky-300 ${
-                            active
-                              ? 'ring-2 ring-orange-300 ring-offset-2 shadow-md z-10'
-                              : guestMode && chosenGrade
-                                ? 'scale-[0.86] opacity-45'
-                                : ''
-                          }`}
-                        >
-                          <GraduationCap className="mx-auto mb-1 h-4 w-4" />
-                          <span className="block whitespace-nowrap text-sm sm:text-lg font-black">Khối {grade}</span>
-                          <span className="hidden text-[9px] text-white/90 sm:block">
-                            {active
-                              ? (guestMode ? 'Đang vào hành trình…' : 'Đã chọn ✓')
-                              : (guestMode ? 'Chạm để vào học' : 'Chạm để chọn')}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>}
-                </div>
-
-                {!guestMode && <details open className="rounded-xl border border-sky-100 bg-sky-50 p-3 text-slate-800">
-                  <summary className="cursor-pointer font-bold">Mã học sinh do giáo viên cấp</summary>
-                  <label className="block mt-3">Mã học sinh hoặc mã đồng bộ cũ<input type="password" autoComplete="off" value={restoreCode} onChange={e=>setRestoreCode(e.target.value)} maxLength={20} className="block w-full mt-1 border rounded-xl p-3 bg-white" /></label>
-                  <p className="text-xs my-2">Nhập mã cô/thầy cấp hoặc mã hành trình cũ. Hệ thống tự xác định tên, khối và lớp; không cần mật khẩu. Mã đã được cấp lại không còn hiệu lực.</p>
-                  <button type="button" disabled={restoreBusy || !restoreCode.trim()} onClick={async()=>{
-                    if(restoreBusy)return;setRestoreBusy(true);setLoginError('');
-                    try{
-                      await restoreStudentByCode(restoreCode);
-                    }catch(error){setLoginError((error as Error).message);}finally{setRestoreBusy(false);}
-                  }} className="rounded-xl bg-sky-700 text-white px-4 py-2 font-bold disabled:opacity-50">{restoreBusy?'Đang mở hồ sơ…':'Vào học bằng mã'}</button>
-                  {loginError && <p role="alert" className="mt-2 text-rose-700">{loginError}</p>}
-                </details>}
-
-                {!guestMode && <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-amber-900 font-semibold">
-                   Chưa có mã? Nhờ cô/thầy tạo hồ sơ ở mục “Lớp của tôi” và cấp thẻ mã hoặc QR. Em không cần tự nhập tên hay lớp, tránh hồ sơ trùng.
-                 </div>}
-                 {!guestMode && savedSyncCode && <button type="button"
-                   onClick={()=>{setRestoreCode(savedSyncCode);setLoginError('');}}
-                   className="w-full rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-900 font-bold">
-                   Dùng mã đã lưu trên thiết bị này
-                 </button>}
-                 {!guestMode && <button type="button" onClick={()=>{setGuestMode(true);setChosenGrade(null);setLoginError('');}} className="h-9 w-full rounded-xl border border-orange-200 text-xs font-bold text-orange-700 hover:bg-orange-50">Khám phá tự do</button>}
-              </form>
-            ) : (
-              <form className="space-y-4 text-sm" onSubmit={async e => {
-                e.preventDefault(); if(staffBusy) return; setStaffBusy(true); setLoginError('');
-                try {
-                  const user = await authService.login(staffEmail,staffPassword);
-                  setStaffPassword('');
-                  finishStaffLogin(user);
-                } catch(error) { setLoginError((error as Error).message); }
-                finally { setStaffBusy(false); }
-              }}>
-                <p className="text-slate-600">Dùng email và mật khẩu đã được cấp. Hệ thống sẽ mở trang theo quyền của tài khoản.</p>
-                <button type="button" disabled={staffBusy} onClick={async()=>{if(staffBusy)return;setStaffBusy(true);setLoginError('');try{const user=await authService.restore();if(user)finishStaffLogin(user);else setLoginError('Phiên đăng nhập đã hết hạn. Hãy đăng nhập bằng Google hoặc mật khẩu.');}catch(e){setLoginError((e as Error).message);}finally{setStaffBusy(false);}}} className="w-full min-h-11 rounded-xl border border-sky-200 bg-sky-50 p-3 font-bold text-sky-800 disabled:opacity-50">Tiếp tục phiên đăng nhập trên máy này</button>
-                <label className="block font-bold">Email
-                  <input type="email" autoComplete="username" required maxLength={254} value={staffEmail} onChange={e=>setStaffEmail(e.target.value)} className="mt-1 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100" />
-                </label>
-                <label className="block font-bold">Mật khẩu
-                  <input type="password" autoComplete="current-password" required maxLength={128} value={staffPassword} onChange={e=>setStaffPassword(e.target.value)} className="mt-1 h-11 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100" />
-                </label>
-                {loginError && <p role="alert" className="p-3 rounded-xl bg-rose-50 text-rose-700">{loginError}</p>}
-                <p className="text-xs text-slate-500">Quên mật khẩu? Liên hệ quản trị nhà trường để được đặt lại.</p>
-                <button type="submit" disabled={staffBusy} className="h-11 w-full rounded-xl bg-emerald-700 text-sm font-bold text-white shadow-sm hover:bg-emerald-800 disabled:opacity-50">{staffBusy ? 'Đang đăng nhập…' : 'Đăng nhập'}</button>
-                <GoogleTeacherLogin onLogin={finishStaffLogin} />
-                <button type="button" disabled={staffBusy} onClick={()=>{setShowStaffLogin(false);setStaffPassword('');setLoginError('');}} className="block w-full text-center text-xs font-semibold text-slate-500 hover:text-slate-800">← Chọn vai trò khác</button>
-              </form>
-            )}
-          </div>
-        </div>
-      )}
+      {/* Three approved role/student/teacher screens: images are decorative, controls remain live. */}
+      {showRolePicker && <AccessPortal
+        view={showStaffLogin ? 'teacher' : showStudentLogin ? 'student' : 'role'}
+        guestMode={guestMode}
+        chosenGrade={chosenGrade}
+        roleBackground={roleBackground}
+        themeBlur={theme.blur}
+        restoreCode={restoreCode}
+        onRestoreCodeChange={setRestoreCode}
+        savedSyncCode={savedSyncCode}
+        restoreBusy={restoreBusy}
+        staffBusy={staffBusy}
+        staffEmail={staffEmail}
+        staffPassword={staffPassword}
+        onStaffEmailChange={setStaffEmail}
+        onStaffPasswordChange={setStaffPassword}
+        loginError={loginError}
+        onClose={() => {
+          setShowRolePicker(false);
+          setIntroActive(true);
+          setShowStudentLogin(false);
+          setShowStaffLogin(false);
+          setStaffPassword('');
+          setLoginError('');
+        }}
+        onBack={() => {setShowStudentLogin(false);setShowStaffLogin(false);setGuestMode(false);setLoginError('');}}
+        onStudent={() => {audioService.playSfx('click');setLoginError('');setGuestMode(false);setChosenGrade(null);setShowStaffLogin(false);setShowStudentLogin(true);}}
+        onTeacher={openStaffLogin}
+        onStudentGuest={() => {setGuestMode(true);setChosenGrade(null);setLoginError('');}}
+        onStudentGrade={enterGuestJourney}
+        onStudentSubmit={() => {
+          if (restoreBusy || !restoreCode.trim()) return;
+          setRestoreBusy(true);setLoginError('');
+          void restoreStudentByCode(restoreCode).catch(error=>setLoginError((error as Error).message)).finally(()=>setRestoreBusy(false));
+        }}
+        onSavedCode={() => {setRestoreCode(savedSyncCode);setLoginError('');}}
+        onTeacherDemo={() => {
+          if(staffBusy)return;
+          setStaffBusy(true);setLoginError('');
+          void enterTeacherDemo().then(()=>setShowRolePicker(false)).catch(error=>setLoginError((error as Error).message)).finally(()=>setStaffBusy(false));
+        }}
+        onStaffLogin={event => {
+          event.preventDefault();
+          if(staffBusy)return;
+          setStaffBusy(true);setLoginError('');
+          void authService.login(staffEmail,staffPassword).then(user=>{setStaffPassword('');finishStaffLogin(user);}).catch(error=>setLoginError((error as Error).message)).finally(()=>setStaffBusy(false));
+        }}
+        onRestoreStaff={() => {
+          if(staffBusy)return;
+          setStaffBusy(true);setLoginError('');
+          void authService.restore().then(user=>{
+            if(user)finishStaffLogin(user);
+            else setLoginError('Phiên đăng nhập đã hết hạn. Hãy đăng nhập bằng Google hoặc mật khẩu.');
+          }).catch(error=>setLoginError((error as Error).message)).finally(()=>setStaffBusy(false));
+        }}
+        onGoogleLogin={finishStaffLogin}
+      />}
     </div>
   );
 };

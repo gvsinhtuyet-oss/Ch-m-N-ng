@@ -33,15 +33,15 @@ try{
       assertButton(button,'Main cover entry');button.click();
       function assertButton(button,label){if(!button)throw Error('Missing '+label);}
     });
-    await page.waitForSelector('[role="dialog"][aria-label="Chọn vai trò và đăng nhập"]',{timeout:15000});
+    await page.waitForSelector('[role="dialog"][aria-label="Chọn vai trò"]',{timeout:15000});
     const roles=await page.evaluate(()=>{
       const dialog=document.querySelector('[role="dialog"]');
       const text=dialog?.textContent||'';
       return {
         roleText:text,
         demoButtons:[...dialog.querySelectorAll('button')].filter(b=>/Quản trị.*Demo|Khám phá tự do dành cho quản trị/i.test((b.textContent||'')+' '+(b.getAttribute('aria-label')||''))).length,
-        staff:!![...dialog.querySelectorAll('section')].find(s=>s.textContent?.includes('GIÁO VIÊN / QUẢN TRỊ')),
-        student:!![...dialog.querySelectorAll('section')].find(s=>s.textContent?.includes('HỌC SINH')),
+        staff:!!dialog?.querySelector('.cham-access-role-card.teacher'),
+        student:!!dialog?.querySelector('.cham-access-role-card.student'),
         overflow:document.documentElement.scrollWidth-innerWidth,
       };
     });
@@ -49,12 +49,12 @@ try{
     assert.equal(roles.demoButtons,0,'Public Admin Demo button still accessible');
     assert.doesNotMatch(roles.roleText,/Xem thử Quản trị\s*\(Demo\)/);
     assert.ok(roles.overflow<=5,device+' overflow '+roles.overflow);
-    await page.evaluate(()=>{
-      const section=[...document.querySelectorAll('[role="dialog"] section')].find(s=>s.textContent?.includes('GIÁO VIÊN / QUẢN TRỊ'));
-      const button=[...section.querySelectorAll('button')].find(b=>b.textContent?.includes('Đăng nhập'));
-      if(!button)throw Error('No staff login button');button.click();
-    });
-    await page.waitForSelector('[role="dialog"][aria-label="Đăng nhập quản trị và giáo viên"]',{timeout:15000});
+    await page.click('.cham-access-role-card.teacher');
+    await page.waitForSelector('[role="dialog"][aria-label="Đăng nhập giáo viên"]',{timeout:15000});
+    assert.ok(await page.$('.cham-access-google [data-testid="google-signin-host"]'),'Real Google login must remain available');
+    assert.ok(await page.$('.cham-access-teacher-guest'),'Read-only teacher access entry must remain available');
+    await page.click('.cham-access-account-trigger');
+    await page.waitForSelector('input[type="email"][autocomplete="username"]',{timeout:15000});
     const auth=await page.evaluate(()=>({
       email:!!document.querySelector('input[type="email"][autocomplete="username"]'),
       password:!!document.querySelector('input[type="password"][autocomplete="current-password"]'),

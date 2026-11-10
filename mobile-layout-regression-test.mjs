@@ -24,7 +24,7 @@ test('portrait destination selection snaps vertically one station at a time',()=
  assert.match(phone,/min-height: var\(--station-page-height\) !important/);
  assert.match(phone,/scroll-snap-stop: always/);
  assert.match(phone,/journey-extension .*scroll-snap-align: start/);
- assert.match(landing,/grid-cols-2 gap-3 sm:grid-cols-5/);
+ assert.match(read('./src/features/landing/AccessPortal.tsx'),/cham-access-grade-grid/);
 });
 test('cover keeps 2-row identity, fixed 16:9 video and accessible buttons',()=>{
  assert.match(cover,/landing-cover-title\s*\{[\s\S]*?flex-direction:column!important/);
@@ -73,4 +73,25 @@ test('mobile shared header keeps brand, audio, assistant and account accessible'
  assert.match(audio,/header-audio-popover/);
  assert.match(index,/\.app-touch-header \.header-audio-popover[\s\S]*?width: min\(360px, calc\(100vw - 24px\)\)/);
  assert.doesNotMatch(index, /@media\(max-width:839px\)\{\.app-touch-header>div>button>span:nth-child\(2\)\{display:none\}\}/);
+});
+
+test('approved student and teacher access portal preserves real login, QR and guest routes',()=>{
+  const portal=read('./src/features/landing/AccessPortal.tsx');
+  const css=read('./src/features/landing/access-portal.css');
+  assert.match(landing,/import \{ AccessPortal \} from '\.\/AccessPortal'/);
+  assert.match(landing,/showRolePicker && <AccessPortal/);
+  assert.match(landing,/onStudentSubmit=/);
+  assert.match(landing,/restoreStudentByCode\(restoreCode\)/);
+  assert.match(landing,/onStudentGrade=\{enterGuestJourney\}/);
+  assert.match(landing,/onTeacherDemo=/);
+  assert.match(landing,/onGoogleLogin=\{finishStaffLogin\}/);
+  assert.match(portal,/GoogleTeacherLogin onLogin=\{onGoogleLogin\}/);
+  assert.match(portal,/onSubmit=\{onStaffLogin\}/);
+  assert.match(portal,/cham-access-logo/);
+  assert.match(portal,/Học sinh/);
+  assert.match(portal,/Giáo viên tự do/);
+  assert.match(portal,/QR do cô thầy cấp|thẻ QR do cô thầy cấp/);
+  assert.doesNotMatch(portal,/Đăng nhập quản trị và giáo viên/);
+  assert.match(css,/@media \(max-width: 767px\)/);
+  assert.match(css,/max-height:100dvh/);
 });

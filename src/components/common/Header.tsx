@@ -23,7 +23,7 @@ export const Header: React.FC = () => {
   return <header className={`app-touch-header sticky top-0 z-40 border-b border-orange-100 bg-[#fffdf9]/95 shadow-sm backdrop-blur-xl ${adminArea ? 'cham-admin-topbar' : ''}`}>
     <div className={`mx-auto flex ${adminArea ? 'h-[60px]' : currentView === 'station-view' ? 'h-[52px] sm:h-[56px]' : 'h-[68px]'} max-w-[1500px] items-center justify-between gap-2 px-3 sm:gap-4 sm:px-6`}>
       <button type="button" onClick={() => setCurrentView(home)} className="flex min-w-0 items-center gap-2.5 text-left" aria-label="CHẠM ĐÀ NẴNG – trang chính">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-400 text-white shadow-md shadow-orange-200/60"><Compass className="h-6 w-6" /></span>
+        <span className="flex h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-blue-600 shadow-sm" aria-hidden="true"><img src="/cham-brand-icon.svg" alt="" width="40" height="40" className="h-full w-full object-cover" loading="eager" /></span>
         <span className="hidden min-w-0 sm:block"><span className="block whitespace-nowrap text-base font-black tracking-tight text-orange-600 lg:text-lg">CHẠM ĐÀ NẴNG</span><span className="block truncate text-[10px] font-medium text-slate-500">{adminArea ? "Hệ thống quản trị giáo dục địa phương" : t.schoolName}</span></span>
       </button>
       {!adminArea && <nav aria-label="Điều hướng chính" className="hidden min-w-0 flex-1 items-center justify-center gap-0.5 overflow-x-auto rounded-2xl bg-orange-50/70 p-1 lg:flex">{nav.map(item => {

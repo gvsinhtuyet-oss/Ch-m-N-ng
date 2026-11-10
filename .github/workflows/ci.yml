@@ -152,13 +152,14 @@ jobs:
           node assistant-mobile-browser-qa.mjs
           node stage2-my-khe-intro-qa.mjs
           node student-qr-entry-browser-qa.mjs
-      - name: LIVE public guest and Admin Demo UI (read-only, no writes)
+      - name: LIVE public assistant UI (read-only, no writes)
         env:
           QA_URL: https://chamdanang-gddp.pages.dev/
           LIVE_READ_ONLY: 'true'
         run: |
           node assistant-mobile-browser-qa.mjs
-          node staff-admin-demo-qa.mjs
+      # The Admin Demo removal is checked against the NEW locally built app,
+      # not the old Production website awaiting this very PR's deployment.
       - name: Preserve screenshots (including failure evidence)
         if: always()
         uses: actions/upload-artifact@v4

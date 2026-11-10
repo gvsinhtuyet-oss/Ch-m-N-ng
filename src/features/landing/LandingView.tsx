@@ -32,7 +32,6 @@ export const LandingView: React.FC = () => {
     loginAsStudent,
     loginAsTeacher,
     enterTeacherDemo,
-    enterAdminDemo,
     loginAsAdmin,
     soundEnabled,
     toggleSound,
@@ -453,15 +452,7 @@ export const LandingView: React.FC = () => {
                       try{await enterTeacherDemo();setShowRolePicker(false);}
                       catch(error){setLoginError((error as Error).message);}finally{setStaffBusy(false);}
                     }} aria-label={demo} className={`min-h-10 rounded-lg border px-1 sm:px-3 text-[11px] sm:text-sm font-bold transition hover:bg-slate-100 disabled:opacity-50 ${id==='student' ? 'border-orange-200 text-orange-700' : 'border-emerald-200 text-emerald-700'}`}>Khám phá tự do</button>
-                    {id==='teacher' && <button type="button" disabled={staffBusy} aria-label="Khám phá tự do dành cho quản trị" onClick={async()=>{
-                      setLoginError('');
-                      setStaffBusy(true);
-                      try { await enterAdminDemo(); setShowRolePicker(false); }
-                      catch(error) { setLoginError((error as Error).message); }
-                      finally { setStaffBusy(false); }
-                    }} className="min-h-10 rounded-lg border border-indigo-200 bg-indigo-50 px-2 py-2 text-xs font-bold text-indigo-900 transition hover:bg-indigo-100 disabled:opacity-50">
-                      Xem thử Quản trị (Demo)
-                    </button>}
+
                   </div>
                 </section>)}
                 {loginError && <p role="alert" className="md:col-span-2 rounded-xl bg-rose-50 p-3 text-rose-700">{loginError}</p>}

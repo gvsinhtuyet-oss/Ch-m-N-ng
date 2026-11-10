@@ -19,7 +19,6 @@ const StudentProfileView = lazy(() => import('./features/student/StudentProfileV
 const StationView = lazy(() => import('./features/stations/StationView').then(module => ({ default: module.StationView })));
 const TeacherDashboard = lazy(() => import('./features/teacher/TeacherDashboard').then(module => ({ default: module.TeacherDashboard })));
 const AdminDashboard = lazy(() => import('./features/admin/AdminDashboard').then(module => ({ default: module.AdminDashboard })));
-const AdminDemoDashboard = lazy(() => import('./features/admin/AdminDemoDashboard').then(module => ({ default: module.AdminDemoDashboard })));
 const ClassroomPresentationMode = lazy(() => import('./features/teacher/ClassroomPresentationMode').then(module => ({ default: module.ClassroomPresentationMode })));
 import { WifiOff } from 'lucide-react';
 const DanangAssistantChat = lazy(() => import('./components/common/DanangAssistantChat').then(module => ({ default: module.DanangAssistantChat })));
@@ -127,13 +126,13 @@ const AppContent: React.FC = () => {
           <StationView key={currentStation.id} station={currentStation} onBack={closeStation} />
         )}
         {currentView === 'teacher-view' && role === 'teacher' && <TeacherDashboard />}
-        {currentView === 'admin-view' && role === 'admin' && (currentUser?.id === 'admin-demo' ? <AdminDemoDashboard /> : <AdminDashboard />)}
+        {currentView === 'admin-view' && role === 'admin' && <AdminDashboard />}
       </main>
 
       {currentView !== 'student-journey' && currentView !== 'station-view' && <Footer />}
 
       {(role === 'student' || role === 'teacher' || role === 'admin') && currentUser && currentView !== 'presentation-view' && (
-        <FeatureLoadBoundary fallback={assistantUnavailable}><Suspense fallback={assistantLoading}><DanangAssistantChat openRequestId={assistantOpenRequest} storageScope={currentUser?role+':'+currentUser.id:''} currentGrade={currentGrade} onOpenTeacherStation={role === 'student' ? undefined : station=>{setCurrentGrade(station.grade);openStation(station,1);}} docked={currentView === 'student-journey'} audience={currentView === 'admin-view' && role === 'admin' ? 'admin' : role === 'student' ? 'student' : 'teacher'} adminDemo={role === 'admin' && currentUser.id === 'admin-demo'} stage={currentView === 'station-view' ? currentStage : undefined} compactGame={currentView === 'station-view' && (currentStage === 1 || currentStage === 2)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense></FeatureLoadBoundary>
+        <FeatureLoadBoundary fallback={assistantUnavailable}><Suspense fallback={assistantLoading}><DanangAssistantChat openRequestId={assistantOpenRequest} storageScope={currentUser?role+':'+currentUser.id:''} currentGrade={currentGrade} onOpenTeacherStation={role === 'student' ? undefined : station=>{setCurrentGrade(station.grade);openStation(station,1);}} docked={currentView === 'student-journey'} audience={currentView === 'admin-view' && role === 'admin' ? 'admin' : role === 'student' ? 'student' : 'teacher'} stage={currentView === 'station-view' ? currentStage : undefined} compactGame={currentView === 'station-view' && (currentStage === 1 || currentStage === 2)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense></FeatureLoadBoundary>
       )}
 
       {storageWarning && (

@@ -71,15 +71,16 @@ test('rubric is mathematically complete and does not invent a score before human
   assert.equal(calculateQualityScore(ASSISTANT_QUALITY_CASES,scores).score,70);
 });
 
-test('quality UI only mounts under real admin dashboard; demo does not expose it',()=>{
+test('quality UI only mounts under authenticated Admin route',()=>{
   const app=readFileSync('src/App.tsx','utf8');
+  const context=readFileSync('src/contexts/AppContext.tsx','utf8');
   const real=readFileSync('src/features/admin/AdminDashboard.tsx','utf8');
-  const demo=readFileSync('src/features/admin/AdminDemoDashboard.tsx','utf8');
   const panel=readFileSync('src/features/admin/AssistantQualityDashboard.tsx','utf8');
-  assert.match(app,/role === 'admin'.*AdminDemoDashboard.*AdminDashboard/);
+  assert.match(app,/role === 'admin' && <AdminDashboard \/>/);
+  assert.match(context,/authService\.current\(\)\?\.role !== 'admin'/);
   assert.match(real,/Kiểm định chatbot/i);
-  assert.doesNotMatch(demo,/AssistantQualityDashboard|assistant-qa/);
-  assert.match(panel,/currentUser\?\.id!=='admin-demo'/);
+  assert.doesNotMatch(panel,/admin-demo|AdminDemoDashboard/);
+  assert.match(panel,/role==='admin' && currentUser\?\.role==='admin'/);
   assert.doesNotMatch(panel,/\bfetch\s*\(|authService\./);
   assert.match(panel,/Kiểm tra toàn bộ 25 trạm/);
   assert.match(panel,/Biểu đồ chất lượng theo 5 khối/);

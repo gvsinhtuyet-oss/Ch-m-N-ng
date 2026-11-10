@@ -82,8 +82,7 @@ test('natural quick prompts are contextual, short, and quiz-safe',()=>{
  const admin=buildAssistantFollowUps({audience:'admin'});
  assert.deepEqual(admin.map(item=>item.adminPage),['assistant-qa','effectiveness','reports']);
  assert.ok(admin.every(item=>!item.query));
- const demo=buildAssistantFollowUps({audience:'admin',adminDemo:true});
- assert.deepEqual(demo.map(item=>item.adminPage),['reports','content','theme']);
+ assert.ok(admin.every(item=>['assistant-qa','effectiveness','reports'].includes(item.adminPage||'')));
 });
 test('collapsed panel retains input draft and exposes same icon for close; AI is never auto-called on missing retrieval',async()=>{
  const fs=await import('node:fs/promises');

@@ -40,7 +40,6 @@ interface AppContextType {
   loginAsStudent: (student: Student) => void;
   loginAsTeacher: (teacher: Teacher) => void;
   enterTeacherDemo: () => Promise<void>;
-  enterAdminDemo: () => Promise<void>;
   loginAsAdmin: (admin: Admin) => void;
   logout: () => Promise<void>;
   setCurrentGrade: (grade: number) => void;
@@ -162,18 +161,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setCurrentView('admin-view');
   };
 
-  const enterAdminDemo = async () => {
-    if (authService.current()) await authService.logout();
-    audioService.playSfx('unlock');
-    setCurrentUser({ id: 'admin-demo', role: 'admin', name: 'Quản trị trải nghiệm', permissions: [] } as Admin);
-    setRoleState('admin');
-    setGradeState(2);
-    setCurrentStation(null);
-    setAssistantHotspot(null);
-    setCurrentStage(1);
-    setCurrentView('admin-view');
-  };
-
   const logout = async () => {
     if (authService.current()) {
       try { await authService.logout(); } catch (error) { alert((error as Error).message); return; }
@@ -195,7 +182,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, []);
 
   useEffect(() => {
-    if (!currentUser || role === 'student' || ['teacher-demo', 'admin-demo'].includes(currentUser.id)) return;
+    if (!currentUser || role === 'student' || currentUser.id === 'teacher-demo') return;
     let active = true;
     let lastCheckedAt = 0;
     const check = async (force = false) => {
@@ -364,7 +351,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         loginAsStudent,
         loginAsTeacher,
         enterTeacherDemo,
-        enterAdminDemo,
         loginAsAdmin,
         logout,
         setCurrentGrade,

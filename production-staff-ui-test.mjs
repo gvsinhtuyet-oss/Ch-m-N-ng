@@ -15,19 +15,21 @@ test('teacher signed-in and demo roles use the approved real sidebar without cha
  for(const x of ['<TeacherWorkspace />','<ClassRoster />','<RealClassResults />','<GddpTeacherLookup','<ImplementationModal']) assert.ok(teacher.includes(x),x);
 });
 
-test('admin keeps protected and local demo roles distinct with approved layout',()=>{
+test('Admin has real authenticated route only; no public Admin Demo role',()=>{
  const app=read('src/App.tsx');
+ const context=read('src/contexts/AppContext.tsx');
+ const landing=read('src/features/landing/LandingView.tsx');
  const real=read('src/features/admin/AdminDashboard.tsx');
- const demo=read('src/features/admin/AdminDemoDashboard.tsx');
- assert.match(app,/currentUser\?\.id === 'admin-demo' \? <AdminDemoDashboard \/> : <AdminDashboard \/>/);
+ assert.match(app,/currentView === 'admin-view' && role === 'admin' && <AdminDashboard \/>/);
+ assert.match(context,/authService\.current\(\)\?\.id !== admin\.id/);
+ assert.match(context,/authService\.current\(\)\?\.role !== 'admin'/);
+ assert.match(landing,/GIÁO VIÊN \/ QUẢN TRỊ/);
+ for(const source of [app,context,landing]){
+   assert.doesNotMatch(source,/AdminDemoDashboard|enterAdminDemo|admin-demo|Quản trị \(Demo\)|Khám phá tự do dành cho quản trị/);
+ }
  assert.match(real,/admin-workspace/);
  assert.match(real,/admin-sidebar/);
  assert.match(real,/admin-page-hero/);
- assert.match(demo,/admin-workspace/);
- assert.match(demo,/admin-sidebar/);
- assert.match(demo,/<ThemeEditor localOnly\s*\/>/);
- assert.match(demo,/<ContentEditor localOnly\s*\/>/);
- assert.match(demo,/không thể xuất bản/);
  const header=read('src/components/common/Header.tsx');
  assert.match(header,/Xem giao diện/);
  assert.doesNotMatch(header,/Về trang học/);

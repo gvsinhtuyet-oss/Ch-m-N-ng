@@ -23,7 +23,11 @@ test('Admin has real authenticated route only; no public Admin Demo role',()=>{
  assert.match(app,/currentView === 'admin-view' && role === 'admin' && <AdminDashboard \/>/);
  assert.match(context,/authService\.current\(\)\?\.id !== admin\.id/);
  assert.match(context,/authService\.current\(\)\?\.role !== 'admin'/);
- assert.match(landing,/GIÁO VIÊN \/ QUẢN TRỊ/);
+ const portal=read('src/features/landing/AccessPortal.tsx');
+ assert.match(landing,/onTeacher=\{openStaffLogin\}/);
+ assert.match(portal,/Giáo viên/);
+ assert.match(portal,/Đăng nhập bằng tài khoản/);
+ assert.match(portal,/GoogleTeacherLogin onLogin=\{onGoogleLogin\}/);
  for(const source of [app,context,landing]){
    assert.doesNotMatch(source,/AdminDemoDashboard|enterAdminDemo|admin-demo|Quản trị \(Demo\)|Khám phá tự do dành cho quản trị/);
  }

@@ -8,7 +8,10 @@ assert.ok(chrome,'Chromium needed to test QR entry');
 mkdirSync('student-qr-qa',{recursive:true});
 const browser=await puppeteer.launch({executablePath:chrome,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
 async function makePage(viewport){
- const page=await browser.newPage();
+ // Each scenario must have its own origin storage. Otherwise the QR success
+ // test leaves the previous learner in localStorage for the expired QR case.
+ const context=await browser.createBrowserContext();
+ const page=await context.newPage();
  await page.setViewport({...viewport,deviceScaleFactor:1});
  await page.setRequestInterception(true);
  return page;

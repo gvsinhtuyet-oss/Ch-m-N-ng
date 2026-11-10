@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 290" role="img" aria-label="Giáo viên khám phá học liệu">
+<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#80d8ff"/><stop offset="1" stop-color="#f2faff"/></linearGradient><linearGradient id="gold" x2="0" y2="1"><stop stop-color="#ffe750"/><stop offset="1" stop-color="#ffac20"/></linearGradient></defs>
+<rect width="520" height="290" rx="24" fill="url(#sky)"/>
+<path d="M0 212H520V290H0Z" fill="#53bcf0"/><path d="M0 240Q130 222 240 239T520 230" stroke="#d1fbff" stroke-width="8" fill="none"/>
+<g opacity=".6" fill="#80afd3"><path d="M22 187V92h26v95m12 0v-48h26v48m12 0V106h32v81m288 0v-90h27v90m13 0V115h27v72m12 0V80h28v107"/></g>
+<path d="M6 206h504" stroke="#f9b72b" stroke-width="8"/><path d="M310 206Q366 125 420 206M367 206Q415 145 469 206" fill="none" stroke="#ffba28" stroke-width="14"/><path d="M310 206Q366 125 420 206M367 206Q415 145 469 206" fill="none" stroke="#ffec83" stroke-width="3"/>
+<g transform="translate(70 10)">
+<path d="M81 37Q17 24 19 126Q4 175 11 225L50 237L175 224Q181 176 162 117Q175 33 81 37Z" fill="#4b272e" stroke="#5c2d2d" stroke-width="5"/>
+<path d="M53 175q-47 28-47 100h198q-4-65-55-100Z" fill="url(#gold)" stroke="#e08c10" stroke-width="5"/>
+<path d="M65 177l32 32 24-32M97 209v67" fill="none" stroke="#f9efb5" stroke-width="5"/>
+<ellipse cx="95" cy="117" rx="70" ry="84" fill="#ffd0aa" stroke="#945a3d" stroke-width="4"/>
+<path d="M24 104Q5 42 66 28Q161-3 175 109Q143 69 122 55Q84 107 24 104Z" fill="#482b2e"/>
+<ellipse cx="73" cy="117" rx="11" ry="16" fill="#fff"/><ellipse cx="125" cy="117" rx="11" ry="16" fill="#fff"/>
+<ellipse cx="75" cy="120" rx="5" ry="10" fill="#273a50"/><ellipse cx="127" cy="120" rx="5" ry="10" fill="#273a50"/>
+<path d="M82 153Q102 173 123 153" stroke="#b94038" stroke-width="6" stroke-linecap="round" fill="none"/>
+<ellipse cx="45" cy="143" rx="12" ry="7" fill="#ed9280" opacity=".55"/><ellipse cx="151" cy="143" rx="12" ry="7" fill="#ed9280" opacity=".55"/>
+<path d="M155 206Q222 205 239 145" stroke="#f7ca9f" stroke-width="20" fill="none" stroke-linecap="round"/><path d="M228 147q-8-21 0-29m7 28q11-18 19-17m-5 25q18-4 22-13" fill="none" stroke="#f7c89d" stroke-width="11" stroke-linecap="round"/>
+<path d="M49 213q-6-6-1-12l87 5 9 70H61Z" fill="#1a73ce" stroke="#0b4c9e" stroke-width="5"/><path d="M94 213l7 63" stroke="#4dcaff" stroke-width="4"/>
+</g>
+<path d="M438 38h22v30h-22zM470 52h28v16h-28z" fill="#9ad1ee"/><path d="M445 44h8m30 15h9" stroke="white" stroke-width="3"/>
+</svg>

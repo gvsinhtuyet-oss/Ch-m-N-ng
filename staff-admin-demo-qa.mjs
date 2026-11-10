@@ -4,14 +4,12 @@ import puppeteer from 'puppeteer-core';
 
 const url=process.env.QA_URL||'http://127.0.0.1:4173/';
 const chrome=[process.env.CHROME_BIN,'/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium'].find(x=>x&&existsSync(x));
-assert.ok(chrome,'Chromium browser is required for Admin Demo QA');
+assert.ok(chrome,'Chromium is required for role picker and Admin auth QA');
 mkdirSync('staff-admin-qa',{recursive:true});
 const browser=await puppeteer.launch({executablePath:chrome,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
-try {
-  for (const [device,width,height] of [['desktop',1366,768],['phone',390,844]]) {
+try{
+  for(const [device,width,height] of [['desktop',1366,768],['phone',390,844]]){
     const page=await browser.newPage();
-    // For live Production QA, intercept all mutating requests.
-    // This proves public UX without writing analytics, ratings or school data.
     if(process.env.LIVE_READ_ONLY==='true'){
       await page.setRequestInterception(true);
       page.on('request',request=>{
@@ -20,64 +18,58 @@ try {
       });
     }
     const errors=[],protectedWrites=[];
-    page.on('pageerror',e=>errors.push(e.message));
-    page.on('request',r=>{
-      const p=new URL(r.url()).pathname;
-      if(['POST','PUT','PATCH','DELETE'].includes(r.method()) && new RegExp('^/api/(admin|teacher|content|auth)/').test(p))
-        protectedWrites.push(r.method()+' '+p);
+    page.on('pageerror',error=>errors.push(error.message));
+    page.on('request',request=>{
+      const p=new URL(request.url()).pathname;
+      if(['POST','PUT','PATCH','DELETE'].includes(request.method()) && /^\/api\/(admin|teacher|content|auth)\//.test(p))
+        protectedWrites.push(request.method()+' '+p);
     });
     await page.setViewport({width,height,isMobile:width<800,hasTouch:width<800,deviceScaleFactor:1});
-    const response=await page.goto(url+'?qa-admin-demo=20261108',{waitUntil:'domcontentloaded',timeout:50000});
-    if(response) assert.equal(response.status(),200,'Production navigation returned an HTTP error');
-    else {
-      // A previously installed PWA service worker may serve an app shell
-      // without a navigation HTTPResponse in subsequent browser pages.
-      // The separate strict preflight already requires HTTP 200 on /.
-      const navigation=await page.evaluate(()=>({
-        pathname:location.pathname,title:document.title,
-        loaded:document.readyState!=='loading',
-      }));
-      assert.equal(navigation.pathname,'/','missing Production page navigation');
-      assert.match(navigation.title,/CHẠM ĐÀ NẴNG/);
-      assert.ok(navigation.loaded,'PWA app shell was not loaded');
-      console.log('LIVE PWA SHELL',device,navigation.title);
-    }
+    const response=await page.goto(url+'?qa-real-admin-only=20261110',{waitUntil:'domcontentloaded',timeout:50000});
+    if(response)assert.equal(response.status(),200,'App route failed');
     await page.waitForFunction(()=>document.body.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'),{timeout:30000});
-    assert.ok(await page.evaluate(()=>{
-      const b=[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'));
-      b?.click();return !!b;
-    }),'missing entry');
-    await page.waitForSelector('button[aria-label="Khám phá tự do dành cho quản trị"]',{timeout:15000});
-    await page.evaluate(()=>document.querySelector('button[aria-label="Khám phá tự do dành cho quản trị"]').click());
-    await page.waitForSelector('.admin-workspace .admin-sidebar',{timeout:25000});
-    await page.waitForSelector('.admin-workspace .admin-page-hero',{timeout:25000});
-    const view=await page.evaluate(()=>({
-      title:document.querySelector('.admin-page-hero')?.textContent||'',
-      note:document.querySelector('.admin-page-hero [role="note"]')?.textContent||'',
-      nav:document.querySelector('nav[aria-label="Điều hướng quản trị trải nghiệm"]')?.textContent||'',
-      overflow:document.documentElement.scrollWidth-innerWidth
-    }));
-    for(const tab of ['Tổng quan','Quản lý 25 trạm','Giao diện','Xem thử bài học'])
-      assert.ok(view.nav.includes(tab),'missing demo section: '+tab);
-    assert.match(view.note,/không thể xuất bản dữ liệu chung/i);
-    assert.ok(view.overflow<=5,device+' horizontal overflow '+view.overflow);
-    if(device==='phone') {
-      const toggle=await page.$('button[aria-controls="admin-demo-navigation"]');
-      assert.ok(toggle,'mobile admin menu missing');
-      await toggle.click();
-      assert.equal(await page.$eval('button[aria-controls="admin-demo-navigation"]',e=>e.getAttribute('aria-expanded')),'true');
-    }
     await page.evaluate(()=>{
-      const nav=document.querySelector('nav[aria-label="Điều hướng quản trị trải nghiệm"]');
-      [...nav.querySelectorAll('button')].find(b=>b.textContent?.includes('Giao diện'))?.click();
+      const button=[...document.querySelectorAll('button')].find(x=>x.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'));
+      assertButton(button,'Main cover entry');button.click();
+      function assertButton(button,label){if(!button)throw Error('Missing '+label);}
     });
-    await page.waitForFunction(()=>document.body.textContent?.includes('Quản lý hình nền theo từng khu vực'),{timeout:15000});
-    assert.ok(await page.evaluate(()=>[...document.querySelectorAll('button')].some(b=>b.textContent?.includes('Xem trước và lưu trên máy'))));
-    assert.equal(await page.evaluate(()=>[...document.querySelectorAll('button')].some(b=>b.textContent?.trim()==='Xuất bản giao diện')),false,'Admin Demo must not publish');
-    await page.screenshot({path:'staff-admin-qa/admin-demo-'+device+'.png',fullPage:true});
-    assert.deepEqual(protectedWrites,[],'Demo attempted protected API writes');
-    assert.deepEqual(errors,[],'uncaught browser errors');
-    console.log('ADMIN DEMO',device,'PASS: live route, four sections, local-only guard, theme screen, overflow '+view.overflow);
+    await page.waitForSelector('[role="dialog"][aria-label="Chọn vai trò và đăng nhập"]',{timeout:15000});
+    const roles=await page.evaluate(()=>{
+      const dialog=document.querySelector('[role="dialog"]');
+      const text=dialog?.textContent||'';
+      return {
+        roleText:text,
+        demoButtons:[...dialog.querySelectorAll('button')].filter(b=>/Quản trị.*Demo|Khám phá tự do dành cho quản trị/i.test((b.textContent||'')+' '+(b.getAttribute('aria-label')||''))).length,
+        staff:!![...dialog.querySelectorAll('section')].find(s=>s.textContent?.includes('GIÁO VIÊN / QUẢN TRỊ')),
+        student:!![...dialog.querySelectorAll('section')].find(s=>s.textContent?.includes('HỌC SINH')),
+        overflow:document.documentElement.scrollWidth-innerWidth,
+      };
+    });
+    assert.ok(roles.staff&&roles.student,'student and actual staff entry must remain');
+    assert.equal(roles.demoButtons,0,'Public Admin Demo button still accessible');
+    assert.doesNotMatch(roles.roleText,/Xem thử Quản trị\s*\(Demo\)/);
+    assert.ok(roles.overflow<=5,device+' overflow '+roles.overflow);
+    await page.evaluate(()=>{
+      const section=[...document.querySelectorAll('[role="dialog"] section')].find(s=>s.textContent?.includes('GIÁO VIÊN / QUẢN TRỊ'));
+      const button=[...section.querySelectorAll('button')].find(b=>b.textContent?.includes('Đăng nhập'));
+      if(!button)throw Error('No staff login button');button.click();
+    });
+    await page.waitForSelector('[role="dialog"][aria-label="Đăng nhập quản trị và giáo viên"]',{timeout:15000});
+    const auth=await page.evaluate(()=>({
+      email:!!document.querySelector('input[type="email"][autocomplete="username"]'),
+      password:!!document.querySelector('input[type="password"][autocomplete="current-password"]'),
+      adminPanel:!!document.querySelector('.admin-workspace'),
+      fakeAdminLink:!!document.querySelector('button[aria-label="Khám phá tự do dành cho quản trị"]'),
+      overflow:document.documentElement.scrollWidth-innerWidth,
+    }));
+    assert.ok(auth.email&&auth.password,'Real staff auth form must be reachable');
+    assert.equal(auth.adminPanel,false,'An anonymous visitor must not enter protected Admin');
+    assert.equal(auth.fakeAdminLink,false,'Anonymous Admin Demo entry must be absent');
+    assert.ok(auth.overflow<=5,device+' auth overflow '+auth.overflow);
+    assert.deepEqual(protectedWrites,[],'Role selection must not write protected data');
+    assert.deepEqual(errors,[],'No uncaught browser errors');
+    await page.screenshot({path:'staff-admin-qa/admin-login-'+device+'.png',fullPage:true});
+    console.log('ROLE QA',device,'PASS: no Admin Demo, real staff login, protected Admin, no writes');
     await page.close();
   }
-} finally {await browser.close();}
+}finally{await browser.close();}

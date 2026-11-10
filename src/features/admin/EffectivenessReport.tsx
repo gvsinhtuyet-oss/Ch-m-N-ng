@@ -14,6 +14,17 @@ type Report = {
 const number = new Intl.NumberFormat('vi-VN');
 const reportTime = new Intl.DateTimeFormat('vi-VN', {timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit'});
 const refreshIntervalMs = 120_000;
+// The period starting 01/10/2026 is selectable only while it fits the backend's
+// genuine 90-day reporting window. Never invent earlier historical counts.
+const octoberStart = Date.UTC(2026, 9, 1);
+const vietnamTodayParts = new Intl.DateTimeFormat('en-US', {
+  timeZone:'Asia/Ho_Chi_Minh',year:'numeric',month:'2-digit',day:'2-digit',
+}).formatToParts(new Date());
+const vietnamDateField=(field:'year'|'month'|'day') =>
+  Number(vietnamTodayParts.find(part=>part.type===field)?.value ?? 0);
+const daysFromOctober = Math.round((Date.UTC(vietnamDateField('year'),vietnamDateField('month')-1,vietnamDateField('day'))-octoberStart)/86400000)+1;
+const showOctoberPeriod=daysFromOctober>=1&&daysFromOctober<=90;
+
 const date = (day: string) => day.split('-').reverse().join('/');
 const stages = ['stage1', 'stage2', 'stage3', 'stage4'] as const;
 const fieldClass = 'block w-full min-w-0 rounded-xl border bg-white px-3 py-2';
@@ -98,7 +109,7 @@ function StageProgressChart({values}: {values: {label: string; value: number}[]}
 export function EffectivenessReport({openProgress, openFeedback}: {
   openProgress: () => void; openFeedback: (stationId: string) => void;
 }) {
-  const [days, setDays] = useState(30);
+  const [days, setDays] = useState(showOctoberPeriod?daysFromOctober:30);
   const [grade, setGrade] = useState(0);
   const [stationId, setStationId] = useState('');
   const [audience, setAudience] = useState(-1);
@@ -180,6 +191,12 @@ export function EffectivenessReport({openProgress, openFeedback}: {
       }
     }
   }
+  const monthlyVisits = new Map<string,number>();
+  for(const [day,count] of visitsByDay){
+    const month=day.slice(0,7);
+    monthlyVisits.set(month,(monthlyVisits.get(month)??0)+count);
+  }
+  const peakMonth = Math.max(1,...monthlyVisits.values());
   const visits = [...visitsByDay.values()];
   const totalVisits = visits.reduce((sum, count) => sum + count, 0);
   const maxVisits = Math.max(1, ...visits);
@@ -219,15 +236,18 @@ export function EffectivenessReport({openProgress, openFeedback}: {
     finally {setDownloading(false);}
   }
 
-  return <section className="space-y-5 rounded-3xl border bg-white p-4 sm:p-6">
-    <header>
-      <h2 className="text-2xl font-black">Báo cáo hiệu quả</h2>
-      <p className="mt-1 text-sm text-slate-600">Thống kê chung mọi người khám phá, gồm khám phá tự do và học sinh đăng nhập. Tiến độ theo lớp chỉ áp dụng cho học sinh đã liên kết lớp.</p>
+  return <section className="space-y-5 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+    <header className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sky-950 via-blue-900 to-indigo-900 px-5 py-6 text-white sm:px-7">
+      <div className="pointer-events-none absolute -right-10 -top-12 h-44 w-44 rounded-full border-[24px] border-white/10" aria-hidden="true"/>
+      <p className="relative text-xs font-extrabold uppercase tracking-[.18em] text-sky-200">CHẠM ĐÀ NẴNG · BÁO CÁO QUẢN TRỊ</p>
+      <h2 className="relative mt-2 text-2xl font-black sm:text-3xl">Hiệu quả sử dụng và hành trình khám phá</h2>
+      <p className="relative mt-2 max-w-2xl text-sm leading-6 text-sky-100">Theo dõi lượt truy cập, mức hoàn thành bốn chặng và hoạt động tại 25 trạm. Dữ liệu được tổng hợp từ hoạt động đã ghi nhận trên máy chủ.</p>
     </header>
     <div className="grid gap-3 text-sm sm:grid-cols-2 lg:grid-cols-4">
       <label>Thời gian
         <select className={fieldClass} value={days} onChange={event => setDays(Number(event.target.value))}>
-          {[7, 30, 90].map(value => <option key={value} value={value}>{value} ngày gần nhất</option>)}
+          {showOctoberPeriod&&<option value={daysFromOctober}>Từ 01/10/2026 đến nay</option>}
+          {[7, 30, 60, 90].filter(value=>!showOctoberPeriod||value!==daysFromOctober).map(value => <option key={value} value={value}>{value} ngày gần nhất</option>)}
         </select>
       </label>
       <label>Nhóm người dùng
@@ -254,11 +274,18 @@ export function EffectivenessReport({openProgress, openFeedback}: {
       </button>
       {currentSnapshot && <p className="text-xs text-slate-600">Cập nhật thành công lúc {reportTime.format(currentSnapshot.checkedAt)} · Giờ Việt Nam</p>}
     </div>
-    {error && <p role="alert" className="rounded-xl bg-amber-50 p-3 text-sm text-amber-900">
-      {error}{report ? ' Đang hiển thị số liệu từ lần tải thành công gần nhất.' : ''}
-    </p>}
+    {error&&<div role="status" className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+      <p className="font-semibold">{report?'Số liệu được giữ từ lần cập nhật gần nhất.':'Chưa kết nối được báo cáo hiệu quả.'}</p>
+      <p className="mt-1 text-xs text-slate-600">Có thể tải lại khi đường truyền và máy chủ sẵn sàng.</p>
+      <details className="mt-2 text-xs text-slate-500"><summary className="cursor-pointer">Chi tiết kết nối dành cho quản trị</summary><p className="mt-1 break-words">{error}</p></details>
+    </div>}
+    {!report && <div role="status" className="flex min-h-40 flex-col items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-gradient-to-b from-slate-50 to-white px-5 py-6 text-center">
+      <p className="font-bold text-slate-800">{loading?'Đang tổng hợp kết quả từ máy chủ…':'Báo cáo chưa có dữ liệu được xác minh'}</p>
+      <p className="max-w-lg text-sm text-slate-600">{loading?'Dữ liệu sẽ hiển thị sau khi kết nối hoàn tất.':'Bạn có thể thử làm mới để xem thống kê đã ghi nhận. Các chỉ số chưa xác minh không được tính là 0.'}</p>
+    </div>}
     {report && <>
-      <p className="text-xs text-slate-500">Từ {date(report.start)} đến {date(report.end)} · Giờ Việt Nam</p>
+      <p className="text-xs font-medium text-slate-500">Thống kê từ {date(report.start)} đến {date(report.end)} · Giờ Việt Nam</p>
+      {(grade!==0||stationId!=='')&&<p className="rounded-xl bg-sky-50 px-3 py-2 text-xs text-sky-900">Bộ lọc khối và trạm áp dụng cho tiến độ; lượt truy cập website vẫn tính cho toàn bộ người khám phá thuộc nhóm đã chọn.</p>}
       <div className="grid gap-3 sm:grid-cols-3">
         <article className="rounded-2xl bg-sky-50 p-4"><h3 className="font-bold">Lượt truy cập website</h3><p className="text-2xl font-black">{countLabel(totalVisits)}</p><p className="text-xs">Gồm khám phá tự do và học sinh theo bộ lọc · Một lượt mỗi phiên, không phải số người duy nhất</p></article>
         <article className="rounded-2xl bg-indigo-50 p-4"><h3 className="font-bold">Lượt bắt đầu trạm</h3><p className="text-2xl font-black">{countLabel(started)}</p><p className="text-xs">Một lượt cho mỗi trạm trong một phiên</p></article>
@@ -279,6 +306,23 @@ export function EffectivenessReport({openProgress, openFeedback}: {
         </article>
       </div>
       {totalVisits > 0 ? <>
+        <section aria-label="So sánh lượt truy cập theo tháng" className="rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 to-white p-4 sm:p-5">
+          <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
+            <h3 className="font-extrabold text-slate-900">Lượt truy cập theo tháng</h3>
+            <span className="text-xs text-slate-600">Tổng hợp từ các ngày thuộc khoảng thời gian đã chọn</span>
+          </div>
+          <div className="space-y-3">
+            {[...monthlyVisits.entries()].map(([month,count])=><div key={month} className="grid grid-cols-[5.5rem_minmax(0,1fr)_4.5rem] items-center gap-3 text-sm sm:grid-cols-[8rem_minmax(0,1fr)_5.5rem]">
+              <span className="font-semibold text-slate-700">Tháng {month.slice(5)}/{month.slice(0,4)}</span>
+              <div className="h-5 overflow-hidden rounded-full bg-sky-100" role="meter"
+                aria-label={`Lượt truy cập tháng ${month.slice(5)}/${month.slice(0,4)}`}
+                aria-valuemin={0} aria-valuemax={peakMonth} aria-valuenow={count}>
+                <div className="h-full rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 transition-[width]" style={{width:`${count/peakMonth*100}%`}}/>
+              </div>
+              <strong className="text-right tabular-nums text-sky-950">{countLabel(count)}</strong>
+            </div>)}
+          </div>
+        </section>
         <VisitTrendChart entries={[...visitsByDay.entries()]} />
         <details className="rounded-xl border p-4">
         <summary className="cursor-pointer font-bold">Lượt truy cập theo ngày</summary>
@@ -309,14 +353,14 @@ export function EffectivenessReport({openProgress, openFeedback}: {
         </details>)}
       </div>
     </>}
-    <section className="space-y-2 rounded-xl border p-4">
+    <section className="space-y-2 rounded-2xl border border-slate-200 bg-slate-50/60 p-4 sm:p-5">
       <h3 className="font-bold">Hiệu quả học sinh và giáo viên</h3>
       <p className="text-sm text-slate-600">Mẫu thí điểm tính điểm trước–sau trên cùng nhóm học sinh và số phút chuẩn bị của giáo viên. Tệp do nhà trường giữ, phần mềm không tải dữ liệu trong tệp lên máy chủ.</p>
       <div className="flex flex-wrap gap-2">
         <button type="button" onClick={openProgress} className="rounded-lg border px-3 py-2 text-sm font-semibold">Tiến độ đã đồng bộ theo lớp</button>
         <button type="button" disabled={downloading} onClick={() => void downloadPilot()} className="rounded-lg border px-3 py-2 text-sm font-semibold">{downloading ? 'Đang tạo tệp…' : 'Tải mẫu đo hiệu quả (.xlsx)'}</button>
       </div>
-      {downloadError && <p role="alert" className="text-sm text-rose-700">{downloadError}</p>}
+      {downloadError && <p role="status" className="rounded-lg bg-white px-3 py-2 text-sm text-slate-700">{downloadError}</p>}
     </section>
   </section>;
 }

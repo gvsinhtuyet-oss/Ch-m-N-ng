@@ -29,7 +29,6 @@ interface Props {
   compactGame?: boolean;
   docked?: boolean;
   audience?: 'student' | 'teacher' | 'admin';
-  adminDemo?: boolean;
   openRequestId?: number;
   stage?: number;
   storageScope?: string;
@@ -79,14 +78,10 @@ export interface AssistantSuggestion {
   adminPage?:'assistant-qa'|'effectiveness'|'reports'|'content'|'theme';
 }
 /** Friendly labels, explicit source-grounded queries; admin actions open real pages. */
-export function buildAssistantFollowUps({audience,stage,topic,stationTitle,hotspotTitle,unknown=false,adminDemo=false}:{
- audience:'student'|'teacher'|'admin';stage?:number;topic?:string;stationTitle?:string;hotspotTitle?:string;unknown?:boolean;adminDemo?:boolean;
+export function buildAssistantFollowUps({audience,stage,topic,stationTitle,hotspotTitle,unknown=false}:{
+ audience:'student'|'teacher'|'admin';stage?:number;topic?:string;stationTitle?:string;hotspotTitle?:string;unknown?:boolean;
 }):AssistantSuggestion[]{
- if(audience==='admin')return adminDemo?[
-  {label:'Mình xem tiến độ học nhé!',query:'',adminPage:'reports'},
-  {label:'Mở kho 25 trạm nào!',query:'',adminPage:'content'},
-  {label:'Thử đổi giao diện nhé!',query:'',adminPage:'theme'},
- ]:[
+ if(audience==='admin')return [
   {label:'Có câu nào cần kiểm tra lại không?',query:'',adminPage:'assistant-qa'},
   {label:'Việc học đang hiệu quả ra sao?',query:'',adminPage:'effectiveness'},
   {label:'Xem kết quả từng lớp nhé!',query:'',adminPage:'reports'},
@@ -149,7 +144,7 @@ const AssistantEmblem=({className}:{className?:string})=>(
   </svg>
 );
 
-export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '', adminDemo = false, openRequestId = 0 }) => {
+export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '', openRequestId = 0 }) => {
   const isTeacher = audience !== 'student';
   const isAdmin = audience === 'admin';
   const welcome = isAdmin ? 'Chào thầy cô! Mình cùng xem các mục quản trị nhé.' : isTeacher ? 'Thầy cô muốn chuẩn bị nội dung nào hôm nay?' : WELCOME;
@@ -301,7 +296,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const latestAnswer=messages.filter(m=>m.role==='assistant'&&m.id!=='welcome').at(-1);
   const suggestedPrompts=buildAssistantFollowUps({
     audience,stage,topic:latestAnswer?.topic,stationTitle:station?.titleVi,hotspotTitle:hotspot?.titleVi,
-    unknown:latestAnswer?.found===false,adminDemo,
+    unknown:latestAnswer?.found===false,
   });
 
   const append = (message: ChatMessage) => {

@@ -86,7 +86,7 @@ test('approved student and teacher access portal preserves real login, QR and gu
   assert.match(landing,/onTeacherDemo=/);
   assert.match(landing,/onGoogleLogin=\{finishStaffLogin\}/);
   assert.match(portal,/GoogleTeacherLogin onLogin=\{onGoogleLogin\}/);
-  assert.match(portal,/onStaffLogin=/);
+  assert.match(portal,/onSubmit=\{onStaffLogin\}/);
   assert.match(portal,/cham-access-logo/);
   assert.match(portal,/Học sinh/);
   assert.match(portal,/Giáo viên tự do/);

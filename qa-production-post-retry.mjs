@@ -4,7 +4,7 @@ import {readFileSync,readdirSync} from 'node:fs';
 import {resolve} from 'node:path';
 const live='https://chamdanang-gddp.pages.dev';
 const html=readFileSync('dist/index.html','utf8');
-const entry=[...html.matchAll(/<script\\b[^>]*src=["']([^"']+\\.js)["']/gi)].map(m=>m[1]).filter(x=>x.startsWith('/assets/'));
+const entry=[...html.matchAll(/<script\b[^>]*src=["']([^"']+\.js)["']/gi)].map(m=>m[1]).filter(x=>x.startsWith('/assets/'));
 assert.ok(entry.length,'Vite index must contain at least one JS script');
 const chunk=readdirSync('dist/assets').filter(x=>x.endsWith('.js')).find(x=>readFileSync(resolve('dist/assets',x),'utf8').includes('Hiệu quả sử dụng và hành trình khám phá'));
 assert.ok(chunk,'New Admin dashboard chunk not found in local build');

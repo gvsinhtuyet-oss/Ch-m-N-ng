@@ -38,6 +38,20 @@ export function StudentAccessCards({classId,className}:{classId:string;className
   <p className="text-sm rounded-xl bg-amber-50 p-3">Em đã học trên website? Nhập mã đồng bộ cũ của em rồi chọn “Giữ hành trình cũ”. Chỉ cấp hồ sơ mới cho em chưa có hành trình.</p>
   <button type="button" disabled={busy||!students.some(s=>!s.issued)} onClick={()=>setConfirm('batch')} className="rounded-xl bg-sky-700 text-white px-4 py-3 font-bold disabled:opacity-50">Cấp mã cho các em chưa có hồ sơ</button>
   {confirm==='batch'&&<div className="rounded-xl border border-amber-300 p-3"><p>Đã kiểm tra các em chưa có hành trình cũ? Thao tác này tạo hồ sơ mới cho {students.filter(s=>!s.issued).length} em chưa có mã.</p><button type="button" disabled={busy} onClick={()=>void issue(students.filter(s=>!s.issued),'issue')} className="m-2 rounded-lg bg-emerald-700 p-2 text-white">Xác nhận cấp mã mới</button><button type="button" disabled={busy} onClick={()=>setConfirm('')}>Hủy</button></div>}
+  {students.some(student=>student.issued)&&<div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+    <button type="button" disabled={busy||downloadBusy} onClick={()=>setConfirm(confirm==='rotate-batch'?'':'rotate-batch')}
+      className="text-sm font-bold text-slate-700 underline underline-offset-4 disabled:opacity-50">
+      Đã mất thẻ QR cũ? Cấp lại bộ thẻ đã cấp
+    </button>
+    {confirm==='rotate-batch'&&<div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-950">
+      <p className="font-bold">Cảnh báo: mã cũ của {students.filter(student=>student.issued).length} học sinh sẽ hết hiệu lực.</p>
+      <p className="mt-1">Chỉ làm việc này nếu đã mất bản thẻ hoặc chưa gửi thẻ cho phụ huynh. Tất cả mã QR cũ sẽ không còn đăng nhập được; tiến độ học của các em vẫn được giữ nguyên. Sau khi cấp lại, tải ZIP ngay rồi gửi riêng từng thẻ.</p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <button type="button" disabled={busy||downloadBusy} onClick={()=>void issue(students.filter(student=>student.issued),'rotate')} className="rounded-lg bg-amber-800 px-4 py-2 font-bold text-white disabled:opacity-50">Tôi hiểu, cấp lại mã đã cấp</button>
+        <button type="button" disabled={busy} onClick={()=>setConfirm('')} className="rounded-lg border border-slate-300 bg-white px-4 py-2 font-semibold">Không cấp lại</button>
+      </div>
+    </div>}
+  </div>}
   <div className="space-y-3">{students.map(row=><div key={row.id} className="rounded-xl border p-3 space-y-2">
    <p className="font-bold">{row.index+1}. {row.name} <span className="text-xs font-normal">{row.issued?'· Đã có hồ sơ':'· Chưa cấp mã'}</span></p>
    {!row.issued?<div className="flex flex-wrap items-center gap-2"><button type="button" disabled={busy} onClick={()=>void issue([row],'issue')} className="rounded-lg bg-emerald-700 p-2 text-white">Cấp mã mới</button><input aria-label={'Mã cũ của '+row.name+' số '+(row.index+1)} type="password" autoComplete="off" maxLength={20} placeholder="Mã đồng bộ cũ (nếu có)" value={oldCodes[row.id]||''} onChange={e=>setOldCodes(prev=>({...prev,[row.id]:e.target.value}))} className="min-w-0 max-w-full rounded-lg border p-2"/><button type="button" disabled={busy||!oldCodes[row.id]?.trim()} onClick={()=>void issue([row],'adopt')} className="rounded-lg border p-2">Giữ hành trình cũ</button></div>:<button type="button" disabled={busy} onClick={()=>setConfirm(row.id)} className="rounded-lg border p-2">Quên/lộ mã: cấp lại</button>}

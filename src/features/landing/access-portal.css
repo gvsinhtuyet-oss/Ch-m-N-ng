@@ -294,3 +294,14 @@
  .cham-access-form-card{padding-top:13px}
 }
 @media(prefers-reduced-motion:reduce){.cham-access-sheet{animation:none}}
+/* Small phones keep every action visible beneath the unchanged landing name. */
+@media(max-width:767px) and (max-height:700px){
+ .cham-access-sheet:not([data-screen=role]) .cham-access-content{padding:8px}
+ .cham-access-form-card{padding:8px 10px}
+ .cham-access-card-title{margin-top:4px}
+ .cham-access-description{margin-bottom:5px}
+ .cham-access-back{margin-top:2px}
+ .cham-access-primary{margin-top:8px}
+ .cham-access-student-secondary{margin-top:6px}
+ .cham-access-hint{margin-top:4px}
+}

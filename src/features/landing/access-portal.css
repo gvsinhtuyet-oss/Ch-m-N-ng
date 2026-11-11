@@ -305,3 +305,9 @@
  .cham-access-student-secondary{margin-top:6px}
  .cham-access-hint{margin-top:4px}
 }
+@media(max-width:767px) and (max-height:700px){
+ .cham-access-sheet[data-screen=teacher] .cham-access-role-chip{display:none}
+ .cham-access-sheet[data-screen=teacher] .cham-access-or{margin:3px 0}
+ .cham-access-sheet[data-screen=teacher] .cham-access-guest-note{margin-top:3px}
+ .cham-access-sheet[data-screen=teacher] .cham-access-card-title{margin-top:2px}
+}

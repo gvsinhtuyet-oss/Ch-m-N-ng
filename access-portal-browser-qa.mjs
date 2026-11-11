@@ -18,6 +18,11 @@ try {
   const nav=await page.goto(origin+'?qa-responsive-access=20261111',{waitUntil:'domcontentloaded',timeout:50000});
   assert.equal(nav?.status(),200,name+' app navigation');
   await page.waitForFunction(()=>document.body.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'),{timeout:30000});
+  await page.evaluate(()=>document.fonts.ready);
+  const originalTitle=await page.$('.landing-cover-title');
+  const originalTitleBox=await originalTitle.boundingBox();
+  const originalTitleStyle=await originalTitle.evaluate(el=>{const s=getComputedStyle(el);return [s.color,s.fontSize,s.textShadow];});
+  await page.screenshot({path:'access-portal-qa/cover-'+name+'.png'});
   await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'))?.click());
   await page.waitForSelector('[role="dialog"][aria-label="Chọn vai trò"]',{timeout:20000});
 
@@ -26,17 +31,19 @@ try {
    assert.ok(panel,name+' '+view+' must use a single real responsive sheet');
    await page.waitForFunction(()=>[...document.querySelectorAll('.cham-access-sheet .cham-access-illustration img')].every(img=>img.complete && img.naturalWidth>500),{timeout:20000});
    await page.evaluate(async()=>{await Promise.all([...document.querySelectorAll('.cham-access-sheet .cham-access-illustration img')].map(img=>img.decode().catch(()=>{})));});
+   await page.evaluate(async()=>{await Promise.all(document.querySelector('.cham-access-sheet').getAnimations().map(animation=>animation.finished.catch(()=>{})));});
    const metrics=await page.evaluate(()=>{
     const sheet=document.querySelector('.cham-access-sheet');
     const rect=sheet.getBoundingClientRect();
     const images=[...sheet.querySelectorAll('.cham-access-illustration img')];
-    const logo=sheet.querySelector('.cham-access-wordmark');
+    const logo=document.querySelector('.landing-cover-title');
+    const logoStyle=getComputedStyle(logo);
     const actions=[...sheet.querySelectorAll('button')].filter(el=>getComputedStyle(el).display!=='none');
     return {
       x:rect.x,right:rect.right,top:rect.top,bottom:rect.bottom,
       width:innerWidth,height:innerHeight,pageWidth:document.documentElement.scrollWidth,
       innerOverflow:sheet.scrollHeight-sheet.clientHeight,
-      logo:logo?.textContent,images:images.map(img=>[img.naturalWidth,img.naturalHeight]),
+      logo:logo?.textContent,logoBox:logo.getBoundingClientRect().toJSON(),logoStyle:[logoStyle.color,logoStyle.fontSize,logoStyle.textShadow],duplicateNames:sheet.querySelectorAll('.cham-access-wordmark').length,images:images.map(img=>[img.naturalWidth,img.naturalHeight]),
       outOfView:actions.filter(el=>{
         const b=el.getBoundingClientRect();
         return b.width<24||b.height<24||b.left<-1||b.right>innerWidth+1||b.top<-1||b.bottom>innerHeight+1;
@@ -49,6 +56,13 @@ try {
    assert.ok(metrics.innerOverflow<=2,name+' '+view+' unexpectedly scrolls '+JSON.stringify(metrics));
    assert.deepEqual(metrics.outOfView,[],name+' '+view+' controls outside screen');
    assert.match(metrics.logo||'',/CHẠMĐÀ NẴNG/,'wordmark must be sharp live text');
+   assert.equal(await originalTitle.evaluate(el=>el.isConnected),true,'original title DOM node stays mounted');
+   assert.equal(metrics.duplicateNames,0,'access panels must not repeat the app name');
+   assert.ok(metrics.top>=metrics.logoBox.bottom+8,name+' '+view+' must not cover the original title');
+   for(const key of ['x','y','width','height'])assert.ok(Math.abs(metrics.logoBox[key]-originalTitleBox[key])<1,name+' '+view+' original title moved: '+key);
+   assert.deepEqual(metrics.logoStyle,originalTitleStyle,name+' original title styling changed');
+   assert.equal(await page.$('.landing-cover-player iframe'),null,'intro playback is stopped during access');
+   assert.equal(await page.$eval('.landing-cover-actions',el=>getComputedStyle(el).visibility),'hidden','cover controls disappear');
    assert.ok(metrics.images.every(([w,h])=>w>=600&&h>=240),'approved dedicated card/banner illustrations are loaded');
    if(view==='role')assert.ok(metrics.bottom-metrics.top<=height*.8,name+' role chooser should be compact');
    await page.screenshot({path:'access-portal-qa/'+view+'-'+name+'.png'});
@@ -84,6 +98,12 @@ try {
   await page.waitForSelector('.cham-access-account-form input[autocomplete="username"]');
   assert.ok(await page.$('.cham-access-account-form input[autocomplete="current-password"]'));
   assert.ok(await page.$('.cham-access-toggle-password'));
+  await page.click('.cham-access-toggle-password');
+  assert.equal(await page.$eval('input[autocomplete="current-password"]',el=>el.type),'text');
+  await page.click('.cham-access-close');
+  await page.waitForFunction(()=>!document.querySelector('.cham-access-sheet'));
+  const restoredVideo=await page.$eval('.landing-cover-player iframe',el=>el.src);
+  assert.equal(new URL(restoredVideo).searchParams.get('autoplay'),'0','closing access restores a paused intro');
   assert.deepEqual(errors,[],name+' JS runtime errors');
   console.log('RESPONSIVE ACCESS '+name+' PASS: sharp live brand, illustrated real buttons, no scroll, QR, guest, Google, email');
   await page.close();

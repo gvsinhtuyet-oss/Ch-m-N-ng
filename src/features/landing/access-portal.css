@@ -249,3 +249,48 @@
  .cham-access-role-card{height:70px}
  .cham-access-role-footer{font-size:20px;padding:10px 12px}
 }
+
+/* Access lives on the existing cover: no replacement background or duplicate name. */
+.cham-access-overlay{
+ inset:0 0 auto;height:var(--access-viewport-height,100dvh);
+ padding:calc(var(--landing-identity-bottom,150px) + 16px) 18px calc(var(--landing-footer-space,30px) + 12px);
+ place-items:center;background:transparent;
+}
+.cham-access-sheet,.cham-access-sheet[data-screen=role]{
+ width:min(960px,100%);height:auto;
+ max-height:calc(var(--access-viewport-height,100dvh) - var(--landing-identity-bottom,150px) - var(--landing-footer-space,30px) - 28px);
+ border:2px solid #fff;border-radius:26px;overflow-y:auto;
+ background:linear-gradient(140deg,#f7fcfff7,#e4f5fff5);
+ animation:cham-access-enter .28s ease-out both;
+}
+.cham-access-sheet[data-screen=role]{width:min(720px,100%)}
+.cham-access-content,.cham-access-sheet[data-screen=role] .cham-access-content{height:auto;padding:22px}
+.cham-access-close,.cham-access-sheet[data-screen=role] .cham-access-close{top:8px;right:8px;width:44px;height:44px}
+.cham-access-role-content h2{
+ margin:6px 28px 20px;max-width:600px;font-size:clamp(19px,2vw,24px);
+ color:#084b94;font-weight:900;line-height:1.3;text-align:center;
+}
+.cham-access-sheet[data-screen=role]:after{
+ content:'';position:absolute;left:12%;right:12%;bottom:7px;height:9px;
+ border-top:2px solid #ffc400;border-radius:50% 50% 0 0;pointer-events:none;
+}
+.cham-access-sheet[data-screen=role] .cham-access-content{padding-bottom:29px}
+.cham-access-hero{min-height:330px}
+@keyframes cham-access-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:767px){
+ .cham-access-overlay,.cham-access-overlay:has(.cham-access-sheet[data-screen=role]){
+  padding:calc(var(--landing-identity-bottom,160px) + 12px) 12px calc(var(--landing-footer-space,40px) + 10px);
+  place-items:center;
+ }
+ .cham-access-sheet,.cham-access-sheet[data-screen=role]{
+  width:min(440px,100%);height:auto;border:2px solid #fff;border-radius:22px;
+  max-height:calc(var(--access-viewport-height,100dvh) - var(--landing-identity-bottom,160px) - var(--landing-footer-space,40px) - 22px);
+ }
+ .cham-access-content,.cham-access-sheet[data-screen=role] .cham-access-content{height:auto;padding:14px 12px}
+ .cham-access-sheet[data-screen=role] .cham-access-content{padding:17px 12px 27px}
+ .cham-access-role-content h2{font-size:18px;margin:6px 27px 17px}
+ .cham-access-sheet[data-screen=role] .cham-access-close{width:38px;height:38px;top:5px;right:5px}
+ .cham-access-hero{min-height:0}
+ .cham-access-form-card{padding-top:13px}
+}
+@media(prefers-reduced-motion:reduce){.cham-access-sheet{animation:none}}

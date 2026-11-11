@@ -82,7 +82,8 @@ test('all role/student/teacher screens use one responsive real UI, high-res appr
  assert.match(landing,/showRolePicker && <ResponsiveAccessPortal/);
  assert.match(responsive,/ResponsiveAccessPortal = AccessPortal/);
  assert.doesNotMatch(responsive,/approved-mobile-stage|approved-hotspot/);
- assert.match(portal,/cham-access-wordmark/);
+ assert.match(landing,/landing-cover-title/);
+ assert.doesNotMatch(portal,/<Wordmark/);
  assert.match(portal,/approved-clean\/student-card\.webp/);
  assert.match(portal,/approved-clean\/student-banner\.webp/);
  assert.match(portal,/approved-clean\/teacher-card\.webp/);

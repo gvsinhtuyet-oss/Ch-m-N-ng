@@ -424,3 +424,26 @@
  .landing-top-actions > button.landing-staff-login { width:auto!important; padding-inline:10px!important; white-space:nowrap; }
  .landing-top-actions > button.landing-staff-login > span { display:inline!important; }
 }
+
+/* One persistent, sharp golden identity for cover and all access steps. */
+.landing-cover-title{
+ color:#ffd000;-webkit-text-fill-color:#ffd000;-webkit-text-stroke:.4px #996000;
+ paint-order:stroke fill;filter:none;
+ text-shadow:0 1px 0 #fff4a1,0 3px 0 #b87800,0 5px 0 #075489;
+}
+.landing-cover-video,.landing-cover-actions{transition:opacity .28s ease,visibility .28s ease}
+.landing-art-shell[data-access-open=true] .landing-art-scene>header,
+.landing-art-shell[data-access-open=true] .landing-cover-video,
+.landing-art-shell[data-access-open=true] .landing-cover-actions{
+ visibility:hidden;opacity:0;pointer-events:none;
+}
+/* Preserve the intro's layout footprint so the identity never jumps. */
+.landing-art-shell[data-access-open=true]{overflow:hidden}
+@media(max-width:767px){
+ .landing-art-shell[data-access-open=true] .landing-review-footer{
+  position:fixed!important;bottom:0;left:0;right:0;z-index:1001;
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .landing-cover-video,.landing-cover-actions{transition:none}
+}

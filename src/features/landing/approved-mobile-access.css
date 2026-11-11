@@ -39,3 +39,7 @@
 .student-notice {top:40%;}.teacher-notice {top:41%;}.approved-mobile-error {bottom:15%;color:#a11222;}.approved-mobile-status {top:66%;}.approved-mobile-selector {top:36%;padding:16px 8px;}
 .approved-mobile-selector > div {display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}.approved-mobile-selector button {padding:10px 0;border-radius:14px;border:1px solid #73c5fc;background:#087cd3;color:#fff;font-weight:bold;}
 @media (max-height:620px) { .approved-mobile-dismiss {width:24px;height:24px;font-size:18px;} }
+/* Ambient full-screen extension of the approved 3:4 artwork on tall phones. The original central picture stays fully visible and undistorted. */
+.approved-mobile-portal { isolation:isolate; }
+.approved-mobile-ambient { position:absolute; z-index:0; inset:-8%; background-size:cover; background-position:center; filter:blur(38px) saturate(1.10); opacity:.48; pointer-events:none; }
+.approved-mobile-stage { z-index:1; }

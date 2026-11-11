@@ -37,6 +37,9 @@ jobs:
       - name: Journey maps, two-option checkpoints and reward persistence
         run: node --import tsx --test journey-maps-test.ts
 
+      - name: Reject invalid or foreign QR payloads
+        run: node --experimental-strip-types --test student-qr-payload-test.mjs
+
       - name: Mobile portrait layout contracts (cover, journey, four stages)
         run: node --test mobile-layout-regression-test.mjs
 

@@ -40,8 +40,8 @@ try{
       return {
         roleText:text,
         demoButtons:[...dialog.querySelectorAll('button')].filter(b=>/Quản trị.*Demo|Khám phá tự do dành cho quản trị/i.test((b.textContent||'')+' '+(b.getAttribute('aria-label')||''))).length,
-        staff:!!dialog?.querySelector('.cham-access-role-card.teacher'),
-        student:!!dialog?.querySelector('.cham-access-role-card.student'),
+        staff:!!dialog?.querySelector('.cham-access-role-card.teacher, .desktop-art-role-teacher'),
+        student:!!dialog?.querySelector('.cham-access-role-card.student, .desktop-art-role-student'),
         overflow:document.documentElement.scrollWidth-innerWidth,
       };
     });
@@ -49,11 +49,11 @@ try{
     assert.equal(roles.demoButtons,0,'Public Admin Demo button still accessible');
     assert.doesNotMatch(roles.roleText,/Xem thử Quản trị\s*\(Demo\)/);
     assert.ok(roles.overflow<=5,device+' overflow '+roles.overflow);
-    await page.click('.cham-access-role-card.teacher');
+    await page.click('.cham-access-role-card.teacher, .desktop-art-role-teacher');
     await page.waitForSelector('[role="dialog"][aria-label="Đăng nhập giáo viên"]',{timeout:15000});
-    assert.ok(await page.$('.cham-access-google [data-testid="google-signin-host"]'),'Real Google login must remain available');
-    assert.ok(await page.$('.cham-access-teacher-guest'),'Read-only teacher access entry must remain available');
-    await page.click('.cham-access-account-trigger');
+    assert.ok(await page.$('.cham-access-google [data-testid="google-signin-host"], .desktop-art-google [data-testid="google-signin-host"]'),'Real Google login must remain available');
+    assert.ok(await page.$('.cham-access-teacher-guest, .desktop-art-teacher-guest'),'Read-only teacher access entry must remain available');
+    if (device === 'phone') await page.click('.cham-access-account-trigger');
     await page.waitForSelector('input[type="email"][autocomplete="username"]',{timeout:15000});
     const auth=await page.evaluate(()=>({
       email:!!document.querySelector('input[type="email"][autocomplete="username"]'),

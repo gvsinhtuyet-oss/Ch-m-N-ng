@@ -311,3 +311,5 @@
  .cham-access-sheet[data-screen=teacher] .cham-access-guest-note{margin-top:3px}
  .cham-access-sheet[data-screen=teacher] .cham-access-card-title{margin-top:2px}
 }
+/* The dialog itself receives focus without a dark browser frame; controls keep their focus rings. */
+.cham-access-sheet:focus{outline:none}

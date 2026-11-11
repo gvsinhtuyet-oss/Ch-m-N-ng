@@ -53,7 +53,7 @@ function Wordmark() {
 
 function Art({ kind, className = '' }: { kind: 'student'|'teacher'; className?: string }) {
   return <div className={'cham-access-illustration '+className} aria-hidden="true">
-    <img src={kind === 'student' ? students : teacher} loading="eager" decoding="async" alt="" draggable={false} />
+    <img src={kind === 'student' ? students : teacher} loading="eager" decoding="sync" alt="" draggable={false} />
   </div>;
 }
 

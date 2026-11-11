@@ -22,7 +22,9 @@
 .cham-access-role-card.teacher{background:#fff0d9}
 .cham-access-role-card:hover{transform:translateY(-2px);box-shadow:0 10px 25px #074e9b4d}
 .cham-access-illustration{position:relative;display:block;overflow:hidden;isolation:isolate;min-width:0;background:linear-gradient(170deg,#7fd4fa,#e2faff 60%,#8acfed)}
-.cham-access-illustration img{position:absolute;left:50%;bottom:0;display:block;width:100%;height:auto;max-width:none;transform:translateX(-50%);pointer-events:none;user-select:none}
+/* Clip the printed poster controls, including the central back-button pill,
+   while retaining the approved character artwork on both sides. */
+.cham-access-illustration img{clip-path:polygon(0 65.5%,30% 65.5%,30% 70.2%,70% 70.2%,70% 65.5%,100% 65.5%,100% 100%,0 100%);position:absolute;left:50%;bottom:0;display:block;width:100%;height:auto;max-width:none;transform:translateX(-50%);pointer-events:none;user-select:none}
 .cham-access-illustration:after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to bottom,rgba(218,247,255,.95),rgba(218,247,255,0) 19%)}
 .cham-access-role-picture{height:clamp(158px,24vh,206px);width:100%}
 .cham-access-role-picture img{width:100%;bottom:-5px}
@@ -183,3 +185,5 @@
 @media(prefers-reduced-motion:reduce){
  .cham-access-role-card,.cham-access-account-trigger svg:last-child{transition:none}
 }
+
+.cham-access-role-card.teacher .cham-access-illustration img,.cham-access-hero.teacher .cham-access-illustration img{clip-path:polygon(0 65.4%,33.3% 65.4%,33.3% 69.8%,67% 69.8%,67% 65.4%,100% 65.4%,100% 100%,0 100%)}

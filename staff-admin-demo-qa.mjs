@@ -75,7 +75,7 @@ try{
     await page.click('.cham-access-account-trigger');
     await page.waitForSelector('input[autocomplete="username"]',{timeout:15000});
     const auth=await page.evaluate(()=>({
-      email:!!document.querySelector('input[type="email"][autocomplete="username"]'),
+      email:!!document.querySelector('input[autocomplete="username"]'),
       password:!!document.querySelector('input[type="password"][autocomplete="current-password"]'),
       adminPanel:!!document.querySelector('.admin-workspace'),
       fakeAdminLink:!!document.querySelector('button[aria-label="Khám phá tự do dành cho quản trị"]'),

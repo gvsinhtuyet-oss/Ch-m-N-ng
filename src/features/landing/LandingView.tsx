@@ -1,6 +1,6 @@
 import { AppFullscreenButton } from '../../components/common/AppFullscreen';
 import './landing-cover.css';
-import { AccessPortal } from './AccessPortal';
+import { ResponsiveAccessPortal } from './ResponsiveAccessPortal';
 import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { DEMO_STUDENTS } from '../../data/mockUsers';
@@ -386,7 +386,7 @@ export const LandingView: React.FC = () => {
       </div>
 
       {/* Three approved role/student/teacher screens: images are decorative, controls remain live. */}
-      {showRolePicker && <AccessPortal
+      {showRolePicker && <ResponsiveAccessPortal
         view={showStaffLogin ? 'teacher' : showStudentLogin ? 'student' : 'role'}
         guestMode={guestMode}
         chosenGrade={chosenGrade}

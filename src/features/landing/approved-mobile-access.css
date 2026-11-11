@@ -1,0 +1,45 @@
+/* Approved artwork includes its own labels. Only hit targets + live input text overlay it.
+ * The image is fully visible: no object-cover cropping, no vertical scrolling. */
+.approved-mobile-portal { position:fixed; inset:0; z-index:1000; display:grid; place-items:center; overflow:hidden; background:linear-gradient(#009fe7,#5bddf8 75%,#00a7f1); }
+.approved-mobile-stage { position:relative; width:min(100vw,75dvh); height:auto; aspect-ratio:1086/1448; isolation:isolate; overflow:visible; flex:none; }
+.approved-mobile-art { display:block; width:100%; height:100%; object-fit:contain; pointer-events:none; user-select:none; }
+.approved-hotspot { position:absolute; border:0; padding:0; background:transparent; cursor:pointer; z-index:3; border-radius:999px; }
+.approved-hotspot:focus-visible, .approved-mobile-dismiss:focus-visible { outline:3px solid #ffdd00; outline-offset:2px; }
+.approved-hotspot:disabled { cursor:not-allowed; opacity:.45; }
+.approved-mobile-dismiss { position:absolute; right:1%; top:1%; z-index:5; width:30px; height:30px; border:2px solid white; border-radius:50%; background:#0755bd; color:#fff; font-size:23px; line-height:20px; cursor:pointer; }
+.role-student {left:12%;top:39%;width:76%;height:11%;}
+.role-teacher {left:12%;top:52%;width:76%;height:12%;}
+.student-code {left:14%;top:35.6%;width:57%;height:4.7%;}
+.student-qr {left:75%;top:35.5%;width:12%;height:6.5%;}
+.student-start {left:9%;top:45%;width:82%;height:9%;}
+.student-guest {left:9%;top:55.4%;width:82%;height:9%;}
+.student-back {left:29%;top:65.5%;width:43%;height:5%;}
+.approved-mobile-input { position:absolute; z-index:3; background:rgba(247,252,255,.93); border:1px solid #6cc9ff; color:#0846aa; border-radius:999px; padding:0 4%; font-size:clamp(12px,2.8dvw,17px); font-weight:600; min-width:0; }
+.approved-mobile-input::placeholder {color:#64748b;}
+.approved-mobile-saved { position:absolute; z-index:5; top:42%; left:28%; background:#e8f8ff; color:#0855bb; border:1px solid #0054b6; border-radius:14px; padding:3px 10px; font-size:11px; }
+.teacher-free {left:11%;top:53%;width:78%;height:8%;}
+.teacher-back {left:33%;top:65.5%;width:34%;height:5%;}
+.teacher-expand {left:18%;top:39%;width:54%;height:4%;}
+/* Reuse the live Google two-step OAuth button; the approved artwork remains intact. */
+.approved-mobile-google {position:absolute;z-index:4;left:30%;width:48%;top:30.9%;height:6.6%;display:flex;align-items:stretch;justify-content:center;overflow:visible;}
+.approved-mobile-google > div {width:100%;height:100%;max-width:100%;min-width:0;margin:0;padding:0;background:transparent;border:0;box-shadow:none;}
+.approved-mobile-google > div > p {display:none;}
+.approved-mobile-google > div > p[role="alert"] {display:block;position:absolute;z-index:9;left:-20%;top:100%;width:130%;background:#fff0f1;color:#aa1830;border:2px solid #e48c8c;border-radius:10px;padding:6px;font-size:12px;line-height:1.3;}
+.approved-mobile-google [data-testid="google-signin-host"] {height:100%;align-items:stretch;}
+.approved-mobile-google [data-testid="google-signin-host"] button {height:100%;min-height:0;padding:0 4px;border:1px solid #e3fdff;border-radius:35px;background:linear-gradient(180deg,#64caff,#0077f8 46%,#004ed4);box-shadow:inset 0 2px 3px #ffffff8a,0 2px 6px #00399a70;color:#fff;text-shadow:0 1px 2px #00359e;font-size:clamp(10px,3.3dvw,19px);line-height:1.05;font-weight:800;white-space:normal;}
+.approved-mobile-credentials { position:absolute;left:28%;width:50%;top:43.1%;height:7.9%;z-index:4;display:flex;flex-direction:column;gap:6%;margin:0; }
+.approved-mobile-credentials input {width:100%;height:47%;min-height:0;border:0;border-radius:24px;background:rgba(239,249,255,.98);font-size:clamp(12px,3.0dvw,17px);color:#103d8e;padding:0 5%;outline-offset:0;}
+/* The arrow already drawn on the account heading is the REAL form submit control. */
+.approved-mobile-eye {position:absolute;right:0;bottom:0;width:13%;height:45%;background:transparent;border:0;cursor:pointer;}
+.approved-mobile-account-submit {position:absolute;z-index:6;top:-54%;left:100%;width:18%;height:48%;border:0;border-radius:999px;background:transparent;cursor:pointer;}
+.approved-mobile-account-submit:focus-visible,.approved-mobile-eye:focus-visible {outline:3px solid #ffdc23;outline-offset:1px;}
+.approved-mobile-account-submit:disabled {opacity:.4;cursor:wait;}
+.approved-mobile-notice,.approved-mobile-error,.approved-mobile-status,.approved-mobile-selector {position:absolute;z-index:8;left:9%;width:82%;border:2px solid white;border-radius:14px;background:#f3fcff;color:#04458f;box-shadow:0 5px 16px #003a6977;padding:10px 13px;font-size:clamp(11px,2.5dvw,15px);line-height:1.35;text-align:center;}
+.approved-mobile-notice button {float:right;border:0;background:transparent;color:#0053af;font-size:20px;cursor:pointer;}
+.student-notice {top:40%;}.teacher-notice {top:41%;}.approved-mobile-error {bottom:15%;color:#a11222;}.approved-mobile-status {top:66%;}.approved-mobile-selector {top:36%;padding:16px 8px;}
+.approved-mobile-selector > div {display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}.approved-mobile-selector button {padding:10px 0;border-radius:14px;border:1px solid #73c5fc;background:#087cd3;color:#fff;font-weight:bold;}
+@media (max-height:620px) { .approved-mobile-dismiss {width:24px;height:24px;font-size:18px;} }
+/* Ambient full-screen extension of the approved 3:4 artwork on tall phones. The original central picture stays fully visible and undistorted. */
+.approved-mobile-portal { isolation:isolate; }
+.approved-mobile-ambient { position:absolute; z-index:0; inset:-8%; background-size:cover; background-position:center; filter:blur(38px) saturate(1.10); opacity:.48; pointer-events:none; }
+.approved-mobile-stage { z-index:1; }

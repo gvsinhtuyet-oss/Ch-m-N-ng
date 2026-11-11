@@ -40,8 +40,8 @@ try{
       return {
         roleText:text,
         demoButtons:[...dialog.querySelectorAll('button')].filter(b=>/Quản trị.*Demo|Khám phá tự do dành cho quản trị/i.test((b.textContent||'')+' '+(b.getAttribute('aria-label')||''))).length,
-        staff:!!dialog?.querySelector('.cham-access-role-card.teacher'),
-        student:!!dialog?.querySelector('.cham-access-role-card.student'),
+        staff:!!dialog?.querySelector('.cham-access-role-card.teacher, .role-teacher'),
+        student:!!dialog?.querySelector('.cham-access-role-card.student, .role-student'),
         overflow:document.documentElement.scrollWidth-innerWidth,
       };
     });
@@ -49,11 +49,29 @@ try{
     assert.equal(roles.demoButtons,0,'Public Admin Demo button still accessible');
     assert.doesNotMatch(roles.roleText,/Xem thử Quản trị\s*\(Demo\)/);
     assert.ok(roles.overflow<=5,device+' overflow '+roles.overflow);
-    await page.click('.cham-access-role-card.teacher');
+    if (device === 'phone') {
+      // The approved portrait poster has transparent real buttons over the artwork.
+      await page.click('.role-student');
+      await page.waitForSelector('#approved-student-code');
+      await page.type('#approved-student-code','AB12CD34EF56');
+      assert.equal(await page.$eval('.student-start',b=>b.disabled),false,'Student code enables start');
+      await page.click('.student-qr');
+      await page.waitForSelector('.student-notice');
+      await page.click('.student-qr');
+      await page.click('.student-guest');
+      await page.waitForSelector('.approved-mobile-selector button');
+      assert.equal(await page.evaluate(()=>document.querySelectorAll('.approved-mobile-selector button').length),5,'All five guest grades must be selectable');
+      await page.click('.student-back');
+      await page.waitForSelector('#approved-student-code');
+      await page.click('.student-back');
+      await page.waitForSelector('.role-teacher');
+      console.log('ROLE QA phone STUDENT PASS: code input, QR instructions, guest grades, back');
+    }
+    await page.click(device === 'phone' ? '.role-teacher' : '.cham-access-role-card.teacher');
     await page.waitForSelector('[role="dialog"][aria-label="Đăng nhập giáo viên"]',{timeout:15000});
-    assert.ok(await page.$('.cham-access-google [data-testid="google-signin-host"]'),'Real Google login must remain available');
-    assert.ok(await page.$('.cham-access-teacher-guest'),'Read-only teacher access entry must remain available');
-    await page.click('.cham-access-account-trigger');
+    assert.ok(await page.$(device === 'phone' ? '.approved-mobile-google [data-testid="google-signin-host"]' : '.cham-access-google [data-testid="google-signin-host"]'),'Real Google login must remain available');
+    assert.ok(await page.$(device === 'phone' ? '.teacher-free' : '.cham-access-teacher-guest'),'Read-only teacher access entry must remain available');
+    await page.click(device === 'phone' ? '.teacher-expand' : '.cham-access-account-trigger');
     await page.waitForSelector('input[type="email"][autocomplete="username"]',{timeout:15000});
     const auth=await page.evaluate(()=>({
       email:!!document.querySelector('input[type="email"][autocomplete="username"]'),

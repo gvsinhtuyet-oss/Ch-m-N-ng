@@ -78,8 +78,18 @@ test('mobile shared header keeps brand, audio, assistant and account accessible'
 test('approved student and teacher access portal preserves real login, QR and guest routes',()=>{
   const portal=read('./src/features/landing/AccessPortal.tsx');
   const css=read('./src/features/landing/access-portal.css');
-  assert.match(landing,/import \{ AccessPortal \} from '\.\/AccessPortal'/);
-  assert.match(landing,/showRolePicker && <AccessPortal/);
+  assert.match(landing,/import \{ ResponsiveAccessPortal \} from '\.\/ResponsiveAccessPortal'/);
+  assert.match(landing,/showRolePicker && <ResponsiveAccessPortal/);
+  const mobile=read('./src/features/landing/ResponsiveAccessPortal.tsx');
+  const mobileCss=read('./src/features/landing/approved-mobile-access.css');
+  assert.match(mobile,/if \(!portrait\) return <AccessPortal/);
+  assert.match(mobile,/src=\{assets\[p\.view\]\}/);
+  assert.match(mobile,/GoogleTeacherLogin onLogin=\{p\.onGoogleLogin\}/);
+  assert.match(mobile,/onSubmit=\{p\.onStaffLogin\}/);
+  assert.match(mobile,/onStudentGrade\(g\)/);
+  assert.match(mobile,/p\.onStudentSubmit/);
+  assert.match(mobileCss,/object-fit:contain/);
+  assert.match(mobileCss,/\.approved-mobile-account-submit/);
   assert.match(landing,/onStudentSubmit=/);
   assert.match(landing,/restoreStudentByCode\(restoreCode\)/);
   assert.match(landing,/onStudentGrade=\{enterGuestJourney\}/);

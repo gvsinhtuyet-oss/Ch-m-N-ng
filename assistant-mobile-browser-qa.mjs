@@ -40,15 +40,20 @@ try {
     }
     await page.waitForFunction(()=>document.body.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'),{timeout:30000});
     await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'))?.click());
-    if (process.env.LIVE_READ_ONLY === 'true' && !(await page.$('.cham-access-role-card.student'))) {
-      // The LIVE public site can still serve its earlier role picker before this PR is deployed.
-      await page.waitForSelector('button[aria-label="Khám phá tự do dành cho học sinh"]',{timeout:15000});
-      await page.click('button[aria-label="Khám phá tự do dành cho học sinh"]');
-    } else {
-      await page.waitForSelector('.cham-access-role-card.student',{timeout:15000});
+    if (await page.$('.role-student')) {
+      await page.click('.role-student');
+      await page.waitForSelector('.student-guest',{timeout:15000});
+      await page.click('.student-guest');
+    } else if (await page.$('.cham-access-role-card.student')) {
       await page.click('.cham-access-role-card.student');
       await page.waitForSelector('.cham-access-student-secondary button',{timeout:15000});
       await page.evaluate(()=>[...document.querySelectorAll('.cham-access-student-secondary button')].find(b=>b.textContent?.includes('Khám phá tự do'))?.click());
+    } else if (process.env.LIVE_READ_ONLY === 'true') {
+      // Live Production may still serve its earlier entry design.
+      await page.waitForSelector('button[aria-label="Khám phá tự do dành cho học sinh"]',{timeout:15000});
+      await page.click('button[aria-label="Khám phá tự do dành cho học sinh"]');
+    } else {
+      throw Error('Missing student entry button across approved and legacy mobile layouts');
     }
     await page.waitForFunction(()=>!![...document.querySelectorAll('button')].find(b=>b.textContent?.includes('Khối 2')),{timeout:15000});
     await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('Khối 2'))?.click());

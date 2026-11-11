@@ -87,11 +87,9 @@ export const AccessPortal: React.FC<Props> = ({
             <h1>Hãy chọn vai trò <span>để bắt đầu khám phá nhé!</span></h1>
             <div className="cham-access-roles">
               <button type="button" className="cham-access-role-card student" onClick={onStudent} aria-label="Chọn vai trò học sinh">
-                <Art kind="student" className="cham-access-role-picture" />
                 <span className="cham-access-role-footer"><GraduationCap aria-hidden="true" /><span>Học sinh</span><ArrowRight className="cham-access-arrow" aria-hidden="true" /></span>
               </button>
               <button type="button" className="cham-access-role-card teacher" onClick={onTeacher} aria-label="Chọn vai trò giáo viên">
-                <Art kind="teacher" className="cham-access-role-picture" />
                 <span className="cham-access-role-footer"><BookOpen aria-hidden="true" /><span>Giáo viên</span><ArrowRight className="cham-access-arrow" aria-hidden="true" /></span>
               </button>
             </div>

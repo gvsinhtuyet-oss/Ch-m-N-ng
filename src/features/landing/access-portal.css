@@ -229,3 +229,23 @@
  .cham-access-role-card{height:102px}
  .cham-access-role-footer{font-size:17px}
 }
+
+/* Two clear role actions; illustrations remain on the student/teacher login screens. */
+.cham-access-wordmark{
+ color:#ffc400;-webkit-text-fill-color:#ffc400;-webkit-text-stroke:.65px #075489;paint-order:stroke fill;
+ filter:none;text-shadow:0 1px 0 #fff5a3,0 3px 0 #075489;
+}
+.cham-access-role-card{height:86px;border-radius:20px}
+.cham-access-role-footer{width:100%;justify-content:flex-start;flex-wrap:nowrap;padding:16px 20px;gap:13px;font-size:24px}
+.cham-access-role-footer>svg:first-child{flex:0 0 38px;width:38px;height:38px;padding:8px;box-sizing:border-box;border-radius:12px;background:#ffffff26}
+.cham-access-role-footer .cham-access-arrow{margin-left:auto;width:31px;height:31px;flex:0 0 31px}
+@media(max-width:767px){
+ .cham-access-role-card{height:76px;border-radius:17px}
+ .cham-access-role-footer{padding:12px 16px;font-size:22px;gap:12px}
+ .cham-access-role-footer>svg:first-child{width:36px;height:36px;flex-basis:36px}
+ .cham-access-role-footer .cham-access-arrow{width:29px;height:29px;flex-basis:29px}
+}
+@media(max-width:360px){
+ .cham-access-role-card{height:70px}
+ .cham-access-role-footer{font-size:20px;padding:10px 12px}
+}

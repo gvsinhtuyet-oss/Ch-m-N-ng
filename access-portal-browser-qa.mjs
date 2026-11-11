@@ -26,6 +26,14 @@ try {
     async function verify(view) {
       const selector=mobile?'.approved-mobile-stage':'.cham-access-sheet';
       await page.waitForSelector(selector,{visible:true,timeout:15000});
+      // React preserves the poster container across view changes. Wait for the
+      // *new* approved image to load; otherwise fast Android emulation races the image request.
+      if (mobile) await page.waitForFunction(expected=>{
+        const stage=document.querySelector('.approved-mobile-stage');
+        const img=stage?.querySelector('.approved-mobile-art');
+        return stage?.getAttribute('data-screen')===expected && !!img?.complete && (img.naturalWidth||0)>0;
+      },{timeout:20000},view);
+      else await page.waitForFunction(()=>[...document.querySelectorAll('.cham-access-sheet img')].every(img=>img.complete&&img.naturalWidth>0),{timeout:20000});
       const box=await page.evaluate(selector=>{
         const elem=document.querySelector(selector);
         const rect=elem.getBoundingClientRect();

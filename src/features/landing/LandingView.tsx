@@ -9,6 +9,7 @@ import { audioService } from '../../services/AudioService';
 import { backgroundMusic } from '../../services/BackgroundMusic';
 import { progressService } from '../../services/ProgressService';
 import { studentSyncService } from '../../services/StudentSyncService';
+import { normalizeStudentCode } from './studentQr';
 import { readTheme } from '../../services/ThemeService';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import {
@@ -179,10 +180,12 @@ export const LandingView: React.FC = () => {
   };
 
   const restoreStudentByCode=async (code:string)=>{
-    const restored=await studentSyncService.restore(code);
+    const normalized = normalizeStudentCode(code);
+    if (!normalized) throw new Error('Mã học sinh không đúng định dạng. Hãy nhập hoặc quét mã do thầy cô cấp.');
+    const restored=await studentSyncService.restore(normalized);
     if(authService.current())await authService.logout();
     const profile=restored.profile;
-    const syncCode=code.toUpperCase().replace(/[^A-Z0-9]/g,'');
+    const syncCode=normalized;
     localStorage.setItem(STUDENT_PROFILE_KEY,JSON.stringify({...profile,syncCode}));
     progressService.mergeStudentProgressRecords(profile.id,restored.progress);
     loginAsStudent({
@@ -415,6 +418,20 @@ export const LandingView: React.FC = () => {
         onTeacher={openStaffLogin}
         onStudentGuest={() => {setGuestMode(true);setChosenGrade(null);setLoginError('');}}
         onStudentGrade={enterGuestJourney}
+        onScanCode={async code => {
+          if (restoreBusy) throw new Error('Hệ thống đang kiểm tra mã. Vui lòng thử lại sau.');
+          setRestoreBusy(true);
+          setLoginError('');
+          try {
+            await restoreStudentByCode(code);
+          } catch (caught) {
+            const message = caught instanceof Error ? caught.message : 'Không xác minh được mã học sinh.';
+            setLoginError(message);
+            throw new Error(message);
+          } finally {
+            setRestoreBusy(false);
+          }
+        }}
         onStudentSubmit={() => {
           if (restoreBusy || !restoreCode.trim()) return;
           setRestoreBusy(true);setLoginError('');

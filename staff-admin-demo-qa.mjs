@@ -56,8 +56,10 @@ try{
       await page.type('#approved-student-code','AB12CD34EF56');
       assert.equal(await page.$eval('.student-start',b=>b.disabled),false,'Student code enables start');
       await page.click('.student-qr');
-      await page.waitForSelector('.student-notice');
-      await page.click('.student-qr');
+      await page.waitForSelector('[role="dialog"][aria-label="Quét mã QR học sinh"]');
+      assert.ok(await page.$('.cham-qr-upload input[type=file]'),'QR allows upload as camera fallback');
+      await page.click('.cham-qr-header button');
+      await page.waitForFunction(()=>!document.querySelector('.cham-qr-overlay'));
       await page.click('.student-guest');
       await page.waitForSelector('.approved-mobile-selector button');
       assert.equal(await page.evaluate(()=>document.querySelectorAll('.approved-mobile-selector button').length),5,'All five guest grades must be selectable');
@@ -65,7 +67,7 @@ try{
       await page.waitForSelector('#approved-student-code');
       await page.click('.student-back');
       await page.waitForSelector('.role-teacher');
-      console.log('ROLE QA phone STUDENT PASS: code input, QR instructions, guest grades, back');
+      console.log('ROLE QA phone STUDENT PASS: code input, QR scanner, guest grades, back');
     }
     await page.click(device === 'phone' ? '.role-teacher' : '.cham-access-role-card.teacher');
     await page.waitForSelector('[role="dialog"][aria-label="Đăng nhập giáo viên"]',{timeout:15000});

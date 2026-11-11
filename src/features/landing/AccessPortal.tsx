@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight, BookOpen, Check, Compass, Eye, EyeOff, GraduationCap, KeyRound, LockKeyhole, QrCode, X } from 'lucide-react';
 import { GoogleTeacherLogin } from '../../components/auth/GoogleTeacherLogin';
+import { StudentQrScanner } from './StudentQrScanner';
 import type { StaffUser } from '../../services/AuthService';
 import './access-portal.css';
 
@@ -27,6 +28,7 @@ interface Props {
   onStudentGuest: () => void;
   onStudentGrade: (grade: number) => void;
   onStudentSubmit: () => void;
+  onScanCode: (code: string) => Promise<void>;
   onSavedCode: () => void;
   onTeacherDemo: () => void;
   onStaffLogin: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -43,13 +45,13 @@ export const AccessPortal: React.FC<Props> = ({
   restoreCode, onRestoreCodeChange, savedSyncCode, restoreBusy,
   staffBusy, staffEmail, staffPassword, onStaffEmailChange,
   onStaffPasswordChange, loginError, onClose, onBack, onStudent,
-  onTeacher, onStudentGuest, onStudentGrade, onStudentSubmit,
+  onTeacher, onStudentGuest, onStudentGrade, onStudentSubmit, onScanCode,
   onSavedCode, onTeacherDemo, onStaffLogin, onRestoreStaff,
   onGoogleLogin,
 }) => {
   const [accountExpanded, setAccountExpanded] = useState(false);
   const [showCode, setShowCode] = useState(false);
-  const [qrHelp, setQrHelp] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
   return (
     <div className="cham-access-overlay" data-screen={view}>
       <img className="cham-access-backdrop" src={roleBackground} alt="" aria-hidden="true" style={{filter:`blur(${Math.min(3,themeBlur)}px)`}} />
@@ -110,8 +112,8 @@ export const AccessPortal: React.FC<Props> = ({
                           {savedSyncCode && <button type="button" onClick={onSavedCode}><Check size={18} aria-hidden="true"/> Dùng mã đã lưu</button>}
                           <button type="button" onClick={onStudentGuest}><Compass size={18} aria-hidden="true"/> Khám phá tự do</button>
                         </div>
-                        <button type="button" className="cham-access-qr-help" onClick={()=>setQrHelp(value=>!value)} aria-expanded={qrHelp}><QrCode size={17} aria-hidden="true"/> {qrHelp?'Ẩn hướng dẫn mã QR':'Em có thẻ QR? Xem cách vào học'}</button>
-                        {qrHelp && <p className="cham-access-qr-tip">Dùng camera điện thoại quét thẻ QR do cô thầy cấp, rồi mở đường dẫn CHẠM ĐÀ NẴNG. Không cần cài ứng dụng.</p>}
+                        <button type="button" className="cham-access-qr-help" onClick={()=>setQrOpen(true)} aria-label="Mở camera quét QR hoặc tải ảnh QR"><QrCode size={17} aria-hidden="true"/> Quét QR hoặc tải ảnh QR</button>
+                        <p className="cham-access-qr-tip">Dùng thẻ QR do cô thầy cấp. Mã sai sẽ không đăng nhập được.</p>
                         <p className="cham-access-hint">Chưa có mã? Nhờ cô thầy cấp mã trong “Lớp của tôi”.</p>
                       </>
                     )}
@@ -145,6 +147,7 @@ export const AccessPortal: React.FC<Props> = ({
             </div>
           )}
         </div>
+        {view === 'student' && !guestMode && qrOpen && <StudentQrScanner onClose={()=>setQrOpen(false)} onVerifiedCode={onScanCode} />}
       </section>
     </div>
   );

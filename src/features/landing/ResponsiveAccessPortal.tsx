@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AccessPortal } from './AccessPortal';
 import { GoogleTeacherLogin } from '../../components/auth/GoogleTeacherLogin';
+import { StudentQrScanner } from './StudentQrScanner';
 import './approved-mobile-access.css';
 
 type Props = React.ComponentProps<typeof AccessPortal>;
@@ -26,7 +27,7 @@ export const ResponsiveAccessPortal: React.FC<Props> = (props) => {
 
 const ApprovedMobileAccessPortal: React.FC<Props> = (p) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [qrHelp, setQrHelp] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const back = p.guestMode ? p.onStudent : p.onBack;
   return (
@@ -43,10 +44,10 @@ const ApprovedMobileAccessPortal: React.FC<Props> = (p) => {
           {!p.guestMode ? <>
             <label htmlFor="approved-student-code" className="sr-only">Mã học sinh</label>
             <input id="approved-student-code" className="approved-mobile-input student-code" autoComplete="off" spellCheck={false} maxLength={20} value={p.restoreCode} placeholder="Nhập mã do thầy cô cấp…" onChange={e=>p.onRestoreCodeChange(e.target.value)} onKeyDown={e=>{if(e.key==='Enter')p.onStudentSubmit();}} />
-            <button className="approved-hotspot student-qr" type="button" aria-label="Hướng dẫn quét mã QR" onClick={()=>setQrHelp(v=>!v)} />
+            <button className="approved-hotspot student-qr" type="button" aria-label="Quét mã QR bằng camera hoặc tải ảnh QR" onClick={()=>setQrOpen(true)} />
             <button className="approved-hotspot student-start" type="button" aria-label="Bắt đầu khám phá bằng mã học sinh" disabled={p.restoreBusy || !p.restoreCode.trim()} onClick={p.onStudentSubmit} />
             <button className="approved-hotspot student-guest" type="button" aria-label="Khám phá tự do" onClick={p.onStudentGuest} />
-            {qrHelp && <div className="approved-mobile-notice student-notice" role="status"><button type="button" onClick={()=>setQrHelp(false)} aria-label="Đóng">×</button>Dùng camera điện thoại quét mã QR do giáo viên cấp, sau đó mở liên kết. Không cần cài ứng dụng.</div>}
+
           </> : <div className="approved-mobile-selector"><strong>Em muốn khám phá khối nào?</strong><div>{[1,2,3,4,5].map(g=><button key={g} type="button" disabled={p.restoreBusy} onClick={()=>p.onStudentGrade(g)}>Khối {g}</button>)}</div></div>}
           {p.restoreBusy && <div className="approved-mobile-status" role="status">Đang mở hồ sơ học sinh…</div>}
           {p.loginError && <div className="approved-mobile-error" role="alert">{p.loginError}</div>}
@@ -70,6 +71,7 @@ const ApprovedMobileAccessPortal: React.FC<Props> = (p) => {
           {p.loginError && <div className="approved-mobile-error" role="alert">{p.loginError}</div>}
         </>}
       </div>
+      {p.view === 'student' && !p.guestMode && qrOpen && <StudentQrScanner onClose={()=>setQrOpen(false)} onVerifiedCode={p.onScanCode} />}
     </div>
   );
 };

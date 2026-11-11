@@ -100,7 +100,13 @@ test('approved student and teacher access portal preserves real login, QR and gu
   assert.match(portal,/cham-access-logo/);
   assert.match(portal,/Học sinh/);
   assert.match(portal,/Giáo viên tự do/);
-  assert.match(portal,/QR do cô thầy cấp|thẻ QR do cô thầy cấp/);
+  assert.match(portal,/thẻ QR do cô thầy cấp/);
+  assert.match(portal,/StudentQrScanner/);
+  assert.match(mobile,/StudentQrScanner/);
+  assert.match(landing,/onScanCode=/);
+  assert.match(read('./src/features/landing/StudentQrScanner.tsx'),/getUserMedia/);
+  assert.match(read('./src/features/landing/StudentQrScanner.tsx'),/Tải ảnh QR/);
+  assert.match(read('./src/features/landing/studentQr.ts'),/extractStudentCodeFromQr/);
   assert.doesNotMatch(portal,/Đăng nhập quản trị và giáo viên/);
   assert.match(css,/@media \(max-width: 767px\)/);
   assert.match(css,/max-height:100dvh/);

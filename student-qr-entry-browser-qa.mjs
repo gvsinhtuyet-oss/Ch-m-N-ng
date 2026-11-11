@@ -65,7 +65,7 @@ try{
  await failed.waitForFunction(()=>document.body.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'),{timeout:30000});
  await failed.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'))?.click());
  await failed.waitForFunction(()=>document.body.textContent?.includes('Mã học sinh đã hết hiệu lực.'),{timeout:20000});
- assert.ok(await failed.$('input[type="password"]'),'failed QR must offer a manual code retry');
+ assert.ok(await failed.$('#cham-access-student-code'),'failed QR must offer a manual code retry');
  assert.equal(await failed.evaluate(()=>localStorage.getItem('cham_danang_student_profile_v1')),null);
  console.log('STUDENT QR EXPIRED PASS: safe retry, no fabricated student profile');
  await failed.close();
@@ -75,7 +75,7 @@ try{
  await regular.goto(origin,{waitUntil:'domcontentloaded',timeout:45000});
  await regular.waitForFunction(()=>document.body.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'),{timeout:30000});
  await regular.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'))?.click());
- await regular.waitForSelector('[role="dialog"][aria-label="Chọn vai trò"] .role-teacher',{timeout:15000});
+ await regular.waitForSelector('[role="dialog"][aria-label="Chọn vai trò"] .cham-access-role-card.teacher',{timeout:15000});
  console.log('REGULAR ENTRY PASS: non-QR guest/teacher/admin role selection preserved');
  await regular.close();
 }finally{

@@ -46,7 +46,7 @@ test('student landing only admits managed profiles through teacher code, preserv
  assert.match(downloads,/archive\.file\(/);
  assert.match(downloads,/canvas\.toBlob\(/);
  assert.doesNotMatch(downloads,/fetch\(|axios|XMLHttpRequest/,'Private QR cards must not be uploaded to an external API');
- assert.match(portal,/guestMode \? \(/);
+ assert.match(portal,/guestMode \? <div/);
  assert.match(portal,/cham-access-grade-grid/);
  assert.doesNotMatch(landing,/studentSyncService\.register\(/);
  assert.doesNotMatch(landing,/handleStudentSubmit/);

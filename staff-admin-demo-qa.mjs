@@ -60,7 +60,7 @@ try{
       await page.click('.student-qr');
       await page.click('.student-guest');
       await page.waitForSelector('.approved-mobile-selector button');
-      assert.equal(await page.$$eval('.approved-mobile-selector button',x=>x.length),5,'All five guest grades must be selectable');
+      assert.equal(await page.evaluate(()=>document.querySelectorAll('.approved-mobile-selector button').length),5,'All five guest grades must be selectable');
       await page.click('.student-back');
       await page.waitForSelector('#approved-student-code');
       await page.click('.student-back');

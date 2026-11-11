@@ -25,7 +25,7 @@
 .cham-access-illustration img{position:absolute;left:50%;bottom:0;display:block;width:100%;height:auto;max-width:none;transform:translateX(-50%);pointer-events:none;user-select:none}
 .cham-access-illustration:after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to bottom,rgba(218,247,255,.95),rgba(218,247,255,0) 19%)}
 .cham-access-role-picture{height:clamp(158px,24vh,206px);width:100%}
-.cham-access-role-picture img{width:100%;bottom:-5px}
+.cham-access-role-picture img{width:135%;bottom:-5px}
 .cham-access-role-card.teacher .cham-access-illustration{background:linear-gradient(155deg,#f7edcd,#b1eafa)}
 .cham-access-role-footer{display:flex;align-items:center;justify-content:center;gap:11px;margin:0;min-height:68px;padding:12px 18px;color:white;background:linear-gradient(180deg,#259aef,#0062c8);font-size:clamp(19px,2.1vw,25px);line-height:1.12;font-weight:900}
 .cham-access-role-card.teacher .cham-access-role-footer{background:linear-gradient(180deg,#ffb328,#f87907)}
@@ -120,7 +120,7 @@
  .cham-access-roles{grid-template-columns:1fr;gap:12px;width:100%}
  .cham-access-role-card{display:flex;flex-direction:row;align-items:stretch;height:clamp(116px,18dvh,148px);border-radius:18px}
  .cham-access-role-picture{width:37%;height:100%;flex:0 0 37%}
- .cham-access-role-picture img{width:262px;left:50%;bottom:-1px}
+ .cham-access-role-picture img{width:340px;left:50%;bottom:-1px}
  .cham-access-role-footer{flex:1;min-width:0;align-self:stretch;display:flex;justify-content:center;flex-wrap:wrap;gap:5px;min-height:0;padding:8px 7px;font-size:clamp(17px,5vw,22px)}
  .cham-access-role-footer>svg:first-child{width:22px;height:22px}
  .cham-access-role-footer .cham-access-arrow{margin-left:4px;width:27px;height:27px}
@@ -178,6 +178,7 @@
  .cham-access-form-card{padding:16px 14px}
  .cham-access-roles{max-width:700px}
  .cham-access-role-picture{height:190px}
+ .cham-access-hero-picture img{width:520px}
 }
 @media(prefers-reduced-motion:reduce){
  .cham-access-role-card,.cham-access-account-trigger svg:last-child{transition:none}

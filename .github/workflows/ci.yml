@@ -155,6 +155,7 @@ jobs:
           node assistant-mobile-browser-qa.mjs
           node stage2-my-khe-intro-qa.mjs
           node student-qr-entry-browser-qa.mjs
+          node student-qr-scan-browser-qa.mjs
           node access-portal-browser-qa.mjs
       - name: LIVE public assistant UI (read-only, no writes)
         env:

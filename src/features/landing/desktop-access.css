@@ -1,0 +1,175 @@
+/* Desktop-only approved image-based role, student and teacher access screens.
+   All interactive controls remain DOM elements; images are decorative. */
+.desktop-art-overlay {
+  position: fixed; inset: 0; z-index: 80;
+  display: grid; place-items: center;
+  overflow: auto; isolation: isolate;
+  background: radial-gradient(circle at 50% 25%, #8be6ff 0%, #25b8f6 56%, #0786d8 100%);
+  color: #123c79;
+}
+.desktop-art-board {
+  position: relative; isolation: isolate; overflow: hidden;
+  flex: 0 0 auto; width: min(100vw, 177.68dvh);
+  aspect-ratio: 1672 / 941; margin: auto;
+  background: #16aff5; box-shadow: 0 0 65px #00559344;
+}
+.desktop-art-image {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: fill; pointer-events: none; user-select: none;
+}
+.desktop-art-sr {
+  position: absolute!important; width: 1px!important; height: 1px!important;
+  padding: 0!important; margin: -1px!important; overflow: hidden!important;
+  clip: rect(0,0,0,0)!important; white-space: nowrap!important; border: 0!important;
+}
+.desktop-art-board button {
+  font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.desktop-art-board button:disabled { cursor: not-allowed; }
+.desktop-art-board button:focus-visible,
+.desktop-art-board input:focus-visible { outline: 4px solid #facc15; outline-offset: 2px; }
+.desktop-art-hit {
+  position: absolute; z-index: 3; padding: 0; background: transparent;
+  border: 0; border-radius: 22px; color: transparent;
+  transition: box-shadow .15s, background .15s, transform .15s;
+}
+.desktop-art-hit:hover:not(:disabled) {
+  box-shadow: inset 0 0 0 3px #ffffffb5, 0 0 20px #ffffffa0;
+  background: #ffffff12;
+}
+.desktop-art-hit:active:not(:disabled) { transform: translateY(2px); }
+.desktop-art-close {
+  position: absolute; z-index: 8; right: 1.5%; top: 2.2%;
+  display: grid; place-items: center; width: clamp(36px, 3vw, 49px);
+  height: clamp(36px, 3vw, 49px); border: 2px solid #ffffffa6;
+  border-radius: 50%; color: #155aa2; background: #ecf9ffde;
+  box-shadow: 0 3px 13px #02538d35;
+}
+.desktop-art-close:hover { background: #fff; }
+
+/* Role picker: two equal-size, real, fully clickable role cards. */
+.desktop-art-role-student { left: 14.4%; top: 40.1%; width: 32.5%; height: 44.7%; border-radius: 5%; }
+.desktop-art-role-teacher { left: 52.4%; top: 39.9%; width: 33.1%; height: 44.9%; border-radius: 5%; }
+
+/* Student: images contain the labels; only the code field needs visible live text. */
+.desktop-art-student-code {
+  position: absolute; z-index: 4; left: 53.4%; top: 43.1%;
+  width: 28.9%; height: 8%; display: flex; align-items: center;
+  border-radius: 999px; border: 2px solid #b4e7fa;
+  background: #f6fbffeF; box-shadow: inset 0 2px 5px #1b8fe614;
+}
+.desktop-art-student-code:focus-within { box-shadow: 0 0 0 4px #f9dc64aa; }
+.desktop-art-student-code input {
+  width: 100%; height: 100%; min-width: 0; flex: 1 1 auto;
+  border: 0; outline: 0; padding: 0 3.2% 0 4%; background: transparent;
+  font-size: clamp(15px, 1.44vw, 26px); color: #234c7b; font-weight: 650;
+}
+.desktop-art-student-code input::placeholder { color: #7e90b6; font-style: italic; }
+.desktop-art-student-code button {
+  display: grid; flex: 0 0 auto; place-items: center; height: 80%;
+  width: 10%; min-width: 30px; margin-right: 2%; border: 0;
+  border-radius: 50%; background: transparent; color: #0c57b8;
+}
+.desktop-art-student-start { left: 52.85%; top: 54.7%; width: 30%; height: 9.5%; border-radius: 999px; }
+.desktop-art-student-guest { left: 52.85%; top: 65.3%; width: 30%; height: 9.4%; border-radius: 999px; }
+.desktop-art-student-back { left: 58.1%; top: 77.1%; width: 19%; height: 6%; border-radius: 999px; }
+.desktop-art-student-start:disabled { opacity: .65; }
+/* Keep painted button visually readable while the code is empty. */
+.desktop-art-student-start:disabled:hover { box-shadow: none; background: transparent; }
+
+/* Teacher: actual Google auth and account form live over approved button artwork. */
+.desktop-art-google {
+  position: absolute; left: 51.25%; top: 37.35%; width: 30.4%; height: 7.7%;
+  z-index: 5;
+}
+.desktop-art-google > div {
+  position: relative; width: 100%; height: 100%; padding: 0!important;
+  margin: 0!important; border: 0!important; background: transparent!important;
+  border-radius: 999px!important;
+}
+.desktop-art-google p:not([role="alert"]) { display: none; }
+.desktop-art-google [data-testid="google-signin-host"] { height: 100%; width: 100%; }
+.desktop-art-google [data-testid="google-signin-host"] > button {
+  height: 100%; min-height: 0; width: 100%;
+  padding: 0; border-radius: 999px; opacity: .015;
+}
+.desktop-art-google [data-testid="google-signin-host"]:hover {
+  box-shadow: 0 0 0 3px #ffffffaa, 0 0 20px #ffffff90; border-radius: 999px;
+}
+.desktop-art-google p[role="alert"] {
+  position: absolute; top: 107%; right: 0; z-index: 30;
+  width: 100%; margin: 0; padding: 9px 12px; border-radius: 12px;
+  background: #fff2f2; border: 1px solid #ffb4b4;
+  box-shadow: 0 5px 14px #032e5b30; color: #b91c1c; font-size: 13px;
+}
+.desktop-art-teacher-form { display: contents; }
+.desktop-art-teacher-email, .desktop-art-teacher-password {
+  position: absolute; z-index: 5; display: flex; align-items: center;
+  left: 52.9%; width: 28.3%; height: 5.55%;
+  border-radius: 999px; background: #f5faffec; border: 1px solid #b9dbf3;
+}
+.desktop-art-teacher-email { top: 49.65%; }
+.desktop-art-teacher-password { top: 55.65%; }
+.desktop-art-teacher-email:focus-within, .desktop-art-teacher-password:focus-within {
+  outline: 3px solid #ffd04a; outline-offset: 1px;
+}
+.desktop-art-teacher-email input, .desktop-art-teacher-password input {
+  width: 100%; height: 100%; min-width: 0; flex: 1; padding: 0 4%;
+  border: 0; outline: 0; border-radius: inherit; background: transparent;
+  color: #194771; font-size: clamp(14px, 1.27vw, 23px); font-weight: 600;
+}
+.desktop-art-teacher-email input::placeholder, .desktop-art-teacher-password input::placeholder { color: #667b9c; }
+.desktop-art-teacher-password button {
+  flex: 0 0 auto; display: grid; place-items: center; width: 11%;
+  height: 100%; border: 0; border-radius: 50%; color: #1157b5; background: transparent;
+}
+.desktop-art-teacher-login { left: 52%; top: 62.7%; width: 29.6%; height: 7.2%; border-radius: 999px; }
+.desktop-art-teacher-guest { left: 52%; top: 70.5%; width: 29.6%; height: 7.2%; border-radius: 999px; }
+.desktop-art-teacher-back { left: 58.6%; top: 79%; width: 17.8%; height: 5.5%; border-radius: 999px; }
+
+/* Client-side validation & guest grade selection remain real and accessible. */
+.desktop-art-error {
+  position: absolute; z-index: 25; width: 31%; padding: 8px 12px;
+  border: 1px solid #ffc2be; border-radius: 12px;
+  background: #fff2f3f5; color: #b91c1c; font-size: clamp(12px, 1vw, 16px);
+  box-shadow: 0 5px 16px #09508345; text-align: center;
+}
+.desktop-art-student-error { left: 52%; top: 83%; }
+.desktop-art-teacher-error { left: 52%; top: 85%; }
+.desktop-art-modal-backdrop {
+  position: absolute; inset: 0; z-index: 10; background: #003e82a1; backdrop-filter: blur(5px);
+}
+.desktop-art-grade-modal {
+  position: absolute; z-index: 11; left: 27%; top: 29%; width: 46%;
+  padding: 3.2% 3% 2.8%; text-align: center; color: #16538e;
+  border: 4px solid white; border-radius: 32px;
+  background: linear-gradient(145deg, #f8feff, #dff3ff);
+  box-shadow: 0 24px 70px #003f72a6;
+}
+.desktop-art-grade-modal h2 {
+  margin: 0 0 8px; font-weight: 950; color: #0c69ba;
+  font-size: clamp(22px, 2.3vw, 42px);
+}
+.desktop-art-grade-modal p { font-weight: 650; font-size: clamp(14px, 1.2vw, 20px); }
+.desktop-art-grades { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 24px 0; }
+.desktop-art-grades button {
+  padding: 14px 4px; min-height: 58px; border: 2px solid #fff; border-radius: 16px;
+  background: linear-gradient(#21b4fb,#096ccd); color: white; font-weight: 900;
+  font-size: clamp(13px, 1.08vw, 18px); box-shadow: 0 4px 0 #06488f;
+}
+.desktop-art-grades button:nth-child(2) { background: linear-gradient(#65dcae,#0ba179); }
+.desktop-art-grades button:nth-child(3) { background: linear-gradient(#ffe279,#f69c18); }
+.desktop-art-grades button:nth-child(4) { background: linear-gradient(#ff9ab9,#e84383); }
+.desktop-art-grades button:nth-child(5) { background: linear-gradient(#bcb3ff,#7657dc); }
+.desktop-art-grades button:hover { transform: translateY(-2px); }
+.desktop-art-modal-back { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px;
+  border: 1px solid #82bfe2; border-radius: 100px; background: #ecf9ff; color: #105da2; font-weight: 800; }
+.desktop-art-modal-error { color: #b91c1c!important; }
+@media (min-width:1024px) and (max-height:650px) {
+  .desktop-art-close { width: 35px; height: 35px; }
+  .desktop-art-grade-modal { padding-top: 2%; padding-bottom: 1.8%; }
+  .desktop-art-grades { margin: 12px 0; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .desktop-art-hit { transition: none; }
+}

@@ -83,8 +83,10 @@ test('all role/student/teacher screens use one responsive real UI, high-res appr
  assert.match(responsive,/ResponsiveAccessPortal = AccessPortal/);
  assert.doesNotMatch(responsive,/approved-mobile-stage|approved-hotspot/);
  assert.match(portal,/cham-access-wordmark/);
- assert.match(portal,/approved-mobile\/student\.webp/);
- assert.match(portal,/approved-mobile\/teacher\.webp/);
+ assert.match(portal,/approved-clean\/student-card\.webp/);
+ assert.match(portal,/approved-clean\/student-banner\.webp/);
+ assert.match(portal,/approved-clean\/teacher-card\.webp/);
+ assert.match(portal,/approved-clean\/teacher-banner\.webp/);
  assert.match(portal,/cham-access-role-card student/);
  assert.match(portal,/cham-access-role-card teacher/);
  assert.match(portal,/GoogleTeacherLogin onLogin=\{onGoogleLogin\}/);

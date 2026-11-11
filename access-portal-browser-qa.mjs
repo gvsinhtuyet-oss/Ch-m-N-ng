@@ -25,6 +25,7 @@ try {
    const panel=await page.$('.cham-access-sheet[data-screen="'+view+'"]');
    assert.ok(panel,name+' '+view+' must use a single real responsive sheet');
    await page.waitForFunction(()=>[...document.querySelectorAll('.cham-access-sheet .cham-access-illustration img')].every(img=>img.complete && img.naturalWidth>500),{timeout:20000});
+   await page.evaluate(async()=>{await Promise.all([...document.querySelectorAll('.cham-access-sheet .cham-access-illustration img')].map(img=>img.decode().catch(()=>{})));});
    const metrics=await page.evaluate(()=>{
     const sheet=document.querySelector('.cham-access-sheet');
     const rect=sheet.getBoundingClientRect();

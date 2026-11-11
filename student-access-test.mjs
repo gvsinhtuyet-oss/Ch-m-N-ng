@@ -31,7 +31,8 @@ test('student landing only admits managed profiles through teacher code, preserv
  const teacher=readFileSync(new URL('./src/features/teacher/StudentAccessCards.tsx',import.meta.url),'utf8');
  const profile=readFileSync(new URL('./src/features/student/StudentProfileView.tsx',import.meta.url),'utf8');
  assert.match(portal,/Mã học sinh của em/);
- assert.match(landing,/studentSyncService\.restore\(code\)/);
+ assert.match(landing,/studentSyncService\.restore\(normalized\)/);
+ assert.match(landing,/normalizeStudentCode\(code\)/);
  assert.match(landing,/await restoreStudentByCode\(qrEntryCode\)/);
  assert.match(landing,/setIntroActive\(true\)/);
  assert.match(landing,/window\.history\.replaceState/);

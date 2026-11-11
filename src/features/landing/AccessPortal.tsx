@@ -36,10 +36,11 @@ export interface Props {
   onScanCode: (code: string) => Promise<void>;
 }
 
-/* High-resolution approved artwork, CROPPED to its illustration strip.
-   Never embed the artwork's old fake buttons, logo or printed labels in the UI. */
-const students = '/images/landing/approved-mobile/student.webp';
-const teacher = '/images/landing/approved-mobile/teacher.webp';
+/* Approved clean artwork: dedicated cards and wide headers, with no printed UI. */
+const artwork = {
+  student: { card: '/images/landing/approved-clean/student-card.webp', banner: '/images/landing/approved-clean/student-banner.webp' },
+  teacher: { card: '/images/landing/approved-clean/teacher-card.webp', banner: '/images/landing/approved-clean/teacher-banner.webp' },
+};
 const grades = [1, 2, 3, 4, 5];
 
 function Wordmark() {
@@ -51,14 +52,14 @@ function Wordmark() {
   </div>;
 }
 
-function Art({ kind, className = '' }: { kind: 'student'|'teacher'; className?: string }) {
+function Art({ kind, variant = 'card', className = '' }: { kind: 'student'|'teacher'; variant?: 'card'|'banner'; className?: string }) {
   return <div className={'cham-access-illustration '+className} aria-hidden="true">
-    <img src={kind === 'student' ? students : teacher} loading="eager" decoding="sync" alt="" draggable={false} />
+    <picture><source media="(max-width: 767px)" srcSet={artwork[kind][variant]} /><img src={artwork[kind].card} loading="eager" decoding="sync" alt="" draggable={false} /></picture>
   </div>;
 }
 
 export const AccessPortal: React.FC<Props> = ({
-  view, guestMode, chosenGrade, roleBackground, themeBlur,
+  view, guestMode, chosenGrade, roleBackground,
   restoreCode, onRestoreCodeChange, savedSyncCode, restoreBusy,
   staffBusy, staffEmail, staffPassword, onStaffEmailChange,
   onStaffPasswordChange, loginError, onClose, onBack, onStudent,
@@ -72,7 +73,7 @@ export const AccessPortal: React.FC<Props> = ({
   const [showCode, setShowCode] = useState(true);
   return (
     <div className="cham-access-overlay" data-screen={view}>
-      <img className="cham-access-backdrop" src={roleBackground} alt="" aria-hidden="true" style={{filter: 'blur(' + Math.min(3, themeBlur) + 'px)'}} />
+      <img className="cham-access-backdrop" src={roleBackground} alt="" aria-hidden="true"  />
       <div className="cham-access-colorveil" aria-hidden="true" />
       <section className="cham-access-sheet" data-screen={view} role="dialog" aria-modal="true"
         aria-label={view === 'role' ? 'Chọn vai trò' : view === 'student' ? 'Đăng nhập học sinh' : 'Đăng nhập giáo viên'}>
@@ -99,7 +100,7 @@ export const AccessPortal: React.FC<Props> = ({
           <main className="cham-access-step-layout" data-screen={view}>
             <aside className={'cham-access-hero '+view} aria-hidden="true">
               <div className="cham-access-hero-sky"><span>{view === 'student' ? 'Khám phá quê hương' : 'Dạy học sáng tạo'}</span><small>Đà Nẵng thân yêu</small></div>
-              <Art kind={view === 'student' ? 'student' : 'teacher'} className="cham-access-hero-picture" />
+              <Art kind={view === 'student' ? 'student' : 'teacher'} variant="banner" className="cham-access-hero-picture" />
             </aside>
             <div className="cham-access-form-card">
               {view === 'student' ? <>

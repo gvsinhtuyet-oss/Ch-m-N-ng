@@ -49,7 +49,8 @@ try {
    assert.ok(metrics.innerOverflow<=2,name+' '+view+' unexpectedly scrolls '+JSON.stringify(metrics));
    assert.deepEqual(metrics.outOfView,[],name+' '+view+' controls outside screen');
    assert.match(metrics.logo||'',/CHẠMĐÀ NẴNG/,'wordmark must be sharp live text');
-   assert.ok(metrics.images.every(([w,h])=>w>=900&&h>=1200),'approved high-res illustrations are used');
+   assert.ok(metrics.images.every(([w,h])=>w>=600&&h>=240),'approved dedicated card/banner illustrations are loaded');
+   if(view==='role')assert.ok(metrics.bottom-metrics.top<=height*.8,name+' role chooser should be compact');
    await page.screenshot({path:'access-portal-qa/'+view+'-'+name+'.png'});
    return metrics;
   }

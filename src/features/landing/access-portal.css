@@ -1,5 +1,5 @@
 /* CHẠM ĐÀ NẴNG — shared live-access UI.
-   Responsive illustrations reuse the approved high-resolution posters, but
+   Dedicated approved illustration assets are used, while
    headings/buttons/forms are real HTML — never click regions printed in images. */
 .cham-access-overlay{position:fixed;inset:0;z-index:1000;isolation:isolate;display:grid;place-items:center;overflow:hidden;padding:clamp(10px,2.1vw,26px);color:#143e6b;font-family:inherit}
 .cham-access-backdrop{position:absolute;inset:-16px;width:calc(100% + 32px);height:calc(100% + 32px);object-fit:cover;opacity:.92;pointer-events:none;z-index:-2}
@@ -22,13 +22,9 @@
 .cham-access-role-card.teacher{background:#fff0d9}
 .cham-access-role-card:hover{transform:translateY(-2px);box-shadow:0 10px 25px #074e9b4d}
 .cham-access-illustration{position:relative;display:block;overflow:hidden;isolation:isolate;min-width:0;background:linear-gradient(170deg,#7fd4fa,#e2faff 60%,#8acfed)}
-/* Clip the printed poster controls, including the central back-button pill,
-   while retaining the approved character artwork on both sides. */
-.cham-access-illustration img{clip-path:polygon(0 65.5%,30% 65.5%,30% 70.2%,70% 70.2%,70% 65.5%,100% 65.5%,100% 100%,0 100%);position:absolute;left:50%;bottom:0;display:block;width:100%;height:auto;max-width:none;transform:translateX(-50%);pointer-events:none;user-select:none}
-.cham-access-illustration:after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(to bottom,rgba(218,247,255,.95),rgba(218,247,255,0) 19%)}
+.cham-access-illustration picture{display:block;width:100%;height:100%}
+.cham-access-illustration img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none;user-select:none}
 .cham-access-role-picture{height:clamp(158px,24vh,206px);width:100%}
-.cham-access-role-picture img{width:100%;bottom:-5px}
-.cham-access-role-picture,.cham-access-role-card.teacher .cham-access-illustration{background:linear-gradient(180deg,#4dc7ee,#57cdf3 42%,#8bd9ed)}
 .cham-access-role-footer{display:flex;align-items:center;justify-content:center;gap:11px;margin:0;min-height:68px;padding:12px 18px;color:white;background:linear-gradient(180deg,#259aef,#0062c8);font-size:clamp(19px,2.1vw,25px);line-height:1.12;font-weight:900}
 .cham-access-role-card.teacher .cham-access-role-footer{background:linear-gradient(180deg,#ffb328,#f87907)}
 .cham-access-role-footer>svg:first-child{width:25px;height:25px;flex-shrink:0}
@@ -40,8 +36,8 @@
 .cham-access-hero-sky{position:absolute;z-index:4;top:18px;left:12px;right:12px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;pointer-events:none;color:#1057a0;font-size:clamp(15px,2vw,23px);font-weight:900;text-shadow:0 1px 0 #fff,0 1px 8px #ffffffdb}
 .cham-access-hero-sky small{font-size:12px;font-weight:800;color:#346a91}
 .cham-access-hero-picture{position:absolute;left:0;right:0;bottom:0;width:100%;height:min(53%,224px);background:transparent}
-.cham-access-hero-picture img{width:clamp(430px,125%,540px);bottom:24px}
-.cham-access-hero-picture:after{background:linear-gradient(180deg,rgba(191,236,255,.98),transparent 22%)}
+.cham-access-hero-picture img{width:100%;height:100%;object-fit:cover;object-position:center}
+
 .cham-access-form-card{display:flex;flex-direction:column;min-width:0;padding:clamp(12px,1.7vw,22px);border-radius:22px;border:1px solid #fff;background:rgba(255,255,255,.95);box-shadow:0 8px 26px #1256881d}
 .cham-access-role-chip{display:flex;align-items:center;justify-content:center;gap:8px;align-self:center;padding:4px 16px;border-radius:100px;background:#e0f3ff;color:#0961b1;font-size:12px;letter-spacing:.06em;font-weight:900}
 .cham-access-role-chip.teacher{background:#fff0cf;color:#ad5705}
@@ -122,7 +118,7 @@
  .cham-access-roles{grid-template-columns:1fr;gap:12px;width:100%}
  .cham-access-role-card{display:flex;flex-direction:row;align-items:stretch;height:clamp(116px,18dvh,148px);border-radius:18px}
  .cham-access-role-picture{width:37%;height:100%;flex:0 0 37%}
- .cham-access-role-picture img{width:calc(clamp(96px,18dvh,148px)*2);left:50%;bottom:-1px}
+
  .cham-access-role-footer{flex:1;min-width:0;align-self:stretch;display:flex;justify-content:center;flex-wrap:wrap;gap:5px;min-height:0;padding:8px 7px;font-size:clamp(17px,5vw,22px)}
  .cham-access-role-footer>svg:first-child{width:22px;height:22px}
  .cham-access-role-footer .cham-access-arrow{margin-left:4px;width:27px;height:27px}
@@ -132,7 +128,7 @@
  .cham-access-hero-sky{top:9px;left:6px;right:auto;width:50%;font-size:14px;text-align:left;align-items:flex-start}
  .cham-access-hero-sky small{font-size:10px}
  .cham-access-hero-picture{left:auto;right:0;width:58%;height:100%;background:transparent}
- .cham-access-hero-picture img{width:225px;left:50%;bottom:8px}
+
  .cham-access-form-card{flex:0 0 auto;padding:14px clamp(11px,3.5vw,17px) 10px;border-radius:19px}
  .cham-access-card-title h1{font-size:clamp(21px,5.5vw,26px)}
  .cham-access-description{font-size:12px;margin:3px 0 12px}
@@ -154,7 +150,7 @@
  .cham-access-content{padding-top:calc(env(safe-area-inset-top,0px) + 8px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 7px)}
  .cham-access-masthead{margin-bottom:7px}
  .cham-access-hero{display:none}
- .cham-access-hero-picture img{bottom:8px}
+
  .cham-access-form-card{padding-top:9px;padding-bottom:7px}
  .cham-access-description{margin-bottom:9px}
  .cham-access-role-content h1{margin:2px auto 10px}
@@ -180,10 +176,56 @@
  .cham-access-form-card{padding:16px 14px}
  .cham-access-roles{max-width:700px}
  .cham-access-role-picture{height:190px}
- .cham-access-hero-picture img{width:520px}
+
 }
 @media(prefers-reduced-motion:reduce){
  .cham-access-role-card,.cham-access-account-trigger svg:last-child{transition:none}
 }
 
-.cham-access-role-card.teacher .cham-access-illustration img,.cham-access-hero.teacher .cham-access-illustration img{clip-path:polygon(0 65.4%,33.3% 65.4%,33.3% 69.8%,67% 69.8%,67% 65.4%,100% 65.4%,100% 100%,0 100%)}
+
+
+/* Compact role chooser, crisp cover-style branding, and clean approved artwork. */
+.cham-access-backdrop{inset:0;width:100%;height:100%;opacity:1;filter:none}
+.cham-access-colorveil{background:linear-gradient(135deg,rgba(20,126,186,.08),rgba(230,250,255,.06))}
+.cham-access-wordmark{color:#ffe563;background:none;-webkit-text-fill-color:currentColor;-webkit-text-stroke:0;filter:none;text-shadow:0 2px 0 #a66e08,0 4px 0 #075489,0 6px 12px #004b7455;letter-spacing:-.035em;font-weight:950;line-height:1.15}
+.cham-access-sheet[data-screen=role]{width:min(800px,100%)}
+.cham-access-sheet[data-screen=role] .cham-access-content{height:auto;padding:22px}
+.cham-access-sheet[data-screen=role] .cham-access-masthead{margin:0 40px 16px}
+.cham-access-sheet[data-screen=role] .cham-access-wordmark{font-size:clamp(32px,4.2vw,52px)}
+.cham-access-role-content h1{font-size:clamp(18px,2vw,23px);margin:0 auto 16px}
+.cham-access-roles{width:100%;gap:16px}
+.cham-access-role-card{flex-direction:row;height:148px;border-radius:20px}
+.cham-access-role-picture{flex:0 0 42%;width:42%;height:100%;background:#b5e7fa}
+.cham-access-role-footer{flex:1;min-width:0;min-height:0;flex-wrap:wrap;gap:7px;padding:10px;font-size:22px}
+.cham-access-role-footer>svg:first-child{width:22px;height:22px}
+.cham-access-role-footer .cham-access-arrow{width:28px;height:28px;margin-left:0}
+.cham-access-role-footnote{margin:12px 0 0;font-size:11px}
+.cham-access-hero-picture{inset:0;width:100%;height:100%;background:transparent}
+.cham-access-hero-sky{top:0;left:0;right:0;padding:14px 10px 24px;background:linear-gradient(180deg,#e7f8ffe8,#e7f8ff00);font-size:18px}
+@media(max-width:767px){
+ .cham-access-overlay:has(.cham-access-sheet[data-screen=role]){padding:12px;place-items:center}
+ .cham-access-sheet[data-screen=role]{width:min(410px,100%);height:auto;max-height:calc(100dvh - 24px);border:2px solid #fff;border-radius:24px}
+ .cham-access-sheet[data-screen=role] .cham-access-content{height:auto;padding:22px 14px 16px}
+ .cham-access-sheet[data-screen=role] .cham-access-masthead{margin:0 14px 17px}
+ .cham-access-sheet[data-screen=role] .cham-access-wordmark{font-size:clamp(25px,7.6vw,34px)}
+ .cham-access-sheet[data-screen=role] .cham-access-close{top:7px;right:7px;width:32px;height:32px}
+ .cham-access-role-content{flex:0 0 auto}
+ .cham-access-role-content h1{font-size:18px;line-height:1.3;margin:0 auto 14px;max-width:290px}
+ .cham-access-roles{gap:10px}
+ .cham-access-role-card{height:112px;border-radius:16px}
+ .cham-access-role-picture{flex-basis:40%;width:40%}
+ .cham-access-role-footer{font-size:clamp(17px,4.8vw,20px);gap:5px;padding:8px 6px}
+ .cham-access-role-footer>svg:first-child{width:19px;height:19px}
+ .cham-access-role-footer .cham-access-arrow{width:25px;height:25px;margin-left:0}
+ .cham-access-role-footnote{display:block;font-size:10px;line-height:1.35;margin-top:10px}
+ .cham-access-hero{flex-basis:clamp(110px,32vw,140px);height:clamp(110px,32vw,140px)}
+ .cham-access-hero-sky{width:48%;padding:10px 6px;top:0;left:0;align-items:flex-start;text-align:left;background:linear-gradient(90deg,#e8faffcc,transparent);font-size:14px}
+ .cham-access-hero-picture{left:0;right:0;width:100%;height:100%}
+}
+@media(max-width:360px){
+ .cham-access-sheet[data-screen=role] .cham-access-content{padding:22px 10px 12px}
+ .cham-access-sheet[data-screen=role] .cham-access-masthead{margin-inline:14px}
+ .cham-access-sheet[data-screen=role] .cham-access-wordmark{font-size:24px}
+ .cham-access-role-card{height:102px}
+ .cham-access-role-footer{font-size:17px}
+}

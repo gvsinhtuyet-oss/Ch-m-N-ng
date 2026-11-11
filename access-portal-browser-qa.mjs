@@ -32,7 +32,7 @@ try {
         const stage=document.querySelector('.approved-mobile-stage');
         const img=stage?.querySelector('.approved-mobile-art');
         return stage?.getAttribute('data-screen')===expected && !!img?.complete && (img.naturalWidth||0)>0;
-      },{timeout:20000},view);
+      },{timeout:20000},view==='roles'?'role':view);
       else await page.waitForFunction(()=>[...document.querySelectorAll('.cham-access-sheet img')].every(img=>img.complete&&img.naturalWidth>0),{timeout:20000});
       const box=await page.evaluate(selector=>{
         const elem=document.querySelector(selector);

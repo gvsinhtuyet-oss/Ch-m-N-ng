@@ -51,10 +51,10 @@ export const AccessPortal: React.FC<AccessPortalProps> = (props) => {
 } = props;
   const [desktopAccess, setDesktopAccess] = useState(() =>
     typeof window !== 'undefined' &&
-    window.matchMedia('(min-width: 1024px) and (orientation: landscape)').matches
+    window.matchMedia('(min-width: 1024px) and (orientation: landscape) and (hover: hover) and (pointer: fine)').matches
   );
   React.useEffect(() => {
-    const media = window.matchMedia('(min-width: 1024px) and (orientation: landscape)');
+    const media = window.matchMedia('(min-width: 1024px) and (orientation: landscape) and (hover: hover) and (pointer: fine)');
     const update = () => setDesktopAccess(media.matches);
     media.addEventListener('change', update);
     update();

@@ -30,7 +30,7 @@ const ApprovedMobileAccessPortal: React.FC<Props> = (p) => {
   const [accountOpen, setAccountOpen] = useState(false);
   const back = p.guestMode ? p.onStudent : p.onBack;
   return (
-    <div className="approved-mobile-portal" role="dialog" aria-modal="true" aria-label={p.view === 'role' ? 'Chọn vai trò' : p.view === 'student' ? 'Học sinh' : 'Giáo viên'}>
+    <div className="approved-mobile-portal" role="dialog" aria-modal="true" aria-label={p.view === 'role' ? 'Chọn vai trò' : p.view === 'student' ? 'Đăng nhập học sinh' : 'Đăng nhập giáo viên'}>
       <div className="approved-mobile-stage" data-screen={p.view}>
         <img className="approved-mobile-art" src={assets[p.view]} alt="" aria-hidden="true" draggable={false} />
         <button type="button" className="approved-mobile-dismiss" aria-label="Đóng và trở về trang bìa" onClick={p.onClose}>×</button>

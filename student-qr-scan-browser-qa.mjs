@@ -33,9 +33,9 @@ try {
    await page.waitForFunction(()=>document.body.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'),{timeout:30000});
    await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'))?.click());
    await page.waitForSelector('[role="dialog"][aria-label="Chọn vai trò"]',{timeout:20000});
-   await page.click(width<1024?'.role-student':'.cham-access-role-card.student');
+   await page.click('.cham-access-role-card.student');
    await page.waitForSelector('[role="dialog"][aria-label="Đăng nhập học sinh"]',{timeout:20000});
-   await page.click(width<1024?'.student-qr':'.cham-access-qr-help');
+   await page.click('.cham-access-qr-button');
    await page.waitForSelector('[role="dialog"][aria-label="Quét mã QR học sinh"]',{timeout:12000});
    assert.ok(await page.$('.cham-qr-actions button'),'Camera retry button is accessible');
    const input=await page.$('.cham-qr-upload input[type=file]');

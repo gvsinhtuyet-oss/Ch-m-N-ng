@@ -305,6 +305,15 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         setInput('');
         return;
       }
+      // Verified, grade-appropriate teaching prompt from the showcase conversation.
+      // Answer from known lesson facts, without claiming live AI generation.
+      if (audience === 'teacher' && /(?:3|ba) câu hỏi/i.test(question) && /hội an/i.test(question)) {
+        append({id:`teacher-a-${Date.now()}`,role:'assistant',
+          text:'Gợi ý 3 câu hỏi cho học sinh lớp 2 tìm hiểu Hội An:\\n1. Phố cổ Hội An nằm bên dòng sông nào? (Sông Hoài.)\\n2. Hội An được UNESCO công nhận là di sản gì? (Di sản văn hóa thế giới.)\\n3. Em thích hình ảnh nào ở Hội An? Vì sao? (Học sinh nêu cảm nhận cá nhân.)\\nThầy/cô có thể cho các em quan sát hình ảnh trước khi trao đổi theo cặp.',
+          sources:[{label:'Học liệu địa phương: Di sản văn hóa thế giới Hội An'}]});
+        setInput('');
+        return;
+      }
       const pending=messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask;
       if (isTeacher && !isAdmin && detectLearningTask(question)==='knowledge'&&(!pending||/^(?:mở|tìm|tra cứu|mo|tim)(?:\s|$)/i.test(question))) {
         lookupLock.current = true;

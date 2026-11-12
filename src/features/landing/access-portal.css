@@ -365,3 +365,7 @@
  .landing-cover-main .cham-access-grade-grid button{min-height:62px}
  .cham-access-grade-grid button>strong{font-size:29px}
 }
+/* Override older full-screen selectors, including the :has role variant. */
+.landing-cover-main>.cham-access-overlay,
+.landing-cover-main>.cham-access-overlay:has(.cham-access-sheet[data-screen=role]){padding:0!important;height:auto!important;inset:auto!important;place-items:center}
+.cham-access-grade-grid button>span{text-transform:uppercase}

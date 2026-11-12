@@ -446,3 +446,16 @@
  .landing-art-shell[data-access-open=true][data-access-view=grades] .landing-cover-video{display:none}
  .landing-art-shell[data-access-open=true][data-access-view=grades] .landing-cover-main{grid-template-rows:auto minmax(0,1fr);grid-template-areas:'identity' 'actions'}
 }
+@media(max-width:1023px) and (orientation:portrait){
+ .landing-art-shell[data-access-open=true],.landing-art-shell[data-access-open=true] .landing-art-scene{height:100dvh!important;min-height:0!important;overflow:hidden!important}
+ .landing-art-shell[data-access-open=true] .landing-cover-main{flex:1 1 0!important;min-height:0!important;padding:8px 12px!important;gap:12px!important;justify-content:center!important}
+ .landing-art-shell[data-access-open=true] .landing-cover-identity{flex:0 0 auto}
+ .landing-art-shell[data-access-open=true] .landing-cover-video{flex:0 0 auto;width:min(100%,350px)!important}
+ .landing-art-shell[data-access-open=true]:is([data-access-view=student],[data-access-view=teacher]) .landing-cover-video{display:none!important}
+ .landing-art-shell[data-access-open=true] .landing-review-footer{flex:0 0 auto;padding:5px 6px!important;font-size:9px!important;gap:2px!important}
+}
+@media(max-width:767px) and (max-height:700px){
+ .landing-art-shell[data-access-open=true] .landing-cover-main{padding:5px 10px!important;gap:7px!important}
+ .landing-art-shell[data-access-open=true] .landing-cover-video{width:180px!important}
+ .landing-art-shell[data-access-open=true][data-access-view=grades] .landing-cover-video{display:none!important}
+}

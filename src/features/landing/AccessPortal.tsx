@@ -114,7 +114,7 @@ export const AccessPortal: React.FC<Props> = ({
                   <div className="cham-access-grade-grid" role="group" aria-label="Chọn khối lớp">
                     {grades.map(grade => <button type="button" key={grade} disabled={restoreBusy || chosenGrade !== null}
                       onClick={() => setSelectedGrade(grade)} aria-pressed={selectedGrade === grade}>
-                      <span>KHỐI</span><strong>{grade}</strong>{selectedGrade === grade && <Check className="cham-grade-check" size={17} aria-hidden="true"/>}
+                      <span>Khối </span><strong>{grade}</strong>{selectedGrade === grade && <Check className="cham-grade-check" size={17} aria-hidden="true"/>}
                     </button>)}
                   </div>
                   <button type="button" className="cham-access-primary cham-grade-start" disabled={selectedGrade === null || restoreBusy || chosenGrade !== null}

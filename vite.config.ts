@@ -30,8 +30,8 @@ export default defineConfig(async ({mode, command}) => {
     });
   };
   return {
-    // Preserve legacy media queries for iPhones running Safari before 16.4.
-    build: { cssTarget: 'safari15' },
+    // JavaScript and CSS must both support Safari 15; the Vite 8 default JS target starts at Safari 16.4.
+    build: { target: 'safari15', cssTarget: 'safari15' },
     plugins: [
       {name:'cham-preview-api',configureServer:connectApi,configurePreviewServer:connectApi},
       react(),

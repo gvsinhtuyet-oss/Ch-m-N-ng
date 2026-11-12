@@ -327,7 +327,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
           return;
         }
       }
-      const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text, previousTopic:messages.filter(message=>message.role==='assistant').at(-1)?.topic, previousAnswer:messages.filter(message=>message.role==='assistant'&&!message.ai).at(-1)?.text, pendingTask:messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask, practiceIndex:practiceCounts.current[practiceTopic || messages.filter(message=>message.role==='assistant').at(-1)?.topic || ''] || 0 });
+      const result = retrieveDanangAssistantAnswer(question, { ...context, audience: isAdmin ? 'teacher' : audience, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text, previousTopic:messages.filter(message=>message.role==='assistant').at(-1)?.topic, previousAnswer:messages.filter(message=>message.role==='assistant'&&!message.ai).at(-1)?.text, pendingTask:messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask, practiceIndex:practiceCounts.current[practiceTopic || messages.filter(message=>message.role==='assistant').at(-1)?.topic || ''] || 0 });
       if(result.practice)practiceCounts.current[result.topic || '']=(result.practice.sequence??0)+1;
       append({
         id: `a-${Date.now()}`,

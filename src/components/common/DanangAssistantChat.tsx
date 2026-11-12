@@ -417,7 +417,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         <span id="assistant-drag-hint" className="sr-only">Giữ và kéo biểu tượng để tránh che nội dung.</span>
       </div>
 
-      {measurementMounted && <Suspense fallback={null}><EffectivenessPanel key={storageScope} open={measurementOpen} audience={audience} grade={currentGrade || station?.grade || 2} scope={storageScope} initialTopic={messages.filter(message=>message.role==='assistant').at(-1)?.topic} onClose={()=>{setMeasurementOpen(false);setOpen(true);}} /></Suspense>}
+      {measurementMounted && <Suspense fallback={null}><EffectivenessPanel key={storageScope} open={measurementOpen} audience={isAdmin ? 'teacher' : audience} grade={currentGrade || station?.grade || 2} scope={storageScope} initialTopic={messages.filter(message=>message.role==='assistant').at(-1)?.topic} onClose={()=>{setMeasurementOpen(false);setOpen(true);}} /></Suspense>}
       {isTeacher && lessonPanel && <Suspense fallback={<div role="status" className="fixed inset-4 z-[70] rounded-2xl bg-white p-6 shadow-xl">Đang mở bài học…</div>}>
         <TeacherLessonPanel catalog={lessonPanel.catalog} recordId={lessonPanel.recordId} source={lessonPanel.source} stations={ALL_25_STATIONS} onClose={() => {setLessonPanel(null);setOpen(true);}} onOpenStation={station => {setLessonPanel(null);onOpenTeacherStation?.(station);}} />
       </Suspense>}

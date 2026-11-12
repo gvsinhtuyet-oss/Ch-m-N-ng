@@ -431,19 +431,18 @@
  paint-order:stroke fill;filter:none;
  text-shadow:0 1px 0 #fff4a1,0 3px 0 #b87800,0 5px 0 #075489;
 }
-.landing-cover-video,.landing-cover-actions{transition:opacity .28s ease,visibility .28s ease}
-.landing-art-shell[data-access-open=true] .landing-art-scene>header,
-.landing-art-shell[data-access-open=true] .landing-cover-video,
-.landing-art-shell[data-access-open=true] .landing-cover-actions{
- visibility:hidden;opacity:0;pointer-events:none;
+/* The approved cover stays visible; access replaces only its actions column. */
+.landing-art-shell[data-access-open=true] .landing-cover-video{visibility:visible;opacity:1;pointer-events:auto}
+.landing-art-shell[data-access-open=true] .landing-art-scene>header{visibility:visible;opacity:1}
+@media(max-width:1023px) and (orientation:portrait){
+ .landing-art-shell[data-access-open=true] .landing-cover-main{grid-template-rows:auto auto minmax(0,1fr);gap:12px;padding-block:8px 10px}
+ .landing-art-shell[data-access-open=true] .landing-cover-video{width:min(100%,calc((100dvh - 470px)*16/9));min-width:160px}
+ .landing-art-shell[data-access-open=true]:is([data-access-view=student],[data-access-view=teacher]) .landing-cover-video{display:none}
+ .landing-art-shell[data-access-open=true]:is([data-access-view=student],[data-access-view=teacher]) .landing-cover-main{grid-template-rows:auto minmax(0,1fr);grid-template-areas:'identity' 'actions'}
 }
-/* Preserve the intro's layout footprint so the identity never jumps. */
-.landing-art-shell[data-access-open=true]{overflow:hidden}
-@media(max-width:767px){
- .landing-art-shell[data-access-open=true] .landing-review-footer{
-  position:fixed!important;bottom:0;left:0;right:0;z-index:1001;
- }
-}
-@media(prefers-reduced-motion:reduce){
- .landing-cover-video,.landing-cover-actions{transition:none}
+@media(max-width:767px) and (max-height:700px){
+ .landing-art-shell[data-access-open=true] .landing-cover-main{gap:8px;padding-inline:10px}
+ .landing-art-shell[data-access-open=true] .landing-cover-video{width:min(100%,240px);min-width:0}
+ .landing-art-shell[data-access-open=true][data-access-view=grades] .landing-cover-video{display:none}
+ .landing-art-shell[data-access-open=true][data-access-view=grades] .landing-cover-main{grid-template-rows:auto minmax(0,1fr);grid-template-areas:'identity' 'actions'}
 }

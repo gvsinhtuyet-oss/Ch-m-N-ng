@@ -189,7 +189,7 @@ export const LandingView: React.FC = () => {
     setIntroActive(false);
     try {
       introFrameRef.current?.contentWindow?.postMessage(
-        JSON.stringify({ event: 'command', func: 'stopVideo', args: [] }),
+        JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }),
         '*'
       );
     } catch {
@@ -320,7 +320,7 @@ export const LandingView: React.FC = () => {
 
 
   return (
-    <div ref={shellRef} data-access-open={showRolePicker} className="landing-art-shell text-white select-none">
+    <div ref={shellRef} data-access-open={showRolePicker} data-access-view={showRolePicker ? (showStaffLogin ? 'teacher' : showStudentLogin ? (guestMode ? 'grades' : 'student') : 'role') : 'cover'} className="landing-art-shell text-white select-none">
       <div className="landing-art-scene">
       {/* Nền trang bìa do Quản trị cài riêng. */}
       <img
@@ -391,10 +391,10 @@ export const LandingView: React.FC = () => {
         </div>
 
         {/* Video giới thiệu giữ nguyên nguồn gốc và tự phát khi trình duyệt cho phép. */}
-        <div className="landing-cover-video relative min-w-0" aria-hidden={showRolePicker}>
+        <div className="landing-cover-video relative min-w-0" aria-hidden={false}>
             <div className="absolute -inset-1 rounded-[22px] sm:rounded-[26px] bg-gradient-to-r from-sky-500/35 via-white/10 to-amber-400/35 blur-lg pointer-events-none" />
             <div className="landing-cover-player relative overflow-hidden rounded-2xl sm:rounded-3xl border-[3px] border-white/80 bg-black shadow-2xl shadow-slate-950/60">
-              {introActive && <iframe
+              {<iframe
                 ref={introFrameRef}
                 className="absolute inset-0 h-full w-full"
                 src={`https://www.youtube-nocookie.com/embed/Ud2uUxz9Lw4?autoplay=${introAutoplay ? 1 : 0}&mute=1&playsinline=1&rel=0&controls=1&enablejsapi=1`}
@@ -406,7 +406,7 @@ export const LandingView: React.FC = () => {
             </div>
           </div>
 
-        <div className="landing-cover-actions" aria-hidden={showRolePicker}>
+        {!showRolePicker && <div className="landing-cover-actions">
           <p className="landing-action-invitation">Mỗi điểm đến,<br /><strong>một điều kỳ diệu</strong></p>
           <button onClick={()=>void handleStartJourney()} disabled={restoreBusy} aria-label={qrEntryCode&&restoreBusy?'Đang mở hồ sơ học sinh':'CHẠM ĐỂ KHÁM PHÁ'} className="group flex items-center gap-2 rounded-[22px] border-b-[6px] border-amber-700 bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 px-5 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg font-black text-slate-950 shadow-[0_8px_25px_rgba(0,0,0,.35)] transition hover:scale-105 active:translate-y-1 active:border-b-2 disabled:cursor-wait disabled:opacity-80">
             <Compass className="h-6 w-6 text-blue-900 group-hover:rotate-45 transition-transform"/> {qrEntryCode&&restoreBusy?'ĐANG MỞ LỚP CỦA EM…':'CHẠM ĐỂ KHÁM PHÁ'} <ArrowRight className="h-5 w-5"/>
@@ -417,17 +417,7 @@ export const LandingView: React.FC = () => {
             <span><CircleHelp aria-hidden="true" />Quiz</span>
             <span><Award aria-hidden="true" />Hộ chiếu số</span>
           </div>
-        </div>
-
-      </main>
-
-      <footer className="landing-review-footer relative z-20">
-        <span>Tài liệu giáo dục địa phương TP Đà Nẵng</span>
-
-        <span>Người phát triển: <strong>TRƯƠNG SINH TUYẾT</strong></span>
-      </footer>
-
-      </div>
+        </div>}
 
       {/* Three approved role/student/teacher screens: images are decorative, controls remain live. */}
       {showRolePicker && <ResponsiveAccessPortal
@@ -501,6 +491,17 @@ export const LandingView: React.FC = () => {
         }}
         onGoogleLogin={finishStaffLogin}
       />}
+      </main>
+
+      <footer className="landing-review-footer relative z-20">
+        <span>Tài liệu giáo dục địa phương TP Đà Nẵng</span>
+
+        <span>Người phát triển: <strong>TRƯƠNG SINH TUYẾT</strong></span>
+      </footer>
+
+      </div>
+
+
     </div>
   );
 };

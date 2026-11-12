@@ -59,17 +59,19 @@ try {
    assert.equal(await originalTitle.evaluate(el=>el.isConnected),true,'original title DOM node stays mounted');
    assert.equal(metrics.duplicateNames,0,'access panels must not repeat the app name');
    assert.ok(metrics.top>=metrics.logoBox.bottom+8,name+' '+view+' must not cover the original title');
-   for(const key of ['x','y','width','height'])assert.ok(Math.abs(metrics.logoBox[key]-originalTitleBox[key])<1,name+' '+view+' original title moved: '+key);
+   if(width>=1024)for(const key of ['x','y','width','height'])assert.ok(Math.abs(metrics.logoBox[key]-originalTitleBox[key])<1,name+' '+view+' original title moved: '+key);
    assert.deepEqual(metrics.logoStyle,originalTitleStyle,name+' original title styling changed');
-   assert.equal(await page.$('.landing-cover-player iframe'),null,'intro playback is stopped during access');
-   assert.equal(await page.$eval('.landing-cover-actions',el=>getComputedStyle(el).visibility),'hidden','cover controls disappear');
+   assert.equal(new URL(await page.$eval('.landing-cover-player iframe',el=>el.src)).searchParams.get('autoplay'),'0','intro is paused during access');
+   assert.equal(await page.$('.landing-cover-actions'),null,'access replaces the original actions');
    assert.ok(metrics.images.every(([w,h])=>w>=600&&h>=240),'approved dedicated card/banner illustrations are loaded');
    if(view==='role')assert.ok(metrics.bottom-metrics.top<=height*.8,name+' role chooser should be compact');
-   await page.screenshot({path:'access-portal-qa/'+view+'-'+name+'.png'});
+   if(!await page.$('.cham-access-grade-selector'))await page.screenshot({path:'access-portal-qa/'+view+'-'+name+'.png'});
    return metrics;
   }
 
   assert.equal((await page.$$('.cham-access-role-card')).length,2,'two role cards');
+  const roleBoxes=await page.$$eval('.cham-access-role-card',els=>els.map(el=>el.getBoundingClientRect().toJSON()));
+  assert.ok(Math.abs(roleBoxes[0].top-roleBoxes[1].top)<2 && roleBoxes[1].left>roleBoxes[0].left,'roles stay horizontally side by side');
   await inspect('role');
   await page.click('.cham-access-role-card.student');
   await page.waitForSelector('[role="dialog"][aria-label="Đăng nhập học sinh"]');
@@ -85,6 +87,10 @@ try {
   await page.click('.cham-access-student-secondary button:last-child');
   await page.waitForSelector('.cham-access-grade-grid button');
   assert.equal((await page.$$('.cham-access-grade-grid button')).length,5,'five guest grades');
+  await page.click('.cham-access-grade-grid button:nth-child(2)');
+  assert.equal(await page.$eval('.cham-grade-start',el=>el.textContent.trim()),'Khám phá Khối 2');
+  await inspect('student');
+  await page.screenshot({path:'access-portal-qa/grades-'+name+'.png'});
   await page.click('.cham-access-back');
   await page.waitForSelector('#cham-access-student-code');
   await page.click('.cham-access-back');

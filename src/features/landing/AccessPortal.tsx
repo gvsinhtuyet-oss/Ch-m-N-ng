@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, Compass, Eye, EyeOff, GraduationCap, KeyRound, LockKeyhole, QrCode, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Check, Compass, Eye, EyeOff, GraduationCap, KeyRound, LockKeyhole, QrCode, X } from 'lucide-react';
 import { GoogleTeacherLogin } from '../../components/auth/GoogleTeacherLogin';
 import type { StaffUser } from '../../services/AuthService';
 import { StudentQrScanner } from './StudentQrScanner';
@@ -58,6 +58,8 @@ export const AccessPortal: React.FC<Props> = ({
   onSavedCode, onTeacherDemo, onStaffLogin, onRestoreStaff,
   onGoogleLogin, onScanCode,
 }) => {
+  const [selectedGrade, setSelectedGrade] = useState<number | null>(null);
+  useEffect(() => { setSelectedGrade(null); }, [guestMode]);
   const [accountExpanded, setAccountExpanded] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
@@ -77,8 +79,8 @@ export const AccessPortal: React.FC<Props> = ({
     } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   };
   return (
-    <div className="cham-access-overlay" data-screen={view}>
-      <section ref={sheetRef} tabIndex={-1} onKeyDown={handleDialogKey} className="cham-access-sheet" data-screen={view} role="dialog" aria-modal="true"
+    <div className="cham-access-overlay" data-screen={view} data-guest={guestMode}>
+      <section ref={sheetRef} tabIndex={-1} onKeyDown={handleDialogKey} className="cham-access-sheet" data-screen={view} role="dialog" aria-modal="false"
         aria-label={view === 'role' ? 'Chọn vai trò' : view === 'student' ? 'Đăng nhập học sinh' : 'Đăng nhập giáo viên'}>
         <button type="button" className="cham-access-close" onClick={onClose} aria-label="Đóng cửa sổ">
           <X size={22} />
@@ -86,7 +88,7 @@ export const AccessPortal: React.FC<Props> = ({
         <div className="cham-access-content">
 
           {view === 'role' ? <main className="cham-access-role-content">
-            <h2>Chọn vai trò để bắt đầu hành trình</h2>
+            <h2>Chọn vai trò<span>để bắt đầu hành trình</span></h2>
             <div className="cham-access-roles">
               <button type="button" className="cham-access-role-card student" onClick={onStudent} aria-label="Chọn vai trò học sinh">
                 <span className="cham-access-role-footer"><GraduationCap aria-hidden="true" /><span>Học sinh</span><ArrowRight className="cham-access-arrow" aria-hidden="true" /></span>
@@ -95,6 +97,7 @@ export const AccessPortal: React.FC<Props> = ({
                 <span className="cham-access-role-footer"><BookOpen aria-hidden="true" /><span>Giáo viên</span><ArrowRight className="cham-access-arrow" aria-hidden="true" /></span>
               </button>
             </div>
+            <button type="button" className="cham-access-back" onClick={onClose}><ArrowLeft size={18}/> Quay lại</button>
           </main> :
           <main className="cham-access-step-layout" data-screen={view}>
             <aside className={'cham-access-hero '+view} aria-hidden="true">
@@ -107,9 +110,17 @@ export const AccessPortal: React.FC<Props> = ({
                 <div className="cham-access-card-title"><h1>{guestMode ? 'Chọn khối lớp của em!' : 'Chào Nhà phiêu lưu!'}</h1></div>
                 <p className="cham-access-description">{guestMode ? 'Em muốn khám phá khối nào hôm nay?' : 'Vào học bằng mã của em'}</p>
 
-                {guestMode ? <div className="cham-access-grade-grid" role="group" aria-label="Chọn khối lớp">
-                  {grades.map(grade => <button type="button" key={grade} disabled={restoreBusy}
-                    onClick={() => onStudentGrade(grade)} aria-pressed={chosenGrade === grade}>Khối {grade}</button>)}
+                {guestMode ? <div className="cham-access-grade-selector">
+                  <div className="cham-access-grade-grid" role="group" aria-label="Chọn khối lớp">
+                    {grades.map(grade => <button type="button" key={grade} disabled={restoreBusy || chosenGrade !== null}
+                      onClick={() => setSelectedGrade(grade)} aria-pressed={selectedGrade === grade}>
+                      <span>KHỐI</span><strong>{grade}</strong>{selectedGrade === grade && <Check className="cham-grade-check" size={17} aria-hidden="true"/>}
+                    </button>)}
+                  </div>
+                  <button type="button" className="cham-access-primary cham-grade-start" disabled={selectedGrade === null || restoreBusy || chosenGrade !== null}
+                    onClick={() => { if (selectedGrade !== null) onStudentGrade(selectedGrade); }}>
+                    {chosenGrade !== null ? 'Đang mở hành trình…' : selectedGrade === null ? 'Chọn khối để khám phá' : `Khám phá Khối ${selectedGrade}`}<ArrowRight size={19} aria-hidden="true"/>
+                  </button>
                 </div> : <>
                   <label htmlFor="cham-access-student-code" className="cham-access-label"><KeyRound size={16}/> Mã học sinh của em</label>
                   <div className="cham-access-code-row">

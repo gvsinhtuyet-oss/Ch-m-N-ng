@@ -313,3 +313,55 @@
 }
 /* The dialog itself receives focus without a dark browser frame; controls keep their focus rings. */
 .cham-access-sheet:focus{outline:none}
+
+/* Approved inline aqua card: live controls replace the cover's right column. */
+.landing-cover-main>.cham-access-overlay{
+ position:relative;inset:auto;grid-area:actions;align-self:center;justify-self:center;
+ width:100%;height:auto;min-height:0;max-height:100%;padding:0;z-index:25;overflow:visible;
+}
+.landing-cover-main .cham-access-sheet,.landing-cover-main .cham-access-sheet[data-screen=role]{
+ width:min(500px,100%);height:auto;max-height:calc(100dvh - var(--landing-identity-bottom,150px) - 64px);
+ border:1.5px solid #efffff;border-radius:25px;
+ background:linear-gradient(135deg,#edfcfff2,#b4edf2df);box-shadow:0 10px 30px #06446e40,inset 0 1px 0 #fff;
+}
+.landing-cover-main .cham-access-content{padding:18px 14px 12px}
+.landing-cover-main .cham-access-sheet[data-screen=role] .cham-access-content{padding:20px 14px 16px}
+.landing-cover-main .cham-access-sheet[data-screen=role] .cham-access-close{display:none}
+.landing-cover-main .cham-access-role-content h2{margin:0 0 18px;font-size:clamp(23px,2.4vw,34px);color:#064783}
+.cham-access-role-content h2>span{display:block;font-size:.66em;margin-top:4px}
+.landing-cover-main .cham-access-roles{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.landing-cover-main .cham-access-role-card{height:112px;border-radius:18px;border-width:1px}
+.landing-cover-main .cham-access-role-footer{position:relative;display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:8px;padding:12px 7px;font-size:clamp(16px,1.6vw,23px)}
+.landing-cover-main .cham-access-role-footer>svg:first-child{flex:0 0 100%;width:35px;height:35px;padding:0;background:none;border-radius:0}
+.landing-cover-main .cham-access-role-footer .cham-access-arrow{width:20px;height:20px;flex:0 0 20px;margin:0;padding:0;background:transparent;color:white;border-radius:0}
+.landing-cover-main .cham-access-sheet[data-screen=role]:after{left:8%;right:8%;height:5px;bottom:5px;border-top-width:1px}
+.landing-cover-main .cham-access-step-layout{display:block}
+.landing-cover-main .cham-access-hero{display:none}
+.landing-cover-main .cham-access-form-card{padding:12px;border-radius:18px;background:#faffffed}
+.landing-cover-main .cham-access-card-title h1{font-size:24px}
+.landing-cover-main .cham-access-description{margin-bottom:10px}
+.landing-cover-main .cham-access-close{width:34px;height:34px;top:4px;right:4px}
+.landing-cover-main .cham-access-grade-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:14px 0}
+.landing-cover-main .cham-access-grade-grid button{position:relative;grid-column:span 2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;min-height:82px;border:1px solid #fff;background:linear-gradient(160deg,#10a9e8,#065caf);border-radius:15px}
+.landing-cover-main .cham-access-grade-grid button:nth-child(4){grid-column:2 / span 2}
+.cham-access-grade-grid button>span{font-size:12px;line-height:1.2}
+.cham-access-grade-grid button>strong{font-size:36px;line-height:1.15}
+.landing-cover-main .cham-access-grade-grid button[aria-pressed=true]{outline:3px solid #ffcd26;outline-offset:0;background:linear-gradient(160deg,#087ed1,#044b92)}
+.cham-grade-check{position:absolute;right:4px;top:4px;background:#ffdc37;color:#064b83;border-radius:50%;padding:2px}
+@media(max-width:1023px) and (orientation:portrait){
+ .landing-cover-main>.cham-access-overlay{align-self:center;max-height:100%}
+ .landing-cover-main .cham-access-sheet,.landing-cover-main .cham-access-sheet[data-screen=role]{width:min(500px,100%)}
+ .landing-cover-main .cham-access-role-content h2{font-size:25px;margin-bottom:12px}
+ .landing-cover-main .cham-access-role-footer{font-size:18px}
+ .landing-cover-main .cham-access-content{padding:10px}
+}
+@media(max-width:767px) and (max-height:700px){
+ .landing-cover-main .cham-access-sheet[data-screen=role] .cham-access-content{padding:12px 10px 10px}
+ .landing-cover-main .cham-access-role-content h2{font-size:22px;margin-bottom:9px}
+ .landing-cover-main .cham-access-role-card{height:86px;border-radius:14px}
+ .landing-cover-main .cham-access-role-footer{font-size:16px;padding:8px 3px;gap:5px}
+ .landing-cover-main .cham-access-role-footer>svg:first-child{height:27px;width:27px}
+ .landing-cover-main .cham-access-back{margin-top:3px}
+ .landing-cover-main .cham-access-grade-grid button{min-height:62px}
+ .cham-access-grade-grid button>strong{font-size:29px}
+}

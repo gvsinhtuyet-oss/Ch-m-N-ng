@@ -1,5 +1,5 @@
 {
-  "commit": "3017d1c252aa66daf32495a8065744699ba88888",
+  "commit": "15edd8b4bc68afd25dffa39ce16f017ad51c16ce",
   "files": [
     {
       "path": "src/games/stage2/SharedStage2.tsx",
@@ -227,7 +227,7 @@
     },
     {
       "path": "src/App.tsx",
-      "sha256": "ef69fb4a20c49a50ea73037eda552b8e0c4327f07e96d1582cba47f81852261d"
+      "sha256": "ee32de640ff472c18b53be72b75b139af115512a246e956a4521b658f4e11977"
     },
     {
       "path": "src/components/common/DanangAssistantChat.tsx",
@@ -243,7 +243,7 @@
     },
     {
       "path": "vite.config.ts",
-      "sha256": "511c495f8568375c2f740e1e016ec6c6403a0932c7ce1f690a66a07c1c7e185b"
+      "sha256": "7dafe5a3930fd4c352ccf89a56b54bb794af2cfff2842cc4ecdaea53eb554b6f"
     },
     {
       "path": "src/types/index.ts",
@@ -263,7 +263,7 @@
     },
     {
       "path": "src/components/common/FeatureLoadBoundary.tsx",
-      "sha256": "2357daa7fc05e98443ce7d419ed6c34685e089802e99819b06cdfb29436f91c7"
+      "sha256": "ee3d7f5434334e2ccdc071f4cb5d9a581a202de9b407349bd91f54dfef32a2ba"
     },
     {
       "path": "src/components/station/journey-stages.css",

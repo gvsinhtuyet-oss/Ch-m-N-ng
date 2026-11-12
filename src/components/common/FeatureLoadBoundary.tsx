@@ -1,5 +1,26 @@
 import React from 'react';
 
+/**
+ * Refresh only versioned application assets after Safari cannot import a lazy module.
+ * Never remove localStorage, IndexedDB or student progress.
+ */
+export async function recoverApplicationAssets(): Promise<void> {
+  try {
+    if ('serviceWorker' in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(registrations.filter(reg => new URL(reg.scope).origin === location.origin).map(reg => reg.unregister()));
+    }
+    if ('caches' in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys.filter(key => /^(workbox-|cham-|precache)/i.test(key)).map(key => caches.delete(key)));
+    }
+  } catch (error) { console.warn('[CHAM] Assistant asset cache recovery:', error); }
+  // Preserve Preview authentication, current route and deep links.
+  const next = new URL(window.location.href);
+  next.searchParams.set('recovery', String(Date.now()));
+  window.location.replace(next.href);
+}
+
 type FailureState = { failed: boolean; code: string; detail: string };
 
 export class FeatureLoadBoundary extends React.Component<React.PropsWithChildren<{fallback?:React.ReactNode}>, FailureState> {
@@ -22,23 +43,7 @@ export class FeatureLoadBoundary extends React.Component<React.PropsWithChildren
     console.error('[CHAM] Feature render failed:', error, info.componentStack);
   }
 
-  private recover = async () => {
-    // Clear only generated application assets, never learner profiles or progress.
-    try {
-      if ('serviceWorker' in navigator) {
-        const registrations = await navigator.serviceWorker.getRegistrations();
-        await Promise.all(registrations.filter(reg => new URL(reg.scope).origin === location.origin).map(reg => reg.unregister()));
-      }
-      if ('caches' in window) {
-        const keys = await caches.keys();
-        await Promise.all(keys.filter(key => /^(workbox-|cham-|precache)/i.test(key)).map(key => caches.delete(key)));
-      }
-    } catch (error) { console.warn('[CHAM] Asset cache recovery:', error); }
-    // Preserve Preview authentication and deep links while refreshing assets.
-    const next = new URL(window.location.href);
-    next.searchParams.set('recovery', String(Date.now()));
-    window.location.replace(next.href);
-  };
+  private recover = recoverApplicationAssets;
 
   render() {
     if (!this.state.failed) return this.props.children;

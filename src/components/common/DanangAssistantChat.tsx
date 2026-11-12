@@ -147,7 +147,7 @@ const AssistantEmblem=({className}:{className?:string})=>(
 export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '', openRequestId = 0 }) => {
   const isTeacher = audience !== 'student';
   const isAdmin = audience === 'admin';
-  const welcome = isAdmin ? 'Chào thầy cô! Mình cùng xem các mục quản trị nhé.' : isTeacher ? 'Thầy cô muốn chuẩn bị nội dung nào hôm nay?' : WELCOME;
+  const welcome = isAdmin ? 'Chào anh/chị! Mình có thể giúp tìm các mục quản trị, kiểm định trợ lý và xem báo cáo đã xác thực.' : isTeacher ? 'Chào thầy/cô! Em hỗ trợ tìm học liệu và gợi ý hoạt động dạy học.' : WELCOME;
   const [open, setOpen] = useState(false);
   // Header/station shortcuts can be tapped before this lazy-loaded module mounts.
   // The parent keeps the request ID, so the first tap is not lost on slow networks.
@@ -266,7 +266,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
   const mobile=viewport.width<1024;
   const panelHeight=Math.min(mobile?viewport.height*.82:viewport.height*.78,mobile?680:620,viewport.height-24);
-  const panelWidth=Math.min(400,viewport.width-24);
+  const panelWidth=Math.min(420,viewport.width-24);
   const panelLeft=mobile?12:Math.max(12,Math.min(launcherPosition.x,viewport.width-panelWidth-12));
   const panelTop=mobile?Math.max(12,viewport.height-panelHeight-12):Math.max(12,Math.min(
     launcherPosition.y>viewport.height/2?launcherPosition.y-panelHeight-16:launcherPosition.y+(compactGame?58:122),
@@ -358,6 +358,12 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     setShowSuggestions(false);
     append({ id: `q-${Date.now()}`, role: 'student', text: isTeacher ? question : maskStudentPrivateQuestion(question) });
     try {
+      // Provide a verified example for the class-2 Hội An teaching prompt.
+      if (audience==='teacher' && /(?:3|ba) câu hỏi/i.test(question) && /hội an/i.test(question)) {
+        append({id:`hoi-an-${Date.now()}`,role:'assistant',text:'Gợi ý 3 câu hỏi cho học sinh lớp 2 tìm hiểu Hội An:\n1. Phố cổ Hội An nằm bên dòng sông nào? (Sông Hoài.)\n2. Hội An được UNESCO công nhận là di sản gì? (Di sản văn hóa thế giới.)\n3. Em ấn tượng với điều gì ở Hội An? Vì sao? (Học sinh chia sẻ cảm nhận.)\nThầy/cô có thể cho học sinh quan sát tranh rồi trao đổi theo cặp.'});
+        setInput('');
+        return;
+      }
       const pending=messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask;
       if (isTeacher && detectLearningTask(question)==='knowledge'&&(!pending||/^(?:mở|tìm|tra cứu|mo|tim)(?:\s|$)/i.test(question))) {
         lookupLock.current = true;
@@ -474,9 +480,9 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
           role="dialog"
           aria-label="Trợ lý khám phá Đà Nẵng"
           style={{left:panelLeft, top:panelTop, width:panelWidth, height:panelHeight, maxHeight:panelHeight}}
-          className="discovery-chat-bubble fixed z-[60] flex flex-col overflow-hidden rounded-[24px] border border-sky-100 bg-[#fffefa] shadow-[0_18px_64px_-16px_rgba(15,70,95,0.28)] outline-none"
+          className="discovery-chat-bubble fixed z-[60] flex flex-col overflow-hidden rounded-[24px] border border-sky-200 bg-white shadow-[0_20px_65px_-14px_rgba(15,70,95,0.32)] outline-none"
         >
-          <header className="relative z-10 shrink-0 border-b border-white/10 bg-gradient-to-r from-sky-800 to-cyan-700 px-4 py-3 text-white">
+          <header className="relative z-10 shrink-0 border-b border-white/10 bg-gradient-to-r from-sky-800 via-cyan-700 to-teal-600 px-4 py-3 text-white">
             <div className="flex items-center gap-2.5">
               <button type="button" onClick={()=>setOpen(false)} aria-label="Thu gọn Trợ lý Khám phá" title="Thu gọn Trợ lý Khám phá" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"><AssistantEmblem className="h-8 w-8"/></button>
               <div className="min-w-0 flex-1">
@@ -495,7 +501,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
               <button type="button" onClick={()=>setOpen(false)} className="flex h-11 w-9 shrink-0 items-center justify-center rounded-full text-white/85 hover:bg-white/10" aria-label="Đóng trợ lý"><X className="h-5 w-5"/></button>
             </div>
           </header>
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#fffefa] px-4 py-4">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-gradient-to-b from-sky-50/70 to-white px-3.5 py-4 sm:px-4">
             <div className="space-y-3">
               {messages.map(message => (
                 <div
@@ -504,8 +510,8 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                 >
                   <div
                     className={`min-w-0 break-words rounded-[20px] px-3.5 py-3 text-sm leading-relaxed ${message.role === 'student'
-                        ? 'max-w-[88%] rounded-br-md bg-sky-700 text-white shadow-sm'
-                        : message.id==='welcome'?'max-w-full px-0 py-1 text-slate-600':'max-w-[96%] rounded-bl-md border border-slate-100 bg-white text-slate-700'
+                        ? 'max-w-[92%] rounded-br-md bg-gradient-to-br from-blue-600 to-sky-600 text-white shadow-sm'
+                        : message.id==='welcome'?'max-w-full border border-sky-100 bg-sky-100/80 text-slate-700':'max-w-[98%] rounded-bl-md border border-slate-100 bg-white text-slate-800 shadow-sm'
                     }`}
                   >
                     <p className="whitespace-pre-wrap"><SimpleBold text={message.text} /></p>

@@ -28,7 +28,7 @@ interface Props {
   hotspot?: ExplorationHotspot | null;
   compactGame?: boolean;
   docked?: boolean;
-  audience?: 'student' | 'teacher';
+  audience?: 'student' | 'teacher' | 'admin';
   stage?: number;
   storageScope?: string;
   currentGrade?: number;
@@ -61,7 +61,7 @@ const MAX_VISIBLE_MESSAGES = 10;
 export interface AssistantSuggestion {label:string;query:string;draft?:boolean;}
 /** Contextual prompts run entirely in the local knowledge-based chatbot. */
 export function buildAssistantFollowUps({audience,stage,topic,stationTitle,hotspotTitle,unknown=false}:{
- audience:'student'|'teacher';stage?:number;topic?:string;stationTitle?:string;hotspotTitle?:string;unknown?:boolean;
+ audience:'student'|'teacher'|'admin';stage?:number;topic?:string;stationTitle?:string;hotspotTitle?:string;unknown?:boolean;
 }):AssistantSuggestion[]{
  if(audience==='student'&&stage===2)return [
   {label:'Quan sát gì?',query:'Em nên quan sát gì?'},
@@ -70,6 +70,11 @@ export function buildAssistantFollowUps({audience,stage,topic,stationTitle,hotsp
  ];
  const clean=(x?:string)=>x?.replace(/^\d+[.)]\s*/,'').replace(/\s+/g,' ').trim().slice(0,90)||'';
  const focus=clean(unknown?undefined:topic)||clean(hotspotTitle)||clean(stationTitle);
+ if(audience==='admin')return [
+  {label:'Theo dõi lượt tham gia',query:'Cho tôi xem thống kê nhanh lượng truy cập và đánh giá.'},
+  {label:'Đánh giá và góp ý',query:'Tôi xem đánh giá sao và góp ý ở đâu?'},
+  {label:'Kiểm tra học liệu',query:'Làm sao kiểm tra và cập nhật học liệu?'},
+ ];
  if(audience==='teacher')return focus?[
   {label:'Soạn 3 câu hỏi',query:'Tạo 3 câu hỏi kèm đáp án về '+focus},
   {label:'Hoạt động 5 phút',query:'Gợi ý hoạt động 5 phút về '+focus},
@@ -112,8 +117,12 @@ const AssistantEmblem=({className}:{className?:string})=>(
 );
 
 export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '' }) => {
-  const isTeacher = audience === 'teacher';
-  const welcome = isTeacher ? 'Thầy cô cần tìm bài học hay chuẩn bị nội dung nào?' : WELCOME;
+  const isAdmin = audience === 'admin';
+  const isTeacher = audience !== 'student';
+  const welcome = isAdmin
+    ? 'Chào anh/chị! Tôi hỗ trợ tra cứu chức năng quản trị, đánh giá và góp ý. Số liệu thống kê chỉ được xem trong báo cáo đã xác thực.'
+    : isTeacher ? 'Chào thầy/cô! Em có thể hỗ trợ tìm học liệu, gợi ý câu hỏi và hoạt động dạy học.'
+    : 'Chào em! Mình là Trợ lý khám phá nè. Em muốn cùng mình tìm hiểu điều gì hôm nay? 😊';
   const [open, setOpen] = useState(false);
   const [showSuggestions,setShowSuggestions]=useState(true);
   const panelRef=useRef<HTMLElement|null>(null);
@@ -151,13 +160,13 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const aiLock=useRef(false);
   useEffect(()=>()=>activeAi.current?.abort(),[]);
   useEffect(()=>{
-    if(!isTeacher||!open){if(!isTeacher)setAiAvailable(false);return;}
+    if(!isTeacher||isAdmin||!open){if(!isTeacher||isAdmin)setAiAvailable(false);return;}
     const controller=new AbortController();
     fetch('/api/education-assistant',{credentials:'same-origin',signal:controller.signal})
       .then(r=>r.ok?r.json():null).then(data=>{if(!controller.signal.aborted)setAiAvailable(data?.available===true);})
       .catch(()=>{});
     return()=>controller.abort();
-  },[isTeacher,open]);
+  },[isTeacher,isAdmin,open]);
   const [messages, setMessages] = useState<ChatMessage[]>([
     { id: 'welcome', role: 'assistant', text: welcome },
   ]);
@@ -225,7 +234,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
   const mobile=viewport.width<640;
   const panelHeight=Math.min(mobile?viewport.height*.82:viewport.height*.78,mobile?680:620,viewport.height-24);
-  const panelWidth=Math.min(400,viewport.width-24);
+  const panelWidth=Math.min(420,viewport.width-24);
   const panelLeft=mobile?12:Math.max(12,Math.min(launcherPosition.x,viewport.width-panelWidth-12));
   const panelTop=mobile?Math.max(12,viewport.height-panelHeight-12):Math.max(12,Math.min(
     launcherPosition.y>viewport.height/2?launcherPosition.y-panelHeight-16:launcherPosition.y+(compactGame?58:122),
@@ -284,8 +293,20 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     setShowSuggestions(false);
     append({ id: `q-${Date.now()}`, role: 'student', text: question });
     try {
+      // Admin questions are guidance only. Never fabricate counts or claim private analytics access.
+      if (isAdmin) {
+        const q = question.toLocaleLowerCase('vi-VN');
+        const answer = /thống kê|truy cập|lượt|đánh giá|sao|góp ý|báo cáo|số liệu|trải nghiệm/.test(q)
+          ? 'Để xem số liệu thực, anh/chị mở **Quản trị → Thống kê / Đánh giá & góp ý**, chọn thời gian, khối hoặc trạm cần xem. Tôi chưa được kết nối trực tiếp với dữ liệu báo cáo trong cửa sổ chat nên không thể tự đọc hoặc xác nhận các con số. Nếu trang báo lỗi, hãy kiểm tra kết nối và trạng thái lưu dữ liệu trước khi sử dụng số liệu.'
+          : /học liệu|cập nhật|nội dung|xuất bản|kiểm duyệt/.test(q)
+          ? 'Anh/chị mở **Quản trị → Quản lý học liệu** để kiểm tra từng trạm, rà soát nguồn tư liệu, lưu nháp và chỉ xuất bản nội dung đã được duyệt. Nên kiểm tra lại trên cả điện thoại và máy tính sau khi cập nhật.'
+          : 'Tôi có thể hướng dẫn quản lý học liệu, theo dõi đánh giá và sử dụng báo cáo. Anh/chị muốn hỏi về thống kê, góp ý hay cập nhật nội dung?';
+        append({id:`admin-a-${Date.now()}`,role:'assistant',text:answer});
+        setInput('');
+        return;
+      }
       const pending=messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask;
-      if (isTeacher && detectLearningTask(question)==='knowledge'&&(!pending||/^(?:mở|tìm|tra cứu|mo|tim)(?:\s|$)/i.test(question))) {
+      if (isTeacher && !isAdmin && detectLearningTask(question)==='knowledge'&&(!pending||/^(?:mở|tìm|tra cứu|mo|tim)(?:\s|$)/i.test(question))) {
         lookupLock.current = true;
         setLookupBusy(true);
         const {catalog, source} = await loadLessonCatalog();
@@ -314,7 +335,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     setInput('');
   };
   const requestAi=async(question:string,fallback?:string)=>{
-    if(aiLock.current||!aiAvailable||!isTeacher)return;
+    if(aiLock.current||!aiAvailable||!isTeacher||isAdmin)return;
     aiLock.current=true;
     setAiBusy(true);
     const controller=new AbortController();
@@ -336,7 +357,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   };
   const askAi=()=>{
     const question=input.trim()||messages.filter(m=>m.role==='student').at(-1)?.text;
-    if(!question||aiLock.current||!aiAvailable||!isTeacher)return;
+    if(!question||aiLock.current||!aiAvailable||!isTeacher||isAdmin)return;
     if(input.trim()){append({id:`ai-q-${Date.now()}`,role:'student',text:question});setInput('');}
     void requestAi(question);
   };
@@ -399,13 +420,14 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
           role="dialog"
           aria-label="Trợ lý khám phá Đà Nẵng"
           style={{left:panelLeft, top:panelTop, width:panelWidth, height:panelHeight, maxHeight:panelHeight}}
-          className="discovery-chat-bubble fixed z-[60] flex flex-col overflow-hidden rounded-[24px] border border-sky-100 bg-[#fffefa] shadow-[0_18px_64px_-16px_rgba(15,70,95,0.28)] outline-none"
+          className="discovery-chat-bubble fixed z-[60] flex flex-col overflow-hidden rounded-[24px] border border-sky-200 bg-white shadow-[0_20px_65px_-14px_rgba(15,70,95,0.32)] outline-none"
         >
-          <header className="relative z-10 shrink-0 border-b border-white/10 bg-gradient-to-r from-sky-800 to-cyan-700 px-4 py-3 text-white">
+          <header className="relative z-10 shrink-0 border-b border-white/10 bg-gradient-to-r from-sky-800 via-cyan-700 to-teal-600 px-4 py-3 text-white">
             <div className="flex items-center gap-2.5">
               <button type="button" onClick={()=>setOpen(false)} aria-label="Thu gọn Trợ lý Khám phá" title="Thu gọn Trợ lý Khám phá" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"><AssistantEmblem className="h-8 w-8"/></button>
               <div className="min-w-0 flex-1">
-                <h2 className="truncate text-[15px] font-bold tracking-tight">Trợ lý Khám phá</h2>
+                <h2 className="truncate text-[16px] font-bold tracking-tight">Trợ lý khám phá</h2>
+                <p className="mt-0.5 truncate text-[11px] text-sky-100">{isAdmin?'Hỗ trợ quản trị':isTeacher?'Hỗ trợ giáo viên':'Đồng hành cùng em khám phá'}</p>
                 {(currentGrade||station?.grade)&&<p className="mt-0.5 truncate text-[11px] text-sky-100">Lớp {currentGrade||station?.grade}{station?' · '+(hotspot?.titleVi?.replace(/^\d+\.\s*/,'')||station.titleVi):''}</p>}
               </div>
               <details ref={menuRef} className="relative shrink-0">
@@ -420,7 +442,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
               <button type="button" onClick={()=>setOpen(false)} className="flex h-11 w-9 shrink-0 items-center justify-center rounded-full text-white/85 hover:bg-white/10" aria-label="Đóng trợ lý"><X className="h-5 w-5"/></button>
             </div>
           </header>
-          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-[#fffefa] px-4 py-4">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain bg-gradient-to-b from-sky-50/70 to-white px-3.5 py-4 sm:px-4">
             <div className="space-y-3">
               {messages.map(message => (
                 <div
@@ -429,8 +451,8 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                 >
                   <div
                     className={`min-w-0 break-words rounded-[20px] px-3.5 py-3 text-sm leading-relaxed ${message.role === 'student'
-                        ? 'max-w-[88%] rounded-br-md bg-sky-700 text-white shadow-sm'
-                        : message.id==='welcome'?'max-w-full px-0 py-1 text-slate-600':'max-w-[96%] rounded-bl-md border border-slate-100 bg-white text-slate-700'
+                        ? 'max-w-[92%] rounded-br-md bg-gradient-to-br from-blue-600 to-sky-600 text-white shadow-sm'
+                        : message.id==='welcome'?'max-w-full border border-sky-100 bg-sky-100/80 text-slate-700':'max-w-[98%] rounded-bl-md border border-slate-100 bg-white text-slate-800 shadow-sm'
                     }`}
                   >
                     <p className="whitespace-pre-wrap"><SimpleBold text={message.text} /></p>
@@ -468,7 +490,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             </div>
 
              {showSuggestions&&<div className="mt-4 flex flex-wrap gap-2" aria-label="Gợi ý hỏi tiếp theo">
-               {suggestedPrompts.slice(0,3).map(item=><button key={item.label} type="button" disabled={aiBusy||lookupBusy} onClick={()=>{if(item.draft){setInput(item.query);inputRef.current?.focus();}else void ask(item.query);}} className="min-h-11 rounded-2xl border border-sky-100 bg-white px-3 py-2 text-xs font-semibold text-sky-800 transition hover:border-sky-200 hover:bg-sky-50 disabled:opacity-40">{item.label}</button>)}
+               {suggestedPrompts.slice(0,3).map(item=><button key={item.label} type="button" disabled={aiBusy||lookupBusy} onClick={()=>{if(item.draft){setInput(item.query);inputRef.current?.focus();}else void ask(item.query);}} className="min-h-11 rounded-full border border-sky-200 bg-white px-3 py-2 text-xs font-semibold text-sky-800 transition hover:border-sky-200 hover:bg-sky-50 disabled:opacity-40">{item.label}</button>)}
              </div>}
             <div ref={endRef} />
           </div>
@@ -493,7 +515,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                   }
                 }}
                 rows={1}
-                placeholder={isTeacher ? 'Tìm bài hoặc hỏi nội dung…' : 'Em muốn hỏi điều gì?'}
+                placeholder={isAdmin ? 'Anh/chị cần hỗ trợ gì?' : isTeacher ? 'Tìm bài hoặc hỏi nội dung…' : 'Em muốn hỏi điều gì?'}
                 className="max-h-24 min-h-11 min-w-0 flex-1 resize-none bg-transparent px-1 py-2.5 text-base text-slate-800 outline-none placeholder:text-slate-400"
                 aria-label="Nhập câu hỏi"
               />

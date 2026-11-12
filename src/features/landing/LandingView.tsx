@@ -1,7 +1,7 @@
 import { AppFullscreenButton } from '../../components/common/AppFullscreen';
 import './landing-cover.css';
 import { ResponsiveAccessPortal } from './ResponsiveAccessPortal';
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useApp } from '../../contexts/AppContext';
 import { DEMO_STUDENTS } from '../../data/mockUsers';
 import { authService, type StaffUser } from '../../services/AuthService';
@@ -52,51 +52,9 @@ export const LandingView: React.FC = () => {
   const [restoreBusy,setRestoreBusy] = useState(false);
   const [loginError, setLoginError] = useState<string>('');
   const [introActive, setIntroActive] = useState(true);
-  const [introAutoplay, setIntroAutoplay] = useState(true);
-  const shellRef = useRef<HTMLDivElement | null>(null);
-  const identityRef = useRef<HTMLDivElement | null>(null);
   const [theme, setTheme] = useState(readTheme);
   const [mobileBackground, setMobileBackground] = useState(() => window.matchMedia('(max-width: 1023px) and (orientation: portrait)').matches);
   const introFrameRef = useRef<HTMLIFrameElement | null>(null);
-
-  // The landing identity stays mounted in its original layout. The access panel
-  // uses its measured bottom edge instead of rendering or repositioning a logo.
-  useLayoutEffect(() => {
-    if (showRolePicker) window.scrollTo(0, 0);
-    const update = () => {
-      const shell = shellRef.current;
-      const identity = identityRef.current;
-      if (!shell || !identity) return;
-      const viewport = window.visualViewport;
-      shell.style.setProperty('--landing-identity-bottom', Math.max(0, identity.getBoundingClientRect().bottom) + 'px');
-      shell.style.setProperty('--access-viewport-height', (viewport?.height || window.innerHeight) + 'px');
-      const footer = shell.querySelector('.landing-review-footer');
-      shell.style.setProperty('--landing-footer-space', (footer?.getBoundingClientRect().height || 28) + 'px');
-    };
-    update();
-    const observer = new ResizeObserver(update);
-    if (identityRef.current) observer.observe(identityRef.current);
-    window.addEventListener('resize', update);
-    window.visualViewport?.addEventListener('resize', update);
-    document.fonts.ready.then(update);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', update);
-      window.visualViewport?.removeEventListener('resize', update);
-    };
-  }, [showRolePicker]);
-
-  useEffect(() => {
-    if (!showRolePicker) return;
-    const rootOverflow = document.documentElement.style.overflow;
-    const bodyOverflow = document.body.style.overflow;
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.documentElement.style.overflow = rootOverflow;
-      document.body.style.overflow = bodyOverflow;
-    };
-  }, [showRolePicker]);
 
   const STUDENT_PROFILE_KEY = 'cham_danang_student_profile_v1';
   useEffect(()=>{
@@ -164,7 +122,7 @@ export const LandingView: React.FC = () => {
   }, [introActive]);
 
   useEffect(() => {
-    if (!introActive || !introAutoplay) return;
+    if (!introActive) return;
     const startAudibleIntro = () => {
       try {
         introFrameRef.current?.contentWindow?.postMessage(
@@ -183,14 +141,13 @@ export const LandingView: React.FC = () => {
       window.removeEventListener('pointerdown', startAudibleIntro);
       window.removeEventListener('keydown', startAudibleIntro);
     };
-  }, [introActive, introAutoplay]);
+  }, [introActive]);
 
   const stopIntroVideo = () => {
-    setIntroAutoplay(false);
     setIntroActive(false);
     try {
       introFrameRef.current?.contentWindow?.postMessage(
-        JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }),
+        JSON.stringify({ event: 'command', func: 'stopVideo', args: [] }),
         '*'
       );
     } catch {
@@ -323,7 +280,7 @@ export const LandingView: React.FC = () => {
 
 
   return (
-    <div ref={shellRef} data-access-open={showRolePicker} data-access-view={showRolePicker ? (showStaffLogin ? 'teacher' : showStudentLogin ? (guestMode ? 'grades' : 'student') : 'role') : 'cover'} className="landing-art-shell text-white select-none">
+    <div className="landing-art-shell text-white select-none">
       <div className="landing-art-scene">
       {/* Nền trang bìa do Quản trị cài riêng. */}
       <img
@@ -331,7 +288,7 @@ export const LandingView: React.FC = () => {
         alt=""
         aria-hidden="true"
         className="landing-cover-background absolute inset-0 h-full w-full object-cover"
-        style={{ filter: 'none' }}
+        style={{ filter: 'blur(' + theme.blur + 'px)' }}
       />
       <div className="absolute inset-0 bg-white pointer-events-none" style={{ opacity: theme.lightness }} />
       <div className="landing-cover-shade absolute inset-0 pointer-events-none" />
@@ -384,7 +341,7 @@ export const LandingView: React.FC = () => {
 
       {/* Compact cinematic cover: app identity → intro video → explore */}
       <main data-intro-active={introActive} className="landing-cover-main relative z-20 w-full min-h-0 flex-1 mx-auto text-center">
-        <div ref={identityRef} className="landing-cover-identity">
+        <div className="landing-cover-identity">
           <h1 className="landing-cover-title">
             <span>CHẠM</span><span>ĐÀ NẴNG</span>
           </h1>
@@ -394,22 +351,24 @@ export const LandingView: React.FC = () => {
         </div>
 
         {/* Video giới thiệu giữ nguyên nguồn gốc và tự phát khi trình duyệt cho phép. */}
-        <div className="landing-cover-video relative min-w-0" aria-hidden={false}>
+        {introActive && (
+          <div className="landing-cover-video relative min-w-0">
             <div className="absolute -inset-1 rounded-[22px] sm:rounded-[26px] bg-gradient-to-r from-sky-500/35 via-white/10 to-amber-400/35 blur-lg pointer-events-none" />
             <div className="landing-cover-player relative overflow-hidden rounded-2xl sm:rounded-3xl border-[3px] border-white/80 bg-black shadow-2xl shadow-slate-950/60">
-              {<iframe
+              <iframe
                 ref={introFrameRef}
                 className="absolute inset-0 h-full w-full"
-                src={`https://www.youtube-nocookie.com/embed/Ud2uUxz9Lw4?autoplay=${introAutoplay ? 1 : 0}&mute=1&playsinline=1&rel=0&controls=1&enablejsapi=1`}
+                src="https://www.youtube-nocookie.com/embed/Ud2uUxz9Lw4?autoplay=1&mute=1&playsinline=1&rel=0&controls=1&enablejsapi=1"
                 title="Video giới thiệu CHẠM ĐÀ NẴNG"
                 allow="autoplay; encrypted-media; picture-in-picture"
                 allowFullScreen
-              />}
+              />
 
             </div>
           </div>
+        )}
 
-        {!showRolePicker && <div className="landing-cover-actions">
+        <div className="landing-cover-actions">
           <p className="landing-action-invitation">Mỗi điểm đến,<br /><strong>một điều kỳ diệu</strong></p>
           <button onClick={()=>void handleStartJourney()} disabled={restoreBusy} aria-label={qrEntryCode&&restoreBusy?'Đang mở hồ sơ học sinh':'CHẠM ĐỂ KHÁM PHÁ'} className="group flex items-center gap-2 rounded-[22px] border-b-[6px] border-amber-700 bg-gradient-to-b from-yellow-200 via-amber-400 to-orange-500 px-5 py-2 sm:px-8 sm:py-3 text-sm sm:text-lg font-black text-slate-950 shadow-[0_8px_25px_rgba(0,0,0,.35)] transition hover:scale-105 active:translate-y-1 active:border-b-2 disabled:cursor-wait disabled:opacity-80">
             <Compass className="h-6 w-6 text-blue-900 group-hover:rotate-45 transition-transform"/> {qrEntryCode&&restoreBusy?'ĐANG MỞ LỚP CỦA EM…':'CHẠM ĐỂ KHÁM PHÁ'} <ArrowRight className="h-5 w-5"/>
@@ -420,7 +379,17 @@ export const LandingView: React.FC = () => {
             <span><CircleHelp aria-hidden="true" />Quiz</span>
             <span><Award aria-hidden="true" />Hộ chiếu số</span>
           </div>
-        </div>}
+        </div>
+
+      </main>
+
+      <footer className="landing-review-footer relative z-20">
+        <span>Tài liệu giáo dục địa phương TP Đà Nẵng</span>
+
+        <span>Người phát triển: <strong>TRƯƠNG SINH TUYẾT</strong></span>
+      </footer>
+
+      </div>
 
       {/* Three approved role/student/teacher screens: images are decorative, controls remain live. */}
       {showRolePicker && <ResponsiveAccessPortal
@@ -441,7 +410,6 @@ export const LandingView: React.FC = () => {
         loginError={loginError}
         onClose={() => {
           setShowRolePicker(false);
-          setIntroAutoplay(false);
           setIntroActive(true);
           setShowStudentLogin(false);
           setShowStaffLogin(false);
@@ -494,18 +462,8 @@ export const LandingView: React.FC = () => {
         }}
         onGoogleLogin={finishStaffLogin}
       />}
-      </main>
-
-      <footer className="landing-review-footer relative z-20">
-        <span>Tài liệu giáo dục địa phương TP Đà Nẵng</span>
-
-        <span>Người phát triển: <strong>TRƯƠNG SINH TUYẾT</strong></span>
-      </footer>
-
-      </div>
-
-
     </div>
   );
 };
 export default LandingView;
+

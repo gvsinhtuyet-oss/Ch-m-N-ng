@@ -57,7 +57,6 @@ try {
     }
     await page.waitForFunction(()=>!![...document.querySelectorAll('button')].find(b=>b.textContent?.includes('Khối 2')),{timeout:15000});
     await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('Khối 2'))?.click());
-    if(await page.$('.cham-grade-start')) await page.click('.cham-grade-start');
     await page.waitForSelector('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]',{visible:true,timeout:30000});
     const visibility=await page.evaluate(()=>{
       const wrapper=document.querySelector('.discovery-assistant');

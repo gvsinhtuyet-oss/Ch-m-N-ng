@@ -82,8 +82,7 @@ test('all role/student/teacher screens use one responsive real UI, high-res appr
  assert.match(landing,/showRolePicker && <ResponsiveAccessPortal/);
  assert.match(responsive,/ResponsiveAccessPortal = AccessPortal/);
  assert.doesNotMatch(responsive,/approved-mobile-stage|approved-hotspot/);
- assert.match(landing,/landing-cover-title/);
- assert.doesNotMatch(portal,/<Wordmark/);
+ assert.match(portal,/cham-access-wordmark/);
  assert.match(portal,/approved-clean\/student-card\.webp/);
  assert.match(portal,/approved-clean\/student-banner\.webp/);
  assert.match(portal,/approved-clean\/teacher-card\.webp/);
@@ -92,7 +91,7 @@ test('all role/student/teacher screens use one responsive real UI, high-res appr
  assert.match(portal,/cham-access-role-card teacher/);
  assert.match(portal,/GoogleTeacherLogin onLogin=\{onGoogleLogin\}/);
  assert.match(portal,/onSubmit=\{onStaffLogin\}/);
- assert.match(portal,/onStudentGrade\(selectedGrade\)/);
+ assert.match(portal,/onStudentGrade\(grade\)/);
  assert.match(portal,/onStudentSubmit/);
  assert.match(portal,/onTeacherDemo/);
  assert.match(portal,/StudentQrScanner/);

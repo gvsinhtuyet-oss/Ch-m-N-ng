@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, Check, Compass, Eye, EyeOff, GraduationCap, KeyRound, LockKeyhole, QrCode, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Compass, Eye, EyeOff, GraduationCap, KeyRound, LockKeyhole, QrCode, X } from 'lucide-react';
 import { GoogleTeacherLogin } from '../../components/auth/GoogleTeacherLogin';
 import type { StaffUser } from '../../services/AuthService';
 import { StudentQrScanner } from './StudentQrScanner';
@@ -43,6 +43,15 @@ const artwork = {
 };
 const grades = [1, 2, 3, 4, 5];
 
+function Wordmark() {
+  return <div className="cham-access-masthead">
+    <div className="cham-access-logo cham-access-wordmark" role="img" aria-label="CHẠM ĐÀ NẴNG">
+      <span>CHẠM</span><span>ĐÀ NẴNG</span>
+    </div>
+    <p className="cham-access-tagline">Hành trình số khám phá quê hương</p>
+  </div>;
+}
+
 function Art({ kind, variant = 'card', className = '' }: { kind: 'student'|'teacher'; variant?: 'card'|'banner'; className?: string }) {
   return <div className={'cham-access-illustration '+className} aria-hidden="true">
     <picture><source media="(max-width: 767px)" srcSet={artwork[kind][variant]} /><img src={artwork[kind].card} loading="eager" decoding="sync" alt="" draggable={false} /></picture>
@@ -50,7 +59,7 @@ function Art({ kind, variant = 'card', className = '' }: { kind: 'student'|'teac
 }
 
 export const AccessPortal: React.FC<Props> = ({
-  view, guestMode, chosenGrade,
+  view, guestMode, chosenGrade, roleBackground,
   restoreCode, onRestoreCodeChange, savedSyncCode, restoreBusy,
   staffBusy, staffEmail, staffPassword, onStaffEmailChange,
   onStaffPasswordChange, loginError, onClose, onBack, onStudent,
@@ -58,8 +67,6 @@ export const AccessPortal: React.FC<Props> = ({
   onSavedCode, onTeacherDemo, onStaffLogin, onRestoreStaff,
   onGoogleLogin, onScanCode,
 }) => {
-  const [selectedGrade, setSelectedGrade] = useState<number | null>(null);
-  useEffect(() => { setSelectedGrade(null); }, [guestMode]);
   const [accountExpanded, setAccountExpanded] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
@@ -68,36 +75,38 @@ export const AccessPortal: React.FC<Props> = ({
   useEffect(() => { sheetRef.current?.focus({ preventScroll: true }); }, [view]);
   const handleDialogKey = (event: React.KeyboardEvent<HTMLElement>) => {
     if (qrOpen) return;
-    if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); onClose(); return; }
+    if (event.key === 'Escape') { event.preventDefault(); onClose(); return; }
     if (event.key !== 'Tab') return;
-    const controls = [...event.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled),[tabindex="0"]')]
-      .filter(element => element.getClientRects().length > 0 && getComputedStyle(element).visibility !== 'hidden');
+    const controls = [...event.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled)')].filter(el => el.getClientRects().length > 0);
     const first = controls[0], last = controls[controls.length - 1];
-    if (!first) return;
-    if (event.shiftKey && (document.activeElement === first || document.activeElement === sheetRef.current)) {
-      event.preventDefault(); last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === sheetRef.current)) { event.preventDefault(); last?.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
   };
   return (
-    <div className="cham-access-overlay" data-screen={view} data-guest={guestMode}>
-      <section ref={sheetRef} tabIndex={-1} onKeyDown={handleDialogKey} className="cham-access-sheet" data-screen={view} role="dialog" aria-modal="false"
+    <div className="cham-access-overlay" data-screen={view}>
+      <img className="cham-access-backdrop" src={roleBackground} alt="" aria-hidden="true"  />
+      <div className="cham-access-colorveil" aria-hidden="true" />
+      <section ref={sheetRef} tabIndex={-1} onKeyDown={handleDialogKey} className="cham-access-sheet" data-screen={view} role="dialog" aria-modal="true"
         aria-label={view === 'role' ? 'Chọn vai trò' : view === 'student' ? 'Đăng nhập học sinh' : 'Đăng nhập giáo viên'}>
         <button type="button" className="cham-access-close" onClick={onClose} aria-label="Đóng cửa sổ">
           <X size={22} />
         </button>
         <div className="cham-access-content">
+          <Wordmark />
 
           {view === 'role' ? <main className="cham-access-role-content">
-            <h2>Chọn vai trò<span>để bắt đầu hành trình</span></h2>
+            <h1>Hãy chọn vai trò <span>để bắt đầu khám phá nhé!</span></h1>
             <div className="cham-access-roles">
               <button type="button" className="cham-access-role-card student" onClick={onStudent} aria-label="Chọn vai trò học sinh">
+                <Art kind="student" className="cham-access-role-picture" />
                 <span className="cham-access-role-footer"><GraduationCap aria-hidden="true" /><span>Học sinh</span><ArrowRight className="cham-access-arrow" aria-hidden="true" /></span>
               </button>
               <button type="button" className="cham-access-role-card teacher" onClick={onTeacher} aria-label="Chọn vai trò giáo viên">
+                <Art kind="teacher" className="cham-access-role-picture" />
                 <span className="cham-access-role-footer"><BookOpen aria-hidden="true" /><span>Giáo viên</span><ArrowRight className="cham-access-arrow" aria-hidden="true" /></span>
               </button>
             </div>
-            <button type="button" className="cham-access-back" onClick={onClose}><ArrowLeft size={18}/> Quay lại</button>
+            <p className="cham-access-role-footnote">Cùng khám phá quê hương Đà Nẵng qua những điểm chạm thú vị.</p>
           </main> :
           <main className="cham-access-step-layout" data-screen={view}>
             <aside className={'cham-access-hero '+view} aria-hidden="true">
@@ -110,17 +119,9 @@ export const AccessPortal: React.FC<Props> = ({
                 <div className="cham-access-card-title"><h1>{guestMode ? 'Chọn khối lớp của em!' : 'Chào Nhà phiêu lưu!'}</h1></div>
                 <p className="cham-access-description">{guestMode ? 'Em muốn khám phá khối nào hôm nay?' : 'Vào học bằng mã của em'}</p>
 
-                {guestMode ? <div className="cham-access-grade-selector">
-                  <div className="cham-access-grade-grid" role="group" aria-label="Chọn khối lớp">
-                    {grades.map(grade => <button type="button" key={grade} disabled={restoreBusy || chosenGrade !== null}
-                      onClick={() => setSelectedGrade(grade)} aria-pressed={selectedGrade === grade}>
-                      <span>Khối </span><strong>{grade}</strong>{selectedGrade === grade && <Check className="cham-grade-check" size={17} aria-hidden="true"/>}
-                    </button>)}
-                  </div>
-                  <button type="button" className="cham-access-primary cham-grade-start" disabled={selectedGrade === null || restoreBusy || chosenGrade !== null}
-                    onClick={() => { if (selectedGrade !== null) onStudentGrade(selectedGrade); }}>
-                    {chosenGrade !== null ? 'Đang mở hành trình…' : selectedGrade === null ? 'Chọn khối để khám phá' : `Khám phá Khối ${selectedGrade}`}<ArrowRight size={19} aria-hidden="true"/>
-                  </button>
+                {guestMode ? <div className="cham-access-grade-grid" role="group" aria-label="Chọn khối lớp">
+                  {grades.map(grade => <button type="button" key={grade} disabled={restoreBusy || chosenGrade !== null}
+                    onClick={() => onStudentGrade(grade)} aria-pressed={chosenGrade === grade}>Khối {grade}</button>)}
                 </div> : <>
                   <label htmlFor="cham-access-student-code" className="cham-access-label"><KeyRound size={16}/> Mã học sinh của em</label>
                   <div className="cham-access-code-row">

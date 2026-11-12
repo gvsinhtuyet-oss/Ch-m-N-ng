@@ -424,38 +424,3 @@
  .landing-top-actions > button.landing-staff-login { width:auto!important; padding-inline:10px!important; white-space:nowrap; }
  .landing-top-actions > button.landing-staff-login > span { display:inline!important; }
 }
-
-/* One persistent, sharp golden identity for cover and all access steps. */
-.landing-cover-title{
- color:#ffd000;-webkit-text-fill-color:#ffd000;-webkit-text-stroke:.4px #996000;
- paint-order:stroke fill;filter:none;
- text-shadow:0 1px 0 #fff4a1,0 3px 0 #b87800,0 5px 0 #075489;
-}
-/* The approved cover stays visible; access replaces only its actions column. */
-.landing-art-shell[data-access-open=true] .landing-cover-video{visibility:visible;opacity:1;pointer-events:auto}
-.landing-art-shell[data-access-open=true] .landing-art-scene>header{visibility:visible;opacity:1}
-@media(max-width:1023px) and (orientation:portrait){
- .landing-art-shell[data-access-open=true] .landing-cover-main{grid-template-rows:auto auto minmax(0,1fr);gap:12px;padding-block:8px 10px}
- .landing-art-shell[data-access-open=true] .landing-cover-video{width:min(100%,calc((100dvh - 470px)*16/9));min-width:160px}
- .landing-art-shell[data-access-open=true]:is([data-access-view=student],[data-access-view=teacher]) .landing-cover-video{display:none}
- .landing-art-shell[data-access-open=true]:is([data-access-view=student],[data-access-view=teacher]) .landing-cover-main{grid-template-rows:auto minmax(0,1fr);grid-template-areas:'identity' 'actions'}
-}
-@media(max-width:767px) and (max-height:700px){
- .landing-art-shell[data-access-open=true] .landing-cover-main{gap:8px;padding-inline:10px}
- .landing-art-shell[data-access-open=true] .landing-cover-video{width:min(100%,240px);min-width:0}
- .landing-art-shell[data-access-open=true][data-access-view=grades] .landing-cover-video{display:none}
- .landing-art-shell[data-access-open=true][data-access-view=grades] .landing-cover-main{grid-template-rows:auto minmax(0,1fr);grid-template-areas:'identity' 'actions'}
-}
-@media(max-width:1023px) and (orientation:portrait){
- .landing-art-shell[data-access-open=true],.landing-art-shell[data-access-open=true] .landing-art-scene{height:100dvh!important;min-height:0!important;overflow:hidden!important}
- .landing-art-shell[data-access-open=true] .landing-cover-main{flex:1 1 0!important;min-height:0!important;padding:8px 12px!important;gap:12px!important;justify-content:center!important}
- .landing-art-shell[data-access-open=true] .landing-cover-identity{flex:0 0 auto}
- .landing-art-shell[data-access-open=true] .landing-cover-video{flex:0 0 auto;width:min(100%,350px)!important}
- .landing-art-shell[data-access-open=true]:is([data-access-view=student],[data-access-view=teacher]) .landing-cover-video{display:none!important}
- .landing-art-shell[data-access-open=true] .landing-review-footer{flex:0 0 auto;padding:5px 6px!important;font-size:9px!important;gap:2px!important}
-}
-@media(max-width:767px) and (max-height:700px){
- .landing-art-shell[data-access-open=true] .landing-cover-main{padding:5px 10px!important;gap:7px!important}
- .landing-art-shell[data-access-open=true] .landing-cover-video{width:180px!important}
- .landing-art-shell[data-access-open=true][data-access-view=grades] .landing-cover-video{display:none!important}
-}

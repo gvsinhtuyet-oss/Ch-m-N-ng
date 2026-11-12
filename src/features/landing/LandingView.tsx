@@ -396,7 +396,7 @@ export const LandingView: React.FC = () => {
         view={showStaffLogin ? 'teacher' : showStudentLogin ? 'student' : 'role'}
         guestMode={guestMode}
         chosenGrade={chosenGrade}
-        roleBackground={roleBackground}
+        roleBackground={mobileBackground ? coverBackground : roleBackground}
         themeBlur={theme.blur}
         restoreCode={restoreCode}
         onRestoreCodeChange={setRestoreCode}

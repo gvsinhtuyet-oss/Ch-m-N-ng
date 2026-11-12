@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
+import {readFileSync} from 'node:fs';
 import {FeatureLoadBoundary} from './src/components/common/FeatureLoadBoundary';
 
 test('missing exports are module-version errors and an optional feature can fail without full-screen recovery',()=>{
@@ -34,4 +35,16 @@ test('recovery preserves Preview auth and deep links and never clears learner st
  }finally{
   names.forEach((name,i)=>{if(originals[i])Object.defineProperty(globalThis,name,originals[i]!);else delete (globalThis as any)[name];});
  }
+});
+
+
+test('Safari assistant build and fallback are deliberately compatible and preserve student data',()=>{
+ const vite=readFileSync('vite.config.ts','utf8');
+ const app=readFileSync('src/App.tsx','utf8');
+ const boundary=readFileSync('src/components/common/FeatureLoadBoundary.tsx','utf8');
+ assert.match(vite,/target:\s*'safari15'/);
+ assert.match(app,/Khắc phục và tải bản mới/);
+ assert.match(app,/recoverApplicationAssets\(\)/);
+ assert.match(boundary,/export async function recoverApplicationAssets/);
+ assert.doesNotMatch(boundary,/localStorage\.(?:clear|removeItem)\s*\(/);
 });

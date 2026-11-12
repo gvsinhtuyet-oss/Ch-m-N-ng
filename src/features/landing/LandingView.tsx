@@ -48,6 +48,7 @@ export const LandingView: React.FC = () => {
   const [restoreCode,setRestoreCode] = useState('');
   const [qrEntryCode,setQrEntryCode] = useState('');
   const qrEntryInFlight=useRef(false);
+  const guestEntryInFlight=useRef(false);
   const [restoreBusy,setRestoreBusy] = useState(false);
   const [loginError, setLoginError] = useState<string>('');
   const [introActive, setIntroActive] = useState(true);
@@ -274,6 +275,8 @@ export const LandingView: React.FC = () => {
   };
 
   const enterGuestJourney = (grade: number) => {
+    if (guestEntryInFlight.current || !Number.isInteger(grade) || grade < 1 || grade > 5) return;
+    guestEntryInFlight.current = true;
     setChosenGrade(grade);
     setLoginError('');
     audioService.playSfx('click');
@@ -314,7 +317,7 @@ export const LandingView: React.FC = () => {
         loginAsStudent(student);
       } catch (error) {
         setLoginError((error as Error).message);
-      }
+      } finally { guestEntryInFlight.current = false; }
     }, 320);
   };
 

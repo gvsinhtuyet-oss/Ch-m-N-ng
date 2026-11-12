@@ -92,7 +92,7 @@ test('all role/student/teacher screens use one responsive real UI, high-res appr
  assert.match(portal,/cham-access-role-card teacher/);
  assert.match(portal,/GoogleTeacherLogin onLogin=\{onGoogleLogin\}/);
  assert.match(portal,/onSubmit=\{onStaffLogin\}/);
- assert.match(portal,/onStudentGrade\(grade\)/);
+ assert.match(portal,/onStudentGrade\(selectedGrade\)/);
  assert.match(portal,/onStudentSubmit/);
  assert.match(portal,/onTeacherDemo/);
  assert.match(portal,/StudentQrScanner/);

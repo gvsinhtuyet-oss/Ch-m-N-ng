@@ -12,39 +12,38 @@ function loginError(error:unknown){
  return (error as Error)?.message||'Chưa đăng nhập được Google. Hãy thử lại.';
 }
 export function GoogleTeacherLogin({onLogin}:{onLogin:(user:StaffUser)=>void}){
- const [error,setError]=useState(''),[busy,setBusy]=useState(false),[nonce,setNonce]=useState('');
+ const [error,setError]=useState(''),[busy,setBusy]=useState(false);
  const attempt=useRef(0),running=useRef(false);
+ const challenge=useRef<{nonce:string;expiresAt:number}|null>(null);
  useEffect(()=>()=>{attempt.current++;},[]);
- async function prepare(){
-  if(running.current)return;
-  running.current=true;const version=++attempt.current;setBusy(true);setError('');setNonce('');
-  try{
-   const response=await fetchWithTimeout('/api/auth/google/challenge',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:'{}',cache:'no-store'});
-   const data=await response.json();
-   if(!response.ok)throw Error(data.error||'Chưa chuẩn bị được đăng nhập Google.');
-   if(!/^[a-f0-9]{48}$/.test(data.nonce))throw Error('Phiên đăng nhập chưa hợp lệ. Hãy thử lại.');
-   if(version===attempt.current)setNonce(data.nonce);
-  }catch(e){if(version===attempt.current)setError(loginError(e));}
-  finally{running.current=false;if(version===attempt.current)setBusy(false);}
- }
  async function login(){
-  if(running.current||!nonce)return;
+  if(running.current)return;
   running.current=true;const version=++attempt.current;setBusy(true);setError('');
   try{
-   const credential=await googlePopup(nonce);
+   // Prepare only after an explicit click; never write a challenge on mount.
+   if(!challenge.current || challenge.current.expiresAt<=Date.now()){
+    const response=await fetchWithTimeout('/api/auth/google/challenge',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:'{}',cache:'no-store'});
+    const data=await response.json();
+    if(!response.ok)throw Error(data.error||'Chưa chuẩn bị được đăng nhập Google.');
+    if(!/^[a-f0-9]{48}$/.test(data.nonce))throw Error('Phiên đăng nhập chưa hợp lệ. Hãy thử lại.');
+    challenge.current={nonce:data.nonce,expiresAt:Date.now()+240000};
+   }
    if(version!==attempt.current)return;
+   const credential=await googlePopup(challenge.current.nonce);
+   if(version!==attempt.current)return;
+   // The server consumes this challenge when verifying the credential.
+   challenge.current=null;
    const user=await authService.googleLogin(credential);
    if(version===attempt.current)onLogin(user);
   }catch(e){if(version===attempt.current)setError(loginError(e));}
-  finally{running.current=false;if(version===attempt.current){setBusy(false);setNonce('');}}
+  finally{running.current=false;if(version===attempt.current)setBusy(false);}
  }
  return <div className="space-y-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3">
   <p className="font-bold">Giáo viên toàn thành phố</p>
   <p className="text-xs text-slate-600">Dùng Google để tạo không gian riêng. Tài khoản mới không có quyền quản trị.</p>
   <div data-testid="google-signin-host" className="flex w-full min-w-0 justify-center" aria-busy={busy}>
-   <button type="button" disabled={busy} onClick={()=>void (nonce?login():prepare())} className="min-h-12 w-full rounded-xl bg-white p-3 font-bold text-emerald-800 disabled:opacity-60">{busy?'Đang xử lý…':nonce?'Chọn tài khoản Google':'Tiếp tục với Google'}</button>
+   <button type="button" disabled={busy} onClick={()=>void login()} className="min-h-12 w-full rounded-xl bg-white p-3 font-bold text-emerald-800 disabled:opacity-60">{busy?'Đang mở Google…':'Tiếp tục với Google'}</button>
   </div>
-  {nonce&&<p className="text-xs text-slate-600">Bấm chọn tài khoản, sau đó xác thực trong cửa sổ Google.</p>}
   {error&&<p role="alert" className="text-sm text-rose-700">{error}</p>}
  </div>;
 }

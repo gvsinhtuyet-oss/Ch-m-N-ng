@@ -369,3 +369,12 @@
 .landing-cover-main>.cham-access-overlay,
 .landing-cover-main>.cham-access-overlay:has(.cham-access-sheet[data-screen=role]){padding:0!important;height:auto!important;inset:auto!important;place-items:center}
 .cham-access-grade-grid button>span{text-transform:uppercase}
+@media(max-width:767px) and (max-height:700px){
+ .landing-cover-main .cham-access-content{padding:6px}
+ .landing-cover-main .cham-access-form-card{padding:7px 10px}
+ .landing-cover-main .cham-access-card-title h1{font-size:22px}
+ .landing-cover-main .cham-access-description{margin-bottom:5px}
+ .landing-cover-main .cham-access-role-chip{display:none}
+ .landing-cover-main .cham-access-primary{min-height:44px;margin-top:8px;font-size:15px}
+ .landing-cover-main .cham-access-grade-grid{margin:8px 0}
+}

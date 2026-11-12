@@ -231,3 +231,16 @@
 }
 
 .cham-access-sheet:focus{outline:none}
+
+/* Keep the same Da Nang scenery behind every mobile access step. */
+@media(max-width:767px){
+ .cham-access-overlay{padding:12px;place-items:center}
+ .cham-access-sheet:not([data-screen=role]){
+  width:min(440px,100%);height:auto;max-height:calc(100dvh - 24px);
+  border:2px solid #fff;border-radius:24px;
+  background:linear-gradient(145deg,#f6fcfff5,#e1f5fff0);
+ }
+ .cham-access-sheet:not([data-screen=role]) .cham-access-content{
+  height:auto;padding:14px 12px 12px;
+ }
+}

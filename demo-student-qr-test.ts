@@ -21,7 +21,7 @@ test('Fictional classroom QR links round-trip and cannot impersonate real studen
 });
 test('Free classroom QR uses local-only guest and never calls credential restore or analytics API',()=>{
   const landing=readFileSync('src/features/landing/LandingView.tsx','utf8');
-  const app=readFileSync('src/App.tsx','utf8');
+  const context=readFileSync('src/contexts/AppContext.tsx','utf8');
   const service=readFileSync('src/services/EffectivenessService.ts','utf8');
   const demo=readFileSync('src/features/teacher/DemoStudentAccessCards.tsx','utf8');
   const real=readFileSync('src/features/teacher/StudentAccessCards.tsx','utf8');
@@ -34,7 +34,7 @@ test('Free classroom QR uses local-only guest and never calls credential restore
   assert.match(landing,/effectivenessService\.setDemoMode\(true\)/);
   assert.match(landing,/isGuest:true/);
   assert.match(landing,/demo-qr-g/);
-  assert.match(app,/effectivenessService\.setDemoMode\(fromDemoQr\)/);
+  assert.match(context,/effectivenessService\.setDemoMode\(student.id.startsWith\('demo-qr-'\)\)/);
   assert.match(service,/if \(demoOnly\(\) \|\| import\.meta\.env/);
   assert.match(service,/if\(demoOnly\(\)\)return stars\?\?0/);
   assert.match(real,/authService\.issueStudentCode/);

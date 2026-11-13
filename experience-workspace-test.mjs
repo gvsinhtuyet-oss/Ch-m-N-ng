@@ -29,3 +29,33 @@ test('Protected real Admin remains separate from teacher guest route', () => {
   assert.match(context, /authService\.current\(\)\?\.role !== 'admin'/);
   assert.doesNotMatch(context, /enterAdminDemo|loginAsAdminDemo/);
 });
+
+test('Experience Admin matches the real five groups and ten pages without loading privileged AdminDashboard', () => {
+  const actual = read('src/features/admin/AdminDashboard.tsx');
+  const shell = read('src/features/teacher/AdminExperienceShell.tsx');
+  const experience = read('src/features/teacher/ExperienceWorkspace.tsx');
+  const groups = ['Tổng quan','Dạy và học','Học liệu','Báo cáo','Cài đặt'];
+  const ids = ['overview','tracking','reports','stations','gddp','effectiveness','proposals','users','theme','assistant-qa'];
+  for (const label of groups) {
+    assert.ok(actual.includes("label: '" + label + "'"), 'Real admin group ' + label);
+    assert.ok(shell.includes("label: '" + label + "'"), 'Experience group ' + label);
+  }
+  for (const id of ids) {
+    assert.ok(actual.includes("id: '" + id + "'"), 'Real admin page ' + id);
+    assert.ok(shell.includes("id: '" + id + "'"), 'Experience page ' + id);
+  }
+  assert.match(shell, /admin-workspace/);
+  assert.match(shell, /admin-sidebar/);
+  assert.match(shell, /admin-page-hero/);
+  assert.match(experience, /<AdminExperienceShell activePage=\{adminPage\}/);
+  assert.doesNotMatch(shell, /authService|AdminDashboard\s*from|fetch\s*\(|\/api\//);
+});
+test('Admin experience displays local-only effectiveness and performs offline chatbot checks', () => {
+  const experience = read('src/features/teacher/ExperienceWorkspace.tsx');
+  assert.match(experience, /Hiệu quả sử dụng và hành trình khám phá/);
+  assert.match(experience, /Kiểm định Trợ lý khám phá/);
+  assert.match(experience, /evaluateAssistantQualityCase\(row\)/);
+  assert.match(experience, /DỮ LIỆU MINH HỌA/);
+  assert.match(experience, /Không tạo biểu đồ ngày truy cập giả định/);
+  assert.doesNotMatch(experience, /\bfetch\s*\(|authService|studentSyncService|\/api\/admin|\/api\/teacher/);
+});

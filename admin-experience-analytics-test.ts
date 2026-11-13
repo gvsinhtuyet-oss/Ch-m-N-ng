@@ -50,9 +50,13 @@ test('Showcase is explicitly labelled fictional and does not query or mutate rea
   const visualization=readFileSync('src/features/teacher/AdminExperienceAnalytics.tsx','utf8');
   const data=readFileSync('src/features/teacher/adminExperienceAnalyticsData.ts','utf8');
   const workspace=readFileSync('src/features/teacher/ExperienceWorkspace.tsx','utf8');
-  assert.match(visualization,/DỮ LIỆU MÔ PHỎNG/);
-  assert.match(visualization,/Không gửi API, không ghi Firestore/);
+  assert.match(visualization,/CHẾ ĐỘ TRẢI NGHIỆM · SỐ LIỆU GIẢ ĐỊNH/);
+  assert.match(visualization,/không gửi API và không ghi Firestore/);
   assert.match(data,/entirely fictitious/);
+  const shell=readFileSync('src/features/teacher/AdminExperienceShell.tsx','utf8');
+  assert.match(shell,/CHẾ ĐỘ TRẢI NGHIỆM · SỐ LIỆU GIẢ ĐỊNH/);
+  assert.match(visualization,/CHẾ ĐỘ TRẢI NGHIỆM · SỐ LIỆU GIẢ ĐỊNH/);
+  assert.doesNotMatch(visualization,/opacity-0|sr-only.*SỐ LIỆU GIẢ ĐỊNH|hidden.*SỐ LIỆU GIẢ ĐỊNH/);
   assert.match(workspace,/AdminExperienceAnalytics mode="overview"/);
   assert.match(workspace,/AdminExperienceAnalytics mode="ratings"/);
   assert.match(workspace,/AdminExperienceAnalytics mode="effectiveness"/);

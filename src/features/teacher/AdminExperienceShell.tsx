@@ -7,7 +7,7 @@ import {
 /**
  * Match the real AdminDashboard information architecture and CSS hooks.
  * This shell only accepts local ReactNode panels; it never mounts the privileged
- * AdminDashboard, its authService queries or privileged API-powered children.
+ * real AdminDashboard or any of its privileged data-fetching children.
  */
 export const experienceAdminGroups = [
   { label: 'Tổng quan', icon: LayoutDashboard, pages: [{ id: 'overview', label: 'Tổng quan' }] },

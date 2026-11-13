@@ -48,7 +48,7 @@ export async function exportTeacherPlanExcel(plan:TeacherWorkspace){
 export async function exportTeacherPlanWord(plan:TeacherWorkspace){
   const {Document,Packer,Paragraph,TextRun,HeadingLevel}=await import('docx');
   const para=(text:string,bold=false)=>new Paragraph({
-    children:[new TextRun({text,bold})],spacing:{after:100},keepTogether:true,
+    children:[new TextRun({text,bold})],spacing:{after:100},
   });
   const rows:any[]=[
     new Paragraph({text:'KẾ HOẠCH TÍCH HỢP GIÁO DỤC ĐỊA PHƯƠNG',heading:HeadingLevel.TITLE}),

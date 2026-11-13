@@ -5,7 +5,6 @@ import {learningFeedbackService} from '../../services/LearningFeedbackService';
 export function JourneyRating({stationId,userId,requireStudent=false,compact=false,readOnly=false}:{stationId:string;userId?:string;requireStudent?:boolean;compact?:boolean;readOnly?:boolean}) {
   const [stars,setStars]=useState(0),[thanked,setThanked]=useState(false),[busy,setBusy]=useState(false);
   const [ready,setReady]=useState(false);
-  const [saveMessage,setSaveMessage]=useState('');
   const saving=useRef(false);
   const revision=useRef(0);
   const storageKey=`cham_danang_journey_rating_v2:${userId||'guest'}:${stationId}`;
@@ -42,7 +41,7 @@ export function JourneyRating({stationId,userId,requireStudent=false,compact=fal
     setBusy(true);
     setStars(value);
     // Thank the learner for participating, independently of storage availability.
-    setThanked(true);setSaveMessage('');
+    setThanked(true);
     let savedLocally=false;
     try {
       localStorage.setItem(storageKey,JSON.stringify({stars:value,storage:'device'}));
@@ -57,7 +56,6 @@ export function JourneyRating({stationId,userId,requireStudent=false,compact=fal
     } catch {
       if(revision.current!==version)return;
       if(!savedLocally)setStars(stars);
-      setSaveMessage(savedLocally?'Đã giữ lựa chọn trên thiết bị. Chạm lại sao để gửi khi có kết nối.':'Chưa gửi được đánh giá. Em hãy thử lại.');
     } finally {
       if(revision.current===version){
         saving.current=false;
@@ -71,7 +69,6 @@ export function JourneyRating({stationId,userId,requireStudent=false,compact=fal
       {[1,2,3,4,5].map(value=>readOnly?<Star key={value} aria-hidden="true" className={`h-4 w-4 sm:h-5 sm:w-5 ${value<=stars?"fill-amber-400 text-amber-600":"text-amber-300"}`}/>:<button key={value} type="button" disabled={busy||!ready} aria-label={`${value} sao`} aria-pressed={stars===value} onClick={()=>void save(value)} className="rounded p-1 focus-visible:outline-2 focus-visible:outline-amber-700 disabled:opacity-60"><Star className={`${compact?'h-4 w-4 sm:h-5 sm:w-5':'h-6 w-6'} ${value<=stars?'fill-amber-400 text-amber-600':'text-amber-600'}`}/></button>)}
     </div>
 
-    {saveMessage&&<span role="status" className="max-w-56 text-center text-[10px] font-semibold">{saveMessage}</span>}
     {thanked&&<span role="status" className={compact?"basis-full max-w-56 text-[10px] font-semibold":"max-w-56 text-center text-[10px] font-semibold"}>Cảm ơn bạn đã đánh giá!</span>}
   </div>;
 }

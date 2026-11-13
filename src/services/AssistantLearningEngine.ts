@@ -1,3 +1,4 @@
+import {splitAssistantSentences} from './AssistantSentenceSplitter';
 import knowledge from '../data/assistantKnowledge.json';
 import profiles from '../data/assistantLearningProfiles.json';
 import assessmentBank from '../data/assistantAssessmentBank.json';
@@ -173,7 +174,7 @@ export function handleLearningRequest(query:string,context:LearningContext={}):L
   if(!card||!profile){
     const material=stationMaterial(query,context);
     if(!material)return clarify(query,task);
-    const sentences=material.answer.split(/(?<=[.!?])\s+/).filter(Boolean);
+    const sentences=splitAssistantSentences(material.answer).filter(Boolean);
     if(task==='rewrite')return {...result(query,sentences.slice(0,2).join(' '),undefined,task),topic:material.topic,sources:material.sources};
     if(task==='practice')return {...result(query,`Em hãy nêu một điều đã biết về ${material.topic}.`,undefined,task),topic:material.topic,sources:material.sources,practice:{id:material.id,topicId:material.id,topic:material.topic,question:`Em hãy nêu một điều đã biết về ${material.topic}.`,answer:sentences.slice(0,2).join(' '),explanation:'Đối chiếu câu trả lời với học liệu; phần tự đối chiếu này không được chấm điểm tự động.'}};
     if(task==='questions'){
@@ -192,8 +193,8 @@ export function handleLearningRequest(query:string,context:LearningContext={}):L
   }
   if(task==='rewrite'){
     const count=q.match(/\b(?:bang|thanh|trong|gon|con)\s*([1-4])\s*cau\b/)?.[1];
-    const sentences=(grade<=2?profile.young:card.answer).split(/(?<=[.!?])\s+/).filter(Boolean);
-    if(count){const extra=[profile.example,profile.applicationAnswer].flatMap(text=>text.split(/(?<=[.!?])\s+/));const unique=[...new Set([...sentences,...extra])];const selected=unique.slice(0,Number(count));return result(query,selected.join(' ')+(selected.length<Number(count)?'\nTôi chỉ giữ các ý đã có căn cứ, nên đoạn này ngắn hơn số câu yêu cầu.':''),card,task);}
+    const sentences=splitAssistantSentences(grade<=2?profile.young:card.answer).filter(Boolean);
+    if(count){const extra=[profile.example,profile.applicationAnswer].flatMap(text=>splitAssistantSentences(text));const unique=[...new Set([...sentences,...extra])];const selected=unique.slice(0,Number(count));return result(query,selected.join(' ')+(selected.length<Number(count)?'\nTôi chỉ giữ các ý đã có căn cứ, nên đoạn này ngắn hơn số câu yêu cầu.':''),card,task);}
     return result(query,(grade<=2?profile.young:card.answer)+'\nVí dụ: '+profile.example,card,task);
   }
   if(task==='practice'){

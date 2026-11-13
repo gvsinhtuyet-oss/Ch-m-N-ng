@@ -106,14 +106,12 @@ const AppContent: React.FC = () => {
 
   const assistantLoading = assistantOpenRequest > 0
     ? <div role="status" className="fixed bottom-4 left-3 right-3 z-[80] mx-auto max-w-sm rounded-2xl bg-sky-900 px-4 py-3 text-center text-sm font-semibold text-white shadow-lg">Đang mở Trợ lý khám phá…</div>
-    : null;
-  const assistantUnavailable = assistantOpenRequest > 0
-    ? <div role="alert" className="fixed bottom-[max(16px,env(safe-area-inset-bottom))] left-3 right-3 z-[80] mx-auto max-w-sm rounded-2xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950 shadow-lg">
+    : <button type="button" aria-label="Mở Trợ lý trong khi tải" className="fixed bottom-6 right-3 z-[80] min-h-12 rounded-full bg-sky-800 px-4 py-3 text-sm font-bold text-white shadow-xl lg:hidden" onClick={()=>window.dispatchEvent(new Event('cham-open-assistant'))}>💬 Trợ lý</button>;
+  const assistantUnavailable = <div role="alert" className="fixed bottom-[max(16px,env(safe-area-inset-bottom))] left-3 right-3 z-[80] mx-auto max-w-sm rounded-2xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-950 shadow-lg">
         <p className="font-bold">Trợ lý khám phá chưa tải được.</p>
         <p className="mt-1 text-xs">Safari có thể đang dùng tệp ứng dụng cũ hoặc chưa tải xong. Khắc phục chỉ làm mới tệp ứng dụng, không xóa thông tin học sinh hay tiến trình.</p>
         <button type="button" className="mt-3 min-h-11 w-full rounded-xl bg-sky-700 px-3 py-2 font-bold text-white" onClick={() => void recoverApplicationAssets()}>Khắc phục và tải bản mới</button>
-      </div>
-    : null;
+      </div>;
 
   if (!currentUser && currentView !== 'landing') return <LandingView />;
 

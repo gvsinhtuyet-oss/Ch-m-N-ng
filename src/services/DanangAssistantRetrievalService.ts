@@ -1,3 +1,4 @@
+import {splitAssistantSentences} from './AssistantSentenceSplitter';
 import {handleLearningRequest,adaptLearningResult,type LearningTask,type PracticeQuestion} from './AssistantLearningEngine';
 import knowledge from '../data/assistantKnowledge.json';
 import guides from '../data/assistantStationGuides.json';
@@ -294,7 +295,7 @@ const dialectDefinitionRequested = (query: string, entry: AssistantLexiconEntry)
   return q === term || new RegExp(`^(?:từ |chữ )?${term} (?:nghĩa là gì|là gì|có nghĩa gì)$`).test(q);
 };
 const concisePassage = (query: string, text: string, intent: QuestionIntent): string => {
-  const sentences = unique(text.split(/(?<=[.!?])\s+/).map(s => s.trim()).filter(Boolean));
+  const sentences = unique(splitAssistantSentences(text).map(s => s.trim()).filter(Boolean));
   return sentences.map((text, index) => ({ text, index, score: longTextScore(query, text) }))
     .filter(item => intentEvidence[intent].test(normalizeForSearch(item.text)))
     .sort((a, b) => b.score - a.score || a.index - b.index)

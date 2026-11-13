@@ -9,6 +9,7 @@ test('Free teacher has a safe, isolated Teacher/Admin experience switch', () => 
   assert.match(teacher, /currentUser\?\.id === 'teacher-demo'/);
   assert.match(teacher, /<ExperienceWorkspace teacherPanel=\{<TeacherDashboardCore \/>/);
   assert.match(experience, /Chuyển đổi vai trò trải nghiệm/);
+  assert.match(read('src/features/landing/AccessPortal.tsx'), /Giáo viên \/ Quản trị trải nghiệm/);
   assert.match(experience, /Quản trị/);
   assert.match(experience, /Giáo viên/);
   assert.match(experience, /CHẾ ĐỘ TRẢI NGHIỆM · DỮ LIỆU MINH HỌA/);

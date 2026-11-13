@@ -186,9 +186,9 @@ export const AccessPortal: React.FC<Props> = ({
                 </form>}
                 <div className="cham-access-or"><span>HOẶC</span></div>
                 <button type="button" className="cham-access-teacher-guest" disabled={staffBusy} onClick={()=>requestName('teacher')}>
-                  <BookOpen size={27} aria-hidden="true"/><span><strong>Giáo viên tự do</strong><small>Trải nghiệm học liệu không cần tài khoản</small></span><ArrowRight size={20} aria-hidden="true"/>
+                  <BookOpen size={27} aria-hidden="true"/><span><strong>Giáo viên / Quản trị trải nghiệm</strong><small>Tạo lớp, quản lý học liệu và xem báo cáo thử</small></span><ArrowRight size={20} aria-hidden="true"/>
                 </button>
-                <p className="cham-access-guest-note">Đăng nhập để tạo lớp, cấp mã và xem kết quả học sinh.</p>
+                <p className="cham-access-guest-note">Đăng nhập để cấp mã QR và lưu kết quả thật. Chế độ trải nghiệm chỉ lưu trên thiết bị này.</p>
                 {staffBusy && <p role="status" className="cham-access-status">Đang xử lý đăng nhập…</p>}
                 {loginError && <p role="alert" className="cham-access-error">{loginError}</p>}
                 <button type="button" className="cham-access-back" onClick={onBack}><ArrowLeft size={19}/> Chọn vai trò khác</button>

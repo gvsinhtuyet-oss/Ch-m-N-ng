@@ -1,6 +1,7 @@
 import {LearningFeedbackForm} from '../../components/station/LearningFeedbackForm';
 import {learningThumbnail} from '../../utils/learningThumbnail';
 import {TeacherWorkspace} from './TeacherWorkspace';
+import { ExperienceWorkspace } from './ExperienceWorkspace';
 import { ClassRoster } from './ClassRoster';
 import { RealClassResults } from './RealClassResults';
 import { GddpTeacherLookup } from './GddpTeacherLookup';
@@ -37,7 +38,7 @@ const teacherSections = [
 ] as const;
 type TeacherSection = typeof teacherSections[number]['id'];
 
-export const TeacherDashboard: React.FC = () => {
+const TeacherDashboardCore: React.FC = () => {
   const {
     currentUser,
     currentGrade,
@@ -485,4 +486,14 @@ export const TeacherDashboard: React.FC = () => {
       </div>
     </div>
   );
+};
+
+
+// Free staff access renders a sandbox beside the existing teaching tools.
+// Protected Admin remains strictly behind the authenticated admin route.
+export const TeacherDashboard: React.FC = () => {
+  const { currentUser } = useApp();
+  return currentUser?.id === 'teacher-demo'
+    ? <ExperienceWorkspace teacherPanel={<TeacherDashboardCore />} />
+    : <TeacherDashboardCore />;
 };

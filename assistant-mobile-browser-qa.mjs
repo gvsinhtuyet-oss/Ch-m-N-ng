@@ -55,6 +55,7 @@ try {
     } else {
       throw Error('Missing student entry button across approved and legacy mobile layouts');
     }
+    if(await page.$('#free-explorer-name')){await page.type('#free-explorer-name','Bạn kiểm tra');await page.click('button[type=submit]');}
     await page.waitForFunction(()=>!![...document.querySelectorAll('button')].find(b=>b.textContent?.includes('Khối 2')),{timeout:15000});
     await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('Khối 2'))?.click());
     await page.waitForSelector('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]',{visible:true,timeout:30000});

@@ -11,6 +11,7 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
  // Open the full inbox by default. A deep-link from a station intentionally sets its filter.
  useEffect(()=>{if(initialStationId!==undefined){setStationId(initialStationId);setGrade(0);}},[initialStationId]);
  const [ratings,setRatings]=useState<Record<string,number[]>>({});
+ const [ratingsWarning,setRatingsWarning]=useState('');
  const [ratingsError,setRatingsError]=useState('');
  const [ratingsStatus,setRatingsStatus]=useState<number|null>(null);
  const [ratingsBusy,setRatingsBusy]=useState(true);
@@ -20,8 +21,8 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
   setRatingsError('');
   setRatingsStatus(null);
   try{
-   const response=await authService.stationRatings();
-   setRatings(response);
+   const response=await authService.stationRatingsReport();
+   setRatings(response.ratings);setRatingsWarning(response.warning||'');
   } catch(error){
    const status=(error as {status?:number})?.status;
    setRatings({});
@@ -70,6 +71,8 @@ export const ProposalInbox:React.FC<{initialStationId?:string}>=({initialStation
     {busy||ratingsBusy?'Đang tải…':'Làm mới'}
    </button>
   </div>
+  {ratingsWarning&&<p role="status" className="rounded-xl bg-amber-50 p-3 text-amber-950">{ratingsWarning}</p>}
+  <button type="button" className="rounded-xl border px-4 py-2 text-sm font-bold" onClick={()=>window.dispatchEvent(new CustomEvent('cham-admin-open-page',{detail:{page:'effectiveness'}}))}>Xem tên khách và đánh giá theo thời điểm</button>
   <div className="grid gap-3 sm:grid-cols-3" aria-label="Tổng hợp đánh giá và góp ý">
     <div className="rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50 to-white p-4">
       <p className="text-sm font-semibold text-amber-900">Sao trung bình</p>

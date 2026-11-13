@@ -1,3 +1,4 @@
+import {freeExplorerIdentity} from './services/FreeExplorerIdentity';
 import { AppFullscreenProvider } from './components/common/AppFullscreen';
 import { FeatureLoadBoundary, recoverApplicationAssets } from './components/common/FeatureLoadBoundary';
 import { effectivenessService } from './services/EffectivenessService';
@@ -71,8 +72,9 @@ const AppContent: React.FC = () => {
   const analyticsAudience = currentUser && role !== 'student' ? 2
     : currentUser && !(currentUser as Student).isGuest ? 1 : 0;
   useEffect(() => {
+    if(!currentUser || (!(currentUser as Student).isGuest && currentUser.id!=='teacher-demo'))freeExplorerIdentity.activate(null);
     effectivenessService.visit(analyticsAudience);
-  }, [analyticsAudience]);
+  }, [analyticsAudience,currentUser?.id]);
   useEffect(() => {
     const visible = () => {
       if (document.visibilityState === 'hidden') effectivenessService.flush();

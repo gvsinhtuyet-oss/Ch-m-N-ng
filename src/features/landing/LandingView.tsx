@@ -1,3 +1,4 @@
+import {freeExplorerIdentity} from '../../services/FreeExplorerIdentity';
 import { AppFullscreenButton } from '../../components/common/AppFullscreen';
 import './landing-cover.css';
 import { ResponsiveAccessPortal } from './ResponsiveAccessPortal';
@@ -239,7 +240,7 @@ export const LandingView: React.FC = () => {
     audioService.playSfx('click');
 
     window.setTimeout(() => {
-      const normalizedName = 'Nhà phiêu lưu tự do';
+      const normalizedName = freeExplorerIdentity.current()?.name || 'Nhà phiêu lưu tự do';
       let guestId = '';
       try {
         guestId = localStorage.getItem('cham_danang_guest_id_v1') || '';
@@ -441,10 +442,10 @@ export const LandingView: React.FC = () => {
           void restoreStudentByCode(restoreCode).catch(error=>setLoginError((error as Error).message)).finally(()=>setRestoreBusy(false));
         }}
         onSavedCode={() => {setRestoreCode(savedSyncCode);setLoginError('');}}
-        onTeacherDemo={() => {
+        onTeacherDemo={name => {
           if(staffBusy)return;
           setStaffBusy(true);setLoginError('');
-          void enterTeacherDemo().then(()=>setShowRolePicker(false)).catch(error=>setLoginError((error as Error).message)).finally(()=>setStaffBusy(false));
+          void enterTeacherDemo(name).then(()=>setShowRolePicker(false)).catch(error=>setLoginError((error as Error).message)).finally(()=>setStaffBusy(false));
         }}
         onStaffLogin={event => {
           event.preventDefault();

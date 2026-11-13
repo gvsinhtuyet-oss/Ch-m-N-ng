@@ -39,7 +39,7 @@ interface AppContextType {
   setRole: (role: UserRole) => Promise<void>;
   loginAsStudent: (student: Student) => void;
   loginAsTeacher: (teacher: Teacher) => void;
-  enterTeacherDemo: () => Promise<void>;
+  enterTeacherDemo: (name?:string) => Promise<void>;
   loginAsAdmin: (admin: Admin) => void;
   logout: () => Promise<void>;
   setCurrentGrade: (grade: number) => void;
@@ -141,10 +141,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setCurrentView('teacher-view');
   };
 
-  const enterTeacherDemo = async () => {
+  const enterTeacherDemo = async (name = 'Giáo viên tự do') => {
     if (authService.current()) await authService.logout();
     audioService.playSfx('unlock');
-    setCurrentUser({ id: 'teacher-demo', role: 'teacher', name: 'Giáo viên trải nghiệm', assignedClasses: ['class-2-24', 'class-2-25'], schoolName: 'Trường Tiểu học Trần Đại Nghĩa' } as Teacher);
+    setCurrentUser({ id: 'teacher-demo', role: 'teacher', name, assignedClasses: ['class-2-24', 'class-2-25'], schoolName: 'Trường Tiểu học Trần Đại Nghĩa' } as Teacher);
     setRoleState('teacher');
     setGradeState(2);
     setCurrentStation(null);

@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync, readdirSync } from 'node:fs';
 import puppeteer from 'puppeteer-core';
+import {resolve} from 'node:path';
+import ExcelJS from 'exceljs';
+import {Document,Packer,Paragraph,Table,TableRow,TableCell} from 'docx';
 
 const url=process.env.QA_URL||'http://127.0.0.1:4173/';
 const chrome=[process.env.CHROME_BIN,'/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium'].find(x=>x&&existsSync(x));
@@ -9,6 +12,14 @@ mkdirSync('teacher-plan-qa',{recursive:true});
 const browser=await puppeteer.launch({executablePath:chrome,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
 
 const auditResults=[];
+const fixtureHeaders=['Môn học','Tên bài','Nội dung tích hợp'];
+const fixtureRow=['TNXH','Bài nhập để kiểm thử','Nội dung thử cục bộ, giáo viên cần đối chiếu'];
+const fixtureBook=new ExcelJS.Workbook();fixtureBook.addWorksheet('Thông tin').addRow(['Bản kiểm thử']);fixtureBook.addWorksheet('Kế hoạch').addRows([fixtureHeaders,fixtureRow]);
+const excelFixture=resolve('teacher-plan-qa/kiem-thu-nhap.xlsx');await fixtureBook.xlsx.writeFile(excelFixture);
+const wordFixture=resolve('teacher-plan-qa/kiem-thu-nhap.docx');
+writeFileSync(wordFixture,await Packer.toBuffer(new Document({sections:[{children:[new Table({rows:[fixtureHeaders,fixtureRow].map(row=>new TableRow({children:row.map(text=>new TableCell({children:[new Paragraph(text)]}))}))})]}]})));
+const waitDownload=async(dir,suffix)=>{for(let i=0;i<100;i++){if(readdirSync(dir).some(n=>n.endsWith(suffix)))return;await new Promise(r=>setTimeout(r,100));}throw Error('Download missing '+suffix);};
+
 const clickButton=async(page,text)=>
   page.evaluate(label=>{
     const candidates=[...document.querySelectorAll('button')].filter(x=>x.getClientRects().length>0);
@@ -22,6 +33,7 @@ try{
     const page=await browser.newPage();
     const pageErrors=[],serverWrites=[],apiReads=[],thirdPartyBlocked=[];
     page.on('pageerror',error=>pageErrors.push(error.message));
+    await page.setCacheEnabled(false);
     await page.setBypassServiceWorker(true);
     await page.setRequestInterception(true);
     page.on('request',request=>{
@@ -110,6 +122,19 @@ try{
     assert.deepEqual(serverWrites,[], 'Experience must not attempt ANY network mutation');
     assert.ok(!apiReads.some(s=>/\/api\/(admin|teacher|student)\//.test(s)),'No protected reads in experience');
     await page.screenshot({path:'teacher-plan-qa/'+device+'.png',fullPage:false});
+    // Both import types must preview without replacing the current plan.
+    for(const path of [excelFixture,wordFixture]){
+      const before=await page.evaluate(()=>JSON.parse(localStorage.getItem('cham-teacher-integration-drafts-v2:teacher-demo'))['2026-2027|2'].records.length);
+      const input=await page.$('input[type="file"][accept=".docx,.xlsx"]');assert.ok(input);await input.uploadFile(path);
+      await page.waitForFunction(()=>document.body.textContent.includes('Xem trước dữ liệu nhập:'),{timeout:15000});
+      assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('cham-teacher-integration-drafts-v2:teacher-demo'))['2026-2027|2'].records.length),before,'Preview must not replace a saved draft');
+      await clickButton(page,'Hủy nhập');
+    }
+    const downloads=resolve('teacher-plan-qa/downloads-'+device);mkdirSync(downloads,{recursive:true});
+    const client=await page.target().createCDPSession();await client.send('Page.setDownloadBehavior',{behavior:'allow',downloadPath:downloads});
+    await clickButton(page,'Tải Excel');await waitDownload(downloads,'.xlsx');
+    await clickButton(page,'Tải Word');await waitDownload(downloads,'.docx');
+
     // Same "Lớp của tôi · Mã QR" navigation as an authenticated Teacher.
     if(width<1024)await page.click('button[aria-controls="teacher-navigation"]');
     await page.evaluate(()=>{
@@ -127,6 +152,9 @@ try{
       hasZip:document.body.textContent?.includes('Tải trọn bộ thẻ QR (ZIP)'),
     }));
     assert.ok(demoCard.count>=1&&demoCard.png&&demoCard.hasZip,'Demo QR card must render as PNG and offer ZIP');
+    await clickButton(page,'Tải thẻ PNG riêng');await waitDownload(downloads,'.png');
+    await clickButton(page,'Tải trọn bộ thẻ QR (ZIP)');await waitDownload(downloads,'.zip');
+    await page.pdf({path:downloads+'/the-qr-trai-nghiem.pdf',format:'A4',printBackground:true});
     assert.deepEqual(pageErrors,[],'QR classroom page errors');
 
     // The same workspace creates a local class; never use a real student's details.
@@ -158,8 +186,9 @@ try{
 
     // Scan a fictional QR using its public, deliberately noncredential deep-link.
     const qrPage=await browser.newPage();
-    const qrWrites=[],qrErrors=[],qrThirdPartyBlocked=[];
+    const qrWrites=[],qrErrors=[],qrThirdPartyBlocked=[],qrReads=[];
     qrPage.on('pageerror',error=>qrErrors.push(error.message));
+    await qrPage.setCacheEnabled(false);
     await qrPage.setBypassServiceWorker(true);
     await qrPage.setRequestInterception(true);
     qrPage.on('request',request=>{
@@ -168,7 +197,7 @@ try{
         if(target.origin===new URL(url).origin||/firestore\.googleapis\.com$/.test(target.hostname))qrWrites.push(request.method()+' '+target.pathname);
         else qrThirdPartyBlocked.push(request.method()+' '+target.host+target.pathname);
         request.abort('blockedbyclient');
-      }else request.continue();
+      }else {if(new URL(request.url()).origin===new URL(url).origin&&new URL(request.url()).pathname.startsWith('/api/'))qrReads.push(request.method()+' '+new URL(request.url()).pathname);request.continue();}
     });
     await qrPage.setViewport({width:390,height:844,isMobile:true,hasTouch:true,deviceScaleFactor:1});
     await qrPage.goto(url.split('?')[0]+'#demo-student=g2&n=1&c=2%2F24',{waitUntil:'domcontentloaded',timeout:60000});
@@ -181,6 +210,7 @@ try{
     assert.deepEqual(qrWrites,[],'Demo QR must never attempt a network mutation');
     assert.deepEqual(qrErrors,[],'Demo QR guest errors');
     await qrPage.screenshot({path:'teacher-plan-qa/qr-entry-'+device+'.png',fullPage:false});
+    Object.assign(audit,{qrApiReads:qrReads,qrNetworkMutations:qrWrites,qrThirdPartyBlocked});writeFileSync('teacher-plan-qa/request-audit.json',JSON.stringify(auditResults,null,2));
     await qrPage.close();
     console.log('Teacher integration QA',device,'PASS: unified menu, verified integration, ZIP/PNG QR, local-only QR scan, no backend writes');
     await page.close();

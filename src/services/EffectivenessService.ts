@@ -91,7 +91,6 @@ function note(stationId?: string, stage = 0) {
   if (demoOnly() || import.meta.env.VITE_EFFECTIVENESS_ENABLED !== 'true') return;
   try {
     const {id: session} = currentVisit(Date.now());
-    if (audience === 2) stationId = undefined;
     const sent = acknowledged?.session === session ? acknowledged : undefined;
     if (!pending && sent && sent.visitor?.id===freeExplorerIdentity.current()?.id && audience <= sent.audience &&
         (!stationId || stage <= (sent.stations.get(stationId) ?? -1))) return;

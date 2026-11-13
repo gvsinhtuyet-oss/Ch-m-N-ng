@@ -52,10 +52,10 @@ test('Experience Admin matches the real five groups and ten pages without loadin
 });
 test('Admin experience displays local-only effectiveness and performs offline chatbot checks', () => {
   const experience = read('src/features/teacher/ExperienceWorkspace.tsx');
-  assert.match(experience, /Hiệu quả sử dụng và hành trình khám phá/);
+  assert.match(experience, /AdminExperienceAnalytics mode="effectiveness"/);
   assert.match(experience, /Kiểm định Trợ lý khám phá/);
   assert.match(experience, /evaluateAssistantQualityCase\(row\)/);
   assert.match(experience, /DỮ LIỆU MINH HỌA/);
-  assert.match(experience, /Không tạo biểu đồ ngày truy cập giả định/);
+  assert.match(read('src/features/teacher/AdminExperienceAnalytics.tsx'), /DỮ LIỆU MÔ PHỎNG/);
   assert.doesNotMatch(experience, /\bfetch\s*\(|authService|studentSyncService|\/api\/admin|\/api\/teacher/);
 });

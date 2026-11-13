@@ -52,13 +52,12 @@ export const AdminDashboard: React.FC = () => {
   const checkHealth=async()=>{
     setHealthLoading(true);
     try {
-      const status=await authService.health();
-      setHealth({
-        connected:status.firestore==='connected',
-        ready:status.auth?.ready===true,
-        writable:status.firestoreWrite==='connected',
-        writeNotTested:status.firestoreWrite==='not-tested',
-      });
+      // The legacy /api/health may write to Firestore: check only the stateless server config.
+      const response=await fetch('/api/auth/google/config',{credentials:'same-origin',cache:'no-store'});
+      if(!response.ok)throw Error('Máy chủ chưa phản hồi.');
+      const config=await response.json();
+      if(typeof config?.clientId!=='string')throw Error('Cấu hình máy chủ không hợp lệ.');
+      setHealth({connected:true,ready:false,writable:false,writeNotTested:true});
     } catch {
       setHealth({connected:false,ready:false,writable:false,writeNotTested:false});
     } finally {setHealthLoading(false);}
@@ -95,7 +94,7 @@ export const AdminDashboard: React.FC = () => {
   };
   const showOverviewData = activeTab === 'overview' || activeTab === 'tracking';
   useEffect(()=>{if(showOverviewData)void load();},[activeTab]);
-  useEffect(()=>{if(activeTab==='overview')void checkHealth();},[activeTab]);
+  // No automatic health probe on opening Admin: safeguard Firestore quota.
 
   const filteredImplementations = gradeFilter === 0
     ? implementations
@@ -199,8 +198,8 @@ export const AdminDashboard: React.FC = () => {
                 <h2 className="mt-1 text-xl font-black text-slate-900 sm:text-2xl">Tổng quan hoạt động toàn trường</h2>
                 <p className="mt-1 text-xs text-slate-500">Theo tài khoản, lớp học và hoạt động đã được hệ thống ghi nhận</p>
               </div>
-              <span role="status" className={`px-2.5 py-1 rounded-full text-xs font-bold ${health?.connected && health.ready && health.writable ? 'bg-emerald-100 text-emerald-800' : !health || healthLoading ? 'bg-slate-100 text-slate-700' : 'bg-slate-100 text-slate-700'}`}>
-                {!health || healthLoading ? 'Đang kiểm tra kho dữ liệu' : health.connected && health.ready && health.writable ? 'Kho dữ liệu: sẵn sàng' : health.connected && health.ready && health.writeNotTested ? 'Kho dữ liệu: kết nối đọc (chưa thử ghi)' : 'Kho dữ liệu: cần kiểm tra'}
+              <span role="status" className={`px-2.5 py-1 rounded-full text-xs font-bold ${health?.connected ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-700'}`}>
+                {healthLoading ? 'Đang kiểm tra máy chủ' : !health ? 'Không tự kiểm tra Firestore' : health.connected ? 'Máy chủ: kết nối (không thử Firestore)' : 'Máy chủ: cần kiểm tra'}
               </span>
             </div>
 

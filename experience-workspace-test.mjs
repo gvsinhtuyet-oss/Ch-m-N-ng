@@ -12,7 +12,7 @@ test('Free teacher has a safe, isolated Teacher/Admin experience switch', () => 
   assert.match(read('src/features/landing/AccessPortal.tsx'), /Giáo viên \/ Quản trị trải nghiệm/);
   assert.match(experience, /Quản trị/);
   assert.match(experience, /Giáo viên/);
-  assert.match(experience, /CHẾ ĐỘ TRẢI NGHIỆM · DỮ LIỆU MINH HỌA/);
+  assert.match(experience, /CHẾ ĐỘ TRẢI NGHIỆM · SỐ LIỆU GIẢ ĐỊNH/);
 });
 test('Sample class, star, plan and assets live on this device only', () => {
   const source = read('src/features/teacher/ExperienceWorkspace.tsx');
@@ -55,7 +55,7 @@ test('Admin experience displays local-only effectiveness and performs offline ch
   assert.match(experience, /AdminExperienceAnalytics mode="effectiveness"/);
   assert.match(experience, /Kiểm định Trợ lý khám phá/);
   assert.match(experience, /evaluateAssistantQualityCase\(row\)/);
-  assert.match(experience, /DỮ LIỆU MINH HỌA/);
-  assert.match(read('src/features/teacher/AdminExperienceAnalytics.tsx'), /DỮ LIỆU MÔ PHỎNG/);
+  assert.match(experience, /SỐ LIỆU GIẢ ĐỊNH/);
+  assert.match(read('src/features/teacher/AdminExperienceAnalytics.tsx'), /CHẾ ĐỘ TRẢI NGHIỆM · SỐ LIỆU GIẢ ĐỊNH/);
   assert.doesNotMatch(experience, /\bfetch\s*\(|authService|studentSyncService|\/api\/admin|\/api\/teacher/);
 });

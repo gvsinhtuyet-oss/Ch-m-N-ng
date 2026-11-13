@@ -48,7 +48,7 @@ export const AdminDashboard: React.FC = () => {
   const [workflowError,setWorkflowError]=useState('');
   const [loading,setLoading]=useState(false);
   const [healthLoading,setHealthLoading]=useState(false);
-  const [health,setHealth]=useState<{connected:boolean;ready:boolean;writable:boolean}|null>(null);
+  const [health,setHealth]=useState<{connected:boolean;ready:boolean;writable:boolean;writeNotTested:boolean}|null>(null);
   const checkHealth=async()=>{
     setHealthLoading(true);
     try {
@@ -57,9 +57,10 @@ export const AdminDashboard: React.FC = () => {
         connected:status.firestore==='connected',
         ready:status.auth?.ready===true,
         writable:status.firestoreWrite==='connected',
+        writeNotTested:status.firestoreWrite==='not-tested',
       });
     } catch {
-      setHealth({connected:false,ready:false,writable:false});
+      setHealth({connected:false,ready:false,writable:false,writeNotTested:false});
     } finally {setHealthLoading(false);}
   };
   const load=async()=>{
@@ -199,7 +200,7 @@ export const AdminDashboard: React.FC = () => {
                 <p className="mt-1 text-xs text-slate-500">Theo tài khoản, lớp học và hoạt động đã được hệ thống ghi nhận</p>
               </div>
               <span role="status" className={`px-2.5 py-1 rounded-full text-xs font-bold ${health?.connected && health.ready && health.writable ? 'bg-emerald-100 text-emerald-800' : !health || healthLoading ? 'bg-slate-100 text-slate-700' : 'bg-slate-100 text-slate-700'}`}>
-                {!health || healthLoading ? 'Đang kiểm tra kho dữ liệu' : health.connected && health.ready && health.writable ? 'Kho dữ liệu: sẵn sàng' : 'Kho dữ liệu: cần kiểm tra'}
+                {!health || healthLoading ? 'Đang kiểm tra kho dữ liệu' : health.connected && health.ready && health.writable ? 'Kho dữ liệu: sẵn sàng' : health.connected && health.ready && health.writeNotTested ? 'Kho dữ liệu: kết nối đọc (chưa thử ghi)' : 'Kho dữ liệu: cần kiểm tra'}
               </span>
             </div>
 

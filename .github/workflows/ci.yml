@@ -111,6 +111,9 @@ jobs:
       - name: Integration plan defaults, KNTT lesson matching, real/demo isolation and manual sync
         run: node --import tsx --test teacher-integration-plan-test.ts
 
+      - name: Teacher demo QR is functional but never issues real codes or analytics writes
+        run: node --import tsx --test demo-student-qr-test.ts
+
       - name: Actual Teacher/Admin role routes and approved CSS regression
         run: node --test production-staff-ui-test.mjs
 

@@ -64,6 +64,8 @@ jobs:
         run: npm run lint
 
       - name: Build and preserve existing Pages Functions
+        env:
+          VITE_EFFECTIVENESS_ENABLED: "true"
         run: |
           npm run build
           test -f 'functions/api/[[path]].js'

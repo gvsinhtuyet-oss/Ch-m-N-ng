@@ -38,6 +38,7 @@ export const authService = {
   async saveImplementation(data: Pick<ImplementationRecord,'classId'|'grade'|'stationId'|'stationName'|'implementationDate'|'session'|'method'|'note'>): Promise<ImplementationRecord> {return (await request('/api/teacher/implementations','POST',data)).record;},
   async reviewProposal(id:string,status:'accepted'|'rejected'){await request('/api/teacher/proposals','PUT',{id,status});},
   async proposals(): Promise<LearningProposal[]> {return (await request('/api/teacher/proposals')).records;},
+  async stationRatingsReport():Promise<{ratings:Record<string,number[]>;warning?:string}> {return request('/api/admin/station-ratings');},
   async stationRatings(): Promise<Record<string, number[]>> {
     return (await request('/api/admin/station-ratings')).ratings;
   },

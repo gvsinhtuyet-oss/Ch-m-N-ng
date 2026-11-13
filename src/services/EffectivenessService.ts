@@ -1,10 +1,12 @@
+import {freeExplorerIdentity} from './FreeExplorerIdentity';
 type Audience = 0 | 1 | 2;
 type Visit = {id: string; lastActivity: number; staff?: boolean};
-type Batch = {session: string; audience: Audience; stations: Map<string, number>};
+type Batch = {session: string; audience: Audience; stations: Map<string, number>;visitor:ReturnType<typeof freeExplorerIdentity.current>};
 
 const visitKey = 'cham_effectiveness_visit_v1';
 const idleMs = 30 * 60 * 1000;
 let visit: Visit | undefined;
+let visitorId='';
 let audience: Audience = 0;
 let acknowledged: Batch | undefined;
 let pending: Batch | undefined;
@@ -13,6 +15,7 @@ let pauseUntil = 0;
 let timer: number | undefined;
 
 function currentVisit(now: number): Visit {
+  const person=freeExplorerIdentity.current()?.id||'';if(person!==visitorId){visitorId=person;visit=undefined;try{localStorage.removeItem(visitKey)}catch{}}
   try {
     const saved = JSON.parse(localStorage.getItem(visitKey) || 'null') as Visit | null;
     if (saved && /^[a-f0-9]{32}$/.test(saved.id) && Number.isFinite(saved.lastActivity) &&
@@ -40,7 +43,7 @@ async function flush() {
       method: 'POST', headers: {'Content-Type': 'application/json'}, keepalive: true,
       signal: AbortSignal.timeout(12000),
       body: JSON.stringify({
-        session: batch.session, audience: batch.audience,
+        session: batch.session, audience: batch.audience, visitor: batch.visitor,
         stations: [...batch.stations].map(([id, stage]) => ({id, stage})),
       }),
     });
@@ -85,7 +88,7 @@ function note(stationId?: string, stage = 0) {
     const sent = acknowledged?.session === session ? acknowledged : undefined;
     if (!pending && sent && audience <= sent.audience &&
         (!stationId || stage <= (sent.stations.get(stationId) ?? -1))) return;
-    if (pending?.session !== session) pending = {session, audience, stations: new Map()};
+    if (pending?.session !== session) pending = {session, audience, stations: new Map(),visitor:freeExplorerIdentity.current()};
     pending.audience = Math.max(pending.audience, audience) as Audience;
     if (pending.audience === 2) pending.stations.clear();
     else if (stationId && stage > Math.max(pending.stations.get(stationId) ?? -1, sent?.stations.get(stationId) ?? -1)) {
@@ -96,6 +99,11 @@ function note(stationId?: string, stage = 0) {
 }
 
 export const effectivenessService = {
+  async guestRating(stationId:string, stars?:number){
+    const visitor=freeExplorerIdentity.current();if(!visitor)throw Error('Vui lòng nhập tên trước khi đánh giá.');
+    const response=await fetch('/api/effectiveness',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session:currentVisit(Date.now()).id,audience:visitor.role==='teacher'?2:0,stations:[],visitor,rating:{stationId,...(stars===undefined?{action:'read'}:{stars})}})});
+    if(!response.ok)throw Error('Chưa lưu được đánh giá vào báo cáo.');return (await response.json()).stars as number;
+  },
   visit(kind: Audience) { audience = kind; note(); },
   stage(stationId: string, stage: number) { note(stationId, stage); },
   refreshVisit() { note(); },

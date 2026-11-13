@@ -7,6 +7,8 @@ type StationStats = {
   stage1: number; stage2: number; stage3: number; stage4: number;
 };
 type Report = {
+  people?:Array<{name:string;role:string;createdAt:string}>;
+  namedRatings?:Array<{name:string;role:string;stationId:string;stars:number;updatedAt:string}>;
   start: string; end: string;
   visits: {day: string; audience: number; visits: number}[];
   stations: StationStats[];
@@ -362,5 +364,6 @@ export function EffectivenessReport({openProgress, openFeedback}: {
       </div>
       {downloadError && <p role="status" className="rounded-lg bg-white px-3 py-2 text-sm text-slate-700">{downloadError}</p>}
     </section>
-  </section>;
+  {report && <section className="rounded-2xl border bg-white p-4 space-y-4"><h3 className="font-bold">Tên người khám phá tự do và đánh giá</h3><p className="text-sm text-slate-600">Tên do khách tự nhập, chưa xác minh danh tính. Hiển thị tối đa 200 lượt và 200 đánh giá gần nhất trong khoảng thời gian đã chọn; khách giáo viên được liệt kê ở đây, không cộng vào lượt học sinh.</p><div className="overflow-auto"><table className="w-full text-left text-sm"><thead><tr><th>Tên</th><th>Vai trò</th><th>Thời điểm truy cập</th></tr></thead><tbody>{(report.people||[]).map((p,i)=><tr key={i}><td className="py-2">{p.name}</td><td>{p.role==='teacher'?'Giáo viên tự do':'Học sinh tự do'}</td><td>{new Date(p.createdAt).toLocaleString('vi-VN')}</td></tr>)}</tbody></table>{!report.people?.length&&<p>Chưa có lượt truy cập kèm tên trong khoảng đã chọn.</p>}</div><div className="overflow-auto"><table className="w-full text-left text-sm"><thead><tr><th>Tên</th><th>Vai trò</th><th>Trạm</th><th>Sao</th><th>Thời điểm</th></tr></thead><tbody>{(report.namedRatings||[]).map((p,i)=><tr key={i}><td className="py-2">{p.name}</td><td>{p.role==='teacher'?'Giáo viên tự do':'Học sinh tự do'}</td><td>{OFFICIAL_25_CATALOG.find(s=>s.id===p.stationId)?.titleVi||p.stationId}</td><td>{p.stars}/5</td><td>{new Date(p.updatedAt).toLocaleString('vi-VN')}</td></tr>)}</tbody></table>{!report.namedRatings?.length&&<p>Chưa có đánh giá kèm tên trong khoảng đã chọn.</p>}</div></section>}
+</section>;
 }

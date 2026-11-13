@@ -1,3 +1,4 @@
+import {freeExplorerIdentity} from '../../services/FreeExplorerIdentity';
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, BookOpen, Compass, Eye, EyeOff, GraduationCap, KeyRound, LockKeyhole, QrCode, X } from 'lucide-react';
 import { GoogleTeacherLogin } from '../../components/auth/GoogleTeacherLogin';
@@ -25,11 +26,11 @@ export interface Props {
   onBack: () => void;
   onStudent: () => void;
   onTeacher: () => void;
-  onStudentGuest: () => void;
+  onStudentGuest: (name:string) => void;
   onStudentGrade: (grade: number) => void;
   onStudentSubmit: () => void;
   onSavedCode: () => void;
-  onTeacherDemo: () => void;
+  onTeacherDemo: (name:string) => void;
   onStaffLogin: (event: React.FormEvent<HTMLFormElement>) => void;
   onRestoreStaff: () => void;
   onGoogleLogin: (user: StaffUser) => void;
@@ -67,6 +68,9 @@ export const AccessPortal: React.FC<Props> = ({
   onSavedCode, onTeacherDemo, onStaffLogin, onRestoreStaff,
   onGoogleLogin, onScanCode,
 }) => {
+  const [nameRole,setNameRole]=useState<'student'|'teacher'|null>(null);
+  const [freeName,setFreeName]=useState('');
+  const requestName=(role:'student'|'teacher')=>{setFreeName(freeExplorerIdentity.savedName(role));setNameRole(role)};
   const [accountExpanded, setAccountExpanded] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
@@ -75,7 +79,7 @@ export const AccessPortal: React.FC<Props> = ({
   useEffect(() => { sheetRef.current?.focus({ preventScroll: true }); }, [view]);
   const handleDialogKey = (event: React.KeyboardEvent<HTMLElement>) => {
     if (qrOpen) return;
-    if (event.key === 'Escape') { event.preventDefault(); onClose(); return; }
+    if (event.key === 'Escape') { event.preventDefault(); if(nameRole)setNameRole(null);else onClose(); return; }
     if (event.key !== 'Tab') return;
     const controls = [...event.currentTarget.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled)')].filter(el => el.getClientRects().length > 0);
     const first = controls[0], last = controls[controls.length - 1];
@@ -94,7 +98,7 @@ export const AccessPortal: React.FC<Props> = ({
         <div className="cham-access-content">
           <Wordmark />
 
-          {view === 'role' ? <main className="cham-access-role-content">
+          {nameRole ? <main className="cham-access-step-layout"><div className="cham-access-form-card" style={{gridColumn:'1 / -1',width:'100%',maxWidth:540,margin:'0 auto'}}><form onSubmit={event=>{event.preventDefault();const name=freeName.trim().replace(/\s+/g,' ');if(!name)return;freeExplorerIdentity.save(name,nameRole);if(nameRole==='student')onStudentGuest(name);else onTeacherDemo(name);setNameRole(null);}}><h1>{nameRole==='student'?'Em tên là gì?':'Thầy cô cho biết tên nhé!'}</h1><label className="cham-access-label" htmlFor="free-explorer-name">{nameRole==='student'?'Tên của em':'Tên thầy cô'}</label><input id="free-explorer-name" autoFocus required maxLength={60} autoComplete="off" value={freeName} onChange={e=>setFreeName(e.target.value)} placeholder={nameRole==='student'?'Nhập tên hoặc tên gọi của em':'Ví dụ: Cô Tuyết'} style={{width:'100%',padding:14,border:'1px solid #94a3b8',borderRadius:12,fontSize:16}}/><p className="cham-access-hint">Tên sẽ hiện trong lời chào và báo cáo truy cập, đánh giá của quản trị. Có thể dùng tên gọi; không cần nhập số điện thoại hay thông tin riêng tư khác.</p><button type="submit" className="cham-access-primary" disabled={!freeName.trim()||staffBusy||restoreBusy}>Tiếp tục <ArrowRight size={20}/></button><button type="button" className="cham-access-back" onClick={()=>setNameRole(null)}>Quay lại</button></form></div></main> : view === 'role' ? <main className="cham-access-role-content">
             <h1>Hãy chọn vai trò <span>để bắt đầu khám phá nhé!</span></h1>
             <div className="cham-access-roles">
               <button type="button" className="cham-access-role-card student" onClick={onStudent} aria-label="Chọn vai trò học sinh">
@@ -144,7 +148,7 @@ export const AccessPortal: React.FC<Props> = ({
                   </button>
                   <div className="cham-access-student-secondary">
                     {savedSyncCode && <button type="button" onClick={onSavedCode} disabled={restoreBusy}>Dùng mã đã lưu</button>}
-                    <button type="button" onClick={onStudentGuest} disabled={restoreBusy}><Compass size={19}/> Khám phá tự do</button>
+                    <button type="button" onClick={()=>requestName('student')} disabled={restoreBusy}><Compass size={19}/> Khám phá tự do</button>
                   </div>
                   <p className="cham-access-hint">Em có thẻ QR? Chạm biểu tượng QR bên cạnh mã học sinh.</p>
                 </>}
@@ -181,7 +185,7 @@ export const AccessPortal: React.FC<Props> = ({
                   <p>Quên mật khẩu? Liên hệ quản trị để được hỗ trợ.</p>
                 </form>}
                 <div className="cham-access-or"><span>HOẶC</span></div>
-                <button type="button" className="cham-access-teacher-guest" disabled={staffBusy} onClick={onTeacherDemo}>
+                <button type="button" className="cham-access-teacher-guest" disabled={staffBusy} onClick={()=>requestName('teacher')}>
                   <BookOpen size={27} aria-hidden="true"/><span><strong>Giáo viên tự do</strong><small>Trải nghiệm học liệu không cần tài khoản</small></span><ArrowRight size={20} aria-hidden="true"/>
                 </button>
                 <p className="cham-access-guest-note">Đăng nhập để tạo lớp, cấp mã và xem kết quả học sinh.</p>

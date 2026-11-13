@@ -8,7 +8,17 @@ const json = (data, status = 200) => Response.json(data, {
   status, headers: {'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff'},
 });
 
-async function record(request, db, day) {
+
+const preparedDatabases=new WeakSet();
+export async function ensureNamedReports(db){
+ if(preparedDatabases.has(db))return;
+ await db.batch([
+ db.prepare('CREATE TABLE IF NOT EXISTS report_named_sessions (session_id TEXT PRIMARY KEY, visitor_id TEXT NOT NULL, name TEXT NOT NULL, role TEXT NOT NULL, created_at TEXT NOT NULL)').bind(),
+ db.prepare('CREATE TABLE IF NOT EXISTS report_named_ratings (visitor_id TEXT NOT NULL, station_id TEXT NOT NULL, name TEXT NOT NULL, role TEXT NOT NULL, stars INTEGER NOT NULL CHECK(stars BETWEEN 1 AND 5), updated_at TEXT NOT NULL, PRIMARY KEY(visitor_id,station_id))').bind()
+ ]);preparedDatabases.add(db);
+}
+
+async function record(request, db, day, now) {
   if (request.headers.get('Origin') !== new URL(request.url).origin ||
       request.headers.get('Sec-Fetch-Site') === 'cross-site') {
     return json({error: 'Nguồn yêu cầu không hợp lệ.'}, 403);
@@ -46,6 +56,13 @@ async function record(request, db, day) {
     return json({error: 'Dữ liệu không hợp lệ.'}, 400);
   }
 
+  const visitor=data.visitor;
+  if(visitor!=null && (typeof visitor.name!=='string'||!visitor.name.trim()||visitor.name.length>60||/[\u0000-\u001f<>]/.test(visitor.name)||!['student','teacher'].includes(visitor.role)||!/^[a-f0-9]{32}$/.test(visitor.id||'')))return json({error:'Tên người khám phá không hợp lệ.'},400);
+  if(data.rating && (!visitor || !stationIds.has(data.rating.stationId) || (data.rating.action!=='read'&&(!Number.isInteger(data.rating.stars)||data.rating.stars<1||data.rating.stars>5))))return json({error:'Đánh giá không hợp lệ.'},400);
+  if(visitor)await ensureNamedReports(db);
+  if(data.rating?.action==='read'){
+   const saved=await db.prepare('SELECT stars FROM report_named_ratings WHERE visitor_id=? AND station_id=?').bind(visitor.id,data.rating.stationId).first();return json({stars:saved?.stars||0});
+  }
   const statements = [db.prepare(`
     INSERT INTO report_sessions(id, day, audience) VALUES (?, ?, ?)
     ON CONFLICT(id) DO UPDATE SET audience = excluded.audience
@@ -59,7 +76,10 @@ async function record(request, db, day) {
       WHERE excluded.stage > report_station_sessions.stage
     `).bind(id, stage, data.session));
   }
+  if(visitor)statements.push(db.prepare('INSERT INTO report_named_sessions(session_id,visitor_id,name,role,created_at) VALUES(?,?,?,?,?) ON CONFLICT(session_id) DO NOTHING').bind(data.session,visitor.id,visitor.name.trim(),visitor.role,new Date(now).toISOString()));
+  if(data.rating)statements.push(db.prepare('INSERT INTO report_named_ratings(visitor_id,station_id,name,role,stars,updated_at) VALUES(?,?,?,?,?,?) ON CONFLICT(visitor_id,station_id) DO UPDATE SET name=excluded.name,stars=excluded.stars,updated_at=excluded.updated_at WHERE stars!=excluded.stars OR name!=excluded.name').bind(visitor.id,data.rating.stationId,visitor.name.trim(),visitor.role,data.rating.stars,new Date(now).toISOString()));
   await db.batch(statements);
+  if(data.rating)return json({saved:true,stars:data.rating.stars});
   return new Response(null, {status: 204, headers: {'Cache-Control': 'no-store'}});
 }
 
@@ -69,7 +89,7 @@ export async function effectiveness(request, env, authorize = proxyApi, now = Da
     return json({error: 'Chưa bật thu thập báo cáo.'}, 503);
   }
   try {
-    if (request.method === 'POST') return await record(request, db, vietnamDay(now));
+    if (request.method === 'POST') return await record(request, db, vietnamDay(now), now);
     if (request.method !== 'GET') return json({error: 'Phương thức không hỗ trợ.'}, 405);
 
     if (!/(?:^|;\s*)cham_session=[a-f0-9]{64}(?:;|$)/.test(request.headers.get('Cookie') || '')) {
@@ -104,7 +124,12 @@ export async function effectiveness(request, env, authorize = proxyApi, now = Da
         GROUP BY p.station_id, s.audience
       `).bind(start, end),
     ]);
-    return json({start, end, visits: visits.results, stations: stations.results});
+    await ensureNamedReports(db);
+    const [people,ratings]=await db.batch([
+     db.prepare("SELECT name,role,created_at AS createdAt FROM report_named_sessions WHERE substr(datetime(created_at,'+7 hours'),1,10) BETWEEN ? AND ? ORDER BY created_at DESC LIMIT 200").bind(start,end),
+     db.prepare("SELECT name,role,station_id AS stationId,stars,updated_at AS updatedAt FROM report_named_ratings WHERE substr(datetime(updated_at,'+7 hours'),1,10) BETWEEN ? AND ? ORDER BY updated_at DESC LIMIT 200").bind(start,end)
+    ]);
+    return json({start,end,visits:visits.results,stations:stations.results,people:people.results,namedRatings:ratings.results});
   } catch {
     return json({error: 'Chưa tải hoặc lưu được số liệu báo cáo. Vui lòng thử lại sau.'}, 503);
   }

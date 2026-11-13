@@ -1,3 +1,5 @@
+import {freeExplorerIdentity} from './FreeExplorerIdentity';
+import {effectivenessService} from './EffectivenessService';
 import {fetchWithTimeout} from './NetworkService';
 export const FEEDBACK_CATEGORIES=['Kiến thức','Hình ảnh/âm thanh','Câu hỏi/trò chơi','Đề xuất khác'] as const;
 export type FeedbackCategory=typeof FEEDBACK_CATEGORIES[number];
@@ -19,8 +21,9 @@ async function request(path:string,data:object) {
   return result;
 }
 export const learningFeedbackService={
-  async rating(stationId:string,userId?:string,requireStudent=false):Promise<number>{return (await request('rating',{stationId,action:'read',...studentCredential(userId,requireStudent)})).stars;},
+  async rating(stationId:string,userId?:string,requireStudent=false):Promise<number>{if(!requireStudent&&freeExplorerIdentity.current())return effectivenessService.guestRating(stationId);return (await request('rating',{stationId,action:'read',...studentCredential(userId,requireStudent)})).stars;},
   async saveRating(stationId:string,stars:number,userId?:string,requireStudent=false):Promise<number>{
+    if(!requireStudent&&freeExplorerIdentity.current())return effectivenessService.guestRating(stationId,stars);
     const result=await request('rating',{stationId,stars,...studentCredential(userId,requireStudent)});
     if(result.saved!==true)throw new Error('Máy chủ chưa xác nhận lưu.');
     return result.stars;

@@ -106,7 +106,50 @@ try{
     assert.ok(!serverWrites.some(s=>/^PUT |^POST /.test(s)&&/\/api\/teacher\/workspace|\/api\/admin\//.test(s)),
       'Demo must not sync a plan or write Admin data');
     await page.screenshot({path:'teacher-plan-qa/'+device+'.png',fullPage:false});
-    console.log('Teacher integration QA',device,'PASS: seeded school/book/year, reviewed suggestions, add and teach, local-only draft, no protected writes');
+    // Same "Lớp của tôi · Mã QR" navigation as an authenticated Teacher.
+    if(device==='phone')await page.click('button[aria-controls="teacher-navigation"]');
+    await page.evaluate(()=>{
+      const button=[...document.querySelectorAll('#teacher-navigation button')]
+        .find(x=>x.textContent?.includes('Lớp của tôi · Mã QR'));
+      if(!button)throw Error('Missing shared QR classroom menu');
+      button.click();
+    });
+    await page.waitForFunction(()=>document.body.textContent?.includes('Thẻ QR học sinh'),{timeout:15000});
+    await clickButton(page,'Tạo thẻ QR cho');
+    await page.waitForSelector('img[alt^="Mã QR trải nghiệm"]',{timeout:25000});
+    const demoCard=await page.evaluate(()=>({
+      count:document.querySelectorAll('img[alt^="Mã QR trải nghiệm"]').length,
+      png:document.querySelector('img[alt^="Mã QR trải nghiệm"]')?.getAttribute('src')?.startsWith('data:image/png'),
+      hasZip:document.body.textContent?.includes('Tải trọn bộ thẻ QR (ZIP)'),
+    }));
+    assert.ok(demoCard.count>=1&&demoCard.png&&demoCard.hasZip,'Demo QR card must render as PNG and offer ZIP');
+    assert.deepEqual(pageErrors,[],'QR classroom page errors');
+
+    // Scan a fictional QR using its public, deliberately noncredential deep-link.
+    const qrPage=await browser.newPage();
+    const qrWrites=[],qrErrors=[];
+    qrPage.on('pageerror',error=>qrErrors.push(error.message));
+    await qrPage.setRequestInterception(true);
+    qrPage.on('request',request=>{
+      if(['POST','PUT','PATCH','DELETE'].includes(request.method())){
+        qrWrites.push(request.method()+' '+new URL(request.url()).pathname);
+        request.abort('blockedbyclient');
+      }else request.continue();
+    });
+    await qrPage.setViewport({width:390,height:844,isMobile:true,hasTouch:true,deviceScaleFactor:1});
+    await qrPage.goto(url.split('?')[0]+'#demo-student=g2&n=1&c=2%2F24',{waitUntil:'domcontentloaded',timeout:60000});
+    await qrPage.waitForFunction(()=>document.body.textContent?.includes('Thẻ QR TRẢI NGHIỆM'),{timeout:20000});
+    await qrPage.evaluate(()=>{
+      const btn=[...document.querySelectorAll('button')].find(b=>b.getAttribute('aria-label')==='CHẠM ĐỂ KHÁM PHÁ');
+      if(!btn)throw Error('Missing cover entry for demo QR');btn.click();
+    });
+    await qrPage.waitForFunction(()=>document.body.textContent?.includes('Học sinh 01')&&document.body.textContent?.includes('Khối 2'),{timeout:30000});
+    assert.ok(!qrWrites.some(s=>/\/api\/(?:effectiveness|student\/sync|teacher|admin)/.test(s)),
+      'Demo QR must never hit protected or analytics write routes');
+    assert.deepEqual(qrErrors,[],'Demo QR guest errors');
+    await qrPage.screenshot({path:'teacher-plan-qa/qr-entry-'+device+'.png',fullPage:false});
+    await qrPage.close();
+    console.log('Teacher integration QA',device,'PASS: unified menu, verified integration, ZIP/PNG QR, local-only QR scan, no backend writes');
     await page.close();
   }
 } finally {await browser.close();}

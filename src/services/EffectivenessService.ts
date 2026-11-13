@@ -1,12 +1,11 @@
 import {freeExplorerIdentity} from './FreeExplorerIdentity';
 type Audience = 0 | 1 | 2;
-type Visit = {id: string; lastActivity: number; staff?: boolean};
+type Visit = {id: string; lastActivity: number; staff?: boolean; visitorId?:string};
 type Batch = {session: string; audience: Audience; stations: Map<string, number>;visitor:ReturnType<typeof freeExplorerIdentity.current>};
 
 const visitKey = 'cham_effectiveness_visit_v1';
 const idleMs = 30 * 60 * 1000;
 let visit: Visit | undefined;
-let visitorId='';
 let audience: Audience = 0;
 let acknowledged: Batch | undefined;
 let pending: Batch | undefined;
@@ -15,16 +14,17 @@ let pauseUntil = 0;
 let timer: number | undefined;
 
 function currentVisit(now: number): Visit {
-  const person=freeExplorerIdentity.current()?.id||'';if(person!==visitorId){visitorId=person;visit=undefined;try{localStorage.removeItem(visitKey)}catch{}}
+  const person=freeExplorerIdentity.current()?.id||'';
   try {
     const saved = JSON.parse(localStorage.getItem(visitKey) || 'null') as Visit | null;
     if (saved && /^[a-f0-9]{32}$/.test(saved.id) && Number.isFinite(saved.lastActivity) &&
         (!visit || saved.lastActivity > visit.lastActivity)) visit = saved;
   } catch { /* Continue in memory. */ }
-  if (!visit || now - visit.lastActivity >= idleMs || (visit.staff && audience !== 2)) {
+  if (!visit || now - visit.lastActivity >= idleMs || (!!visit.visitorId && visit.visitorId!==person) || (visit.staff && audience !== 2)) {
     const id = Array.from(crypto.getRandomValues(new Uint8Array(16)), byte => byte.toString(16).padStart(2, '0')).join('');
     visit = {id, lastActivity: now};
   }
+  if(person)visit.visitorId=person;
   visit.lastActivity = now;
   if (audience === 2) visit.staff = true;
   try { localStorage.setItem(visitKey, JSON.stringify(visit)); } catch { /* Continue in memory. */ }
@@ -50,6 +50,7 @@ async function flush() {
     if (response.status !== 204) throw Error('Analytics unavailable');
     if (acknowledged?.session !== batch.session) acknowledged = batch;
     else {
+      acknowledged.visitor=batch.visitor;
       acknowledged.audience = Math.max(acknowledged.audience, batch.audience) as Audience;
       for (const [id, stage] of batch.stations) {
         acknowledged.stations.set(id, Math.max(stage, acknowledged.stations.get(id) ?? -1));
@@ -86,9 +87,10 @@ function note(stationId?: string, stage = 0) {
     const {id: session} = currentVisit(Date.now());
     if (audience === 2) stationId = undefined;
     const sent = acknowledged?.session === session ? acknowledged : undefined;
-    if (!pending && sent && audience <= sent.audience &&
+    if (!pending && sent && sent.visitor?.id===freeExplorerIdentity.current()?.id && audience <= sent.audience &&
         (!stationId || stage <= (sent.stations.get(stationId) ?? -1))) return;
     if (pending?.session !== session) pending = {session, audience, stations: new Map(),visitor:freeExplorerIdentity.current()};
+    pending.visitor=freeExplorerIdentity.current();
     pending.audience = Math.max(pending.audience, audience) as Audience;
     if (pending.audience === 2) pending.stations.clear();
     else if (stationId && stage > Math.max(pending.stations.get(stationId) ?? -1, sent?.stations.get(stationId) ?? -1)) {

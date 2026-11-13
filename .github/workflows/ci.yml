@@ -114,7 +114,7 @@ jobs:
       - name: Admin charts and feedback visual regression
         run: node --test admin-report-visual-regression-test.mjs
       - name: Bounded real effectiveness analytics and exact October-to-now reporting
-        run: node --test effectiveness-test.mjs named-ratings-test.mjs
+        run: node --test effectiveness-test.mjs named-ratings-test.mjs named-visitor-client-test.mjs
 
       - name: Production build
         run: npm run build

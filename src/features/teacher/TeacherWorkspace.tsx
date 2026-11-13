@@ -67,7 +67,7 @@ const recordFields=[
   {key:'teachingSuggestion',label:'Gợi ý tổ chức, câu hỏi, đánh giá',rows:3},
 ] as const;
 
-export function TeacherWorkspace(){
+export function TeacherWorkspace({onOpenClassroom}:{onOpenClassroom?:()=>void}={}){
   const {currentUser,currentGrade,allStationsInCurrentGrade,setCurrentGrade,openStation}=useApp();
   const uid=currentUser?.id||'teacher-anonymous';
   const demo=uid==='teacher-demo';
@@ -222,6 +222,14 @@ export function TeacherWorkspace(){
         Dữ liệu cũ vẫn giữ nguyên cho đến khi bạn chủ động thay thế.
         <button type="button" className="ml-2 underline font-semibold" onClick={()=>edit({book:DEFAULT_BOOK})}>Dùng bộ sách đã thống nhất</button>
       </div>}
+    </div>
+
+    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-sky-100 bg-sky-50 p-4">
+      <div>
+        <h3 className="font-black text-blue-950">Mã QR học sinh nằm ở “Lớp của tôi · Mã QR”</h3>
+        <p className="mt-1 text-xs text-slate-700">Tạo/chọn lớp → lưu danh sách → cấp mã cho học sinh → tải thẻ PNG hoặc ZIP. Chế độ trải nghiệm dùng thẻ thử riêng.</p>
+      </div>
+      {onOpenClassroom && <button type="button" className={mainButton} onClick={onOpenClassroom}>Mở Lớp của tôi · Mã QR</button>}
     </div>
 
     <div className="grid grid-cols-3 gap-2 sm:gap-3">

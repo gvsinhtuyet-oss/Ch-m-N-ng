@@ -111,6 +111,9 @@ jobs:
       - name: Actual Teacher/Admin role routes and approved CSS regression
         run: node --test production-staff-ui-test.mjs
 
+      - name: Isolated Teacher/Admin experience and protected role tests
+        run: node --test experience-workspace-test.mjs
+
       - name: Admin charts and feedback visual regression
         run: node --test admin-report-visual-regression-test.mjs
       - name: Bounded real effectiveness analytics and exact October-to-now reporting

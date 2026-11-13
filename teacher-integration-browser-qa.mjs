@@ -37,7 +37,7 @@ async function checkChat(page,role,questions){
   await page.type('textarea[aria-label="Nhập câu hỏi"]',question);
   await page.click('button[aria-label="Gửi câu hỏi"]');
   await page.waitForFunction(n=>document.querySelectorAll('[data-chat-role="assistant"]').length>n,{timeout:15000},before);
-  const answer=await page.$$eval('[data-chat-role="assistant"]',els=>els.at(-1).querySelector('p').textContent);
+  const answer=await page.$$eval('[data-chat-role="assistant"]',els=>els.slice(-1)[0].querySelector('p').textContent);
   assert.ok(answer.includes(expected),role+' failed '+question+': '+answer);
  }
  await page.screenshot({path:'teacher-plan-qa/chat-'+role+'-'+(await page.viewport()).width+'.png'});
@@ -46,6 +46,7 @@ async function checkChat(page,role,questions){
 try{
   for(const [device,width,height] of [['desktop',1366,900],['iphone',390,844],['android',412,915],['ipad',820,1180]]){
     const page=await browser.newPage();
+    if(device==='iphone')await page.evaluateOnNewDocument(()=>{Array.prototype.at=undefined;});
     const pageErrors=[],serverWrites=[],apiReads=[],thirdPartyBlocked=[];
     page.on('pageerror',error=>pageErrors.push(error.message));
     await page.setCacheEnabled(false);
@@ -203,6 +204,7 @@ try{
 
     // Scan a fictional QR using its public, deliberately noncredential deep-link.
     const qrPage=await browser.newPage();
+    if(device==='iphone')await qrPage.evaluateOnNewDocument(()=>{Array.prototype.at=undefined;});
     const qrWrites=[],qrErrors=[],qrThirdPartyBlocked=[],qrReads=[];
     qrPage.on('pageerror',error=>qrErrors.push(error.message));
     await qrPage.setCacheEnabled(false);

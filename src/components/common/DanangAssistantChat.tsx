@@ -297,7 +297,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   }, [messages, open, showSuggestions]);
 
   const context = useMemo(() => ({ station, hotspot, stations: ALL_25_STATIONS, audience:audience==='admin'?'teacher' as const:audience, stage, grade:currentGrade || station?.grade }), [station, hotspot, audience, stage, currentGrade]);
-  const latestAnswer=messages.filter(m=>m.role==='assistant'&&m.id!=='welcome').at(-1);
+  const latestAnswer=messages.filter(m=>m.role==='assistant'&&m.id!=='welcome').slice(-1)[0];
   const suggestedPrompts=buildAssistantFollowUps({
     audience,stage,topic:latestAnswer?.topic,stationTitle:station?.titleVi,hotspotTitle:hotspot?.titleVi,
     unknown:latestAnswer?.found===false,
@@ -369,7 +369,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         setInput('');
         return;
       }
-      const pending=messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask;
+      const pending=messages.filter(message=>message.role==='assistant').slice(-1)[0]?.pendingTask;
       if (isTeacher && detectLearningTask(question)==='knowledge'&&(!pending||/^(?:mở|tìm|tra cứu|mo|tim)(?:\s|$)/i.test(question))) {
         lookupLock.current = true;
         setLookupBusy(true);
@@ -382,7 +382,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
           return;
         }
       }
-      const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').at(-1)?.text, previousTopic:messages.filter(message=>message.role==='assistant').at(-1)?.topic, previousAnswer:messages.filter(message=>message.role==='assistant'&&!message.ai).at(-1)?.text, pendingTask:messages.filter(message=>message.role==='assistant').at(-1)?.pendingTask, practiceIndex:practiceCounts.current[practiceTopic || messages.filter(message=>message.role==='assistant').at(-1)?.topic || ''] || 0 });
+      const result = retrieveDanangAssistantAnswer(question, { ...context, previousQuery: messages.filter(message => message.role === 'student').slice(-1)[0]?.text, previousTopic:messages.filter(message=>message.role==='assistant').slice(-1)[0]?.topic, previousAnswer:messages.filter(message=>message.role==='assistant'&&!message.ai).slice(-1)[0]?.text, pendingTask:messages.filter(message=>message.role==='assistant').slice(-1)[0]?.pendingTask, practiceIndex:practiceCounts.current[practiceTopic || messages.filter(message=>message.role==='assistant').slice(-1)[0]?.topic || ''] || 0 });
       if(result.practice)practiceCounts.current[result.topic || '']=(result.practice.sequence??0)+1;
       append({
         id: `a-${Date.now()}`,
@@ -420,7 +420,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     }
   };
   const askAi=()=>{
-    const question=input.trim()||messages.filter(m=>m.role==='student').at(-1)?.text;
+    const question=input.trim()||messages.filter(m=>m.role==='student').slice(-1)[0]?.text;
     if(!question||aiLock.current||!aiAvailable||!isTeacher)return;
     if(input.trim()){append({id:`ai-q-${Date.now()}`,role:'student',text:question});setInput('');}
     void requestAi(question);
@@ -473,7 +473,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         <span id="assistant-drag-hint" className="sr-only">{mobile ? "Chạm để mở Trợ lý khám phá." : "Giữ và kéo biểu tượng để tránh che nội dung."}</span>
       </div>
 
-      {measurementMounted && <Suspense fallback={null}><EffectivenessPanel key={storageScope} open={measurementOpen} audience={isAdmin?'teacher':audience} grade={currentGrade || station?.grade || 2} scope={storageScope} initialTopic={messages.filter(message=>message.role==='assistant').at(-1)?.topic} onClose={()=>{setMeasurementOpen(false);setOpen(true);}} /></Suspense>}
+      {measurementMounted && <Suspense fallback={null}><EffectivenessPanel key={storageScope} open={measurementOpen} audience={isAdmin?'teacher':audience} grade={currentGrade || station?.grade || 2} scope={storageScope} initialTopic={messages.filter(message=>message.role==='assistant').slice(-1)[0]?.topic} onClose={()=>{setMeasurementOpen(false);setOpen(true);}} /></Suspense>}
       {isTeacher && lessonPanel && <Suspense fallback={<div role="status" className="fixed inset-4 z-[70] rounded-2xl bg-white p-6 shadow-xl">Đang mở bài học…</div>}>
         <TeacherLessonPanel catalog={lessonPanel.catalog} recordId={lessonPanel.recordId} source={lessonPanel.source} stations={ALL_25_STATIONS} onClose={() => {setLessonPanel(null);setOpen(true);}} onOpenStation={station => {setLessonPanel(null);onOpenTeacherStation?.(station);}} />
       </Suspense>}

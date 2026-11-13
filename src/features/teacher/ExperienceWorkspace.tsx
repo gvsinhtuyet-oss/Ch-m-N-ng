@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ALL_25_STATIONS } from '../../data/allStations';
 import { AdminExperienceShell, type AdminExperiencePage } from './AdminExperienceShell';
+import { AdminExperienceAnalytics } from './AdminExperienceAnalytics';
 import { ASSISTANT_QUALITY_CASES, evaluateAssistantQualityCase } from '../admin/assistantQualityEngine';
 
 type Learner = { id: string; name: string; completed: number; stars: number; feedback: string };
@@ -174,10 +175,11 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
   </div>;
 
   const adminOverview = <div className="space-y-4">
+    <AdminExperienceAnalytics mode="overview" />
     <div className="flex flex-wrap items-center justify-between gap-2">
       <div><p className="text-xs font-extrabold uppercase tracking-widest text-indigo-600">NĂM HỌC 2026–2027</p>
-        <h2 className="mt-1 text-xl font-black text-slate-900 sm:text-2xl">Tổng quan hoạt động toàn trường</h2>
-        <p className="text-xs text-slate-500">Bộ số liệu trải nghiệm trên thiết bị · Không phải thống kê thật</p>
+        <h2 className="mt-1 text-xl font-black text-slate-900 sm:text-2xl">Các lớp bạn đang tạo trên thiết bị</h2>
+        <p className="text-xs text-slate-500">Thông tin quản lý lớp cá nhân trên trình duyệt, độc lập với báo cáo mô phỏng 267 người ở phía trên.</p>
       </div>
       <span className="rounded-full bg-amber-100 px-3 py-2 text-xs font-semibold text-amber-950">Dữ liệu cục bộ · Không dùng Firestore</span>
     </div>
@@ -192,7 +194,7 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
     </div>
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 2xl:grid-cols-6">
       {[
-        ['Giáo viên', 1],
+        ['Giáo viên mẫu', 1],
         ['Lớp học', data.classes.length],
         ['Học sinh', students.length],
         ['Trạm GDĐP', ALL_25_STATIONS.length],
@@ -209,10 +211,15 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
         <div className="mt-1 h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full bg-sky-600" style={{width: students.length ? (g.students/students.length*100)+'%' : '0%'}} /></div>
       </div>)}</div>
     </div>
-    <div className={muted}>Các số liệu trên được tính từ bản trải nghiệm tại thiết bị này, KHÔNG phải truy cập, đánh giá hay kết quả thật trên hệ thống. Chưa kết nối Firestore hoặc báo cáo Production.</div>
+    <div className={muted}>Các lớp do bạn tạo chỉ tồn tại trên thiết bị này và KHÔNG được cộng vào bộ 267 người tham gia mô phỏng phía trên. Không có dữ liệu Production hay Firestore.</div>
   </div>;
 
-  const ratingsPanel = <div className="grid gap-4 lg:grid-cols-2">
+  const ratingsPanel = <div className="space-y-5">
+    <AdminExperienceAnalytics mode="ratings" />
+    <section className="space-y-3">
+      <h3 className="text-lg font-black text-slate-900">Đánh giá của lớp bạn tự tạo trên thiết bị</h3>
+      <p className="text-xs text-slate-600">Nhóm dữ liệu lớp cá nhân dưới đây độc lập với bộ 267 người mô phỏng; chỉ hiển thị các trường bạn tự nhập.</p>
+      <div className="grid gap-4 lg:grid-cols-2">
     <section className="rounded-2xl border bg-white p-5">
       <h2 className="text-lg font-black">Đánh giá 1–5 sao · Dữ liệu minh họa</h2>
       <p className="mt-2 text-3xl font-black text-indigo-800">{average === null ? '—' : average.toFixed(1)} <span className="text-base font-normal">/ 5 · {evaluated.length} lượt mẫu</span></p>
@@ -226,6 +233,8 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
         <p className="font-bold">{c.student} · {c.className}</p><p className="mt-1">{c.note}</p>
       </article>)}
       {!comments.length && <p className="text-sm text-slate-500">Chưa có góp ý.</p>}</div>
+    </section>
+      </div>
     </section>
   </div>;
 
@@ -280,44 +289,7 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
       </tr>)}</tbody></table></div>
   </section>;
 
-  const effectivenessPanel = <div className="space-y-4">
-    <section className="overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-950 to-sky-800 p-5 text-white shadow-md sm:p-6">
-      <p className="text-xs font-bold uppercase tracking-wider text-sky-200">CHẠM ĐÀ NẴNG · BÁO CÁO QUẢN TRỊ</p>
-      <h2 className="mt-2 text-xl font-black sm:text-2xl">Hiệu quả sử dụng và hành trình khám phá</h2>
-      <p className="mt-2 max-w-3xl text-sm text-sky-100">Bản trình diễn biểu đồ theo lớp và tiến độ học sinh mẫu; số lượt truy cập/ngày và tỷ lệ sử dụng Production không có trong bộ dữ liệu cục bộ.</p>
-    </section>
-    <div className="grid gap-3 sm:grid-cols-3">
-      {[
-        ['Học sinh tham gia mẫu', students.filter(s=>s.completed>0).length],
-        ['Trạm đã hoàn thành (mẫu)', students.reduce((n,s)=>n+s.completed,0)],
-        ['Lượt đánh giá mẫu', evaluated.length]
-      ].map(([label,value])=><div key={label} className="rounded-2xl border bg-white p-5">
-        <p className="text-xs font-semibold text-slate-600">{label}</p><p className="mt-2 text-3xl font-black text-sky-800">{value}</p>
-      </div>)}
-    </div>
-    <div className="grid gap-4 lg:grid-cols-2">
-      <div className="rounded-2xl border bg-white p-5">
-        <h3 className="font-black">Số học sinh mẫu theo khối</h3>
-        <div className="mt-4 space-y-3">{countsByGrade.map(g=><div key={g.grade}>
-          <div className="mb-1 flex justify-between text-sm"><span>Khối {g.grade}</span><span className="font-bold">{g.students} em</span></div>
-          <div className="h-3 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-sky-600"
-            style={{width:students.length?(100*g.students/students.length)+'%':'0%'}}/></div>
-        </div>)}</div>
-      </div>
-      <div className="rounded-2xl border bg-white p-5">
-        <h3 className="font-black">Mức độ khám phá (số trạm)</h3>
-        <div className="mt-4 space-y-3">{[0,1,2,3,4,5].map(count=>{
-          const hits=students.filter(s=>s.completed===count).length;
-          return <div key={count}>
-            <div className="mb-1 flex justify-between text-sm"><span>{count}/5 trạm</span><span className="font-bold">{hits} em</span></div>
-            <div className="h-3 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-indigo-600"
-              style={{width:students.length?(100*hits/students.length)+'%':'0%'}}/></div>
-          </div>;
-        })}</div>
-      </div>
-    </div>
-    <div className={muted}>Không tạo biểu đồ ngày truy cập giả định. Khi đăng nhập quản trị thật, chỉ số được lấy từ dữ liệu máy chủ đã xác minh.</div>
-  </div>;
+  const effectivenessPanel = <AdminExperienceAnalytics mode="effectiveness" />;
 
   const usersPanel = <section className="rounded-2xl border border-slate-200 bg-white p-5">
     <h2 className="text-lg font-black">Tài khoản và phân quyền</h2>

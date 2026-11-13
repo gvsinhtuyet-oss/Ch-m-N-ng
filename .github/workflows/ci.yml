@@ -114,6 +114,9 @@ jobs:
       - name: Isolated Teacher/Admin experience and protected role tests
         run: node --test experience-workspace-test.mjs
 
+      - name: Fictional 267-person Admin analytics, filters and zero-network tests
+        run: node --import tsx --test admin-experience-analytics-test.ts
+
       - name: Admin charts and feedback visual regression
         run: node --test admin-report-visual-regression-test.mjs
       - name: Bounded real effectiveness analytics and exact October-to-now reporting

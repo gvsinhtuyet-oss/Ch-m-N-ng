@@ -61,7 +61,7 @@ export default function AssistantEffectivenessPanel({open,onClose,audience,grade
     if(event.key==='Escape'){event.stopPropagation();onClose();}
     if(event.key==='Tab'){
       const controls=Array.from(panel.current?.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),textarea:not(:disabled)')||[]).filter(element=>element.getClientRects().length);
-      const first=controls[0],last=controls.at(-1);
+      const first=controls[0],last=controls.slice(-1)[0];
       if(event.shiftKey&&(document.activeElement===first||document.activeElement===panel.current)){event.preventDefault();last?.focus();}
       else if(!event.shiftKey&&(document.activeElement===last||document.activeElement===panel.current)){event.preventDefault();first?.focus();}
     }

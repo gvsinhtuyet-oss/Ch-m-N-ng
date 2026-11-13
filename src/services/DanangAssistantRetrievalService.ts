@@ -586,7 +586,7 @@ function retrieveLegacyAnswer(rawQuery:string, context:AssistantRetrievalContext
       results.map((r,i)=>`**${parts[i]}?**\n${r.answer}`).join('\n\n')+(parts.length>3?'\n\nBạn tách các ý còn lại thành lượt tiếp theo nhé.':''),
       results.every(r=>r.found)?'medium':'low',{
         sources:[...new Map(results.flatMap(r=>r.sources||[]).map(s=>[s.url||s.label,s])).values()],
-        topic:results.at(-1)?.topic,
+        topic:results.slice(-1)[0]?.topic,
       });
   }
   if(questionIntent(query)==='comparison') {

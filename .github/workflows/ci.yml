@@ -109,7 +109,7 @@ jobs:
         run: node teacher-workspace-test.mjs && node --test google-identity-test.mjs && node --import tsx --test teacher-plan-import-test.ts
 
       - name: Integration plan defaults, KNTT lesson matching, real/demo isolation and manual sync
-        run: node --import tsx --test teacher-integration-plan-test.ts experience-no-network-test.ts
+        run: node --import tsx --test teacher-integration-plan-test.ts experience-no-network-test.ts assistant-three-roles-test.ts
 
       - name: Teacher demo QR is functional but never issues real codes or analytics writes
         run: node --import tsx --test demo-student-qr-test.ts

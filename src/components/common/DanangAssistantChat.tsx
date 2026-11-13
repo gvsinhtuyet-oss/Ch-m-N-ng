@@ -1,3 +1,4 @@
+import {staffAssistantAnswer,type StaffAssistantPage} from '../../services/StaffAssistantAnswers';
 import {isExperienceMode} from '../../services/ExperienceMode';
 import {audioService} from '../../services/AudioService';
 import {constrainAssistantPosition, type AssistantPosition} from '../../utils/assistantPosition';
@@ -46,6 +47,7 @@ interface ChatMessage {
   teachingExample?: string;
   followUp?: string;
   ai?: boolean;
+  adminPage?:StaffAssistantPage;
   task?: LearningTask;
   practice?: PracticeQuestion;
   pendingTask?: LearningTask;
@@ -148,7 +150,7 @@ const AssistantEmblem=({className}:{className?:string})=>(
 export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '', openRequestId = 0 }) => {
   const isTeacher = audience !== 'student';
   const isAdmin = audience === 'admin';
-  const welcome = isAdmin ? 'Chào anh/chị! Mình có thể giúp tìm các mục quản trị, kiểm định trợ lý và xem báo cáo đã xác thực.' : isTeacher ? 'Chào thầy/cô! Em hỗ trợ tìm học liệu và gợi ý hoạt động dạy học.' : WELCOME;
+  const welcome = isAdmin ? isExperienceMode()?'Chào anh/chị! Mình hỗ trợ báo cáo số liệu giả định, xem kết quả lớp và kiểm định chatbot trong không gian trải nghiệm.':'Chào anh/chị! Mình có thể giúp tìm các mục quản trị, kiểm định trợ lý và xem báo cáo đã xác thực.' : isTeacher ? 'Chào thầy/cô! Em hỗ trợ tìm học liệu và gợi ý hoạt động dạy học.' : WELCOME;
   const [open, setOpen] = useState(false);
   // Header/station shortcuts can be tapped before this lazy-loaded module mounts.
   // The parent keeps the request ID, so the first tap is not lost on slow networks.
@@ -360,6 +362,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     setShowSuggestions(false);
     append({ id: `q-${Date.now()}`, role: 'student', text: isTeacher ? question : maskStudentPrivateQuestion(question) });
     try {
+      if(isAdmin){const response=await staffAssistantAnswer(question,isExperienceMode());if(epoch!==chatEpoch.current)return;if(response){append({id:`admin-${Date.now()}`,role:'assistant',text:response.answer,adminPage:response.adminPage});setInput('');return;}}
       // Provide a verified example for the class-2 Hội An teaching prompt.
       if (audience==='teacher' && /(?:3|ba) câu hỏi/i.test(question) && /hội an/i.test(question)) {
         append({id:`hoi-an-${Date.now()}`,role:'assistant',text:'Gợi ý 3 câu hỏi cho học sinh lớp 2 tìm hiểu Hội An:\n1. Phố cổ Hội An nằm bên dòng sông nào? (Sông Hoài.)\n2. Hội An được UNESCO công nhận là di sản gì? (Di sản văn hóa thế giới.)\n3. Em ấn tượng với điều gì ở Hội An? Vì sao? (Học sinh chia sẻ cảm nhận.)\nThầy/cô có thể cho học sinh quan sát tranh rồi trao đổi theo cặp.'});
@@ -479,6 +482,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
           ref={panelRef}
           tabIndex={-1}
           id="danang-assistant-panel"
+          data-assistant-audience={audience}
           role="dialog"
           aria-label="Trợ lý khám phá Đà Nẵng"
           style={{left:panelLeft, top:panelTop, width:panelWidth, height:panelHeight, maxHeight:panelHeight}}
@@ -488,7 +492,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             <div className="flex items-center gap-2.5">
               <button type="button" onClick={()=>setOpen(false)} aria-label="Thu gọn Trợ lý Khám phá" title="Thu gọn Trợ lý Khám phá" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"><AssistantEmblem className="h-8 w-8"/></button>
               <div className="min-w-0 flex-1">
-                <h2 className="truncate text-[15px] font-bold tracking-tight">Trợ lý Khám phá</h2>
+                <h2 className="truncate text-[15px] font-bold tracking-tight">Trợ lý Khám phá</h2><p className="text-[10px] font-semibold text-sky-100">{isAdmin?'Hỗ trợ Quản trị':isTeacher?'Hỗ trợ Giáo viên':'Đồng hành Học sinh'}</p>
                 {(currentGrade||station?.grade)&&<p className="mt-0.5 truncate text-[11px] text-sky-100">Lớp {currentGrade||station?.grade}{station?' · '+(hotspot?.titleVi?.replace(/^\d+\.\s*/,'')||station.titleVi):''}</p>}
               </div>
               <details ref={menuRef} className="relative shrink-0">
@@ -511,7 +515,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                   className={`flex ${message.role === 'student' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`min-w-0 break-words rounded-[20px] px-3.5 py-3 text-sm leading-relaxed ${message.role === 'student'
+                    data-chat-role={message.role} className={`min-w-0 break-words rounded-[20px] px-3.5 py-3 text-sm leading-relaxed ${message.role === 'student'
                         ? 'max-w-[92%] rounded-br-md bg-gradient-to-br from-blue-600 to-sky-600 text-white shadow-sm'
                         : message.id==='welcome'?'max-w-full border border-sky-100 bg-sky-100/80 text-slate-700':'max-w-[98%] rounded-bl-md border border-slate-100 bg-white text-slate-800 shadow-sm'
                     }`}
@@ -540,6 +544,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
                       {spokenMessageId===message.id?'Dừng đọc':'Nghe câu trả lời'}
                     </button>}
 
+                    {isAdmin&&message.adminPage&&<button type="button" onClick={()=>{window.dispatchEvent(new CustomEvent('cham-admin-open-page',{detail:{page:message.adminPage}}));setOpen(false);}} className="mt-2 min-h-11 rounded-xl bg-indigo-700 px-3 py-2 text-sm font-bold text-white">Mở trang liên quan</button>}
                     {isTeacher&&message.role==='assistant'&&message.id!=='welcome'&&!message.lessons&&<button type="button" aria-label="Sao chép kèm nguồn" onClick={()=>void copyAnswer(message)} className="mt-2 min-h-11 rounded-lg border border-sky-200 px-3 py-2 text-xs font-bold text-sky-800">{copiedMessage===message.id?'Đã sao chép':'Sao chép'}</button>}
                     {message.ai && <p className="mt-2 text-[11px] text-amber-800">AI tham khảo</p>}
                     {isTeacher&&(message.teachingExample||message.followUp)&&<details className="mt-2 border-t border-slate-100 pt-2 text-sm"><summary className="cursor-pointer py-1 text-xs font-semibold text-sky-800">Gợi ý dạy học</summary>{message.teachingExample&&<p className="mt-2">{message.teachingExample}</p>}{message.followUp&&<p className="mt-2">Hỏi thêm: {message.followUp}</p>}</details>}

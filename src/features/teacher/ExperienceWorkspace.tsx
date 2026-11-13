@@ -59,6 +59,8 @@ const muted = 'rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-a
 export const ExperienceWorkspace: React.FC<{ teacherPanel: (panels: {classesPanel: React.ReactNode; resultsPanel: React.ReactNode}) => React.ReactNode }> = ({ teacherPanel }) => {
   const [data, setData] = useState<Sandbox>(readSandbox);
   const [area, setArea] = useState<'teacher' | 'admin'>('teacher');
+  useEffect(()=>{window.dispatchEvent(new CustomEvent('cham-experience-assistant-role',{detail:{role:area}}));},[area]);
+  useEffect(()=>{const navigate=(event:Event)=>{const page=(event as CustomEvent).detail?.page;if(['assistant-qa','effectiveness','reports'].includes(page)){setArea('admin');setAdminPage(page);}};window.addEventListener('cham-admin-open-page',navigate);return()=>window.removeEventListener('cham-admin-open-page',navigate);},[]);
   const [adminPage, setAdminPage] = useState<AdminExperiencePage>('overview');
   const [qualityGrade, setQualityGrade] = useState(0);
   const [qualityChecks, setQualityChecks] = useState<Record<string, 'pass'|'flag'|'review'>>({});

@@ -28,6 +28,21 @@ const clickButton=async(page,text)=>
     target.click();
   },text);
 
+async function checkChat(page,role,questions){
+ await page.waitForSelector('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]',{visible:true,timeout:15000});
+ await page.click('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]');
+ await page.waitForSelector('#danang-assistant-panel[data-assistant-audience="'+role+'"]');
+ for(const [question,expected] of questions){
+  const before=await page.$$eval('[data-chat-role="assistant"]',els=>els.length);
+  await page.type('textarea[aria-label="Nhập câu hỏi"]',question);
+  await page.click('button[aria-label="Gửi câu hỏi"]');
+  await page.waitForFunction(n=>document.querySelectorAll('[data-chat-role="assistant"]').length>n,{timeout:15000},before);
+  const answer=await page.$$eval('[data-chat-role="assistant"]',els=>els.at(-1).querySelector('p').textContent);
+  assert.ok(answer.includes(expected),role+' failed '+question+': '+answer);
+ }
+ await page.screenshot({path:'teacher-plan-qa/chat-'+role+'-'+(await page.viewport()).width+'.png'});
+ await page.click('[aria-label="Thu gọn Trợ lý Khám phá"]');
+}
 try{
   for(const [device,width,height] of [['desktop',1366,900],['iphone',390,844],['android',412,915],['ipad',820,1180]]){
     const page=await browser.newPage();
@@ -93,6 +108,7 @@ try{
     assert.equal(basics.hasPrivateDemo,true);
     assert.equal(basics.realSaveButtons,0,'Demo must never have an account-sync button');
 
+    await checkChat(page,'teacher',[['Gợi ý 3 câu hỏi cho học sinh lớp 2 tìm hiểu Hội An','Gợi ý 3 câu hỏi'],['Thiết kế hoạt động 5 phút về bảo vệ san hô cho lớp 2','phút'],['Vòng tuần hoàn nước là gì?','bốc hơi']]);
     // Pick grade 2 and one curated, textbook-reviewed lesson.
     await page.evaluate(()=>{
       const label=[...document.querySelectorAll('label')].find(x=>x.textContent?.trim().startsWith('Khối lớp'));
@@ -165,6 +181,7 @@ try{
     assert.ok(await page.evaluate(()=>[...document.querySelectorAll('input')].some(i=>i.value==='Học viên kiểm thử A')));
     await page.evaluate(()=>{const group=document.querySelector('[aria-label="Chuyển đổi vai trò trải nghiệm"]');[...group.querySelectorAll('button')].find(b=>b.textContent==='Quản trị').click();});
     await page.waitForSelector('.admin-workspace');
+    await checkChat(page,'admin',[['Tổng quan hiệu quả sử dụng hiện có những số liệu nào?','267'],['Xem kết quả học tập từng lớp ở đâu?','Kết quả theo lớp'],['Làm sao kiểm định chatbot của 25 trạm?','Kiểm định chatbot']]);
         // Navigate the actual visible sidebar by labels, expanding its parent groups.
     const groups=[['Dạy và học',['Nhật ký triển khai','Kết quả theo lớp']],['Học liệu',['Quản lý 25 trạm','Địa chỉ GDĐP']],['Báo cáo',['Hiệu quả sử dụng','Đánh giá sao và góp ý']],['Cài đặt',['Tài khoản và quyền','Giao diện','Kiểm định chatbot']]];
     for(const [group,labels] of groups){
@@ -207,6 +224,7 @@ try{
       if(!btn)throw Error('Missing cover entry for demo QR');btn.click();
     });
     await qrPage.waitForFunction(()=>document.body.textContent?.includes('Học sinh 01')&&document.body.textContent?.includes('Khối 2'),{timeout:30000});
+    await checkChat(qrPage,'student',[['Phố cổ Hội An có gì đặc biệt?','Hội An'],['San hô là động vật hay thực vật?','động vật'],['Vòng tuần hoàn nước là gì?','bốc hơi']]);
     assert.deepEqual(qrWrites,[],'Demo QR must never attempt a network mutation');
     assert.deepEqual(qrErrors,[],'Demo QR guest errors');
     await qrPage.screenshot({path:'teacher-plan-qa/qr-entry-'+device+'.png',fullPage:false});

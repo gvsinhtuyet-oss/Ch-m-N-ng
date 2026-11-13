@@ -27,6 +27,15 @@ const DanangAssistantChat = lazy(() => import('./components/common/DanangAssista
 const AppContent: React.FC = () => {
   const { currentUser, role, currentView, currentStation, currentAssistantHotspot, currentStage, currentGrade, setCurrentGrade, openStation, isOnline, closeStation, exitPresentationMode } = useApp();
   const [assistantOpenRequest, setAssistantOpenRequest] = useState(0);
+  const [experienceAssistantRole,setExperienceAssistantRole]=useState<'teacher'|'admin'>('teacher');
+  useEffect(()=>{
+    setExperienceAssistantRole('teacher');
+    if(currentUser?.id!=='teacher-demo')return;
+    const update=(event:Event)=>{const area=(event as CustomEvent).detail?.role;if(area==='teacher'||area==='admin')setExperienceAssistantRole(area);};
+    window.addEventListener('cham-experience-assistant-role',update);
+    return()=>window.removeEventListener('cham-experience-assistant-role',update);
+  },[currentUser?.id]);
+  const assistantAudience=currentUser?.id==='teacher-demo'?experienceAssistantRole:currentView==='admin-view'&&role==='admin'?'admin':role==='student'?'student':'teacher';
   useEffect(() => {
     // Preserve the first tap while the lazily loaded chatbot bundle is still downloading.
     const requestOpen = () => setAssistantOpenRequest(count => count + 1);
@@ -138,7 +147,7 @@ const AppContent: React.FC = () => {
       {currentView !== 'student-journey' && currentView !== 'station-view' && <Footer />}
 
       {(role === 'student' || role === 'teacher' || role === 'admin') && currentUser && currentView !== 'presentation-view' && (
-        <FeatureLoadBoundary fallback={assistantUnavailable}><Suspense fallback={assistantLoading}><DanangAssistantChat openRequestId={assistantOpenRequest} storageScope={currentUser?role+':'+currentUser.id:''} currentGrade={currentGrade} onOpenTeacherStation={role === 'student' ? undefined : station=>{setCurrentGrade(station.grade);openStation(station,1);}} docked={currentView === 'student-journey'} audience={currentView === 'admin-view' && role === 'admin' ? 'admin' : role === 'student' ? 'student' : 'teacher'} stage={currentView === 'station-view' ? currentStage : undefined} compactGame={currentView === 'station-view' && (currentStage === 1 || currentStage === 2)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense></FeatureLoadBoundary>
+        <FeatureLoadBoundary fallback={assistantUnavailable}><Suspense fallback={assistantLoading}><DanangAssistantChat openRequestId={assistantOpenRequest} storageScope={currentUser?role+':'+currentUser.id:''} currentGrade={currentGrade} onOpenTeacherStation={role === 'student' ? undefined : station=>{setCurrentGrade(station.grade);openStation(station,1);}} docked={currentView === 'student-journey'} audience={assistantAudience} stage={currentView === 'station-view' ? currentStage : undefined} compactGame={currentView === 'station-view' && (currentStage === 1 || currentStage === 2)} station={currentView === 'station-view' ? currentStation : null} hotspot={currentView === 'station-view' ? currentAssistantHotspot : null} /></Suspense></FeatureLoadBoundary>
       )}
 
       {storageWarning && (

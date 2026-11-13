@@ -70,8 +70,7 @@ try {
   await page.waitForFunction(()=>!document.querySelector('.cham-qr-overlay'));
   await page.click('.cham-access-student-secondary button:last-child');
       await page.waitForSelector('#free-explorer-name');
-      await page.click('#free-explorer-name',{clickCount:3});
-      await page.keyboard.press('Backspace');
+      await page.locator('#free-explorer-name').fill('');
       assert.equal(await page.$eval('button[type=submit]',b=>b.disabled),true,'Free entry requires a nonempty name');
       await page.type('#free-explorer-name','Bạn kiểm tra');
       await page.click('button[type=submit]');
@@ -87,8 +86,7 @@ try {
   assert.ok(await page.$('.cham-access-teacher-guest'));
   await page.click('.cham-access-teacher-guest');
   await page.waitForSelector('#free-explorer-name');
-      await page.click('#free-explorer-name',{clickCount:3});
-      await page.keyboard.press('Backspace');
+      await page.locator('#free-explorer-name').fill('');
   assert.equal(await page.$eval('button[type=submit]',b=>b.disabled),true,'Teacher free entry requires a name');
   await page.type('#free-explorer-name','Cô kiểm tra');
   await page.click('.cham-access-back');

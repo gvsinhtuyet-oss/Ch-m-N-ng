@@ -82,7 +82,7 @@ export function StudentAccessCards({classId,className}:{classId:string;className
   </div>)}</div>
   {message&&<p role="status" className="rounded-xl bg-slate-100 p-3">{message}</p>}
   {!!cards.length&&<>
-   <p className="text-sm font-bold">Thẻ chỉ hiện trong lượt cấp này. Hãy lưu thẻ trước khi rời trang.</p>
+   <p className="text-sm font-bold">Thẻ mới cấp hoặc vừa tạo lại từ mã đã giữ chỉ nằm trên trang hiện tại. Hãy tải về trước khi rời trang.</p>
    <div className="flex flex-wrap gap-2">
     <button type="button" disabled={busy||downloadBusy} onClick={async()=>{
       setDownloadBusy(true);setMessage('');
@@ -92,7 +92,7 @@ export function StudentAccessCards({classId,className}:{classId:string;className
     }} className="rounded-xl bg-sky-700 p-3 text-white font-bold disabled:opacity-60">{downloadBusy?'Đang chuẩn bị thẻ…':'Tải trọn bộ thẻ QR (ZIP)'}</button>
     <button type="button" disabled={busy||downloadBusy} onClick={()=>window.print()} className="rounded-xl bg-slate-800 p-3 text-white font-bold disabled:opacity-60">In / lưu PDF thẻ đã cấp</button>
    </div>
-   <p className="rounded-xl bg-amber-50 border border-amber-200 p-3 text-sm text-amber-900">Mỗi ảnh PNG chứa mã đăng nhập riêng của một học sinh. Không gửi toàn bộ ZIP vào nhóm phụ huynh; hãy gửi từng ảnh cho đúng gia đình. Nếu rời trang trước khi tải, mã đã cấp không thể xem lại dạng rõ để bảo vệ học sinh.</p>
+   <p className="rounded-xl bg-amber-50 border border-amber-200 p-3 text-sm text-amber-900">Mỗi ảnh PNG chứa mã đăng nhập riêng của một học sinh. Không gửi toàn bộ ZIP vào nhóm phụ huynh; hãy gửi từng ảnh cho đúng gia đình. Nếu rời trang trước khi tải, ứng dụng không truy xuất được mã đã cấp từ máy chủ; cần giữ bản sao mã cũ để tạo lại QR mà không cấp lại.</p>
    <div id="student-access-print" className="grid sm:grid-cols-2 gap-3">{cards.map(card=><article key={card.id} className="student-access-card rounded-xl border-2 border-sky-200 bg-white p-4 text-center break-inside-avoid"><p className="text-sm font-bold">CHẠM ĐÀ NẴNG · Lớp {className}</p><p className="font-black text-lg">{card.name}</p>{card.qr&&<img src={card.qr} alt={'QR vào học của '+card.name} width={180} height={180} className="mx-auto"/>}<p className="font-mono text-lg font-bold tracking-wider">{card.code}</p><p className="text-xs">Quét QR → xem video chào mừng → CHẠM ĐỂ KHÁM PHÁ → tự vào lớp. Giữ thẻ riêng.</p>
    <button type="button" disabled={busy||downloadBusy||!card.qr} onClick={async()=>{
       setDownloadBusy(true);setMessage('');

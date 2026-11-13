@@ -192,7 +192,7 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
     <div className="flex flex-wrap items-center justify-between gap-2">
       <div><p className="text-xs font-extrabold uppercase tracking-widest text-indigo-600">NĂM HỌC 2026–2027</p>
         <h2 className="mt-1 text-xl font-black text-slate-900 sm:text-2xl">Các lớp bạn đang tạo trên thiết bị</h2>
-        <p className="text-xs text-slate-500">Thông tin quản lý lớp cá nhân trên trình duyệt, độc lập với báo cáo mô phỏng 267 người ở phía trên.</p>
+        <p className="text-xs text-slate-500">Thông tin lớp được quản lý trên thiết bị và tính riêng với bảng số liệu tổng quan.</p>
       </div>
       <span className="rounded-full bg-amber-100 px-3 py-2 text-xs font-semibold text-amber-950">Dữ liệu cục bộ · Không dùng Firestore</span>
     </div>
@@ -224,14 +224,14 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
         <div className="mt-1 h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full bg-sky-600" style={{width: students.length ? (g.students/students.length*100)+'%' : '0%'}} /></div>
       </div>)}</div>
     </div>
-    <div className={muted}>Các lớp do bạn tạo chỉ tồn tại trên thiết bị này và KHÔNG được cộng vào bộ 267 người tham gia mô phỏng phía trên. Không có dữ liệu Production hay Firestore.</div>
+    <div className={muted}>Các lớp tự tạo được lưu trên thiết bị và tính riêng với thống kê chung; không sử dụng dữ liệu Production hay Firestore.</div>
   </div>;
 
   const ratingsPanel = <div className="space-y-5">
     <AdminExperienceAnalytics mode="ratings" />
     <section className="space-y-3">
       <h3 className="text-lg font-black text-slate-900">Đánh giá của lớp bạn tự tạo trên thiết bị</h3>
-      <p className="text-xs text-slate-600">Nhóm dữ liệu lớp cá nhân dưới đây độc lập với bộ 267 người mô phỏng; chỉ hiển thị các trường bạn tự nhập.</p>
+      <p className="text-xs text-slate-600">Đánh giá của các lớp bạn tự tạo trên thiết bị được tổng hợp riêng với bảng phía trên.</p>
       <div className="grid gap-4 lg:grid-cols-2">
     <section className="rounded-2xl border bg-white p-5">
       <h2 className="text-lg font-black">Đánh giá sao theo lớp</h2>
@@ -293,7 +293,7 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
 
   const trackingPanel = <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
     <h2 className="text-lg font-black text-slate-900">Sổ theo dõi triển khai GDĐP toàn trường</h2>
-    <p className="mt-1 text-xs text-slate-600">Bản trình diễn theo lớp, chưa ghi nhận ngày/tiết dạy thật. Các cột tiến độ phản ánh số trạm học sinh hoàn thành.</p>
+    <p className="mt-1 text-xs text-slate-600">Theo dõi tiến độ khám phá theo từng lớp. Chức năng ghi ngày/tiết dạy thật chỉ dành cho tài khoản đã đăng nhập.</p>
     <div className="mt-4 overflow-x-auto"><table className="min-w-[550px] w-full text-left text-sm">
       <thead className="border-y bg-slate-50 text-slate-600"><tr><th className="p-3">Lớp</th><th className="p-3">Khối</th><th className="p-3">Học sinh</th><th className="p-3">Lượt hoàn thành trạm</th><th className="p-3">Ghi nhận</th></tr></thead>
       <tbody>{data.classes.map(c=><tr key={c.id} className="border-b">

@@ -13,15 +13,15 @@ const newId = () => String(Date.now()) + '-' + Math.random().toString(36).slice(
 const makeStudents = (prefix: string, count: number): Learner[] =>
   Array.from({ length: count }, (_, index) => ({
     id: prefix + '-' + (index + 1),
-    name: 'Học sinh mẫu ' + String(index + 1).padStart(2, '0'),
+    name: 'Học sinh ' + String(index + 1).padStart(2, '0'),
     completed: index % 6,
     stars: index % 4 === 0 ? 0 : 4 + (index % 2),
     feedback: index === 2 ? 'Em thích hình ảnh và trò chơi khám phá.' : ''
   }));
 const seed = (): Sandbox => ({
   classes: [
-    { id: 'demo-class-224', name: '2/24 (mẫu)', grade: 2, students: makeStudents('a', 8) },
-    { id: 'demo-class-225', name: '2/25 (mẫu)', grade: 2, students: makeStudents('b', 6) }
+    { id: 'demo-class-224', name: '2/24 (trải nghiệm)', grade: 2, students: makeStudents('a', 8) },
+    { id: 'demo-class-225', name: '2/25 (trải nghiệm)', grade: 2, students: makeStudents('b', 6) }
   ],
   notes: {},
   published: [],
@@ -33,7 +33,20 @@ function readSandbox(): Sandbox {
     if (data && Array.isArray(data.classes) && data.classes.length <= 40 &&
       data.classes.every((c: Classroom) => c && typeof c.id === 'string' && Array.isArray(c.students) && c.students.length <= 100) &&
       data.notes && typeof data.notes === 'object' && Array.isArray(data.published) && typeof data.plan === 'string') {
-      return data as Sandbox;
+      // Rename untouched legacy demo labels without modifying user-entered class or student names.
+      const normalized = data as Sandbox;
+      return { ...normalized, classes: normalized.classes.map(c => {
+        if (c.id !== 'demo-class-224' && c.id !== 'demo-class-225') return c;
+        const oldClass = c.id === 'demo-class-224' ? '2/24 (mẫu)' : '2/25 (mẫu)';
+        const newClass = c.id === 'demo-class-224' ? '2/24 (trải nghiệm)' : '2/25 (trải nghiệm)';
+        return { ...c, name: c.name === oldClass ? newClass : c.name,
+          students: c.students.map(student => ({
+            ...student,
+            name: /^Học sinh mẫu \d{2}$/.test(student.name)
+              ? student.name.replace('Học sinh mẫu ', 'Học sinh ')
+              : student.name,
+          })) };
+      }) };
     }
   } catch { /* Missing, corrupt or disabled local storage: use an isolated sample. */ }
   return seed();
@@ -194,7 +207,7 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
     </div>
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 2xl:grid-cols-6">
       {[
-        ['Giáo viên mẫu', 1],
+        ['Giáo viên', 1],
         ['Lớp học', data.classes.length],
         ['Học sinh', students.length],
         ['Trạm GDĐP', ALL_25_STATIONS.length],
@@ -207,7 +220,7 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
     <div className="rounded-2xl border bg-white p-5">
       <h2 className="text-lg font-black text-slate-900">Triển khai theo khối</h2>
       <div className="mt-3 space-y-3">{countsByGrade.map(g => <div key={g.grade}>
-        <div className="flex justify-between text-sm"><span>Khối {g.grade} · {g.classes} lớp</span><strong>{g.students} học sinh mẫu</strong></div>
+        <div className="flex justify-between text-sm"><span>Khối {g.grade} · {g.classes} lớp</span><strong>{g.students} học sinh</strong></div>
         <div className="mt-1 h-2 overflow-hidden rounded-full bg-slate-100"><div className="h-full bg-sky-600" style={{width: students.length ? (g.students/students.length*100)+'%' : '0%'}} /></div>
       </div>)}</div>
     </div>
@@ -221,14 +234,14 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
       <p className="text-xs text-slate-600">Nhóm dữ liệu lớp cá nhân dưới đây độc lập với bộ 267 người mô phỏng; chỉ hiển thị các trường bạn tự nhập.</p>
       <div className="grid gap-4 lg:grid-cols-2">
     <section className="rounded-2xl border bg-white p-5">
-      <h2 className="text-lg font-black">Đánh giá 1–5 sao · Dữ liệu minh họa</h2>
-      <p className="mt-2 text-3xl font-black text-indigo-800">{average === null ? '—' : average.toFixed(1)} <span className="text-base font-normal">/ 5 · {evaluated.length} lượt mẫu</span></p>
+      <h2 className="text-lg font-black">Đánh giá sao theo lớp</h2>
+      <p className="mt-2 text-3xl font-black text-indigo-800">{average === null ? '—' : average.toFixed(1)} <span className="text-base font-normal">/ 5 · {evaluated.length} lượt</span></p>
       <div className="mt-4 space-y-3">{ratingCounts.map(item => <div key={item.stars} className="flex items-center gap-3 text-sm">
         <span className="w-14 shrink-0">{item.stars} sao</span><div className="h-3 flex-1 overflow-hidden rounded-full bg-slate-100">
           <div className="h-full rounded-full bg-amber-400" style={{width: evaluated.length ? (item.count/evaluated.length*100)+'%' : '0%'}} /></div>
         <strong>{item.count}</strong></div>)}</div>
     </section>
-    <section className="rounded-2xl border bg-white p-5"><h2 className="text-lg font-black">Góp ý minh họa</h2>
+    <section className="rounded-2xl border bg-white p-5"><h2 className="text-lg font-black">Góp ý của lớp</h2>
       <div className="mt-3 max-h-80 space-y-2 overflow-y-auto">{comments.map((c, i) => <article key={i} className="rounded-xl bg-slate-50 p-3 text-sm">
         <p className="font-bold">{c.student} · {c.className}</p><p className="mt-1">{c.note}</p>
       </article>)}
@@ -240,7 +253,7 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
 
   const assetsPanel = <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
     <section className="rounded-2xl border bg-white p-4">
-      <h2 className="text-lg font-black">Quản lý 25 trạm · Bản trải nghiệm</h2>
+      <h2 className="text-lg font-black">Quản lý 25 trạm</h2>
       <p className="mb-3 mt-1 text-sm text-slate-600">Chọn trạm để soạn nháp, xuất bản thử trên thiết bị.</p>
       <div className="max-h-[440px] space-y-1 overflow-y-auto">{ALL_25_STATIONS.map(s =>
         <button type="button" key={s.id} onClick={() => setSelectedAssetId(s.id)}
@@ -271,7 +284,7 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
     <textarea id="experience-plan" className={field + ' mt-2 min-h-[160px]'} maxLength={3000} value={data.plan}
       onChange={e => setData(old => ({ ...old, plan: e.target.value }))} />
     <button type="button" className="mt-4 min-h-11 rounded-xl border border-rose-300 px-4 font-bold text-rose-800" onClick={() => {
-      if (window.confirm('Xóa toàn bộ chỉnh sửa trải nghiệm trên thiết bị và khôi phục dữ liệu mẫu?')) {
+      if (window.confirm('Xóa toàn bộ chỉnh sửa trải nghiệm trên thiết bị và khôi phục dữ liệu trải nghiệm?')) {
         setData(seed()); setSelectedId('demo-class-224'); setSelectedAssetId(ALL_25_STATIONS[0]?.id || '');
       }
     }}>Đặt lại bản trải nghiệm</button>
@@ -280,9 +293,9 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
 
   const trackingPanel = <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
     <h2 className="text-lg font-black text-slate-900">Sổ theo dõi triển khai GDĐP toàn trường</h2>
-    <p className="mt-1 text-xs text-slate-600">Bản trình diễn theo lớp, chưa ghi nhận ngày/tiết dạy thật. Các cột tiến độ phản ánh số trạm học sinh mẫu hoàn thành.</p>
+    <p className="mt-1 text-xs text-slate-600">Bản trình diễn theo lớp, chưa ghi nhận ngày/tiết dạy thật. Các cột tiến độ phản ánh số trạm học sinh hoàn thành.</p>
     <div className="mt-4 overflow-x-auto"><table className="min-w-[550px] w-full text-left text-sm">
-      <thead className="border-y bg-slate-50 text-slate-600"><tr><th className="p-3">Lớp</th><th className="p-3">Khối</th><th className="p-3">Học sinh</th><th className="p-3">Lượt hoàn thành trạm mẫu</th><th className="p-3">Ghi nhận</th></tr></thead>
+      <thead className="border-y bg-slate-50 text-slate-600"><tr><th className="p-3">Lớp</th><th className="p-3">Khối</th><th className="p-3">Học sinh</th><th className="p-3">Lượt hoàn thành trạm</th><th className="p-3">Ghi nhận</th></tr></thead>
       <tbody>{data.classes.map(c=><tr key={c.id} className="border-b">
         <td className="p-3 font-bold">{c.name}</td><td className="p-3">{c.grade}</td><td className="p-3">{c.students.length}</td>
         <td className="p-3">{c.students.reduce((n,s)=>n+s.completed,0)}</td><td className="p-3 text-amber-800">Trải nghiệm cục bộ</td>
@@ -297,8 +310,8 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
     <div className="mt-4 grid gap-3 md:grid-cols-3">
       {[
         ['Quản trị','Trải nghiệm giao diện quản lý, kiểm định và báo cáo'],
-        ['Giáo viên','Tạo lớp và quản lý học liệu mẫu trên thiết bị'],
-        ['Học sinh',students.length+' hồ sơ mẫu trong '+data.classes.length+' lớp'],
+        ['Giáo viên','Tạo lớp và quản lý học liệu trên thiết bị'],
+        ['Học sinh',students.length+' hồ sơ trải nghiệm trong '+data.classes.length+' lớp'],
       ].map(([label,description])=><div key={label} className="rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4">
         <h3 className="font-bold text-indigo-950">{label}</h3><p className="mt-2 text-sm text-slate-700">{description}</p>
       </div>)}
@@ -383,7 +396,7 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
             <button type="button" className={area === 'admin' ? button : 'min-h-11 rounded-xl border px-4 font-bold'} aria-pressed={area==='admin'} onClick={()=>setArea('admin')}>Quản trị</button>
           </div>
         </div>
-        <p role="status" className="mt-3 text-xs font-bold text-amber-900">CHẾ ĐỘ TRẢI NGHIỆM · DỮ LIỆU MINH HỌA (lưu cục bộ, không phải số liệu thật)</p>
+        <p role="status" className="mt-3 text-xs font-semibold text-slate-700">CHẾ ĐỘ TRẢI NGHIỆM · SỐ LIỆU GIẢ ĐỊNH — Không phải lượt truy cập hay đánh giá thực tế</p>
       </div>
       {saveError && <p role="alert" className={'mt-3 ' + muted}>{saveError}</p>}
       {area === 'teacher' && <nav className="my-4 flex flex-wrap gap-2" aria-label="Chức năng giáo viên trải nghiệm">

@@ -178,12 +178,15 @@ const server = createServer(async (req,res) => {
     const pathname = new URL(req.url, 'http://localhost').pathname;
     if(await learningFeedback(req,res,pathname,body,json))return;
     if (pathname === '/api/health' && req.method === 'GET') {
+      // Regular health checks are read-only. Write probes require an authenticated admin.
+      const verifyWrite = new URL(req.url, 'http://localhost').searchParams.get('writeProbe') === '1';
+      if (verifyWrite) await auth.requireAdmin(req);
       const cachedHealthTtl = healthCache?.auth?.ready ? HEALTH_OK_CACHE_MS : HEALTH_ERROR_CACHE_MS;
-      if (healthCache && Date.now() - healthCacheAt < cachedHealthTtl) {
+      if (!verifyWrite && healthCache && Date.now() - healthCacheAt < cachedHealthTtl) {
         return json(res, 200, healthCache);
       }
       let firestoreStatus = 'unknown';
-      let firestoreWriteStatus = 'unknown';
+      let firestoreWriteStatus = 'not-tested';
       let firestoreError = null;
       let firestoreWriteError = null;
       let adminAccountExists = false;
@@ -199,20 +202,22 @@ const server = createServer(async (req,res) => {
             const adminUser = await cloudStore.get('cham_users', adminId);
             adminAccountExists = !!(adminUser && adminUser.role === 'admin' && adminUser.active);
           }
-          const writeProbeId = 'cloud-run-' + createHash('sha256')
-            .update(String(process.env.K_REVISION || process.env.K_SERVICE || 'local'))
-            .digest('hex').slice(0, 16);
-          try {
-            await cloudStore.put('cham_health_checks', writeProbeId, { checkedAt: Date.now() });
-            await cloudStore.remove('cham_health_checks', writeProbeId);
-            firestoreWriteStatus = 'connected';
-          } catch (err) {
-            firestoreWriteStatus = `error: ${err.message}`;
-            firestoreWriteError = {
-              status: err.storageStatus || null,
-              code: err.storageCode || null,
-              detail: err.storageDetail || null,
-            };
+          if (verifyWrite) {
+            const writeProbeId = 'cloud-run-' + createHash('sha256')
+              .update(String(process.env.K_REVISION || process.env.K_SERVICE || 'local'))
+              .digest('hex').slice(0, 16);
+            try {
+              await cloudStore.put('cham_health_checks', writeProbeId, { checkedAt: Date.now() });
+              await cloudStore.remove('cham_health_checks', writeProbeId);
+              firestoreWriteStatus = 'connected';
+            } catch (err) {
+              firestoreWriteStatus = `error: ${err.message}`;
+              firestoreWriteError = {
+                status: err.storageStatus || null,
+                code: err.storageCode || null,
+                detail: err.storageDetail || null,
+              };
+            }
           }
         } catch (err) {
           firestoreStatus = `error: ${err.message}`;
@@ -231,7 +236,7 @@ const server = createServer(async (req,res) => {
         typeof process.env.AUTH_ADMIN_PASSWORD === 'string' &&
         process.env.AUTH_ADMIN_PASSWORD.length >= 12 &&
         process.env.AUTH_ADMIN_PASSWORD.length <= 128;
-      healthCache = {
+      const healthReport = {
         status: 'ok',
         revision: process.env.K_REVISION || null,
         service: process.env.K_SERVICE || null,
@@ -248,14 +253,17 @@ const server = createServer(async (req,res) => {
           bootstrapSecretConfigured,
           ready:
             firestoreStatus === 'connected' &&
-            firestoreWriteStatus === 'connected' &&
+            (!verifyWrite || firestoreWriteStatus === 'connected') &&
             !!adminEmail &&
             (adminAccountExists || bootstrapSecretConfigured),
         },
         contentStorage: durableContent ? 'firestore' : 'local',
       };
-      healthCacheAt = Date.now();
-      return json(res, 200, healthCache);
+      if (!verifyWrite) {
+        healthCache = healthReport;
+        healthCacheAt = Date.now();
+      }
+      return json(res, 200, healthReport);
     }
     // GDĐP is a separate read-only teacher catalog; only Admin may update it.
     // Keep all existing auth, students, stations, and content endpoints unchanged.

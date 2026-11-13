@@ -72,6 +72,9 @@ const AppContent: React.FC = () => {
   const analyticsAudience = currentUser && role !== 'student' ? 2
     : currentUser && !(currentUser as Student).isGuest ? 1 : 0;
   useEffect(() => {
+    // Demo QR students are only local guests, not production analytics subjects.
+    const fromDemoQr=Boolean(currentUser?.id.startsWith('demo-qr-')) || window.location.hash.startsWith('#demo-student=');
+    effectivenessService.setDemoMode(fromDemoQr);
     if(!currentUser || (!(currentUser as Student).isGuest && currentUser.id!=='teacher-demo'))freeExplorerIdentity.activate(null);
     effectivenessService.visit(analyticsAudience);
   }, [analyticsAudience,currentUser?.id]);

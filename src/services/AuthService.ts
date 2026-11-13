@@ -33,6 +33,7 @@ async function request(path: string, method='GET', data?: unknown) {
 }
 export const authService = {
   current: () => user,
+  clearLocal: () => { user=null; },
   async googleLogin(credential:string) {user=(await request('/api/auth/google','POST',{credential})).user;return user!;},
   async implementations(): Promise<ImplementationRecord[]> { return (await request('/api/teacher/implementations')).records; },
   async saveImplementation(data: Pick<ImplementationRecord,'classId'|'grade'|'stationId'|'stationName'|'implementationDate'|'session'|'method'|'note'>): Promise<ImplementationRecord> {return (await request('/api/teacher/implementations','POST',data)).record;},
@@ -52,7 +53,7 @@ export const authService = {
   async saveClass(data: Pick<ManagedClass, 'name' | 'grade' | 'academicYear' | 'students'>, create: boolean) { await request('/api/teacher/classes', create ? 'POST' : 'PUT', data); },
   async restore() { user=(await request('/api/auth/session')).user; return user; },
   async login(email: string,password: string) { user=(await request('/api/auth/login','POST',{email,password})).user; return user!; },
-  async logout() { await request('/api/auth/logout','POST',{}); user=null; },
+  async logout() { (await import('./TeacherWorkspaceService')).clearWorkspaceCache(); await request('/api/auth/logout','POST',{}); user=null; },
   async users(): Promise<(StaffUser & {active:boolean})[]> { return (await request('/api/admin/users')).users; },
   async createTeacher(email: string,name: string,password: string) { await request('/api/admin/users','POST',{email,name,password}); },
   async updateTeacher(email: string,active: boolean,password?: string) { await request('/api/admin/users','PUT',{email,active,password}); },

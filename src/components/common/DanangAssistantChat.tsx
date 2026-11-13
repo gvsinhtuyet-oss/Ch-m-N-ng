@@ -1,3 +1,4 @@
+import {isExperienceMode} from '../../services/ExperienceMode';
 import {audioService} from '../../services/AudioService';
 import {constrainAssistantPosition, type AssistantPosition} from '../../utils/assistantPosition';
 import React, { useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
@@ -192,6 +193,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
   const aiLock=useRef(false);
   useEffect(()=>()=>activeAi.current?.abort(),[]);
   useEffect(()=>{
+    if(isExperienceMode()){setAiAvailable(false);return;}
     if(!isTeacher||!open){if(!isTeacher)setAiAvailable(false);return;}
     const controller=new AbortController();
     fetch('/api/education-assistant',{credentials:'same-origin',signal:controller.signal})

@@ -1,3 +1,4 @@
+import {isExperienceMode,setExperienceMode} from './ExperienceMode';
 import {freeExplorerIdentity} from './FreeExplorerIdentity';
 type Audience = 0 | 1 | 2;
 type Visit = {id: string; lastActivity: number; staff?: boolean; visitorId?:string};
@@ -13,7 +14,7 @@ let sending = false;
 let pauseUntil = 0;
 let timer: number | undefined;
 let demoQrMode=false;
-const demoOnly = () => demoQrMode || (typeof window!=='undefined' && window.location.hash.startsWith('#demo-student='));
+const demoOnly = () => isExperienceMode() || demoQrMode || (typeof window!=='undefined' && window.location.hash.startsWith('#demo-student='));
 
 function currentVisit(now: number): Visit {
   const person=freeExplorerIdentity.current()?.id||'';
@@ -105,7 +106,7 @@ function note(stationId?: string, stage = 0) {
 
 export const effectivenessService = {
   setDemoMode(active:boolean){
-    demoQrMode=active;
+    demoQrMode=active;setExperienceMode(active);
     if(active){pending=undefined;timer!==undefined&&window.clearTimeout(timer);timer=undefined;}
   },
   async guestRating(stationId:string, stars?:number){

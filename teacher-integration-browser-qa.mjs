@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { existsSync, mkdirSync } from 'node:fs';
+import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import puppeteer from 'puppeteer-core';
 
 const url=process.env.QA_URL||'http://127.0.0.1:4173/';
@@ -8,6 +8,7 @@ assert.ok(chrome,'Chromium required for teacher integration planner QA');
 mkdirSync('teacher-plan-qa',{recursive:true});
 const browser=await puppeteer.launch({executablePath:chrome,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
 
+const auditResults=[];
 const clickButton=async(page,text)=>
   page.evaluate(label=>{
     const candidates=[...document.querySelectorAll('button')].filter(x=>x.getClientRects().length>0);
@@ -17,9 +18,9 @@ const clickButton=async(page,text)=>
   },text);
 
 try{
-  for(const [device,width,height] of [['desktop',1366,900],['phone',390,844]]){
+  for(const [device,width,height] of [['desktop',1366,900],['iphone',390,844],['android',412,915],['ipad',820,1180]]){
     const page=await browser.newPage();
-    const pageErrors=[],serverWrites=[];
+    const pageErrors=[],serverWrites=[],apiReads=[];
     page.on('pageerror',error=>pageErrors.push(error.message));
     await page.setRequestInterception(true);
     page.on('request',request=>{
@@ -27,10 +28,10 @@ try{
       if(['POST','PUT','PATCH','DELETE'].includes(method)){
         serverWrites.push(method+' '+new URL(request.url()).pathname);
         request.abort('blockedbyclient');
-      }else request.continue();
+      }else {if(new URL(request.url()).pathname.startsWith('/api/'))apiReads.push(method+' '+new URL(request.url()).pathname);request.continue();}
     });
     await page.setViewport({width,height,deviceScaleFactor:1,isMobile:width<800,hasTouch:width<800});
-    const response=await page.goto(url+'?qa-teacher-integration=20261114',{waitUntil:'domcontentloaded',timeout:60000});
+    const response=await page.goto(url+'?experience=1&qa-teacher-integration=20261114',{waitUntil:'domcontentloaded',timeout:60000});
     if(response)assert.equal(response.status(),200);
     await page.waitForFunction(()=>document.body.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'),{timeout:40000});
     await page.evaluate(()=>{
@@ -45,7 +46,7 @@ try{
     await page.type('#free-explorer-name','Giáo viên kiểm thử');
     await page.click('button[type="submit"]');
     await page.waitForSelector('.teacher-workspace',{timeout:30000});
-    if(device==='phone'){
+    if(width<1024){
       const toggle=await page.$('button[aria-controls="teacher-navigation"]');
       assert.ok(toggle);await toggle.click();
     }
@@ -103,11 +104,11 @@ try{
     await page.waitForFunction(()=>document.body.textContent?.includes('Dạy bài đã chọn'),{timeout:15000});
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+8),false,'Horizontal overflow in '+device);
     assert.deepEqual(pageErrors,[],'Browser runtime errors '+device);
-    assert.ok(!serverWrites.some(s=>/^PUT |^POST /.test(s)&&/\/api\/teacher\/workspace|\/api\/admin\//.test(s)),
-      'Demo must not sync a plan or write Admin data');
+    assert.deepEqual(serverWrites,[], 'Experience must not attempt ANY network mutation');
+    assert.ok(!apiReads.some(s=>/\/api\/(admin|teacher|student)\//.test(s)),'No protected reads in experience');
     await page.screenshot({path:'teacher-plan-qa/'+device+'.png',fullPage:false});
     // Same "Lớp của tôi · Mã QR" navigation as an authenticated Teacher.
-    if(device==='phone')await page.click('button[aria-controls="teacher-navigation"]');
+    if(width<1024)await page.click('button[aria-controls="teacher-navigation"]');
     await page.evaluate(()=>{
       const button=[...document.querySelectorAll('#teacher-navigation button')]
         .find(x=>x.textContent?.includes('Lớp của tôi · Mã QR'));
@@ -124,6 +125,33 @@ try{
     }));
     assert.ok(demoCard.count>=1&&demoCard.png&&demoCard.hasZip,'Demo QR card must render as PNG and offer ZIP');
     assert.deepEqual(pageErrors,[],'QR classroom page errors');
+
+    // The same workspace creates a local class; never use a real student's details.
+    await page.type('input[aria-label="Tên lớp mới"]','2/99');
+    await clickButton(page,'Tạo lớp');
+    await page.type('textarea[aria-label="Danh sách tên học sinh"]','Học viên kiểm thử A\nHọc viên kiểm thử B');
+    await clickButton(page,'Thêm vào lớp');
+    assert.ok(await page.evaluate(()=>[...document.querySelectorAll('input')].some(i=>i.value==='Học viên kiểm thử A')));
+    await page.evaluate(()=>{const group=document.querySelector('[aria-label="Chuyển đổi vai trò trải nghiệm"]');[...group.querySelectorAll('button')].find(b=>b.textContent==='Quản trị').click();});
+    await page.waitForSelector('.admin-workspace');
+        // Navigate the actual visible sidebar by labels, expanding its parent groups.
+    const groups=[['Dạy và học',['Nhật ký triển khai','Kết quả theo lớp']],['Học liệu',['Quản lý 25 trạm','Địa chỉ GDĐP']],['Báo cáo',['Hiệu quả sử dụng','Đánh giá sao và góp ý']],['Cài đặt',['Tài khoản và quyền','Giao diện','Kiểm định chatbot']]];
+    for(const [group,labels] of groups){
+      if(width<1024)await page.click('button[aria-controls="admin-experience-navigation"]');
+      await page.evaluate(label=>{const nav=document.querySelector('#admin-experience-navigation');const b=[...nav.querySelectorAll('button')].find(b=>b.textContent.trim()===label);if(!b)throw Error('Missing group '+label);b.click();},group);
+      for(const label of labels){
+        if(width<1024){const expanded=await page.$eval('button[aria-controls="admin-experience-navigation"]',b=>b.getAttribute('aria-expanded'));if(expanded!=='true')await page.click('button[aria-controls="admin-experience-navigation"]');}
+        await page.evaluate(label=>{const nav=document.querySelector('#admin-experience-navigation');const b=[...nav.querySelectorAll('button')].find(b=>b.textContent.trim()===label);if(!b)throw Error('Missing page '+label);b.click();},label);
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+8),false,'Admin overflow '+device+' '+label);
+      }
+    }
+    await clickButton(page,'Kiểm tra');
+    await page.screenshot({path:'teacher-plan-qa/admin-'+device+'.png',fullPage:false});
+    assert.deepEqual(serverWrites,[],'No network mutations in class creation and all Admin experience pages');
+    assert.deepEqual(pageErrors,[],'No runtime errors after all experience menus');
+    const audit={device,width,height,url,apiReads,networkMutations:serverWrites,blockedMethods:['POST','PUT','PATCH','DELETE']};
+    auditResults.push(audit);writeFileSync('teacher-plan-qa/request-audit.json',JSON.stringify(auditResults,null,2));
+    console.log('REQUEST AUDIT',JSON.stringify(audit));
 
     // Scan a fictional QR using its public, deliberately noncredential deep-link.
     const qrPage=await browser.newPage();
@@ -144,8 +172,7 @@ try{
       if(!btn)throw Error('Missing cover entry for demo QR');btn.click();
     });
     await qrPage.waitForFunction(()=>document.body.textContent?.includes('Học sinh 01')&&document.body.textContent?.includes('Khối 2'),{timeout:30000});
-    assert.ok(!qrWrites.some(s=>/\/api\/(?:effectiveness|student\/sync|teacher|admin)/.test(s)),
-      'Demo QR must never hit protected or analytics write routes');
+    assert.deepEqual(qrWrites,[],'Demo QR must never attempt a network mutation');
     assert.deepEqual(qrErrors,[],'Demo QR guest errors');
     await qrPage.screenshot({path:'teacher-plan-qa/qr-entry-'+device+'.png',fullPage:false});
     await qrPage.close();

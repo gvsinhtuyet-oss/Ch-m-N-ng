@@ -12,7 +12,7 @@ export function DemoStudentAccessCards({className,grade,students}:Props){
   const [busy,setBusy]=useState(false);
   const [message,setMessage]=useState('');
   const [selected,setSelected]=useState('');
-  useEffect(()=>{setCards([]);setMessage('');setSelected('');},[className,grade,students.length]);
+  useEffect(()=>{setCards([]);setMessage('');setSelected('');},[className,grade,students.map(s=>s.id+':'+s.name).join('|')]);
   async function generate(){
     setBusy(true);setMessage('');
     try{
@@ -23,7 +23,7 @@ export function DemoStudentAccessCards({className,grade,students}:Props){
         const code='TN-'+String(grade)+String(ordinal).padStart(3,'0');
         const url=makeDemoStudentQrUrl(window.location.origin,grade,ordinal,className);
         const qr=await qrcode.toDataURL(url,{width:300,margin:2,errorCorrectionLevel:'M'});
-        results.push({id:students[i].id,name:'Học sinh '+String(ordinal).padStart(2,'0'),code,qr});
+        results.push({id:students[i].id,name:students[i].name,code,qr});
       }
       setCards(results);
       setMessage('Đã tạo '+results.length+' thẻ trải nghiệm trên thiết bị. QR quét vào hành trình thử và không cấp tài khoản học sinh thật.');

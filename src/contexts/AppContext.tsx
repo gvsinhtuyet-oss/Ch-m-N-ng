@@ -145,7 +145,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const enterTeacherDemo = async (name = 'Giáo viên tự do') => {
-    if (authService.current()) await authService.logout();
+    // Keep any real HttpOnly session intact; the sandbox only forgets its in-memory user.
+    authService.clearLocal();
     effectivenessService.setDemoMode(true);
     audioService.playSfx('unlock');
     setCurrentUser({ id: 'teacher-demo', role: 'teacher', name, assignedClasses: ['class-2-24', 'class-2-25'], schoolName: 'Trường Tiểu học Trần Đại Nghĩa' } as Teacher);
@@ -199,10 +200,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         if (active && !user) { setCurrentUser(null); setCurrentStation(null); setCurrentView('landing'); }
       } catch { /* A connection failure is shown by the next protected action. */ }
     };
-    const timer = window.setInterval(() => void check(true), 10 * 60 * 1000);
     const handleFocus = () => void check(false);
     window.addEventListener('focus', handleFocus);
-    return () => { active = false; window.clearInterval(timer); window.removeEventListener('focus', handleFocus); };
+    return () => { active = false; window.removeEventListener('focus', handleFocus); };
   }, [currentUser?.id, role]);
 
   useEffect(() => {

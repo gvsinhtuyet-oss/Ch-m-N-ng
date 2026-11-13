@@ -12,7 +12,7 @@ test('teacher signed-in and demo roles use the approved real sidebar without cha
  assert.match(teacher,/teacher-page-hero/);
  assert.match(teacher,/aria-label="Điều hướng giáo viên"/);
  for(const t of ['Dạy học ngay','Kế hoạch bài dạy','Lớp của tôi','Kết quả học tập','Kho học liệu','Danh mục 25 trạm']) assert.ok(teacher.includes(t),t);
- for(const x of ['<TeacherWorkspace />','<ClassRoster />','<RealClassResults />','<GddpTeacherLookup','<ImplementationModal']) assert.ok(teacher.includes(x),x);
+ for(const x of ['<TeacherWorkspace onOpenClassroom=','<ClassRoster />','<RealClassResults />','<GddpTeacherLookup','<ImplementationModal']) assert.ok(teacher.includes(x),x);
 });
 
 test('Admin has real authenticated route only; no public Admin Demo role',()=>{

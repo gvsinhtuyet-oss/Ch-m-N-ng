@@ -15,6 +15,7 @@ test('Free teacher has a safe, isolated Teacher/Admin experience switch', () => 
   assert.match(experience, /CHẾ ĐỘ TRẢI NGHIỆM · SỐ LIỆU GIẢ ĐỊNH/);
 });
 test('Sample class, star, plan and assets live on this device only', () => {
+  const teacher=read('src/features/teacher/TeacherDashboard.tsx');
   const source = read('src/features/teacher/ExperienceWorkspace.tsx');
   for (const expected of ['localStorage.getItem', 'localStorage.setItem', 'Tạo lớp', 'Thêm vào lớp', 'Đánh giá sao theo lớp', 'ALL_25_STATIONS.map', 'Kế hoạch tích hợp GDĐP']) {
     assert.ok(source.includes(expected), expected);

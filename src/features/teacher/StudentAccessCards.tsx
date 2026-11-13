@@ -7,8 +7,9 @@ export function StudentAccessCards({classId,className}:{classId:string;className
  const [busy,setBusy]=useState(false),[message,setMessage]=useState(''),[confirm,setConfirm]=useState('');
  const [downloadBusy,setDownloadBusy]=useState(false);
  const [oldCodes,setOldCodes]=useState<Record<string,string>>({});
+ const [retainedCodes,setRetainedCodes]=useState<Record<string,string>>({});
  const generation=useRef(0),inFlight=useRef(false);
- useEffect(()=>{const version=++generation.current;setCards([]);setStudents([]);setOldCodes({});setMessage('');setConfirm('');
+ useEffect(()=>{const version=++generation.current;setCards([]);setStudents([]);setOldCodes({});setRetainedCodes({});setMessage('');setConfirm('');
   void authService.studentAccess(classId).then(rows=>{if(version===generation.current)setStudents(rows);}).catch(e=>{if(version===generation.current)setMessage(e.message);});
   return()=>{generation.current++;};
  },[classId]);
@@ -31,6 +32,20 @@ export function StudentAccessCards({classId,className}:{classId:string;className
    if(version===generation.current){setConfirm('');setMessage(`Đã xử lý ${completed} học sinh. Hãy in hoặc lưu thẻ trước khi rời trang.`);}
   }catch(e){if(version===generation.current){setMessage(`${completed?`Đã cấp ${completed} mã. `:''}${(e as Error).message} Nếu kết nối bị ngắt, tải lại danh sách trước khi thử tiếp.`);try{setStudents(await authService.studentAccess(classId));}catch{}}}
   finally{inFlight.current=false;if(version===generation.current)setBusy(false);}
+ }
+ async function recreateLocalQr(row:StudentAccess){
+  const raw=(retainedCodes[row.id]||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if(raw.length!==12){setMessage('Mã đã cấp cần gồm 12 ký tự. Kiểm tra lại mã đang hiệu lực.');return;}
+  setDownloadBusy(true);setMessage('');
+  try{
+   const QRCode=await import('qrcode');
+   const code=raw.match(/.{1,4}/g)?.join('-')||raw;
+   const qr=await QRCode.toDataURL(window.location.origin+'/#student-code='+encodeURIComponent(code),{width:300,margin:2,errorCorrectionLevel:'M'});
+   setCards(previous=>[...previous.filter(c=>c.id!==row.id),{id:row.id,name:row.name,code,qr}]);
+   setRetainedCodes(previous=>({...previous,[row.id]:''}));
+   setMessage('Đã dựng lại ảnh QR ngay trên thiết bị từ mã bạn cung cấp. Không có yêu cầu ghi Firestore. Hãy quét thử bằng thiết bị của học sinh trước khi phát thẻ.');
+  }catch(error){setMessage('Chưa tạo được QR trên trình duyệt: '+(error as Error).message);}
+  finally{setDownloadBusy(false);}
  }
  return <section id="cham-student-access-section" className="scroll-mt-24 border-t pt-5 space-y-4">
   <h3 className="text-lg font-black">Mã đăng nhập riêng của học sinh</h3>
@@ -56,6 +71,13 @@ export function StudentAccessCards({classId,className}:{classId:string;className
   <div className="space-y-3">{students.map(row=><div key={row.id} className="rounded-xl border p-3 space-y-2">
    <p className="font-bold">{row.index+1}. {row.name} <span className="text-xs font-normal">{row.issued?'· Đã có hồ sơ':'· Chưa cấp mã'}</span></p>
    {!row.issued?<div className="flex flex-wrap items-center gap-2"><button type="button" disabled={busy} onClick={()=>void issue([row],'issue')} className="rounded-lg bg-emerald-700 p-2 text-white">Cấp mã mới</button><input aria-label={'Mã cũ của '+row.name+' số '+(row.index+1)} type="password" autoComplete="off" maxLength={20} placeholder="Mã đồng bộ cũ (nếu có)" value={oldCodes[row.id]||''} onChange={e=>setOldCodes(prev=>({...prev,[row.id]:e.target.value}))} className="min-w-0 max-w-full rounded-lg border p-2"/><button type="button" disabled={busy||!oldCodes[row.id]?.trim()} onClick={()=>void issue([row],'adopt')} className="rounded-lg border p-2">Giữ hành trình cũ</button></div>:<button type="button" disabled={busy} onClick={()=>setConfirm(row.id)} className="rounded-lg border p-2">Quên/lộ mã: cấp lại</button>}
+   {row.issued&&<div className="rounded-xl border border-sky-200 bg-sky-50 p-3 space-y-2">
+     <label className="block text-xs font-bold text-sky-950">Còn giữ mã đang dùng? Tạo lại QR trên máy, không cấp lại
+       <input className="mt-1 w-full rounded-lg border border-sky-300 bg-white p-2 font-mono text-sm" type="password" autoComplete="off" maxLength={20} placeholder="Nhập mã đã cấp (12 ký tự)" value={retainedCodes[row.id]||''} onChange={e=>setRetainedCodes(prev=>({...prev,[row.id]:e.target.value}))}/>
+     </label>
+     <button type="button" disabled={busy||downloadBusy||!(retainedCodes[row.id]||'').trim()} onClick={()=>void recreateLocalQr(row)} className="rounded-lg border border-sky-600 bg-white px-3 py-2 text-xs font-bold text-sky-900 disabled:opacity-50">Tạo lại QR từ mã cũ (không ghi Firestore)</button>
+     <p className="text-xs text-sky-800">Chỉ dựng lại hình từ mã có sẵn, không kiểm tra tính hợp lệ với máy chủ. Mã đã bị cấp lại sẽ không đăng nhập được.</p>
+   </div>}
    {confirm===row.id&&<div className="rounded-lg bg-amber-50 p-3"><p>Mã cũ của {row.name} sẽ ngừng sử dụng. Hồ sơ và tiến độ giữ nguyên. Thiết bị đang học cần nhập mã mới.</p><button type="button" disabled={busy} onClick={()=>void issue([row],'rotate')} className="m-2 rounded-lg bg-amber-700 p-2 text-white">Xác nhận cấp lại</button><button type="button" disabled={busy} onClick={()=>setConfirm('')}>Hủy</button></div>}
   </div>)}</div>
   {message&&<p role="status" className="rounded-xl bg-slate-100 p-3">{message}</p>}

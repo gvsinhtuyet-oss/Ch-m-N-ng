@@ -16,4 +16,5 @@ test('entering a name annotates the current visit; another person gets a new vis
  assert.equal(requests.length,2);assert.equal(requests[0].session,requests[1].session,'Name entry must not create a second counted visit');assert.equal(requests[1].visitor.name,'Bạn An');
  service.visit(0);await flush();assert.equal(requests.length,2,'Repeated UI renders must not resend');
  person={id:'b'.repeat(32),name:'Bạn Bình',role:'student'};service.visit(0);await flush();assert.notEqual(requests[2].session,requests[1].session,'Different people must not share attribution');
+ const beforeStaff=requests.length;service.visit(2);service.stage('g2-station-1',4);service.refreshVisit();await flush();assert.equal(requests.length,beforeStaff,'Staff navigation must not submit analytics requests');
 });

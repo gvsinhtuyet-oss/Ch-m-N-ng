@@ -86,6 +86,8 @@ function schedule() {
 }
 
 function note(stationId?: string, stage = 0) {
+  // Staff navigation is not learner usage; never queue analytics for teachers/admins.
+  if(audience===2)return;
   if (demoOnly() || import.meta.env.VITE_EFFECTIVENESS_ENABLED !== 'true') return;
   try {
     const {id: session} = currentVisit(Date.now());
@@ -115,7 +117,11 @@ export const effectivenessService = {
     const response=await fetch('/api/effectiveness',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session:currentVisit(Date.now()).id,audience:visitor.role==='teacher'?2:0,stations:[],visitor,rating:{stationId,...(stars===undefined?{action:'read'}:{stars})}})});
     if(!response.ok)throw Error('Chưa lưu được đánh giá vào báo cáo.');return (await response.json()).stars as number;
   },
-  visit(kind: Audience) { audience = kind; note(); },
+  visit(kind: Audience) {
+    audience=kind;
+    if(kind===2){pending=undefined;if(timer!==undefined)window.clearTimeout(timer);timer=undefined;return;}
+    note();
+  },
   stage(stationId: string, stage: number) { note(stationId, stage); },
   refreshVisit() { note(); },
   flush() { void flush(); },

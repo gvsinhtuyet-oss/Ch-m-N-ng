@@ -32,8 +32,9 @@ export function StudentAccessCards({classId,className}:{classId:string;className
   }catch(e){if(version===generation.current){setMessage(`${completed?`Đã cấp ${completed} mã. `:''}${(e as Error).message} Nếu kết nối bị ngắt, tải lại danh sách trước khi thử tiếp.`);try{setStudents(await authService.studentAccess(classId));}catch{}}}
   finally{inFlight.current=false;if(version===generation.current)setBusy(false);}
  }
- return <section className="border-t pt-5 space-y-4">
+ return <section id="cham-student-access-section" className="scroll-mt-24 border-t pt-5 space-y-4">
   <h3 className="text-lg font-black">Mã đăng nhập riêng của học sinh</h3>
+  <p role="status" className="rounded-xl border border-sky-200 bg-sky-50 p-3 text-sm text-sky-900">Trạng thái: {students.filter(s=>s.issued).length} đã cấp mã / {students.length} học sinh. Xem trạng thái chỉ đọc; muốn in lại QR đã cấp, hãy dùng ảnh/PDF/ZIP đã tải lúc cấp mã. Không cấp lại mã chỉ để xem QR vì mã cũ sẽ hết hiệu lực.</p>
   <p className="text-sm text-slate-600">Mỗi em có hồ sơ riêng gắn với lớp. Dùng mã hoặc quét QR để vào học, không cần mật khẩu. Kết quả tự về lớp này.</p>
   <p className="text-sm rounded-xl bg-amber-50 p-3">Em đã học trên website? Nhập mã đồng bộ cũ của em rồi chọn “Giữ hành trình cũ”. Chỉ cấp hồ sơ mới cho em chưa có hành trình.</p>
   <button type="button" disabled={busy||!students.some(s=>!s.issued)} onClick={()=>setConfirm('batch')} className="rounded-xl bg-sky-700 text-white px-4 py-3 font-bold disabled:opacity-50">Cấp mã cho các em chưa có hồ sơ</button>

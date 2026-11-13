@@ -11,7 +11,8 @@ const sizes=[['iphone-small',320,640],['iphone',390,844],['android',412,915],['i
 
 try {
  for(const [name,width,height] of sizes) {
-  const page=await browser.newPage();
+  const deviceContext=await browser.createBrowserContext();
+  const page=await deviceContext.newPage();
   const errors=[];
   page.on('pageerror', e=>errors.push(e.message));
   await page.setViewport({width,height,isMobile:width<1024,hasTouch:width<1024,deviceScaleFactor:1});
@@ -70,10 +71,6 @@ try {
   await page.waitForFunction(()=>!document.querySelector('.cham-qr-overlay'));
   await page.click('.cham-access-student-secondary button:last-child');
       await page.waitForSelector('#free-explorer-name');
-      await page.focus('#free-explorer-name');
-      await page.keyboard.down('Control');await page.keyboard.press('a');await page.keyboard.up('Control');
-      await page.keyboard.press('Backspace');
-      await page.waitForFunction(()=>document.querySelector('#free-explorer-name')?.value==='' && document.querySelector('button[type=submit]')?.disabled);
       assert.equal(await page.$eval('button[type=submit]',b=>b.disabled),true,'Free entry requires a nonempty name');
       await page.type('#free-explorer-name','Bạn kiểm tra');
       await page.click('button[type=submit]');
@@ -89,10 +86,6 @@ try {
   assert.ok(await page.$('.cham-access-teacher-guest'));
   await page.click('.cham-access-teacher-guest');
   await page.waitForSelector('#free-explorer-name');
-      await page.focus('#free-explorer-name');
-      await page.keyboard.down('Control');await page.keyboard.press('a');await page.keyboard.up('Control');
-      await page.keyboard.press('Backspace');
-      await page.waitForFunction(()=>document.querySelector('#free-explorer-name')?.value==='' && document.querySelector('button[type=submit]')?.disabled);
   assert.equal(await page.$eval('button[type=submit]',b=>b.disabled),true,'Teacher free entry requires a name');
   await page.type('#free-explorer-name','Cô kiểm tra');
   await page.click('.cham-access-back');
@@ -104,6 +97,6 @@ try {
   assert.ok(await page.$('.cham-access-toggle-password'));
   assert.deepEqual(errors,[],name+' JS runtime errors');
   console.log('RESPONSIVE ACCESS '+name+' PASS: sharp live brand, illustrated real buttons, no scroll, QR, guest, Google, email');
-  await page.close();
+  await deviceContext.close();
  }
 } finally { await browser.close(); }

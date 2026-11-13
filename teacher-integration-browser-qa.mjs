@@ -20,15 +20,18 @@ const clickButton=async(page,text)=>
 try{
   for(const [device,width,height] of [['desktop',1366,900],['iphone',390,844],['android',412,915],['ipad',820,1180]]){
     const page=await browser.newPage();
-    const pageErrors=[],serverWrites=[],apiReads=[];
+    const pageErrors=[],serverWrites=[],apiReads=[],thirdPartyBlocked=[];
     page.on('pageerror',error=>pageErrors.push(error.message));
+    await page.setBypassServiceWorker(true);
     await page.setRequestInterception(true);
     page.on('request',request=>{
       const method=request.method();
       if(['POST','PUT','PATCH','DELETE'].includes(method)){
-        serverWrites.push(method+' '+new URL(request.url()).pathname);
+        const target=new URL(request.url());
+        if(target.origin===new URL(url).origin||/firestore\.googleapis\.com$/.test(target.hostname))serverWrites.push(method+' '+target.pathname);
+        else thirdPartyBlocked.push(method+' '+target.host+target.pathname);
         request.abort('blockedbyclient');
-      }else {if(new URL(request.url()).pathname.startsWith('/api/'))apiReads.push(method+' '+new URL(request.url()).pathname);request.continue();}
+      }else {if(new URL(request.url()).origin===new URL(url).origin&&new URL(request.url()).pathname.startsWith('/api/'))apiReads.push(method+' '+new URL(request.url()).pathname);request.continue();}
     });
     await page.setViewport({width,height,deviceScaleFactor:1,isMobile:width<800,hasTouch:width<800});
     const response=await page.goto(url+'?experience=1&qa-teacher-integration=20261114',{waitUntil:'domcontentloaded',timeout:60000});
@@ -149,18 +152,21 @@ try{
     await page.screenshot({path:'teacher-plan-qa/admin-'+device+'.png',fullPage:false});
     assert.deepEqual(serverWrites,[],'No network mutations in class creation and all Admin experience pages');
     assert.deepEqual(pageErrors,[],'No runtime errors after all experience menus');
-    const audit={device,width,height,url,apiReads,networkMutations:serverWrites,blockedMethods:['POST','PUT','PATCH','DELETE']};
+    const audit={device,width,height,url,apiReads,networkMutations:serverWrites,thirdPartyBlocked,blockedMethods:['POST','PUT','PATCH','DELETE']};
     auditResults.push(audit);writeFileSync('teacher-plan-qa/request-audit.json',JSON.stringify(auditResults,null,2));
     console.log('REQUEST AUDIT',JSON.stringify(audit));
 
     // Scan a fictional QR using its public, deliberately noncredential deep-link.
     const qrPage=await browser.newPage();
-    const qrWrites=[],qrErrors=[];
+    const qrWrites=[],qrErrors=[],qrThirdPartyBlocked=[];
     qrPage.on('pageerror',error=>qrErrors.push(error.message));
+    await qrPage.setBypassServiceWorker(true);
     await qrPage.setRequestInterception(true);
     qrPage.on('request',request=>{
       if(['POST','PUT','PATCH','DELETE'].includes(request.method())){
-        qrWrites.push(request.method()+' '+new URL(request.url()).pathname);
+        const target=new URL(request.url());
+        if(target.origin===new URL(url).origin||/firestore\.googleapis\.com$/.test(target.hostname))qrWrites.push(request.method()+' '+target.pathname);
+        else qrThirdPartyBlocked.push(request.method()+' '+target.host+target.pathname);
         request.abort('blockedbyclient');
       }else request.continue();
     });

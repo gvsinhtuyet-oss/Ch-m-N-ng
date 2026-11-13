@@ -60,6 +60,10 @@ try{
       await page.click('.cham-qr-header button');
       await page.waitForFunction(()=>!document.querySelector('.cham-qr-overlay'));
       await page.click('.cham-access-student-secondary button:last-child');
+      await page.waitForSelector('#free-explorer-name');
+      assert.equal(await page.$eval('button[type=submit]',b=>b.disabled),true,'Free entry requires a nonempty name');
+      await page.type('#free-explorer-name','Bạn kiểm tra');
+      await page.click('button[type=submit]');
       await page.waitForSelector('.cham-access-grade-grid button');
       assert.equal(await page.$$eval('.cham-access-grade-grid button',x=>x.length),5,'All five guest grades must be selectable');
       await page.click('.cham-access-back');

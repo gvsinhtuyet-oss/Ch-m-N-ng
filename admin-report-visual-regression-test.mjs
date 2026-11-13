@@ -25,7 +25,7 @@ test('Admin effectiveness charts use API response and never demo metrics',()=>{
 
 test('Admin stars draw only from server ratings and show unavailable state',()=>{
   const inbox=source('src/features/admin/ProposalInbox.tsx');
-  assert.match(inbox,/authService\.stationRatings\(\)/);
+  assert.match(inbox,/authService\.stationRatingsReport\(\)/);
   assert.match(inbox,/ratingsError/);
   assert.match(inbox,/ratingsStatus===404/);
   assert.match(inbox,/Thống kê sao đang chờ đồng bộ/);

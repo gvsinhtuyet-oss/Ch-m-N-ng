@@ -69,6 +69,10 @@ try {
   await page.click('.cham-qr-header button');
   await page.waitForFunction(()=>!document.querySelector('.cham-qr-overlay'));
   await page.click('.cham-access-student-secondary button:last-child');
+      await page.waitForSelector('#free-explorer-name');
+      assert.equal(await page.$eval('button[type=submit]',b=>b.disabled),true,'Free entry requires a nonempty name');
+      await page.type('#free-explorer-name','Bạn kiểm tra');
+      await page.click('button[type=submit]');
   await page.waitForSelector('.cham-access-grade-grid button');
   assert.equal((await page.$$('.cham-access-grade-grid button')).length,5,'five guest grades');
   await page.click('.cham-access-back');
@@ -79,6 +83,12 @@ try {
   await page.waitForSelector('[role="dialog"][aria-label="Đăng nhập giáo viên"]');
   assert.ok(await page.$('.cham-access-google [data-testid="google-signin-host"]'));
   assert.ok(await page.$('.cham-access-teacher-guest'));
+  await page.click('.cham-access-teacher-guest');
+  await page.waitForSelector('#free-explorer-name');
+  assert.equal(await page.$eval('button[type=submit]',b=>b.disabled),true,'Teacher free entry requires a name');
+  await page.type('#free-explorer-name','Cô kiểm tra');
+  await page.click('.cham-access-back');
+  await page.waitForSelector('.cham-access-teacher-guest');
   await inspect('teacher');
   await page.click('.cham-access-account-trigger');
   await page.waitForSelector('.cham-access-account-form input[autocomplete="username"]');

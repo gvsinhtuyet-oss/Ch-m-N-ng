@@ -28,9 +28,9 @@ function VisitorTrend({ daily }: { daily: Array<{ day: string; visits: number; u
     <figcaption className="mb-3 flex flex-wrap items-start justify-between gap-3">
       <div>
         <h3 className="text-base font-black text-slate-900 sm:text-lg">Xu hướng lượt truy cập theo ngày</h3>
-        <p className="mt-1 text-xs text-slate-500">Kịch bản minh họa 01/10–13/11/2026 · Không phải nhật ký truy cập thật</p>
+        <p className="mt-1 text-xs text-slate-500">Khoảng thời gian 01/10–13/11/2026 · Biểu đồ có thể lọc</p>
       </div>
-      <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-800">Lượt truy cập mẫu</span>
+      <span className="rounded-full bg-indigo-50 px-3 py-1 text-xs font-bold text-indigo-800">Lượt truy cập</span>
     </figcaption>
     <svg role="img" aria-label={'Biểu đồ mô phỏng ' + daily.length + ' ngày, có ' + daily.reduce((sum, d) => sum + d.visits, 0) + ' lượt truy cập.'}
       className="h-auto w-full" viewBox="0 0 790 245">
@@ -61,7 +61,7 @@ function VisitorTrend({ daily }: { daily: Array<{ day: string; visits: number; u
           fill="#64748b">{dateShort(entry.day)}</text>)}
     </svg>
     <div className="flex items-center justify-between gap-2 border-t border-slate-100 pt-3 text-xs text-slate-600">
-      <span>{daily.length} ngày mô phỏng</span>
+      <span>{daily.length} ngày</span>
       <span>Cao nhất: <strong className="text-indigo-900">{Math.max(0, ...daily.map(day => day.visits))} lượt/ngày</strong></span>
     </div>
   </figure>;
@@ -92,7 +92,7 @@ export const AdminExperienceAnalytics: React.FC<{ mode: Mode }> = ({ mode }) => 
   const [audience, setAudience] = useState<ExperienceAudience>('all');
   const report = useMemo(() => getExperienceShowcase({ month, grade, audience }), [month, grade, audience]);
   const title = mode === 'ratings' ? 'Đánh giá sao và góp ý'
-    : mode === 'overview' ? 'Tổng quan hiệu quả trải nghiệm'
+    : mode === 'overview' ? 'Tổng quan hiệu quả sử dụng'
       : 'Hiệu quả sử dụng và hành trình khám phá';
   const selectClass = 'min-h-10 rounded-xl border border-white/25 bg-slate-900/60 px-3 py-2 text-sm text-white outline-offset-2';
   const ratingAverage = report.average === null ? '—' : report.average.toFixed(1).replace('.', ',');
@@ -104,13 +104,13 @@ export const AdminExperienceAnalytics: React.FC<{ mode: Mode }> = ({ mode }) => 
         <BarChart3 className="h-4 w-4" /> CHẠM ĐÀ NẴNG · QUẢN TRỊ TRẢI NGHIỆM
       </div>
       <span className="rounded-full border border-amber-300/60 bg-amber-300/20 px-3 py-1.5 text-xs font-extrabold tracking-wide text-amber-100">
-        DỮ LIỆU MÔ PHỎNG
+        CHẾ ĐỘ TRẢI NGHIỆM · SỐ LIỆU GIẢ ĐỊNH
       </span>
     </div>
     <h2 className="mt-4 text-2xl font-black leading-tight sm:text-3xl">{title}</h2>
     <p className="mt-2 max-w-2xl text-sm leading-6 text-sky-100">
-      Kịch bản trình diễn với {EXPERIENCE_SHOWCASE_PEOPLE.length} người tham gia giả định, trải từ tháng 10 đến ngày 13/11/2026.
-      Mọi số liệu chỉ dùng để thử giao diện, không ghi vào thống kê thực tế.
+      Theo dõi người tham gia, lượt truy cập, hành trình qua bốn chặng và đánh giá sao
+      từ tháng 10 đến ngày 13/11/2026.
     </p>
     <div className="mt-5 grid gap-3 sm:grid-cols-3">
       <label className="block text-xs font-bold text-sky-100">
@@ -135,8 +135,8 @@ export const AdminExperienceAnalytics: React.FC<{ mode: Mode }> = ({ mode }) => 
         <select className={selectClass + ' mt-1 block w-full'} value={audience}
           onChange={e => setAudience(e.target.value as ExperienceAudience)}>
           <option value="all">Học sinh + Khám phá tự do</option>
-          <option value="student">Học sinh có mã (mẫu)</option>
-          <option value="guest">Khám phá tự do (mẫu)</option>
+          <option value="student">Học sinh có mã</option>
+          <option value="guest">Khám phá tự do</option>
         </select>
       </label>
     </div>
@@ -148,7 +148,7 @@ export const AdminExperienceAnalytics: React.FC<{ mode: Mode }> = ({ mode }) => 
     <Metric icon={<TrendingUp className="h-5 w-5" />} title="Lượt truy cập" value={nf.format(report.visits)}
       detail="Bao gồm lượt quay lại" tone="sky" />
     <Metric icon={<Star className="h-5 w-5" />} title="Đánh giá sao" value={nf.format(totalRatings)}
-      detail="Lượt đánh giá trong kịch bản" tone="amber" />
+      detail="Tổng số lượt đánh giá" tone="amber" />
     <Metric icon={<Compass className="h-5 w-5" />} title="Điểm trung bình" value={ratingAverage}
       detail="Thang điểm tối đa 5 sao" tone="emerald" />
   </div>;
@@ -198,7 +198,7 @@ export const AdminExperienceAnalytics: React.FC<{ mode: Mode }> = ({ mode }) => 
     <div className="mt-5 space-y-3">
       {report.byGrade.map(row => <div key={row.grade}>
         <div className="mb-1 flex justify-between text-sm">
-          <span>Khối {row.grade}</span><strong>{row.count} người mẫu</strong>
+          <span>Khối {row.grade}</span><strong>{row.count} người</strong>
         </div>
         <div className="h-3 overflow-hidden rounded-full bg-slate-100">
           <div className="h-full rounded-full bg-indigo-500"
@@ -210,7 +210,7 @@ export const AdminExperienceAnalytics: React.FC<{ mode: Mode }> = ({ mode }) => 
 
   const rankingPanel = <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
     <h3 className="text-base font-black text-slate-900">Top trạm được khám phá</h3>
-    <p className="mt-1 text-xs text-slate-500">Xếp hạng tình huống mẫu trên tổng số 25 trạm.</p>
+    <p className="mt-1 text-xs text-slate-500">Thống kê theo lượt khám phá trong tổng số 25 trạm.</p>
     <ol className="mt-4 space-y-2">{report.stationRanking.map((station, index) =>
       <li key={station.id} className="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2.5">
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-indigo-100 text-sm font-black text-indigo-800">{index + 1}</span>
@@ -226,7 +226,7 @@ export const AdminExperienceAnalytics: React.FC<{ mode: Mode }> = ({ mode }) => 
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div>
         <h3 className="text-base font-black text-slate-900 sm:text-lg">Mức độ hài lòng</h3>
-        <p className="mt-1 text-xs text-slate-500">Phân bố 1–5 sao của người tham gia giả định</p>
+        <p className="mt-1 text-xs text-slate-500">Phân bố mức đánh giá từ 1 đến 5 sao</p>
       </div>
       <div className="flex items-center gap-2">
         <Star className="h-6 w-6 fill-amber-400 text-amber-400"/>
@@ -246,13 +246,13 @@ export const AdminExperienceAnalytics: React.FC<{ mode: Mode }> = ({ mode }) => 
   </section>;
 
   const commentsPanel = <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
-    <h3 className="text-base font-black text-slate-900">Góp ý minh họa</h3>
-    <p className="mt-1 text-xs text-slate-500">Nhận xét được viết để thử cách hiển thị; không trích từ học sinh thật.</p>
+    <h3 className="text-base font-black text-slate-900">Ý kiến và góp ý</h3>
+    <p className="mt-1 text-xs text-slate-500">Một số nhận xét trong phiên trải nghiệm.</p>
     <div className="mt-4 space-y-2">
       {EXPERIENCE_SHOWCASE_FEEDBACK.slice(0, Math.min(6, Math.ceil(totalRatings / 22))).map((comment, index) =>
         <div key={comment} className="rounded-xl border border-slate-100 bg-slate-50 p-3">
           <div className="mb-1 flex items-center justify-between gap-2">
-            <span className="text-sm font-semibold text-slate-800">{index % 3 === 0 ? 'Khách mẫu' : 'Học sinh mẫu'} #{String(index + 1).padStart(2,'0')}</span>
+            <span className="text-sm font-semibold text-slate-800">{index % 3 === 0 ? 'Khách tham quan' : 'Học sinh'} #{String(index + 1).padStart(2,'0')}</span>
             <span className="text-xs font-bold text-amber-700">{index % 4 === 0 ? '4' : '5'} ★</span>
           </div>
           <p className="text-sm text-slate-700">{comment}</p>
@@ -270,9 +270,8 @@ export const AdminExperienceAnalytics: React.FC<{ mode: Mode }> = ({ mode }) => 
     {(mode === 'ratings' || mode === 'effectiveness') &&
       <div className="grid gap-4 lg:grid-cols-2">{ratingPanel}{commentsPanel}</div>}
     <p className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs font-semibold leading-5 text-amber-950">
-      DỮ LIỆU MÔ PHỎNG · {EXPERIENCE_SHOWCASE_PEOPLE.length} hồ sơ tham gia giả định, không có danh tính thật.
-      Thống kê không phản ánh kết quả học tập, lượt truy cập hoặc đánh giá đã lưu trên hệ thống Production.
-      Không gửi API, không ghi Firestore; bộ lọc chỉ xử lý dữ liệu trong trình duyệt.
+      SỐ LIỆU GIẢ ĐỊNH PHỤC VỤ TRẢI NGHIỆM · Không phải kết quả học tập, lượt truy cập hay đánh giá thực tế.
+      Bộ lọc xử lý cục bộ, không gửi API và không ghi Firestore.
     </p>
     {mode === 'overview' && <p className="text-xs text-slate-600">
       Muốn xem chi tiết, chọn <strong>Báo cáo → Hiệu quả sử dụng</strong> hoặc <strong>Đánh giá sao và góp ý</strong> ở menu bên trái.

@@ -104,8 +104,8 @@ export const AdminExperienceShell: React.FC<Props> = ({ activePage, onPageChange
         </p>
         <h1 ref={title} tabIndex={-1} className="mt-1 text-xl font-black text-slate-900 sm:text-2xl">{active.label}</h1>
       </header>
-      <p role="status" className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs font-semibold text-amber-950">
-        DỮ LIỆU MINH HỌA · Chế độ cục bộ, không phản ánh lượt truy cập thật và không sử dụng quyền Admin thực
+      <p role="status" className="rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-xs font-semibold text-slate-700">
+        CHẾ ĐỘ TRẢI NGHIỆM · SỐ LIỆU GIẢ ĐỊNH — Không phải dữ liệu truy cập và đánh giá thực tế
       </p>
       {pages[activePage]}
     </div>

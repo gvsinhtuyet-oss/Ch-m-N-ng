@@ -11,6 +11,8 @@ import { backgroundMusic } from '../../services/BackgroundMusic';
 import { progressService } from '../../services/ProgressService';
 import { studentSyncService } from '../../services/StudentSyncService';
 import { normalizeStudentCode } from './studentQr';
+import { parseDemoStudentQr, type DemoStudentLink } from '../teacher/demoStudentQr';
+import { effectivenessService } from '../../services/EffectivenessService';
 import { readTheme } from '../../services/ThemeService';
 import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackground';
 import {
@@ -48,6 +50,7 @@ export const LandingView: React.FC = () => {
   const [savedSyncCode, setSavedSyncCode] = useState<string>('');
   const [restoreCode,setRestoreCode] = useState('');
   const [qrEntryCode,setQrEntryCode] = useState('');
+  const [demoQrEntry,setDemoQrEntry] = useState<DemoStudentLink|null>(null);
   const qrEntryInFlight=useRef(false);
   const guestEntryInFlight=useRef(false);
   const [restoreBusy,setRestoreBusy] = useState(false);
@@ -60,6 +63,13 @@ export const LandingView: React.FC = () => {
   const STUDENT_PROFILE_KEY = 'cham_danang_student_profile_v1';
   useEffect(()=>{
     const readStudentQr=()=>{
+      const demoLink=parseDemoStudentQr(window.location.hash);
+      if(demoLink){
+        setDemoQrEntry(demoLink);setQrEntryCode('');setRestoreCode('');
+        setLoginError('');setGuestMode(false);setShowRolePicker(false);
+        setShowStudentLogin(false);setIntroActive(true);
+        return;
+      }
       const match=/^#student-code=([A-Z0-9-]{12,20})$/i.exec(window.location.hash);
       if(!match)return;
       setQrEntryCode(match[1].toUpperCase());
@@ -202,6 +212,28 @@ export const LandingView: React.FC = () => {
   };
 
   const handleStartJourney = async () => {
+    if(demoQrEntry){
+      if(qrEntryInFlight.current)return;
+      qrEntryInFlight.current=true;setRestoreBusy(true);setLoginError('');
+      try{
+        if(authService.current())await authService.logout();
+        // Demo QR is not a credential; it starts a local-only, non-syncing guest.
+        effectivenessService.setDemoMode(true);
+        const name='Học sinh '+String(demoQrEntry.ordinal).padStart(2,'0');
+        const id='demo-qr-g'+demoQrEntry.grade+'-'+demoQrEntry.className.replace('/','-')+'-'+demoQrEntry.ordinal;
+        loginAsStudent({
+          ...DEMO_STUDENTS[0],id,studentCode:id,
+          displayName:name,name,role:'student',isGuest:true,
+          classId:'demo-class-'+demoQrEntry.className.replace('/','-'),
+          className:demoQrEntry.className+' (trải nghiệm)',grade:demoQrEntry.grade,
+          pinHash:undefined,status:'active',
+        });
+        window.history.replaceState(null,'',window.location.pathname+window.location.search);
+        setDemoQrEntry(null);stopIntroVideo();
+      }catch(error){setLoginError((error as Error).message);effectivenessService.setDemoMode(false);}
+      finally{qrEntryInFlight.current=false;setRestoreBusy(false);}
+      return;
+    }
     if(qrEntryCode){
       if(qrEntryInFlight.current)return;
       qrEntryInFlight.current=true;
@@ -282,6 +314,9 @@ export const LandingView: React.FC = () => {
 
   return (
     <div className="landing-art-shell text-white select-none">
+      {demoQrEntry && <div role="status" className="pointer-events-none absolute left-1/2 top-3 z-[70] w-[min(94vw,550px)] -translate-x-1/2 rounded-xl border border-amber-300 bg-amber-50/95 px-4 py-3 text-center text-sm font-bold text-amber-950 shadow-lg">
+        Thẻ QR TRẢI NGHIỆM · Lớp {demoQrEntry.className} · Học sinh {String(demoQrEntry.ordinal).padStart(2,'0')}. Bấm CHẠM ĐỂ KHÁM PHÁ để vào hành trình học thử.
+      </div>}
       <div className="landing-art-scene">
       {/* Nền trang bìa do Quản trị cài riêng. */}
       <img

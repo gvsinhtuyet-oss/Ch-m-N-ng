@@ -18,8 +18,18 @@ export const ClassRoster: React.FC = () => {
     else {setGrade(2);setName('2/1');setNames('');}
   };
   return <section className="bg-white rounded-3xl p-6 border space-y-4">
-    <h2 className="text-xl font-black">Lớp và danh sách học sinh của tôi</h2>
-    <p className="text-sm text-slate-600">Tạo lớp, nhập mỗi học sinh trên một dòng rồi lưu. Danh sách được lưu trên máy chủ và chỉ nhân sự có quyền mới xem được.</p>
+    <h2 className="text-xl font-black">Lớp của tôi · Danh sách và mã QR học sinh</h2>
+    <p className="text-sm text-slate-600">Tạo lớp, nhập mỗi học sinh trên một dòng rồi lưu. Danh sách được lưu trên máy chủ và chỉ giáo viên có quyền mới xem được.</p>
+    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-sky-200 bg-sky-50 p-4">
+      <div><strong className="text-sky-950">Thẻ QR của học sinh ở ngay bên dưới danh sách lớp</strong>
+        <p className="mt-1 text-xs text-slate-700">1. Tạo hoặc chọn lớp → 2. Lưu danh sách → 3. Cấp mã và tải PNG/ZIP. Không cấp lại mã đã có nếu chưa cần thiết.</p></div>
+      <button type="button" className="min-h-11 rounded-xl bg-sky-700 px-4 py-2 text-sm font-bold text-white"
+        onClick={()=>{
+          if(!selected&&classes.length)choose(classes[0].id);
+          requestAnimationFrame(()=>document.getElementById('teacher-student-qr-cards')?.scrollIntoView({behavior:'smooth',block:'start'}));
+        }}
+        disabled={!selected&&!classes.length}>Xem mã QR học sinh</button>
+    </div>
     <label className="block">Chọn lớp<select className="block w-full border rounded-xl p-3" value={selected} onChange={e=>choose(e.target.value)} disabled={busy}>
       <option value="">+ Tạo lớp mới</option>{classes.map(c=><option key={c.id} value={c.id}>{c.name} · {c.academicYear} · {c.totalStudents} học sinh</option>)}
     </select></label>
@@ -40,7 +50,7 @@ export const ClassRoster: React.FC = () => {
         <button className="rounded-xl bg-emerald-700 text-white px-5 py-3 font-bold">{busy?'Đang lưu…':selected?'Lưu danh sách':'Tạo lớp và lưu danh sách'}</button>
       </fieldset>
     </form>
-    {selected&&<StudentAccessCards key={selected+classes.find(c=>c.id===selected)?.students.join("|")} classId={selected} className={name}/>}
+    {selected&&<div id="teacher-student-qr-cards"><StudentAccessCards key={selected+classes.find(c=>c.id===selected)?.students.join("|")} classId={selected} className={name}/></div>}
     {message && <p role="status" className="rounded-xl bg-slate-100 p-3">{message}</p>}
   </section>;
 };

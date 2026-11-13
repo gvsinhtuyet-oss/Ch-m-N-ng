@@ -1,3 +1,4 @@
+import {isExperienceMode,setExperienceMode} from './ExperienceMode';
 import {freeExplorerIdentity} from './FreeExplorerIdentity';
 type Audience = 0 | 1 | 2;
 type Visit = {id: string; lastActivity: number; staff?: boolean; visitorId?:string};
@@ -12,6 +13,8 @@ let pending: Batch | undefined;
 let sending = false;
 let pauseUntil = 0;
 let timer: number | undefined;
+let demoQrMode=false;
+const demoOnly = () => isExperienceMode() || demoQrMode || (typeof window!=='undefined' && window.location.hash.startsWith('#demo-student='));
 
 function currentVisit(now: number): Visit {
   const person=freeExplorerIdentity.current()?.id||'';
@@ -32,6 +35,7 @@ function currentVisit(now: number): Visit {
 }
 
 async function flush() {
+  if(demoOnly()){pending=undefined;return;}
   if (timer !== undefined) window.clearTimeout(timer);
   timer = undefined;
   if (!pending || sending || !navigator.onLine || Date.now() < pauseUntil) return;
@@ -82,10 +86,11 @@ function schedule() {
 }
 
 function note(stationId?: string, stage = 0) {
-  if (import.meta.env.VITE_EFFECTIVENESS_ENABLED !== 'true') return;
+  // Staff navigation is not learner usage; never queue analytics for teachers/admins.
+  if(audience===2)return;
+  if (demoOnly() || import.meta.env.VITE_EFFECTIVENESS_ENABLED !== 'true') return;
   try {
     const {id: session} = currentVisit(Date.now());
-    if (audience === 2) stationId = undefined;
     const sent = acknowledged?.session === session ? acknowledged : undefined;
     if (!pending && sent && sent.visitor?.id===freeExplorerIdentity.current()?.id && audience <= sent.audience &&
         (!stationId || stage <= (sent.stations.get(stationId) ?? -1))) return;
@@ -101,12 +106,21 @@ function note(stationId?: string, stage = 0) {
 }
 
 export const effectivenessService = {
+  setDemoMode(active:boolean){
+    demoQrMode=active;setExperienceMode(active);
+    if(active){pending=undefined;timer!==undefined&&window.clearTimeout(timer);timer=undefined;}
+  },
   async guestRating(stationId:string, stars?:number){
+    if(demoOnly())return stars??0;
     const visitor=freeExplorerIdentity.current();if(!visitor)throw Error('Vui lòng nhập tên trước khi đánh giá.');
     const response=await fetch('/api/effectiveness',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session:currentVisit(Date.now()).id,audience:visitor.role==='teacher'?2:0,stations:[],visitor,rating:{stationId,...(stars===undefined?{action:'read'}:{stars})}})});
     if(!response.ok)throw Error('Chưa lưu được đánh giá vào báo cáo.');return (await response.json()).stars as number;
   },
-  visit(kind: Audience) { audience = kind; note(); },
+  visit(kind: Audience) {
+    audience=kind;
+    if(kind===2){pending=undefined;if(timer!==undefined)window.clearTimeout(timer);timer=undefined;return;}
+    note();
+  },
   stage(stationId: string, stage: number) { note(stationId, stage); },
   refreshVisit() { note(); },
   flush() { void flush(); },

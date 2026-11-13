@@ -1,3 +1,4 @@
+import {isExperienceMode} from './ExperienceMode';
 import {freeExplorerIdentity} from './FreeExplorerIdentity';
 import {effectivenessService} from './EffectivenessService';
 import {fetchWithTimeout} from './NetworkService';
@@ -14,6 +15,12 @@ function studentCredential(userId?:string,requireStudent=false) {
 }
 
 async function request(path:string,data:object) {
+  if(isExperienceMode()){
+    const key='cham-experience-feedback:'+path+':'+String((data as any).stationId||'');
+    if(path==='rating'){const d=data as any;if(d.action==='read'){try{return {saved:true,stars:JSON.parse(localStorage.getItem(key)||'0')};}catch{return {saved:true,stars:0};}}
+      localStorage.setItem(key,JSON.stringify(d.stars));return {saved:true,stars:d.stars};}
+    const rows=JSON.parse(localStorage.getItem(key)||'[]');rows.push({...data,createdAt:new Date().toISOString()});localStorage.setItem(key,JSON.stringify(rows));return {saved:true};
+  }
   const response=await fetchWithTimeout('/api/learning/'+path,{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
   if(!response.headers.get('content-type')?.includes('application/json'))throw new Error('Máy chủ phản hồi chưa sẵn sàng.');
   const result=await response.json();
@@ -21,9 +28,9 @@ async function request(path:string,data:object) {
   return result;
 }
 export const learningFeedbackService={
-  async rating(stationId:string,userId?:string,requireStudent=false):Promise<number>{if(!requireStudent&&freeExplorerIdentity.current())return effectivenessService.guestRating(stationId);return (await request('rating',{stationId,action:'read',...studentCredential(userId,requireStudent)})).stars;},
+  async rating(stationId:string,userId?:string,requireStudent=false):Promise<number>{if(!isExperienceMode()&&!requireStudent&&freeExplorerIdentity.current())return effectivenessService.guestRating(stationId);return (await request('rating',{stationId,action:'read',...studentCredential(userId,requireStudent)})).stars;},
   async saveRating(stationId:string,stars:number,userId?:string,requireStudent=false):Promise<number>{
-    if(!requireStudent&&freeExplorerIdentity.current())return effectivenessService.guestRating(stationId,stars);
+    if(!isExperienceMode()&&!requireStudent&&freeExplorerIdentity.current())return effectivenessService.guestRating(stationId,stars);
     const result=await request('rating',{stationId,stars,...studentCredential(userId,requireStudent)});
     if(result.saved!==true)throw new Error('Máy chủ chưa xác nhận lưu.');
     return result.stars;

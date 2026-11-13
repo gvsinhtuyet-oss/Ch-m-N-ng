@@ -1,3 +1,4 @@
+import {isExperienceMode} from './ExperienceMode';
 import { publicGddpTextbookRecords } from '../../gddp-textbook-review.mjs';
 import { bundledGddpCatalog } from './GddpBundledCatalog';
 import { fetchWithTimeout } from './NetworkService';
@@ -31,9 +32,15 @@ async function call<T>(path: string, method = 'GET', data?: unknown): Promise<T>
   if (!res.ok) throw new Error(json.error || 'Không thể truy cập thư viện GDĐP.');
   return json as T;
 }
+let publicCache: {at:number;value:Promise<GddpCatalog & {source?:string}>}|undefined;
 export const gddpService = {
   publicCatalog: async () => {
-    const catalog = await call<GddpCatalog & {source?: string}>('/api/gddp/catalog');
+    if(isExperienceMode())return {...bundledGddpCatalog,records:publicGddpTextbookRecords(bundledGddpCatalog.records),published:false,source:'bundled-experience'};
+    if(!publicCache||Date.now()-publicCache.at>5*60*1000){
+      const value=call<GddpCatalog & {source?:string}>('/api/gddp/catalog');
+      publicCache={at:Date.now(),value};value.catch(()=>{if(publicCache?.value===value)publicCache=undefined;});
+    }
+    const catalog = await publicCache.value;
     const records = catalog.published === false && catalog.source?.startsWith('bundled-')
       ? bundledGddpCatalog.records : catalog.records;
     return {...catalog, records: publicGddpTextbookRecords(records)};

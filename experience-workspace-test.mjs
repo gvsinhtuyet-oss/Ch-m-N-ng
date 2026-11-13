@@ -7,7 +7,7 @@ test('Free teacher has a safe, isolated Teacher/Admin experience switch', () => 
   const teacher = read('src/features/teacher/TeacherDashboard.tsx');
   const experience = read('src/features/teacher/ExperienceWorkspace.tsx');
   assert.match(teacher, /currentUser\?\.id === 'teacher-demo'/);
-  assert.match(teacher, /<ExperienceWorkspace teacherPanel=\{<TeacherDashboardCore \/>/);
+  assert.match(teacher, /<ExperienceWorkspace teacherPanel=\{\(\{classesPanel,resultsPanel\}\)/);
   assert.match(experience, /Chuyển đổi vai trò trải nghiệm/);
   assert.match(read('src/features/landing/AccessPortal.tsx'), /Giáo viên \/ Quản trị trải nghiệm/);
   assert.match(experience, /Quản trị/);
@@ -15,12 +15,16 @@ test('Free teacher has a safe, isolated Teacher/Admin experience switch', () => 
   assert.match(experience, /CHẾ ĐỘ TRẢI NGHIỆM · SỐ LIỆU GIẢ ĐỊNH/);
 });
 test('Sample class, star, plan and assets live on this device only', () => {
+  const teacher=read('src/features/teacher/TeacherDashboard.tsx');
   const source = read('src/features/teacher/ExperienceWorkspace.tsx');
   for (const expected of ['localStorage.getItem', 'localStorage.setItem', 'Tạo lớp', 'Thêm vào lớp', 'Đánh giá sao theo lớp', 'ALL_25_STATIONS.map', 'Kế hoạch tích hợp GDĐP']) {
     assert.ok(source.includes(expected), expected);
   }
   assert.doesNotMatch(source, /\bfetch\s*\(|authService|studentSyncService|firebase\/|\/api\/admin|\/api\/teacher|eval\s*\(/);
-  assert.match(source, /Học sinh mẫu/);
+  assert.match(source, /DemoStudentAccessCards/);
+  assert.match(teacher, /Lớp của tôi · Mã QR/);
+  assert.match(teacher, /demoClassPanel/);
+  assert.match(read('src/features/teacher/ClassRoster.tsx'), /StudentAccessCards/);
 });
 test('Protected real Admin remains separate from teacher guest route', () => {
   const app = read('src/App.tsx');

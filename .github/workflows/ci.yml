@@ -108,6 +108,12 @@ jobs:
       - name: Teacher Google access and private plans
         run: node teacher-workspace-test.mjs && node --test google-identity-test.mjs && node --import tsx --test teacher-plan-import-test.ts
 
+      - name: Integration plan defaults, KNTT lesson matching, real/demo isolation and manual sync
+        run: node --import tsx --test teacher-integration-plan-test.ts experience-no-network-test.ts
+
+      - name: Teacher demo QR is functional but never issues real codes or analytics writes
+        run: node --import tsx --test demo-student-qr-test.ts
+
       - name: Actual Teacher/Admin role routes and approved CSS regression
         run: node --test production-staff-ui-test.mjs
 
@@ -163,6 +169,7 @@ jobs:
           node student-qr-entry-browser-qa.mjs
           node student-qr-scan-browser-qa.mjs
           node access-portal-browser-qa.mjs
+          node teacher-integration-browser-qa.mjs
       - name: LIVE public assistant UI (read-only, no writes)
         env:
           QA_URL: https://chamdanang-gddp.pages.dev/
@@ -181,6 +188,7 @@ jobs:
             staff-admin-qa/
             student-qr-qa/
             access-portal-qa/
+            teacher-plan-qa/
           if-no-files-found: ignore
 
   live-student-identity-readonly:

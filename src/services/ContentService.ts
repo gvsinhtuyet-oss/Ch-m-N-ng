@@ -1,3 +1,4 @@
+import {isExperienceMode} from './ExperienceMode';
 import {contentForServer} from './contentAssetUrls';
 import { journeyMapImage } from '../data/journeyMapAssets';
 import {currentRealPhotos} from './RealPhotoPolicy';
@@ -95,6 +96,7 @@ export const contentService = {
     this.apply(station);
   },
   async loadShared(stations: Station[]) {
+    if(isExperienceMode())return false;
     try {
       const response = await fetchWithTimeout('/api/content', { cache: 'no-store' }, 120000);
       if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) return false;

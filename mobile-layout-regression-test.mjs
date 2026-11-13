@@ -97,7 +97,7 @@ test('all role/student/teacher screens use one responsive real UI, high-res appr
  assert.match(portal,/StudentQrScanner/);
  assert.match(portal,/onScanCode/);
  assert.match(portal,/cham-access-qr-button/);
- assert.match(portal,/Giáo viên tự do/);
+ assert.match(portal,/Giáo viên \/ Quản trị trải nghiệm/);
  assert.match(portal,/Khám phá tự do/);
  assert.match(landing,/onScanCode=/);
  assert.match(css,/@media\(max-width:767px\)/);

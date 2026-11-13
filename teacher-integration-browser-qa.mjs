@@ -29,7 +29,8 @@ const clickButton=async(page,text)=>
   },text);
 
 async function checkChat(page,role,questions){
- await page.click('[aria-label="Mở Trợ lý khám phá Đà Nẵng"]');
+ await page.waitForSelector('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]',{visible:true,timeout:15000});
+ await page.click('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]');
  await page.waitForSelector('#danang-assistant-panel[data-assistant-audience="'+role+'"]');
  for(const [question,expected] of questions){
   const before=await page.$$eval('[data-chat-role="assistant"]',els=>els.length);

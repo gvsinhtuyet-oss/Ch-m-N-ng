@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ALL_25_STATIONS } from '../../data/allStations';
+import { AdminExperienceShell, type AdminExperiencePage } from './AdminExperienceShell';
+import { ASSISTANT_QUALITY_CASES, evaluateAssistantQualityCase } from '../admin/assistantQualityEngine';
 
 type Learner = { id: string; name: string; completed: number; stars: number; feedback: string };
 type Classroom = { id: string; name: string; grade: number; students: Learner[] };
@@ -43,7 +45,9 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
   const [data, setData] = useState<Sandbox>(readSandbox);
   const [area, setArea] = useState<'teacher' | 'admin'>('teacher');
   const [teacherPage, setTeacherPage] = useState<'teaching' | 'classes' | 'results'>('teaching');
-  const [adminPage, setAdminPage] = useState<'overview' | 'classes' | 'ratings' | 'assets' | 'settings'>('overview');
+  const [adminPage, setAdminPage] = useState<AdminExperiencePage>('overview');
+  const [qualityGrade, setQualityGrade] = useState(0);
+  const [qualityChecks, setQualityChecks] = useState<Record<string, 'pass'|'flag'|'review'>>({});
   const [selectedId, setSelectedId] = useState('demo-class-224');
   const [className, setClassName] = useState('');
   const [classGrade, setClassGrade] = useState(2);
@@ -170,12 +174,30 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
   </div>;
 
   const adminOverview = <div className="space-y-4">
-    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+    <div className="flex flex-wrap items-center justify-between gap-2">
+      <div><p className="text-xs font-extrabold uppercase tracking-widest text-indigo-600">NĂM HỌC 2026–2027</p>
+        <h2 className="mt-1 text-xl font-black text-slate-900 sm:text-2xl">Tổng quan hoạt động toàn trường</h2>
+        <p className="text-xs text-slate-500">Bộ số liệu trải nghiệm trên thiết bị · Không phải thống kê thật</p>
+      </div>
+      <span className="rounded-full bg-amber-100 px-3 py-2 text-xs font-semibold text-amber-950">Dữ liệu cục bộ · Không dùng Firestore</span>
+    </div>
+    <div aria-label="Lối tắt quản trị trải nghiệm" className="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+      {([
+        ['reports','Xem kết quả lớp'],
+        ['proposals','Xem đánh giá sao và góp ý'],
+        ['stations','Sửa nội dung trạm'],
+        ['effectiveness','Biểu đồ sử dụng và hiệu quả'],
+      ] as const).map(([id,label])=><button type="button" key={id} onClick={()=>setAdminPage(id)}
+        className="flex min-h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-left text-sm font-bold text-indigo-900 hover:bg-indigo-50">{label}</button>)}
+    </div>
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 2xl:grid-cols-6">
       {[
+        ['Giáo viên', 1],
         ['Lớp học', data.classes.length],
-        ['Học sinh mẫu', students.length],
-        ['Đánh giá mẫu', evaluated.length],
-        ['Điểm sao trung bình', average === null ? '—' : average.toFixed(1) + '/5']
+        ['Học sinh', students.length],
+        ['Trạm GDĐP', ALL_25_STATIONS.length],
+        ['Đánh giá sao', evaluated.length],
+        ['Điểm sao trung bình', average === null ? '—' : average.toFixed(1)]
       ].map(([label, value]) => <div key={label} className="rounded-2xl border bg-white p-4 shadow-sm">
         <p className="text-xs font-semibold text-slate-600">{label}</p><p className="mt-2 text-2xl font-black text-indigo-900">{value}</p>
       </div>)}
@@ -246,17 +268,135 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
     }}>Đặt lại bản trải nghiệm</button>
   </section>;
 
+
+  const trackingPanel = <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+    <h2 className="text-lg font-black text-slate-900">Sổ theo dõi triển khai GDĐP toàn trường</h2>
+    <p className="mt-1 text-xs text-slate-600">Bản trình diễn theo lớp, chưa ghi nhận ngày/tiết dạy thật. Các cột tiến độ phản ánh số trạm học sinh mẫu hoàn thành.</p>
+    <div className="mt-4 overflow-x-auto"><table className="min-w-[550px] w-full text-left text-sm">
+      <thead className="border-y bg-slate-50 text-slate-600"><tr><th className="p-3">Lớp</th><th className="p-3">Khối</th><th className="p-3">Học sinh</th><th className="p-3">Lượt hoàn thành trạm mẫu</th><th className="p-3">Ghi nhận</th></tr></thead>
+      <tbody>{data.classes.map(c=><tr key={c.id} className="border-b">
+        <td className="p-3 font-bold">{c.name}</td><td className="p-3">{c.grade}</td><td className="p-3">{c.students.length}</td>
+        <td className="p-3">{c.students.reduce((n,s)=>n+s.completed,0)}</td><td className="p-3 text-amber-800">Trải nghiệm cục bộ</td>
+      </tr>)}</tbody></table></div>
+  </section>;
+
+  const effectivenessPanel = <div className="space-y-4">
+    <section className="overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-950 to-sky-800 p-5 text-white shadow-md sm:p-6">
+      <p className="text-xs font-bold uppercase tracking-wider text-sky-200">CHẠM ĐÀ NẴNG · BÁO CÁO QUẢN TRỊ</p>
+      <h2 className="mt-2 text-xl font-black sm:text-2xl">Hiệu quả sử dụng và hành trình khám phá</h2>
+      <p className="mt-2 max-w-3xl text-sm text-sky-100">Bản trình diễn biểu đồ theo lớp và tiến độ học sinh mẫu; số lượt truy cập/ngày và tỷ lệ sử dụng Production không có trong bộ dữ liệu cục bộ.</p>
+    </section>
+    <div className="grid gap-3 sm:grid-cols-3">
+      {[
+        ['Học sinh tham gia mẫu', students.filter(s=>s.completed>0).length],
+        ['Trạm đã hoàn thành (mẫu)', students.reduce((n,s)=>n+s.completed,0)],
+        ['Lượt đánh giá mẫu', evaluated.length]
+      ].map(([label,value])=><div key={label} className="rounded-2xl border bg-white p-5">
+        <p className="text-xs font-semibold text-slate-600">{label}</p><p className="mt-2 text-3xl font-black text-sky-800">{value}</p>
+      </div>)}
+    </div>
+    <div className="grid gap-4 lg:grid-cols-2">
+      <div className="rounded-2xl border bg-white p-5">
+        <h3 className="font-black">Số học sinh mẫu theo khối</h3>
+        <div className="mt-4 space-y-3">{countsByGrade.map(g=><div key={g.grade}>
+          <div className="mb-1 flex justify-between text-sm"><span>Khối {g.grade}</span><span className="font-bold">{g.students} em</span></div>
+          <div className="h-3 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-sky-600"
+            style={{width:students.length?(100*g.students/students.length)+'%':'0%'}}/></div>
+        </div>)}</div>
+      </div>
+      <div className="rounded-2xl border bg-white p-5">
+        <h3 className="font-black">Mức độ khám phá (số trạm)</h3>
+        <div className="mt-4 space-y-3">{[0,1,2,3,4,5].map(count=>{
+          const hits=students.filter(s=>s.completed===count).length;
+          return <div key={count}>
+            <div className="mb-1 flex justify-between text-sm"><span>{count}/5 trạm</span><span className="font-bold">{hits} em</span></div>
+            <div className="h-3 overflow-hidden rounded-full bg-slate-100"><div className="h-full rounded-full bg-indigo-600"
+              style={{width:students.length?(100*hits/students.length)+'%':'0%'}}/></div>
+          </div>;
+        })}</div>
+      </div>
+    </div>
+    <div className={muted}>Không tạo biểu đồ ngày truy cập giả định. Khi đăng nhập quản trị thật, chỉ số được lấy từ dữ liệu máy chủ đã xác minh.</div>
+  </div>;
+
+  const usersPanel = <section className="rounded-2xl border border-slate-200 bg-white p-5">
+    <h2 className="text-lg font-black">Tài khoản và phân quyền</h2>
+    <p className="mt-1 text-sm text-slate-600">Sơ đồ vai trò tương tự Admin thật; không cấp quyền quản trị, không tạo tài khoản thật và không xem dữ liệu người dùng Production.</p>
+    <div className="mt-4 grid gap-3 md:grid-cols-3">
+      {[
+        ['Quản trị','Trải nghiệm giao diện quản lý, kiểm định và báo cáo'],
+        ['Giáo viên','Tạo lớp và quản lý học liệu mẫu trên thiết bị'],
+        ['Học sinh',students.length+' hồ sơ mẫu trong '+data.classes.length+' lớp'],
+      ].map(([label,description])=><div key={label} className="rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4">
+        <h3 className="font-bold text-indigo-950">{label}</h3><p className="mt-2 text-sm text-slate-700">{description}</p>
+      </div>)}
+    </div>
+  </section>;
+
+  const themePanel = <section className="rounded-2xl border border-slate-200 bg-white p-5">
+    <h2 className="text-lg font-black">Giao diện ứng dụng</h2>
+    <p className="mt-1 text-sm text-slate-600">Xem phong cách giao diện trong chế độ trải nghiệm. Thay đổi nền, logo và giao diện thật cần đăng nhập quản trị chính thức.</p>
+    <div className="mt-4 grid gap-4 sm:grid-cols-2">
+      <div className="rounded-2xl border border-sky-200 bg-gradient-to-br from-orange-100 via-white to-sky-100 p-6 text-center shadow-sm">
+        <p className="text-xl font-black tracking-wider text-orange-600">CHẠM ĐÀ NẴNG</p>
+        <p className="mt-2 text-sm text-blue-950">Hành trình số khám phá quê hương</p>
+        <div className="mx-auto mt-5 max-w-xs rounded-xl bg-blue-700 px-4 py-3 text-sm font-bold text-white">Chạm để khám phá</div>
+      </div>
+      <div className="rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-white p-6 text-center shadow-sm">
+        <p className="text-xl font-black text-indigo-950">Quản trị CHẠM ĐÀ NẴNG</p>
+        <p className="mt-2 text-sm text-slate-600">Không gian quản lý · 5 nhóm chức năng</p>
+        <div className="mx-auto mt-5 max-w-xs rounded-xl border border-indigo-200 bg-white px-4 py-3 text-sm font-bold">Tổng quan</div>
+      </div>
+    </div>
+  </section>;
+
+  const qualityCases = ASSISTANT_QUALITY_CASES.filter(c=>
+    !qualityGrade || ALL_25_STATIONS.some(st=>st.id===c.stationId && st.grade===qualityGrade));
+  const qualityChecked = qualityCases.filter(c=>qualityChecks[c.id]);
+  const qualityFlagged = qualityChecked.filter(c=>qualityChecks[c.id]==='flag');
+  const qualityPassed = qualityChecked.filter(c=>qualityChecks[c.id]==='pass');
+  const qualityPanel = <section className="space-y-4">
+    <div className="rounded-2xl border bg-white p-5">
+      <h2 className="text-lg font-black">Kiểm định Trợ lý khám phá · 25 trạm</h2>
+      <p className="mt-1 text-sm text-slate-600">Chạy kiểm tra cục bộ bộ truy hồi câu trả lời đã có sẵn, không gửi câu hỏi cho AI/API. Các trường hợp phải đối chiếu kiến thức vẫn cần giáo viên kiểm duyệt.</p>
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <label htmlFor="experience-qa-grade" className="text-sm font-bold">Khối lớp</label>
+        <select id="experience-qa-grade" className={field+' sm:w-auto'} value={qualityGrade} onChange={e=>setQualityGrade(Number(e.target.value))}>
+          <option value={0}>Tất cả 5 khối</option>{[1,2,3,4,5].map(g=><option key={g} value={g}>Khối {g}</option>)}
+        </select>
+        <button type="button" className={button} onClick={()=>{
+          const selected=qualityCases.filter(c=>['context','guard','unknown'].includes(c.check));
+          const results:Record<string,'pass'|'flag'|'review'>={};
+          for (const row of selected) {
+            try { results[row.id]=evaluateAssistantQualityCase(row).autoStatus; }
+            catch { results[row.id]='flag'; }
+          }
+          setQualityChecks(old=>({...old,...results}));
+        }}>Kiểm tra bộ tình huống cục bộ</button>
+      </div>
+      <div className="mt-4 grid grid-cols-3 gap-3 text-center">
+        {[['Đã kiểm',qualityChecked.length],['Đạt kỹ thuật',qualityPassed.length],['Cần xem lại',qualityFlagged.length]].map(([label,n])=>
+          <div key={label} className="rounded-xl bg-slate-50 p-3"><p className="text-xs text-slate-600">{label}</p><strong className="text-xl text-indigo-900">{n}</strong></div>)}
+      </div>
+    </div>
+    <div className="rounded-2xl border bg-white p-4">
+      <h3 className="font-black">Tình huống cần kiểm tra</h3>
+      <div className="mt-3 max-h-80 space-y-2 overflow-y-auto">
+        {qualityCases.filter(c=>qualityChecks[c.id]==='flag').slice(0,15).map(c=>
+          <div key={c.id} className="rounded-xl border border-rose-100 bg-rose-50 p-3 text-sm">
+            <p className="font-bold">{c.question}</p><p className="mt-1 text-slate-600">{c.note}</p>
+          </div>)}
+        {!qualityFlagged.length&&<p className="text-sm text-slate-600">Chưa có tình huống lỗi được xác nhận. Có thể nhấn kiểm tra để xem kết quả kỹ thuật.</p>}
+      </div>
+      <p className="mt-3 text-xs text-amber-900">Kiểm thử kỹ thuật không chứng minh chatbot hiểu hội thoại tự nhiên, cũng không chứng minh mọi câu trả lời đúng. Không lưu kết quả vào Admin thật.</p>
+    </div>
+  </section>;
+
+
   const teacherMenu = [
     {id:'teaching',name:'Dạy học & học liệu'},
     {id:'classes',name:'Tạo lớp · Danh sách'},
     {id:'results',name:'Kết quả học tập'}
-  ] as const;
-  const adminMenu = [
-    {id:'overview',name:'Tổng quan'},
-    {id:'classes',name:'Quản lý lớp'},
-    {id:'ratings',name:'Đánh giá sao'},
-    {id:'assets',name:'Quản lý học liệu'},
-    {id:'settings',name:'Cài đặt & kế hoạch'}
   ] as const;
   return <div className="min-w-0 bg-[#f7f9fd] pb-8">
     <div className="mx-auto max-w-[1500px] px-3 pt-5 sm:px-6">
@@ -274,22 +414,29 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
         <p role="status" className="mt-3 text-xs font-bold text-amber-900">CHẾ ĐỘ TRẢI NGHIỆM · DỮ LIỆU MINH HỌA (lưu cục bộ, không phải số liệu thật)</p>
       </div>
       {saveError && <p role="alert" className={'mt-3 ' + muted}>{saveError}</p>}
-      <nav className="my-4 flex flex-wrap gap-2" aria-label={'Chức năng ' + (area === 'teacher' ? 'giáo viên' : 'quản trị') + ' trải nghiệm'}>
-        {area === 'teacher' ? teacherMenu.map(item => <button type="button" key={item.id} aria-current={teacherPage===item.id ? 'page' : undefined}
-          className={teacherPage === item.id ? button : 'min-h-11 rounded-xl border bg-white px-3 text-sm font-bold text-slate-800'} onClick={()=>setTeacherPage(item.id)}>{item.name}</button>)
-          : adminMenu.map(item => <button type="button" key={item.id} aria-current={adminPage===item.id ? 'page' : undefined}
-          className={adminPage === item.id ? button : 'min-h-11 rounded-xl border bg-white px-3 text-sm font-bold text-slate-800'} onClick={()=>setAdminPage(item.id)}>{item.name}</button>)}
-      </nav>
+      {area === 'teacher' && <nav className="my-4 flex flex-wrap gap-2" aria-label="Chức năng giáo viên trải nghiệm">
+        {teacherMenu.map(item => <button type="button" key={item.id} aria-current={teacherPage===item.id ? 'page' : undefined}
+          className={teacherPage === item.id ? button : 'min-h-11 rounded-xl border bg-white px-3 text-sm font-bold text-slate-800'}
+          onClick={()=>setTeacherPage(item.id)}>{item.name}</button>)}
+      </nav>}
     </div>
-    {area === 'teacher' && teacherPage === 'teaching' ? teacherPanel :
+    {area === 'teacher' && (teacherPage === 'teaching' ? teacherPanel :
       <div className="mx-auto max-w-[1500px] space-y-4 px-3 sm:px-6">
-        {area === 'teacher' && teacherPage === 'classes' && classesPanel}
-        {area === 'teacher' && teacherPage === 'results' && resultsPanel}
-        {area === 'admin' && adminPage === 'overview' && adminOverview}
-        {area === 'admin' && adminPage === 'classes' && classesPanel}
-        {area === 'admin' && adminPage === 'ratings' && ratingsPanel}
-        {area === 'admin' && adminPage === 'assets' && assetsPanel}
-        {area === 'admin' && adminPage === 'settings' && settingsPanel}
-      </div>}
+        {teacherPage === 'classes' && classesPanel}
+        {teacherPage === 'results' && resultsPanel}
+      </div>)}
+    {area === 'admin' && <AdminExperienceShell activePage={adminPage} onPageChange={setAdminPage}
+      pages={{
+        overview: adminOverview,
+        tracking: trackingPanel,
+        reports: resultsPanel,
+        stations: assetsPanel,
+        gddp: settingsPanel,
+        effectiveness: effectivenessPanel,
+        proposals: ratingsPanel,
+        users: usersPanel,
+        theme: themePanel,
+        'assistant-qa': qualityPanel,
+      }} />}
   </div>;
 };

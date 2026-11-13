@@ -50,3 +50,17 @@ test('same approved image is visible on staff pages with local fallback and read
  assert.match(css,/\.teacher-workspace \.teacher-page-hero/);
  assert.match(css,/\.admin-page-hero/);
 });
+
+test('existing classes expose QR status with a scroll shortcut; read-only view never reissues codes',()=>{
+ const roster=read('src/features/teacher/ClassRoster.tsx');
+ const cards=read('src/features/teacher/StudentAccessCards.tsx');
+ assert.match(roster,/Xem trạng thái mã \/ QR của học sinh/);
+ assert.match(roster,/cham-student-access-section/);
+ assert.match(cards,/id="cham-student-access-section"/);
+ assert.match(cards,/đã cấp mã \/ /);
+ assert.match(cards,/mã cũ sẽ hết hiệu lực/);
+ assert.match(cards,/authService\.studentAccess\(classId\)/);
+ // Issuing/rotating credentials still requires explicit button confirmation.
+ assert.match(cards,/Xác nhận cấp lại/);
+ assert.doesNotMatch(roster,/authService\.issueStudentCode/);
+});

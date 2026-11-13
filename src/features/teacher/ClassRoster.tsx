@@ -40,6 +40,12 @@ export const ClassRoster: React.FC = () => {
         <button className="rounded-xl bg-emerald-700 text-white px-5 py-3 font-bold">{busy?'Đang lưu…':selected?'Lưu danh sách':'Tạo lớp và lưu danh sách'}</button>
       </fieldset>
     </form>
+    {selected&&<div className="rounded-xl border border-sky-200 bg-sky-50 p-3 space-y-2">
+      <p className="font-bold text-sky-950">Mã học sinh và thẻ QR của lớp {name}</p>
+      <p className="text-sm text-sky-900">Danh sách học sinh không đồng nghĩa các em đã được cấp mã. Thẻ QR chỉ hiển thị trong lượt cấp; không thể xem lại mã rõ từ tài khoản để bảo vệ học sinh.</p>
+      <button type="button" className="rounded-xl bg-sky-700 px-4 py-2.5 text-sm font-bold text-white" onClick={()=>document.getElementById('cham-student-access-section')?.scrollIntoView({behavior:'smooth',block:'start'})}>Xem trạng thái mã / QR của học sinh</button>
+      <p className="text-xs text-sky-800">Xem trạng thái không cấp lại mã và không ghi Firestore. Chỉ chọn cấp mã mới nếu em chưa có mã; tránh cấp lại trước ngày thi.</p>
+    </div>}
     {selected&&<StudentAccessCards key={selected+classes.find(c=>c.id===selected)?.students.join("|")} classId={selected} className={name}/>}
     {message && <p role="status" className="rounded-xl bg-slate-100 p-3">{message}</p>}
   </section>;

@@ -24,7 +24,7 @@ const oneDay = (month: number, day: number) => '2026-' + String(month).padStart(
 
 /**
  * Reproducible, entirely fictitious 2026 showcase. Do not send this dataset to
- * /api/effectiveness or present it as production analytics.
+ * production analytics endpoints or present it as live analytics.
  *
  * 267 fictional distinct participants; 45 repeat visits => 312 visits;
  * exactly 210 fictional ratings. November has more first-time participants.

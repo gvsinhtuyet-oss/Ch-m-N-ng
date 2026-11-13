@@ -7,6 +7,7 @@ import { CANONICAL_HOI_AN_STATION } from '../data/canonicalHoiAn';
 import { audioService } from '../services/AudioService';
 import { progressService } from '../services/ProgressService';
 import { studentSyncService } from '../services/StudentSyncService';
+import { effectivenessService } from '../services/EffectivenessService';
 import { Language, TRANSLATIONS } from '../utils/i18n';
 
 export type AppView =
@@ -119,6 +120,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const loginAsStudent = (student: Student) => {
+    effectivenessService.setDemoMode(student.id.startsWith('demo-qr-'));
     audioService.playSfx('unlock');
     setCurrentUser(student);
     setRoleState('student');
@@ -131,6 +133,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const loginAsTeacher = (teacher: Teacher) => {
     if (authService.current()?.id !== teacher.id || authService.current()?.role !== 'teacher') return;
+    effectivenessService.setDemoMode(false);
     audioService.playSfx('unlock');
     setCurrentUser(teacher);
     setRoleState('teacher');
@@ -143,6 +146,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const enterTeacherDemo = async (name = 'Giáo viên tự do') => {
     if (authService.current()) await authService.logout();
+    effectivenessService.setDemoMode(true);
     audioService.playSfx('unlock');
     setCurrentUser({ id: 'teacher-demo', role: 'teacher', name, assignedClasses: ['class-2-24', 'class-2-25'], schoolName: 'Trường Tiểu học Trần Đại Nghĩa' } as Teacher);
     setRoleState('teacher');
@@ -155,6 +159,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const loginAsAdmin = (admin: Admin) => {
     if (authService.current()?.id !== admin.id || authService.current()?.role !== 'admin') return;
+    effectivenessService.setDemoMode(false);
     audioService.playSfx('unlock');
     setCurrentUser(admin);
     setRoleState('admin');

@@ -16,7 +16,7 @@ test('Free teacher has a safe, isolated Teacher/Admin experience switch', () => 
 });
 test('Sample class, star, plan and assets live on this device only', () => {
   const source = read('src/features/teacher/ExperienceWorkspace.tsx');
-  for (const expected of ['localStorage.getItem', 'localStorage.setItem', 'Tạo lớp', 'Thêm vào lớp', 'Đánh giá 1–5 sao', 'ALL_25_STATIONS.map', 'Kế hoạch tích hợp GDĐP']) {
+  for (const expected of ['localStorage.getItem', 'localStorage.setItem', 'Tạo lớp', 'Thêm vào lớp', 'Đánh giá sao theo lớp', 'ALL_25_STATIONS.map', 'Kế hoạch tích hợp GDĐP']) {
     assert.ok(source.includes(expected), expected);
   }
   assert.doesNotMatch(source, /\bfetch\s*\(|authService|studentSyncService|firebase\/|\/api\/admin|\/api\/teacher|eval\s*\(/);

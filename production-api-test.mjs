@@ -30,8 +30,14 @@ for (const runtime of (productionRoot?['production']:['production','vite'])) tes
  child.once('exit',code=>{clearTimeout(timer);reject(new Error('Server exited '+code+' '+logs));});child.once('error',reject);});
  const base='http://127.0.0.1:'+port;
  const call=async(path,method='GET',data,cookie='')=>{const r=await fetch(base+path,{method,headers:{Origin:base,...(data?{'Content-Type':'application/json'}:{}),...(cookie?{Cookie:cookie}:{})},...(data?{body:JSON.stringify(data)}:{})});return {status:r.status,data:await r.json(),cookie:r.headers.get('set-cookie')?.split(';')[0]};};
- assert.equal((await call('/api/health')).data.auth.ready,true);
+ const readOnlyHealth=await call('/api/health');
+ assert.equal(readOnlyHealth.data.auth.ready,true);
+ assert.equal(readOnlyHealth.data.firestoreWrite,'not-tested');
+ assert.equal((await call('/api/health?writeProbe=1')).status,401);
  const admin=await call('/api/auth/login','POST',{email:'owner@example.com',password:'Synthetic-owner-password-42'});assert.equal(admin.status,200);
+ const explicitProbe=await call('/api/health?writeProbe=1','GET',undefined,admin.cookie);
+ assert.equal(explicitProbe.status,200);
+ assert.equal(explicitProbe.data.firestoreWrite,'connected');
  assert.equal((await call('/api/admin/users','POST',{email:'teacher@example.com',name:'GV thử nghiệm',password:'Synthetic-teacher-password-42'},admin.cookie)).status,200);
  const teacher=await call('/api/auth/login','POST',{email:'teacher@example.com',password:'Synthetic-teacher-password-42'});assert.equal(teacher.data.user.role,'teacher');
  assert.equal((await call('/api/admin/gddp/catalog','GET',undefined,teacher.cookie)).status,403);

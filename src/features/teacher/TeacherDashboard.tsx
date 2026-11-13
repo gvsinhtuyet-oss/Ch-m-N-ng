@@ -31,14 +31,14 @@ import {
 const teacherSections = [
   {id:'gddp',label:'Dạy học ngay',icon:Presentation,description:'Tra cứu kế hoạch tích hợp và mở bài học đúng khối'},
   {id:'workspace',label:'Kế hoạch bài dạy',icon:FileEdit,description:'Quản lý kế hoạch và hoạt động đã chuẩn bị'},
-  {id:'classrooms',label:'Lớp của tôi',icon:Users,description:'Danh sách và tiến độ học tập theo lớp'},
+  {id:'classrooms',label:'Lớp của tôi · Mã QR',icon:Users,description:'Tạo lớp, danh sách, thẻ QR và tiến độ học sinh'},
   {id:'results',label:'Kết quả học tập',icon:BarChart3,description:'Báo cáo kết quả, mức độ tham gia và triển khai'},
   {id:'resources',label:'Kho học liệu',icon:BookOpen,description:'Tư liệu và nguồn học liệu đã kiểm chứng'},
   {id:'teaching',label:'Danh mục 25 trạm',icon:MapIcon,description:'Mở bài, trình chiếu và ghi nhận tiết dạy'},
 ] as const;
 type TeacherSection = typeof teacherSections[number]['id'];
 
-const TeacherDashboardCore: React.FC = () => {
+const TeacherDashboardCore: React.FC<{demoClassPanel?:React.ReactNode;demoResultsPanel?:React.ReactNode}> = ({demoClassPanel,demoResultsPanel}) => {
   const {
     currentUser,
     currentGrade,
@@ -128,7 +128,7 @@ const TeacherDashboardCore: React.FC = () => {
         </div>
       </header>
 
-      {activeTab === 'workspace' && <TeacherWorkspace />}
+      {activeTab === 'workspace' && <TeacherWorkspace onOpenClassroom={()=>navigateSection('classrooms')}/>}
       {activeTab === 'gddp' && <GddpTeacherLookup stations={allStationsInCurrentGrade} currentGrade={currentGrade} onGradeChange={setCurrentGrade} onOpenStudentStage1={station=>openStation(station,1)} />}
 
       {/* TAB 1: DẠY HỌC */}
@@ -270,7 +270,8 @@ const TeacherDashboardCore: React.FC = () => {
 
       {/* TAB 2: LỚP HỌC */}
       {activeTab === 'classrooms' && currentUser?.id !== 'teacher-demo' && <ClassRoster />}
-      {activeTab === 'classrooms' && currentUser?.id === 'teacher-demo' && (
+      {activeTab === 'classrooms' && currentUser?.id === 'teacher-demo' && demoClassPanel}
+      {activeTab === 'classrooms' && currentUser?.id === 'teacher-demo' && !demoClassPanel && (
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -350,8 +351,9 @@ const TeacherDashboardCore: React.FC = () => {
 
       {/* TAB 3: KẾT QUẢ */}
       {activeTab === 'results' && currentUser?.id !== 'teacher-demo' && <RealClassResults />}
+      {activeTab === 'results' && currentUser?.id === 'teacher-demo' && demoResultsPanel}
 
-      {activeTab === 'results' && currentUser?.id === 'teacher-demo' && (
+      {activeTab === 'results' && currentUser?.id === 'teacher-demo' && !demoResultsPanel && (
         <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
@@ -494,6 +496,6 @@ const TeacherDashboardCore: React.FC = () => {
 export const TeacherDashboard: React.FC = () => {
   const { currentUser } = useApp();
   return currentUser?.id === 'teacher-demo'
-    ? <ExperienceWorkspace teacherPanel={<TeacherDashboardCore />} />
+    ? <ExperienceWorkspace teacherPanel={({classesPanel,resultsPanel})=><TeacherDashboardCore demoClassPanel={classesPanel} demoResultsPanel={resultsPanel}/>} />
     : <TeacherDashboardCore />;
 };

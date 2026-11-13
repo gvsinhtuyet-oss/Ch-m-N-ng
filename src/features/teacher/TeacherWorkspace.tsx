@@ -9,8 +9,7 @@ import {reviewGddpTextbookAddress} from '../../../gddp-textbook-review.mjs';
 import {blankLocalPlan,loadLocalPlan,storeLocalPlan,downloadLocalBackup,downloadLocalExcel,importLocalBackup,SCHOOL_NAME,TEXTBOOK_NAME,SCHOOL_YEAR} from '../../services/LocalTeacherPlan';
 import type {TeacherWorkspace as Workspace} from '../../services/TeacherWorkspaceService';
 
-// Keep local plans isolated by account. Opening this screen never calls
-// /api/teacher/workspace or /api/teacher/proposals (Firestore-backed endpoints).
+// Browser-local drafts never call the server-backed planning endpoints.
 export function TeacherWorkspace(){
  const {currentUser}=useApp();
  return <OfflineTeacherWorkspace key={currentUser?.id||'offline-teacher'}/>;

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ALL_25_STATIONS } from '../../data/allStations';
 import { AdminExperienceShell, type AdminExperiencePage } from './AdminExperienceShell';
+import { DemoStudentAccessCards } from './DemoStudentAccessCards';
 import { AdminExperienceAnalytics } from './AdminExperienceAnalytics';
 import { ASSISTANT_QUALITY_CASES, evaluateAssistantQualityCase } from '../admin/assistantQualityEngine';
 
@@ -55,10 +56,9 @@ const field = 'min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 
 const button = 'min-h-11 rounded-xl bg-blue-700 px-4 py-2 text-sm font-bold text-white hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50';
 const muted = 'rounded-xl border border-amber-300 bg-amber-50 p-3 text-sm text-amber-950';
 
-export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = ({ teacherPanel }) => {
+export const ExperienceWorkspace: React.FC<{ teacherPanel: (panels: {classesPanel: React.ReactNode; resultsPanel: React.ReactNode}) => React.ReactNode }> = ({ teacherPanel }) => {
   const [data, setData] = useState<Sandbox>(readSandbox);
   const [area, setArea] = useState<'teacher' | 'admin'>('teacher');
-  const [teacherPage, setTeacherPage] = useState<'teaching' | 'classes' | 'results'>('teaching');
   const [adminPage, setAdminPage] = useState<AdminExperiencePage>('overview');
   const [qualityGrade, setQualityGrade] = useState(0);
   const [qualityChecks, setQualityChecks] = useState<Record<string, 'pass'|'flag'|'review'>>({});
@@ -116,7 +116,7 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
   const classesPanel = <div className="space-y-4">
     <div className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
       <h2 className="text-lg font-black text-blue-950">Lớp của tôi · Dữ liệu trên thiết bị</h2>
-      <p className="mt-1 text-sm text-slate-600">Tạo lớp, nhập học sinh và điều chỉnh kết quả để thử quy trình. Không cấp mã QR hoặc ghi dữ liệu lên máy chủ.</p>
+      <p className="mt-1 text-sm text-slate-600">Tạo lớp và nhập học sinh như giao diện giáo viên thật. Bên dưới có phần cấp, tải, in QR trải nghiệm. Các thẻ không cấp mã tài khoản thật hoặc ghi dữ liệu lên máy chủ.</p>
       <form className="mt-4 grid gap-2 sm:grid-cols-[1fr_9rem_auto]" onSubmit={e => {
         e.preventDefault(); const name = className.trim().slice(0, 60); if (!name || data.classes.length >= 40) return;
         const id = newId(); setData(old => ({ ...old, classes: [...old.classes, { id, name, grade: classGrade, students: [] }] }));
@@ -167,6 +167,7 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
         </table>
         {!classroom.students.length && <p className="py-4 text-sm text-slate-500">Lớp chưa có học sinh. Nhập danh sách phía trên.</p>}
       </div>
+      <DemoStudentAccessCards className={classroom.name} grade={classroom.grade} students={classroom.students}/>
     </div> : <p className="rounded-xl bg-white p-4">Chưa có lớp. Hãy tạo lớp ở trên.</p>}
   </div>;
 
@@ -378,11 +379,6 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
   </section>;
 
 
-  const teacherMenu = [
-    {id:'teaching',name:'Dạy học & học liệu'},
-    {id:'classes',name:'Tạo lớp · Danh sách'},
-    {id:'results',name:'Kết quả học tập'}
-  ] as const;
   return <div className="min-w-0 bg-[#f7f9fd] pb-8">
     <div className="mx-auto max-w-[1500px] px-3 pt-5 sm:px-6">
       <div className="rounded-2xl border border-sky-200 bg-white p-4 shadow-sm">
@@ -399,17 +395,8 @@ export const ExperienceWorkspace: React.FC<{ teacherPanel: React.ReactNode }> = 
         <p role="status" className="mt-3 text-xs font-semibold text-slate-700">CHẾ ĐỘ TRẢI NGHIỆM · SỐ LIỆU GIẢ ĐỊNH — Không phải lượt truy cập hay đánh giá thực tế</p>
       </div>
       {saveError && <p role="alert" className={'mt-3 ' + muted}>{saveError}</p>}
-      {area === 'teacher' && <nav className="my-4 flex flex-wrap gap-2" aria-label="Chức năng giáo viên trải nghiệm">
-        {teacherMenu.map(item => <button type="button" key={item.id} aria-current={teacherPage===item.id ? 'page' : undefined}
-          className={teacherPage === item.id ? button : 'min-h-11 rounded-xl border bg-white px-3 text-sm font-bold text-slate-800'}
-          onClick={()=>setTeacherPage(item.id)}>{item.name}</button>)}
-      </nav>}
     </div>
-    {area === 'teacher' && (teacherPage === 'teaching' ? teacherPanel :
-      <div className="mx-auto max-w-[1500px] space-y-4 px-3 sm:px-6">
-        {teacherPage === 'classes' && classesPanel}
-        {teacherPage === 'results' && resultsPanel}
-      </div>)}
+    {area === 'teacher' && teacherPanel({classesPanel,resultsPanel})}
     {area === 'admin' && <AdminExperienceShell activePage={adminPage} onPageChange={setAdminPage}
       pages={{
         overview: adminOverview,

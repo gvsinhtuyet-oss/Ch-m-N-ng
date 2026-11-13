@@ -11,12 +11,6 @@ export const ClassRoster: React.FC = () => {
   const [busy,setBusy]=useState(false), [message,setMessage]=useState('');
   const load=async()=>setClasses(await authService.classes());
   useEffect(()=>{void load().catch(e=>setMessage(e.message));},[]);
-  useEffect(()=>{
-    if(selected||!classes.length)return;
-    const first=classes[0];setSelected(first.id);
-    setGrade(first.grade);setName(first.name);setYear(first.academicYear);
-    setNames(first.students.join('\n'));
-  },[classes,selected]);
   const choose=(id:string)=>{
     setSelected(id);setMessage('');
     const c=classes.find(c=>c.id===id);
@@ -30,8 +24,11 @@ export const ClassRoster: React.FC = () => {
       <div><strong className="text-sky-950">Thẻ QR của học sinh ở ngay bên dưới danh sách lớp</strong>
         <p className="mt-1 text-xs text-slate-700">1. Tạo hoặc chọn lớp → 2. Lưu danh sách → 3. Cấp mã và tải PNG/ZIP. Không cấp lại mã đã có nếu chưa cần thiết.</p></div>
       <button type="button" className="min-h-11 rounded-xl bg-sky-700 px-4 py-2 text-sm font-bold text-white"
-        onClick={()=>document.getElementById('teacher-student-qr-cards')?.scrollIntoView({behavior:'smooth',block:'start'})}
-        disabled={!selected}>Xem mã QR học sinh</button>
+        onClick={()=>{
+          if(!selected&&classes.length)choose(classes[0].id);
+          requestAnimationFrame(()=>document.getElementById('teacher-student-qr-cards')?.scrollIntoView({behavior:'smooth',block:'start'}));
+        }}
+        disabled={!selected&&!classes.length}>Xem mã QR học sinh</button>
     </div>
     <label className="block">Chọn lớp<select className="block w-full border rounded-xl p-3" value={selected} onChange={e=>choose(e.target.value)} disabled={busy}>
       <option value="">+ Tạo lớp mới</option>{classes.map(c=><option key={c.id} value={c.id}>{c.name} · {c.academicYear} · {c.totalStudents} học sinh</option>)}

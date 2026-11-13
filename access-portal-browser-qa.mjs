@@ -70,7 +70,10 @@ try {
   await page.waitForFunction(()=>!document.querySelector('.cham-qr-overlay'));
   await page.click('.cham-access-student-secondary button:last-child');
       await page.waitForSelector('#free-explorer-name');
-      await page.locator('#free-explorer-name').fill('');
+      await page.focus('#free-explorer-name');
+      await page.keyboard.down('Control');await page.keyboard.press('a');await page.keyboard.up('Control');
+      await page.keyboard.press('Backspace');
+      await page.waitForFunction(()=>document.querySelector('#free-explorer-name')?.value==='' && document.querySelector('button[type=submit]')?.disabled);
       assert.equal(await page.$eval('button[type=submit]',b=>b.disabled),true,'Free entry requires a nonempty name');
       await page.type('#free-explorer-name','Bạn kiểm tra');
       await page.click('button[type=submit]');
@@ -86,7 +89,10 @@ try {
   assert.ok(await page.$('.cham-access-teacher-guest'));
   await page.click('.cham-access-teacher-guest');
   await page.waitForSelector('#free-explorer-name');
-      await page.locator('#free-explorer-name').fill('');
+      await page.focus('#free-explorer-name');
+      await page.keyboard.down('Control');await page.keyboard.press('a');await page.keyboard.up('Control');
+      await page.keyboard.press('Backspace');
+      await page.waitForFunction(()=>document.querySelector('#free-explorer-name')?.value==='' && document.querySelector('button[type=submit]')?.disabled);
   assert.equal(await page.$eval('button[type=submit]',b=>b.disabled),true,'Teacher free entry requires a name');
   await page.type('#free-explorer-name','Cô kiểm tra');
   await page.click('.cham-access-back');

@@ -41,7 +41,8 @@ export function JourneyRating({stationId,userId,requireStudent=false,compact=fal
     saving.current=true;
     setBusy(true);
     setStars(value);
-    setThanked(false);setSaveMessage('');
+    // Thank the learner for participating, independently of storage availability.
+    setThanked(true);setSaveMessage('');
     let savedLocally=false;
     try {
       localStorage.setItem(storageKey,JSON.stringify({stars:value,storage:'device'}));
@@ -71,6 +72,6 @@ export function JourneyRating({stationId,userId,requireStudent=false,compact=fal
     </div>
 
     {saveMessage&&<span role="status" className="max-w-56 text-center text-[10px] font-semibold">{saveMessage}</span>}
-    {thanked&&<span role="status" className={compact?"basis-full max-w-56 text-[10px] font-semibold":"max-w-56 text-center text-[10px] font-semibold"}>Cảm ơn em đã đánh giá!</span>}
+    {thanked&&<span role="status" className={compact?"basis-full max-w-56 text-[10px] font-semibold":"max-w-56 text-center text-[10px] font-semibold"}>Cảm ơn bạn đã đánh giá!</span>}
   </div>;
 }

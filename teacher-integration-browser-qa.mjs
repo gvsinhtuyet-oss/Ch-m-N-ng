@@ -37,7 +37,7 @@ async function checkChat(page,role,questions){
   await page.type('textarea[aria-label="Nhập câu hỏi"]',question);
   await page.click('button[aria-label="Gửi câu hỏi"]');
   await page.waitForFunction(n=>document.querySelectorAll('[data-chat-role="assistant"]').length>n,{timeout:15000},before);
-  const answer=await page.$$eval('[data-chat-role="assistant"] > p',els=>els.at(-1).textContent);
+  const answer=await page.$$eval('[data-chat-role="assistant"]',els=>els.at(-1).querySelector('p').textContent);
   assert.ok(answer.includes(expected),role+' failed '+question+': '+answer);
  }
  await page.screenshot({path:'teacher-plan-qa/chat-'+role+'-'+(await page.viewport()).width+'.png'});

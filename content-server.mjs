@@ -46,6 +46,8 @@ catch (error) { if (error.code !== 'ENOENT') throw error; }
 let writes = Promise.resolve();
 let sharedContentCache = null;
 let sharedContentCacheAt = 0;
+let sharedContentPending = null;
+let sharedContentGeneration = 0;
 let healthCache = null;
 let healthCacheAt = 0;
 const CONTENT_CACHE_MS = 5 * 60 * 1000;
@@ -55,16 +57,26 @@ const questionAiCache=new Map();
 const questionAiUsage=new Map(); // Per-instance guard; shared quota requires durable store for citywide scale.
 
 const invalidateSharedContentCache = () => {
+  sharedContentGeneration++;
+  sharedContentPending = null;
   sharedContentCache = null;
   sharedContentCacheAt = 0;
 };
 const loadSharedContent = async () => {
   if (!durableContent) return { stations, theme };
   if (sharedContentCache && Date.now() - sharedContentCacheAt < CONTENT_CACHE_MS) return sharedContentCache;
-  const current = await durableContent.load();
-  sharedContentCache = current;
-  sharedContentCacheAt = Date.now();
-  return current;
+  if(sharedContentPending)return sharedContentPending;
+  const generation=sharedContentGeneration;
+  const pending=durableContent.load().then(current=>{
+    // An older load must not republish stale cache after an Admin save.
+    if(generation===sharedContentGeneration){
+      sharedContentCache=current;
+      sharedContentCacheAt=Date.now();
+    }
+    return current;
+  }).finally(()=>{if(sharedContentPending===pending)sharedContentPending=null;});
+  sharedContentPending=pending;
+  return pending;
 };
 const validUrl = value => typeof value === 'string' && (
   value === '' || /^\/learning\/grade45\/photos\/[a-z0-9-]+\.webp$/.test(value) || /^https:\/\//i.test(value) || /^\/learning\/(?:grade[13]|grade45)\/[a-z0-9-]+\.svg$/.test(value) ||

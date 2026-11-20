@@ -1,8 +1,8 @@
 import {splitAssistantSentences} from './AssistantSentenceSplitter';
-import {handleLearningRequest,adaptLearningResult,type LearningTask,type PracticeQuestion} from './AssistantLearningEngine';
+import {handleLearningRequest,adaptLearningResult,detectLearningTask,type LearningTask,type PracticeQuestion} from './AssistantLearningEngine';
 import knowledge from '../data/assistantKnowledge.json';
 import guides from '../data/assistantStationGuides.json';
-import { answerLocalEducationQuestion, resolveLocalEducationFollowUp } from './LocalEducationKnowledge';
+import { answerLocalEducationQuestion, answerReviewedLocalFacts, resolveLocalEducationFollowUp } from './LocalEducationKnowledge';
 import type { ExplorationHotspot, Station } from '../types';
 import {
   type AssistantLexiconEntry,
@@ -549,6 +549,26 @@ export function retrieveDanangAssistantAnswer(rawQuery:string, context:Assistant
    if(safety)return safety;
   }
   if(context.stage===2 && context.audience!=='teacher')return retrieveSingleAnswer(query,context);
+  // Resolve each explicit question in order, carrying the topic of the preceding answer.
+  const parts = query.split(/[?？;]+/).map(part => part.trim()).filter(Boolean);
+  if (parts.length > 1) {
+    let previousQuery = context.previousQuery;
+    let previousTopic = context.previousTopic;
+    const results = parts.slice(0, 3).map(part => {
+      const result = retrieveDanangAssistantAnswer(part, {...context, previousQuery, previousTopic});
+      previousQuery = part;
+      previousTopic = result.topic;
+      return result;
+    });
+    const found = results.every(result => result.found);
+    return makeResult(found ? 'common' : 'unknown', normalizeDanangDialect(query),
+      results.map((result, index) => `**${parts[index]}?**\n${result.answer}`).join('\n\n')
+        + (parts.length > 3 ? '\n\nBạn tách các ý còn lại thành lượt tiếp theo nhé.' : ''),
+      found ? 'medium' : 'low', {
+        sources: [...new Map(results.flatMap(result => result.sources || []).map(source => [source.url || source.label, source])).values()],
+        topic: previousTopic,
+      });
+  }
   // Time-sensitive visit facts must be handled before fuzzy station passages.
   const visitor=visitorInformationResponse(query,context);
   if(visitor)return visitor;
@@ -556,6 +576,13 @@ export function retrieveDanangAssistantAnswer(rawQuery:string, context:Assistant
   if(history)return history;
   const friendly=friendlyStudentConversation(query,context);
   if(friendly)return friendly;
+  const task = detectLearningTask(query);
+  const reviewed = task === 'knowledge' || task === 'comparison'
+    ? answerReviewedLocalFacts(query, context.previousTopic, context.previousQuery)
+    : null;
+  if (reviewed) return makeResult('common', normalizeDanangDialect(query), reviewed.answer, 'high', {
+    sources: reviewed.sources, topic: reviewed.topic,
+  });
   const learning=handleLearningRequest(query,context);
   if(learning)return learning;
   return adaptLearningResult(retrieveLegacyAnswer(query,context),query,context);
@@ -575,19 +602,6 @@ function retrieveLegacyAnswer(rawQuery:string, context:AssistantRetrievalContext
     return makeResult('common',normalizeDanangDialect(query),exampleCard.teachingExample,'high',{
       topic:exampleCard.term,sources:[exampleCard.source],followUp:exampleCard.followUp,
     });
-  }
-  // Two explicit questions are answered separately, instead of one keyword hiding the other.
-  const parts=query.split(/[?？;]+/).map(s=>s.trim()).filter(Boolean);
-  if(parts.length>1) {
-    const results=parts.slice(0,3).map((part,index)=>retrieveDanangAssistantAnswer(part,{
-      ...context,previousQuery:index?parts[index-1]:context.previousQuery,
-    }));
-    return makeResult(results.every(r=>r.found)?'common':'unknown',normalizeDanangDialect(query),
-      results.map((r,i)=>`**${parts[i]}?**\n${r.answer}`).join('\n\n')+(parts.length>3?'\n\nBạn tách các ý còn lại thành lượt tiếp theo nhé.':''),
-      results.every(r=>r.found)?'medium':'low',{
-        sources:[...new Map(results.flatMap(r=>r.sources||[]).map(s=>[s.url||s.label,s])).values()],
-        topic:results.slice(-1)[0]?.topic,
-      });
   }
   if(questionIntent(query)==='comparison') {
     // A reviewed comparison card has priority; otherwise present the two reviewed definitions.

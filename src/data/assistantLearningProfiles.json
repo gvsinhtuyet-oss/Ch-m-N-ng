@@ -338,7 +338,9 @@
   {
     "id": "hoi-an-on-tap",
     "young": "Hội An là đô thị cổ có nhiều giá trị văn hóa. Đô thị cổ Hội An được UNESCO ghi danh Di sản thế giới năm 1999.",
-    "example": "Nhà cổ, đường phố và hoạt động văn hóa là những điều có thể tìm hiểu về Hội An.",
+    "example": "Quan sát ảnh nhà cổ. Em có thể chỉ vào mái ngói hoặc cửa gỗ rồi nói một câu mô tả chi tiết mình thấy.",
+    "observationQuestion": "Nhìn ảnh nhà cổ Hội An, em thấy chi tiết nào? Chi tiết đó giúp em giới thiệu ngôi nhà ra sao?",
+    "observationAnswer": "Chỉ đúng một chi tiết có trong ảnh rồi mô tả bằng một câu. Ví dụ: Em thấy cửa gỗ. Chi tiết này giúp em giới thiệu vật liệu cửa của ngôi nhà.",
     "applicationQuestion": "Khi tham quan phố cổ, em làm gì để giữ gìn di sản?",
     "applicationAnswer": "Thực hiện nội quy, giữ vệ sinh, không viết vẽ hay làm hỏng công trình và tôn trọng người dân."
   },
@@ -355,5 +357,40 @@
     "example": "Ở trò trốn tìm, một bạn đi tìm còn các bạn khác trốn trong phạm vi đã thống nhất.",
     "applicationQuestion": "Trước khi chơi trốn tìm, các bạn cần thống nhất điều gì?",
     "applicationAnswer": "Thống nhất luật, lượt chơi và phạm vi an toàn; tránh chỗ nguy hiểm."
+  },
+  {
+    "id": "chua-cau-kien-truc",
+    "young": "Chùa Cầu là cây cầu có mái che ở Hội An. Bên cầu có một ngôi miếu nhỏ.",
+    "example": "Trong ảnh nhìn nghiêng, em có thể thấy mái che phía trên và lối đi qua cầu phía dưới.",
+    "applicationQuestion": "Nếu bạn định viết tên lên một phần của công trình cổ, em sẽ làm gì?",
+    "applicationAnswer": "Nhắc bạn nhẹ nhàng và báo người lớn nếu cần. Việc đó giúp giữ gìn bề mặt công trình."
+  },
+  {
+    "id": "gom-thanh-ha",
+    "young": "Các bác thợ Thanh Hà nặn đồ từ đất sét. Đồ được làm khô rồi nung để cứng hơn.",
+    "example": "Một chiếc nồi đất là ví dụ về đồ dùng người thợ có thể tạo hình bằng bàn xoay.",
+    "applicationQuestion": "Nếu em muốn xem một sản phẩm đang phơi, em nên làm gì?",
+    "applicationAnswer": "Xin phép người thợ và quan sát theo hướng dẫn để tránh làm hỏng sản phẩm."
+  },
+  {
+    "id": "rau-tra-que",
+    "young": "Trà Quế có nghề trồng rau. Người trồng rau ở đây có cách bón rau bằng rong lấy từ đầm.",
+    "example": "Quan sát ảnh vườn, em có thể chỉ ra luống trồng rau và lối đi giữa các luống.",
+    "applicationQuestion": "Nếu muốn xem một cây rau ở trong luống, em đi đâu?",
+    "applicationAnswer": "Đi theo lối có sẵn và hỏi người hướng dẫn. Đi vào luống có thể giẫm lên rau."
+  },
+  {
+    "id": "chieu-cam-ne",
+    "young": "Các bác thợ Cẩm Nê dùng sợi cói, lác để dệt chiếu. Khung dệt giúp tạo thành tấm chiếu.",
+    "example": "Sợi cói đi vào tấm chiếu. Khung dệt là dụng cụ người thợ dùng khi làm chiếu.",
+    "applicationQuestion": "Khi muốn xem khung dệt đang hoạt động, em làm gì?",
+    "applicationAnswer": "Đứng nơi người thợ hướng dẫn và xin phép trước khi chạm vào dụng cụ."
+  },
+  {
+    "id": "chieu-ban-thach",
+    "young": "Người thợ Bàn Thạch dệt chiếu từ cây cói, còn gọi là cây lác.",
+    "example": "Ở ảnh nguyên liệu, em thấy từng sợi. Ở ảnh sản phẩm, các sợi đã được dệt thành tấm.",
+    "applicationQuestion": "Nếu bạn nói tấm chiếu là nguyên liệu, em sẽ giải thích thế nào?",
+    "applicationAnswer": "Cói là nguyên liệu. Tấm chiếu là sản phẩm sau khi dùng sợi cói để dệt."
   }
 ]

@@ -363,12 +363,6 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
     append({ id: `q-${Date.now()}`, role: 'student', text: isTeacher ? question : maskStudentPrivateQuestion(question) });
     try {
       if(isAdmin){const response=await staffAssistantAnswer(question,isExperienceMode());if(epoch!==chatEpoch.current)return;if(response){append({id:`admin-${Date.now()}`,role:'assistant',text:response.answer,adminPage:response.adminPage});setInput('');return;}}
-      // Provide a verified example for the class-2 Hội An teaching prompt.
-      if (audience==='teacher' && /(?:3|ba) câu hỏi/i.test(question) && /hội an/i.test(question)) {
-        append({id:`hoi-an-${Date.now()}`,role:'assistant',text:'Gợi ý 3 câu hỏi cho học sinh lớp 2 tìm hiểu Hội An:\n1. Phố cổ Hội An nằm bên dòng sông nào? (Sông Hoài.)\n2. Hội An được UNESCO công nhận là di sản gì? (Di sản văn hóa thế giới.)\n3. Em ấn tượng với điều gì ở Hội An? Vì sao? (Học sinh chia sẻ cảm nhận.)\nThầy/cô có thể cho học sinh quan sát tranh rồi trao đổi theo cặp.'});
-        setInput('');
-        return;
-      }
       const pending=messages.filter(message=>message.role==='assistant').slice(-1)[0]?.pendingTask;
       if (isTeacher && detectLearningTask(question)==='knowledge'&&(!pending||/^(?:mở|tìm|tra cứu|mo|tim)(?:\s|$)/i.test(question))) {
         lookupLock.current = true;

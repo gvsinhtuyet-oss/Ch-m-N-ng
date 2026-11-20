@@ -792,5 +792,85 @@
       "url": "https://mnbode.hanoi.edu.vn/tro-choi-cho-be/tro-choi-dan-gian-tron-tim/ctmb/9344/637577"
     },
     "reviewedOn": "2026-11-01"
+  },
+  {
+    "id": "chua-cau-kien-truc",
+    "term": "Chùa Cầu",
+    "aliases": [
+      "Lai Viễn Kiều",
+      "Cầu Nhật Bản"
+    ],
+    "answer": "Chùa Cầu là cây cầu có mái che ở phố cổ Hội An, gắn với một ngôi miếu nhỏ. Công trình còn được gọi là Lai Viễn Kiều.",
+    "teachingExample": "Chiếu một ảnh toàn cảnh Chùa Cầu, cho các cặp chỉ phần mái, lối qua cầu và nêu căn cứ từ ảnh.",
+    "followUp": "Em thấy chi tiết nào giúp nhận ra đây là một cây cầu?",
+    "source": {
+      "label": "Trung tâm di sản Hội An – Chùa Cầu",
+      "url": "https://hoianheritage.danang.gov.vn/vi/di-san-van-hoa/Cau/Chua-Cau-134.html"
+    },
+    "reviewedOn": "2026-11-21"
+  },
+  {
+    "id": "gom-thanh-ha",
+    "term": "Gốm Thanh Hà",
+    "aliases": [
+      "làng gốm Thanh Hà",
+      "Thanh Hà"
+    ],
+    "answer": "Thanh Hà ở Hội An có nghề làm gốm truyền thống. Người thợ dùng đất sét, tạo hình rồi làm khô và nung đồ gốm.",
+    "teachingExample": "Cho học sinh xếp ba thẻ hình theo thứ tự: tạo hình, làm khô và nung. Mỗi em giải thích một bước.",
+    "followUp": "Vì sao đồ gốm cần được nung?",
+    "source": {
+      "label": "Trung tâm di sản Hội An – Nghề gốm Thanh Hà",
+      "url": "https://hoianheritage.danang.gov.vn/vi/di-san-van-hoa/Nghe-thu-cong-truyen-thong/Nghe-gom-Thanh-Ha-181.html"
+    },
+    "reviewedOn": "2026-11-21"
+  },
+  {
+    "id": "rau-tra-que",
+    "term": "Làng rau Trà Quế",
+    "aliases": [
+      "Trà Quế",
+      "nghề trồng rau Trà Quế"
+    ],
+    "answer": "Trà Quế ở Hội An có nghề trồng rau truyền thống. Một kinh nghiệm của người dân là dùng rong lấy từ đầm Trà Quế để bón rau.",
+    "teachingExample": "Cho học sinh quan sát ảnh luống rau, tìm lối đi giữa các luống rồi giải thích vì sao nên đi theo lối đó.",
+    "followUp": "Khi tham quan vườn rau, em làm gì để giữ luống rau nguyên vẹn?",
+    "source": {
+      "label": "Trung tâm di sản Hội An – Nghề trồng rau Trà Quế",
+      "url": "https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/nghe-trong-rau-tra-que-qua-trinh-xay-dung-ho-so-cong-nhan-di-san-van-hoa-phi-vat-the-quoc-gia-995.html"
+    },
+    "reviewedOn": "2026-11-21"
+  },
+  {
+    "id": "chieu-cam-ne",
+    "term": "Chiếu Cẩm Nê",
+    "aliases": [
+      "làng chiếu Cẩm Nê",
+      "Cẩm Nê"
+    ],
+    "answer": "Nghề dệt chiếu Cẩm Nê sử dụng sợi cói, lác và khung dệt. Người thợ khéo léo đan các sợi để làm thành tấm chiếu.",
+    "teachingExample": "Cho nhóm quan sát ảnh sợi và khung dệt, rồi chỉ vào hình để phân biệt nguyên liệu với dụng cụ.",
+    "followUp": "Em phân biệt sợi dệt chiếu và khung dệt như thế nào?",
+    "source": {
+      "label": "Báo Đà Nẵng – Nghề dệt chiếu Cẩm Nê",
+      "url": "https://baodanang.vn/nguoi-lam-chieu-cuoi-cung-tren-dat-cam-ne-3287044.html"
+    },
+    "reviewedOn": "2026-11-21"
+  },
+  {
+    "id": "chieu-ban-thach",
+    "term": "Chiếu Bàn Thạch",
+    "aliases": [
+      "làng chiếu Bàn Thạch",
+      "Bàn Thạch"
+    ],
+    "answer": "Bàn Thạch có nghề dệt chiếu từ cói, còn gọi là lác. Vùng trồng cói từng cung cấp nguyên liệu cho thợ dệt trong làng.",
+    "teachingExample": "Cho học sinh nhìn hai ảnh cây lác và tấm chiếu, rồi mô tả mối liên hệ giữa nguyên liệu và sản phẩm.",
+    "followUp": "Vì sao cây lác có ích với người dệt chiếu?",
+    "source": {
+      "label": "Báo Đà Nẵng – Làng chiếu truyền thống Bàn Thạch",
+      "url": "https://baodanang.vn/lang-chieu-truyen-thong-ban-thach-tim-cach-phuc-vu-du-khach-3154492.html"
+    },
+    "reviewedOn": "2026-11-21"
   }
 ]

@@ -218,7 +218,9 @@ export function handleLearningRequest(query:string,context:LearningContext={}):L
     }
     const questions=[
       {question:/(?:la gi|vi sao|nam nao|bao nhieu)/.test(norm(card.term))?card.term+'?':`Em hiểu ${card.term} là gì?`,answer:learningExplanation(card.id,grade)},
-      {question:`Em nêu một ví dụ giúp hiểu ${card.term}.`,answer:profile.example},
+      'observationQuestion' in profile
+        ? {question:profile.observationQuestion,answer:profile.observationAnswer}
+        : {question:`Em nêu một ví dụ giúp hiểu ${card.term}.`,answer:profile.example},
       {question:profile.applicationQuestion,answer:profile.applicationAnswer},
       {question:'Em dựa vào nguồn nào để kiểm tra thông tin vừa học?',answer:card.source.label+'. Đọc thông tin và đối chiếu, không tự thêm dữ kiện.'},
       {question:`Em sẽ giới thiệu ${card.term} với bạn bằng điều gì có căn cứ?`,answer:learningExplanation(card.id,grade)},

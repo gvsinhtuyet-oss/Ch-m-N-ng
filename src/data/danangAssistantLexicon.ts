@@ -210,13 +210,14 @@ const DIALECT_RULES = Object.entries(DANANG_DIALECT_NORMALIZATION)
   .sort(([a], [b]) => b.length - a.length)
   .map(([local, standard]) => {
     const escaped = local.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return { pattern: new RegExp(`(?<![\\p{L}\\p{N}])${escaped}(?![\\p{L}\\p{N}])`, 'gu'), standard };
+    return { pattern: new RegExp(`(^|[^\\p{L}\\p{N}])${escaped}(?![\\p{L}\\p{N}])`, 'gu'), standard };
   });
 
 export function normalizeDanangDialect(input: string): string {
   let normalized = input.trim().toLowerCase();
   for (const { pattern, standard } of DIALECT_RULES) {
-    normalized = normalized.replace(pattern, standard);
+    // Restore the prefix delimiter captured in place of Safari-unsupported lookbehind.
+    normalized = normalized.replace(pattern, (_match, prefix: string) => prefix + standard);
   }
   return normalized;
 }

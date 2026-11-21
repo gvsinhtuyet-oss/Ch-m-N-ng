@@ -92,7 +92,8 @@ test('mobile chatbot is not hidden by CSS and has a touch-safe visible launcher'
   const styles=readFileSync('src/index.css','utf8');
   const widget=readFileSync('src/components/common/DanangAssistantChat.tsx','utf8');
   assert.doesNotMatch(styles,/body:has\([^)]*\) \.discovery-assistant\{display:none\}/);
-  assert.match(widget,/max\(18px, calc\(env\(safe-area-inset-bottom\)/);
+  assert.match(widget,/discovery-assistant-mobile/);
+  assert.match(styles,/\.discovery-assistant-mobile\s*\{\s*right: 12px;\s*bottom: 18px;[\s\S]*?bottom: max\(18px, calc\(env\(safe-area-inset-bottom\)/);
   assert.match(widget,/Trợ lý<\/span>/);
   assert.match(widget,/mobile \|\| !event\.isPrimary/);
 });

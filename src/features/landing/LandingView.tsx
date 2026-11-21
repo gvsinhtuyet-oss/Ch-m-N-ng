@@ -18,6 +18,7 @@ import { DEFAULT_APP_BACKGROUND_DATA_URL } from '../../assets/defaultAppBackgrou
 import {
   Compass,
   LogIn,
+  MessageCircle,
   Globe,
   ArrowRight,
   Volume2,
@@ -28,7 +29,7 @@ import {
   Play,
 } from 'lucide-react';
 
-export const LandingView: React.FC = () => {
+export const LandingView: React.FC<{ onOpenAssistant?: () => void }> = ({ onOpenAssistant }) => {
   const {
     loginAsStudent,
     loginAsTeacher,
@@ -426,6 +427,12 @@ export const LandingView: React.FC = () => {
       </footer>
 
       </div>
+
+      {onOpenAssistant && !showRolePicker && <button type="button" className="landing-assistant-shortcut"
+        onClick={() => { stopIntroVideo(); onOpenAssistant(); }} aria-label="Mở Trợ lý khám phá Đà Nẵng">
+        <MessageCircle size={18} aria-hidden="true" />
+        Trợ lý
+      </button>}
 
       {/* Three approved role/student/teacher screens: images are decorative, controls remain live. */}
       {showRolePicker && <ResponsiveAccessPortal

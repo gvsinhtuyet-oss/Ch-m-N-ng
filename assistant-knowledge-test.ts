@@ -302,3 +302,68 @@ test('source-backed safety/fees do not depend on lesson hotspot or fabricated ou
  const unrelated=ask('Sao Hỏa có giá vé tham quan bao nhiêu?',{audience:'student'});
  assert.equal(unrelated.found,false);assert.doesNotMatch(unrelated.answer,/giá vé là/);
 });
+
+test('reviewed local explanations match the requested fact, with subject-specific sources', () => {
+  const cases = [
+    ['Vì sao UNESCO ghi danh Hội An?', /thương cảng/, /whc\.unesco\.org/],
+    ['Chùa Cầu làm bằng gì?', /đá.*gỗ.*ngói/, /Chua-Cau/],
+    ['Gốm Thanh Hà làm bằng gì?', /đất sét/, /Nghe-gom-Thanh-Ha/],
+    ['Làng gốm Thanh Hà ở Hội An có gì đặc biệt?', /bàn xoay/, /Nghe-gom-Thanh-Ha/],
+    ['Trà Quế dùng loại phân gì để trồng rau?', /rong lấy từ đầm/, /nghe-trong-rau-tra-que/],
+    ['Chieu Cam Ne det bang gi?', /cói, lác/, /baodanang\.vn/],
+    ['Bàn Thạch làm bằng gì?', /cói.*lác/, /baodanang\.vn/],
+    ['Voọc ở Sơn Trà ăn gì?', /lá non/, /danang\.gov\.vn/],
+  ] as const;
+  for (const [question, answer, source] of cases) {
+    const result = ask(question);
+    assert.ok(result.found, question);
+    assert.match(result.answer, answer, question);
+    assert.ok(result.sources?.some(item => source.test(item.url ?? '')), question);
+  }
+});
+
+test('local comparisons and distinct UNESCO designations cite both subjects', () => {
+  const items = [
+    ['Thanh Hà và Trà Quế khác nhau ở điểm nào?', /làm gốm.*trồng rau/],
+    ['Cẩm Nê với Bàn Thạch giống nhau ở điểm nào?', /đều có nghề dệt chiếu/],
+    ['Phố cổ Hội An và khu dự trữ sinh quyển Cù Lao Chàm–Hội An khác nhau thế nào?', /1999.*2009/],
+    ['Cù Lao Chàm có phải là Di sản thế giới không?', /sinh quyển năm 2009.*Di sản thế giới năm 1999/],
+  ] as const;
+  for (const [question, expected] of items) {
+    const result = ask(question);
+    assert.match(result.answer, expected, question);
+    assert.equal(result.sources?.length, 2, question);
+  }
+});
+
+test('short follow-ups retain the right subject, including within an explicit multipart question', () => {
+  const prev = ask('Gốm Thanh Hà là gì?');
+  assert.equal(prev.topic, 'Gốm Thanh Hà');
+  const followUp = ask('Thế làm bằng gì?', {previousTopic: prev.topic, previousQuery: 'Gốm Thanh Hà là gì?'});
+  assert.match(followUp.answer, /đất sét/);
+  const mixed = ask('Gốm Thanh Hà là gì? Làm bằng gì?', {previousTopic: 'Làng rau Trà Quế'});
+  assert.match(mixed.answer, /bàn xoay[\s\S]*đất sét/);
+  assert.equal(mixed.topic, 'Gốm Thanh Hà');
+  const switched = ask('Còn voọc ở Sơn Trà ăn gì?', {previousTopic: prev.topic});
+  assert.equal(switched.topic, 'Voọc chà vá chân nâu');
+  assert.match(ask('Có nên cho chúng ăn không?', {previousTopic: switched.topic}).answer, /quan sát voọc từ xa/);
+  assert.doesNotMatch(ask('Mô hình tên lửa làm bằng gì?', {previousTopic: prev.topic}).answer, /Thanh Hà/);
+});
+
+test('reviewed topics support grade 2 teacher activities and preserve assessment and unknown-fact guards', () => {
+  const staff = {audience: 'teacher' as const};
+  const lesson = ask('Gợi ý hoạt động 7 phút về Trà Quế cho lớp 2', staff);
+  assert.match(lesson.answer, /Hoạt động 7 phút · Lớp 2/);
+  assert.match(lesson.answer, /luống rau/);
+  assert.match(lesson.answer, /trả lời miệng/);
+  const questions = ask('Soạn 3 câu hỏi về Chùa Cầu cho lớp 2', staff);
+  assert.equal(questions.answer.match(/\*\*Câu [1-3]\./g)?.length, 3);
+  assert.match(questions.answer, /bề mặt công trình/);
+  const hoiAnQuestions = ask('Gợi ý 3 câu hỏi cho học sinh lớp 2 tìm hiểu Hội An', staff);
+  assert.match(hoiAnQuestions.answer, /Câu 2.*chi tiết nào/);
+  assert.match(hoiAnQuestions.answer, /Câu 3.*giữ gìn di sản/);
+  assert.equal(hoiAnQuestions.sources?.[0].url, 'https://whc.unesco.org/en/list/948/');
+  assert.equal(ask('Gốm Thanh Hà làm bằng gì?', {stage: 2}).layer, 'help');
+  assert.equal(ask('Chùa Cầu dài bao nhiêu mét?').found, false);
+  assert.equal(ask('Gốm Thanh Hà mở cửa lúc mấy giờ?').found, false);
+});

@@ -32,13 +32,17 @@ async function checkChat(page,role,questions){
  await page.waitForSelector('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]',{visible:true,timeout:15000});
  await page.click('.discovery-assistant button[aria-label="Mở Trợ lý khám phá Đà Nẵng"]');
  await page.waitForSelector('#danang-assistant-panel[data-assistant-audience="'+role+'"]');
- for(const [question,expected] of questions){
+ for(const [question,expected,sourceUrl] of questions){
   const before=await page.$$eval('[data-chat-role="assistant"]',els=>els.length);
   await page.type('textarea[aria-label="Nhập câu hỏi"]',question);
   await page.click('button[aria-label="Gửi câu hỏi"]');
   await page.waitForFunction(n=>document.querySelectorAll('[data-chat-role="assistant"]').length>n,{timeout:15000},before);
-  const answer=await page.$$eval('[data-chat-role="assistant"]',els=>els.slice(-1)[0].querySelector('p').textContent);
-  assert.ok(answer.includes(expected),role+' failed '+question+': '+answer);
+  const {answer, urls}=await page.$$eval('[data-chat-role="assistant"]',els=>{
+    const response=els[els.length-1];
+    return {answer:response.textContent||'',urls:[...response.querySelectorAll('a[href]')].map(link=>link.href)};
+  });
+  for(const phrase of [expected].flat())assert.ok(answer.includes(phrase),role+' failed '+question+': '+answer);
+  if(sourceUrl)assert.ok(urls.includes(sourceUrl),role+' did not display the source for '+question);
  }
  await page.screenshot({path:'teacher-plan-qa/chat-'+role+'-'+(await page.viewport()).width+'.png'});
  await page.click('[aria-label="Thu gọn Trợ lý Khám phá"]');
@@ -109,7 +113,7 @@ try{
     assert.equal(basics.hasPrivateDemo,true);
     assert.equal(basics.realSaveButtons,0,'Demo must never have an account-sync button');
 
-    await checkChat(page,'teacher',[['Gợi ý 3 câu hỏi cho học sinh lớp 2 tìm hiểu Hội An','Gợi ý 3 câu hỏi'],['Thiết kế hoạt động 5 phút về bảo vệ san hô cho lớp 2','phút'],['Vòng tuần hoàn nước là gì?','bốc hơi']]);
+    await checkChat(page,'teacher',[['Gợi ý 3 câu hỏi cho học sinh lớp 2 tìm hiểu Hội An',['Câu 1.', 'Câu 2.', 'chi tiết nào', 'Câu 3.', 'giữ gìn di sản'],'https://whc.unesco.org/en/list/948/'],['Thiết kế hoạt động 5 phút về bảo vệ san hô cho lớp 2','phút'],['Vòng tuần hoàn nước là gì?','bốc hơi']]);
     // Pick grade 2 and one curated, textbook-reviewed lesson.
     await page.evaluate(()=>{
       const label=[...document.querySelectorAll('label')].find(x=>x.textContent?.trim().startsWith('Khối lớp'));

@@ -9,7 +9,7 @@ assert.ok(chrome,'Chromium is required for mobile assistant audit');
 mkdirSync('stage2-qa-screenshots',{recursive:true});
 const browser=await puppeteer.launch({executablePath:chrome,headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-gpu']});
 try {
-  for(const [name,width,height] of [['iphone',390,844],['android',412,915],['ipad',810,1080]]){
+  for(const [name,width,height] of [['compact-phone',320,568],['iphone',390,844],['android',412,915],['ipad',810,1080]]){
     const page=await browser.newPage();
     // For live Production QA, intercept all mutating requests.
     // This proves public UX without writing analytics, ratings or school data.
@@ -39,6 +39,22 @@ try {
       console.log('LIVE PWA SHELL',name,navigation.title);
     }
     await page.waitForFunction(()=>document.body.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'),{timeout:30000});
+    if (process.env.LIVE_READ_ONLY !== 'true' || process.env.QA_EXPECT_LANDING_ASSISTANT === 'true') {
+      const shortcut = '.landing-assistant-shortcut';
+      const chat = '[role="dialog"][aria-label="Trợ lý khám phá Đà Nẵng"]';
+      await page.waitForSelector(shortcut, {visible: true, timeout: 10000});
+      for (const question of ['Chùa Cầu là gì?', 'Gốm Thanh Hà làm bằng gì?']) {
+        await page.tap(shortcut);
+        await page.waitForSelector(chat, {visible: true, timeout: 15000});
+        assert.equal(await page.$eval(chat, dialog => dialog.dataset.assistantAudience), 'student');
+        await page.type('textarea[aria-label="Nhập câu hỏi"]', question);
+        await page.tap('button[aria-label="Gửi câu hỏi"]');
+        await page.waitForFunction(() => !!document.querySelector('[role="dialog"] a[href*="hoianheritage.danang.gov.vn"]'), {timeout: 10000});
+        await page.tap('button[aria-label="Đóng trợ lý"]');
+        await page.waitForSelector(chat, {hidden: true, timeout: 10000});
+      }
+      assert.equal(await page.$('.discovery-assistant'), null, 'Landing should have one entry button');
+    }
     await page.evaluate(()=>[...document.querySelectorAll('button')].find(b=>b.textContent?.includes('CHẠM ĐỂ KHÁM PHÁ'))?.click());
     if (await page.$('.role-student')) {
       await page.click('.role-student');

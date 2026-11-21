@@ -76,3 +76,142 @@ export function answerLocalEducationQuestion(query:string):LocalKnowledgeAnswer|
  }
  return null;
 }
+
+type ReviewedSubject = {
+  topic: string;
+  names: RegExp;
+  source: Source;
+  summary?: string;
+  facts: {intent: RegExp; answer: string}[];
+};
+
+const hoiAnSource = {label: 'UNESCO – Đô thị cổ Hội An', url: 'https://whc.unesco.org/en/list/948/'};
+const bridgeSource = {label: 'Trung tâm Quản lý Bảo tồn Di sản Văn hóa Hội An – Chùa Cầu', url: 'https://hoianheritage.danang.gov.vn/vi/di-san-van-hoa/Cau/Chua-Cau-134.html'};
+const potterySource = {label: 'Trung tâm Quản lý Bảo tồn Di sản Văn hóa Hội An – Nghề gốm Thanh Hà', url: 'https://hoianheritage.danang.gov.vn/vi/di-san-van-hoa/Nghe-thu-cong-truyen-thong/Nghe-gom-Thanh-Ha-181.html'};
+const gardenSource = {label: 'Trung tâm Quản lý Bảo tồn Di sản Văn hóa Hội An – Nghề trồng rau Trà Quế', url: 'https://hoianheritage.danang.gov.vn/vi/trao-doi-chuyen-nganh/chuyen-de-nghien-cuu-trao-doi/nghe-trong-rau-tra-que-qua-trinh-xay-dung-ho-so-cong-nhan-di-san-van-hoa-phi-vat-the-quoc-gia-995.html'};
+const camNeSource = {label: 'Báo Đà Nẵng – Nghề dệt chiếu Cẩm Nê', url: 'https://baodanang.vn/nguoi-lam-chieu-cuoi-cung-tren-dat-cam-ne-3287044.html'};
+const banThachSource = {label: 'Báo Đà Nẵng – Làng chiếu truyền thống Bàn Thạch', url: 'https://baodanang.vn/lang-chieu-truyen-thong-ban-thach-tim-cach-phuc-vu-du-khach-3154492.html'};
+const biosphereSource = {label: 'UNESCO – Khu dự trữ sinh quyển Cù Lao Chàm–Hội An', url: 'https://www.unesco.org/en/mab/cu-lao-cham-hoi?hub=66369'};
+const primateSource = {label: 'Cổng thông tin Đà Nẵng – Voọc chà vá chân nâu', url: 'https://bana.danang.gov.vn/vi/web/dng-old/w/t%E1%BB%95ng-quan-v%E1%BB%81-vo%E1%BB%8Dc-ch%C3%A0-v%C3%A1-ch%C3%A2n-n%C3%A2u-pygathrix-nemaeus-'};
+const material = /\b(?:nguyen lieu|vat lieu|lam (?:tu|bang) (?:gi|cay gi)|det (?:tu|bang) (?:gi|cay gi)|dung (?:cay|soi|dat) gi)\b/;
+
+const hoiAn: ReviewedSubject = {
+  topic: 'Hội An',
+  names: /\b(?:pho co hoi an|do thi co hoi an|hoi an)\b/,
+  source: hoiAnSource,
+  facts: [
+    {
+      intent: /\b(?:vi sao|tai sao|ly do)\b.*\b(?:unesco|ghi danh|cong nhan|di san)\b/,
+      answer: 'Hội An từng là một thương cảng, nơi thuyền bè đến buôn bán. Đường phố và nhiều ngôi nhà cổ vẫn lưu lại dấu tích của thương cảng và sự gặp gỡ giữa nhiều nền văn hóa. Đó là những giá trị UNESCO ghi nhận khi đưa đô thị cổ Hội An vào Danh mục Di sản thế giới.',
+    },
+    {
+      intent: /\b(?:giu gin|bao ve|ung xu)\b.*\b(?:di san|pho co|hoi an)\b|\b(?:viet|ve|khac) len (?:tuong|nha|cua) (?:co|di tich)\b/,
+      answer: 'Khi tham quan phố cổ, em đi theo lối hướng dẫn, bỏ rác đúng chỗ và giữ nguyên bề mặt nhà, cửa, tường cổ. Nếu thấy bạn định viết lên tường, em có thể nhắc nhẹ và báo người lớn. Một vết viết nhỏ cũng có thể làm hỏng bề mặt cũ.',
+    },
+  ],
+};
+const bridge: ReviewedSubject = {
+  topic: 'Chùa Cầu',
+  names: /\b(?:chua cau|lai vien kieu|cau nhat ban)\b/,
+  source: bridgeSource,
+  summary: 'Chùa Cầu là một cây cầu có mái che ở phố cổ Hội An. Bên cầu có một ngôi miếu nhỏ. Em có thể nhìn ảnh để tìm phần mái phía trên và lối đi qua cầu phía dưới.',
+  facts: [{
+    intent: /\b(?:vi sao|tai sao|sao)\b.*\b(?:goi ten nhu vay|goi .+ la chua cau|ten (?:la|chua cau)|chua cau .+ goi)\b|\b(?:co phai|la) (?:mot )?(?:ngoi )?chua\b/,
+    answer: 'Cạnh phần cầu có một ngôi miếu. Người địa phương quen gọi miếu ấy là chùa. Hai tiếng chùa và cầu ghép lại thành tên Chùa Cầu. Nhìn ảnh, em thử chỉ lối qua cầu và phần miếu nhé.',
+  }, {
+    intent: material,
+    answer: 'Ở Chùa Cầu, móng và trụ xây bằng đá. Khung và sàn cầu làm bằng gỗ. Mái được lợp ngói. Nhìn ảnh, em thử chỉ ba phần này nhé.',
+  }],
+};
+const pottery: ReviewedSubject = {
+  topic: 'Gốm Thanh Hà',
+  names: /\b(?:lang gom thanh ha|gom thanh ha|thanh ha)\b/,
+  source: potterySource,
+  summary: 'Thanh Hà ở Hội An có nghề làm gốm truyền thống. Người thợ tạo hình đất trên bàn xoay để làm những đồ vật như chum, nồi hoặc bình.',
+  facts: [{
+    intent: material,
+    answer: 'Người thợ gốm Thanh Hà dùng đất sét. Họ xử lý đất, tạo hình, làm khô rồi nung để đồ gốm cứng hơn.',
+  }],
+};
+const garden: ReviewedSubject = {
+  topic: 'Làng rau Trà Quế',
+  names: /\b(?:lang rau tra que|tra que)\b/,
+  source: gardenSource,
+  summary: 'Trà Quế ở Hội An có nghề trồng rau truyền thống, nổi tiếng với các loại rau thơm. Khi xem ảnh, em thử tìm luống rau và kể một việc người trồng rau cần làm để chăm cây.',
+  facts: [{
+    intent: /\b(?:trong rau|bon rau|rau)\b.*\b(?:rong|phan bon|phan gi)\b|\b(?:dung|bon) (?:loai )?(?:phan|rong) gi\b/,
+    answer: 'Một cách chăm rau truyền thống ở Trà Quế là dùng rong lấy từ đầm Trà Quế để bón. Đây là kinh nghiệm của người trồng rau tại làng.',
+  }],
+};
+const camNe: ReviewedSubject = {
+  topic: 'Chiếu Cẩm Nê', names: /\b(?:chieu cam ne|cam ne)\b/, source: camNeSource,
+  facts: [{intent: material, answer: 'Chiếu Cẩm Nê dùng sợi cói, lác để dệt. Người thợ đưa từng sợi qua khung dệt để các sợi đan thành tấm chiếu.'}],
+};
+const banThach: ReviewedSubject = {
+  topic: 'Chiếu Bàn Thạch', names: /\b(?:chieu ban thach|ban thach)\b/, source: banThachSource,
+  summary: 'Bàn Thạch có nghề dệt chiếu từ cây cói, còn gọi là cây lác. Người thợ dùng khung dệt để đan các sợi thành tấm chiếu.',
+  facts: [{intent: material, answer: 'Nguyên liệu dệt chiếu Bàn Thạch là cói, còn gọi là lác. Người thợ phơi sợi trước khi đưa lên khung dệt.'}],
+};
+const biosphere: ReviewedSubject = {
+  topic: 'Cù Lao Chàm–Hội An',
+  names: /\bcu lao cham(?: hoi an)?\b/,
+  source: biosphereSource,
+  facts: [{
+    intent: /\b(?:co phai|phai khong|dung khong|hay)\b.*\b(?:di san|sinh quyen)\b|\bdi san (?:van hoa )?the gioi\b/,
+    answer: 'Cù Lao Chàm–Hội An được UNESCO ghi nhận là khu dự trữ sinh quyển năm 2009. Đô thị cổ Hội An được UNESCO ghi danh Di sản thế giới năm 1999. Hai tên này thuộc hai chương trình khác nhau của UNESCO.',
+  }],
+};
+const primate: ReviewedSubject = {
+  topic: 'Voọc chà vá chân nâu',
+  names: /\b(?:vooc cha va chan nau|vooc o son tra|vooc son tra)\b/,
+  source: primateSource,
+  facts: [
+    {intent: /\b(?:an gi|thuc an|an la|an qua)\b/, answer: 'Voọc chà vá chân nâu ăn chủ yếu là lá, đặc biệt là lá non. Chúng cũng ăn một số phần khác của cây. Khi quan sát voọc, em giữ khoảng cách và để chúng tự tìm thức ăn trong rừng.'},
+    {intent: /\b(?:co nen|duoc|nen|khong nen) cho .*(?:an|banh)\b|\bcho (?:vooc|chung|no) an\b/, answer: 'Em hãy quan sát voọc từ xa và để chúng tự tìm thức ăn trong rừng. Khi đi cùng đoàn tham quan, em thực hiện hướng dẫn của người phụ trách.'},
+  ],
+};
+
+const reviewedSubjects = [hoiAn, bridge, pottery, garden, camNe, banThach, biosphere, primate];
+const comparison = /\b(?:so sanh|khac nhau|khac gi|khac .+ the nao|giong nhau|giong .+ khong|khac biet|phan biet)\b/;
+const localComparisons = [
+  {subjects: [pottery, garden], answer: 'Thanh Hà giữ nghề làm gốm. Người thợ tạo hình và nung đất để làm đồ dùng. Trà Quế giữ nghề trồng rau. Người dân chuẩn bị luống, trồng và chăm rau. Cả hai đều lưu giữ kỹ năng lao động được trao truyền qua nhiều thế hệ.'},
+  {subjects: [camNe, banThach], answer: 'Cẩm Nê và Bàn Thạch đều có nghề dệt chiếu truyền thống và dùng sợi cói, lác. Tư liệu về Bàn Thạch ghi nhận vùng trồng cói từng cung cấp nguyên liệu cho làng. Khi xem ảnh hai làng, em có thể tìm một dụng cụ hoặc công đoạn giống nhau để giải thích.'},
+  {subjects: [hoiAn, biosphere], answer: 'Đô thị cổ Hội An được ghi danh Di sản thế giới năm 1999 vì các giá trị của một thương cảng cổ. Cù Lao Chàm–Hội An được ghi nhận là khu dự trữ sinh quyển năm 2009, gắn việc bảo tồn thiên nhiên với đời sống cộng đồng. Cả hai danh hiệu đều do UNESCO ghi nhận trong các chương trình riêng.'},
+];
+
+function reviewedSubjectsIn(q: string) {
+  const matches = reviewedSubjects.filter(subject => subject.names.test(q));
+  if (matches.includes(biosphere) && /\bcu lao cham hoi an\b/.test(q) && !hoiAn.names.test(q.replace(/\bcu lao cham hoi an\b/g, ''))) {
+    return matches.filter(subject => subject !== hoiAn);
+  }
+  return matches;
+}
+
+export function answerReviewedLocalFacts(query: string, previousTopic?: string, previousQuery?: string) {
+  const q = normalize(query);
+  const named = reviewedSubjectsIn(q);
+  if (comparison.test(q)) {
+    const pair = localComparisons.find(item => named.length === 2 && item.subjects.every(subject => named.includes(subject)));
+    if (pair) return {answer: pair.answer, sources: pair.subjects.map(subject => subject.source)};
+    return null;
+  }
+
+  // A specific place followed by “ở Hội An” is one subject, not a request about both.
+  const subjects = named.length === 2 && named.includes(hoiAn) && /\b(?:o|tai) hoi an\b/.test(q)
+    ? named.filter(subject => subject !== hoiAn)
+    : named;
+  // Inherit a subject only for a short, closed set of questions without a new noun.
+  const bareFollowUp = /^(?:(?:con|vay|the|rua) )?(?:(?:nguyen lieu|vat lieu) (?:la|gi)(?: gi)?|(?:no |nguoi ta )?(?:lam|det) (?:tu|bang) gi|(?:no |chung )?an gi|(?:co nen |duoc )?cho (?:no|chung) an(?: khong)?|(?:vi sao|tai sao) (?:lai )?(?:goi ten nhu vay|duoc (?:ghi danh|cong nhan)(?: nhu vay)?))(?: (?:a|nhe|vay|rua))?$/.test(q);
+  const previous = reviewedSubjectsIn(normalize(previousTopic || previousQuery || ''));
+  const subject = subjects.length === 1 ? subjects[0] : !subjects.length && bareFollowUp && previous.length === 1 ? previous[0] : undefined;
+  if (!subject) return null;
+
+  // Keep an unfamiliar exact date or quantity out of broader explanatory cards.
+  if (/\b(?:nam nao|bao gio|khi nao|bao nhieu|dai bao|cao bao|rong bao)\b/.test(q)) return null;
+  const fact = subject.facts.find(item => item.intent.test(q));
+  const definition = subject.names.test(q) && /\b(?:la gi|noi tieng ve (?:gi|nghe nao)|co nghe gi|co gi dac biet|co chi dac biet|o do lam nghe gi)\b/.test(q);
+  const answer = fact?.answer ?? (definition ? subject.summary : undefined);
+  if (!answer) return null;
+  const sources = subject === biosphere ? [biosphereSource, hoiAnSource] : [subject.source];
+  return {answer, sources, topic: subject.topic};
+}

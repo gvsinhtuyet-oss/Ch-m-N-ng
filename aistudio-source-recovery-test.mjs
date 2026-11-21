@@ -30,12 +30,13 @@ test('recovery snapshot contains the current assistant module contract and isola
  // Effectiveness analytics around AppContent; do not overwrite those changes
  // with the older immutable AI Studio snapshot when validating recovery.
  const productionVariantSHA256 = {
+   'src/services/LocalEducationKnowledge.ts': 'b528afc11d30d5563f6ae92840d8369a311439a898606bd3ec2b4b53ce8c2381',
    'src/components/common/AssistantEffectivenessPanel.tsx': 'fdfb3d448cbf8dcda9df65710a751c085aec2d66b628baf5fe04fb03b7b2b2da',
    'src/features/teacher/TeacherAssistantLessonPanel.tsx': '1dcc9624dcff8ecd5496531ae90007e689bacfb2bf999a1d51352b4cc3b54df3',
-   'src/services/AssistantLearningEngine.ts': '26d6dbb4c526bee6e9b528ea49c03833fd5cd6d2d2dd95d95c457e682adce60d',
-   'src/App.tsx': 'b8b0ef958ba7702887bb8ff6825d876a5051132c5270ad64f431bbc950e3198e',
-   'src/components/common/DanangAssistantChat.tsx': 'a174e7f554c57b33215c7abc23c9f93c4efd2aa8d2859d38b00a9cfb341605f4',
-   'src/data/assistantLearningProfiles.json': '86b06df95e4486d82b7445408f249ba3f0976f81783f62bfb09021dfb6f3d524',
+   'src/services/AssistantLearningEngine.ts': 'c8843af022cf28c65f5c2de0e7f8338f45e7207c157b14a9fbb3b92645373636',
+   'src/App.tsx': '8720fb54c5154103eff0486221cb2737a6415a439c812556840bce09ed74fa69',
+   'src/components/common/DanangAssistantChat.tsx': '12e3081c48863742553224b2b304c43fde476eaf0cde30210b60542128ec1532',
+   'src/data/assistantLearningProfiles.json': 'cb1c9229ae2fb7eb1881d249dc10df203fabfe5ac6ab77fd22c81b646201f920',
    'src/utils/assistantPosition.ts': '3ca568981112ae255ae68e3303ee8f3b13cd07d1860a31a7579cae8c36e8e11b',
    'src/features/teacher/GddpTeacherLookup.tsx': '84a2d4f593ba981f3ce688dcb8d4d099399851b6ad958fa4403fe52f9a65bcbe',
  };

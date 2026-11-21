@@ -134,8 +134,10 @@ test('14 - câu hỏi địa phương dài vẫn được chuẩn hóa', () => {
   );
   assert.match(result.normalizedQuery, /tại sao/i);
   assert.match(result.normalizedQuery, /cái này/i);
-  // The lesson does not explain the name origin; do not substitute a definition.
-  assert.equal(result.layer, 'unknown');
+  // The reviewed conservation source explains the local name.
+  assert.equal(result.layer, 'common');
+  assert.match(result.answer, /quen gọi miếu ấy là chùa/);
+  assert.match(result.sources?.[0].url ?? '', /hoianheritage\.danang\.gov\.vn/);
 });
 
 test('15 - mô phỏng 1000 lượt hỏi liên tiếp không có bộ đếm hay giới hạn lượt', () => {

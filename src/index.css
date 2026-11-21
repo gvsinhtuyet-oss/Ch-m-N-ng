@@ -1036,3 +1036,10 @@ body:has(.journey-screen-fixed){overflow:hidden}
   .app-touch-header .header-touch-assistant { min-width: 44px; width: 44px; padding: 0; }
   .app-touch-header .header-assistant-label { display: none; }
 }
+
+.discovery-assistant-mobile {
+  right: 12px;
+  bottom: 18px;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(18px, calc(env(safe-area-inset-bottom) + 12px));
+}

@@ -424,3 +424,35 @@
  .landing-top-actions > button.landing-staff-login { width:auto!important; padding-inline:10px!important; white-space:nowrap; }
  .landing-top-actions > button.landing-staff-login > span { display:inline!important; }
 }
+
+/* Keep the assistant discoverable on small touch screens before role selection. */
+.landing-assistant-shortcut {
+  position: fixed;
+  z-index: 35;
+  right: 12px;
+  bottom: 14px;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(14px, calc(env(safe-area-inset-bottom) + 12px));
+  display: none;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid #bce9ff;
+  border-radius: 24px;
+  background: #075985;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 4px 14px #001b3b60;
+  touch-action: manipulation;
+}
+
+.landing-assistant-shortcut:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+@media (max-width: 1023px) {
+  .landing-assistant-shortcut { display: inline-flex; }
+}

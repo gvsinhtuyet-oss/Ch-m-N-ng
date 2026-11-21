@@ -27,3 +27,60 @@ test('corrupt or missing chunks return an error instead of empty content',async(
   store.data.delete('cham_content_chunks/'+manifest.chunks[0]);
   await assert.rejects(contentStorage(store).load(),e=>e.status===503);
 });
+
+function measuredStore(){
+  const store=memory();let chunkReads=0,manifestLists=0;
+  const get=store.get,list=store.list;
+  store.get=async(c,id)=>{if(c==='cham_content_chunks')chunkReads++;return get(c,id);};
+  store.list=async(c)=>{if(c==='cham_content')manifestLists++;return list(c);};
+  return {store,reads:()=>chunkReads,lists:()=>manifestLists};
+}
+test('unchanged large media reuses verified chunks while checking fresh manifests',async()=>{
+  const m=measuredStore(),storage=contentStorage(m.store);
+  const value={title:'Học liệu thật không đổi',image:'A'.repeat(1024*1024)};
+  await storage.saveStation('a',value);
+  assert.deepEqual((await storage.load()).stations.a,value);
+  const first=m.reads();assert.ok(first>=2);
+  const restored=await storage.load();restored.stations.a.title='local edit';
+  assert.equal((await storage.load()).stations.a.title,value.title);
+  assert.equal(m.reads(),first);assert.equal(m.lists(),3);
+});
+test('newly published generation is read immediately; failed publication keeps old data',async()=>{
+  const m=measuredStore(),storage=contentStorage(m.store);
+  await storage.saveStation('a',{title:'old'});await storage.load();
+  await storage.saveStation('a',{title:'new'});
+  assert.equal((await storage.load()).stations.a.title,'new');assert.equal(m.reads(),2);
+  const put=m.store.put;
+  m.store.put=async(c,...args)=>{if(c==='cham_content')throw new Error('publication failed');return put(c,...args);};
+  await assert.rejects(storage.saveStation('a',{title:'unpublished'}));
+  assert.equal((await storage.load()).stations.a.title,'new');assert.equal(m.reads(),2);
+});
+test('cache expires and storage failures are never accepted as empty content',async()=>{
+  let clock=0;const m=measuredStore(),storage=contentStorage(m.store,{now:()=>clock,cacheTtlMs:100});
+  await storage.saveStation('a',{title:'old'});await storage.load();
+  const manifest=await m.store.get('cham_content','station-a');
+  m.store.data.delete('cham_content_chunks/'+manifest.chunks[0]);
+  clock=100;
+  await assert.rejects(storage.load(),e=>e.status===503);
+  await assert.rejects(storage.load(),e=>e.status===503);
+  assert.equal(m.reads(),3);
+});
+test('oversized entries are not retained beyond the memory budget',async()=>{
+  const m=measuredStore(),storage=contentStorage(m.store,{maxCacheBytes:10});
+  await storage.saveStation('a',{image:'A'.repeat(100)});
+  await storage.load();await storage.load();assert.equal(m.reads(),2);
+});
+test('combined cached generations stay within the total memory budget',async()=>{
+  const m=measuredStore(),storage=contentStorage(m.store,{maxCacheBytes:100});
+  await storage.saveStation('a',{image:'A'.repeat(60)});
+  await storage.saveStation('b',{image:'B'.repeat(60)});
+  await storage.load();await storage.load();assert.equal(m.reads(),4);
+});
+test('concurrent content requests share chunk reads without sharing mutable results',async()=>{
+  const m=measuredStore(),storage=contentStorage(m.store);
+  await storage.saveStation('a',{image:'A'.repeat(1024*1024)});
+  const results=await Promise.all(Array.from({length:8},()=>storage.load()));
+  assert.equal(m.reads(),3);
+  results[0].stations.a.image='changed';
+  assert.notEqual(results[1].stations.a.image,'changed');
+});

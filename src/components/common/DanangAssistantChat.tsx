@@ -30,6 +30,7 @@ interface Props {
   hotspot?: ExplorationHotspot | null;
   compactGame?: boolean;
   docked?: boolean;
+  hideLauncher?: boolean;
   audience?: 'student' | 'teacher' | 'admin';
   openRequestId?: number;
   stage?: number;
@@ -147,7 +148,7 @@ const AssistantEmblem=({className}:{className?:string})=>(
   </svg>
 );
 
-export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '', openRequestId = 0 }) => {
+export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot = null, compactGame = false, docked = false, hideLauncher = false, audience = 'student', stage, currentGrade, onOpenTeacherStation, storageScope = '', openRequestId = 0 }) => {
   const isTeacher = audience !== 'student';
   const isAdmin = audience === 'admin';
   const welcome = isAdmin ? isExperienceMode()?'Chào anh/chị! Mình hỗ trợ báo cáo số liệu giả định, xem kết quả lớp và kiểm định chatbot trong không gian trải nghiệm.':'Chào anh/chị! Mình có thể giúp tìm các mục quản trị, kiểm định trợ lý và xem báo cáo đã xác thực.' : isTeacher ? 'Chào thầy/cô! Em hỗ trợ tìm học liệu và gợi ý hoạt động dạy học.' : WELCOME;
@@ -422,8 +423,8 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
 
   return (
     <>
-      <div ref={launcherRef} aria-hidden={open||measurementOpen||!!lessonPanel} className={`discovery-assistant fixed z-[68] pointer-events-none flex flex-col items-end justify-end select-none ${mobile ? 'h-[78px] w-[68px] gap-1' : compactGame ? 'h-12 w-12' : 'h-[122px] w-[156px] gap-2'}`}
-        style={{...(mobile ? {right:'max(12px, env(safe-area-inset-right))',bottom:'max(18px, calc(env(safe-area-inset-bottom) + 12px))',left:'auto',top:'auto'} : {left:launcherPosition.x, top:launcherPosition.y}),visibility:open||measurementOpen||lessonPanel?'hidden':'visible'}}>
+      {!hideLauncher && <div ref={launcherRef} aria-hidden={open||measurementOpen||!!lessonPanel} className={`discovery-assistant ${mobile ? 'discovery-assistant-mobile' : ''} fixed z-[68] pointer-events-none flex flex-col items-end justify-end select-none ${mobile ? 'h-[78px] w-[68px] gap-1' : compactGame ? 'h-12 w-12' : 'h-[122px] w-[156px] gap-2'}`}
+        style={{...(mobile ? {left:'auto',top:'auto'} : {left:launcherPosition.x, top:launcherPosition.y}),visibility:open||measurementOpen||lessonPanel?'hidden':'visible'}}>
         <span className="sr-only">Trợ lý Khám phá</span>
         <button
           type="button"
@@ -447,7 +448,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
             drag.current = null;
             if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
           }}
-          onPointerCancel={() => { drag.current = null; suppressClick.current = true; }}
+          onPointerCancel={() => { drag.current = null; suppressClick.current = !mobile; }}
           onLostPointerCapture={() => { drag.current = null; }}
           onClick={event => {
             if (event.detail !== 0 && suppressClick.current) { suppressClick.current = false; return; }
@@ -465,7 +466,7 @@ export const DanangAssistantChat: React.FC<Props> = ({ station = null, hotspot =
         </button>
         {mobile && <span aria-hidden="true" className="pointer-events-none rounded-lg bg-sky-900 px-1.5 py-0.5 text-[10px] font-bold leading-tight text-white shadow-sm">Trợ lý</span>}
         <span id="assistant-drag-hint" className="sr-only">{mobile ? "Chạm để mở Trợ lý khám phá." : "Giữ và kéo biểu tượng để tránh che nội dung."}</span>
-      </div>
+      </div>}
 
       {measurementMounted && <Suspense fallback={null}><EffectivenessPanel key={storageScope} open={measurementOpen} audience={isAdmin?'teacher':audience} grade={currentGrade || station?.grade || 2} scope={storageScope} initialTopic={messages.filter(message=>message.role==='assistant').slice(-1)[0]?.topic} onClose={()=>{setMeasurementOpen(false);setOpen(true);}} /></Suspense>}
       {isTeacher && lessonPanel && <Suspense fallback={<div role="status" className="fixed inset-4 z-[70] rounded-2xl bg-white p-6 shadow-xl">Đang mở bài học…</div>}>

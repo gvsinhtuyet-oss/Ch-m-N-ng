@@ -1,6 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import React from 'react';
+import {readFileSync} from 'node:fs';
 import {renderToStaticMarkup} from 'react-dom/server';
 import {constrainAssistantPosition,compactAssistantPosition} from './src/utils/assistantPosition';
 import {DanangAssistantChat,buildAssistantFollowUps,maskStudentPrivateQuestion} from './src/components/common/DanangAssistantChat';
@@ -27,7 +28,10 @@ test('round exploration launcher stays visible and easy to tap on phones',()=>{
   assert.match(html,/aria-expanded="false"/);
   assert.match(html,/touch-action:manipulation/);
   assert.match(html,/Trợ lý<\/span>/);
-  assert.match(html,/right:max\(12px/);
+  assert.match(html,/discovery-assistant-mobile/);
+  const css=readFileSync(new URL('./src/index.css',import.meta.url),'utf8');
+  assert.match(css,/\.discovery-assistant-mobile\s*\{\s*right: 12px;\s*bottom: 18px;\s*right: max/);
+  assert.doesNotMatch(renderToStaticMarkup(<DanangAssistantChat hideLauncher/>), /discovery-chat-launcher/);
   assert.doesNotMatch(html,/group-hover:flex/);
  }finally{(globalThis as any).window=previous;}
 });

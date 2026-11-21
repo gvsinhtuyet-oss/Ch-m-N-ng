@@ -24,6 +24,21 @@ const ClassroomPresentationMode = lazy(() => import('./features/teacher/Classroo
 import { WifiOff } from 'lucide-react';
 const DanangAssistantChat = lazy(() => import('./components/common/DanangAssistantChat').then(module => ({ default: module.DanangAssistantChat })));
 
+function LandingWithAssistant({ unavailable }: { unavailable: React.ReactNode }) {
+  const [requestId, setRequestId] = useState(0);
+
+  return <>
+    <LandingView onOpenAssistant={() => setRequestId(id => id + 1)} />
+    {requestId > 0 && (
+      <FeatureLoadBoundary fallback={unavailable}>
+        <Suspense fallback={<div role="status" className="fixed bottom-4 left-3 right-3 z-[80] mx-auto max-w-sm rounded-2xl bg-sky-900 p-3 text-center text-sm font-semibold text-white">Đang mở Trợ lý khám phá…</div>}>
+          <DanangAssistantChat audience="student" openRequestId={requestId} hideLauncher />
+        </Suspense>
+      </FeatureLoadBoundary>
+    )}
+  </>;
+}
+
 const AppContent: React.FC = () => {
   const { currentUser, role, currentView, currentStation, currentAssistantHotspot, currentStage, currentGrade, setCurrentGrade, openStation, isOnline, closeStation, exitPresentationMode } = useApp();
   const [assistantOpenRequest, setAssistantOpenRequest] = useState(0);
@@ -113,16 +128,11 @@ const AppContent: React.FC = () => {
         <button type="button" className="mt-3 min-h-11 w-full rounded-xl bg-sky-700 px-3 py-2 font-bold text-white" onClick={() => void recoverApplicationAssets()}>Khắc phục và tải bản mới</button>
       </div>;
 
-  if (!currentUser && currentView !== 'landing') return <LandingView />;
+  if (!currentUser || currentView === 'landing') return <LandingWithAssistant unavailable={assistantUnavailable} />;
 
   // If in Presentation Mode, render full-screen projection without header/footer
   if (currentView === 'presentation-view' && currentStation && (role === 'teacher' || role === 'admin')) {
     return <><ClassroomPresentationMode key={currentStation.id} station={currentStation} onExit={exitPresentationMode} /><FeatureLoadBoundary fallback={assistantUnavailable}><Suspense fallback={assistantLoading}><DanangAssistantChat openRequestId={assistantOpenRequest} storageScope={currentUser?role+':'+currentUser.id:''} currentGrade={currentGrade} onOpenTeacherStation={station=>{setCurrentGrade(station.grade);openStation(station,1);}} audience="teacher" station={currentStation} hotspot={currentAssistantHotspot} /></Suspense></FeatureLoadBoundary></>;
-  }
-
-  // If on Landing Cover Page, render full-screen immersive cover
-  if (currentView === 'landing') {
-    return <LandingView />;
   }
 
   return (
